@@ -28,6 +28,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { PrayerScreen } from './PrayerScreen';
+import { CalendarScreen } from './CalendarScreen';
 
 type Tab = 'home' | 'prayer' | 'calendar' | 'learn' | 'more';
 
@@ -309,13 +310,12 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
-const placeholderContent: Record<Exclude<Tab, 'home' | 'prayer'>, { title: string; subtitle: string; icon: LucideIcon }> = {
-  calendar: { title: 'Kalender', subtitle: 'Islamische Ereignisse und persönliche Termine folgen als Nächstes.', icon: CalendarDays },
+const placeholderContent: Record<Exclude<Tab, 'home' | 'prayer' | 'calendar'>, { title: string; subtitle: string; icon: LucideIcon }> = {
   learn: { title: 'Islam verstehen', subtitle: 'Quran, Hadith, Wissen und Lernbereiche erhalten dasselbe Premium-System.', icon: BookOpen },
   more: { title: 'Mehr & Einstellungen', subtitle: 'Profil, Sprache, Benachrichtigungen und Cloud-Sync werden anschließend umgebaut.', icon: Menu },
 };
 
-function PlaceholderScreen({ tab, onBack }: { tab: Exclude<Tab, 'home' | 'prayer'>; onBack: () => void }) {
+function PlaceholderScreen({ tab, onBack }: { tab: Exclude<Tab, 'home' | 'prayer' | 'calendar'>; onBack: () => void }) {
   const { title, subtitle, icon: Icon } = placeholderContent[tab];
   return (
     <motion.main className="screen placeholder-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -363,6 +363,8 @@ export default function App() {
           <PremiumHome onNavigate={setActiveTab} />
         ) : activeTab === 'prayer' ? (
           <PrayerScreen onBack={() => setActiveTab('home')} />
+        ) : activeTab === 'calendar' ? (
+          <CalendarScreen onBack={() => setActiveTab('home')} />
         ) : (
           <PlaceholderScreen tab={activeTab} onBack={() => setActiveTab('home')} />
         )}
