@@ -13,7 +13,8 @@ body {
   -webkit-tap-highlight-color: transparent;
 }
 
-#root {
+#root,
+.app-entry {
   min-height: 100svh;
 }
 
