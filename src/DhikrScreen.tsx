@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
 import {
   BarChart3,
   ChevronLeft,
@@ -19,10 +20,28 @@ const dhikrCategories = [
   { label: 'Vor Schlaf', icon: MoonStar },
 ];
 
+function readDhikrCount() {
+  try {
+    const stored = Number(localStorage.getItem('nur_dhikr_count'));
+    return Number.isFinite(stored) ? Math.min(100, Math.max(0, stored)) : 33;
+  } catch {
+    return 33;
+  }
+}
+
 export function DhikrScreen({ onBack }: { onBack: () => void }) {
-  const [count, setCount] = useState(33);
+  const [count, setCount] = useState(readDhikrCount);
+  const [activeCategory, setActiveCategory] = useState('Morgen');
   const [toast, setToast] = useState<string | null>(null);
   const progress = Math.min(100, count);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nur_dhikr_count', String(count));
+    } catch {
+      // Persistence is optional in restricted browser modes.
+    }
+  }, [count]);
 
   const flash = (message: string) => {
     setToast(message);
@@ -39,8 +58,8 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-dhikr-counter">
         <div className="reference-dhikr-counter__glow" />
-        <PremiumImage src="/premium-assets/high-res-objects/tasbih.png" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
-        <button className="reference-dhikr-ring" style={{ '--dhikr-progress': `${progress * 3.6}deg` } as React.CSSProperties} onClick={() => setCount((value) => Math.min(100, value + 1))}>
+        <PremiumImage src="/premium-assets/high-res-objects/tasbih.webp" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
+        <button className="reference-dhikr-ring" style={{ '--dhikr-progress': `${progress * 3.6}deg` } as CSSProperties} onClick={() => setCount((value) => Math.min(100, value + 1))} aria-label="Dhikr-Zähler erhöhen">
           <span><strong>{count}</strong><small>/ 100</small></span>
         </button>
         <div className="reference-dhikr-copy">
@@ -62,18 +81,16 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
         <div className="section-heading"><div><span className="overline">Sammlungen</span><h2>Dhikr auswählen</h2></div></div>
         <div className="reference-dhikr-category-grid">
           {dhikrCategories.map(({ label, icon: Icon }) => (
-            <button key={label} onClick={() => flash(`${label}-Dhikr geöffnet`)}>
-              <span><Icon size={23} /></span>
-              <strong>{label}</strong>
-              <small>12 Erinnerungen</small>
+            <button key={label} className={activeCategory === label ? 'is-active' : ''} onClick={() => { setActiveCategory(label); flash(`${label}-Dhikr ausgewählt`); }}>
+              <span><Icon size={23} /></span><strong>{label}</strong><small>12 Erinnerungen</small>
             </button>
           ))}
         </div>
       </section>
 
       <section className="reference-dhikr-remembrance">
-        <div><span className="overline">Nächste Erinnerung</span><h3>Alhamdulillah</h3><p dir="rtl">الْحَمْدُ لِلَّهِ</p><small>Alles Lob gebührt Allah</small></div>
-        <button onClick={() => flash('Dhikr gewechselt')}><Settings size={18} /></button>
+        <div><span className="overline">Ausgewählte Sammlung</span><h3>{activeCategory}</h3><p dir="rtl">الْحَمْدُ لِلَّهِ</p><small>Alles Lob gebührt Allah</small></div>
+        <button onClick={() => flash('Dhikr-Einstellungen geöffnet')}><Settings size={18} /></button>
       </section>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
