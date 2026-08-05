@@ -1,0 +1,53 @@
+.welcome-hero__visual,
+.reference-mosque-hero > .premium-image,
+.reference-dhikr-counter__tasbih,
+.reference-qibla-stage__compass,
+.journey-card:nth-child(2) > .premium-image,
+.journey-card:nth-child(3) > .premium-image {
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.welcome-hero__visual > img,
+.welcome-hero__visual > .premium-image__fallback,
+.reference-mosque-hero > .premium-image > img,
+.reference-mosque-hero > .premium-image > .premium-image__fallback,
+.reference-dhikr-counter__tasbih > img,
+.reference-dhikr-counter__tasbih > .premium-image__fallback,
+.reference-qibla-stage__compass > img,
+.reference-qibla-stage__compass > .premium-image__fallback,
+.journey-card:nth-child(2) > .premium-image > img,
+.journey-card:nth-child(2) > .premium-image > .premium-image__fallback,
+.journey-card:nth-child(3) > .premium-image > img,
+.journey-card:nth-child(3) > .premium-image > .premium-image__fallback {
+  opacity: 0;
+}
+
+.welcome-hero__visual,
+.reference-mosque-hero > .premium-image {
+  background-image: url('/premium-assets/high-res-objects/mosque.webp');
+}
+
+.reference-dhikr-counter__tasbih,
+.journey-card:nth-child(2) > .premium-image {
+  background-image: url('/premium-assets/high-res-objects/tasbih.webp');
+}
+
+.reference-qibla-stage__compass,
+.journey-card:nth-child(3) > .premium-image {
+  background-image: url('/premium-assets/high-res-objects/qibla.webp');
+}
+
+.reference-dhikr-counter__tasbih {
+  opacity: .34;
+}
+
+.reference-qibla-stage__compass {
+  border-radius: 50%;
+}
+
+.journey-card:nth-child(2) > .premium-image,
+.journey-card:nth-child(3) > .premium-image {
+  transform: scale(.94);
+}
