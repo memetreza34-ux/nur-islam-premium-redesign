@@ -20,7 +20,7 @@ const recentSurahs = [
   { name: 'Ar-Rahman', meta: 'Sure 55 · Ayah 1', juz: 'Juz 27' },
 ];
 
-export function QuranScreen({ onBack }: { onBack: () => void }) {
+export function QuranScreen({ onBack, onOpenReader, onOpenAyah }: { onBack: () => void; onOpenReader: () => void; onOpenAyah: () => void }) {
   const [toast, setToast] = useState<string | null>(null);
   const flash = (message: string) => {
     setToast(message);
@@ -41,7 +41,7 @@ export function QuranScreen({ onBack }: { onBack: () => void }) {
           <h2>Surah Al-Kahf</h2>
           <p>Ayah 32 · zuletzt heute gelesen</p>
           <span className="reference-quran-progress"><i /></span>
-          <button className="reference-inline-button" onClick={() => flash('Lesemodus geöffnet')}>Weiterlesen <ChevronRight size={16} /></button>
+          <button className="reference-inline-button" onClick={onOpenReader}>Weiterlesen <ChevronRight size={16} /></button>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/quran-closed.png" className="reference-quran-continue__book" fallback={<QuranObject />} />
       </section>
@@ -49,7 +49,7 @@ export function QuranScreen({ onBack }: { onBack: () => void }) {
       <section className="reference-quran-tools">
         <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Quran erkunden</h2></div></div>
         <div className="reference-quran-tool-grid">
-          <button onClick={() => flash('Alle Suren geöffnet')}><span><BookOpen size={23} /></span><strong>Alle Suren</strong><small>114 Kapitel</small></button>
+          <button onClick={onOpenReader}><span><BookOpen size={23} /></span><strong>Alle Suren</strong><small>114 Kapitel</small></button>
           <button onClick={() => flash('Juz-Auswahl geöffnet')}><span><Box size={23} /></span><strong>Juz</strong><small>30 Abschnitte</small></button>
           <button onClick={() => flash('Lesezeichen geöffnet')}><span><Bookmark size={23} /></span><strong>Lesezeichen</strong><small>Gespeichert</small></button>
           <button onClick={() => flash('Audio-Modus geöffnet')}><span><Headphones size={23} /></span><strong>Audio</strong><small>Rezitation</small></button>
@@ -62,7 +62,7 @@ export function QuranScreen({ onBack }: { onBack: () => void }) {
         <div className="section-heading"><div><span className="overline">Dein Verlauf</span><h2>Zuletzt gelesen</h2></div><button className="text-button" onClick={() => flash('Gesamter Verlauf geöffnet')}>Alle <ChevronRight size={15} /></button></div>
         <div className="reference-quran-list">
           {recentSurahs.map((surah) => (
-            <button key={surah.name} onClick={() => flash(`${surah.name} geöffnet`)}>
+            <button key={surah.name} onClick={onOpenReader}>
               <span className="reference-quran-list__mark"><Sparkles size={17} /></span>
               <span><strong>{surah.name}</strong><small>{surah.meta}</small></span>
               <em>{surah.juz}</em>
@@ -72,14 +72,14 @@ export function QuranScreen({ onBack }: { onBack: () => void }) {
         </div>
       </section>
 
-      <section className="reference-quran-verse">
+      <button className="reference-quran-verse reference-quran-verse--button" onClick={onOpenAyah}>
         <div className="reference-quran-verse__shade" />
         <span className="overline">Ayah des Tages</span>
-        <p dir="rtl">وَاذْكُرُوا اللَّهَ كَثِيرًا لَعَلَّكُمْ تُفْلِحُونَ</p>
-        <blockquote>„Und gedenkt Allahs häufig, auf dass es euch wohl ergehen möge.“</blockquote>
-        <small>Al-Anfal · 8:45</small>
-        <button onClick={() => flash('Ayah gespeichert')}><Bookmark size={17} /> Speichern</button>
-      </section>
+        <p dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
+        <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote>
+        <small>Al-Ikhlas · 112:1</small>
+        <span className="reference-quran-verse__action"><Bookmark size={17} /> Details öffnen</span>
+      </button>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
