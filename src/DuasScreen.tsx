@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import {
   ChevronLeft,
   CircleCheck,
@@ -63,11 +63,26 @@ const duas: Dua[] = [
 
 const categories = ['Alle', 'Morgen', 'Abend', 'Schutz', 'Vergebung'];
 
+function readFavorites() {
+  try {
+    const raw = localStorage.getItem('nur_dua_favorites');
+    if (!raw) return new Set<number>([1]);
+    const parsed = JSON.parse(raw) as number[];
+    return new Set(Array.isArray(parsed) ? parsed : [1]);
+  } catch {
+    return new Set<number>([1]);
+  }
+}
+
 export function DuasScreen({ onBack }: { onBack: () => void }) {
   const [category, setCategory] = useState('Alle');
   const [query, setQuery] = useState('');
-  const [favorites, setFavorites] = useState(() => new Set<number>([1]));
+  const [favorites, setFavorites] = useState(readFavorites);
   const [toast, setToast] = useState<string | null>(null);
+
+  useEffect(() => {
+    try { localStorage.setItem('nur_dua_favorites', JSON.stringify([...favorites])); } catch { /* optional */ }
+  }, [favorites]);
 
   const visible = useMemo(() => duas.filter((dua) => {
     const categoryMatch = category === 'Alle' || dua.category === category;
@@ -100,13 +115,10 @@ export function DuasScreen({ onBack }: { onBack: () => void }) {
         <span className="reference-duas-hero__ornament" aria-hidden="true">۞</span>
         <span className="hero-pill">Dua-Sammlung</span>
         <h2>Sprich mit Allah<br />in jedem Moment.</h2>
-        <p>Ausgewählte Bittgebete mit arabischem Text, verständlicher Übersetzung und klarer Quelle.</p>
+        <p>Ausgewählte Bittgebete mit arabischem Text, sinngemäßer deutscher Bedeutung und sichtbarer Quelle.</p>
       </section>
 
-      <label className="reference-input-search">
-        <Search size={18} />
-        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Dua suchen …" />
-      </label>
+      <label className="reference-input-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Dua suchen …" /></label>
 
       <div className="reference-filter-tabs" role="tablist">
         {categories.map((item) => <button key={item} className={category === item ? 'is-active' : ''} onClick={() => setCategory(item)}>{item}</button>)}
@@ -121,7 +133,7 @@ export function DuasScreen({ onBack }: { onBack: () => void }) {
             </div>
             <h2>{dua.title}</h2>
             <p className="reference-dua-card__arabic" dir="rtl">{dua.arabic}</p>
-            <blockquote>{dua.translation}</blockquote>
+            <blockquote><small>Sinngemäße Bedeutung</small>{dua.translation}</blockquote>
             <footer><small>{dua.source}</small><button onClick={() => flash('Dua geteilt')}><Share2 size={16} /> Teilen</button></footer>
           </motion.article>
         ))}
