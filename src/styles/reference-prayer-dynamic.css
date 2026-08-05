@@ -1,0 +1,100 @@
+.reference-prayer-screen {
+  gap: 14px;
+}
+
+.reference-prayer-location {
+  border-color: rgba(214, 175, 55, .18);
+  background: linear-gradient(145deg, rgba(14, 49, 39, .9), rgba(4, 23, 19, .96));
+}
+
+.reference-prayer-location small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-next-prayer {
+  min-height: 329px;
+}
+
+.reference-next-prayer .next-prayer-panel__main {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 12px;
+}
+
+.reference-next-prayer .next-prayer-panel__time {
+  display: grid;
+  justify-items: end;
+  gap: 2px;
+}
+
+.reference-next-prayer__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  margin-bottom: 2px;
+  border: 1px solid rgba(232, 199, 122, .24);
+  border-radius: 13px;
+  color: var(--gold-bright) !important;
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-next-prayer .next-prayer-panel__progress span {
+  width: 0;
+  transition: width .45s ease;
+}
+
+.reference-next-prayer .next-prayer-panel__actions {
+  display: grid;
+  grid-template-columns: 1fr 47px;
+  gap: 8px;
+}
+
+.reference-next-prayer .adhan-button {
+  display: grid;
+  min-height: 44px;
+  place-items: center;
+}
+
+.reference-next-prayer .adhan-button--active {
+  border-color: rgba(232, 199, 122, .52);
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-prayer-progress {
+  padding: 13px;
+  border-color: rgba(214, 175, 55, .18);
+  background: linear-gradient(145deg, rgba(14, 49, 39, .88), rgba(4, 23, 19, .95));
+}
+
+.reference-prayer-method {
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+}
+
+.reference-prayer-method > span:nth-child(2) {
+  min-width: 0;
+}
+
+.reference-prayer-method em {
+  overflow: hidden;
+  max-width: 235px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 370px) {
+  .reference-next-prayer .next-prayer-panel__time strong {
+    font-size: 2.25rem;
+  }
+
+  .reference-prayer-method em {
+    max-width: 170px;
+  }
+}
