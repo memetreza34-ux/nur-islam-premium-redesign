@@ -9,7 +9,10 @@ type Accent = {
 
 const accents: Record<string, Accent[]> = {
   prayer: [{ asset: 'dome', className: 'reference-artwork-layer__dome', label: 'Goldene Moscheekuppel' }],
-  calendar: [{ asset: 'sun-emblem', className: 'reference-artwork-layer__sun', label: 'Islamisches Sonnenemblem' }],
+  calendar: [
+    { asset: 'sun-emblem', className: 'reference-artwork-layer__sun', label: 'Islamisches Sonnenemblem' },
+    { asset: 'calendar-chip', className: 'reference-artwork-layer__calendar-chip', label: 'Goldene Kalenderkarte' },
+  ],
   duas: [{ asset: 'dua-hands', className: 'reference-artwork-layer__hands', label: 'Hände im Dua' }],
   qibla: [{ asset: 'kaaba', className: 'reference-artwork-layer__kaaba', label: 'Kaaba' }],
   ayah: [{ asset: 'mihrab', className: 'reference-artwork-layer__mihrab', label: 'Illuminierter Mihrab' }],
