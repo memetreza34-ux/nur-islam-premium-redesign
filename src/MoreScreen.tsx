@@ -135,7 +135,7 @@ export function MoreScreen({ onBack }: { onBack: () => void }) {
     <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam</span><h1>Profil</h1></div>
+        <div><span className="overline">Profil & Einstellungen</span><h1>Mehr</h1></div>
         <button className="icon-button" onClick={() => setModal('settings')} aria-label="Einstellungen"><Settings2 size={20} /></button>
       </header>
 
