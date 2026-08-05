@@ -10,6 +10,7 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
+import { InstallAppPrompt } from './InstallAppPrompt';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
 import './styles.css';
@@ -36,6 +37,7 @@ function BootRoot() {
           transition={{ duration: .32 }}
         >
           <App />
+          <InstallAppPrompt />
         </motion.div>
       ) : <SplashScreen key="splash" />}
     </AnimatePresence>
