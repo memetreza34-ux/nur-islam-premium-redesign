@@ -1,0 +1,124 @@
+.next-prayer-panel,
+.learning-hero,
+.account-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.next-prayer-panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -82px;
+  bottom: -28px;
+  width: 285px;
+  height: 205px;
+  opacity: .23;
+  background: url('/premium-assets/high-res-objects/mosque-gold.png') center bottom / contain no-repeat;
+  filter: saturate(.78) drop-shadow(0 18px 22px rgba(0, 0, 0, .45));
+  pointer-events: none;
+}
+
+.next-prayer-panel::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 28, 22, .98) 0%, rgba(5, 31, 24, .89) 53%, rgba(7, 35, 27, .46) 100%);
+  pointer-events: none;
+}
+
+.learning-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: -48px;
+  bottom: -40px;
+  width: 240px;
+  height: 215px;
+  opacity: .42;
+  background: url('/premium-assets/high-res-objects/quran-closed.png') center / contain no-repeat;
+  filter: drop-shadow(0 20px 22px rgba(0, 0, 0, .42));
+  transform: rotate(-4deg);
+  pointer-events: none;
+}
+
+.learning-hero::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(5, 28, 22, .98) 0%, rgba(5, 29, 23, .9) 55%, rgba(5, 27, 21, .38) 100%);
+  pointer-events: none;
+}
+
+.learning-hero__copy,
+.learning-progress {
+  position: relative;
+  z-index: 1;
+}
+
+.featured-learning {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-learning::after {
+  content: '';
+  position: absolute;
+  right: -23px;
+  bottom: -27px;
+  width: 120px;
+  height: 112px;
+  opacity: .24;
+  background: url('/premium-assets/high-res-objects/quran-closed.png') center / contain no-repeat;
+  transform: rotate(-8deg);
+  pointer-events: none;
+}
+
+.featured-learning > * {
+  position: relative;
+  z-index: 1;
+}
+
+.account-card::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 12px;
+  top: 12px;
+  width: 112px;
+  height: 112px;
+  opacity: .19;
+  background: url('/premium-assets/high-res-objects/nur-logo-emblem.png') center / contain no-repeat;
+  filter: drop-shadow(0 13px 18px rgba(0, 0, 0, .3));
+  pointer-events: none;
+}
+
+.account-card::after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+  background:
+    radial-gradient(circle at 88% 18%, rgba(212, 175, 55, .13), transparent 11rem),
+    linear-gradient(145deg, rgba(16, 61, 47, .94), rgba(4, 25, 20, .98));
+  pointer-events: none;
+}
+
+.account-card__ornament {
+  opacity: .06;
+}
+
+@media (max-width: 370px) {
+  .next-prayer-panel::before {
+    right: -102px;
+    width: 270px;
+  }
+
+  .learning-hero::before {
+    right: -72px;
+    width: 220px;
+  }
+}
