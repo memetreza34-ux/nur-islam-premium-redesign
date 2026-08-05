@@ -1,0 +1,133 @@
+/* Secondary premium objects recovered from the chat image set. */
+
+.next-prayer-panel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.next-prayer-panel::before {
+  right: -54px !important;
+  bottom: -22px !important;
+  width: 260px !important;
+  height: 205px !important;
+  opacity: .3 !important;
+  background: url('/premium-assets/high-res-objects/dome-v2.webp') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 20px 20px rgba(0, 0, 0, .42)) saturate(.9) !important;
+}
+
+.calendar-month-card,
+.calendar-event-card,
+.reference-duas-hero,
+.reference-collection-section {
+  position: relative;
+  isolation: isolate;
+}
+
+.calendar-month-card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -24px;
+  right: -20px;
+  width: 150px;
+  height: 150px;
+  opacity: .11;
+  background: url('/premium-assets/high-res-objects/sun-emblem-v2.webp') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.calendar-month-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-event-card {
+  overflow: hidden;
+  padding-right: 118px !important;
+}
+
+.calendar-event-card::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: 10px;
+  bottom: 7px;
+  width: 108px;
+  height: 82px;
+  opacity: .58;
+  background: url('/premium-assets/high-res-objects/calendar-chip-v2.webp') center / contain no-repeat;
+  filter: drop-shadow(0 12px 17px rgba(0, 0, 0, .32));
+  pointer-events: none;
+}
+
+.calendar-event-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-duas-hero {
+  overflow: hidden;
+  padding-right: 138px !important;
+}
+
+.reference-duas-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -12px;
+  bottom: -17px;
+  width: 168px;
+  height: 162px;
+  opacity: .76;
+  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp') center bottom / contain no-repeat;
+  filter: drop-shadow(0 17px 20px rgba(0, 0, 0, .38));
+  pointer-events: none;
+}
+
+.reference-duas-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-collection-section:first-of-type {
+  overflow: hidden;
+}
+
+.reference-collection-section:first-of-type::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: 8px;
+  top: 3px;
+  width: 56px;
+  height: 92px;
+  opacity: .28;
+  background: url('/premium-assets/high-res-objects/bookmark-v2.webp') center / contain no-repeat;
+  pointer-events: none;
+}
+
+.reference-collection-section:first-of-type > * {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 370px) {
+  .calendar-event-card {
+    padding-right: 96px !important;
+  }
+
+  .calendar-event-card::after {
+    width: 88px;
+    height: 70px;
+  }
+
+  .reference-duas-hero {
+    padding-right: 112px !important;
+  }
+
+  .reference-duas-hero::after {
+    width: 140px;
+    height: 138px;
+  }
+}
