@@ -27,6 +27,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { PrayerScreen } from './PrayerScreen';
 import { CalendarScreen } from './CalendarScreen';
+import { LearnScreen } from './LearnScreen';
 import { MoreScreen } from './MoreScreen';
 
 type Tab = 'home' | 'prayer' | 'calendar' | 'learn' | 'more';
@@ -309,20 +310,6 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
-function LearnPlaceholder({ onBack }: { onBack: () => void }) {
-  return (
-    <motion.main className="screen placeholder-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
-      <button className="back-button" onClick={onBack}><ChevronLeft size={18} /> Start</button>
-      <div className="placeholder-card glass-card">
-        <span className="placeholder-card__icon"><BookOpen size={38} /></span>
-        <span className="overline">Premium Redesign</span>
-        <h1>Islam verstehen</h1>
-        <p>Quran, Hadith, Wissen und Lernbereiche erhalten als Nächstes dasselbe Premium-System.</p>
-      </div>
-    </motion.main>
-  );
-}
-
 function BottomNavigation({ active, onChange }: { active: Tab; onChange: (tab: Tab) => void }) {
   const items: Array<{ id: Tab; label: string; icon: LucideIcon }> = [
     { id: 'home', label: 'Start', icon: Home },
@@ -358,10 +345,10 @@ export default function App() {
           <PrayerScreen onBack={() => setActiveTab('home')} />
         ) : activeTab === 'calendar' ? (
           <CalendarScreen onBack={() => setActiveTab('home')} />
-        ) : activeTab === 'more' ? (
-          <MoreScreen onBack={() => setActiveTab('home')} />
+        ) : activeTab === 'learn' ? (
+          <LearnScreen onBack={() => setActiveTab('home')} />
         ) : (
-          <LearnPlaceholder onBack={() => setActiveTab('home')} />
+          <MoreScreen onBack={() => setActiveTab('home')} />
         )}
         <BottomNavigation active={activeTab} onChange={setActiveTab} />
       </div>
