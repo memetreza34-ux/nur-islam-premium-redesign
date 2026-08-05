@@ -13,22 +13,31 @@
   isolation: isolate;
 }
 
+.reference-artwork-layer,
+.reference-artwork-host {
+  overflow: hidden;
+  pointer-events: none;
+}
+
 .reference-artwork-layer {
   position: absolute;
   z-index: 0;
   inset: 0;
-  overflow: hidden;
   border-radius: inherit;
-  pointer-events: none;
 }
 
-.reference-artwork-layer + *,
-.reference-artwork-layer ~ * {
-  position: relative;
-  z-index: 1;
+.reference-artwork-host {
+  position: fixed;
+  z-index: 2;
+  top: 0;
+  left: 50%;
+  width: min(100vw, 470px);
+  height: 100svh;
+  transform: translateX(-50%);
 }
 
-.reference-artwork-layer .reference-sprite {
+.reference-artwork-layer .reference-sprite,
+.reference-artwork-host .reference-sprite {
   position: absolute;
 }
 
@@ -97,7 +106,10 @@
 
 .reference-artwork-layer--duas::after,
 .reference-artwork-layer--prayer::after,
-.reference-artwork-layer--calendar::after {
+.reference-artwork-layer--calendar::after,
+.reference-artwork-host--duas::after,
+.reference-artwork-host--prayer::after,
+.reference-artwork-host--calendar::after {
   content: '';
   position: absolute;
   top: 54px;
