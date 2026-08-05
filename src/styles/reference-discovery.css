@@ -1,0 +1,541 @@
+.reference-duas-screen,
+.reference-names-screen,
+.reference-mosque-screen,
+.reference-collections-screen {
+  gap: 15px;
+}
+
+.reference-duas-hero,
+.reference-names-hero,
+.reference-mosque-hero {
+  position: relative;
+  min-height: 210px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid rgba(226, 191, 119, .34);
+  border-radius: 21px;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(214, 175, 55, .13), transparent 13rem),
+    linear-gradient(145deg, #103b2e, #061e18 62%, #041510);
+  box-shadow: 0 19px 43px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-duas-hero {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+}
+
+.reference-duas-hero__ornament {
+  position: absolute;
+  right: -20px;
+  bottom: -52px;
+  color: rgba(232, 199, 122, .08);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 13rem;
+  line-height: 1;
+}
+
+.reference-duas-hero h2,
+.reference-names-hero h2,
+.reference-mosque-hero h2 {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: .98;
+}
+
+.reference-duas-hero p,
+.reference-names-hero p,
+.reference-mosque-hero p {
+  position: relative;
+  z-index: 1;
+  max-width: 245px;
+  margin: 0;
+  color: var(--muted-green);
+  font-size: .61rem;
+  line-height: 1.55;
+}
+
+.reference-input-search {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 14px;
+  color: var(--gold);
+  background: rgba(8, 37, 29, .82);
+}
+
+.reference-input-search input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  color: var(--cream-strong);
+  background: transparent;
+  font: inherit;
+  font-size: .63rem;
+}
+
+.reference-input-search input::placeholder {
+  color: rgba(154, 168, 155, .7);
+}
+
+.reference-filter-tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.reference-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-filter-tabs button {
+  flex: 0 0 auto;
+  min-height: 35px;
+  padding: 0 12px;
+  border: 1px solid rgba(214, 175, 55, .15);
+  border-radius: 11px;
+  color: var(--muted-green);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  font-size: .55rem;
+}
+
+.reference-filter-tabs button.is-active {
+  border-color: rgba(232, 199, 122, .4);
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-filter-tabs--wide button {
+  flex: 1 0 auto;
+}
+
+.reference-dua-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.reference-dua-card {
+  display: grid;
+  gap: 9px;
+  padding: 16px;
+  border: 1px solid rgba(214, 175, 55, .21);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 93% 3%, rgba(214, 175, 55, .07), transparent 9rem),
+    linear-gradient(145deg, rgba(15, 55, 43, .92), rgba(4, 24, 19, .98));
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024);
+}
+
+.reference-dua-card__top,
+.reference-dua-card footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reference-dua-card__top > span {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--gold-soft);
+  font-size: .51rem;
+}
+
+.reference-dua-card__top button,
+.reference-dua-card footer button {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border: 0;
+  color: var(--muted-green);
+  background: transparent;
+  cursor: pointer;
+  font-size: .52rem;
+}
+
+.reference-dua-card__top button.is-favorite {
+  color: var(--gold-bright);
+}
+
+.reference-dua-card h2,
+.reference-dua-card p,
+.reference-dua-card blockquote {
+  margin: 0;
+}
+
+.reference-dua-card h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.27rem;
+}
+
+.reference-dua-card__arabic {
+  padding: 13px;
+  border: 1px solid rgba(226, 191, 119, .13);
+  border-radius: 14px;
+  color: var(--gold-soft);
+  background: rgba(0, 0, 0, .11);
+  font-family: Amiri, serif;
+  font-size: 1.25rem;
+  line-height: 1.8;
+  text-align: right;
+}
+
+.reference-dua-card blockquote {
+  color: var(--cream);
+  font-size: .61rem;
+  line-height: 1.55;
+}
+
+.reference-dua-card footer {
+  padding-top: 3px;
+  border-top: 1px solid rgba(214, 175, 55, .09);
+}
+
+.reference-dua-card footer small {
+  color: var(--muted-green);
+  font-size: .49rem;
+}
+
+.reference-empty-result {
+  display: grid;
+  min-height: 150px;
+  place-items: center;
+  align-content: center;
+  gap: 5px;
+  border: 1px dashed rgba(214, 175, 55, .2);
+  border-radius: 17px;
+  color: var(--gold);
+}
+
+.reference-empty-result strong {
+  color: var(--cream);
+  font-size: .68rem;
+}
+
+.reference-empty-result small {
+  color: var(--muted-green);
+  font-size: .51rem;
+}
+
+.reference-names-hero {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+}
+
+.reference-names-hero__allah {
+  position: absolute;
+  right: 18px;
+  top: 17px;
+  color: var(--gold-bright);
+  font-family: Amiri, serif;
+  font-size: 4.3rem;
+  text-shadow: 0 12px 25px rgba(0, 0, 0, .45);
+}
+
+.reference-name-list,
+.reference-mosque-list,
+.reference-collection-rows {
+  overflow: hidden;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(15, 53, 42, .88), rgba(4, 24, 19, .96));
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024);
+}
+
+.reference-name-list > button {
+  display: grid;
+  width: 100%;
+  min-height: 67px;
+  grid-template-columns: 74px 1fr 36px;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(214, 175, 55, .09);
+  color: var(--cream-strong);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-name-list > button:last-child,
+.reference-mosque-list > button:last-child,
+.reference-collection-rows > button:last-child {
+  border-bottom: 0;
+}
+
+.reference-name-list__arabic {
+  color: var(--gold-soft);
+  font-family: Amiri, serif;
+  font-size: 1.17rem;
+}
+
+.reference-name-list > button > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-name-list strong {
+  font-size: .68rem;
+}
+
+.reference-name-list small {
+  color: var(--muted-green);
+  font-size: .5rem;
+}
+
+.reference-name-heart {
+  display: grid;
+  width: 35px;
+  height: 35px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--muted-green);
+}
+
+.reference-name-heart.is-active {
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-mosque-hero {
+  min-height: 245px;
+  padding: 0;
+}
+
+.reference-mosque-hero > .premium-image {
+  position: absolute;
+  right: -54px;
+  bottom: -22px;
+  width: 310px;
+  height: 230px;
+  opacity: .88;
+  filter: drop-shadow(0 21px 19px rgba(0, 0, 0, .46));
+}
+
+.reference-mosque-hero > div {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  width: 65%;
+  min-height: 245px;
+  padding: 20px;
+  background: linear-gradient(90deg, rgba(3, 19, 15, .97), rgba(4, 25, 19, .78) 70%, transparent);
+}
+
+.reference-nearby-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--gold-soft);
+  font-size: .55rem;
+}
+
+.reference-nearby-label span,
+.reference-nearby-label button {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reference-nearby-label button {
+  border: 0;
+  color: var(--gold-soft);
+  background: transparent;
+  cursor: pointer;
+}
+
+.reference-mosque-list > button {
+  display: grid;
+  width: 100%;
+  min-height: 76px;
+  grid-template-columns: 40px 1fr auto 17px;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(214, 175, 55, .09);
+  color: var(--cream-strong);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-mosque-list__pin {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .24);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-mosque-list > button > span:nth-child(2) {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-mosque-list strong {
+  overflow: hidden;
+  font-size: .66rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-mosque-list small,
+.reference-mosque-list em {
+  overflow: hidden;
+  color: var(--muted-green);
+  font-size: .47rem;
+  font-style: normal;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-mosque-distance {
+  color: var(--gold-soft);
+  font-size: .51rem;
+}
+
+.reference-mosque-list > button > svg {
+  color: var(--gold);
+}
+
+.reference-map-button,
+.reference-profile-logout {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(214, 175, 55, .22);
+  border-radius: 15px;
+  color: var(--gold-soft);
+  background: rgba(8, 36, 28, .78);
+  cursor: pointer;
+}
+
+.reference-collection-section {
+  display: grid;
+  gap: 9px;
+}
+
+.reference-collection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.reference-collection-grid > button {
+  position: relative;
+  display: grid;
+  min-height: 160px;
+  overflow: hidden;
+  align-content: end;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid rgba(214, 175, 55, .21);
+  border-radius: 17px;
+  color: var(--cream-strong);
+  background: linear-gradient(145deg, rgba(15, 55, 43, .93), rgba(4, 24, 19, .98));
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-collection-grid .premium-image {
+  position: absolute;
+  top: -12px;
+  right: -26px;
+  width: 155px;
+  height: 130px;
+  opacity: .72;
+}
+
+.reference-collection-grid > button > span {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 2px;
+}
+
+.reference-collection-grid strong {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.08rem;
+}
+
+.reference-collection-grid small {
+  color: var(--muted-green);
+  font-size: .49rem;
+}
+
+.reference-collection-grid > button > svg {
+  position: absolute;
+  z-index: 2;
+  right: 11px;
+  bottom: 12px;
+  color: var(--gold-bright);
+}
+
+.reference-collection-rows > button {
+  display: grid;
+  width: 100%;
+  min-height: 63px;
+  grid-template-columns: 38px 1fr 17px;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 0;
+  border-bottom: 1px solid rgba(214, 175, 55, .09);
+  color: var(--cream-strong);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-collection-rows > button > span:first-child {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .22);
+  border-radius: 12px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .06);
+}
+
+.reference-collection-rows > button > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-collection-rows strong {
+  font-size: .65rem;
+}
+
+.reference-collection-rows small {
+  color: var(--muted-green);
+  font-size: .49rem;
+}
+
+.reference-collection-rows > button > svg {
+  color: var(--gold);
+}
