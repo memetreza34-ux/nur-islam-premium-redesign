@@ -22,6 +22,7 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { AssistantScreen } from './AssistantScreen';
 import { CalendarScreen } from './CalendarScreen';
 import { DhikrScreen } from './DhikrScreen';
 import { CollectionsScreen, MosqueScreen, NamesScreen } from './DiscoveryScreens';
@@ -43,7 +44,7 @@ import {
 } from './PremiumVisuals';
 
 type PrimaryTab = 'home' | 'quran' | 'dhikr' | 'qibla' | 'profile';
-type Tab = PrimaryTab | 'prayer' | 'calendar' | 'learn' | 'duas' | 'names' | 'mosques' | 'collections';
+type Tab = PrimaryTab | 'prayer' | 'calendar' | 'learn' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant';
 
 type QuickAction = {
   label: string;
@@ -59,7 +60,7 @@ const quickActions: QuickAction[] = [
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
   { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'learn' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'duas' },
-  { label: 'KI-Assistent', eyebrow: 'Design vorbereitet', icon: MessageCircleQuestion, accent: 'emerald' },
+  { label: 'KI-Assistent', eyebrow: 'Quellenbasierter Modus', icon: MessageCircleQuestion, accent: 'emerald', target: 'assistant' },
 ];
 
 function getIslamicDate() {
@@ -160,7 +161,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
-              onClick={() => target ? onNavigate(target) : showToast('Der KI-Assistent benötigt noch eine sichere Quellen- und Anbieteranbindung.')}
+              onClick={() => target ? onNavigate(target) : undefined}
               whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -188,11 +189,11 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         <article className="hadith-card glass-card"><div className="card-title-row"><span><Quote size={16} /> Hadith des Tages</span></div><blockquote>„Die Taten werden nur nach den Absichten beurteilt.“</blockquote><footer>Sahih al-Bukhari</footer></article>
       </section>
 
-      <section className="ai-preview">
+      <button className="ai-preview" onClick={() => onNavigate('assistant')}>
         <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.png" className="ai-preview__mark" fallback={<NurMark />} />
-        <span><small>Nur Assistent</small><strong>Assalamu Alaikum</strong><p>Der visuelle Bereich ist vorbereitet. Eine echte KI-Verbindung folgt separat.</p></span>
-        <button onClick={() => showToast('KI-Assistent benötigt noch einen Anbieter')}><MessageCircleQuestion size={20} /></button>
-      </section>
+        <span><small>Nur Assistent</small><strong>Assalamu Alaikum</strong><p>Quellenbasierter Bereich für Fragen zu Glauben und Alltag.</p></span>
+        <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
+      </button>
 
       <section className="content-section recommendations">
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
@@ -256,7 +257,9 @@ export default function App() {
                       ? <NamesScreen onBack={goHome} />
                       : activeTab === 'mosques'
                         ? <MosqueScreen onBack={goHome} />
-                        : <CollectionsScreen onBack={goHome} />;
+                        : activeTab === 'collections'
+                          ? <CollectionsScreen onBack={goHome} />
+                          : <AssistantScreen onBack={goHome} />;
 
   return (
     <div className="app-background app-background--v2">
