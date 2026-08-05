@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -26,7 +26,7 @@ type OnboardingSlide = {
   title: string;
   description: string;
   image: string;
-  fallback: React.ReactNode;
+  fallback: ReactNode;
   icon: LucideIcon;
   points: string[];
 };
