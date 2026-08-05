@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
-  Bell,
   BookHeart,
   BookOpen,
   BrainCircuit,
@@ -15,7 +14,6 @@ import {
   HandHeart,
   Home,
   MapPin,
-  Menu,
   MessageCircleQuestion,
   MoonStar,
   Play,
@@ -29,6 +27,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { PrayerScreen } from './PrayerScreen';
 import { CalendarScreen } from './CalendarScreen';
+import { MoreScreen } from './MoreScreen';
 
 type Tab = 'home' | 'prayer' | 'calendar' | 'learn' | 'more';
 
@@ -310,21 +309,15 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
-const placeholderContent: Record<Exclude<Tab, 'home' | 'prayer' | 'calendar'>, { title: string; subtitle: string; icon: LucideIcon }> = {
-  learn: { title: 'Islam verstehen', subtitle: 'Quran, Hadith, Wissen und Lernbereiche erhalten dasselbe Premium-System.', icon: BookOpen },
-  more: { title: 'Mehr & Einstellungen', subtitle: 'Profil, Sprache, Benachrichtigungen und Cloud-Sync werden anschließend umgebaut.', icon: Menu },
-};
-
-function PlaceholderScreen({ tab, onBack }: { tab: Exclude<Tab, 'home' | 'prayer' | 'calendar'>; onBack: () => void }) {
-  const { title, subtitle, icon: Icon } = placeholderContent[tab];
+function LearnPlaceholder({ onBack }: { onBack: () => void }) {
   return (
     <motion.main className="screen placeholder-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <button className="back-button" onClick={onBack}><ChevronLeft size={18} /> Start</button>
       <div className="placeholder-card glass-card">
-        <span className="placeholder-card__icon"><Icon size={38} /></span>
+        <span className="placeholder-card__icon"><BookOpen size={38} /></span>
         <span className="overline">Premium Redesign</span>
-        <h1>{title}</h1>
-        <p>{subtitle}</p>
+        <h1>Islam verstehen</h1>
+        <p>Quran, Hadith, Wissen und Lernbereiche erhalten als Nächstes dasselbe Premium-System.</p>
       </div>
     </motion.main>
   );
@@ -365,8 +358,10 @@ export default function App() {
           <PrayerScreen onBack={() => setActiveTab('home')} />
         ) : activeTab === 'calendar' ? (
           <CalendarScreen onBack={() => setActiveTab('home')} />
+        ) : activeTab === 'more' ? (
+          <MoreScreen onBack={() => setActiveTab('home')} />
         ) : (
-          <PlaceholderScreen tab={activeTab} onBack={() => setActiveTab('home')} />
+          <LearnPlaceholder onBack={() => setActiveTab('home')} />
         )}
         <BottomNavigation active={activeTab} onChange={setActiveTab} />
       </div>
