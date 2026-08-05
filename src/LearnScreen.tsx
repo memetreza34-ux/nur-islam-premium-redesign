@@ -20,6 +20,8 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { LegacyFeatureScreen, learningLegacyFeatures } from './LegacyFeatureScreens';
+import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
 type LearningCategory = {
@@ -80,6 +82,7 @@ const categories: LearningCategory[] = [
 export function LearnScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<LearningCategory | null>(null);
   const [guideMode, setGuideMode] = useState<GuideMode>(null);
+  const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   const flash = (message: string) => {
@@ -89,6 +92,10 @@ export function LearnScreen({ onBack }: { onBack: () => void }) {
 
   if (guideMode) {
     return <WorshipGuideScreen initialMode={guideMode} onBack={() => setGuideMode(null)} />;
+  }
+
+  if (legacyFeature) {
+    return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
   }
 
   return (
@@ -172,6 +179,32 @@ export function LearnScreen({ onBack }: { onBack: () => void }) {
                 <span className="reference-category-card__icon"><Icon size={24} /></span>
                 <strong>{category.title}</strong>
                 <small>{category.subtitle}</small>
+              </motion.button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="reference-learning-section reference-expanded-learning">
+        <div className="section-heading">
+          <div><span className="overline">Vollständige App</span><h2>Weitere Lernfunktionen</h2></div>
+        </div>
+        <p className="reference-expanded-learning__intro">Die starken Lernbereiche der alten App sind jetzt wieder in die neue Premium-Struktur eingebunden.</p>
+        <div className="reference-expanded-learning-grid">
+          {learningLegacyFeatures.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.button
+                key={feature.id}
+                onClick={() => setLegacyFeature(feature.id)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.035 }}
+                whileTap={{ scale: .98 }}
+              >
+                <span className="reference-expanded-learning-grid__icon"><Icon size={22} /></span>
+                <span><small>{feature.subtitle}</small><strong>{feature.title}</strong><em>{feature.description}</em></span>
+                <ChevronRight size={18} />
               </motion.button>
             );
           })}
