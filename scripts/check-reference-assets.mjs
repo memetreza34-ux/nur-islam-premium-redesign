@@ -87,7 +87,19 @@ for (const name of recoveredAssets) {
 }
 
 const assetCss = await readFile(resolve(root, 'src/styles/reference-valid-assets-v2.css'), 'utf8');
-for (const name of recoveredAssets) {
+const wiredAssets = [
+  'nur-logo-emblem-v2.webp',
+  'mosque-gold-v2.webp',
+  'quran-closed-v2.webp',
+  'quran-open-v2.webp',
+  'tasbih-v2.webp',
+  'qibla-compass-v2.webp',
+  'mihrab-arch-v2.webp',
+  'lantern-v2.webp',
+  'kaaba-v2.webp',
+];
+
+for (const name of wiredAssets) {
   if (!assetCss.includes(name)) {
     throw new Error(`Recovered asset is not wired in the cache-safe CSS layer: ${name}`);
   }
