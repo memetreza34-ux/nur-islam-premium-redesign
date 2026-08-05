@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">Nur Islam</title>
+  <desc id="desc">Goldenes Nur-Islam-Symbol auf dunklem Smaragd</desc>
+  <defs>
+    <radialGradient id="bg" cx="35%" cy="24%" r="84%">
+      <stop offset="0" stop-color="#164b3b"/>
+      <stop offset="0.58" stop-color="#08251d"/>
+      <stop offset="1" stop-color="#020b08"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fff0c8"/>
+      <stop offset="0.42" stop-color="#e8c77a"/>
+      <stop offset="1" stop-color="#a97625"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <rect width="512" height="512" rx="118" fill="url(#bg)"/>
+  <path d="M98 384C173 342 233 324 292 328c54 3 97 22 132 56" fill="none" stroke="#d8b564" stroke-width="5" stroke-linecap="round" opacity=".28"/>
+  <path d="M117 392h278" stroke="#e8c77a" stroke-width="4" stroke-linecap="round" opacity=".42"/>
+  <path d="M167 389v-88c0-38 28-72 67-81v169m44 0V198c0-43 32-82 76-91v282" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+  <path d="M121 389v-52c0-42 30-78 71-86 41 8 71 44 71 86v52" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round"/>
+  <path d="M291 389v-92c0-48 34-88 81-98 47 10 81 50 81 98v92" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round"/>
+  <path d="M196 250c19-8 31-26 31-47-23 7-39 29-39 54 0 2 0 5 1 7 2-5 4-10 7-14Z" fill="url(#gold)" filter="url(#glow)"/>
+  <path d="M349 130c17-7 28-24 28-43-21 7-36 26-36 49 0 2 0 4 1 6 2-4 4-8 7-12Z" fill="url(#gold)" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="210" fill="none" stroke="#e8c77a" stroke-width="3" opacity=".25"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#e8c77a" stroke-width="1.5" opacity=".12"/>
+</svg>
