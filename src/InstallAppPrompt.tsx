@@ -11,6 +11,23 @@ type BeforeInstallPromptEvent = Event & {
 };
 
 const DISMISSED_KEY = 'nur_install_prompt_dismissed';
+const ONBOARDING_KEY = 'nur_onboarding_complete';
+
+function readFlag(key: string) {
+  try {
+    return localStorage.getItem(key) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function writeFlag(key: string) {
+  try {
+    localStorage.setItem(key, 'true');
+  } catch {
+    // Private browsing can block storage; dismissal still works for this session.
+  }
+}
 
 function isStandalone() {
   return window.matchMedia('(display-mode: standalone)').matches
@@ -24,19 +41,36 @@ export function InstallAppPrompt() {
   const [installed, setInstalled] = useState(false);
 
   useEffect(() => {
-    if (isStandalone() || localStorage.getItem(DISMISSED_KEY) === 'true') return;
+    if (isStandalone() || readFlag(DISMISSED_KEY)) return;
 
     const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
-    let iosTimer: number | undefined;
+    let revealTimer: number | undefined;
+    let onboardingPoll: number | undefined;
 
-    if (isIos) {
-      iosTimer = window.setTimeout(() => setMode('ios'), 2400);
-    }
+    const revealWhenReady = (nextMode: Exclude<InstallMode, null>) => {
+      const reveal = () => {
+        if (readFlag(DISMISSED_KEY) || isStandalone()) return;
+        revealTimer = window.setTimeout(() => setMode(nextMode), 1500);
+      };
+
+      if (readFlag(ONBOARDING_KEY)) {
+        reveal();
+        return;
+      }
+
+      onboardingPoll = window.setInterval(() => {
+        if (!readFlag(ONBOARDING_KEY)) return;
+        if (onboardingPoll) window.clearInterval(onboardingPoll);
+        reveal();
+      }, 700);
+    };
+
+    if (isIos) revealWhenReady('ios');
 
     const handlePrompt = (event: Event) => {
       event.preventDefault();
       setInstallEvent(event as BeforeInstallPromptEvent);
-      window.setTimeout(() => setMode('native'), 1700);
+      revealWhenReady('native');
     };
 
     const handleInstalled = () => {
@@ -49,14 +83,15 @@ export function InstallAppPrompt() {
     window.addEventListener('appinstalled', handleInstalled);
 
     return () => {
-      if (iosTimer) window.clearTimeout(iosTimer);
+      if (revealTimer) window.clearTimeout(revealTimer);
+      if (onboardingPoll) window.clearInterval(onboardingPoll);
       window.removeEventListener('beforeinstallprompt', handlePrompt);
       window.removeEventListener('appinstalled', handleInstalled);
     };
   }, []);
 
   const dismiss = () => {
-    localStorage.setItem(DISMISSED_KEY, 'true');
+    writeFlag(DISMISSED_KEY);
     setMode(null);
   };
 
