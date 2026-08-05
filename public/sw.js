@@ -1,14 +1,9 @@
-const CACHE_NAME = 'nur-islam-premium-v2';
+const CACHE_NAME = 'nur-islam-premium-v3';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/nur-app-icon.svg',
-  '/premium-assets/high-res-objects/nur-logo-emblem.webp',
-  '/premium-assets/high-res-objects/mosque-gold.webp',
-  '/premium-assets/high-res-objects/quran-closed.webp',
-  '/premium-assets/high-res-objects/qibla-compass.webp',
-  '/premium-assets/high-res-objects/tasbih.webp'
+  '/nur-app-icon.svg'
 ];
 
 function offlineDocument() {
@@ -53,6 +48,14 @@ self.addEventListener('fetch', (event) => {
         })
         .catch(async () => (await caches.match('/index.html')) || offlineDocument())
     );
+    return;
+  }
+
+  // Never cache premium artwork until the original source files have been
+  // replaced with verified PNG/WebP binaries. This prevents broken image
+  // payloads from surviving a code update in an installed PWA.
+  if (url.pathname.startsWith('/premium-assets/')) {
+    event.respondWith(fetch(request).catch(() => Response.error()));
     return;
   }
 
