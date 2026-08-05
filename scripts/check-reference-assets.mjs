@@ -1,4 +1,4 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
@@ -37,7 +37,7 @@ if (width !== 512 || height !== 256) {
 }
 
 const spriteComponent = await readFile(resolve(root, 'src/ReferenceSprite.tsx'), 'utf8');
-const requiredAssets = [
+const requiredSpriteAssets = [
   'dome',
   'kaaba',
   'lantern',
@@ -48,10 +48,51 @@ const requiredAssets = [
   'bookmark',
 ];
 
-for (const asset of requiredAssets) {
+for (const asset of requiredSpriteAssets) {
   if (!spriteComponent.includes(`'${asset}'`)) {
     throw new Error(`Reference sprite mapping is missing: ${asset}`);
   }
 }
 
-console.log(`Reference artwork verified: ${width}x${height}, ${sprite.length} bytes, ${requiredAssets.length} assets.`);
+const recoveredDirectory = resolve(root, 'public/premium-assets/high-res-objects');
+const recoveredAssets = [
+  'nur-logo-emblem-v2.webp',
+  'mosque-gold-v2.webp',
+  'mosque-v2.webp',
+  'quran-closed-v2.webp',
+  'quran-open-v2.webp',
+  'tasbih-v2.webp',
+  'qibla-compass-v2.webp',
+  'qibla-v2.webp',
+  'mihrab-v2.webp',
+  'mihrab-arch-v2.webp',
+  'lantern-v2.webp',
+  'kaaba-v2.webp',
+];
+
+for (const name of recoveredAssets) {
+  const path = resolve(recoveredDirectory, name);
+  const fileStats = await stat(path);
+  if (fileStats.size < 1000) {
+    throw new Error(`Recovered asset is unexpectedly small: ${name} (${fileStats.size} bytes).`);
+  }
+
+  const data = await readFile(path);
+  if (data.subarray(0, 4).toString('ascii') !== 'RIFF') {
+    throw new Error(`Recovered asset has no RIFF header: ${name}`);
+  }
+  if (data.subarray(8, 12).toString('ascii') !== 'WEBP') {
+    throw new Error(`Recovered asset is not WebP: ${name}`);
+  }
+}
+
+const assetCss = await readFile(resolve(root, 'src/styles/reference-valid-assets-v2.css'), 'utf8');
+for (const name of recoveredAssets) {
+  if (!assetCss.includes(name)) {
+    throw new Error(`Recovered asset is not wired in the cache-safe CSS layer: ${name}`);
+  }
+}
+
+console.log(
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets.`,
+);
