@@ -7,6 +7,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  Droplets,
   GraduationCap,
   HeartHandshake,
   Landmark,
@@ -19,6 +20,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
 type LearningCategory = {
   id: string;
@@ -27,6 +29,8 @@ type LearningCategory = {
   description: string;
   icon: LucideIcon;
 };
+
+type GuideMode = 'wudu' | 'salah' | null;
 
 const categories: LearningCategory[] = [
   {
@@ -75,12 +79,17 @@ const categories: LearningCategory[] = [
 
 export function LearnScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<LearningCategory | null>(null);
+  const [guideMode, setGuideMode] = useState<GuideMode>(null);
   const [toast, setToast] = useState<string | null>(null);
 
   const flash = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(null), 2200);
   };
+
+  if (guideMode) {
+    return <WorshipGuideScreen initialMode={guideMode} onBack={() => setGuideMode(null)} />;
+  }
 
   return (
     <motion.main
@@ -112,6 +121,26 @@ export function LearnScreen({ onBack }: { onBack: () => void }) {
         <div className="reference-learning-hero__badge">
           <GraduationCap size={17} />
           <span><strong>12 Lektionen</strong><small>bereits abgeschlossen</small></span>
+        </div>
+      </section>
+
+      <section className="reference-practice-section">
+        <div className="section-heading">
+          <div><span className="overline">Praktische Anleitung</span><h2>Wudu & Salah</h2></div>
+        </div>
+        <div className="reference-practice-grid">
+          <button onClick={() => setGuideMode('wudu')}>
+            <span><Droplets size={24} /></span>
+            <strong>Wudu lernen</strong>
+            <small>Gebetswaschung Schritt für Schritt</small>
+            <ChevronRight size={17} />
+          </button>
+          <button onClick={() => setGuideMode('salah')}>
+            <span><Sparkles size={24} /></span>
+            <strong>Salah lernen</strong>
+            <small>Gebetsablauf ruhig erklärt</small>
+            <ChevronRight size={17} />
+          </button>
         </div>
       </section>
 
@@ -174,8 +203,8 @@ export function LearnScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-knowledge-quote">
         <span className="reference-knowledge-quote__mark"><Star size={18} /></span>
-        <p>„Und sprich: Mein Herr, mehre mein Wissen.“</p>
-        <small>Sure Taha · 20:114</small>
+        <p>Sinngemäß: „Mein Herr, mehre mein Wissen.“</p>
+        <small>Quran · Taha 20:114</small>
       </section>
 
       <AnimatePresence>
@@ -201,7 +230,7 @@ export function LearnScreen({ onBack }: { onBack: () => void }) {
               <h3>{selected.subtitle}</h3>
               <p>{selected.description}</p>
               <div className="reference-category-modal__meta">
-                <span><CircleCheck size={16} /> Authentische Quellen</span>
+                <span><CircleCheck size={16} /> Quellen werden sichtbar ausgewiesen</span>
                 <span><ScrollText size={16} /> Schrittweise Lektionen</span>
                 <span><UsersRound size={16} /> Für Einsteiger geeignet</span>
               </div>
