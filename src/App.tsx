@@ -30,6 +30,8 @@ import { CollectionsScreen, MosqueScreen, NamesScreen } from './DiscoveryScreens
 import { DuasScreen } from './DuasScreen';
 import { InstallAppPrompt } from './InstallAppPrompt';
 import { LearnScreen } from './LearnScreen';
+import { LegacyFeatureScreen } from './LegacyFeatureScreens';
+import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { MoreScreen } from './MoreScreen';
 import { OnboardingScreen } from './OnboardingScreen';
 import { PrayerScreen } from './PrayerScreen';
@@ -59,7 +61,8 @@ import {
 } from './prayerSchedule';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
-type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah';
+type LegacyTab = `legacy:${LegacyFeatureId}`;
+type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | LegacyTab;
 
 type QuickAction = {
   label: string;
@@ -73,7 +76,7 @@ const quickActions: QuickAction[] = [
   { label: 'Quran lesen', eyebrow: 'Weiterlernen', icon: BookOpen, accent: 'gold', target: 'reader' },
   { label: 'Wudu & Salah', eyebrow: 'Schritt für Schritt', icon: HandHeart, accent: 'cream', target: 'wudu' },
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
-  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'learn' },
+  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'duas' },
   { label: 'KI-Assistent', eyebrow: 'Quellenbasierter Modus', icon: MessageCircleQuestion, accent: 'emerald', target: 'assistant' },
 ];
@@ -93,6 +96,14 @@ const screensWithBottomNavigation = new Set<Tab>([
   'collections',
   'assistant',
 ]);
+
+function isLegacyTab(tab: Tab): tab is LegacyTab {
+  return tab.startsWith('legacy:');
+}
+
+function getLegacyFeatureId(tab: LegacyTab) {
+  return tab.slice('legacy:'.length) as LegacyFeatureId;
+}
 
 function getIslamicDate(date = new Date()) {
   try {
@@ -272,8 +283,8 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <section className="content-section recommendations">
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
         <div className="recommendation-list">
-          <button className="recommendation-card" onClick={() => onNavigate('calendar')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('profile')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah-map')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
@@ -340,41 +351,43 @@ export default function App() {
     );
   }
 
-  const screen = activeTab === 'home'
-    ? <PremiumHome onNavigate={setActiveTab} />
-    : activeTab === 'quran'
-      ? <QuranScreen onBack={goHome} onOpenReader={() => setActiveTab('reader')} onOpenAyah={() => setActiveTab('ayah')} />
-      : activeTab === 'reader'
-        ? <QuranReaderScreen onBack={goQuran} />
-        : activeTab === 'ayah'
-          ? <AyahDetailScreen onBack={goHome} />
-          : activeTab === 'hadith'
-            ? <HadithDetailScreen onBack={goHome} />
-            : activeTab === 'wudu'
-              ? <WorshipGuideScreen initialMode="wudu" onBack={goLearn} />
-              : activeTab === 'salah'
-                ? <WorshipGuideScreen initialMode="salah" onBack={goLearn} />
-                : activeTab === 'dhikr'
-                  ? <DhikrScreen onBack={goHome} />
-                  : activeTab === 'qibla'
-                    ? <QiblaScreen onBack={goHome} />
-                    : activeTab === 'profile'
-                      ? <MoreScreen onBack={goHome} />
-                      : activeTab === 'prayer'
-                        ? <PrayerScreen onBack={goHome} />
-                        : activeTab === 'calendar'
-                          ? <CalendarScreen onBack={goHome} />
-                          : activeTab === 'learn'
-                            ? <LearnScreen onBack={goHome} />
-                            : activeTab === 'duas'
-                              ? <DuasScreen onBack={goHome} />
-                              : activeTab === 'names'
-                                ? <NamesScreen onBack={goHome} />
-                                : activeTab === 'mosques'
-                                  ? <MosqueScreen onBack={goHome} />
-                                  : activeTab === 'collections'
-                                    ? <CollectionsScreen onBack={goHome} />
-                                    : <AssistantScreen onBack={goHome} />;
+  const screen = isLegacyTab(activeTab)
+    ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goHome} />
+    : activeTab === 'home'
+      ? <PremiumHome onNavigate={setActiveTab} />
+      : activeTab === 'quran'
+        ? <QuranScreen onBack={goHome} onOpenReader={() => setActiveTab('reader')} onOpenAyah={() => setActiveTab('ayah')} />
+        : activeTab === 'reader'
+          ? <QuranReaderScreen onBack={goQuran} />
+          : activeTab === 'ayah'
+            ? <AyahDetailScreen onBack={goHome} />
+            : activeTab === 'hadith'
+              ? <HadithDetailScreen onBack={goHome} />
+              : activeTab === 'wudu'
+                ? <WorshipGuideScreen initialMode="wudu" onBack={goLearn} />
+                : activeTab === 'salah'
+                  ? <WorshipGuideScreen initialMode="salah" onBack={goLearn} />
+                  : activeTab === 'dhikr'
+                    ? <DhikrScreen onBack={goHome} />
+                    : activeTab === 'qibla'
+                      ? <QiblaScreen onBack={goHome} />
+                      : activeTab === 'profile'
+                        ? <MoreScreen onBack={goHome} />
+                        : activeTab === 'prayer'
+                          ? <PrayerScreen onBack={goHome} />
+                          : activeTab === 'calendar'
+                            ? <CalendarScreen onBack={goHome} />
+                            : activeTab === 'learn'
+                              ? <LearnScreen onBack={goHome} />
+                              : activeTab === 'duas'
+                                ? <DuasScreen onBack={goHome} />
+                                : activeTab === 'names'
+                                  ? <NamesScreen onBack={goHome} />
+                                  : activeTab === 'mosques'
+                                    ? <MosqueScreen onBack={goHome} />
+                                    : activeTab === 'collections'
+                                      ? <CollectionsScreen onBack={goHome} />
+                                      : <AssistantScreen onBack={goHome} />;
 
   return (
     <div className="app-background app-background--v2">
