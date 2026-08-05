@@ -10,6 +10,7 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
+import { AppErrorBoundary, NetworkStatus } from './AppSystemLayer';
 import { InstallAppPrompt } from './InstallAppPrompt';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
@@ -36,8 +37,11 @@ function BootRoot() {
           animate={{ opacity: 1 }}
           transition={{ duration: .32 }}
         >
-          <App />
-          <InstallAppPrompt />
+          <AppErrorBoundary>
+            <App />
+            <InstallAppPrompt />
+            <NetworkStatus />
+          </AppErrorBoundary>
         </motion.div>
       ) : <SplashScreen key="splash" />}
     </AnimatePresence>
