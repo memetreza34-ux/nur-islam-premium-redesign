@@ -1,0 +1,141 @@
+.premium-home--v2 {
+  position: relative;
+  padding-top: 0;
+}
+
+.premium-home--v2 .brand-bar {
+  position: absolute;
+  z-index: 8;
+  top: 13px;
+  right: 13px;
+  left: 13px;
+  min-height: 40px;
+  padding: 0;
+  pointer-events: none;
+}
+
+.premium-home--v2 .brand-bar button {
+  pointer-events: auto;
+}
+
+.premium-home--v2 .brand-lockup > span:last-child {
+  display: none;
+}
+
+.premium-home--v2 .brand-lockup__mark,
+.premium-home--v2 .brand-lockup__mark > img,
+.premium-home--v2 .brand-lockup__mark > .premium-image__fallback,
+.premium-home--v2 .brand-lockup__mark svg {
+  width: 38px;
+  height: 38px;
+}
+
+.premium-home--v2 .brand-lockup {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(232, 199, 122, .25);
+  border-radius: 13px;
+  background: rgba(5, 32, 25, .7);
+  backdrop-filter: blur(15px);
+}
+
+.premium-home--v2 .brand-lockup__mark {
+  transform: scale(.72);
+}
+
+.premium-home--v2 .brand-bar__actions .icon-button:first-child {
+  display: none;
+}
+
+.premium-home--v2 .brand-bar__actions .icon-button {
+  border-color: rgba(232, 199, 122, .25);
+  background: rgba(5, 32, 25, .7);
+  backdrop-filter: blur(15px);
+}
+
+.premium-home--v2 .welcome-hero {
+  margin-top: 0;
+  min-height: 392px;
+}
+
+.premium-home--v2 .welcome-hero__copy {
+  padding-top: 82px;
+}
+
+.premium-home--v2 .welcome-hero__copy h1 {
+  max-width: 225px;
+  font-size: 0;
+}
+
+.premium-home--v2 .welcome-hero__copy h1::after {
+  content: 'Möge Allah deinen Tag segnen und dir Frieden schenken.';
+  display: block;
+  color: rgba(255, 248, 231, .82);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: .73rem;
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: 0;
+}
+
+.premium-home--v2 .prayer-hero--v2 .gold-button {
+  display: none;
+}
+
+.premium-home--v2 .prayer-hero--v2 .prayer-hero__content {
+  padding-bottom: 13px;
+}
+
+.premium-home--v2 .tracker--v2 {
+  display: none;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading .overline {
+  display: none;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2 {
+  font-size: 0;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2::after {
+  content: 'Deine Reise fortsetzen';
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.48rem;
+  font-weight: 600;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .text-button {
+  color: var(--muted-green);
+  font-size: .55rem;
+}
+
+.premium-home--v2 .journey-card {
+  min-height: 156px;
+}
+
+.premium-home--v2 .journey-card .premium-image {
+  height: 111px;
+}
+
+.premium-home--v2 .quick-grid--v2,
+.premium-home--v2 .continue-card--v2,
+.premium-home--v2 .inspiration-grid--v2,
+.premium-home--v2 .ai-preview,
+.premium-home--v2 .recommendations {
+  margin-top: 2px;
+}
+
+@media (max-width: 370px) {
+  .premium-home--v2 .welcome-hero {
+    min-height: 375px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy {
+    padding-top: 76px;
+  }
+}
