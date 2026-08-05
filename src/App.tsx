@@ -12,13 +12,13 @@ import {
   HandHeart,
   Home,
   MapPin,
+  Menu,
   MessageCircleQuestion,
   Play,
   Quote,
   Settings,
   Sparkles,
   SunMedium,
-  UserRound,
   UsersRound,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
@@ -50,8 +50,8 @@ import {
   RosetteObject,
 } from './PremiumVisuals';
 
-type PrimaryTab = 'home' | 'quran' | 'dhikr' | 'qibla' | 'profile';
-type Tab = PrimaryTab | 'prayer' | 'calendar' | 'learn' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah';
+type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
+type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah';
 
 type QuickAction = {
   label: string;
@@ -130,7 +130,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         </button>
         <div className="brand-bar__actions">
           <button className="icon-button" onClick={() => onNavigate('qibla')} aria-label="Qibla öffnen"><Compass size={20} /></button>
-          <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Einstellungen öffnen"><Settings size={20} /></button>
+          <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Mehr öffnen"><Menu size={20} /></button>
         </div>
       </header>
 
@@ -245,10 +245,10 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
 function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: (tab: PrimaryTab) => void }) {
   const items: Array<{ id: PrimaryTab; label: string; icon: LucideIcon }> = [
     { id: 'home', label: 'Home', icon: Home },
-    { id: 'quran', label: 'Quran', icon: BookOpen },
-    { id: 'dhikr', label: 'Dhikr', icon: Sparkles },
-    { id: 'qibla', label: 'Qibla', icon: Compass },
-    { id: 'profile', label: 'Profil', icon: UserRound },
+    { id: 'prayer', label: 'Gebete', icon: SunMedium },
+    { id: 'calendar', label: 'Kalender', icon: CalendarDays },
+    { id: 'learn', label: 'Lernen', icon: BookOpen },
+    { id: 'profile', label: 'Mehr', icon: Menu },
   ];
 
   return (
@@ -265,7 +265,15 @@ function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: 
 export default function App() {
   const [onboardingComplete, setOnboardingComplete] = useState(hasCompletedOnboarding);
   const [activeTab, setActiveTab] = useState<Tab>('home');
-  const primaryActive: PrimaryTab = activeTab === 'quran' || activeTab === 'dhikr' || activeTab === 'qibla' || activeTab === 'profile' ? activeTab : 'home';
+  const primaryActive: PrimaryTab = activeTab === 'prayer'
+    ? 'prayer'
+    : activeTab === 'calendar'
+      ? 'calendar'
+      : activeTab === 'learn'
+        ? 'learn'
+        : ['profile', 'duas', 'names', 'mosques', 'collections', 'assistant'].includes(activeTab)
+          ? 'profile'
+          : 'home';
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
