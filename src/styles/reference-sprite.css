@@ -1,0 +1,125 @@
+.reference-sprite {
+  display: block;
+  width: 128px;
+  height: 128px;
+  flex: 0 0 auto;
+  background-repeat: no-repeat;
+  background-size: 512px 256px;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .38));
+}
+
+.screen-transition-frame {
+  position: relative;
+  isolation: isolate;
+}
+
+.reference-artwork-layer {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  overflow: hidden;
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.reference-artwork-layer + *,
+.reference-artwork-layer ~ * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-artwork-layer .reference-sprite {
+  position: absolute;
+}
+
+.reference-artwork-layer__dome {
+  top: 176px;
+  right: -13px;
+  opacity: .25;
+  transform: scale(1.34);
+}
+
+.reference-artwork-layer__sun {
+  top: 90px;
+  right: -16px;
+  opacity: .24;
+  transform: scale(1.22);
+}
+
+.reference-artwork-layer__hands {
+  top: 94px;
+  right: -17px;
+  opacity: .42;
+  transform: scale(1.16);
+}
+
+.reference-artwork-layer__kaaba {
+  top: 190px;
+  left: 50%;
+  opacity: .2;
+  transform: translateX(-50%) scale(1.32);
+}
+
+.reference-artwork-layer__mihrab {
+  top: 95px;
+  right: -6px;
+  opacity: .18;
+  transform: scale(1.5);
+}
+
+.reference-artwork-layer__lantern {
+  top: 142px;
+  right: 2px;
+  opacity: .3;
+  transform: scale(1.08);
+}
+
+.reference-artwork-layer__learn-mihrab {
+  top: 112px;
+  right: -21px;
+  opacity: .15;
+  transform: scale(1.55);
+}
+
+.reference-artwork-layer__bookmark {
+  top: 119px;
+  right: 14px;
+  opacity: .24;
+  transform: scale(.82);
+}
+
+.reference-artwork-layer__collection-bookmark {
+  top: 102px;
+  right: 10px;
+  opacity: .24;
+  transform: scale(.9);
+}
+
+.reference-artwork-layer--duas::after,
+.reference-artwork-layer--prayer::after,
+.reference-artwork-layer--calendar::after {
+  content: '';
+  position: absolute;
+  top: 54px;
+  right: -95px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(217, 177, 89, .09), transparent 68%);
+}
+
+@media (max-width: 370px) {
+  .reference-artwork-layer__dome {
+    right: -29px;
+    transform: scale(1.18);
+  }
+
+  .reference-artwork-layer__hands {
+    right: -30px;
+    opacity: .35;
+  }
+
+  .reference-artwork-layer__sun {
+    right: -31px;
+  }
+}
