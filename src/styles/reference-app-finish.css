@@ -1,0 +1,208 @@
+html {
+  overscroll-behavior-y: none;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  touch-action: manipulation;
+}
+
+body {
+  min-height: 100svh;
+  overscroll-behavior-y: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-tap-highlight-color: transparent;
+}
+
+#root {
+  min-height: 100svh;
+}
+
+.reference-splash {
+  position: relative;
+  display: grid;
+  min-height: calc(100svh - max(20px, env(safe-area-inset-top)) - max(20px, env(safe-area-inset-bottom)));
+  overflow: hidden;
+  place-items: center;
+  align-content: center;
+  padding: 42px 20px;
+  border: 1px solid rgba(232, 199, 122, .18);
+  border-radius: 30px;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 50% 26%, rgba(40, 126, 92, .22), transparent 18rem),
+    radial-gradient(circle at 50% 64%, rgba(214, 175, 55, .11), transparent 15rem),
+    linear-gradient(165deg, #0a2a21 0%, #041611 58%, #020a08 100%);
+  box-shadow: 0 28px 76px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-splash::before,
+.reference-splash::after {
+  content: '';
+  position: absolute;
+  z-index: -3;
+  border: 1px solid rgba(232, 199, 122, .08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.reference-splash::before {
+  width: 420px;
+  height: 420px;
+  top: -230px;
+  right: -205px;
+}
+
+.reference-splash::after {
+  width: 310px;
+  height: 310px;
+  bottom: -210px;
+  left: -180px;
+}
+
+.reference-splash__halo {
+  position: absolute;
+  z-index: -2;
+  top: 21%;
+  width: 270px;
+  height: 270px;
+  border: 1px solid rgba(232, 199, 122, .13);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .12), transparent 67%);
+  box-shadow: 0 0 80px rgba(214, 175, 55, .08);
+}
+
+.reference-splash__mosque,
+.reference-splash__mosque img,
+.reference-splash__mosque .premium-image__fallback,
+.reference-splash__mosque svg {
+  width: 420px;
+  height: 250px;
+}
+
+.reference-splash__mosque {
+  position: absolute;
+  z-index: -1;
+  right: -83px;
+  bottom: 48px;
+  opacity: .22;
+  filter: saturate(.72) drop-shadow(0 24px 20px rgba(0, 0, 0, .45));
+}
+
+.reference-splash__brand {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.reference-splash__mark,
+.reference-splash__mark img,
+.reference-splash__mark .premium-image__fallback,
+.reference-splash__mark svg {
+  width: 108px;
+  height: 108px;
+}
+
+.reference-splash__mark {
+  margin-bottom: 12px;
+  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .38));
+}
+
+.reference-splash h1,
+.reference-splash p {
+  margin: 0;
+}
+
+.reference-splash h1 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 4rem;
+  font-weight: 600;
+  line-height: .86;
+  letter-spacing: -.045em;
+}
+
+.reference-splash p {
+  color: rgba(245, 239, 227, .68);
+  font-size: .65rem;
+  letter-spacing: .06em;
+}
+
+.reference-splash__loader {
+  position: absolute;
+  bottom: max(31px, env(safe-area-inset-bottom));
+  width: 72px;
+  height: 3px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.reference-splash__loader span {
+  display: block;
+  width: 48%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, transparent, #efd596, transparent);
+  animation: nur-splash-loading 1.05s ease-in-out infinite;
+}
+
+.screen-transition-frame {
+  min-width: 0;
+}
+
+.is-standalone body {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.is-standalone input,
+.is-standalone textarea,
+.is-standalone [contenteditable='true'] {
+  user-select: text;
+  -webkit-user-select: text;
+}
+
+.is-standalone .app-background {
+  min-height: 100svh;
+}
+
+.is-standalone .app-shell {
+  min-height: 100svh;
+  padding-top: max(12px, env(safe-area-inset-top));
+}
+
+.is-standalone .bottom-nav {
+  bottom: max(7px, env(safe-area-inset-bottom));
+}
+
+@keyframes nur-splash-loading {
+  0% { transform: translateX(-120%); opacity: .3; }
+  50% { opacity: 1; }
+  100% { transform: translateX(230%); opacity: .3; }
+}
+
+@media (max-width: 370px) {
+  .reference-splash {
+    border-radius: 24px;
+  }
+
+  .reference-splash h1 {
+    font-size: 3.5rem;
+  }
+
+  .reference-splash__mark,
+  .reference-splash__mark img,
+  .reference-splash__mark .premium-image__fallback,
+  .reference-splash__mark svg {
+    width: 94px;
+    height: 94px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-splash__loader span {
+    animation: none;
+    width: 100%;
+  }
+}
