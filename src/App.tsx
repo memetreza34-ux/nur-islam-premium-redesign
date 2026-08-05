@@ -7,7 +7,6 @@ import {
   CalendarDays,
   ChevronRight,
   CircleCheck,
-  Clock3,
   Compass,
   Globe2,
   HandHeart,
@@ -24,10 +23,13 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
-import { PrayerScreen } from './PrayerScreen';
 import { CalendarScreen } from './CalendarScreen';
-import { MoreScreen } from './MoreScreen';
+import { DhikrScreen } from './DhikrScreen';
 import { LearnScreen } from './LearnScreen';
+import { MoreScreen } from './MoreScreen';
+import { PrayerScreen } from './PrayerScreen';
+import { QiblaScreen } from './QiblaScreen';
+import { QuranScreen } from './QuranScreen';
 import {
   CrescentObject,
   LanternObject,
@@ -39,25 +41,25 @@ import {
   RosetteObject,
 } from './PremiumVisuals';
 
-type Tab = 'home' | 'prayer' | 'calendar' | 'learn' | 'more';
+type PrimaryTab = 'home' | 'quran' | 'dhikr' | 'qibla' | 'profile';
+type Tab = PrimaryTab | 'prayer' | 'calendar' | 'learn';
 
 type QuickAction = {
   label: string;
   eyebrow: string;
   icon: LucideIcon;
   accent: 'gold' | 'cream' | 'emerald';
+  target?: Tab;
 };
 
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Weiterlernen', icon: BookOpen, accent: 'gold' },
-  { label: 'Wudu & Salah', eyebrow: 'Schritt für Schritt', icon: HandHeart, accent: 'cream' },
-  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald' },
-  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold' },
-  { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream' },
+  { label: 'Quran lesen', eyebrow: 'Weiterlernen', icon: BookOpen, accent: 'gold', target: 'quran' },
+  { label: 'Wudu & Salah', eyebrow: 'Schritt für Schritt', icon: HandHeart, accent: 'cream', target: 'learn' },
+  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'learn' },
+  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'learn' },
+  { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'learn' },
   { label: 'KI-Assistent', eyebrow: 'Design vorbereitet', icon: MessageCircleQuestion, accent: 'emerald' },
 ];
-
-const prayers = ['Fajr', 'Dhuhr', 'Asr', 'Maghrib', 'Isha'];
 
 function getIslamicDate() {
   try {
@@ -71,42 +73,9 @@ function getIslamicDate() {
   }
 }
 
-function ProgressRing({ value, total }: { value: number; total: number }) {
-  const radius = 34;
-  const circumference = 2 * Math.PI * radius;
-  const progress = Math.min(1, value / total);
-
-  return (
-    <div className="progress-ring" aria-label={`${value} von ${total} Gebeten erledigt`}>
-      <svg viewBox="0 0 84 84" role="img">
-        <circle className="progress-ring__track" cx="42" cy="42" r={radius} />
-        <circle
-          className="progress-ring__value"
-          cx="42"
-          cy="42"
-          r={radius}
-          strokeDasharray={circumference}
-          strokeDashoffset={circumference * (1 - progress)}
-        />
-      </svg>
-      <strong>{value}/{total}</strong>
-    </div>
-  );
-}
-
 function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
-  const [completed, setCompleted] = useState(() => new Set(['Fajr', 'Dhuhr', 'Asr']));
   const [toast, setToast] = useState<string | null>(null);
   const islamicDate = useMemo(getIslamicDate, []);
-
-  const togglePrayer = (prayer: string) => {
-    setCompleted((current) => {
-      const next = new Set(current);
-      if (next.has(prayer)) next.delete(prayer);
-      else next.add(prayer);
-      return next;
-    });
-  };
 
   const showToast = (message: string) => {
     setToast(message);
@@ -122,36 +91,28 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
     >
       <header className="brand-bar">
         <button className="brand-lockup" onClick={() => showToast('Nur Islam')} aria-label="Nur Islam">
-          <PremiumImage
-            src="/premium-assets/high-res-objects/nur-logo-emblem.png"
-            className="brand-lockup__mark"
-            fallback={<NurMark />}
-          />
+          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.png" className="brand-lockup__mark" fallback={<NurMark />} />
           <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
         </button>
         <div className="brand-bar__actions">
-          <button className="icon-button" onClick={() => showToast('Qibla-Kompass geöffnet')} aria-label="Qibla öffnen"><Compass size={20} /></button>
-          <button className="icon-button" onClick={() => onNavigate('more')} aria-label="Einstellungen öffnen"><Settings size={20} /></button>
+          <button className="icon-button" onClick={() => onNavigate('qibla')} aria-label="Qibla öffnen"><Compass size={20} /></button>
+          <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Einstellungen öffnen"><Settings size={20} /></button>
         </div>
       </header>
 
       <section className="welcome-hero">
         <div className="welcome-hero__shade" />
-        <PremiumImage
-          src="/premium-assets/high-res-objects/mosque-gold.png"
-          className="welcome-hero__visual"
-          fallback={<MosqueScene />}
-        />
+        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold.png" className="welcome-hero__visual" fallback={<MosqueScene />} />
         <div className="welcome-hero__copy">
           <span className="overline">Assalamu Alaikum</span>
           <h1>Ein ruhiger Ort für deinen Glauben.</h1>
           <p>Möge Allah deinen Tag segnen, dir Frieden schenken und dich im Guten bestärken.</p>
         </div>
-        <div className="welcome-hero__date">
+        <button className="welcome-hero__date" onClick={() => onNavigate('calendar')}>
           <span className="welcome-hero__date-day">20</span>
           <span><strong>{islamicDate}</strong><small>Islamischer Kalender</small></span>
           <CalendarDays size={20} />
-        </div>
+        </button>
       </section>
 
       <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
@@ -161,16 +122,8 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
             <span className="location"><MapPin size={14} /> Berlin</span>
           </div>
           <div className="hero-main">
-            <div>
-              <span className="arabic-label">الظهر</span>
-              <h2>Dhuhr</h2>
-              <div className="countdown"><Clock3 size={16} /> in 2 Std. 15 Min.</div>
-            </div>
-            <div className="hero-orb">
-              <span className="hero-orb__ring" />
-              <SunMedium size={31} />
-              <strong>12:45</strong>
-            </div>
+            <div><span className="arabic-label">الظهر</span><h2>Dhuhr</h2><div className="countdown">in 2 Std. 15 Min.</div></div>
+            <div className="hero-orb"><span className="hero-orb__ring" /><SunMedium size={31} /><strong>12:45</strong></div>
           </div>
           <div className="prayer-mini-times">
             {[
@@ -181,31 +134,18 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         </div>
       </section>
 
-      <section className="tracker glass-card tracker--v2">
-        <div className="tracker__summary">
-          <ProgressRing value={completed.size} total={5} />
-          <div><span className="overline">Gebets-Tracker</span><h3>Dein Fortschritt heute</h3><p>{completed.size === 5 ? 'Alle Pflichtgebete erledigt.' : 'Bleib Schritt für Schritt konsequent.'}</p></div>
-        </div>
-        <div className="prayer-checks">
-          {prayers.map((prayer) => {
-            const done = completed.has(prayer);
-            return <button key={prayer} className={done ? 'prayer-check prayer-check--done' : 'prayer-check'} onClick={() => togglePrayer(prayer)} aria-pressed={done}><span>{done ? <CircleCheck size={17} /> : null}</span>{prayer}</button>;
-          })}
-        </div>
-      </section>
-
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
         <div className="journey-grid">
-          <button className="journey-card journey-card--quran" onClick={() => showToast('Quran-Bereich geöffnet')}>
+          <button className="journey-card journey-card--quran" onClick={() => onNavigate('quran')}>
             <PremiumImage src="/premium-assets/high-res-objects/quran-closed.png" fallback={<QuranObject />} />
             <span><small>Weiterlesen</small><strong>Surah Al-Kahf</strong><em>Ayah 18 von 110</em></span>
           </button>
-          <button className="journey-card" onClick={() => showToast('Dhikr geöffnet')}>
+          <button className="journey-card" onClick={() => onNavigate('dhikr')}>
             <PremiumImage src="/premium-assets/high-res-objects/tasbih.png" fallback={<RosetteObject />} />
             <span><small>Tägliches Ziel</small><strong>Dhikr</strong><em>33 von 100</em></span>
           </button>
-          <button className="journey-card" onClick={() => showToast('Qibla geöffnet')}>
+          <button className="journey-card" onClick={() => onNavigate('qibla')}>
             <PremiumImage src="/premium-assets/high-res-objects/qibla-compass.png" fallback={<QiblaObject />} />
             <span><small>Richtung Mekka</small><strong>Qibla</strong><em>Kompass starten</em></span>
           </button>
@@ -215,8 +155,16 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Dein täglicher Begleiter</h2></div></div>
         <div className="quick-grid quick-grid--v2">
-          {quickActions.map(({ label, eyebrow, icon: Icon, accent }, index) => (
-            <motion.button key={label} className={`quick-card quick-card--${accent}`} onClick={() => showToast(`${label} geöffnet`)} whileTap={{ scale: 0.97 }} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.045 }}>
+          {quickActions.map(({ label, eyebrow, icon: Icon, accent, target }, index) => (
+            <motion.button
+              key={label}
+              className={`quick-card quick-card--${accent}`}
+              onClick={() => target ? onNavigate(target) : showToast('Der KI-Assistent benötigt noch eine sichere Quellen- und Anbieteranbindung.')}
+              whileTap={{ scale: 0.97 }}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.045 }}
+            >
               <span className="quick-card__icon"><Icon size={25} /></span><span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><ChevronRight className="quick-card__arrow" size={18} />
             </motion.button>
           ))}
@@ -224,9 +172,9 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       </section>
 
       <section className="continue-card continue-card--v2 glass-card">
-        <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-bookmark.png" fallback={<QuranObject />} /></div>
+        <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed.png" fallback={<QuranObject />} /></div>
         <div className="continue-card__body"><span className="overline">Weiterlesen</span><h3>Surah Al-Kahf</h3><p>Ayah 18 von 110 · zuletzt heute gelesen</p><div className="reading-progress"><span /></div></div>
-        <button className="play-button" aria-label="Weiterlesen" onClick={() => showToast('Quran-Lesemodus geöffnet')}><Play size={20} fill="currentColor" /></button>
+        <button className="play-button" aria-label="Weiterlesen" onClick={() => onNavigate('quran')}><Play size={20} fill="currentColor" /></button>
       </section>
 
       <section className="inspiration-grid inspiration-grid--v2">
@@ -248,7 +196,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <section className="content-section recommendations">
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
         <div className="recommendation-list">
-          <button className="recommendation-card" onClick={() => showToast('Fasten-Assistent geöffnet')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('calendar')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => showToast('Ummah-Weltkarte geöffnet')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => showToast('Moschee-Suche geöffnet')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
         </div>
@@ -259,25 +207,53 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
-function BottomNavigation({ active, onChange }: { active: Tab; onChange: (tab: Tab) => void }) {
-  const items: Array<{ id: Tab; label: string; icon: LucideIcon }> = [
-    { id: 'home', label: 'Start', icon: Home },
-    { id: 'prayer', label: 'Gebete', icon: MoonStar },
-    { id: 'calendar', label: 'Kalender', icon: CalendarDays },
-    { id: 'learn', label: 'Lernen', icon: BookOpen },
-    { id: 'more', label: 'Profil', icon: UserRound },
+function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: (tab: PrimaryTab) => void }) {
+  const items: Array<{ id: PrimaryTab; label: string; icon: LucideIcon }> = [
+    { id: 'home', label: 'Home', icon: Home },
+    { id: 'quran', label: 'Quran', icon: BookOpen },
+    { id: 'dhikr', label: 'Dhikr', icon: Sparkles },
+    { id: 'qibla', label: 'Qibla', icon: Compass },
+    { id: 'profile', label: 'Profil', icon: UserRound },
   ];
-  return <nav className="bottom-nav" aria-label="Hauptnavigation">{items.map(({ id, label, icon: Icon }) => <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)}><span><Icon size={20} /></span><small>{label}</small></button>)}</nav>;
+
+  return (
+    <nav className="bottom-nav" aria-label="Hauptnavigation">
+      {items.map(({ id, label, icon: Icon }) => (
+        <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)}>
+          <span><Icon size={20} /></span><small>{label}</small>
+        </button>
+      ))}
+    </nav>
+  );
 }
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<Tab>('home');
+  const primaryActive: PrimaryTab = activeTab === 'prayer' || activeTab === 'calendar' || activeTab === 'learn' ? 'home' : activeTab;
+
+  const screen = activeTab === 'home'
+    ? <PremiumHome onNavigate={setActiveTab} />
+    : activeTab === 'quran'
+      ? <QuranScreen onBack={() => setActiveTab('home')} />
+      : activeTab === 'dhikr'
+        ? <DhikrScreen onBack={() => setActiveTab('home')} />
+        : activeTab === 'qibla'
+          ? <QiblaScreen onBack={() => setActiveTab('home')} />
+          : activeTab === 'profile'
+            ? <MoreScreen onBack={() => setActiveTab('home')} />
+            : activeTab === 'prayer'
+              ? <PrayerScreen onBack={() => setActiveTab('home')} />
+              : activeTab === 'calendar'
+                ? <CalendarScreen onBack={() => setActiveTab('home')} />
+                : <LearnScreen onBack={() => setActiveTab('home')} />;
+
   return (
     <div className="app-background app-background--v2">
-      <div className="background-orbit background-orbit--one" /><div className="background-orbit background-orbit--two" />
+      <div className="background-orbit background-orbit--one" />
+      <div className="background-orbit background-orbit--two" />
       <div className="app-shell">
-        {activeTab === 'home' ? <PremiumHome onNavigate={setActiveTab} /> : activeTab === 'prayer' ? <PrayerScreen onBack={() => setActiveTab('home')} /> : activeTab === 'calendar' ? <CalendarScreen onBack={() => setActiveTab('home')} /> : activeTab === 'learn' ? <LearnScreen onBack={() => setActiveTab('home')} /> : <MoreScreen onBack={() => setActiveTab('home')} />}
-        <BottomNavigation active={activeTab} onChange={setActiveTab} />
+        {screen}
+        <BottomNavigation active={primaryActive} onChange={setActiveTab} />
       </div>
     </div>
   );
