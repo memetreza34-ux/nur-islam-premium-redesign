@@ -1,0 +1,710 @@
+.reference-reader-screen,
+.reference-detail-screen,
+.reference-guide-screen {
+  gap: 15px;
+}
+
+.reference-reader-hero,
+.reference-guide-hero {
+  position: relative;
+  display: grid;
+  min-height: 205px;
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .34);
+  border-radius: 21px;
+  background:
+    radial-gradient(circle at 79% 25%, rgba(231, 188, 96, .17), transparent 12rem),
+    linear-gradient(145deg, #113b2f, #061e18 68%, #041410);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-reader-hero {
+  grid-template-columns: 1fr 154px;
+  align-items: center;
+  padding: 20px 18px 25px;
+}
+
+.reference-reader-hero > div:first-child {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 5px;
+}
+
+.reference-reader-hero h2,
+.reference-reader-hero p {
+  margin: 0;
+}
+
+.reference-reader-hero h2 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.85rem;
+  font-weight: 600;
+}
+
+.reference-reader-hero p {
+  color: var(--muted-green);
+  font-size: .57rem;
+}
+
+.reference-reader-hero > .premium-image,
+.reference-reader-hero > .premium-image img,
+.reference-reader-hero > .premium-image .premium-image__fallback,
+.reference-reader-hero > .premium-image svg {
+  width: 160px;
+  height: 145px;
+}
+
+.reference-reader-hero > .premium-image {
+  position: absolute;
+  right: -5px;
+  bottom: 12px;
+  opacity: .92;
+  filter: drop-shadow(0 18px 20px rgba(0, 0, 0, .42));
+}
+
+.reference-reader-progress {
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+  left: 16px;
+  height: 4px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.reference-reader-progress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #efd391, #c8953d);
+}
+
+.reference-reader-controls {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) 108px;
+  gap: 7px;
+}
+
+.reference-reader-controls > button,
+.reference-font-control {
+  display: flex;
+  min-height: 45px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(214, 175, 55, .18);
+  border-radius: 14px;
+  color: var(--cream);
+  background: rgba(9, 39, 31, .85);
+}
+
+.reference-reader-controls > button {
+  cursor: pointer;
+}
+
+.reference-reader-controls > button.is-active {
+  border-color: rgba(232, 199, 122, .45);
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .08);
+}
+
+.reference-reader-controls span,
+.reference-font-control strong {
+  font-size: .56rem;
+}
+
+.reference-font-control button {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 0;
+  border-radius: 9px;
+  color: var(--gold-soft);
+  background: rgba(214, 175, 55, .05);
+  cursor: pointer;
+}
+
+.reference-reader-source,
+.reference-source-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 13px;
+  border: 1px solid rgba(77, 187, 111, .2);
+  border-radius: 15px;
+  color: #9ee0b3;
+  background: rgba(57, 157, 88, .055);
+}
+
+.reference-reader-source > span,
+.reference-source-card > span {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-reader-source strong,
+.reference-source-card strong {
+  color: var(--cream-strong);
+  font-size: .57rem;
+}
+
+.reference-reader-source small,
+.reference-source-card small {
+  color: var(--muted-green);
+  font-size: .49rem;
+  line-height: 1.45;
+}
+
+.reference-reader-verses {
+  display: grid;
+  gap: 10px;
+}
+
+.reference-reader-verse {
+  display: grid;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(214, 175, 55, .07), transparent 9rem),
+    linear-gradient(145deg, rgba(15, 54, 42, .92), rgba(4, 24, 19, .98));
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
+}
+
+.reference-reader-verse header,
+.reference-reader-verse footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reference-reader-verse header > span {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .26);
+  border-radius: 10px;
+  color: var(--gold-bright);
+  font-size: .58rem;
+  background: rgba(214, 175, 55, .06);
+}
+
+.reference-reader-verse header > div,
+.reference-reader-verse footer button {
+  display: flex;
+  gap: 6px;
+}
+
+.reference-reader-verse header button,
+.reference-reader-verse footer button {
+  border: 0;
+  color: var(--muted-green);
+  background: transparent;
+  cursor: pointer;
+}
+
+.reference-reader-verse header button.is-saved {
+  color: var(--gold-bright);
+}
+
+.reference-reader-verse > p {
+  margin: 5px 0 2px;
+  color: var(--cream-strong);
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+  line-height: 1.95;
+  text-align: right;
+}
+
+.reference-reader-verse blockquote {
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid rgba(214, 175, 55, .11);
+  color: rgba(245, 239, 227, .76);
+  font-size: .62rem;
+  line-height: 1.55;
+}
+
+.reference-reader-verse footer {
+  color: var(--gold);
+  font-size: .51rem;
+}
+
+.reference-reader-verse footer button {
+  align-items: center;
+  color: var(--gold-soft);
+  font-size: .5rem;
+}
+
+.reference-reader-next {
+  display: flex;
+  min-height: 59px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 14px;
+  border: 1px solid rgba(214, 175, 55, .18);
+  border-radius: 16px;
+  color: var(--cream-strong);
+  background: rgba(8, 35, 28, .8);
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-reader-next > span {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-reader-next small {
+  color: var(--gold);
+  font-size: .5rem;
+}
+
+.reference-reader-next strong {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem;
+}
+
+.reference-ayah-hero,
+.reference-hadith-hero {
+  position: relative;
+  display: grid;
+  overflow: hidden;
+  justify-items: center;
+  gap: 12px;
+  min-height: 360px;
+  padding: 31px 22px 24px;
+  border: 1px solid rgba(226, 191, 119, .42);
+  border-radius: 23px;
+  text-align: center;
+  box-shadow: 0 22px 50px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-ayah-hero {
+  background: linear-gradient(145deg, #f3e8d4, #e6cea2);
+}
+
+.reference-ayah-hero__art {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: .13;
+}
+
+.reference-ayah-hero__art img,
+.reference-ayah-hero__art .premium-image__fallback,
+.reference-ayah-hero__art svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reference-ayah-hero > *:not(.reference-ayah-hero__art) {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-ayah-hero > p {
+  margin: 29px 0 7px;
+  color: #102d24;
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+  font-size: 2.35rem;
+  line-height: 1.8;
+}
+
+.reference-ayah-hero blockquote {
+  max-width: 310px;
+  margin: 0;
+  color: #37483f;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.12rem;
+  line-height: 1.45;
+}
+
+.reference-ayah-hero > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.reference-ayah-hero > div button,
+.reference-detail-actions button {
+  display: flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(26, 65, 52, .19);
+  border-radius: 13px;
+  color: #16362b;
+  background: rgba(255, 255, 255, .32);
+  cursor: pointer;
+}
+
+.reference-ayah-hero > div button.is-saved {
+  color: #f7e6be;
+  background: #173b30;
+}
+
+.reference-hadith-hero {
+  min-height: 320px;
+  align-content: center;
+  color: var(--cream-strong);
+  background:
+    radial-gradient(circle at 50% 20%, rgba(214, 175, 55, .13), transparent 12rem),
+    linear-gradient(145deg, #123e31, #061e18 72%, #041410);
+}
+
+.reference-hadith-hero__mark {
+  display: grid;
+  width: 73px;
+  height: 73px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .35);
+  border-radius: 50%;
+  color: var(--gold-bright);
+  font-family: 'Noto Naskh Arabic', 'Amiri', serif;
+  font-size: 1.45rem;
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-hadith-hero blockquote {
+  max-width: 330px;
+  margin: 8px 0 2px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.5;
+}
+
+.reference-hadith-hero footer {
+  color: var(--gold-soft);
+  font-size: .56rem;
+}
+
+.reference-source-card--strong {
+  border-color: rgba(214, 175, 55, .23);
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .055);
+}
+
+.reference-reflection-card {
+  display: grid;
+  grid-template-columns: 42px 1fr;
+  gap: 11px;
+  padding: 14px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(15, 54, 42, .92), rgba(4, 24, 19, .98));
+}
+
+.reference-reflection-card__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .26);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-reflection-card > span:last-child {
+  display: grid;
+  gap: 3px;
+}
+
+.reference-reflection-card small {
+  color: var(--gold);
+  font-size: .5rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.reference-reflection-card h2,
+.reference-reflection-card p {
+  margin: 0;
+}
+
+.reference-reflection-card h2 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.08rem;
+}
+
+.reference-reflection-card p {
+  color: var(--muted-green);
+  font-size: .57rem;
+  line-height: 1.5;
+}
+
+.reference-hadith-points {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-hadith-points span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 43px;
+  padding: 9px 12px;
+  border: 1px solid rgba(214, 175, 55, .15);
+  border-radius: 13px;
+  color: var(--cream);
+  background: rgba(8, 35, 28, .72);
+  font-size: .57rem;
+}
+
+.reference-hadith-points svg {
+  color: var(--gold-bright);
+}
+
+.reference-detail-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-detail-actions button {
+  border-color: rgba(214, 175, 55, .2);
+  color: var(--gold-soft);
+  background: rgba(8, 35, 28, .82);
+}
+
+.reference-detail-actions button.is-saved {
+  border-color: rgba(232, 199, 122, .47);
+  color: var(--cream-strong);
+  background: rgba(214, 175, 55, .1);
+}
+
+.reference-guide-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  padding: 5px;
+  border: 1px solid rgba(214, 175, 55, .17);
+  border-radius: 16px;
+  background: rgba(5, 27, 21, .84);
+}
+
+.reference-guide-tabs button {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--muted-green);
+  background: transparent;
+  cursor: pointer;
+}
+
+.reference-guide-tabs button.is-active {
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-guide-hero {
+  grid-template-columns: 145px 1fr;
+  align-items: center;
+  min-height: 215px;
+  padding: 15px 17px;
+}
+
+.reference-guide-hero > .premium-image,
+.reference-guide-hero > .premium-image img,
+.reference-guide-hero > .premium-image .premium-image__fallback,
+.reference-guide-hero > .premium-image svg {
+  width: 140px;
+  height: 170px;
+}
+
+.reference-guide-hero > .premium-image {
+  filter: drop-shadow(0 18px 19px rgba(0, 0, 0, .4));
+}
+
+.reference-guide-hero > div:last-child {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 7px;
+}
+
+.reference-guide-hero h2,
+.reference-guide-hero p {
+  margin: 0;
+}
+
+.reference-guide-hero h2 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  line-height: 1.05;
+}
+
+.reference-guide-hero p {
+  color: var(--muted-green);
+  font-size: .53rem;
+  line-height: 1.45;
+}
+
+.reference-guide-progress {
+  display: grid;
+  gap: 7px;
+  padding: 13px;
+  border: 1px solid rgba(214, 175, 55, .17);
+  border-radius: 15px;
+  background: rgba(8, 35, 28, .75);
+}
+
+.reference-guide-progress > span {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reference-guide-progress strong {
+  color: var(--cream-strong);
+  font-size: .59rem;
+}
+
+.reference-guide-progress small {
+  color: var(--gold);
+  font-size: .5rem;
+}
+
+.reference-guide-progress > div {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.reference-guide-progress i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #efd394, #c9953a);
+}
+
+.reference-guide-steps {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-guide-steps > button {
+  display: grid;
+  grid-template-columns: 39px 1fr 18px;
+  align-items: center;
+  gap: 10px;
+  min-height: 78px;
+  padding: 10px 12px;
+  border: 1px solid rgba(214, 175, 55, .14);
+  border-radius: 15px;
+  color: var(--cream-strong);
+  background: rgba(8, 35, 28, .72);
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-guide-steps > button > span:first-child {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 12px;
+  color: var(--gold-soft);
+  background: rgba(214, 175, 55, .055);
+}
+
+.reference-guide-steps > button > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-guide-steps small {
+  color: var(--gold);
+  font-size: .47rem;
+}
+
+.reference-guide-steps strong {
+  font-size: .63rem;
+}
+
+.reference-guide-steps em {
+  color: var(--muted-green);
+  font-size: .5rem;
+  font-style: normal;
+  line-height: 1.4;
+}
+
+.reference-guide-steps > button > svg {
+  color: rgba(212, 175, 55, .7);
+}
+
+.reference-guide-steps > button.is-active {
+  border-color: rgba(232, 199, 122, .44);
+  background: linear-gradient(145deg, rgba(17, 61, 47, .95), rgba(5, 28, 22, .98));
+}
+
+.reference-guide-steps > button.is-complete > span:first-child {
+  color: #9ce1b2;
+  border-color: rgba(73, 190, 111, .25);
+  background: rgba(73, 190, 111, .07);
+}
+
+.reference-guide-navigation {
+  display: grid;
+  grid-template-columns: 112px 1fr;
+  gap: 8px;
+}
+
+.reference-guide-navigation > button:first-child {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  border: 1px solid rgba(214, 175, 55, .18);
+  border-radius: 13px;
+  color: var(--gold-soft);
+  background: rgba(8, 35, 28, .8);
+  cursor: pointer;
+}
+
+.reference-guide-navigation > button:first-child:disabled {
+  opacity: .36;
+  cursor: not-allowed;
+}
+
+@media (max-width: 370px) {
+  .reference-reader-controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .reference-font-control {
+    grid-column: 1 / -1;
+  }
+
+  .reference-guide-hero {
+    grid-template-columns: 116px 1fr;
+  }
+
+  .reference-guide-hero > .premium-image,
+  .reference-guide-hero > .premium-image img,
+  .reference-guide-hero > .premium-image .premium-image__fallback,
+  .reference-guide-hero > .premium-image svg {
+    width: 112px;
+    height: 150px;
+  }
+}
