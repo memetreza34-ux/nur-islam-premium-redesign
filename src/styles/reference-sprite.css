@@ -55,6 +55,13 @@
   transform: scale(1.22);
 }
 
+.reference-artwork-layer__calendar-chip {
+  top: 168px;
+  left: -27px;
+  opacity: .28;
+  transform: scale(.86) rotate(-5deg);
+}
+
 .reference-artwork-layer__hands {
   top: 94px;
   right: -17px;
@@ -133,5 +140,10 @@
 
   .reference-artwork-layer__sun {
     right: -31px;
+  }
+
+  .reference-artwork-layer__calendar-chip {
+    left: -42px;
+    opacity: .23;
   }
 }
