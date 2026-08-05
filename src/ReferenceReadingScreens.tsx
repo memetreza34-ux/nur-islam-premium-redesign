@@ -54,7 +54,9 @@ function readNumberSet(key: string, fallback: number[]) {
 
 function readStoredNumber(key: string, fallback: number) {
   try {
-    const value = Number(localStorage.getItem(key));
+    const raw = localStorage.getItem(key);
+    if (raw === null) return fallback;
+    const value = Number(raw);
     return Number.isFinite(value) ? value : fallback;
   } catch {
     return fallback;
