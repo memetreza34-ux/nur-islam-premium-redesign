@@ -1,218 +1,213 @@
-import { useMemo, useState } from 'react';
+import { useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookHeart,
   BookOpen,
-  BrainCircuit,
+  BookMarked,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
-  Clock3,
-  Compass,
   GraduationCap,
-  HandHeart,
-  Heart,
+  HeartHandshake,
   Landmark,
-  MessageCircleQuestion,
-  MoonStar,
-  Search,
+  Scale,
+  ScrollText,
+  Settings,
   Sparkles,
   Star,
-  SunMedium,
-  TentTree,
   UsersRound,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 
-type Category = 'Alle' | 'Quran & Sunnah' | 'Glauben' | 'Praxis' | 'Geschichte';
-
-type Module = {
+type LearningCategory = {
   id: string;
   title: string;
   subtitle: string;
   description: string;
-  category: Exclude<Category, 'Alle'>;
   icon: LucideIcon;
-  progress: number;
-  lessons: number;
-  accent: 'gold' | 'cream' | 'emerald';
-  badge?: string;
 };
 
-const categories: Category[] = ['Alle', 'Quran & Sunnah', 'Glauben', 'Praxis', 'Geschichte'];
-
-const modules: Module[] = [
-  { id: 'quran', title: 'Quran lesen', subtitle: 'Arabisch, Übersetzung & Tafsir', description: 'Lies Suren, setze Lesezeichen und führe deinen persönlichen Lesefortschritt fort.', category: 'Quran & Sunnah', icon: BookOpen, progress: 34, lessons: 114, accent: 'gold', badge: 'Weiterlesen' },
-  { id: 'hadith', title: 'Hadith', subtitle: 'Überlieferungen verstehen', description: 'Entdecke ausgewählte Hadithe mit Quelle, Einordnung und verständlicher Erklärung.', category: 'Quran & Sunnah', icon: BookHeart, progress: 12, lessons: 80, accent: 'cream' },
-  { id: 'knowledge', title: 'Islamisches Wissen', subtitle: 'Aqida, Fiqh und Alltag', description: 'Strukturierte Grundlagen zu Glauben, Gottesdienst, Charakter und muslimischem Alltag.', category: 'Glauben', icon: GraduationCap, progress: 21, lessons: 48, accent: 'emerald', badge: 'Beliebt' },
-  { id: 'names', title: '99 Namen Allahs', subtitle: 'Bedeutung und Reflexion', description: 'Lerne die schönsten Namen Allahs mit Bedeutung, Aussprache und persönlicher Reflexion.', category: 'Glauben', icon: Sparkles, progress: 18, lessons: 99, accent: 'gold' },
-  { id: 'prophets', title: 'Propheten', subtitle: 'Geschichten und Lehren', description: 'Lerne die Geschichten der Propheten und die wichtigsten Lehren für das heutige Leben.', category: 'Geschichte', icon: UsersRound, progress: 8, lessons: 25, accent: 'cream' },
-  { id: 'wudu', title: 'Wudu & Salah', subtitle: 'Schritt für Schritt', description: 'Visuelle Anleitungen für Gebetswaschung, Gebetsablauf und häufige Fragen.', category: 'Praxis', icon: HandHeart, progress: 67, lessons: 18, accent: 'emerald', badge: 'Fortsetzen' },
-  { id: 'duas', title: 'Duas', subtitle: 'Für jeden Moment', description: 'Authentische Bittgebete für Alltag, Schutz, Reisen, Schlaf und besondere Situationen.', category: 'Quran & Sunnah', icon: Heart, progress: 27, lessons: 64, accent: 'gold' },
-  { id: 'fasting', title: 'Fasten-Assistent', subtitle: 'Ramadan und freiwilliges Fasten', description: 'Fastentage, Absicht, Regeln und praktische Begleitung übersichtlich an einem Ort.', category: 'Praxis', icon: SunMedium, progress: 15, lessons: 22, accent: 'cream' },
-  { id: 'hajj', title: 'Hajj & Umrah', subtitle: 'Ablauf und Vorbereitung', description: 'Eine klare Schritt-für-Schritt-Begleitung für Rituale, Duas und organisatorische Vorbereitung.', category: 'Praxis', icon: TentTree, progress: 4, lessons: 31, accent: 'emerald' },
-  { id: 'history', title: 'Islamische Geschichte', subtitle: 'Orte, Epochen und Persönlichkeiten', description: 'Erkunde wichtige Orte, Ereignisse und Persönlichkeiten der islamischen Geschichte.', category: 'Geschichte', icon: Landmark, progress: 9, lessons: 45, accent: 'gold' },
-  { id: 'qibla', title: 'Qibla verstehen', subtitle: 'Richtung, Kaaba und Gebet', description: 'Verstehe die Bedeutung der Qibla und nutze anschließend den integrierten Kompass.', category: 'Praxis', icon: Compass, progress: 0, lessons: 7, accent: 'cream' },
-  { id: 'quiz', title: 'Islam Quiz', subtitle: 'Wissen spielerisch prüfen', description: 'Teste dein Wissen in verschiedenen Kategorien und sammle Lernfortschritt.', category: 'Glauben', icon: BrainCircuit, progress: 42, lessons: 20, accent: 'emerald', badge: 'Neu' },
+const categories: LearningCategory[] = [
+  {
+    id: 'aqidah',
+    title: 'Aqidah',
+    subtitle: 'Glaubenslehre',
+    description: 'Lerne die Grundlagen des islamischen Glaubens klar und strukturiert.',
+    icon: Sparkles,
+  },
+  {
+    id: 'fiqh',
+    title: 'Fiqh',
+    subtitle: 'Islamische Rechtslehre',
+    description: 'Verstehe Regeln des Alltags, der Anbetung und des Zusammenlebens.',
+    icon: Scale,
+  },
+  {
+    id: 'tafsir',
+    title: 'Tafsir',
+    subtitle: 'Quran-Erklärungen',
+    description: 'Entdecke Bedeutungen, Hintergründe und Lehren ausgewählter Verse.',
+    icon: BookOpen,
+  },
+  {
+    id: 'seerah',
+    title: 'Seerah',
+    subtitle: 'Biografie des Propheten',
+    description: 'Lerne das Leben, den Charakter und die Lehren des Propheten kennen.',
+    icon: Landmark,
+  },
+  {
+    id: 'hadith',
+    title: 'Hadith',
+    subtitle: 'Überlieferungen',
+    description: 'Lies ausgewählte Hadithe mit Quelle und verständlicher Einordnung.',
+    icon: BookHeart,
+  },
+  {
+    id: 'akhlaq',
+    title: 'Akhlaq',
+    subtitle: 'Charakter & Verhalten',
+    description: 'Stärke deinen Charakter durch Barmherzigkeit, Geduld und Aufrichtigkeit.',
+    icon: HeartHandshake,
+  },
 ];
 
 export function LearnScreen({ onBack }: { onBack: () => void }) {
-  const [category, setCategory] = useState<Category>('Alle');
-  const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<Module | null>(null);
-  const [favorites, setFavorites] = useState(() => new Set(['quran', 'names']));
+  const [selected, setSelected] = useState<LearningCategory | null>(null);
   const [toast, setToast] = useState<string | null>(null);
-
-  const filteredModules = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase('de-DE');
-    return modules.filter((module) => {
-      const categoryMatches = category === 'Alle' || module.category === category;
-      const queryMatches = !normalized || `${module.title} ${module.subtitle} ${module.description}`.toLocaleLowerCase('de-DE').includes(normalized);
-      return categoryMatches && queryMatches;
-    });
-  }, [category, query]);
-
-  const overallProgress = Math.round(modules.reduce((sum, module) => sum + module.progress, 0) / modules.length);
 
   const flash = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(null), 2200);
   };
 
-  const toggleFavorite = (id: string) => {
-    setFavorites((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
-  };
-
   return (
     <motion.main
-      className="screen learn-screen"
+      className="screen reference-learn-screen"
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
-      <header className="learn-header glass-card">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+      <header className="reference-screen-header">
+        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite">
+          <ChevronLeft size={20} />
+        </button>
         <div>
-          <span className="overline">Lernen & entdecken</span>
-          <h1>Islam verstehen</h1>
+          <span className="overline">Nur Islam</span>
+          <h1>Islam lernen</h1>
         </div>
-        <span className="learn-header__icon"><GraduationCap size={23} /></span>
+        <button className="icon-button" onClick={() => flash('Lerneinstellungen geöffnet')} aria-label="Lerneinstellungen">
+          <Settings size={20} />
+        </button>
       </header>
 
-      <section className="learning-hero">
-        <div className="learning-hero__pattern" aria-hidden="true">۞</div>
-        <div className="learning-hero__copy">
+      <section className="reference-learning-hero">
+        <div className="reference-learning-hero__shade" />
+        <div className="reference-learning-hero__copy">
           <span className="hero-pill">Deine Lernreise</span>
-          <h2>Wissen, das dich im Alltag begleitet</h2>
-          <p>Strukturierte Inhalte in einem ruhigen, klaren und hochwertigen Lernerlebnis.</p>
+          <h2>Suche Wissen.<br />Wachse im Glauben.</h2>
+          <p>Entdecke sorgfältig aufgebaute Lektionen, die deinen Alltag und deine Verbindung zu Allah stärken.</p>
         </div>
-        <div className="learning-progress">
-          <div className="learning-progress__ring" style={{ '--learn-progress': `${overallProgress}%` } as React.CSSProperties}>
-            <strong>{overallProgress}%</strong>
-          </div>
-          <span><strong>Gesamtfortschritt</strong><small>{favorites.size} Favoriten · {modules.length} Bereiche</small></span>
+        <div className="reference-learning-hero__badge">
+          <GraduationCap size={17} />
+          <span><strong>12 Lektionen</strong><small>bereits abgeschlossen</small></span>
         </div>
       </section>
 
-      <section className="learn-search-section">
-        <label className="learn-search glass-card">
-          <Search size={19} />
-          <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Quran, Gebet, Propheten …" />
-          {query ? <button onClick={() => setQuery('')} aria-label="Suche löschen"><X size={17} /></button> : null}
-        </label>
-        <div className="learn-filters" aria-label="Lernkategorien">
-          {categories.map((item) => (
-            <button key={item} className={category === item ? 'learn-filter learn-filter--active' : 'learn-filter'} onClick={() => setCategory(item)}>{item}</button>
-          ))}
-        </div>
-      </section>
-
-      <section className="featured-learning glass-card">
-        <div className="featured-learning__icon"><BookOpen size={30} /></div>
-        <div>
-          <span className="overline">Zuletzt geöffnet</span>
-          <h2>Surah Al-Kahf weiterlesen</h2>
-          <p>Ayah 18 von 110 · Übersetzung und Tafsir</p>
-          <div className="featured-learning__progress"><span /></div>
-        </div>
-        <button onClick={() => flash('Quran-Lesemodus geöffnet')} aria-label="Weiterlesen"><ChevronRight size={21} /></button>
-      </section>
-
-      <section className="content-section">
+      <section className="reference-learning-section">
         <div className="section-heading">
-          <div><span className="overline">Bibliothek</span><h2>{category === 'Alle' ? 'Alle Lernbereiche' : category}</h2></div>
-          <span className="learn-result-count">{filteredModules.length} Bereiche</span>
+          <div>
+            <span className="overline">Lernbereiche</span>
+            <h2>Kategorien</h2>
+          </div>
+          <button className="text-button" onClick={() => flash('Alle Kategorien werden angezeigt')}>
+            Alle anzeigen <ChevronRight size={16} />
+          </button>
         </div>
 
-        {filteredModules.length ? (
-          <div className="learning-grid">
-            {filteredModules.map((module, index) => {
-              const Icon = module.icon;
-              const favorite = favorites.has(module.id);
-              return (
-                <motion.article
-                  key={module.id}
-                  className={`learning-card learning-card--${module.accent}`}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: Math.min(index * 0.035, 0.25) }}
-                >
-                  <button className={favorite ? 'learning-card__favorite learning-card__favorite--active' : 'learning-card__favorite'} onClick={() => toggleFavorite(module.id)} aria-label={`${module.title} favorisieren`}>
-                    <Heart size={17} fill={favorite ? 'currentColor' : 'none'} />
-                  </button>
-                  {module.badge ? <span className="learning-card__badge">{module.badge}</span> : null}
-                  <span className="learning-card__icon"><Icon size={27} /></span>
-                  <span className="learning-card__category">{module.category}</span>
-                  <h3>{module.title}</h3>
-                  <p>{module.subtitle}</p>
-                  <div className="learning-card__meta">
-                    <span><Clock3 size={14} /> {module.lessons} Einheiten</span>
-                    <strong>{module.progress}%</strong>
-                  </div>
-                  <div className="learning-card__progress"><span style={{ width: `${module.progress}%` }} /></div>
-                  <button className="learning-card__open" onClick={() => setSelected(module)}>Öffnen <ChevronRight size={17} /></button>
-                </motion.article>
-              );
-            })}
-          </div>
-        ) : (
-          <div className="learn-empty glass-card">
-            <Search size={30} />
-            <h3>Keine Inhalte gefunden</h3>
-            <p>Ändere den Suchbegriff oder wähle eine andere Kategorie.</p>
-            <button className="gold-button" onClick={() => { setQuery(''); setCategory('Alle'); }}>Alle Bereiche anzeigen</button>
-          </div>
-        )}
+        <div className="reference-category-grid">
+          {categories.map((category, index) => {
+            const Icon = category.icon;
+            return (
+              <motion.button
+                key={category.id}
+                className="reference-category-card"
+                onClick={() => setSelected(category)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.045 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <span className="reference-category-card__ornament" aria-hidden="true">۞</span>
+                <span className="reference-category-card__icon"><Icon size={24} /></span>
+                <strong>{category.title}</strong>
+                <small>{category.subtitle}</small>
+              </motion.button>
+            );
+          })}
+        </div>
       </section>
 
-      <section className="ai-learning-card glass-card">
-        <span className="ai-learning-card__icon"><MessageCircleQuestion size={28} /></span>
-        <div><span className="overline">KI-Assistent</span><h2>Fragen stellen und Inhalte erklären lassen</h2><p>Das Premium-Design ist vorbereitet. Die echte, quellenbasierte KI-Anbindung folgt separat.</p></div>
-        <span className="ai-learning-card__status">Design bereit</span>
+      <section className="reference-continue-section">
+        <div className="section-heading">
+          <div>
+            <span className="overline">Dein Fortschritt</span>
+            <h2>Weiterlernen</h2>
+          </div>
+          <button className="text-button" onClick={() => flash('Dein Lernfortschritt wurde geöffnet')}>
+            Alle <ChevronRight size={16} />
+          </button>
+        </div>
+
+        <button className="reference-continue-card" onClick={() => flash('Die Reinigung des Herzens geöffnet')}>
+          <span className="reference-continue-card__cover"><BookMarked size={28} /></span>
+          <span className="reference-continue-card__copy">
+            <small>Akhlaq · Lektion 4</small>
+            <strong>Die Reinigung des Herzens</strong>
+            <em>45 % abgeschlossen</em>
+            <span className="reference-progress"><span /></span>
+          </span>
+          <ChevronRight size={20} />
+        </button>
+      </section>
+
+      <section className="reference-knowledge-quote">
+        <span className="reference-knowledge-quote__mark"><Star size={18} /></span>
+        <p>„Und sprich: Mein Herr, mehre mein Wissen.“</p>
+        <small>Sure Taha · 20:114</small>
       </section>
 
       <AnimatePresence>
         {selected ? (
-          <motion.div className="learn-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section className="learn-modal" initial={{ opacity: 0, y: 28, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 18, scale: 0.98 }} onClick={(event) => event.stopPropagation()}>
-              <button className="learn-modal__close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={19} /></button>
-              <span className={`learn-modal__icon learn-modal__icon--${selected.accent}`}><selected.icon size={33} /></span>
-              <span className="overline">{selected.category}</span>
+          <motion.div
+            className="reference-modal-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setSelected(null)}
+          >
+            <motion.section
+              className="reference-category-modal"
+              initial={{ opacity: 0, y: 24, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 14, scale: 0.98 }}
+              onClick={(event) => event.stopPropagation()}
+            >
+              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
+              <span className="reference-category-modal__icon"><selected.icon size={31} /></span>
+              <span className="overline">Islam lernen</span>
               <h2>{selected.title}</h2>
               <h3>{selected.subtitle}</h3>
               <p>{selected.description}</p>
-              <div className="learn-modal__stats">
-                <span><strong>{selected.lessons}</strong><small>Einheiten</small></span>
-                <span><strong>{selected.progress}%</strong><small>Fortschritt</small></span>
-                <span><strong>{favorites.has(selected.id) ? 'Ja' : 'Nein'}</strong><small>Favorit</small></span>
+              <div className="reference-category-modal__meta">
+                <span><CircleCheck size={16} /> Authentische Quellen</span>
+                <span><ScrollText size={16} /> Schrittweise Lektionen</span>
+                <span><UsersRound size={16} /> Für Einsteiger geeignet</span>
               </div>
-              <button className="gold-button" onClick={() => { flash(`${selected.title} geöffnet`); setSelected(null); }}>Lernen beginnen <ChevronRight size={17} /></button>
+              <button className="gold-button" onClick={() => { flash(`${selected.title} geöffnet`); setSelected(null); }}>
+                Lernen beginnen <ChevronRight size={17} />
+              </button>
             </motion.section>
           </motion.div>
         ) : null}
