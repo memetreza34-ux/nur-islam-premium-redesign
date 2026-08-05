@@ -27,6 +27,7 @@ import {
   UsersRound,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { PrayerScreen } from './PrayerScreen';
 
 type Tab = 'home' | 'prayer' | 'calendar' | 'learn' | 'more';
 
@@ -308,14 +309,13 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   );
 }
 
-const placeholderContent: Record<Exclude<Tab, 'home'>, { title: string; subtitle: string; icon: LucideIcon }> = {
-  prayer: { title: 'Gebete', subtitle: 'Gebetszeiten, Tracker und Adhan werden im nächsten Schritt übertragen.', icon: MoonStar },
-  calendar: { title: 'Kalender', subtitle: 'Islamische Ereignisse und persönliche Termine folgen nach dem Home-Screen.', icon: CalendarDays },
+const placeholderContent: Record<Exclude<Tab, 'home' | 'prayer'>, { title: string; subtitle: string; icon: LucideIcon }> = {
+  calendar: { title: 'Kalender', subtitle: 'Islamische Ereignisse und persönliche Termine folgen als Nächstes.', icon: CalendarDays },
   learn: { title: 'Islam verstehen', subtitle: 'Quran, Hadith, Wissen und Lernbereiche erhalten dasselbe Premium-System.', icon: BookOpen },
   more: { title: 'Mehr & Einstellungen', subtitle: 'Profil, Sprache, Benachrichtigungen und Cloud-Sync werden anschließend umgebaut.', icon: Menu },
 };
 
-function PlaceholderScreen({ tab, onBack }: { tab: Exclude<Tab, 'home'>; onBack: () => void }) {
+function PlaceholderScreen({ tab, onBack }: { tab: Exclude<Tab, 'home' | 'prayer'>; onBack: () => void }) {
   const { title, subtitle, icon: Icon } = placeholderContent[tab];
   return (
     <motion.main className="screen placeholder-screen" initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -361,6 +361,8 @@ export default function App() {
       <div className="app-shell">
         {activeTab === 'home' ? (
           <PremiumHome onNavigate={setActiveTab} />
+        ) : activeTab === 'prayer' ? (
+          <PrayerScreen onBack={() => setActiveTab('home')} />
         ) : (
           <PlaceholderScreen tab={activeTab} onBack={() => setActiveTab('home')} />
         )}
