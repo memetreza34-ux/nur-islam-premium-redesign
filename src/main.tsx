@@ -17,12 +17,17 @@ import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
 import './styles.css';
 
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
 registerNurPwa();
 
 function BootRoot() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const timer = window.setTimeout(() => setReady(true), reducedMotion ? 250 : 1050);
     return () => window.clearTimeout(timer);
