@@ -1,0 +1,65 @@
+html,
+body,
+#root,
+.app-entry {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-background {
+  width: 100%;
+  height: 100svh;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-shell:not(.app-shell--onboarding) {
+  display: flex;
+  width: min(100%, 470px);
+  height: 100svh;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+.app-shell:not(.app-shell--onboarding) .screen-transition-frame {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  padding-bottom: calc(126px + env(safe-area-inset-bottom));
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-shell:not(.app-shell--onboarding) .screen-transition-frame::-webkit-scrollbar {
+  display: none;
+}
+
+.app-shell--detail .screen-transition-frame {
+  padding-bottom: max(30px, env(safe-area-inset-bottom));
+}
+
+.app-shell:not(.app-shell--onboarding) .bottom-nav {
+  position: absolute;
+  right: 14px;
+  bottom: max(12px, env(safe-area-inset-bottom));
+  left: 14px;
+  width: auto;
+  transform: none;
+}
+
+@media (min-width: 760px) {
+  .app-shell:not(.app-shell--onboarding) {
+    width: min(100%, 520px);
+  }
+
+  .app-shell:not(.app-shell--onboarding) .bottom-nav {
+    right: 24px;
+    left: 24px;
+  }
+}
