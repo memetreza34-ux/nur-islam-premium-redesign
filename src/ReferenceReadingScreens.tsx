@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   Bookmark,
@@ -42,6 +42,25 @@ const readerVerses: ReaderVerse[] = [
   { number: 4, arabic: 'وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌ', meaning: 'Sinngemäße Bedeutung: Niemand ist Ihm ebenbürtig.' },
 ];
 
+function readNumberSet(key: string, fallback: number[]) {
+  try {
+    const stored = localStorage.getItem(key);
+    const parsed = stored ? JSON.parse(stored) as number[] : fallback;
+    return new Set(Array.isArray(parsed) ? parsed : fallback);
+  } catch {
+    return new Set(fallback);
+  }
+}
+
+function readStoredNumber(key: string, fallback: number) {
+  try {
+    const value = Number(localStorage.getItem(key));
+    return Number.isFinite(value) ? value : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
 function useToast() {
   const [toast, setToast] = useState<ToastState>(null);
   const flash = (message: string) => {
@@ -62,21 +81,25 @@ function ScreenHeader({ title, eyebrow, onBack, action }: { title: string; eyebr
 }
 
 function Toast({ message }: { message: string | null }) {
-  return (
-    <AnimatePresence>
-      {message ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {message}</motion.div> : null}
-    </AnimatePresence>
-  );
+  return <AnimatePresence>{message ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {message}</motion.div> : null}</AnimatePresence>;
 }
 
 export function QuranReaderScreen({ onBack }: { onBack: () => void }) {
-  const [fontSize, setFontSize] = useState(34);
+  const [fontSize, setFontSize] = useState(() => readStoredNumber('nur_reader_font_size', 34));
   const [translation, setTranslation] = useState(true);
   const [playing, setPlaying] = useState(false);
-  const [bookmarks, setBookmarks] = useState(() => new Set<number>([1]));
+  const [bookmarks, setBookmarks] = useState(() => readNumberSet('nur_quran_bookmarks_112', [1]));
   const { toast, flash } = useToast();
-
   const progress = useMemo(() => `${Math.round((1 / readerVerses.length) * 100)}%`, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem('nur_reader_font_size', String(fontSize));
+      localStorage.setItem('nur_quran_bookmarks_112', JSON.stringify([...bookmarks]));
+    } catch {
+      // Local persistence is optional.
+    }
+  }, [fontSize, bookmarks]);
 
   const toggleBookmark = (number: number) => {
     setBookmarks((current) => {
@@ -91,12 +114,8 @@ export function QuranReaderScreen({ onBack }: { onBack: () => void }) {
       <ScreenHeader title="Quran lesen" eyebrow="Sure 112" onBack={onBack} action={() => flash('Leseeinstellungen geöffnet')} />
 
       <section className="reference-reader-hero">
-        <div>
-          <span className="hero-pill">Al-Ikhlas</span>
-          <h2>Die Aufrichtigkeit</h2>
-          <p>4 Ayat · Mekkanisch</p>
-        </div>
-        <PremiumImage src="/premium-assets/high-res-objects/quran-open.png" fallback={<QuranObject />} />
+        <div><span className="hero-pill">Al-Ikhlas</span><h2>Die Aufrichtigkeit</h2><p>4 Ayat · Mekkanisch</p></div>
+        <PremiumImage src="/premium-assets/high-res-objects/quran-closed.webp" fallback={<QuranObject />} />
         <span className="reference-reader-progress"><i style={{ width: progress }} /></span>
       </section>
 
@@ -129,29 +148,28 @@ export function QuranReaderScreen({ onBack }: { onBack: () => void }) {
 }
 
 export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => readStoredNumber('nur_daily_ayah_saved', 0) === 1);
   const [playing, setPlaying] = useState(false);
   const { toast, flash } = useToast();
+
+  useEffect(() => {
+    try { localStorage.setItem('nur_daily_ayah_saved', saved ? '1' : '0'); } catch { /* optional */ }
+  }, [saved]);
 
   return (
     <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <ScreenHeader title="Ayah des Tages" eyebrow="Tägliche Inspiration" onBack={onBack} action={() => flash('Darstellung geöffnet')} />
 
       <section className="reference-ayah-hero">
-        <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch.png" className="reference-ayah-hero__art" fallback={<Sparkles size={72} />} />
+        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold.webp" className="reference-ayah-hero__art" fallback={<Sparkles size={72} />} />
         <span className="hero-pill">Sure Al-Ikhlas · 112:1</span>
         <p dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
         <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote>
         <div><button onClick={() => setPlaying((value) => !value)}>{playing ? <Pause size={18} /> : <Headphones size={18} />}{playing ? 'Pausieren' : 'Anhören'}</button><button className={saved ? 'is-saved' : ''} onClick={() => setSaved((value) => !value)}>{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}{saved ? 'Gespeichert' : 'Speichern'}</button></div>
       </section>
 
-      <section className="reference-reflection-card">
-        <span className="reference-reflection-card__icon"><Sparkles size={20} /></span>
-        <span><small>Reflexion</small><h2>Die vollkommene Einheit Allahs</h2><p>Die Sure richtet den Glauben ausschließlich auf Allah. Sie beschreibt Seine Einzigkeit und dass nichts mit Ihm vergleichbar ist.</p></span>
-      </section>
-
+      <section className="reference-reflection-card"><span className="reference-reflection-card__icon"><Sparkles size={20} /></span><span><small>Reflexion</small><h2>Die vollkommene Einheit Allahs</h2><p>Die Sure richtet den Glauben ausschließlich auf Allah. Sie beschreibt Seine Einzigkeit und dass nichts mit Ihm vergleichbar ist.</p></span></section>
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Klare Quellenkennzeichnung</strong><small>Quran 112:1. Die deutsche Formulierung ist eine sinngemäße Bedeutung und keine vorgetäuschte Originalübersetzung.</small></span></section>
-
       <div className="reference-detail-actions"><button onClick={() => flash('Ayah kopiert')}><Copy size={18} /> Kopieren</button><button onClick={() => flash('Teilen geöffnet')}><Share2 size={18} /> Teilen</button></div>
       <Toast message={toast} />
     </motion.main>
@@ -159,31 +177,21 @@ export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
 }
 
 export function HadithDetailScreen({ onBack }: { onBack: () => void }) {
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => readStoredNumber('nur_daily_hadith_saved', 0) === 1);
   const { toast, flash } = useToast();
+
+  useEffect(() => {
+    try { localStorage.setItem('nur_daily_hadith_saved', saved ? '1' : '0'); } catch { /* optional */ }
+  }, [saved]);
 
   return (
     <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <ScreenHeader title="Hadith des Tages" eyebrow="Authentische Überlieferung" onBack={onBack} action={() => flash('Hadith-Einstellungen geöffnet')} />
 
-      <section className="reference-hadith-hero">
-        <span className="reference-hadith-hero__mark">ﷺ</span>
-        <span className="hero-pill">Absicht · Niyyah</span>
-        <blockquote>Sinngemäß: Taten werden entsprechend den Absichten bewertet, und jeder Mensch erhält entsprechend seiner Absicht.</blockquote>
-        <footer>Überliefert von ʿUmar ibn al-Khattab</footer>
-      </section>
-
+      <section className="reference-hadith-hero"><span className="reference-hadith-hero__mark">ﷺ</span><span className="hero-pill">Absicht · Niyyah</span><blockquote>Sinngemäß: Taten werden entsprechend den Absichten bewertet, und jeder Mensch erhält entsprechend seiner Absicht.</blockquote><footer>Überliefert von ʿUmar ibn al-Khattab</footer></section>
       <section className="reference-source-card reference-source-card--strong"><ShieldCheck size={19} /><span><strong>Sahih al-Bukhari 1 · Sahih Muslim 1907</strong><small>Der Text wird bewusst sinngemäß wiedergegeben. Vor Veröffentlichung sollten Wortlaut und Lokalisierung nochmals mit einer geprüften Hadith-Datenquelle abgeglichen werden.</small></span></section>
-
-      <section className="reference-reflection-card">
-        <span className="reference-reflection-card__icon"><Sparkles size={20} /></span>
-        <span><small>Was du mitnehmen kannst</small><h2>Die Absicht gibt der Tat ihre Richtung</h2><p>Eine alltägliche Handlung kann durch eine aufrichtige Absicht zu einer guten Tat werden. Prüfe vor wichtigen Handlungen, warum du sie ausführst.</p></span>
-      </section>
-
-      <section className="reference-hadith-points">
-        {['Absicht vor der Handlung bewusst machen', 'Aufrichtigkeit regelmäßig prüfen', 'Gute Gewohnheiten mit einem klaren Ziel verbinden'].map((point) => <span key={point}><Check size={16} /> {point}</span>)}
-      </section>
-
+      <section className="reference-reflection-card"><span className="reference-reflection-card__icon"><Sparkles size={20} /></span><span><small>Was du mitnehmen kannst</small><h2>Die Absicht gibt der Tat ihre Richtung</h2><p>Eine alltägliche Handlung kann durch eine aufrichtige Absicht zu einer guten Tat werden. Prüfe vor wichtigen Handlungen, warum du sie ausführst.</p></span></section>
+      <section className="reference-hadith-points">{['Absicht vor der Handlung bewusst machen', 'Aufrichtigkeit regelmäßig prüfen', 'Gute Gewohnheiten mit einem klaren Ziel verbinden'].map((point) => <span key={point}><Check size={16} /> {point}</span>)}</section>
       <div className="reference-detail-actions"><button className={saved ? 'is-saved' : ''} onClick={() => setSaved((value) => !value)}>{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}{saved ? 'Gespeichert' : 'Speichern'}</button><button onClick={() => flash('Hadith teilen geöffnet')}><Share2 size={18} /> Teilen</button></div>
       <Toast message={toast} />
     </motion.main>
@@ -218,14 +226,22 @@ const salahSteps: GuideStep[] = [
 
 export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: GuideMode; onBack: () => void }) {
   const [mode, setMode] = useState<GuideMode>(initialMode);
-  const [activeStep, setActiveStep] = useState(0);
+  const [activeStep, setActiveStep] = useState(() => Math.max(0, Math.min(5, readStoredNumber(`nur_guide_${initialMode}_step`, 0))));
   const { toast, flash } = useToast();
   const steps = mode === 'wudu' ? wuduSteps : salahSteps;
 
+  useEffect(() => {
+    try { localStorage.setItem(`nur_guide_${mode}_step`, String(activeStep)); } catch { /* optional */ }
+  }, [mode, activeStep]);
+
   const changeMode = (next: GuideMode) => {
     setMode(next);
-    setActiveStep(0);
+    setActiveStep(Math.max(0, Math.min(5, readStoredNumber(`nur_guide_${next}_step`, 0))));
   };
+
+  const heroAsset = mode === 'wudu'
+    ? '/premium-assets/high-res-objects/mosque-gold.webp'
+    : '/premium-assets/high-res-objects/qibla-compass.webp';
 
   return (
     <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
@@ -234,12 +250,11 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
       <div className="reference-guide-tabs"><button className={mode === 'wudu' ? 'is-active' : ''} onClick={() => changeMode('wudu')}><Droplets size={18} /> Wudu</button><button className={mode === 'salah' ? 'is-active' : ''} onClick={() => changeMode('salah')}><Sparkles size={18} /> Salah</button></div>
 
       <section className={`reference-guide-hero reference-guide-hero--${mode}`}>
-        <PremiumImage src={mode === 'wudu' ? '/premium-assets/high-res-objects/wudu.png' : '/premium-assets/high-res-objects/prayer-rug.png'} fallback={mode === 'wudu' ? <Droplets size={76} /> : <Sparkles size={76} />} />
-        <div><span className="hero-pill">{mode === 'wudu' ? 'Reinigung' : 'Gebet'}</span><h2>{mode === 'wudu' ? 'Bereite dich bewusst auf das Gebet vor.' : 'Lerne den Ablauf ruhig und verständlich.'}</h2><p>{steps.length} kompakte Schritte · lokale Speicherung des Fortschritts</p></div>
+        <PremiumImage src={heroAsset} fallback={mode === 'wudu' ? <Droplets size={76} /> : <Sparkles size={76} />} />
+        <div><span className="hero-pill">{mode === 'wudu' ? 'Reinigung' : 'Gebet'}</span><h2>{mode === 'wudu' ? 'Bereite dich bewusst auf das Gebet vor.' : 'Lerne den Ablauf ruhig und verständlich.'}</h2><p>{steps.length} kompakte Schritte · Fortschritt lokal gespeichert</p></div>
       </section>
 
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Wichtiger Hinweis</strong><small>Dieser Bereich ist ein verständlicher Überblick. Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen. Für verbindliche Praxisfragen sollte eine vertrauenswürdige Lehrperson vor Ort hinzugezogen werden.</small></span></section>
-
       <section className="reference-guide-progress"><span><strong>Schritt {activeStep + 1}</strong><small>von {steps.length}</small></span><div><i style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }} /></div></section>
 
       <section className="reference-guide-steps">
