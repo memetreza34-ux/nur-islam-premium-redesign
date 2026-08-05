@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookHeart,
@@ -14,10 +14,11 @@ import {
   MapPin,
   Menu,
   MessageCircleQuestion,
+  MoonStar,
   Play,
   Quote,
-  Settings,
   Sparkles,
+  Sunrise,
   SunMedium,
   UsersRound,
 } from 'lucide-react';
@@ -27,6 +28,7 @@ import { CalendarScreen } from './CalendarScreen';
 import { DhikrScreen } from './DhikrScreen';
 import { CollectionsScreen, MosqueScreen, NamesScreen } from './DiscoveryScreens';
 import { DuasScreen } from './DuasScreen';
+import { InstallAppPrompt } from './InstallAppPrompt';
 import { LearnScreen } from './LearnScreen';
 import { MoreScreen } from './MoreScreen';
 import { OnboardingScreen } from './OnboardingScreen';
@@ -49,6 +51,12 @@ import {
   QuranObject,
   RosetteObject,
 } from './PremiumVisuals';
+import {
+  formatPrayerRemaining,
+  getNextPrayer,
+  PRAYER_SCHEDULE,
+  PRAYER_SCHEDULE_META,
+} from './prayerSchedule';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah';
@@ -86,16 +94,29 @@ const screensWithBottomNavigation = new Set<Tab>([
   'assistant',
 ]);
 
-function getIslamicDate() {
+function getIslamicDate(date = new Date()) {
   try {
     return new Intl.DateTimeFormat('de-DE-u-ca-islamic', {
       day: 'numeric',
       month: 'long',
       year: 'numeric',
-    }).format(new Date());
+    }).format(date);
   } catch {
     return 'Islamischer Kalender';
   }
+}
+
+function getHomeGreeting(date: Date) {
+  const hour = date.getHours();
+  if (hour < 11) return 'Ein friedlicher Morgen für deinen Glauben.';
+  if (hour < 18) return 'Ein ruhiger Tag für deinen Glauben.';
+  return 'Ein gesegneter Abend für deinen Glauben.';
+}
+
+function PrayerVisual({ visual, size = 14 }: { visual: 'moon' | 'sunrise' | 'sun'; size?: number }) {
+  if (visual === 'moon') return <MoonStar size={size} />;
+  if (visual === 'sunrise') return <Sunrise size={size} />;
+  return <SunMedium size={size} />;
 }
 
 function hasCompletedOnboarding() {
@@ -108,7 +129,15 @@ function hasCompletedOnboarding() {
 
 function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
   const [toast, setToast] = useState<string | null>(null);
-  const islamicDate = useMemo(getIslamicDate, []);
+  const [now, setNow] = useState(() => new Date());
+  const islamicDate = getIslamicDate(now);
+  const nextPrayer = getNextPrayer(now);
+  const greeting = getHomeGreeting(now);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 30000);
+    return () => window.clearInterval(timer);
+  }, []);
 
   const showToast = (message: string) => {
     setToast(message);
@@ -139,11 +168,11 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         <PremiumImage src="/premium-assets/high-res-objects/mosque-gold.webp" className="welcome-hero__visual" fallback={<MosqueScene />} />
         <div className="welcome-hero__copy">
           <span className="overline">Assalamu Alaikum</span>
-          <h1>Ein ruhiger Ort für deinen Glauben.</h1>
+          <h1>{greeting}</h1>
           <p>Möge Allah deinen Tag segnen, dir Frieden schenken und dich im Guten bestärken.</p>
         </div>
         <button className="welcome-hero__date" onClick={() => onNavigate('calendar')}>
-          <span className="welcome-hero__date-day">{new Date().getDate()}</span>
+          <span className="welcome-hero__date-day">{now.getDate()}</span>
           <span><strong>{islamicDate}</strong><small>Islamischer Kalender</small></span>
           <CalendarDays size={20} />
         </button>
@@ -152,18 +181,31 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
         <div className="prayer-hero__content">
           <div className="hero-meta">
-            <span className="hero-pill">Nächstes Gebet</span>
-            <span className="location"><MapPin size={14} /> Berlin</span>
+            <span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
+            <span className="location"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
           </div>
           <div className="hero-main">
-            <div><span className="arabic-label">الظهر</span><h2>Dhuhr</h2><div className="countdown">in 2 Std. 15 Min.</div></div>
-            <div className="hero-orb"><span className="hero-orb__ring" /><SunMedium size={31} /><strong>12:45</strong></div>
+            <div>
+              <span className="arabic-label">{nextPrayer.prayer.arabic}</span>
+              <h2>{nextPrayer.prayer.label}</h2>
+              <div className="countdown">{nextPrayer.tomorrow ? 'morgen in ' : 'in '}{formatPrayerRemaining(nextPrayer.remaining)}</div>
+            </div>
+            <div className="hero-orb">
+              <span className="hero-orb__ring" />
+              <PrayerVisual visual={nextPrayer.prayer.visual} size={31} />
+              <strong>{nextPrayer.prayer.time}</strong>
+            </div>
           </div>
           <div className="prayer-mini-times">
-            {[
-              ['Fajr', '05:24'], ['Sonne', '06:49'], ['Dhuhr', '12:45'], ['Asr', '15:37'], ['Maghrib', '17:28'], ['Isha', '18:54'],
-            ].map(([name, time]) => <span className={name === 'Dhuhr' ? 'is-current' : ''} key={name}><SunMedium size={14} /><small>{name}</small><strong>{time}</strong></span>)}
+            {PRAYER_SCHEDULE.map((prayer) => (
+              <span className={prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
+                <PrayerVisual visual={prayer.visual} />
+                <small>{prayer.compactLabel}</small>
+                <strong>{prayer.time}</strong>
+              </span>
+            ))}
           </div>
+          <span className="prayer-source-note">{PRAYER_SCHEDULE_META.sourceLabel} · {PRAYER_SCHEDULE_META.methodLabel}</span>
           <button className="gold-button" onClick={() => onNavigate('prayer')}>Alle Gebetszeiten <ChevronRight size={18} /></button>
         </div>
       </section>
@@ -231,7 +273,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
         <div className="recommendation-list">
           <button className="recommendation-card" onClick={() => onNavigate('calendar')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => showToast('Ummah-Weltkarte geöffnet')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('profile')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
@@ -346,6 +388,7 @@ export default function App() {
         </AnimatePresence>
         {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={setActiveTab} /> : null}
       </div>
+      <InstallAppPrompt />
     </div>
   );
 }
