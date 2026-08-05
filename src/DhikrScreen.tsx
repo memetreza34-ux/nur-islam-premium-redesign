@@ -22,7 +22,9 @@ const dhikrCategories = [
 
 function readDhikrCount() {
   try {
-    const stored = Number(localStorage.getItem('nur_dhikr_count'));
+    const raw = localStorage.getItem('nur_dhikr_count');
+    if (raw === null) return 33;
+    const stored = Number(raw);
     return Number.isFinite(stored) ? Math.min(100, Math.max(0, stored)) : 33;
   } catch {
     return 33;
