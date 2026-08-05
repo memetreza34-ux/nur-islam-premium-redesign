@@ -23,6 +23,8 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
+import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { NurMark, PremiumImage } from './PremiumVisuals';
 
 type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding';
@@ -84,6 +86,7 @@ function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: P
 
 export function MoreScreen({ onBack }: { onBack: () => void }) {
   const [modal, setModal] = useState<ModalMode>(null);
+  const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [theme, setTheme] = useState(() => readStored('premium_theme', 'Dunkel'));
   const [language, setLanguage] = useState(() => readStored('premium_language', 'Deutsch'));
   const [notifications, setNotifications] = useState(() => readStored('premium_prayer_notifications', true));
@@ -131,6 +134,10 @@ export function MoreScreen({ onBack }: { onBack: () => void }) {
     flash('Einstellung gespeichert');
   };
 
+  if (legacyFeature) {
+    return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
+  }
+
   return (
     <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
@@ -146,6 +153,31 @@ export function MoreScreen({ onBack }: { onBack: () => void }) {
       </section>
 
       <section className="reference-profile-section"><span className="reference-profile-section__label">Deine Inhalte</span><ProfileList rows={journeyRows} onSelect={selectRow} /></section>
+
+      <section className="reference-profile-section reference-services-section">
+        <span className="reference-profile-section__label">Islamische Dienste</span>
+        <p className="reference-services-section__intro">Die wichtigen Zusatzfunktionen der alten App bleiben erhalten und folgen jetzt dem neuen Premium-Aufbau.</p>
+        <div className="reference-services-grid">
+          {serviceLegacyFeatures.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.button
+                key={feature.id}
+                onClick={() => setLegacyFeature(feature.id)}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * .035 }}
+                whileTap={{ scale: .98 }}
+              >
+                <span className="reference-services-grid__icon"><Icon size={21} /></span>
+                <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
+                <ChevronRight size={17} />
+              </motion.button>
+            );
+          })}
+        </div>
+      </section>
+
       <section className="reference-profile-section"><span className="reference-profile-section__label">Personalisierung</span><ProfileList rows={preferenceRows} onSelect={selectRow} /></section>
       <section className="reference-profile-section"><span className="reference-profile-section__label">Informationen</span><ProfileList rows={supportRows} onSelect={selectRow} /></section>
 
