@@ -1,4 +1,4 @@
-const CACHE_NAME = 'nur-islam-premium-v3';
+const CACHE_NAME = 'nur-islam-premium-v4';
 const APP_SHELL = [
   '/',
   '/index.html',
@@ -51,11 +51,21 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Never cache premium artwork until the original source files have been
-  // replaced with verified PNG/WebP binaries. This prevents broken image
-  // payloads from surviving a code update in an installed PWA.
+  // Versioned premium assets are verified WebP files. Use network-first so a
+  // newly recovered image replaces stale data immediately, then keep the valid
+  // response for installed/offline use.
   if (url.pathname.startsWith('/premium-assets/')) {
-    event.respondWith(fetch(request).catch(() => Response.error()));
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(async () => (await caches.match(request)) || Response.error())
+    );
     return;
   }
 
