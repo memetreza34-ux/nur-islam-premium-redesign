@@ -17,12 +17,12 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Gebetszeiten | Teilweise | Echte standort- und methodenabhängige Quelle anbinden |
 | Islamischer Kalender | Vorhanden | Regionale Hijri-Abweichungen und Ereignisquelle ergänzen |
 | Quran | Teilweise | 114-Suren-Katalog, Suche, Filter, Favoriten und dynamischer Offline-Reader vorhanden; aktuell Al-Fatiha, Al-Ikhlas, Al-Falaq und An-Nas vollständig lokal, restliche arabische und deutsche Dateien werden weiter aus dem Altbestand übertragen |
-| Dhikr | Teilweise | Vollständige Kategorien, Quellen und Ziele übernehmen |
+| Dhikr | Migriert | Belegte Routinen nach dem Gebet, morgens und vor dem Schlafen sowie neutraler freier Zähler; tägliche Einzelstände, automatische Tagesgrenze, Fortschritt und sichtbare Quellen |
 | Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
 | Duas | Migriert | 34 Einträge in 13 Kategorien, Suche, Favoriten, Lesefortschritt, Detailansicht, Kopieren und Teilen; fachliche Einzelprüfung ausstehend |
 | 99 Namen Allahs | Migriert | 99 Einträge, Suche, Favoriten, Lernstatus, Fortschritt und Detailansicht; fachliche Endprüfung von Reihenfolge, Schreibweisen und Bedeutungen ausstehend |
 | Moscheesuche | Teilweise | Live-Karten- und Standortdaten anbinden |
-| Sammlungen | Vorhanden | Quran-Lesezeichen über alle lokal verfügbaren Suren zusammenführen, weitere Inhaltstypen und Export ergänzen |
+| Sammlungen | Migriert | Quran-Ayah-Lesezeichen aller lokalen Suren, Lieblingssuren, Duas, Namen, Tagesinhalte und Kalendertage werden zusammengeführt; direkte Zielnavigation und Export bleiben offen |
 | Nur-Assistent | Teilweise | Sicheren Backend- und Quellenprozess entwickeln |
 
 ## Quran-Migration
@@ -38,6 +38,17 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Vollständiger Textbestand | Teilweise | 4 von 114 Suren paarweise in Arabisch und Deutsch übertragen; restliche Dateien offen |
 | Audio | Offen | Erst mit geprüfter Rezitationsquelle aktivieren; aktuelle Oberfläche täuscht keine Wiedergabe vor |
 | Deutsche Bedeutungen | Teilweise | Altbestand übernommen und ausdrücklich als sinngemäße Bedeutung markiert; fachliche Endprüfung ausstehend |
+
+## Dhikr-Migration
+
+| Bestandteil | Status | Umsetzung |
+|---|---|---|
+| Nach dem Gebet | Migriert | 33 Tasbih, 33 Tahmid, 33 Takbir und abschließender Tahlil; Quellenhinweis Sahih Muslim 597a |
+| Morgenroutine | Migriert | Dreimaliger umfassender Tasbih; Quellenhinweis Sahih Muslim 2726a |
+| Vor dem Schlafen | Migriert | Tasbih, Tahmid und Takbir mit sichtbarem Variantenhinweis; Quellenhinweis Sahih al-Bukhari 6318 |
+| Freier Zähler | Migriert | Neutraler persönlicher Zähler ohne behauptete religiöse Sollzahl |
+| Tagesfortschritt | Migriert | Einzelstände je Routine und Dhikr, automatischer Datumswechsel und Routine-Fortschritt |
+| Quellenanzeige | Migriert | Quelle, sinngemäße Bedeutung und Variantenhinweis direkt im Screen |
 
 ## Wiederhergestellte Lernfunktionen
 
