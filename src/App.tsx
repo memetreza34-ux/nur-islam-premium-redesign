@@ -341,6 +341,15 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, onboardingComplete, selectedSurahNumber]);
 
+  useEffect(() => {
+    const openPrayerTracker = () => {
+      setOnboardingComplete(true);
+      setActiveTab('prayer');
+    };
+    window.addEventListener('nur:open-prayer', openPrayerTracker);
+    return () => window.removeEventListener('nur:open-prayer', openPrayerTracker);
+  }, []);
+
   const goHome = () => setActiveTab('home');
   const goQuran = () => setActiveTab('quran');
   const goLearn = () => setActiveTab('learn');
