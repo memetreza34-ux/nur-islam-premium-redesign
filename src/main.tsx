@@ -10,7 +10,8 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
-import { AppErrorBoundary, NetworkStatus } from './AppSystemLayer';
+import { AppErrorBoundary, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
+import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
@@ -81,6 +82,8 @@ function BootRoot() {
     return () => { active = false; };
   }, []);
 
+  useEffect(() => startPrayerReminderScheduler(), []);
+
   return (
     <AnimatePresence mode="wait" initial={false}>
       {ready ? (
@@ -95,6 +98,7 @@ function BootRoot() {
             <App />
             <ReferenceArtworkHost />
             <NetworkStatus />
+            <PrayerReminderBanner />
           </AppErrorBoundary>
         </motion.div>
       ) : <SplashScreen key="splash" />}
