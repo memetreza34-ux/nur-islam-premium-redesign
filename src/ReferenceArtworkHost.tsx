@@ -1,25 +1,26 @@
 import { useEffect, useState } from 'react';
-import { ReferenceSprite, type ReferenceSpriteAsset } from './ReferenceSprite';
 
 type Accent = {
-  asset: ReferenceSpriteAsset;
+  src: string;
   className: string;
   label: string;
 };
 
+const asset = (name: string) => `/premium-assets/high-res-objects/${name}-v2.webp`;
+
 const accents: Record<string, Accent[]> = {
-  prayer: [{ asset: 'dome', className: 'reference-artwork-layer__dome', label: 'Goldene Moscheekuppel' }],
+  prayer: [{ src: asset('dome'), className: 'reference-artwork-layer__dome', label: 'Goldene Moscheekuppel' }],
   calendar: [
-    { asset: 'sun-emblem', className: 'reference-artwork-layer__sun', label: 'Islamisches Sonnenemblem' },
-    { asset: 'calendar-chip', className: 'reference-artwork-layer__calendar-chip', label: 'Goldene Kalenderkarte' },
+    { src: asset('sun-emblem'), className: 'reference-artwork-layer__sun', label: 'Islamisches Sonnenemblem' },
+    { src: asset('calendar-chip'), className: 'reference-artwork-layer__calendar-chip', label: 'Goldene Kalenderkarte' },
   ],
-  duas: [{ asset: 'dua-hands', className: 'reference-artwork-layer__hands', label: 'Hände im Dua' }],
-  qibla: [{ asset: 'kaaba', className: 'reference-artwork-layer__kaaba', label: 'Kaaba' }],
-  ayah: [{ asset: 'mihrab', className: 'reference-artwork-layer__mihrab', label: 'Illuminierter Mihrab' }],
-  hadith: [{ asset: 'lantern', className: 'reference-artwork-layer__lantern', label: 'Goldene Laterne' }],
-  learn: [{ asset: 'mihrab', className: 'reference-artwork-layer__learn-mihrab', label: 'Illuminierter Gebetsbogen' }],
-  profile: [{ asset: 'bookmark', className: 'reference-artwork-layer__bookmark', label: 'Goldenes Lesezeichen' }],
-  collections: [{ asset: 'bookmark', className: 'reference-artwork-layer__collection-bookmark', label: 'Goldenes Lesezeichen' }],
+  duas: [{ src: asset('dua-hands'), className: 'reference-artwork-layer__hands', label: 'Hände im Dua' }],
+  qibla: [{ src: asset('kaaba'), className: 'reference-artwork-layer__kaaba', label: 'Kaaba' }],
+  ayah: [{ src: asset('mihrab-arch'), className: 'reference-artwork-layer__mihrab', label: 'Illuminierter Mihrab' }],
+  hadith: [{ src: asset('lantern'), className: 'reference-artwork-layer__lantern', label: 'Goldene Laterne' }],
+  learn: [{ src: asset('mihrab-arch'), className: 'reference-artwork-layer__learn-mihrab', label: 'Illuminierter Gebetsbogen' }],
+  profile: [{ src: asset('bookmark'), className: 'reference-artwork-layer__bookmark', label: 'Goldenes Lesezeichen' }],
+  collections: [{ src: asset('bookmark'), className: 'reference-artwork-layer__collection-bookmark', label: 'Goldenes Lesezeichen' }],
 };
 
 function detectScreen() {
@@ -61,11 +62,13 @@ export function ReferenceArtworkHost() {
   return (
     <div className={`reference-artwork-host reference-artwork-host--${screen}`} aria-hidden="true">
       {active.map((accent) => (
-        <ReferenceSprite
-          key={`${screen}-${accent.asset}`}
-          asset={accent.asset}
-          className={accent.className}
-          label={accent.label}
+        <img
+          key={`${screen}-${accent.src}`}
+          src={accent.src}
+          className={`reference-artwork-image ${accent.className}`}
+          alt=""
+          aria-label={accent.label}
+          draggable={false}
         />
       ))}
     </div>
