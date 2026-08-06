@@ -1,11 +1,17 @@
-.reference-sprite {
+.reference-sprite,
+.reference-artwork-image {
   display: block;
   width: 128px;
   height: 128px;
   flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .38));
+  user-select: none;
+}
+
+.reference-sprite {
   background-repeat: no-repeat;
   background-size: 512px 256px;
-  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .38));
 }
 
 .screen-transition-frame {
@@ -37,77 +43,79 @@
 }
 
 .reference-artwork-layer .reference-sprite,
-.reference-artwork-host .reference-sprite {
+.reference-artwork-host .reference-sprite,
+.reference-artwork-layer .reference-artwork-image,
+.reference-artwork-host .reference-artwork-image {
   position: absolute;
 }
 
 .reference-artwork-layer__dome {
   top: 176px;
   right: -13px;
-  opacity: .25;
+  opacity: .34;
   transform: scale(1.34);
 }
 
 .reference-artwork-layer__sun {
   top: 90px;
   right: -16px;
-  opacity: .24;
+  opacity: .3;
   transform: scale(1.22);
 }
 
 .reference-artwork-layer__calendar-chip {
   top: 168px;
   left: -27px;
-  opacity: .28;
+  opacity: .38;
   transform: scale(.86) rotate(-5deg);
 }
 
 .reference-artwork-layer__hands {
   top: 94px;
   right: -17px;
-  opacity: .42;
+  opacity: .56;
   transform: scale(1.16);
 }
 
 .reference-artwork-layer__kaaba {
   top: 190px;
   left: 50%;
-  opacity: .2;
+  opacity: .34;
   transform: translateX(-50%) scale(1.32);
 }
 
 .reference-artwork-layer__mihrab {
   top: 95px;
   right: -6px;
-  opacity: .18;
+  opacity: .26;
   transform: scale(1.5);
 }
 
 .reference-artwork-layer__lantern {
   top: 142px;
   right: 2px;
-  opacity: .3;
+  opacity: .4;
   transform: scale(1.08);
 }
 
 .reference-artwork-layer__learn-mihrab {
   top: 112px;
   right: -21px;
-  opacity: .15;
+  opacity: .23;
   transform: scale(1.55);
 }
 
 .reference-artwork-layer__bookmark {
   top: 119px;
   right: 14px;
-  opacity: .24;
+  opacity: .34;
   transform: scale(.82);
 }
 
 .reference-artwork-layer__collection-bookmark {
   top: 102px;
   right: 10px;
-  opacity: .24;
+  opacity: .34;
   transform: scale(.9);
 }
 
@@ -135,7 +143,7 @@
 
   .reference-artwork-layer__hands {
     right: -30px;
-    opacity: .35;
+    opacity: .46;
   }
 
   .reference-artwork-layer__sun {
@@ -144,6 +152,6 @@
 
   .reference-artwork-layer__calendar-chip {
     left: -42px;
-    opacity: .23;
+    opacity: .32;
   }
 }
