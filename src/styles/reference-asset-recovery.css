@@ -1,20 +1,36 @@
 /*
- * Temporary recovery layer.
- * Several binary files in public/premium-assets were stored with invalid image
- * payloads. Never expose the browser's broken-image icon: render the bundled
- * SVG artwork until the original transparent PNG/WebP files are replaced.
+ * Premium image fallback behavior.
+ * Real WebP assets are shown by default. The SVG fallback is displayed only
+ * when PremiumImage marks the failed <img> as hidden.
  */
-.premium-image > img {
-  display: none !important;
+.premium-image {
+  position: relative;
+  display: block;
+  overflow: visible;
 }
 
-.premium-image > .premium-image__fallback,
-.premium-image > .premium-image__fallback[hidden] {
-  position: absolute;
-  inset: 0;
+.premium-image > img {
   display: block !important;
   width: 100%;
   height: 100%;
+  object-fit: contain;
+  opacity: 1 !important;
+}
+
+.premium-image > img[hidden] {
+  display: none !important;
+}
+
+.premium-image > .premium-image__fallback {
+  position: absolute;
+  inset: 0;
+  display: none !important;
+  width: 100%;
+  height: 100%;
+}
+
+.premium-image > .premium-image__fallback:not([hidden]) {
+  display: block !important;
 }
 
 .premium-image > .premium-image__fallback > svg {
@@ -23,20 +39,20 @@
   height: 100%;
 }
 
-/* Make the recovery artwork feel closer to the supplied emerald/gold boards. */
-.welcome-hero__visual .premium-image__fallback,
-.reference-learning-hero .premium-image__fallback {
-  filter: saturate(.9) contrast(1.05) drop-shadow(0 24px 22px rgba(0, 0, 0, .45));
+.welcome-hero__visual > img,
+.reference-learning-hero .premium-image > img {
+  object-position: center bottom;
+  filter: saturate(.94) contrast(1.04) drop-shadow(0 24px 22px rgba(0, 0, 0, .45));
 }
 
-.brand-lockup__mark .premium-image__fallback,
-.ai-preview__mark .premium-image__fallback,
-.reference-profile-greeting__logo .premium-image__fallback {
+.brand-lockup__mark > img,
+.ai-preview__mark > img,
+.reference-profile-greeting__logo > img {
   filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .3));
 }
 
-.journey-card .premium-image__fallback,
-.continue-card__cover .premium-image__fallback,
-.reference-quran-continue__book .premium-image__fallback {
+.journey-card .premium-image > img,
+.continue-card__cover .premium-image > img,
+.reference-quran-continue__book > img {
   filter: drop-shadow(0 15px 16px rgba(0, 0, 0, .42));
 }
