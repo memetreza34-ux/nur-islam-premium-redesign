@@ -1,32 +1,30 @@
 # Nur Islam – Chat-Bildarchiv
 
-Dieser Ordner macht die für das Premium-Redesign ausgewählten Chat-Bilder dauerhaft im Ziel-Repository verfügbar.
+Dieser Ordner enthält die für das Premium-Redesign benötigten, aus dem Chat übernommenen und deduplizierten Designboards. Die Dateien liegen einzeln als WebP im Repository, damit sie direkt auf GitHub sichtbar und für neue Chats oder Entwickler ohne diese Unterhaltung verfügbar sind.
 
-## Enthalten
+## Designboards
 
-- `01-core-experience-preview.webp` – direkt sichtbare Vorschau des zentralen Premium-Boards.
-- `nur-islam-chat-design-boards.zip` – acht deduplizierte und weboptimierte Designboards:
-  1. Core Experience
-  2. Quran & Daily Content
-  3. Learning & Knowledge
-  4. Worship & Seasons
-  5. Places, Community & Settings
-  6. Home Components
-  7. Calendar Components
-  8. Settings & Profile Components
+1. `01-core-experience.webp` – zentrale Premium-Start-, Gebets-, Quran-, Dhikr- und Qibla-Richtung
+2. `02-quran-daily-content.webp` – Quran-Reader, Tages-Ayah und Tages-Hadith
+3. `03-learning-knowledge.webp` – Lernen, Wissen und Inhaltskarten
+4. `04-worship-seasons.webp` – Gottesdienst, Fasten und saisonale Bereiche
+5. `05-places-community-settings.webp` – Orte, Gemeinschaft und Einstellungen
+6. `06-home-components.webp` – Komponenten und Varianten der Startseite
+7. `07-calendar-components.webp` – Kalender-, Ereignis- und Terminbausteine
+8. `08-settings-profile-components.webp` – Profil-, Einstellungs- und Kontobausteine
 
 ## Laufzeitgrafiken
 
-Die tatsächlich von der App verwendeten Einzelobjekte liegen bereits direkt und ohne Archiv unter:
+Die von der App tatsächlich gerenderten Einzelobjekte liegen bereits direkt unter:
 
 `public/premium-assets/high-res-objects/`
 
-Dort befinden sich unter anderem Moschee, Logo, geschlossener und offener Quran, Tasbih, Qibla-Kompass, Kaaba, Mihrab, Laterne, Dua-Hände, Kalenderobjekt und Lesezeichen als gültige `-v2.webp`-Dateien.
+Dort befinden sich unter anderem Logo, Moschee, geschlossener und offener Quran, Tasbih, Qibla-Kompass, Kaaba, Mihrab, Laterne, Dua-Hände, Kalenderobjekt und Lesezeichen als gültige `-v2.webp`-Dateien.
 
 ## Auswahlregel
 
-Nicht jede doppelte Chat-Datei wurde erneut abgelegt. Hochgeladen wurden die für Entwicklung und visuelle Abnahme benötigten, deduplizierten Originalmotive und Boards. Externe Dribbble-/App-Inspirationsscreens werden nur als Inspiration behandelt und nicht als Produktasset übernommen.
+Doppelte Chat-Uploads wurden nicht mehrfach gespeichert. Externe Inspirationsscreens werden nicht als Produktasset übernommen. Enthalten sind die für Entwicklung, Vergleich und visuelle Abnahme benötigten eigenen Projektboards sowie die separaten Laufzeitgrafiken.
 
-## Quelle und Veröffentlichung
+## Inhaltliche Freigabe
 
-Die Boards stammen aus dem Chat-Projektstand vom 4.–5. August 2026. Religiöse Texte und inhaltliche Angaben auf Referenzboards sind keine freigegebene Quellenbasis; für die Produktveröffentlichung gelten weiterhin die fachlichen Prüfhinweise im Projekt-Handoff.
+Religiöse Texte und Angaben auf den Boards sind Designreferenzen und keine finale Quellenfreigabe. Für eine Veröffentlichung gelten weiterhin die fachlichen Prüfhinweise in `docs/CHATGPT-BRAIN-HANDOFF.md`.
