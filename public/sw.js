@@ -1,9 +1,18 @@
-const CACHE_NAME = 'nur-islam-premium-v4';
+const CACHE_NAME = 'nur-islam-premium-v5';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
-  '/nur-app-icon.svg'
+  '/nur-app-icon.svg',
+  '/data/quran/surahs.json',
+  '/data/quran/ar/1.json',
+  '/data/quran/de/1.json',
+  '/data/quran/ar/112.json',
+  '/data/quran/de/112.json',
+  '/data/quran/ar/113.json',
+  '/data/quran/de/113.json',
+  '/data/quran/ar/114.json',
+  '/data/quran/de/114.json'
 ];
 
 function offlineDocument() {
@@ -51,9 +60,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Versioned premium assets are verified WebP files. Use network-first so a
-  // newly recovered image replaces stale data immediately, then keep the valid
-  // response for installed/offline use.
   if (url.pathname.startsWith('/premium-assets/')) {
     event.respondWith(
       fetch(request)
