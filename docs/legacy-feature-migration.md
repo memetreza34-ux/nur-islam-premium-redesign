@@ -16,14 +16,28 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Startseite | Vorhanden | Gemeinsamer dynamischer Demo-Zeitplan mit Gebetsseite eingebunden; echte Quelle bleibt offen |
 | Gebetszeiten | Teilweise | Echte standort- und methodenabhängige Quelle anbinden |
 | Islamischer Kalender | Vorhanden | Regionale Hijri-Abweichungen und Ereignisquelle ergänzen |
-| Quran | Teilweise | Vollständige 114 Suren und geprüfte Übersetzungen aus Altbestand migrieren |
+| Quran | Teilweise | 114-Suren-Katalog, Suche, Filter, Favoriten und dynamischer Offline-Reader vorhanden; aktuell Al-Fatiha, Al-Ikhlas, Al-Falaq und An-Nas vollständig lokal, restliche arabische und deutsche Dateien werden weiter aus dem Altbestand übertragen |
 | Dhikr | Teilweise | Vollständige Kategorien, Quellen und Ziele übernehmen |
 | Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
 | Duas | Migriert | 34 Einträge in 13 Kategorien, Suche, Favoriten, Lesefortschritt, Detailansicht, Kopieren und Teilen; fachliche Einzelprüfung ausstehend |
 | 99 Namen Allahs | Migriert | 99 Einträge, Suche, Favoriten, Lernstatus, Fortschritt und Detailansicht; fachliche Endprüfung von Reihenfolge, Schreibweisen und Bedeutungen ausstehend |
 | Moscheesuche | Teilweise | Live-Karten- und Standortdaten anbinden |
-| Sammlungen | Vorhanden | Namen-Favoriten, weitere Inhaltstypen und Export ergänzen |
+| Sammlungen | Vorhanden | Quran-Lesezeichen über alle lokal verfügbaren Suren zusammenführen, weitere Inhaltstypen und Export ergänzen |
 | Nur-Assistent | Teilweise | Sicheren Backend- und Quellenprozess entwickeln |
+
+## Quran-Migration
+
+| Bestandteil | Status | Umsetzung |
+|---|---|---|
+| Surenverzeichnis | Migriert | Lokale Metadaten für alle 114 Suren, fortlaufende Nummern, Ayah-Anzahl und Offenbarungsort |
+| Surensuche | Migriert | Suche nach Nummer, Transliteration und arabischem Namen |
+| Filter | Migriert | Alle, offline verfügbar, Favoriten, mekkanisch und medinensisch |
+| Reader | Migriert | Dynamische Sure, arabischer Text, sinngemäße deutsche Bedeutung, Schriftgröße, Bedeutungsanzeige, Kopieren, Teilen und lokale Lesezeichen |
+| Lesefortschritt | Migriert | Letzte Sure und aktive Ayah werden lokal gespeichert und auf Home/Quran weitergeführt |
+| Offline-PWA | Migriert | Katalog und aktuell verfügbare Suren werden durch Service Worker v5 vorab gespeichert |
+| Vollständiger Textbestand | Teilweise | 4 von 114 Suren paarweise in Arabisch und Deutsch übertragen; restliche Dateien offen |
+| Audio | Offen | Erst mit geprüfter Rezitationsquelle aktivieren; aktuelle Oberfläche täuscht keine Wiedergabe vor |
+| Deutsche Bedeutungen | Teilweise | Altbestand übernommen und ausdrücklich als sinngemäße Bedeutung markiert; fachliche Endprüfung ausstehend |
 
 ## Wiederhergestellte Lernfunktionen
 
