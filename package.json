@@ -13,7 +13,8 @@
     "duas:check": "node scripts/check-duas-data.mjs",
     "quran:check": "node scripts/check-quran-data.mjs",
     "dhikr:check": "node scripts/check-dhikr-data.mjs",
-    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run lint && npm run build"
+    "navigation:check": "node scripts/check-navigation.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
