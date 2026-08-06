@@ -11,13 +11,25 @@ export type PrayerScheduleItem = {
   visual: 'moon' | 'sunrise' | 'sun';
 };
 
-export const PRAYER_SCHEDULE_META = {
+export type PrayerScheduleMeta = {
+  city: string;
+  country: string;
+  locationLabel: string;
+  sourceLabel: string;
+  methodLabel: string;
+  timezone?: string;
+  calculationNotice?: string;
+};
+
+export const PRAYER_SCHEDULE_META: PrayerScheduleMeta = {
   city: 'Berlin',
   country: 'Deutschland',
   locationLabel: 'Berlin, Deutschland',
   sourceLabel: 'Lokaler Demo-Zeitplan',
   methodLabel: 'Diyanet · Standard-Asr',
-} as const;
+  timezone: 'Europe/Berlin',
+  calculationNotice: 'Lokaler Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
+};
 
 export const PRAYER_SCHEDULE: PrayerScheduleItem[] = [
   { id: 'fajr', label: 'Fajr', compactLabel: 'Fajr', arabic: 'الفجر', time: '04:18', description: 'Morgengebet', obligatory: true, visual: 'moon' },
@@ -52,8 +64,10 @@ export function formatPrayerRemaining(totalMinutes: number) {
   return `${hours} Std. ${minutes} Min.`;
 }
 
-export function getNextPrayer(now = new Date()): NextPrayer {
-  const obligatoryPrayers = PRAYER_SCHEDULE.filter((item) => item.obligatory);
+export function getNextPrayer(now = new Date(), schedule: PrayerScheduleItem[] = PRAYER_SCHEDULE): NextPrayer {
+  const obligatoryPrayers = schedule.filter((item) => item.obligatory);
+  if (!obligatoryPrayers.length) throw new Error('Der Gebetszeitplan enthält keine Pflichtgebete.');
+
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const nextToday = obligatoryPrayers.find((prayer) => prayerTimeToMinutes(prayer.time) > currentMinutes);
 
