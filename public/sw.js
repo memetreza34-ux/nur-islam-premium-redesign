@@ -1,26 +1,29 @@
-const CACHE_NAME = 'nur-islam-premium-v6';
+const VISUAL_VERSION = '20260806-visual4';
+const CACHE_NAME = `nur-islam-premium-v7-${VISUAL_VERSION}`;
+const premiumAsset = (name) => `/premium-assets/high-res-objects/${name}?v=${VISUAL_VERSION}`;
+
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/nur-app-icon.svg',
-  '/premium-assets/high-res-objects/nur-logo-emblem-v2.webp',
-  '/premium-assets/high-res-objects/mosque-gold-v2.webp',
-  '/premium-assets/high-res-objects/mosque-v2.webp',
-  '/premium-assets/high-res-objects/quran-closed-v2.webp',
-  '/premium-assets/high-res-objects/quran-open-v2.webp',
-  '/premium-assets/high-res-objects/tasbih-v2.webp',
-  '/premium-assets/high-res-objects/qibla-compass-v2.webp',
-  '/premium-assets/high-res-objects/qibla-v2.webp',
-  '/premium-assets/high-res-objects/mihrab-v2.webp',
-  '/premium-assets/high-res-objects/mihrab-arch-v2.webp',
-  '/premium-assets/high-res-objects/lantern-v2.webp',
-  '/premium-assets/high-res-objects/kaaba-v2.webp',
-  '/premium-assets/high-res-objects/bookmark-v2.webp',
-  '/premium-assets/high-res-objects/calendar-chip-v2.webp',
-  '/premium-assets/high-res-objects/dome-v2.webp',
-  '/premium-assets/high-res-objects/sun-emblem-v2.webp',
-  '/premium-assets/high-res-objects/dua-hands-v2.webp',
+  premiumAsset('nur-logo-emblem-v2.webp'),
+  premiumAsset('mosque-gold-v2.webp'),
+  premiumAsset('mosque-v2.webp'),
+  premiumAsset('quran-closed-v2.webp'),
+  premiumAsset('quran-open-v2.webp'),
+  premiumAsset('tasbih-v2.webp'),
+  premiumAsset('qibla-compass-v2.webp'),
+  premiumAsset('qibla-v2.webp'),
+  premiumAsset('mihrab-v2.webp'),
+  premiumAsset('mihrab-arch-v2.webp'),
+  premiumAsset('lantern-v2.webp'),
+  premiumAsset('kaaba-v2.webp'),
+  premiumAsset('bookmark-v2.webp'),
+  premiumAsset('calendar-chip-v2.webp'),
+  premiumAsset('dome-v2.webp'),
+  premiumAsset('sun-emblem-v2.webp'),
+  premiumAsset('dua-hands-v2.webp'),
   '/data/quran/surahs.json',
   '/data/quran/ar/1.json',
   '/data/quran/de/1.json',
@@ -55,6 +58,10 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+self.addEventListener('message', (event) => {
+  if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+});
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -64,7 +71,7 @@ self.addEventListener('fetch', (event) => {
 
   if (request.mode === 'navigate') {
     event.respondWith(
-      fetch(request)
+      fetch(request, { cache: 'no-store' })
         .then((response) => {
           if (response.ok) {
             const copy = response.clone();
