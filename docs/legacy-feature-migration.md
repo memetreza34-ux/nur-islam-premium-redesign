@@ -13,16 +13,16 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 
 | Funktion | Status | Nächster Qualitätsschritt |
 |---|---|---|
-| Startseite | Vorhanden | Gebetsübersicht mit gemeinsamem dynamischem Zeitplan verbinden |
+| Startseite | Vorhanden | Gemeinsamer dynamischer Demo-Zeitplan mit Gebetsseite eingebunden; echte Quelle bleibt offen |
 | Gebetszeiten | Teilweise | Echte standort- und methodenabhängige Quelle anbinden |
 | Islamischer Kalender | Vorhanden | Regionale Hijri-Abweichungen und Ereignisquelle ergänzen |
 | Quran | Teilweise | Vollständige 114 Suren und geprüfte Übersetzungen aus Altbestand migrieren |
 | Dhikr | Teilweise | Vollständige Kategorien, Quellen und Ziele übernehmen |
 | Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
 | Duas | Teilweise | Vollständigen geprüften Dua-Bestand übernehmen |
-| 99 Namen Allahs | Teilweise | Von 7 Demo-Einträgen auf vollständige geprüfte Liste erweitern |
+| 99 Namen Allahs | Migriert | 99 Einträge, Suche, Favoriten, Lernstatus, Fortschritt und Detailansicht; fachliche Endprüfung von Reihenfolge, Schreibweisen und Bedeutungen ausstehend |
 | Moscheesuche | Teilweise | Live-Karten- und Standortdaten anbinden |
-| Sammlungen | Vorhanden | Weitere Inhaltstypen und Export ergänzen |
+| Sammlungen | Vorhanden | Namen-Favoriten, weitere Inhaltstypen und Export ergänzen |
 | Nur-Assistent | Teilweise | Sicheren Backend- und Quellenprozess entwickeln |
 
 ## Wiederhergestellte Lernfunktionen
