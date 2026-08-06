@@ -6,7 +6,8 @@ type Accent = {
   label: string;
 };
 
-const asset = (name: string) => `/premium-assets/high-res-objects/${name}-v2.webp`;
+const VISUAL_VERSION = '20260806-visual4';
+const asset = (name: string) => `/premium-assets/high-res-objects/${name}-v2.webp?v=${VISUAL_VERSION}`;
 
 const accents: Record<string, Accent[]> = {
   prayer: [{ src: asset('dome'), className: 'reference-artwork-layer__dome', label: 'Goldene Moscheekuppel' }],
@@ -68,6 +69,8 @@ export function ReferenceArtworkHost() {
           className={`reference-artwork-image ${accent.className}`}
           alt=""
           aria-label={accent.label}
+          loading="eager"
+          decoding="async"
           draggable={false}
         />
       ))}
