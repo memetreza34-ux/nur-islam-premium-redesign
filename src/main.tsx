@@ -16,6 +16,43 @@ import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
 import './styles.css';
 
+const VISUAL_VERSION = '20260806-visual4';
+const PREVIEW_ASSETS = [
+  'nur-logo-emblem-v2.webp',
+  'mosque-gold-v2.webp',
+  'quran-closed-v2.webp',
+  'tasbih-v2.webp',
+  'qibla-compass-v2.webp',
+];
+
+function prepareImmediatePreview() {
+  const params = new URLSearchParams(window.location.search);
+  const forceOnboarding = params.get('onboarding') === '1';
+  const previewMode = import.meta.env.DEV || params.get('preview') === '1';
+
+  try {
+    if (forceOnboarding) localStorage.removeItem('nur_onboarding_complete');
+    else if (previewMode) localStorage.setItem('nur_onboarding_complete', 'true');
+  } catch {
+    // Die Vorschau bleibt auch ohne verfügbaren Browser-Speicher nutzbar.
+  }
+
+  document.documentElement.classList.toggle('is-preview', previewMode && !forceOnboarding);
+
+  PREVIEW_ASSETS.forEach((name) => {
+    const href = `/premium-assets/high-res-objects/${name}?v=${VISUAL_VERSION}`;
+    if (document.head.querySelector(`link[href="${href}"]`)) return;
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = href;
+    link.type = 'image/webp';
+    document.head.appendChild(link);
+  });
+}
+
+prepareImmediatePreview();
+
 if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
 }
@@ -28,7 +65,8 @@ function BootRoot() {
   useEffect(() => {
     window.scrollTo(0, 0);
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 250 : 1050);
+    const previewMode = document.documentElement.classList.contains('is-preview');
+    const timer = window.setTimeout(() => setReady(true), previewMode || reducedMotion ? 160 : 800);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -40,7 +78,7 @@ function BootRoot() {
           className="app-entry"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: .32 }}
+          transition={{ duration: .28 }}
         >
           <AppErrorBoundary>
             <App />
