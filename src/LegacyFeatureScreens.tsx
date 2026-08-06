@@ -10,7 +10,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
-  Compass,
   Globe2,
   HeartHandshake,
   Library,
@@ -26,7 +25,7 @@ import {
   Star,
   TriangleAlert,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 
 export type LegacyFeatureId =
   | 'fasting'
@@ -52,6 +51,9 @@ export type LegacyFeatureItem = {
   art: string;
 };
 
+const VISUAL_REVISION = '8';
+const visual = (path: string) => `${path}?v=${VISUAL_REVISION}`;
+
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Hadithe durchsuchen, lesen und lokal speichern.', icon: Library, art: '/premium-assets/high-res-objects/lantern-v2.webp' },
   { id: 'knowledge', title: 'Wissensbibliothek', subtitle: 'Themen strukturiert lernen', description: 'Aqidah, Fiqh, Geschichte und Charakter in einem Bereich.', icon: BookOpenCheck, art: '/premium-assets/high-res-objects/quran-open-v2.webp' },
@@ -73,7 +75,9 @@ export const serviceLegacyFeatures: LegacyFeatureItem[] = [
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
 
-const featureContent: Record<Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library'>, string[]> = {
+type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library'>;
+
+const featureContent: Record<GenericFeatureId, string[]> = {
   knowledge: ['Grundlagen des Glaubens', 'Anbetung und Alltag', 'Islamische Geschichte', 'Charakter und Verhalten'],
   prophets: ['Adam – Schöpfung und Verantwortung', 'Nuh – Geduld und Standhaftigkeit', 'Ibrahim – Vertrauen und Hingabe', 'Musa – Mut und Führung', 'Isa – Zeichen und Barmherzigkeit', 'Muhammad ﷺ – Vorbild und Botschaft'],
   hajj: ['Ihram und Absicht', 'Tawaf', 'Sa’i zwischen Safa und Marwa', 'Arafat', 'Muzdalifah und Mina', 'Abschluss und Rückkehr'],
@@ -92,7 +96,7 @@ const quizQuestions = [
   { question: 'In welchem Monat wird gefastet?', answers: ['Muharram', 'Rajab', 'Ramadan', 'Shawwal'], correct: 2 },
   { question: 'Wohin richtet sich das Gebet?', answers: ['Madinah', 'Zur Kaaba', 'Jerusalem', 'Zum Sonnenaufgang'], correct: 1 },
   { question: 'Wie heißt die Gebetswaschung?', answers: ['Adhan', 'Wudu', 'Dhikr', 'Khutbah'], correct: 1 },
-];
+] as const;
 
 const hadithItems = [
   { id: 'intentions', title: 'Absichten', summary: 'Sinngemäßer Inhalt: Der Wert einer Handlung hängt von der Absicht ab.', source: 'Sahih al-Bukhari 1; Sahih Muslim 1907' },
@@ -103,12 +107,12 @@ const hadithItems = [
   { id: 'ease', title: 'Erleichtern', summary: 'Sinngemäßer Inhalt: Erleichtert und erschwert nicht; gebt frohe Botschaft und schreckt nicht ab.', source: 'Sahih al-Bukhari 69; Sahih Muslim 1734' },
   { id: 'cleanliness', title: 'Reinheit', summary: 'Sinngemäßer Inhalt: Reinheit besitzt im Glauben einen hohen Stellenwert.', source: 'Sahih Muslim 223' },
   { id: 'smile', title: 'Freundlichkeit', summary: 'Sinngemäßer Inhalt: Freundliche Begegnung und ein lächelndes Gesicht sind gute Taten.', source: 'Jami at-Tirmidhi 1956' },
-];
+] as const;
 
 function readStored<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) as T : fallback;
+    return raw === null ? fallback : JSON.parse(raw) as T;
   } catch {
     return fallback;
   }
@@ -118,7 +122,7 @@ function writeStored<T>(key: string, value: T) {
   try {
     localStorage.setItem(key, JSON.stringify(value));
   } catch {
-    // Persistence is optional when storage access is restricted.
+    // Speicherung ist in eingeschränkten Browsermodi optional.
   }
 }
 
@@ -142,12 +146,12 @@ function getHijriDay(date: Date) {
 }
 
 function findNextWhiteDay() {
-  const date = new Date();
-  for (let index = 1; index <= 45; index += 1) {
-    const candidate = new Date(date);
-    candidate.setDate(date.getDate() + index);
-    const day = getHijriDay(candidate);
-    if (day >= 13 && day <= 15) return { date: candidate, day };
+  const today = new Date();
+  for (let offset = 1; offset <= 45; offset += 1) {
+    const candidate = new Date(today);
+    candidate.setDate(today.getDate() + offset);
+    const hijriDay = getHijriDay(candidate);
+    if (hijriDay >= 13 && hijriDay <= 15) return { date: candidate, day: hijriDay };
   }
   return null;
 }
@@ -158,12 +162,12 @@ function FeatureHeader({ feature, onBack }: { feature: LegacyFeatureItem; onBack
     <>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Aus der vollständigen Nur-Islam-App</span><h1>{feature.title}</h1></div>
+        <div><span className="overline">Nur Islam Premium</span><h1>{feature.title}</h1></div>
         <span className="reference-legacy-header-icon"><Icon size={20} /></span>
       </header>
       <section className="reference-legacy-hero">
         <div className="reference-legacy-hero__copy"><span className="hero-pill">{feature.subtitle}</span><h2>{feature.title}</h2><p>{feature.description}</p></div>
-        <img src={feature.art} alt="" aria-hidden="true" />
+        <img src={visual(feature.art)} alt="" aria-hidden="true" draggable={false} />
       </section>
     </>
   );
@@ -174,7 +178,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [complete, setComplete] = useState(false);
-  const bestScore = readStored('nur_quiz_best_score', 0);
+  const [bestScore, setBestScore] = useState(() => Math.min(quizQuestions.length, Math.max(0, readStored('nur_quiz_best_score', 0))));
   const question = quizQuestions[index];
 
   const answer = (answerIndex: number) => {
@@ -184,9 +188,13 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
   };
 
   const next = () => {
+    if (selected === null) return;
     if (index === quizQuestions.length - 1) {
-      const finalScore = score + (selected === question.correct ? 1 : 0);
-      writeStored('nur_quiz_best_score', Math.max(bestScore, finalScore));
+      // Die richtige Antwort wurde bereits in answer() gezählt. Kein doppeltes Addieren.
+      const finalScore = Math.min(quizQuestions.length, score);
+      const nextBest = Math.max(bestScore, finalScore);
+      setBestScore(nextBest);
+      writeStored('nur_quiz_best_score', nextBest);
       setComplete(true);
       return;
     }
@@ -206,19 +214,31 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
       <FeatureHeader feature={feature} onBack={onBack} />
       {complete ? (
         <section className="reference-quiz-result">
-          <span><CircleCheck size={30} /></span><h2>{score} von {quizQuestions.length} richtig</h2><p>Dein Bestwert wird nur auf diesem Gerät gespeichert.</p>
+          <span><CircleCheck size={30} /></span>
+          <h2>{score} von {quizQuestions.length} richtig</h2>
+          <p>Bestwert: {bestScore} von {quizQuestions.length}. Die Speicherung erfolgt nur auf diesem Gerät.</p>
           <button className="gold-button" onClick={restart}><RotateCcw size={17} /> Erneut versuchen</button>
         </section>
       ) : (
         <section className="reference-quiz-card">
           <div className="reference-quiz-progress"><span style={{ width: `${((index + 1) / quizQuestions.length) * 100}%` }} /></div>
-          <small>Frage {index + 1} von {quizQuestions.length}</small><h2>{question.question}</h2>
+          <small>Frage {index + 1} von {quizQuestions.length} · Bestwert {bestScore}</small>
+          <h2>{question.question}</h2>
           <div className="reference-quiz-answers">
             {question.answers.map((item, answerIndex) => {
               const isSelected = selected === answerIndex;
               const isCorrect = selected !== null && answerIndex === question.correct;
               const isWrong = isSelected && answerIndex !== question.correct;
-              return <button key={item} className={`${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`} onClick={() => answer(answerIndex)}><span>{String.fromCharCode(65 + answerIndex)}</span>{item}{isCorrect ? <Check size={18} /> : null}</button>;
+              return (
+                <button
+                  key={item}
+                  className={`${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`}
+                  onClick={() => answer(answerIndex)}
+                  disabled={selected !== null}
+                >
+                  <span>{String.fromCharCode(65 + answerIndex)}</span>{item}{isCorrect ? <Check size={18} /> : null}
+                </button>
+              );
             })}
           </div>
           <button className="gold-button" disabled={selected === null} onClick={next}>{index === quizQuestions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
@@ -243,15 +263,19 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   return (
     <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <FeatureHeader feature={feature} onBack={onBack} />
-      <section className="reference-legacy-section"><div className="section-heading"><div><span className="overline">Nächste Möglichkeiten</span><h2>Freiwillige Fastentage</h2></div></div>
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Nächste Möglichkeiten</span><h2>Freiwillige Fastentage</h2></div></div>
         <div className="reference-fasting-grid">
           <article><MoonStar size={22} /><small>Montag</small><strong>{formatDate(nextMonday)}</strong></article>
           <article><MoonStar size={22} /><small>Donnerstag</small><strong>{formatDate(nextThursday)}</strong></article>
-          <article><Star size={22} /><small>Weißer Tag</small><strong>{whiteDay ? `${formatDate(whiteDay.date)} ·  ${whiteDay.day}. Hijri-Tag` : 'Nicht berechenbar'}</strong></article>
+          <article><Star size={22} /><small>Weißer Tag</small><strong>{whiteDay ? `${formatDate(whiteDay.date)} · ${whiteDay.day}. Hijri-Tag` : 'Nicht berechenbar'}</strong></article>
         </div>
       </section>
-      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Die berechneten Hijri-Tage können je nach Region und lokaler Mondsichtung abweichen.</p></section>
-      <button className="reference-legacy-toggle" onClick={toggle}><span><CalendarHeart size={20} /><span><strong>Fasten-Erinnerungen</strong><small>Lokal auf diesem Gerät speichern</small></span></span><em className={reminders ? 'is-on' : ''}><i /></em></button>
+      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können je nach Region und lokaler Mondsichtung abweichen.</p></section>
+      <button className="reference-legacy-toggle" onClick={toggle} aria-pressed={reminders}>
+        <span><CalendarHeart size={20} /><span><strong>Fasten-Erinnerungen</strong><small>Lokal auf diesem Gerät speichern</small></span></span>
+        <em className={reminders ? 'is-on' : ''}><i /></em>
+      </button>
     </motion.main>
   );
 }
@@ -259,7 +283,7 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
 function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const [query, setQuery] = useState('');
   const [favorites, setFavorites] = useState<string[]>(() => readStored('nur_hadith_library_favorites', []));
-  const filtered = hadithItems.filter((item) => `${item.title} ${item.summary} ${item.source}`.toLowerCase().includes(query.toLowerCase()));
+  const filtered = hadithItems.filter((item) => `${item.title} ${item.summary} ${item.source}`.toLocaleLowerCase('de-DE').includes(query.toLocaleLowerCase('de-DE')));
 
   const toggleFavorite = (id: string) => {
     const value = favorites.includes(id) ? favorites.filter((item) => item !== id) : [...favorites, id];
@@ -272,15 +296,21 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
       <FeatureHeader feature={feature} onBack={onBack} />
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <section className="reference-hadith-library">
-        {filtered.map((item) => <article key={item.id}><div><span className="overline">{item.title}</span><p>{item.summary}</p><small>{item.source}</small></div><button onClick={() => toggleFavorite(item.id)} aria-label={favorites.includes(item.id) ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} className={favorites.includes(item.id) ? 'is-saved' : ''}><Bookmark size={18} fill={favorites.includes(item.id) ? 'currentColor' : 'none'} /></button></article>)}
+        {filtered.map((item) => (
+          <article key={item.id}>
+            <div><span className="overline">{item.title}</span><p>{item.summary}</p><small>{item.source}</small></div>
+            <button onClick={() => toggleFavorite(item.id)} aria-label={favorites.includes(item.id) ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={favorites.includes(item.id)} className={favorites.includes(item.id) ? 'is-saved' : ''}><Bookmark size={18} fill={favorites.includes(item.id) ? 'currentColor' : 'none'} /></button>
+          </article>
+        ))}
       </section>
-      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die deutsche Formulierung ist als sinngemäße Inhaltsangabe gekennzeichnet. Für Veröffentlichungen werden Wortlaut, Übersetzung und Einordnung erneut fachlich geprüft.</p></section>
+      {!filtered.length ? <div className="reference-empty-result"><Search size={24} /><strong>Kein Hadith gefunden</strong><small>Ändere den Suchbegriff.</small></div> : null}
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die deutsche Formulierung ist als sinngemäße Inhaltsangabe gekennzeichnet. Wortlaut, Übersetzung und Einordnung benötigen vor Veröffentlichung eine fachliche Endprüfung.</p></section>
     </motion.main>
   );
 }
 
 function GenericFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  const entries = featureContent[feature.id as Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library'>];
+  const entries = featureContent[feature.id as GenericFeatureId] ?? [];
   const [completed, setCompleted] = useState<string[]>(() => readStored(`nur_feature_${feature.id}_progress`, []));
 
   const toggle = (entry: string) => {
@@ -292,10 +322,13 @@ function GenericFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   return (
     <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <FeatureHeader feature={feature} onBack={onBack} />
-      <section className="reference-legacy-section"><div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{completed.length}/{entries.length}</span></div>
-        <div className="reference-legacy-list">{entries.map((entry, index) => <button key={entry} onClick={() => toggle(entry)} className={completed.includes(entry) ? 'is-complete' : ''}><span>{completed.includes(entry) ? <CircleCheck size={19} /> : index + 1}</span><strong>{entry}</strong><ChevronRight size={18} /></button>)}</div>
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{completed.length}/{entries.length}</span></div>
+        <div className="reference-legacy-list">
+          {entries.map((entry, index) => <button key={entry} onClick={() => toggle(entry)} className={completed.includes(entry) ? 'is-complete' : ''}><span>{completed.includes(entry) ? <CircleCheck size={19} /> : index + 1}</span><strong>{entry}</strong><ChevronRight size={18} /></button>)}
+        </div>
       </section>
-      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Dieser Bereich übernimmt die Funktion aus der alten App in die neue Premium-Struktur. Inhalte mit religiöser oder finanzieller Tragweite ersetzen keine individuelle Auskunft durch eine qualifizierte Stelle.</p></section>
+      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Religiöse oder finanzielle Inhalte ersetzen keine individuelle Auskunft durch eine qualifizierte Stelle.</p></section>
     </motion.main>
   );
 }
