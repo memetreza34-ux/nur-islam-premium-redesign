@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "lint": "tsc --noEmit",
     "assets:check": "node scripts/check-reference-assets.mjs",
-    "check": "npm run assets:check && npm run lint && npm run build"
+    "names:check": "node scripts/check-names-data.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
