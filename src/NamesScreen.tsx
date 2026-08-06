@@ -17,13 +17,33 @@ import type { NameOfAllah } from './namesOfAllahData';
 
 type NameFilter = 'all' | 'favorites' | 'learned';
 
-function readSet(key: string, fallback: string[] = []) {
+const nameId = (name: NameOfAllah) => String(name.id);
+const validIds = new Set(NAMES_OF_ALLAH.map(nameId));
+
+function migrateNameSet(key: string, fallback: string[] = []) {
   try {
     const raw = localStorage.getItem(key);
-    const parsed = raw ? JSON.parse(raw) as string[] : fallback;
-    return new Set(Array.isArray(parsed) ? parsed : fallback);
+    const parsed = raw ? JSON.parse(raw) as unknown : fallback;
+    const values = Array.isArray(parsed) ? parsed : fallback;
+    const migrated = new Set<string>();
+
+    values.forEach((value) => {
+      const candidate = String(value);
+      if (validIds.has(candidate)) {
+        migrated.add(candidate);
+        return;
+      }
+
+      // Frühere Versionen speicherten die Transliteration. Mehrdeutige alte
+      // Werte werden kontrolliert auf den ersten Eintrag migriert.
+      const legacyMatch = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
+      if (legacyMatch) migrated.add(nameId(legacyMatch));
+    });
+
+    localStorage.setItem(key, JSON.stringify([...migrated]));
+    return migrated;
   } catch {
-    return new Set(fallback);
+    return new Set(fallback.filter((value) => validIds.has(value)));
   }
 }
 
@@ -38,8 +58,8 @@ function writeSet(key: string, value: Set<string>) {
 export function NamesScreen({ onBack }: { onBack: () => void }) {
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<NameFilter>('all');
-  const [favorites, setFavorites] = useState(() => readSet('nur_name_favorites', ['Ar-Rahman']));
-  const [learned, setLearned] = useState(() => readSet('nur_name_learned'));
+  const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites', ['1']));
+  const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
   const [selected, setSelected] = useState<NameOfAllah | null>(null);
   const [toast, setToast] = useState<string | null>(null);
 
@@ -49,8 +69,9 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
   const visible = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('de-DE');
     return NAMES_OF_ALLAH.filter((name) => {
-      if (filter === 'favorites' && !favorites.has(name.latin)) return false;
-      if (filter === 'learned' && !learned.has(name.latin)) return false;
+      const id = nameId(name);
+      if (filter === 'favorites' && !favorites.has(id)) return false;
+      if (filter === 'learned' && !learned.has(id)) return false;
       if (!normalized) return true;
       return `${name.id} ${name.latin} ${name.arabic} ${name.meaning}`
         .toLocaleLowerCase('de-DE')
@@ -66,19 +87,21 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
   };
 
   const toggleFavorite = (name: NameOfAllah) => {
+    const id = nameId(name);
     setFavorites((current) => {
       const next = new Set(current);
-      if (next.has(name.latin)) next.delete(name.latin);
-      else next.add(name.latin);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
 
   const toggleLearned = (name: NameOfAllah) => {
+    const id = nameId(name);
     setLearned((current) => {
       const next = new Set(current);
-      if (next.has(name.latin)) next.delete(name.latin);
-      else next.add(name.latin);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
       return next;
     });
   };
@@ -113,7 +136,7 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
         <ShieldCheck size={16} />
         <span>
           <strong>Vollständiger Altbestand migriert</strong>
-          <small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben werden vor Veröffentlichung noch fachlich und redaktionell geprüft.</small>
+          <small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben benötigen vor Veröffentlichung eine fachliche und redaktionelle Endprüfung.</small>
         </span>
       </section>
 
@@ -132,11 +155,12 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
       {visible.length > 0 ? (
         <section className="reference-name-list reference-name-list--complete">
           {visible.map((name, index) => {
-            const isFavorite = favorites.has(name.latin);
-            const isLearned = learned.has(name.latin);
+            const id = nameId(name);
+            const isFavorite = favorites.has(id);
+            const isLearned = learned.has(id);
             return (
               <motion.article
-                key={`${name.id}-${name.latin}`}
+                key={id}
                 initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: Math.min(index * .012, .22) }}
@@ -167,8 +191,8 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
               <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Deutsche Bedeutungsangabe aus dem Altbestand. Fachliche Endprüfung vor Veröffentlichung ausstehend.</span></div>
               <div className="reference-name-modal__actions">
-                <button className={favorites.has(selected.latin) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(selected.latin) ? 'currentColor' : 'none'} /> Favorit</button>
-                <button className={learned.has(selected.latin) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(selected.latin) ? 'Gelernt' : 'Als gelernt markieren'}</button>
+                <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
+                <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>
               </div>
             </motion.section>
           </motion.div>
