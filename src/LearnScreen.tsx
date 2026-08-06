@@ -11,17 +11,20 @@ import {
   GraduationCap,
   HeartHandshake,
   Landmark,
-  MapPin,
   Scale,
-  ScrollText,
   Settings,
   Sparkles,
   Star,
   TimerReset,
-  UsersRound,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { LearningCourseScreen } from './LearningCourseScreen';
+import {
+  getCategoryLessons,
+  LEARNING_CATEGORIES,
+} from './islamicLearningContent';
+import type { LearningCategoryId } from './islamicLearningContent';
 import { LegacyFeatureScreen, learningLegacyFeatures } from './LegacyFeatureScreens';
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
@@ -29,22 +32,14 @@ import type { PrayerLessonId } from './PrayerLearningScreen';
 import { PremiumImage, QiblaObject } from './PremiumVisuals';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
-type LearningCategory = {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  icon: LucideIcon;
+const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
+  aqidah: Sparkles,
+  fiqh: Scale,
+  tafsir: BookOpen,
+  seerah: Landmark,
+  hadith: BookHeart,
+  akhlaq: HeartHandshake,
 };
-
-const categories: LearningCategory[] = [
-  { id: 'aqidah', title: 'Aqidah', subtitle: 'Glaubenslehre', description: 'Lerne die Grundlagen des islamischen Glaubens klar und strukturiert.', icon: Sparkles },
-  { id: 'fiqh', title: 'Fiqh', subtitle: 'Islamische Rechtslehre', description: 'Verstehe Regeln des Alltags, der Anbetung und des Zusammenlebens.', icon: Scale },
-  { id: 'tafsir', title: 'Tafsir', subtitle: 'Quran-Erklärungen', description: 'Entdecke Bedeutungen, Hintergründe und Lehren ausgewählter Verse.', icon: BookOpen },
-  { id: 'seerah', title: 'Seerah', subtitle: 'Biografie des Propheten', description: 'Lerne das Leben, den Charakter und die Lehren des Propheten kennen.', icon: Landmark },
-  { id: 'hadith', title: 'Hadith', subtitle: 'Überlieferungen', description: 'Lies ausgewählte Hadithe mit Quelle und verständlicher Einordnung.', icon: BookHeart },
-  { id: 'akhlaq', title: 'Akhlaq', subtitle: 'Charakter & Verhalten', description: 'Stärke deinen Charakter durch Barmherzigkeit, Geduld und Aufrichtigkeit.', icon: HeartHandshake },
-];
 
 function readStringSet(key: string) {
   try {
@@ -74,17 +69,20 @@ export function LearnScreen({
   onOpenPrayer: () => void;
   onOpenQibla: () => void;
 }) {
-  const [selected, setSelected] = useState<LearningCategory | null>(null);
   const [wuduOpen, setWuduOpen] = useState(false);
   const [prayerLesson, setPrayerLesson] = useState<PrayerLessonId | null>(null);
+  const [learningCategory, setLearningCategory] = useState<LearningCategoryId | null>(null);
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [learningPlanOpen, setLearningPlanOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   const completedPrayerLessons = readStringSet('nur_prayer_learning_complete');
+  const completedKnowledgeLessons = readStringSet('nur_learning_completed');
   const wuduFinished = readStoredStep('nur_guide_wudu_step') >= 5;
   const completedCoreLessons = Math.min(6, completedPrayerLessons.size + (wuduFinished ? 1 : 0));
   const coreProgress = Math.round((completedCoreLessons / 6) * 100);
+  const totalKnowledgeLessons = LEARNING_CATEGORIES.reduce((sum, category) => sum + category.lessonCount, 0);
+  const knowledgeProgress = Math.round((completedKnowledgeLessons.size / totalKnowledgeLessons) * 100);
   const nextPrayer = PRAYER_LESSONS.find((prayer) => !completedPrayerLessons.has(prayer.id)) ?? PRAYER_LESSONS[0];
 
   const flash = (message: string) => {
@@ -105,6 +103,10 @@ export function LearnScreen({
         onOpenPrayerTimes={onOpenPrayer}
       />
     );
+  }
+
+  if (learningCategory) {
+    return <LearningCourseScreen categoryId={learningCategory} onBack={() => setLearningCategory(null)} />;
   }
 
   if (legacyFeature) {
@@ -158,16 +160,25 @@ export function LearnScreen({
         </div>
       </section>
 
-      <section className="reference-learning-section">
-        <div className="section-heading"><div><span className="overline">Danach vertiefen</span><h2>Weitere Lernbereiche</h2></div></div>
+      <section className="reference-learning-section reference-knowledge-curriculum">
+        <div className="section-heading">
+          <div><span className="overline">Danach vertiefen</span><h2>Wissen mit Quellen</h2></div>
+          <span className="reference-knowledge-progress">{completedKnowledgeLessons.size}/{totalKnowledgeLessons}</span>
+        </div>
+        <div className="reference-knowledge-overview">
+          <span><i style={{ width: `${knowledgeProgress}%` }} /></span>
+          <small>{knowledgeProgress}% des Grundlagenwissens abgeschlossen</small>
+        </div>
         <div className="reference-category-grid">
-          {categories.map((category, index) => {
-            const Icon = category.icon;
+          {LEARNING_CATEGORIES.map((category, index) => {
+            const Icon = categoryIcons[category.id];
+            const lessons = getCategoryLessons(category.id);
+            const completedInCategory = lessons.filter((lesson) => completedKnowledgeLessons.has(lesson.id)).length;
             return (
-              <motion.button key={category.id} className="reference-category-card" onClick={() => setSelected(category)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.045 }} whileTap={{ scale: 0.97 }}>
+              <motion.button key={category.id} className={completedInCategory === lessons.length ? 'reference-category-card is-complete' : 'reference-category-card'} onClick={() => setLearningCategory(category.id)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.045 }} whileTap={{ scale: 0.97 }}>
                 <span className="reference-category-card__ornament" aria-hidden="true">۞</span>
-                <span className="reference-category-card__icon"><Icon size={24} /></span>
-                <strong>{category.title}</strong><small>{category.subtitle}</small>
+                <span className="reference-category-card__icon">{completedInCategory === lessons.length ? <CircleCheck size={24} /> : <Icon size={24} />}</span>
+                <strong>{category.title}</strong><small>{category.subtitle}</small><em>{completedInCategory}/{lessons.length} Lektionen</em>
               </motion.button>
             );
           })}
@@ -195,26 +206,18 @@ export function LearnScreen({
       </section>
 
       <AnimatePresence>
-        {selected ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section className="reference-category-modal" initial={{ opacity: 0, y: 24, scale: 0.97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: 0.98 }} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-category-modal__icon"><selected.icon size={31} /></span><span className="overline">Islam lernen</span><h2>{selected.title}</h2><h3>{selected.subtitle}</h3><p>{selected.description}</p>
-              <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Quellen werden sichtbar ausgewiesen</span><span><ScrollText size={16} /> Schrittweise Lektionen</span><span><UsersRound size={16} /> Für Einsteiger geeignet</span></div>
-              <button className="gold-button" onClick={() => { flash(`${selected.title} ist als nächster Ausbau vorgemerkt`); setSelected(null); }}>Bereich ansehen <ChevronRight size={17} /></button>
-            </motion.section>
-          </motion.div>
-        ) : null}
-      </AnimatePresence>
-
-      <AnimatePresence>
         {learningPlanOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLearningPlanOpen(false)}>
             <motion.section className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setLearningPlanOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Erst das Gebet festigen</h2><p>Die Reihenfolge ist bewusst praktisch aufgebaut. Dein Fortschritt wird nur lokal gespeichert.</p>
-              <div className="reference-learning-plan-list"><span className={wuduFinished ? 'is-complete' : ''}><i>{wuduFinished ? <CircleCheck size={16} /> : 1}</i><strong>Wudu lernen</strong></span><span><i>2</i><strong>Qibla und Gebetszeiten verstehen</strong></span><span className={completedPrayerLessons.size === 5 ? 'is-complete' : ''}><i>{completedPrayerLessons.size === 5 ? <CircleCheck size={16} /> : 3}</i><strong>Alle fünf Pflichtgebete üben</strong></span><span><i>4</i><strong>Quran, Aqidah und Alltag vertiefen</strong></span></div>
-              <button className="gold-button" onClick={() => { setLearningPlanOpen(false); setPrayerLesson(nextPrayer.id); }}>Jetzt weiterlernen <ChevronRight size={17} /></button>
+              <div className="reference-learning-plan-list">
+                <span className={wuduFinished ? 'is-complete' : ''}><i>{wuduFinished ? <CircleCheck size={16} /> : 1}</i><strong>Wudu lernen</strong></span>
+                <span><i>2</i><strong>Qibla und Gebetszeiten verstehen</strong></span>
+                <span className={completedPrayerLessons.size === 5 ? 'is-complete' : ''}><i>{completedPrayerLessons.size === 5 ? <CircleCheck size={16} /> : 3}</i><strong>Alle fünf Pflichtgebete üben</strong></span>
+                <span className={completedKnowledgeLessons.size === totalKnowledgeLessons ? 'is-complete' : ''}><i>{completedKnowledgeLessons.size === totalKnowledgeLessons ? <CircleCheck size={16} /> : 4}</i><strong>Quran, Aqidah und Alltag vertiefen · {completedKnowledgeLessons.size}/{totalKnowledgeLessons}</strong></span>
+              </div>
+              <button className="gold-button" onClick={() => { setLearningPlanOpen(false); completedPrayerLessons.size < 5 ? setPrayerLesson(nextPrayer.id) : setLearningCategory('aqidah'); }}>Jetzt weiterlernen <ChevronRight size={17} /></button>
             </motion.section>
           </motion.div>
         ) : null}
