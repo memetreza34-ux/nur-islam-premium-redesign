@@ -1,6 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode, useEffect, useState } from 'react';
-import { CircleCheck, CloudOff, RefreshCw, ShieldAlert } from 'lucide-react';
+import { BellRing, CircleCheck, Clock3, CloudOff, RefreshCw, ShieldAlert, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import type { PrayerReminderDetail } from './prayerReminderService';
 import { NurMark, PremiumImage } from './PremiumVisuals';
 
 type ErrorBoundaryProps = { children: ReactNode };
@@ -25,7 +26,7 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
     return (
       <main className="reference-system-error">
         <div className="reference-system-error__halo" />
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" className="reference-system-error__logo" fallback={<NurMark />} />
+        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="reference-system-error__logo" fallback={<NurMark />} />
         <span className="reference-system-error__icon"><ShieldAlert size={24} /></span>
         <span className="overline">Nur Islam</span>
         <h1>Die Ansicht konnte nicht geladen werden.</h1>
@@ -77,6 +78,56 @@ export function NetworkStatus() {
           {online ? <CircleCheck size={17} /> : <CloudOff size={17} />}
           <span><strong>{online ? 'Wieder verbunden' : 'Offline-Modus'}</strong><small>{online ? 'Aktuelle Inhalte können wieder geladen werden.' : 'Gespeicherte Bereiche bleiben verfügbar.'}</small></span>
         </motion.div>
+      ) : null}
+    </AnimatePresence>
+  );
+}
+
+export function PrayerReminderBanner() {
+  const [reminder, setReminder] = useState<PrayerReminderDetail | null>(null);
+
+  useEffect(() => {
+    let hideTimer: number | undefined;
+
+    const handleReminder = (rawEvent: Event) => {
+      const event = rawEvent as CustomEvent<PrayerReminderDetail>;
+      setReminder(event.detail);
+      if (hideTimer) window.clearTimeout(hideTimer);
+      hideTimer = window.setTimeout(() => setReminder(null), 12000);
+    };
+
+    window.addEventListener('nur:prayer-reminder-fired', handleReminder);
+    return () => {
+      if (hideTimer) window.clearTimeout(hideTimer);
+      window.removeEventListener('nur:prayer-reminder-fired', handleReminder);
+    };
+  }, []);
+
+  const openPrayerTracker = () => {
+    setReminder(null);
+    window.dispatchEvent(new Event('nur:open-prayer'));
+  };
+
+  return (
+    <AnimatePresence>
+      {reminder ? (
+        <motion.aside
+          className="reference-prayer-reminder-banner"
+          initial={{ opacity: 0, y: -22, scale: .95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: -14, scale: .97 }}
+          role="alert"
+          aria-live="assertive"
+        >
+          <span className="reference-prayer-reminder-banner__icon"><BellRing size={22} /></span>
+          <span className="reference-prayer-reminder-banner__copy">
+            <small>{reminder.arabic} · {reminder.time}</small>
+            <strong>{reminder.label} · Gebetszeit</strong>
+            <em><Clock3 size={13} /> {reminder.description}</em>
+          </span>
+          <button className="reference-prayer-reminder-banner__open" onClick={openPrayerTracker}>Öffnen</button>
+          <button className="reference-prayer-reminder-banner__close" onClick={() => setReminder(null)} aria-label="Erinnerung schließen"><X size={16} /></button>
+        </motion.aside>
       ) : null}
     </AnimatePresence>
   );
