@@ -1,6 +1,7 @@
 name: Premium redesign check
 
 on:
+  workflow_dispatch:
   push:
     branches: [premium-home-redesign]
   pull_request:
@@ -9,13 +10,18 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: premium-redesign-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: npm install
+      - run: npm install --no-audit --no-fund
       - run: npm run check
