@@ -10,7 +10,8 @@
     "lint": "tsc --noEmit",
     "assets:check": "node scripts/check-reference-assets.mjs",
     "names:check": "node scripts/check-names-data.mjs",
-    "check": "npm run assets:check && npm run names:check && npm run lint && npm run build"
+    "duas:check": "node scripts/check-duas-data.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
