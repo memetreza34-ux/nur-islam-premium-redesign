@@ -15,7 +15,8 @@
     "dhikr:check": "node scripts/check-dhikr-data.mjs",
     "navigation:check": "node scripts/check-navigation.mjs",
     "qibla:check": "node scripts/check-qibla.mjs",
-    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run lint && npm run build"
+    "prayer-learning:check": "node scripts/check-prayer-learning-experience.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
