@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   ChevronLeft,
   CircleCheck,
@@ -7,6 +7,7 @@ import {
   MapPin,
   Navigation,
   Settings,
+  TriangleAlert,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { PremiumImage, QiblaObject } from './PremiumVisuals';
@@ -14,6 +15,17 @@ import { PremiumImage, QiblaObject } from './PremiumVisuals';
 type Coordinates = {
   latitude: number;
   longitude: number;
+};
+
+type SensorStatus = 'idle' | 'requesting' | 'active' | 'denied' | 'unsupported';
+
+type CompassOrientationEvent = DeviceOrientationEvent & {
+  webkitCompassHeading?: number;
+  webkitCompassAccuracy?: number;
+};
+
+type DeviceOrientationEventConstructorWithPermission = typeof DeviceOrientationEvent & {
+  requestPermission?: () => Promise<'granted' | 'denied'>;
 };
 
 const KAABA: Coordinates = { latitude: 21.4225, longitude: 39.8262 };
@@ -27,13 +39,17 @@ function toDegrees(value: number) {
   return value * 180 / Math.PI;
 }
 
+function normalizeDegrees(value: number) {
+  return (value % 360 + 360) % 360;
+}
+
 function calculateBearing(from: Coordinates, to: Coordinates) {
   const latitudeOne = toRadians(from.latitude);
   const latitudeTwo = toRadians(to.latitude);
   const longitudeDifference = toRadians(to.longitude - from.longitude);
   const y = Math.sin(longitudeDifference) * Math.cos(latitudeTwo);
   const x = Math.cos(latitudeOne) * Math.sin(latitudeTwo) - Math.sin(latitudeOne) * Math.cos(latitudeTwo) * Math.cos(longitudeDifference);
-  return (toDegrees(Math.atan2(y, x)) + 360) % 360;
+  return normalizeDegrees(toDegrees(Math.atan2(y, x)));
 }
 
 function calculateDistance(from: Coordinates, to: Coordinates) {
@@ -51,19 +67,104 @@ function getDirectionLabel(bearing: number) {
   return labels[Math.round(bearing / 45) % labels.length];
 }
 
+function getScreenOrientationAngle() {
+  const modernAngle = window.screen.orientation?.angle;
+  if (typeof modernAngle === 'number') return modernAngle;
+  const legacyAngle = (window as Window & { orientation?: number }).orientation;
+  return typeof legacyAngle === 'number' ? legacyAngle : 0;
+}
+
 export function QiblaScreen({ onBack }: { onBack: () => void }) {
-  const [calibrated, setCalibrated] = useState(false);
   const [coordinates, setCoordinates] = useState<Coordinates>(BERLIN);
   const [usingLiveLocation, setUsingLiveLocation] = useState(false);
   const [locating, setLocating] = useState(false);
+  const [heading, setHeading] = useState<number | null>(null);
+  const [sensorStatus, setSensorStatus] = useState<SensorStatus>('idle');
+  const [sensorAccuracy, setSensorAccuracy] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const direction = useMemo(() => calculateBearing(coordinates, KAABA), [coordinates]);
   const distance = useMemo(() => calculateDistance(coordinates, KAABA), [coordinates]);
   const roundedDirection = Math.round(direction);
+  const needleRotation = heading === null ? direction : normalizeDegrees(direction - heading);
 
   const flash = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(null), 2100);
+  };
+
+  const handleOrientation = useCallback((rawEvent: Event) => {
+    const event = rawEvent as CompassOrientationEvent;
+    let nextHeading: number | null = null;
+
+    if (typeof event.webkitCompassHeading === 'number' && Number.isFinite(event.webkitCompassHeading)) {
+      nextHeading = event.webkitCompassHeading;
+      if (typeof event.webkitCompassAccuracy === 'number' && Number.isFinite(event.webkitCompassAccuracy)) {
+        setSensorAccuracy(Math.max(0, event.webkitCompassAccuracy));
+      }
+    } else if (typeof event.alpha === 'number' && Number.isFinite(event.alpha)) {
+      nextHeading = 360 - event.alpha;
+      setSensorAccuracy(null);
+    }
+
+    if (nextHeading === null) return;
+    setHeading(normalizeDegrees(nextHeading + getScreenOrientationAngle()));
+    setSensorStatus('active');
+  }, []);
+
+  const stopCompass = useCallback(() => {
+    window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+    window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+    setHeading(null);
+    setSensorAccuracy(null);
+    setSensorStatus('idle');
+  }, [handleOrientation]);
+
+  useEffect(() => () => {
+    window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+    window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+  }, [handleOrientation]);
+
+  const startCompass = async () => {
+    if (sensorStatus === 'active') {
+      stopCompass();
+      flash('Gerätekompass gestoppt');
+      return;
+    }
+
+    const OrientationEvent = window.DeviceOrientationEvent as DeviceOrientationEventConstructorWithPermission | undefined;
+    if (!OrientationEvent) {
+      setSensorStatus('unsupported');
+      flash('Dieses Gerät stellt keinen Kompasssensor bereit');
+      return;
+    }
+
+    setSensorStatus('requesting');
+    try {
+      if (typeof OrientationEvent.requestPermission === 'function') {
+        const permission = await OrientationEvent.requestPermission();
+        if (permission !== 'granted') {
+          setSensorStatus('denied');
+          flash('Kompasszugriff wurde nicht freigegeben');
+          return;
+        }
+      }
+
+      window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+      window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+      window.addEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+      window.addEventListener('deviceorientation', handleOrientation as EventListener, true);
+
+      window.setTimeout(() => {
+        setSensorStatus((current) => {
+          if (current === 'active') return current;
+          flash('Kein Kompasssignal empfangen – Gerät bewegen oder Browserberechtigung prüfen');
+          return 'unsupported';
+        });
+      }, 2500);
+    } catch {
+      setSensorStatus('denied');
+      flash('Kompasszugriff konnte nicht gestartet werden');
+    }
   };
 
   const requestLocation = () => {
@@ -78,7 +179,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
         setUsingLiveLocation(true);
         setLocating(false);
-        flash('Qibla-Richtung wurde neu berechnet');
+        flash('Qibla-Richtung wurde für deinen Standort neu berechnet');
       },
       () => {
         setLocating(false);
@@ -88,39 +189,60 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     );
   };
 
+  const sensorLabel = sensorStatus === 'active'
+    ? 'Live-Kompass aktiv'
+    : sensorStatus === 'requesting'
+      ? 'Kompass wird gestartet …'
+      : sensorStatus === 'denied'
+        ? 'Kompasszugriff verweigert'
+        : sensorStatus === 'unsupported'
+          ? 'Kein Sensorsignal'
+          : 'Kompass noch nicht gestartet';
+
   return (
     <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>Qibla</h1></div>
-        <button className="icon-button" onClick={() => flash('Qibla-Einstellungen geöffnet')}><Settings size={20} /></button>
+        <button className="icon-button" onClick={() => flash('Standort und Sensor werden ausschließlich auf diesem Gerät verarbeitet')} aria-label="Qibla-Hinweis"><Settings size={20} /></button>
       </header>
 
       <section className="reference-qibla-stage">
         <div className="reference-qibla-stage__halo" />
-        <PremiumImage src="/premium-assets/high-res-objects/qibla-compass.webp" className="reference-qibla-stage__compass" fallback={<QiblaObject />} />
-        <span className="reference-qibla-stage__needle" style={{ transform: `translateX(-50%) rotate(${direction}deg)` }}><Navigation size={29} fill="currentColor" /></span>
+        <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" className="reference-qibla-stage__compass" fallback={<QiblaObject />} />
+        <span className="reference-qibla-stage__needle" style={{ transform: `translateX(-50%) rotate(${needleRotation}deg)` }}><Navigation size={29} fill="currentColor" /></span>
         <div className="reference-qibla-stage__copy">
           <span className="overline">Richtung zur Kaaba</span>
           <h2>{roundedDirection}° {getDirectionLabel(direction)}</h2>
-          <p>Entfernung ungefähr {Math.round(distance).toLocaleString('de-DE')} km.</p>
+          <p>{heading === null ? `Entfernung ungefähr ${Math.round(distance).toLocaleString('de-DE')} km.` : `Geräteausrichtung ${Math.round(heading)}° · Entfernung ${Math.round(distance).toLocaleString('de-DE')} km.`}</p>
         </div>
       </section>
 
       <section className="reference-qibla-location">
         <span className="reference-qibla-location__icon"><MapPin size={20} /></span>
-        <span><small>{usingLiveLocation ? 'Aktueller Standort' : 'Standardstandort'}</small><strong>{usingLiveLocation ? 'Gerätestandort' : 'Berlin, Deutschland'}</strong><em>{usingLiveLocation ? 'Koordinaten lokal berechnet' : 'Standort noch nicht freigegeben'}</em></span>
-        <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label="Standort aktualisieren"><LocateFixed size={18} /></button>
+        <span><small>{usingLiveLocation ? 'Aktueller Standort' : 'Standardstandort'}</small><strong>{usingLiveLocation ? 'Gerätestandort' : 'Berlin, Deutschland'}</strong><em>{usingLiveLocation ? 'Koordinaten nur lokal verarbeitet' : 'Standort noch nicht freigegeben'}</em></span>
+        <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label="Standort aktualisieren" disabled={locating}><LocateFixed size={18} /></button>
       </section>
 
       <section className="reference-qibla-calibration">
-        <div><span className="overline">Kompass</span><h3>{calibrated ? 'Kompass vorbereitet' : 'Kalibrierung empfohlen'}</h3><p>{calibrated ? 'Halte das Gerät flach und richte den oberen Rand nach Norden aus.' : 'Bewege dein Gerät in einer liegenden Acht, damit der Gerätesensor genauer arbeiten kann.'}</p></div>
-        <button className={calibrated ? 'reference-calibration-button is-done' : 'reference-calibration-button'} onClick={() => { setCalibrated(true); flash('Kalibrierungshinweis bestätigt'); }}>{calibrated ? <CircleCheck size={17} /> : <Compass size={17} />}{calibrated ? 'Bereit' : 'Kalibrieren'}</button>
+        <div>
+          <span className="overline">Gerätekompass</span>
+          <h3>{sensorLabel}</h3>
+          <p>{sensorStatus === 'active' ? `Die Nadel reagiert live auf die Gerätebewegung${sensorAccuracy === null ? '.' : ` · gemeldete Genauigkeit etwa ${Math.round(sensorAccuracy)}°.`}` : 'Halte das Gerät flach und bewege es vor dem Start kurz in einer liegenden Acht.'}</p>
+        </div>
+        <button
+          className={sensorStatus === 'active' ? 'reference-calibration-button is-done' : 'reference-calibration-button'}
+          onClick={startCompass}
+          disabled={sensorStatus === 'requesting'}
+        >
+          {sensorStatus === 'active' ? <CircleCheck size={17} /> : sensorStatus === 'denied' || sensorStatus === 'unsupported' ? <TriangleAlert size={17} /> : <Compass size={17} />}
+          {sensorStatus === 'active' ? 'Stoppen' : sensorStatus === 'requesting' ? 'Startet …' : 'Kompass starten'}
+        </button>
       </section>
 
       <section className="reference-qibla-tip">
         <Compass size={20} />
-        <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von magnetischen Gegenständen. Die Nadel zeigt den berechneten Winkel; eine echte Sensorrotation benötigt Gerätezugriff.</small></span>
+        <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Standort und Sensordaten verlassen den Browser nicht.</small></span>
       </section>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
