@@ -11,6 +11,7 @@ import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
 import { AppErrorBoundary, NetworkStatus } from './AppSystemLayer';
+import { bootstrapSharedPrayerTimes } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
@@ -52,6 +53,7 @@ function prepareImmediatePreview() {
 }
 
 prepareImmediatePreview();
+const sharedPrayerTimesReady = bootstrapSharedPrayerTimes();
 
 if ('scrollRestoration' in window.history) {
   window.history.scrollRestoration = 'manual';
@@ -61,6 +63,7 @@ registerNurPwa();
 
 function BootRoot() {
   const [ready, setReady] = useState(false);
+  const [, setPrayerTimesVersion] = useState(0);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -68,6 +71,14 @@ function BootRoot() {
     const previewMode = document.documentElement.classList.contains('is-preview');
     const timer = window.setTimeout(() => setReady(true), previewMode || reducedMotion ? 160 : 800);
     return () => window.clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    void sharedPrayerTimesReady.then(() => {
+      if (active) setPrayerTimesVersion((version) => version + 1);
+    });
+    return () => { active = false; };
   }, []);
 
   return (
