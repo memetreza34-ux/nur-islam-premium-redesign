@@ -1,4 +1,4 @@
-const SERVICE_WORKER_VERSION = '7-20260806-visual4';
+const SERVICE_WORKER_VERSION = '8-20260806-reminders';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
@@ -9,6 +9,14 @@ export function registerNurPwa() {
   window.matchMedia('(display-mode: standalone)').addEventListener?.('change', (event) => {
     document.documentElement.classList.toggle('is-standalone', event.matches);
   });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.addEventListener('message', (event) => {
+      if (event.data?.type === 'OPEN_PRAYER') {
+        window.dispatchEvent(new Event('nur:open-prayer'));
+      }
+    });
+  }
 
   if (!import.meta.env.PROD || !('serviceWorker' in navigator)) return;
 
