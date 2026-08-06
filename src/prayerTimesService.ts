@@ -51,6 +51,8 @@ export const ASR_SCHOOL_OPTIONS: Array<{ id: AsrSchool; label: string; descripti
 const LOCATION_STORAGE_KEY = 'nur_prayer_location';
 const PREFERENCES_STORAGE_KEY = 'nur_prayer_preferences';
 const SNAPSHOT_STORAGE_KEY = 'nur_prayer_times_latest';
+const FALLBACK_PRAYER_SCHEDULE = PRAYER_SCHEDULE.map((prayer) => ({ ...prayer }));
+const FALLBACK_PRAYER_META = { ...PRAYER_SCHEDULE_META };
 
 const timingKeys: Record<PrayerScheduleItem['id'], string> = {
   fajr: 'Fajr',
@@ -130,11 +132,17 @@ function safePreferences(value: unknown): value is PrayerTimesPreferences {
 }
 
 function safeSchedule(value: unknown): value is PrayerScheduleItem[] {
-  if (!Array.isArray(value) || value.length !== PRAYER_SCHEDULE.length) return false;
-  return PRAYER_SCHEDULE.every((base, index) => {
+  if (!Array.isArray(value) || value.length !== FALLBACK_PRAYER_SCHEDULE.length) return false;
+  return FALLBACK_PRAYER_SCHEDULE.every((base, index) => {
     const candidate = value[index] as Partial<PrayerScheduleItem> | undefined;
     return candidate?.id === base.id && typeof candidate.time === 'string' && /^\d{2}:\d{2}$/.test(candidate.time);
   });
+}
+
+export function applyPrayerSnapshotToSharedSchedule(snapshot: PrayerTimesSnapshot) {
+  PRAYER_SCHEDULE.splice(0, PRAYER_SCHEDULE.length, ...snapshot.schedule.map((prayer) => ({ ...prayer })));
+  Object.assign(PRAYER_SCHEDULE_META, snapshot.meta);
+  window.dispatchEvent(new CustomEvent('nur:prayer-times-updated', { detail: snapshot.source }));
 }
 
 export function readPrayerLocation() {
@@ -169,9 +177,9 @@ export function createFallbackPrayerSnapshot(
   date = new Date(),
 ): PrayerTimesSnapshot {
   return {
-    schedule: PRAYER_SCHEDULE,
+    schedule: FALLBACK_PRAYER_SCHEDULE.map((prayer) => ({ ...prayer })),
     meta: {
-      ...PRAYER_SCHEDULE_META,
+      ...FALLBACK_PRAYER_META,
       city: location.source === 'device' ? 'Gerätestandort' : 'Berlin',
       locationLabel: location.label,
       sourceLabel: 'Offline-Fallback',
@@ -228,7 +236,7 @@ export async function fetchPrayerTimes(
     const payload = await response.json() as AlAdhanResponse;
     if (payload.code !== 200 || !payload.data?.timings) throw new Error('Gebetszeiten-Quelle lieferte keine gültigen Daten.');
 
-    const schedule = PRAYER_SCHEDULE.map((prayer) => ({
+    const schedule = FALLBACK_PRAYER_SCHEDULE.map((prayer) => ({
       ...prayer,
       time: normalizeTime(payload.data?.timings?.[timingKeys[prayer.id]]),
     }));
@@ -253,8 +261,25 @@ export async function fetchPrayerTimes(
     savePrayerLocation(location);
     savePrayerPreferences(preferences);
     savePrayerSnapshot(snapshot);
+    applyPrayerSnapshotToSharedSchedule(snapshot);
     return snapshot;
   } finally {
     window.clearTimeout(timeout);
+  }
+}
+
+export async function bootstrapSharedPrayerTimes() {
+  const location = readPrayerLocation();
+  const preferences = readPrayerPreferences();
+  const cached = readCachedPrayerSnapshot();
+  if (cached) applyPrayerSnapshotToSharedSchedule(cached);
+
+  try {
+    return await fetchPrayerTimes(location, preferences);
+  } catch {
+    if (cached) return cached;
+    const fallback = createFallbackPrayerSnapshot(location, preferences);
+    applyPrayerSnapshotToSharedSchedule(fallback);
+    return fallback;
   }
 }
