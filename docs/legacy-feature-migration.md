@@ -19,7 +19,7 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Quran | Teilweise | Vollständige 114 Suren und geprüfte Übersetzungen aus Altbestand migrieren |
 | Dhikr | Teilweise | Vollständige Kategorien, Quellen und Ziele übernehmen |
 | Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
-| Duas | Teilweise | Vollständigen geprüften Dua-Bestand übernehmen |
+| Duas | Migriert | 34 Einträge in 13 Kategorien, Suche, Favoriten, Lesefortschritt, Detailansicht, Kopieren und Teilen; fachliche Einzelprüfung ausstehend |
 | 99 Namen Allahs | Migriert | 99 Einträge, Suche, Favoriten, Lernstatus, Fortschritt und Detailansicht; fachliche Endprüfung von Reihenfolge, Schreibweisen und Bedeutungen ausstehend |
 | Moscheesuche | Teilweise | Live-Karten- und Standortdaten anbinden |
 | Sammlungen | Vorhanden | Namen-Favoriten, weitere Inhaltstypen und Export ergänzen |
