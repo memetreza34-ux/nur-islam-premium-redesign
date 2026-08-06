@@ -11,7 +11,8 @@
     "assets:check": "node scripts/check-reference-assets.mjs",
     "names:check": "node scripts/check-names-data.mjs",
     "duas:check": "node scripts/check-duas-data.mjs",
-    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run lint && npm run build"
+    "quran:check": "node scripts/check-quran-data.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
