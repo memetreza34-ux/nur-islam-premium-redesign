@@ -19,6 +19,7 @@ import { AnimatePresence, motion } from 'motion/react';
 import { DUA_BY_ID } from './duaData';
 import { NAMES_OF_ALLAH } from './namesOfAllahData';
 import { PremiumImage, MosqueScene, QuranObject } from './PremiumVisuals';
+import { OFFLINE_QURAN_SURAHS } from './quranService';
 
 const mosques = [
   ['Şehitlik-Moschee', 'Columbiadamm, Berlin', '2,1 km'],
@@ -27,6 +28,13 @@ const mosques = [
   ['Mevlana Moschee', 'Kreuzberg, Berlin', '6,2 km'],
   ['Islamisches Kulturzentrum', 'Tempelhof, Berlin', '7,1 km'],
 ];
+
+const offlineSurahLabels: Record<number, string> = {
+  1: 'Al-Faatiha',
+  112: 'Al-Ikhlaas',
+  113: 'Al-Falaq',
+  114: 'An-Naas',
+};
 
 function readStringSet(key: string, fallback: string[] = []) {
   try {
@@ -56,6 +64,16 @@ function readBoolean(key: string) {
   } catch {
     return false;
   }
+}
+
+function readQuranBookmarkGroups() {
+  return OFFLINE_QURAN_SURAHS
+    .map((surahNumber) => ({
+      surahNumber,
+      label: offlineSurahLabels[surahNumber] ?? `Sure ${surahNumber}`,
+      bookmarks: readNumberSet(`nur_quran_bookmarks_${surahNumber}`),
+    }))
+    .filter((group) => group.bookmarks.size > 0);
 }
 
 function Toast({ message }: { message: string | null }) {
@@ -107,7 +125,8 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
 export function CollectionsScreen({ onBack }: { onBack: () => void }) {
   const [filter, setFilter] = useState('Alle');
   const [toast, setToast] = useState<string | null>(null);
-  const quranBookmarks = useMemo(() => readNumberSet('nur_quran_bookmarks_112'), []);
+  const quranBookmarkGroups = useMemo(readQuranBookmarkGroups, []);
+  const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites'), []);
   const duaFavorites = useMemo(() => readStringSet('nur_dua_favorites'), []);
   const nameFavorites = useMemo(() => readStringSet('nur_name_favorites'), []);
   const calendarFavorites = useMemo(() => readStringSet('nur_calendar_favorites'), []);
@@ -120,10 +139,11 @@ export function CollectionsScreen({ onBack }: { onBack: () => void }) {
   const showNames = filter === 'Alle' || filter === 'Namen';
   const showHadith = filter === 'Alle' || filter === 'Hadith';
   const showDates = filter === 'Alle' || filter === 'Termine';
-  const hasAny = quranBookmarks.size > 0 || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithSaved || calendarFavorites.size > 0;
+  const hasQuran = quranBookmarkGroups.length > 0 || quranSurahFavorites.size > 0;
+  const hasAny = hasQuran || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithSaved || calendarFavorites.size > 0;
 
   const emptyForFilter = !hasAny
-    || (filter === 'Quran' && quranBookmarks.size === 0)
+    || (filter === 'Quran' && !hasQuran)
     || (filter === 'Duas' && duaFavorites.size === 0)
     || (filter === 'Namen' && nameFavorites.size === 0)
     || (filter === 'Hadith' && !ayahSaved && !hadithSaved)
@@ -141,11 +161,15 @@ export function CollectionsScreen({ onBack }: { onBack: () => void }) {
         {['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine'].map((item) => <button key={item} className={filter === item ? 'is-active' : ''} onClick={() => setFilter(item)}>{item}</button>)}
       </div>
 
-      {showQuran && quranBookmarks.size > 0 ? (
+      {showQuran && hasQuran ? (
         <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Quran</span><h2>Lesezeichen</h2></div></div>
+          <div className="section-heading"><div><span className="overline">Quran</span><h2>Lesezeichen & Suren</h2></div></div>
           <div className="reference-collection-grid">
-            <button onClick={() => flash('Al-Ikhlas geöffnet')}><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /><span><strong>Al-Ikhlas</strong><small>{quranBookmarks.size} gespeicherte Ayat</small></span><Bookmark size={17} /></button>
+            <button onClick={() => flash('Quran-Sammlung geöffnet')}><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /><span><strong>{quranBookmarkGroups.reduce((sum, group) => sum + group.bookmarks.size, 0)} Ayah-Lesezeichen</strong><small>{quranSurahFavorites.size} Lieblingssuren</small></span><Bookmark size={17} /></button>
+          </div>
+          <div className="reference-collection-rows">
+            {quranBookmarkGroups.map((group) => <button key={`bookmark-${group.surahNumber}`} onClick={() => flash(`${group.label} geöffnet`)}><span><BookOpen size={18} /></span><span><strong>{group.label}</strong><small>Sure {group.surahNumber} · {group.bookmarks.size} gespeicherte Ayat</small></span><ChevronRight size={17} /></button>)}
+            {[...quranSurahFavorites].map((surahNumber) => <button key={`favorite-${surahNumber}`} onClick={() => flash(`${offlineSurahLabels[surahNumber] ?? `Sure ${surahNumber}`} geöffnet`)}><span><Sparkles size={18} /></span><span><strong>{offlineSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span><ChevronRight size={17} /></button>)}
           </div>
         </section>
       ) : null}
