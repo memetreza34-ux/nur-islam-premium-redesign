@@ -37,11 +37,11 @@ import { NamesScreen } from './NamesScreen';
 import { OnboardingScreen } from './OnboardingScreen';
 import { PrayerScreen } from './PrayerScreen';
 import { QiblaScreen } from './QiblaScreen';
+import { QuranReaderScreen } from './QuranReaderScreen';
 import { QuranScreen } from './QuranScreen';
 import {
   AyahDetailScreen,
   HadithDetailScreen,
-  QuranReaderScreen,
   WorshipGuideScreen,
 } from './ReferenceReadingScreens';
 import {
@@ -74,7 +74,7 @@ type QuickAction = {
 };
 
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Weiterlernen', icon: BookOpen, accent: 'gold', target: 'reader' },
+  { label: 'Quran lesen', eyebrow: 'Offline weiterlesen', icon: BookOpen, accent: 'gold', target: 'reader' },
   { label: 'Wudu & Salah', eyebrow: 'Schritt für Schritt', icon: HandHeart, accent: 'cream', target: 'wudu' },
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
   { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
@@ -139,7 +139,13 @@ function hasCompletedOnboarding() {
   }
 }
 
-function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
+function PremiumHome({
+  onNavigate,
+  onOpenReader,
+}: {
+  onNavigate: (tab: Tab) => void;
+  onOpenReader: (surahNumber: number) => void;
+}) {
   const [toast, setToast] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
   const islamicDate = getIslamicDate(now);
@@ -166,7 +172,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
     >
       <header className="brand-bar">
         <button className="brand-lockup" onClick={() => showToast('Nur Islam')} aria-label="Nur Islam">
-          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" className="brand-lockup__mark" fallback={<NurMark />} />
+          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="brand-lockup__mark" fallback={<NurMark />} />
           <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
         </button>
         <div className="brand-bar__actions">
@@ -177,7 +183,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
 
       <section className="welcome-hero">
         <div className="welcome-hero__shade" />
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold.webp" className="welcome-hero__visual" fallback={<MosqueScene />} />
+        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" className="welcome-hero__visual" fallback={<MosqueScene />} />
         <div className="welcome-hero__copy">
           <span className="overline">Assalamu Alaikum</span>
           <h1>{greeting}</h1>
@@ -225,16 +231,16 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
         <div className="journey-grid">
-          <button className="journey-card journey-card--quran" onClick={() => onNavigate('reader')}>
-            <PremiumImage src="/premium-assets/high-res-objects/quran-closed.webp" fallback={<QuranObject />} />
-            <span><small>Weiterlesen</small><strong>Surah Al-Kahf</strong><em>Ayah 18 von 110</em></span>
+          <button className="journey-card journey-card--quran" onClick={() => onOpenReader(112)}>
+            <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
+            <span><small>Offline weiterlesen</small><strong>Surah Al-Ikhlaas</strong><em>4 Ayat vollständig verfügbar</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('dhikr')}>
-            <PremiumImage src="/premium-assets/high-res-objects/tasbih.webp" fallback={<RosetteObject />} />
+            <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} />
             <span><small>Tägliches Ziel</small><strong>Dhikr</strong><em>33 von 100</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('qibla')}>
-            <PremiumImage src="/premium-assets/high-res-objects/qibla-compass.webp" fallback={<QiblaObject />} />
+            <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" fallback={<QiblaObject />} />
             <span><small>Richtung Mekka</small><strong>Qibla</strong><em>Kompass starten</em></span>
           </button>
         </div>
@@ -247,7 +253,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
-              onClick={() => target ? onNavigate(target) : undefined}
+              onClick={() => target === 'reader' ? onOpenReader(112) : target ? onNavigate(target) : undefined}
               whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -260,14 +266,14 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       </section>
 
       <section className="continue-card continue-card--v2 glass-card">
-        <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed.webp" fallback={<QuranObject />} /></div>
-        <div className="continue-card__body"><span className="overline">Weiterlesen</span><h3>Surah Al-Kahf</h3><p>Ayah 18 von 110 · zuletzt heute gelesen</p><div className="reading-progress"><span /></div></div>
-        <button className="play-button" aria-label="Weiterlesen" onClick={() => onNavigate('reader')}><Play size={20} fill="currentColor" /></button>
+        <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /></div>
+        <div className="continue-card__body"><span className="overline">Offline verfügbar</span><h3>Surah Al-Ikhlaas</h3><p>Arabisch und deutsche Bedeutung · 4 Ayat</p><div className="reading-progress"><span style={{ width: '25%' }} /></div></div>
+        <button className="play-button" aria-label="Weiterlesen" onClick={() => onOpenReader(112)}><Play size={20} fill="currentColor" /></button>
       </section>
 
       <section className="inspiration-grid inspiration-grid--v2">
         <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
-          <PremiumImage src="/premium-assets/high-res-objects/quran-closed.webp" className="verse-card__art" fallback={<LanternObject />} />
+          <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
           <div className="card-title-row"><span><Sparkles size={16} /> Ayah des Tages</span><span><BookHeart size={18} /></span></div>
           <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
@@ -276,7 +282,7 @@ function PremiumHome({ onNavigate }: { onNavigate: (tab: Tab) => void }) {
       </section>
 
       <button className="ai-preview" onClick={() => onNavigate('assistant')}>
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" className="ai-preview__mark" fallback={<NurMark />} />
+        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="ai-preview__mark" fallback={<NurMark />} />
         <span><small>Nur Assistent</small><strong>Assalamu Alaikum</strong><p>Quellenbasierter Bereich für Fragen zu Glauben und Alltag.</p></span>
         <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
       </button>
@@ -319,6 +325,7 @@ function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: 
 export default function App() {
   const [onboardingComplete, setOnboardingComplete] = useState(hasCompletedOnboarding);
   const [activeTab, setActiveTab] = useState<Tab>('home');
+  const [selectedSurahNumber, setSelectedSurahNumber] = useState(112);
   const primaryActive: PrimaryTab = activeTab === 'prayer'
     ? 'prayer'
     : activeTab === 'calendar'
@@ -331,11 +338,15 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, onboardingComplete]);
+  }, [activeTab, onboardingComplete, selectedSurahNumber]);
 
   const goHome = () => setActiveTab('home');
   const goQuran = () => setActiveTab('quran');
   const goLearn = () => setActiveTab('learn');
+  const openReader = (surahNumber: number) => {
+    setSelectedSurahNumber(surahNumber);
+    setActiveTab('reader');
+  };
 
   if (!onboardingComplete) {
     return (
@@ -355,11 +366,11 @@ export default function App() {
   const screen = isLegacyTab(activeTab)
     ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goHome} />
     : activeTab === 'home'
-      ? <PremiumHome onNavigate={setActiveTab} />
+      ? <PremiumHome onNavigate={setActiveTab} onOpenReader={openReader} />
       : activeTab === 'quran'
-        ? <QuranScreen onBack={goHome} onOpenReader={() => setActiveTab('reader')} onOpenAyah={() => setActiveTab('ayah')} />
+        ? <QuranScreen onBack={goHome} onOpenReader={openReader} onOpenAyah={() => setActiveTab('ayah')} />
         : activeTab === 'reader'
-          ? <QuranReaderScreen onBack={goQuran} />
+          ? <QuranReaderScreen surahNumber={selectedSurahNumber} onBack={goQuran} onOpenSurah={setSelectedSurahNumber} />
           : activeTab === 'ayah'
             ? <AyahDetailScreen onBack={goHome} />
             : activeTab === 'hadith'
@@ -396,7 +407,7 @@ export default function App() {
       <div className="background-orbit background-orbit--two" />
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
         <AnimatePresence mode="wait">
-          <motion.div key={activeTab} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
+          <motion.div key={`${activeTab}-${activeTab === 'reader' ? selectedSurahNumber : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
             {screen}
           </motion.div>
         </AnimatePresence>
