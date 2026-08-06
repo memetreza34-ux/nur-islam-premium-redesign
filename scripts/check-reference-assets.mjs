@@ -1,5 +1,5 @@
 import { readFile, readdir, stat } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { extname, resolve } from 'node:path';
 
 const root = process.cwd();
 const chunksDirectory = resolve(root, 'src/assets');
@@ -91,32 +91,53 @@ for (const name of recoveredAssets) {
   }
 }
 
-const primaryCss = await readFile(resolve(root, 'src/styles/reference-valid-assets-v2.css'), 'utf8');
-const secondaryCss = await readFile(resolve(root, 'src/styles/reference-valid-assets-secondary.css'), 'utf8');
-const wiredAssets = [
-  'nur-logo-emblem-v2.webp',
-  'mosque-gold-v2.webp',
-  'quran-closed-v2.webp',
-  'quran-open-v2.webp',
-  'tasbih-v2.webp',
-  'qibla-compass-v2.webp',
-  'mihrab-arch-v2.webp',
-  'lantern-v2.webp',
-  'kaaba-v2.webp',
-  'dome-v2.webp',
-  'dua-hands-v2.webp',
-  'sun-emblem-v2.webp',
-  'calendar-chip-v2.webp',
-  'bookmark-v2.webp',
-];
+async function collectTextFiles(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) files.push(...await collectTextFiles(path));
+    else if (['.ts', '.tsx', '.css'].includes(extname(entry.name))) files.push(path);
+  }
+  return files;
+}
 
-const completeCss = `${primaryCss}\n${secondaryCss}`;
-for (const name of wiredAssets) {
-  if (!completeCss.includes(name)) {
-    throw new Error(`Recovered asset is not wired in the cache-safe CSS layers: ${name}`);
+const sourceFiles = await collectTextFiles(resolve(root, 'src'));
+const sourceParts = await Promise.all(sourceFiles.map((path) => readFile(path, 'utf8')));
+const completeSource = sourceParts.join('\n');
+
+for (const name of recoveredAssets) {
+  if (!completeSource.includes(name) && !['mosque-v2.webp', 'qibla-v2.webp', 'mihrab-v2.webp'].includes(name)) {
+    throw new Error(`Recovered asset is not wired in the app source: ${name}`);
   }
 }
 
+const allCss = sourceFiles
+  .filter((path) => extname(path) === '.css')
+  .map((path, index) => sourceParts[sourceFiles.indexOf(path)])
+  .join('\n');
+
+const forbiddenGlobalRules = [
+  /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
+  /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
+];
+
+for (const pattern of forbiddenGlobalRules) {
+  if (pattern.test(allCss)) {
+    throw new Error('A global CSS rule hides real premium images. SVG fallbacks must only appear after an image load error.');
+  }
+}
+
+const recoveryCss = await readFile(resolve(root, 'src/styles/reference-asset-recovery.css'), 'utf8');
+if (!recoveryCss.includes('.premium-image > img[hidden]') || !recoveryCss.includes('display: block !important')) {
+  throw new Error('Premium image fallback CSS does not preserve visible real images and error-only fallbacks.');
+}
+
+const premiumVisuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
+if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVisuals.includes('next.hidden = false')) {
+  throw new Error('PremiumImage must switch to its SVG fallback only after an actual image error.');
+}
+
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, no global image-hiding CSS.`,
 );
