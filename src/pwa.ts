@@ -1,4 +1,4 @@
-const SERVICE_WORKER_VERSION = '6';
+const SERVICE_WORKER_VERSION = '7-20260806-visual4';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
@@ -23,7 +23,24 @@ export function registerNurPwa() {
 
     navigator.serviceWorker
       .register(`/sw.js?v=${SERVICE_WORKER_VERSION}`, { updateViaCache: 'none' })
-      .then((registration) => registration.update())
+      .then(async (registration) => {
+        await registration.update();
+
+        if (registration.waiting) {
+          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+        }
+
+        registration.addEventListener('updatefound', () => {
+          const worker = registration.installing;
+          if (!worker) return;
+
+          worker.addEventListener('statechange', () => {
+            if (worker.state === 'installed' && navigator.serviceWorker.controller) {
+              worker.postMessage({ type: 'SKIP_WAITING' });
+            }
+          });
+        });
+      })
       .catch(() => {
         // Die App bleibt online verwendbar, falls die Registrierung blockiert ist.
       });
