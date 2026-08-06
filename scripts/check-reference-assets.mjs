@@ -91,6 +91,35 @@ for (const name of recoveredAssets) {
   }
 }
 
+const designBoardDirectory = resolve(root, 'docs/design-references/chat');
+const designBoards = new Map([
+  ['01-core-experience.webp', 5598],
+  ['02-quran-daily-content.webp', 5428],
+  ['03-learning-knowledge.webp', 6536],
+  ['04-worship-seasons.webp', 6674],
+  ['05-places-community-settings.webp', 6612],
+  ['06-home-components.webp', 5596],
+  ['07-calendar-components.webp', 5970],
+  ['08-settings-profile-components.webp', 8626],
+]);
+
+const designBoardReadme = await readFile(resolve(designBoardDirectory, 'README.md'), 'utf8');
+for (const [name, expectedSize] of designBoards) {
+  const path = resolve(designBoardDirectory, name);
+  const fileStats = await stat(path);
+  if (fileStats.size !== expectedSize) {
+    throw new Error(`Chat design board has an unexpected size: ${name} (${fileStats.size}, expected ${expectedSize}).`);
+  }
+
+  const data = await readFile(path);
+  if (data.subarray(0, 4).toString('ascii') !== 'RIFF' || data.subarray(8, 12).toString('ascii') !== 'WEBP') {
+    throw new Error(`Chat design board is not a valid WebP file: ${name}`);
+  }
+  if (!designBoardReadme.includes(name)) {
+    throw new Error(`Chat design board is missing from its README: ${name}`);
+  }
+}
+
 async function collectTextFiles(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
   const files = [];
@@ -139,5 +168,5 @@ if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVis
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, no global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, no global image-hiding CSS.`,
 );
