@@ -1,9 +1,17 @@
 import type { CSSProperties } from 'react';
 
+const PREMIUM_ASSET_VERSION = '20260806-visual4';
+
 type VisualProps = {
   className?: string;
   style?: CSSProperties;
 };
+
+function versionPremiumAsset(src: string) {
+  if (!src.startsWith('/premium-assets/')) return src;
+  const separator = src.includes('?') ? '&' : '?';
+  return `${src}${separator}v=${PREMIUM_ASSET_VERSION}`;
+}
 
 export function NurMark({ className = '', style }: VisualProps) {
   return (
@@ -155,10 +163,41 @@ export function CrescentObject({ className = '', style }: VisualProps) {
   );
 }
 
-export function PremiumImage({ src, alt = '', className = '', fallback }: { src: string; alt?: string; className?: string; fallback: React.ReactNode }) {
+export function PremiumImage({
+  src,
+  alt = '',
+  className = '',
+  fallback,
+  priority = false,
+}: {
+  src: string;
+  alt?: string;
+  className?: string;
+  fallback: React.ReactNode;
+  priority?: boolean;
+}) {
+  const versionedSrc = versionPremiumAsset(src);
+  const eager = priority || /brand-lockup|welcome-hero|reference-.*hero/.test(className);
+
   return (
-    <span className={`premium-image ${className}`}>
-      <img src={src} alt={alt} onError={(event) => { event.currentTarget.hidden = true; const next = event.currentTarget.nextElementSibling as HTMLElement | null; if (next) next.hidden = false; }} />
+    <span className={`premium-image ${className}`} data-premium-src={versionedSrc}>
+      <img
+        src={versionedSrc}
+        alt={alt}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        draggable={false}
+        onLoad={(event) => {
+          event.currentTarget.hidden = false;
+          const next = event.currentTarget.nextElementSibling as HTMLElement | null;
+          if (next) next.hidden = true;
+        }}
+        onError={(event) => {
+          event.currentTarget.hidden = true;
+          const next = event.currentTarget.nextElementSibling as HTMLElement | null;
+          if (next) next.hidden = false;
+        }}
+      />
       <span className="premium-image__fallback" hidden>{fallback}</span>
     </span>
   );
