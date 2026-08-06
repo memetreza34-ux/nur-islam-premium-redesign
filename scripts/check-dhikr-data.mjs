@@ -1,0 +1,39 @@
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const root = process.cwd();
+const dataSource = await readFile(resolve(root, 'src/dhikrData.ts'), 'utf8');
+const screenSource = await readFile(resolve(root, 'src/DhikrScreen.tsx'), 'utf8');
+const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+
+const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|before-sleep|free-counter)'/g)].map((match) => match[1]);
+const uniqueRoutineIds = new Set(routineIds);
+
+for (const required of ['after-prayer', 'morning-weighted', 'before-sleep', 'free-counter']) {
+  if (!uniqueRoutineIds.has(required)) throw new Error(`Dhikr routine is missing: ${required}`);
+}
+
+for (const source of ['Sahih Muslim 597a', 'Sahih Muslim 2726a', 'Sahih al-Bukhari 6318']) {
+  if (!dataSource.includes(source)) throw new Error(`Dhikr source label is missing: ${source}`);
+}
+
+const targetValues = [...dataSource.matchAll(/target: (\d+)/g)].map((match) => Number(match[1]));
+if (targetValues.length < 9 || targetValues.some((value) => !Number.isInteger(value) || value < 1)) {
+  throw new Error('Dhikr targets are incomplete or invalid.');
+}
+
+for (const required of [
+  'nur_dhikr_daily_v2',
+  'nur_dhikr_active_routine',
+  'todayKey()',
+  'DHIKR_ROUTINES',
+  'reference-dhikr-source',
+]) {
+  if (!screenSource.includes(required)) throw new Error(`Dhikr screen integration is missing: ${required}`);
+}
+
+if (!stylesSource.includes('reference-dhikr-complete.css')) {
+  throw new Error('Complete Dhikr stylesheet is not loaded.');
+}
+
+console.log(`Dhikr migration verified: ${uniqueRoutineIds.size} routines, ${targetValues.length} sourced or neutral counter steps, daily persistence and styles.`);
