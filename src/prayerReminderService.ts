@@ -12,6 +12,7 @@ export type PrayerReminderDetail = {
 const NOTIFICATION_STORAGE_KEY = 'nur_prayer_notifications';
 const REMINDER_WINDOW_MINUTES = 1;
 const CHECK_INTERVAL_MS = 20000;
+const APP_BASE = import.meta.env.BASE_URL;
 
 function dateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -48,18 +49,20 @@ async function showPrayerNotification(prayer: PrayerScheduleItem) {
 
   const options: NotificationOptions = {
     body: `Es ist Zeit für ${prayer.label}. Öffne Nur Islam, um deinen Gebets-Tracker zu aktualisieren.`,
-    icon: '/nur-app-icon.svg',
-    badge: '/nur-app-icon.svg',
+    icon: `${APP_BASE}nur-app-icon.svg`,
+    badge: `${APP_BASE}nur-app-icon.svg`,
     tag: `nur-prayer-${dateKey()}-${prayer.id}`,
-    data: { type: 'prayer-reminder', prayerId: prayer.id, url: '/' },
+    data: { type: 'prayer-reminder', prayerId: prayer.id, url: APP_BASE },
     silent: false,
   };
 
   try {
     if ('serviceWorker' in navigator) {
-      const registration = await navigator.serviceWorker.ready;
-      await registration.showNotification(`${prayer.label} · Gebetszeit`, options);
-      return true;
+      const registration = await navigator.serviceWorker.getRegistration();
+      if (registration) {
+        await registration.showNotification(`${prayer.label} · Gebetszeit`, options);
+        return true;
+      }
     }
 
     new Notification(`${prayer.label} · Gebetszeit`, options);
