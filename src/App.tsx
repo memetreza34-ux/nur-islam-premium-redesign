@@ -25,8 +25,9 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { AssistantScreen } from './AssistantScreen';
 import { CalendarScreen } from './CalendarScreen';
+import { CollectionsScreen } from './CollectionsScreen';
 import { DhikrScreen } from './DhikrScreen';
-import { CollectionsScreen, MosqueScreen } from './DiscoveryScreens';
+import { MosqueScreen } from './DiscoveryScreens';
 import { DuasScreen } from './DuasScreen';
 import { InstallAppPrompt } from './InstallAppPrompt';
 import { LearnScreen } from './LearnScreen';
@@ -291,7 +292,7 @@ function PremiumHome({
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
         <div className="recommendation-list">
           <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah-map')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
@@ -398,7 +399,16 @@ export default function App() {
                                   : activeTab === 'mosques'
                                     ? <MosqueScreen onBack={goHome} />
                                     : activeTab === 'collections'
-                                      ? <CollectionsScreen onBack={goHome} />
+                                      ? <CollectionsScreen
+                                          onBack={goHome}
+                                          onOpenQuran={goQuran}
+                                          onOpenReader={openReader}
+                                          onOpenDuas={() => setActiveTab('duas')}
+                                          onOpenNames={() => setActiveTab('names')}
+                                          onOpenAyah={() => setActiveTab('ayah')}
+                                          onOpenHadith={() => setActiveTab('hadith')}
+                                          onOpenCalendar={() => setActiveTab('calendar')}
+                                        />
                                       : <AssistantScreen onBack={goHome} />;
 
   return (
