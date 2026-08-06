@@ -11,7 +11,6 @@ import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
 import { AppErrorBoundary, NetworkStatus } from './AppSystemLayer';
-import { InstallAppPrompt } from './InstallAppPrompt';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
@@ -46,7 +45,6 @@ function BootRoot() {
           <AppErrorBoundary>
             <App />
             <ReferenceArtworkHost />
-            <InstallAppPrompt />
             <NetworkStatus />
           </AppErrorBoundary>
         </motion.div>
