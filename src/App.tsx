@@ -76,7 +76,7 @@ type QuickAction = {
 
 const quickActions: QuickAction[] = [
   { label: 'Quran lesen', eyebrow: 'Offline weiterlesen', icon: BookOpen, accent: 'gold', target: 'reader' },
-  { label: 'Wudu & Salah', eyebrow: 'Schritt für Schritt', icon: HandHeart, accent: 'cream', target: 'wudu' },
+  { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart, accent: 'cream', target: 'learn' },
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
   { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'duas' },
@@ -391,7 +391,7 @@ export default function App() {
                           : activeTab === 'calendar'
                             ? <CalendarScreen onBack={goHome} />
                             : activeTab === 'learn'
-                              ? <LearnScreen onBack={goHome} />
+                              ? <LearnScreen onBack={goHome} onOpenPrayer={() => setActiveTab('prayer')} onOpenQibla={() => setActiveTab('qibla')} />
                               : activeTab === 'duas'
                                 ? <DuasScreen onBack={goHome} />
                                 : activeTab === 'names'
