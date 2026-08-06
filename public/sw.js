@@ -1,9 +1,26 @@
-const CACHE_NAME = 'nur-islam-premium-v5';
+const CACHE_NAME = 'nur-islam-premium-v6';
 const APP_SHELL = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/nur-app-icon.svg',
+  '/premium-assets/high-res-objects/nur-logo-emblem-v2.webp',
+  '/premium-assets/high-res-objects/mosque-gold-v2.webp',
+  '/premium-assets/high-res-objects/mosque-v2.webp',
+  '/premium-assets/high-res-objects/quran-closed-v2.webp',
+  '/premium-assets/high-res-objects/quran-open-v2.webp',
+  '/premium-assets/high-res-objects/tasbih-v2.webp',
+  '/premium-assets/high-res-objects/qibla-compass-v2.webp',
+  '/premium-assets/high-res-objects/qibla-v2.webp',
+  '/premium-assets/high-res-objects/mihrab-v2.webp',
+  '/premium-assets/high-res-objects/mihrab-arch-v2.webp',
+  '/premium-assets/high-res-objects/lantern-v2.webp',
+  '/premium-assets/high-res-objects/kaaba-v2.webp',
+  '/premium-assets/high-res-objects/bookmark-v2.webp',
+  '/premium-assets/high-res-objects/calendar-chip-v2.webp',
+  '/premium-assets/high-res-objects/dome-v2.webp',
+  '/premium-assets/high-res-objects/sun-emblem-v2.webp',
+  '/premium-assets/high-res-objects/dua-hands-v2.webp',
   '/data/quran/surahs.json',
   '/data/quran/ar/1.json',
   '/data/quran/de/1.json',
@@ -62,7 +79,7 @@ self.addEventListener('fetch', (event) => {
 
   if (url.pathname.startsWith('/premium-assets/')) {
     event.respondWith(
-      fetch(request)
+      fetch(request, { cache: 'no-store' })
         .then((response) => {
           if (response.ok) {
             const copy = response.clone();
