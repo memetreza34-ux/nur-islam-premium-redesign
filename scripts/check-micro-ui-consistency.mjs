@@ -10,6 +10,8 @@ const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer
 const quran = await readFile(resolve(root, 'src/styles/reference-quran-complete.css'), 'utf8');
 const duas = await readFile(resolve(root, 'src/styles/reference-duas-complete.css'), 'utf8');
 const names = await readFile(resolve(root, 'src/styles/reference-names-complete.css'), 'utf8');
+const installPrompt = await readFile(resolve(root, 'src/styles/reference-install-prompt.css'), 'utf8');
+const systemLayer = await readFile(resolve(root, 'src/styles/reference-system-layer.css'), 'utf8');
 
 const microImport = "@import './styles/micro-ui-consistency.css';";
 const finalImport = "@import './styles/visual-consistency.css';";
@@ -39,6 +41,10 @@ for (const selector of [
   '.reference-prayer-live-status small',
   '.reference-mosque-live-status small',
   '.reference-core-access-grid small',
+  '.reference-network-status small',
+  '.reference-install-prompt__copy .overline',
+  '.reference-install-prompt__copy small',
+  '.reference-install-prompt__ios span',
   '.reference-quran-library-status small',
   '.reference-quran-results small',
   '.reference-quran-list__copy small',
@@ -65,6 +71,7 @@ for (const requirement of [
   '.reference-profile-row__icon',
   '.reference-name-progress__icon',
   '.reference-dua-progress > span:first-child',
+  '.reference-install-prompt__action',
   'width: var(--icon-box-medium)',
   'overflow-wrap: anywhere',
   '@media (max-width: 370px)',
@@ -79,5 +86,8 @@ if (!profile.includes('font-size: .51rem') || !assistant.includes('font-size: .4
 if (!quran.includes('font-size: .4rem') || !duas.includes('font-size: .47rem') || !names.includes('font-size: .48rem')) {
   throw new Error('Expected Quran/Dua/Names legacy micro-copy baselines changed; review the centralized overrides.');
 }
+if (!installPrompt.includes('font-size: .46rem') || !installPrompt.includes('font-size: .47rem') || !systemLayer.includes('font-size: .46rem')) {
+  throw new Error('Expected install/network legacy micro-copy baselines changed; review the centralized overrides.');
+}
 
-console.log('Micro UI consistency verified: secondary text across profile, assistant, prayer, calendar, mosque, Quran, Duas, Names, and learning uses one readable scale with aligned compact icon and badge geometry.');
+console.log('Micro UI consistency verified: secondary text across profile, assistant, prayer, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');
