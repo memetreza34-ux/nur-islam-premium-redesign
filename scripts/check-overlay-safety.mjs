@@ -57,6 +57,8 @@ for (const selector of requiredModalSelectors) {
 }
 
 for (const requirement of [
+  'z-index: 160 !important',
+  'isolation: isolate',
   'overflow-y: auto',
   'overscroll-behavior: contain',
   'env(safe-area-inset-top)',
@@ -87,4 +89,4 @@ for (const selector of closeSelectors) {
   if (!overlay.includes(selector)) throw new Error(`44px close control is not covered: ${selector}`);
 }
 
-console.log('Overlay safety verified: profile, learn, prayer settings, learning completion, prayer completion, mosque detail, and prayer-course overlays remain scrollable, safe-area aware, and reachable on short/narrow screens.');
+console.log('Overlay safety verified: profile, learn, prayer settings, learning completion, prayer completion, mosque detail, and prayer-course overlays remain above the app shell, scrollable, safe-area aware, and reachable on short/narrow screens.');
