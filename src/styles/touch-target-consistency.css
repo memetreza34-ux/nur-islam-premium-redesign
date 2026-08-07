@@ -12,6 +12,7 @@
   .reference-dhikr-remembrance button,
   .reference-qibla-location button,
   .reference-assistant-input button,
+  .reference-install-prompt__close,
   .reference-prayer-complete-replay,
   .reference-modal-close,
   .reference-learning-completion-modal__close,
@@ -35,7 +36,8 @@
   .reference-dua-card__top button,
   .reference-dua-card footer button,
   .selected-date-card button,
-  .reference-nearby-label button
+  .reference-nearby-label button,
+  .reference-install-prompt__action
 ) {
   min-height: var(--compact-touch-target);
   min-width: var(--compact-touch-target);
@@ -52,7 +54,8 @@
   .favorite-button,
   .reference-dhikr-remembrance button,
   .reference-qibla-location button,
-  .reference-assistant-input button
+  .reference-assistant-input button,
+  .reference-install-prompt__close
 ) {
   border-radius: 13px;
 }
@@ -88,7 +91,8 @@
   .favorite-button,
   .reference-dhikr-remembrance button,
   .reference-qibla-location button,
-  .reference-assistant-input button
+  .reference-assistant-input button,
+  .reference-install-prompt__close
 ) > svg {
   width: 18px;
   height: 18px;
@@ -105,6 +109,8 @@
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
     .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
@@ -125,6 +131,8 @@
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
     .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
@@ -157,6 +165,8 @@
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
     .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
