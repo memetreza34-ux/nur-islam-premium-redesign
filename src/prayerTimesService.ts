@@ -39,7 +39,7 @@ export const DEFAULT_PRAYER_PREFERENCES: PrayerTimesPreferences = {
 };
 
 export const PRAYER_METHOD_OPTIONS: Array<{ id: PrayerCalculationMethod; label: string; shortLabel: string }> = [
-  { id: 13, label: 'Diyanet İşleri Başkanlığı', shortLabel: 'Diyanet' },
+  { id: 13, label: 'Diyanet İşleri Başkanlığı · API experimentell', shortLabel: 'Diyanet (experimentell)' },
   { id: 3, label: 'Muslim World League', shortLabel: 'MWL' },
 ];
 
@@ -110,175 +110,164 @@ function methodLabel(preferences: PrayerTimesPreferences) {
   return `${method} · ${school}-Asr`;
 }
 
-function safeCoordinates(value: unknown): value is PrayerLocation {
-  if (!value || typeof value !== 'object') return false;
-  const candidate = value as Partial<PrayerLocation>;
-  return typeof candidate.latitude === 'number'
-    && Number.isFinite(candidate.latitude)
-    && candidate.latitude >= -90
-    && candidate.latitude <= 90
-    && typeof candidate.longitude === 'number'
-    && Number.isFinite(candidate.longitude)
-    && candidate.longitude >= -180
-    && candidate.longitude <= 180
-    && typeof candidate.label === 'string'
-    && (candidate.source === 'default' || candidate.source === 'device');
+function fallbackSchedule() {
+  return FALLBACK_PRAYER_SCHEDULE.map((prayer) => ({ ...prayer }));
 }
 
-function safePreferences(value: unknown): value is PrayerTimesPreferences {
-  if (!value || typeof value !== 'object') return false;
-  const candidate = value as Partial<PrayerTimesPreferences>;
-  return (candidate.method === 3 || candidate.method === 13) && (candidate.school === 0 || candidate.school === 1);
-}
-
-function safeSchedule(value: unknown): value is PrayerScheduleItem[] {
-  if (!Array.isArray(value) || value.length !== FALLBACK_PRAYER_SCHEDULE.length) return false;
-  return FALLBACK_PRAYER_SCHEDULE.every((base, index) => {
-    const candidate = value[index] as Partial<PrayerScheduleItem> | undefined;
-    return candidate?.id === base.id && typeof candidate.time === 'string' && /^\d{2}:\d{2}$/.test(candidate.time);
-  });
-}
-
-export function applyPrayerSnapshotToSharedSchedule(snapshot: PrayerTimesSnapshot) {
-  PRAYER_SCHEDULE.splice(0, PRAYER_SCHEDULE.length, ...snapshot.schedule.map((prayer) => ({ ...prayer })));
-  Object.assign(PRAYER_SCHEDULE_META, snapshot.meta);
-  window.dispatchEvent(new CustomEvent('nur:prayer-times-updated', { detail: snapshot.source }));
-}
-
-export function readPrayerLocation() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(LOCATION_STORAGE_KEY) ?? 'null') as unknown;
-    return safeCoordinates(parsed) ? parsed : DEFAULT_PRAYER_LOCATION;
-  } catch {
-    return DEFAULT_PRAYER_LOCATION;
-  }
-}
-
-export function savePrayerLocation(location: PrayerLocation) {
-  try { localStorage.setItem(LOCATION_STORAGE_KEY, JSON.stringify(location)); } catch { /* optional */ }
-}
-
-export function readPrayerPreferences() {
-  try {
-    const parsed = JSON.parse(localStorage.getItem(PREFERENCES_STORAGE_KEY) ?? 'null') as unknown;
-    return safePreferences(parsed) ? parsed : DEFAULT_PRAYER_PREFERENCES;
-  } catch {
-    return DEFAULT_PRAYER_PREFERENCES;
-  }
-}
-
-export function savePrayerPreferences(preferences: PrayerTimesPreferences) {
-  try { localStorage.setItem(PREFERENCES_STORAGE_KEY, JSON.stringify(preferences)); } catch { /* optional */ }
-}
-
-export function createFallbackPrayerSnapshot(
-  location = readPrayerLocation(),
-  preferences = readPrayerPreferences(),
-  date = new Date(),
-): PrayerTimesSnapshot {
+function fallbackMeta(location = DEFAULT_PRAYER_LOCATION, preferences = DEFAULT_PRAYER_PREFERENCES): PrayerScheduleMeta {
   return {
-    schedule: FALLBACK_PRAYER_SCHEDULE.map((prayer) => ({ ...prayer })),
-    meta: {
-      ...FALLBACK_PRAYER_META,
-      city: location.source === 'device' ? 'Gerätestandort' : 'Berlin',
-      locationLabel: location.label,
-      sourceLabel: 'Offline-Fallback',
-      methodLabel: methodLabel(preferences),
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-      calculationNotice: 'Lokaler Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
-    },
-    location,
-    preferences,
-    dateKey: getPrayerDateKey(date),
-    fetchedAt: new Date(0).toISOString(),
-    source: 'fallback',
+    ...FALLBACK_PRAYER_META,
+    city: location.label,
+    locationLabel: location.label,
+    sourceLabel: 'Offline-Ersatzzeitplan',
+    methodLabel: methodLabel(preferences),
+    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'lokal',
+    calculationNotice: 'Offline-Fallback: Die angezeigten Zeiten sind nur ein Ersatz. Bitte vor dem Gebet mit einer verlässlichen örtlichen Quelle prüfen.',
   };
 }
 
-export function readCachedPrayerSnapshot(date = new Date()) {
+function readJson<T>(key: string): T | null {
   try {
-    const parsed = JSON.parse(localStorage.getItem(SNAPSHOT_STORAGE_KEY) ?? 'null') as Partial<PrayerTimesSnapshot> | null;
-    if (!parsed || parsed.dateKey !== getPrayerDateKey(date) || !safeSchedule(parsed.schedule) || !safeCoordinates(parsed.location) || !safePreferences(parsed.preferences)) return null;
-    return {
-      ...parsed,
-      source: 'cache',
-    } as PrayerTimesSnapshot;
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) as T : null;
   } catch {
     return null;
   }
 }
 
-function savePrayerSnapshot(snapshot: PrayerTimesSnapshot) {
-  try { localStorage.setItem(SNAPSHOT_STORAGE_KEY, JSON.stringify(snapshot)); } catch { /* optional */ }
+function writeJson(key: string, value: unknown) {
+  try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* optional cache */ }
+}
+
+function isPrayerLocation(value: unknown): value is PrayerLocation {
+  if (!value || typeof value !== 'object') return false;
+  const location = value as Partial<PrayerLocation>;
+  return Number.isFinite(location.latitude)
+    && Number.isFinite(location.longitude)
+    && typeof location.label === 'string'
+    && (location.source === 'default' || location.source === 'device');
+}
+
+function isPreferences(value: unknown): value is PrayerTimesPreferences {
+  if (!value || typeof value !== 'object') return false;
+  const preferences = value as Partial<PrayerTimesPreferences>;
+  return (preferences.method === 3 || preferences.method === 13)
+    && (preferences.school === 0 || preferences.school === 1);
+}
+
+export function loadPrayerLocation() {
+  const location = readJson<PrayerLocation>(LOCATION_STORAGE_KEY);
+  return isPrayerLocation(location) ? location : DEFAULT_PRAYER_LOCATION;
+}
+
+export function savePrayerLocation(location: PrayerLocation) {
+  writeJson(LOCATION_STORAGE_KEY, location);
+}
+
+export function loadPrayerPreferences() {
+  const preferences = readJson<PrayerTimesPreferences>(PREFERENCES_STORAGE_KEY);
+  return isPreferences(preferences) ? preferences : DEFAULT_PRAYER_PREFERENCES;
+}
+
+export function savePrayerPreferences(preferences: PrayerTimesPreferences) {
+  writeJson(PREFERENCES_STORAGE_KEY, preferences);
+}
+
+export function loadCachedPrayerTimes(date = new Date()) {
+  const cached = readJson<PrayerTimesSnapshot>(SNAPSHOT_STORAGE_KEY);
+  if (!cached || cached.dateKey !== getPrayerDateKey(date) || !Array.isArray(cached.schedule) || cached.schedule.length !== FALLBACK_PRAYER_SCHEDULE.length) return null;
+  return cached;
+}
+
+function createFallbackSnapshot(location = loadPrayerLocation(), preferences = loadPrayerPreferences(), date = new Date()): PrayerTimesSnapshot {
+  return {
+    schedule: fallbackSchedule(),
+    meta: fallbackMeta(location, preferences),
+    location,
+    preferences,
+    dateKey: getPrayerDateKey(date),
+    fetchedAt: new Date().toISOString(),
+    source: 'fallback',
+  };
+}
+
+export function getInitialPrayerTimesSnapshot(date = new Date()): PrayerTimesSnapshot {
+  return loadCachedPrayerTimes(date) ?? createFallbackSnapshot(loadPrayerLocation(), loadPrayerPreferences(), date);
 }
 
 export async function fetchPrayerTimes(
-  location: PrayerLocation,
-  preferences: PrayerTimesPreferences,
+  location = loadPrayerLocation(),
+  preferences = loadPrayerPreferences(),
   date = new Date(),
 ): Promise<PrayerTimesSnapshot> {
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 9000);
   const apiDate = getApiDate(date);
-  const parameters = new URLSearchParams({
-    latitude: String(location.latitude),
-    longitude: String(location.longitude),
-    method: String(preferences.method),
-    school: String(preferences.school),
-  });
+  const url = new URL(`https://api.aladhan.com/v1/timings/${apiDate}`);
+  url.searchParams.set('latitude', String(location.latitude));
+  url.searchParams.set('longitude', String(location.longitude));
+  url.searchParams.set('method', String(preferences.method));
+  url.searchParams.set('school', String(preferences.school));
 
   try {
-    const response = await fetch(`https://api.aladhan.com/v1/timings/${apiDate}?${parameters.toString()}`, {
-      signal: controller.signal,
-      headers: { Accept: 'application/json' },
-    });
-    if (!response.ok) throw new Error(`Gebetszeiten-Quelle antwortet mit ${response.status}.`);
+    const response = await fetch(url, { signal: controller.signal, headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`Gebetszeiten konnten nicht geladen werden (${response.status}).`);
     const payload = await response.json() as AlAdhanResponse;
-    if (payload.code !== 200 || !payload.data?.timings) throw new Error('Gebetszeiten-Quelle lieferte keine gültigen Daten.');
+    if (payload.code !== 200 || !payload.data?.timings) throw new Error('Die Gebetszeiten-API hat keine gültigen Daten geliefert.');
 
     const schedule = FALLBACK_PRAYER_SCHEDULE.map((prayer) => ({
       ...prayer,
       time: normalizeTime(payload.data?.timings?.[timingKeys[prayer.id]]),
     }));
-    const timezone = payload.data.meta?.timezone ?? Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const apiMethodName = payload.data.meta?.method?.name?.trim();
+    const apiSchool = payload.data.meta?.school?.trim();
+    const apiTimezone = payload.data.meta?.timezone?.trim();
+    const selectedMethodLabel = methodLabel(preferences);
+    const meta: PrayerScheduleMeta = {
+      ...FALLBACK_PRAYER_META,
+      city: location.label,
+      locationLabel: location.label,
+      sourceLabel: 'Live via AlAdhan',
+      methodLabel: apiMethodName ? `${apiMethodName} · ${apiSchool || selectedMethodLabel.split(' · ')[1]}` : selectedMethodLabel,
+      timezone: apiTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'lokal',
+      calculationNotice: 'Berechnete Gebetszeiten können je nach örtlicher Moschee, Methode und lokalen Korrekturen abweichen. Bitte bei Unsicherheit vor Ort prüfen.',
+    };
     const snapshot: PrayerTimesSnapshot = {
       schedule,
-      meta: {
-        city: location.source === 'device' ? 'Gerätestandort' : 'Berlin',
-        country: location.source === 'device' ? '' : 'Deutschland',
-        locationLabel: location.label,
-        sourceLabel: 'AlAdhan · Live-Berechnung',
-        methodLabel: methodLabel(preferences),
-        timezone,
-        calculationNotice: 'Berechnete Zeiten können von lokalen Moscheezeiten abweichen. Bitte bei Unsicherheit vor Ort abgleichen.',
-      },
+      meta,
       location,
       preferences,
       dateKey: getPrayerDateKey(date),
       fetchedAt: new Date().toISOString(),
       source: 'live',
     };
-    savePrayerLocation(location);
-    savePrayerPreferences(preferences);
-    savePrayerSnapshot(snapshot);
-    applyPrayerSnapshotToSharedSchedule(snapshot);
+    writeJson(SNAPSHOT_STORAGE_KEY, snapshot);
     return snapshot;
   } finally {
     window.clearTimeout(timeout);
   }
 }
 
-export async function bootstrapSharedPrayerTimes() {
-  const location = readPrayerLocation();
-  const preferences = readPrayerPreferences();
-  const cached = readCachedPrayerSnapshot();
-  if (cached) applyPrayerSnapshotToSharedSchedule(cached);
+export function getFallbackPrayerTimesSnapshot(date = new Date()) {
+  return createFallbackSnapshot(loadPrayerLocation(), loadPrayerPreferences(), date);
+}
 
+export function applyPrayerSnapshotToSharedSchedule(snapshot: PrayerTimesSnapshot) {
+  PRAYER_SCHEDULE.splice(0, PRAYER_SCHEDULE.length, ...snapshot.schedule.map((prayer) => ({ ...prayer })));
+  Object.assign(PRAYER_SCHEDULE_META, snapshot.meta);
+  window.dispatchEvent(new CustomEvent('nur:prayer-times-updated', { detail: snapshot }));
+}
+
+export async function bootstrapSharedPrayerTimes() {
+  const cached = loadCachedPrayerTimes();
+  if (cached) applyPrayerSnapshotToSharedSchedule(cached);
   try {
-    return await fetchPrayerTimes(location, preferences);
+    const live = await fetchPrayerTimes(loadPrayerLocation(), loadPrayerPreferences());
+    applyPrayerSnapshotToSharedSchedule(live);
+    return live;
   } catch {
     if (cached) return cached;
-    const fallback = createFallbackPrayerSnapshot(location, preferences);
+    const fallback = getFallbackPrayerTimesSnapshot();
     applyPrayerSnapshotToSharedSchedule(fallback);
     return fallback;
   }
