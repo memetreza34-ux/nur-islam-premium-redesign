@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { versionAppPath } from './appPaths';
 
 const PREMIUM_ASSET_VERSION = '20260806-visual4';
 
@@ -8,9 +9,8 @@ type VisualProps = {
 };
 
 function versionPremiumAsset(src: string) {
-  if (!src.startsWith('/premium-assets/')) return src;
-  const separator = src.includes('?') ? '&' : '?';
-  return `${src}${separator}v=${PREMIUM_ASSET_VERSION}`;
+  if (!src.includes('premium-assets/')) return src;
+  return versionAppPath(src, PREMIUM_ASSET_VERSION);
 }
 
 export function NurMark({ className = '', style }: VisualProps) {
