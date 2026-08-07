@@ -84,6 +84,7 @@ const catalogSource = await readFile(resolve(root, 'src/QuranScreen.tsx'), 'utf8
 const readerSource = await readFile(resolve(root, 'src/QuranReaderScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const onlineStyles = await readFile(resolve(root, 'src/styles/reference-quran-online.css'), 'utf8');
+const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 
 for (const required of [
   "import { QuranReaderScreen } from './QuranReaderScreen';",
@@ -107,5 +108,8 @@ if (!stylesSource.includes('reference-quran-complete.css') || !stylesSource.incl
 if (!onlineStyles.includes('.reference-quran-availability.is-online') || !onlineStyles.includes('.reference-reader-source-pill')) {
   throw new Error('Online Quran source and availability styles are missing.');
 }
+if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serviceWorker.includes('!key.startsWith(QURAN_CACHE_PREFIX)')) {
+  throw new Error('Service worker updates would delete cached online Quran surahs.');
+}
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, and browser cache.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, and source labels.`);
