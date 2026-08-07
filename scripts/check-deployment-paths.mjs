@@ -24,9 +24,22 @@ for (const requirement of [
   'import.meta.env.BASE_URL',
   'resolveAppPath',
   'versionAppPath',
+  'PREMIUM_ASSET_ALIASES',
   "path.replace(/^\\.\\//, '').replace(/^\\/+/, '')",
 ]) {
   if (!paths.includes(requirement)) throw new Error(`App path resolver is incomplete: ${requirement}`);
+}
+
+const requiredAssetAliases = [
+  "'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp'",
+  "'mosque-gold.webp': 'mosque-gold-v2.webp'",
+  "'quran-closed.webp': 'quran-closed-v2.webp'",
+  "'tasbih.webp': 'tasbih-v2.webp'",
+  "'qibla-compass.webp': 'qibla-compass-v2.webp'",
+  "'kaaba.webp': 'kaaba-v2.webp'",
+];
+for (const alias of requiredAssetAliases) {
+  if (!paths.includes(alias)) throw new Error(`Premium asset alias is missing: ${alias}`);
 }
 
 if (!visuals.includes("import { versionAppPath } from './appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
@@ -84,4 +97,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, manifest scope, premium images, decorative artwork, preloads, service worker registration, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, legacy-to-v2 premium aliases, decorative artwork, preloads, manifest scope, service worker registration, and scoped offline cache.');
