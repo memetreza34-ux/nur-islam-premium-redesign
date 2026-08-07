@@ -54,10 +54,11 @@
 @import './styles/reference-mosque-live.css';
 @import './styles/reference-more-hub.css';
 
-/* Cross-screen interaction, overlay and micro-UI polish */
+/* Cross-screen interaction, overlay, readability and touch polish */
 @import './styles/visual-interaction-polish.css';
 @import './styles/overlay-safety.css';
 @import './styles/micro-ui-consistency.css';
+@import './styles/touch-target-consistency.css';
 
 /* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
 @import './styles/visual-consistency.css';
