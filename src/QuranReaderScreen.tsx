@@ -6,11 +6,14 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  CloudDownload,
   Copy,
+  Database,
   Headphones,
   LoaderCircle,
   Minus,
   Plus,
+  RefreshCw,
   Settings2,
   Share2,
   ShieldCheck,
@@ -21,7 +24,6 @@ import { PremiumImage, QuranObject } from './PremiumVisuals';
 import {
   fetchSurahBundle,
   getGermanRevelationLabel,
-  OFFLINE_QURAN_SURAH_SET,
 } from './quranService';
 import type { QuranSurahBundle } from './quranService';
 
@@ -72,6 +74,7 @@ export function QuranReaderScreen({
   const [bundle, setBundle] = useState<QuranSurahBundle | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
   const [fontSize, setFontSize] = useState(() => readNumber('nur_reader_font_size', 34));
   const [showMeaning, setShowMeaning] = useState(true);
   const [activeAyah, setActiveAyah] = useState(1);
@@ -99,7 +102,7 @@ export function QuranReaderScreen({
       .finally(() => active && setLoading(false));
 
     return () => { active = false; };
-  }, [surahNumber]);
+  }, [reloadToken, surahNumber]);
 
   useEffect(() => {
     try { localStorage.setItem('nur_reader_font_size', String(fontSize)); } catch { /* optional */ }
@@ -140,12 +143,16 @@ export function QuranReaderScreen({
     });
   };
 
+  const germanAttribution = bundle?.source === 'offline'
+    ? 'Sinngemäße deutsche Bedeutung aus dem übernommenen Altbestand'
+    : `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Bubenheim & Elyas'}`;
+
   const copyAyah = async (index: number) => {
     if (!bundle) return;
     const arabic = bundle.arabic.ayahs[index]?.text ?? '';
     const german = bundle.german.ayahs[index]?.text ?? '';
     try {
-      await copyText(`${arabic}\n\nSinngemäße deutsche Bedeutung aus dem Altbestand:\n${german}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`);
+      await copyText(`${arabic}\n\n${germanAttribution}:\n${german}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`);
       flash(`Ayah ${index + 1} kopiert`);
     } catch {
       flash('Kopieren war nicht möglich');
@@ -154,7 +161,7 @@ export function QuranReaderScreen({
 
   const shareAyah = async (index: number) => {
     if (!bundle) return;
-    const text = `${bundle.arabic.ayahs[index]?.text ?? ''}\n\nSinngemäße deutsche Bedeutung aus dem Altbestand:\n${bundle.german.ayahs[index]?.text ?? ''}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`;
+    const text = `${bundle.arabic.ayahs[index]?.text ?? ''}\n\n${germanAttribution}:\n${bundle.german.ayahs[index]?.text ?? ''}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`;
     try {
       if (navigator.share) await navigator.share({ title: `${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`, text });
       else await copyText(text);
@@ -165,28 +172,33 @@ export function QuranReaderScreen({
   };
 
   const nextNumber = Math.min(114, surahNumber + 1);
-  const nextAvailable = nextNumber !== surahNumber && OFFLINE_QURAN_SURAH_SET.has(nextNumber);
+  const nextAvailable = nextNumber !== surahNumber;
+  const readerLabel = bundle?.source === 'offline'
+    ? 'Offline-Reader'
+    : bundle?.source === 'cache'
+      ? 'Im Browser gespeichert'
+      : 'Online-Reader';
 
   return (
     <motion.main className="screen reference-reader-screen reference-reader-screen--dynamic" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zum Quran"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Offline-Reader</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
+        <div><span className="overline">{readerLabel}</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
         <button className="icon-button" onClick={() => flash('Schrift und Bedeutung lassen sich unterhalb anpassen')} aria-label="Leseeinstellungen"><Settings2 size={20} /></button>
       </header>
 
       {loading ? (
-        <div className="reference-reader-loading"><LoaderCircle size={28} className="is-spinning" /><strong>Qurantext wird lokal geladen</strong><small>Keine Anfrage an einen externen Quran-Dienst.</small></div>
+        <div className="reference-reader-loading"><LoaderCircle size={28} className="is-spinning" /><strong>Qurantext wird geladen</strong><small>Lokale Dateien werden bevorzugt; andere Suren werden geprüft online geladen.</small></div>
       ) : error || !bundle ? (
         <section className="reference-reader-unavailable">
           <WifiOff size={34} />
-          <span><strong>Diese Sure ist noch nicht offline verfügbar</strong><small>{error ?? 'Die lokalen Quran-Dateien fehlen.'}</small></span>
-          <button onClick={onBack}>Zur Surenliste</button>
+          <span><strong>Diese Sure konnte nicht geladen werden</strong><small>{error ?? 'Offline-Datei und Online-Quelle sind nicht verfügbar.'}</small></span>
+          <div className="reference-reader-unavailable__actions"><button onClick={() => setReloadToken((value) => value + 1)}><RefreshCw size={16} /> Erneut versuchen</button><button onClick={onBack}>Zur Surenliste</button></div>
         </section>
       ) : (
         <>
           <section className="reference-reader-hero">
-            <div><span className="hero-pill">Sure {bundle.meta.number}</span><h2>{bundle.meta.englishName}</h2><p>{bundle.meta.numberOfAyahs} Ayat · {getGermanRevelationLabel(bundle.meta.revelationType)}</p></div>
+            <div><span className="hero-pill">Sure {bundle.meta.number}</span><h2>{bundle.meta.englishName}</h2><p>{bundle.meta.numberOfAyahs} Ayat · {getGermanRevelationLabel(bundle.meta.revelationType)}</p><span className={`reference-reader-source-pill is-${bundle.source}`}>{bundle.source === 'offline' ? <Database size={13} /> : <CloudDownload size={13} />}{bundle.sourceLabel}</span></div>
             <PremiumImage src="/premium-assets/high-res-objects/quran-open-v2.webp" fallback={<QuranObject />} />
             <span className="reference-reader-progress"><i style={{ width: `${progress}%` }} /></span>
           </section>
@@ -199,7 +211,11 @@ export function QuranReaderScreen({
 
           <section className="reference-reader-source">
             <ShieldCheck size={17} />
-            <span><strong>Lokaler arabischer Qurantext · Sure {bundle.meta.number}</strong><small>Die deutsche Fassung stammt aus dem übernommenen Altbestand und wird als sinngemäße Bedeutung angezeigt. Eine fachliche Endprüfung bleibt vor Veröffentlichung erforderlich.</small></span>
+            {bundle.source === 'offline' ? (
+              <span><strong>Lokaler arabischer Qurantext · Sure {bundle.meta.number}</strong><small>Die deutsche Fassung stammt aus dem übernommenen Altbestand und wird als sinngemäße Bedeutung angezeigt. Eine fachliche Endprüfung bleibt vor Veröffentlichung erforderlich.</small></span>
+            ) : (
+              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Geladen über Al Quran Cloud und im Browser zwischengespeichert. Die Übersetzung wird unverändert angezeigt und nicht automatisch erneut übersetzt.</small></span>
+            )}
           </section>
 
           <section className="reference-reader-verses">
@@ -216,10 +232,10 @@ export function QuranReaderScreen({
                   transition={{ delay: Math.min(index * .018, .24) }}
                   onClick={() => setActiveAyah(ayahNumber)}
                 >
-                  <header><span>{ayahNumber}</span><div><button onClick={(event) => { event.stopPropagation(); copyAyah(index); }} aria-label="Ayah kopieren"><Copy size={17} /></button><button onClick={(event) => { event.stopPropagation(); toggleBookmark(ayahNumber); }} className={saved ? 'is-saved' : ''} aria-label="Ayah speichern">{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button></div></header>
+                  <header><span>{ayahNumber}</span><div><button onClick={(event) => { event.stopPropagation(); void copyAyah(index); }} aria-label="Ayah kopieren"><Copy size={17} /></button><button onClick={(event) => { event.stopPropagation(); toggleBookmark(ayahNumber); }} className={saved ? 'is-saved' : ''} aria-label="Ayah speichern">{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button></div></header>
                   <p dir="rtl" style={{ fontSize }}>{ayah.text}</p>
-                  {showMeaning && german ? <blockquote><small>Sinngemäße deutsche Bedeutung</small>{german}</blockquote> : null}
-                  <footer><span>{bundle.meta.number}:{ayahNumber}</span><button onClick={(event) => { event.stopPropagation(); shareAyah(index); }}><Share2 size={15} /> Teilen</button></footer>
+                  {showMeaning && german ? <blockquote><small>{bundle.source === 'offline' ? 'Sinngemäße deutsche Bedeutung' : `Deutsche Übersetzung · ${bundle.translationLabel}`}</small>{german}</blockquote> : null}
+                  <footer><span>{bundle.meta.number}:{ayahNumber}</span><button onClick={(event) => { event.stopPropagation(); void shareAyah(index); }}><Share2 size={15} /> Teilen</button></footer>
                 </motion.article>
               );
             })}
@@ -227,9 +243,9 @@ export function QuranReaderScreen({
 
           <button
             className={nextAvailable ? 'reference-reader-next' : 'reference-reader-next is-disabled'}
-            onClick={() => nextAvailable ? onOpenSurah(nextNumber) : flash('Die nächste Sure wird noch offline migriert')}
+            onClick={() => nextAvailable ? onOpenSurah(nextNumber) : flash('Du hast das Ende des Surenverzeichnisses erreicht')}
           >
-            <span><small>Als Nächstes</small><strong>{nextAvailable ? `Sure ${nextNumber}` : 'Weitere Suren folgen'}</strong></span><ChevronRight size={20} />
+            <span><small>{nextAvailable ? 'Als Nächstes' : 'Abgeschlossen'}</small><strong>{nextAvailable ? `Sure ${nextNumber}` : 'Sure 114 · An-Nas'}</strong></span><ChevronRight size={20} />
           </button>
         </>
       )}
