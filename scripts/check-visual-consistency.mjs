@@ -33,6 +33,9 @@ if (!styleIndex.trim().endsWith(finalImport)) {
 if (!styleIndex.includes("@import './styles/reference-more-hub.css';")) {
   throw new Error('The More hub stylesheet is not loaded.');
 }
+if (styleIndex.includes("reference-webp-assets.css")) {
+  throw new Error('The obsolete background-image layer must not be active because it hides real premium images.');
+}
 
 const requiredGuardrails = [
   '--app-content-width: 430px',
@@ -48,6 +51,10 @@ const requiredGuardrails = [
   '.app-shell',
   'z-index: 3',
   'stroke-width: var(--icon-stroke)',
+  '.premium-image > img:not([hidden])',
+  'visibility: visible !important',
+  '.premium-image > .premium-image__fallback[hidden]',
+  "mosque-gold-v2.webp?v=20260807-visual-cleanup",
   '@media (max-width: 370px)',
   'grid-template-columns: repeat(2, minmax(0, 1fr))',
   '@media (prefers-reduced-motion: reduce)',
@@ -148,6 +155,7 @@ const allSource = sourceContents.join('\n');
 const forbiddenImageRules = [
   /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
   /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
+  /(?:\.welcome-hero__visual|\.reference-mosque-hero\s*>\s*\.premium-image|\.reference-dhikr-counter__tasbih|\.reference-qibla-stage__compass)[^{]*>\s*img[^{]*\{[^}]*opacity\s*:\s*0(?:\s*!important)?\s*;/si,
   /\.reference-artwork-host\s*\{[^}]*pointer-events\s*:\s*auto/si,
 ];
 for (const pattern of forbiddenImageRules) {
@@ -179,5 +187,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, 44px touch targets, unified headers/cards/icons, safe decorative layers, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, no active image-hiding layer, 44px touch targets, unified headers/cards/icons, safe decorative layers, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
