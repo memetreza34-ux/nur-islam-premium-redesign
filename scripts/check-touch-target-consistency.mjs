@@ -10,6 +10,7 @@ const calendar = await readFile(resolve(root, 'src/styles/calendar.css'), 'utf8'
 const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer-calendar.css'), 'utf8');
 const core = await readFile(resolve(root, 'src/styles/reference-core-screens.css'), 'utf8');
 const assistant = await readFile(resolve(root, 'src/styles/reference-assistant.css'), 'utf8');
+const installPrompt = await readFile(resolve(root, 'src/styles/reference-install-prompt.css'), 'utf8');
 
 const touchImport = "@import './styles/touch-target-consistency.css';";
 const finalImport = "@import './styles/visual-consistency.css';";
@@ -45,6 +46,8 @@ for (const selector of [
   '.reference-dhikr-remembrance button',
   '.reference-qibla-location button',
   '.reference-assistant-input button',
+  '.reference-install-prompt__close',
+  '.reference-install-prompt__action',
   '.reference-dua-card__top button',
   '.reference-dua-card footer button',
   '.selected-date-card button',
@@ -74,8 +77,8 @@ for (const gridRule of [
   if (!touch.includes(gridRule)) throw new Error(`Parent grid is not aligned to 44px compact controls: ${gridRule}`);
 }
 
-if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !assistant.includes('width: 38px')) {
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !assistant.includes('width: 38px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px')) {
   throw new Error('Expected legacy compact control baselines changed; review the centralized 44px overrides.');
 }
 
-console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, assistant, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
+console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, assistant, install prompt, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
