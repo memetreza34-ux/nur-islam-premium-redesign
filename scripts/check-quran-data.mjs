@@ -62,10 +62,28 @@ for (const number of offlineNumbers) {
   }
 }
 
+const onlineServiceFeatures = [
+  "ONLINE_API_BASE = 'https://api.alquran.cloud/v1'",
+  "ONLINE_ARABIC_EDITION = 'quran-uthmani'",
+  "ONLINE_GERMAN_EDITION = 'de.bubenheim'",
+  "ONLINE_CACHE_NAME = 'nur-quran-online-v1'",
+  'AbortController',
+  'ONLINE_TIMEOUT_MS',
+  'readOnlineCache',
+  'writeOnlineCache',
+  'parseOnlineBundle',
+  'validateEdition',
+  "source: 'offline'",
+];
+for (const required of onlineServiceFeatures) {
+  if (!serviceSource.includes(required)) throw new Error(`Online Quran service is missing: ${required}`);
+}
+
 const appSource = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 const catalogSource = await readFile(resolve(root, 'src/QuranScreen.tsx'), 'utf8');
 const readerSource = await readFile(resolve(root, 'src/QuranReaderScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+const onlineStyles = await readFile(resolve(root, 'src/styles/reference-quran-online.css'), 'utf8');
 
 for (const required of [
   "import { QuranReaderScreen } from './QuranReaderScreen';",
@@ -75,16 +93,19 @@ for (const required of [
   if (!appSource.includes(required)) throw new Error(`Quran app routing is missing: ${required}`);
 }
 
-for (const required of ['fetchSurahs', 'OFFLINE_QURAN_SURAH_SET', 'nur_quran_surah_favorites']) {
+for (const required of ['fetchSurahs', 'OFFLINE_QURAN_SURAH_SET', 'nur_quran_surah_favorites', 'Alle 114 Suren lesbar', 'CloudDownload', "onOpenReader(surah.number)"]) {
   if (!catalogSource.includes(required)) throw new Error(`Quran catalog integration is missing: ${required}`);
 }
 
-for (const required of ['fetchSurahBundle', 'nur_quran_last_read', 'nur_quran_bookmarks_']) {
+for (const required of ['fetchSurahBundle', 'nur_quran_last_read', 'nur_quran_bookmarks_', 'bundle.source', 'translationLabel', 'reloadToken', 'Al Quran Cloud']) {
   if (!readerSource.includes(required)) throw new Error(`Quran reader integration is missing: ${required}`);
 }
 
-if (!stylesSource.includes('reference-quran-complete.css')) {
-  throw new Error('Complete Quran stylesheet is not loaded.');
+if (!stylesSource.includes('reference-quran-complete.css') || !stylesSource.includes('reference-quran-online.css')) {
+  throw new Error('Complete or online Quran stylesheet is not loaded.');
+}
+if (!onlineStyles.includes('.reference-quran-availability.is-online') || !onlineStyles.includes('.reference-reader-source-pill')) {
+  throw new Error('Online Quran source and availability styles are missing.');
 }
 
-console.log(`Quran migration verified: 114-surah catalog and ${offlineNumbers.length} fully paired offline surahs.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, and browser cache.`);
