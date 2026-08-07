@@ -1,5 +1,6 @@
 const VISUAL_VERSION = '20260807-reminder-routing';
 const CACHE_NAME = `nur-islam-premium-v9-${VISUAL_VERSION}`;
+const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const premiumAsset = (name) => `/premium-assets/high-res-objects/${name}?v=${VISUAL_VERSION}`;
 
 const APP_SHELL = [
@@ -53,7 +54,11 @@ self.addEventListener('install', (event) => {
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then((keys) => Promise.all(keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))))
+      .then((keys) => Promise.all(
+        keys
+          .filter((key) => key !== CACHE_NAME && !key.startsWith(QURAN_CACHE_PREFIX))
+          .map((key) => caches.delete(key)),
+      ))
       .then(() => self.clients.claim())
   );
 });
