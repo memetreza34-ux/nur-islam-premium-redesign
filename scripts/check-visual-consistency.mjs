@@ -157,11 +157,17 @@ for (const pattern of forbiddenImageRules) {
 }
 
 const referencedPremiumAssets = new Set();
+const addAssetReference = (value) => {
+  const normalized = value.replace(/^\/+/, '');
+  if (!normalized || normalized.endsWith('/') || normalized.includes('${')) return;
+  referencedPremiumAssets.add(normalized);
+};
+
 for (const match of allSource.matchAll(/["'`](\/?premium-assets\/[^"'`?\s)]+)(?:\?[^"'`\s)]*)?["'`]/g)) {
-  referencedPremiumAssets.add(match[1].replace(/^\/+/, ''));
+  addAssetReference(match[1]);
 }
 for (const match of allCss.matchAll(/url\(\s*["']?(\/?premium-assets\/[^"')?\s]+)(?:\?[^"')\s]*)?["']?\s*\)/g)) {
-  referencedPremiumAssets.add(match[1].replace(/^\/+/, ''));
+  addAssetReference(match[1]);
 }
 
 for (const assetPath of referencedPremiumAssets) {
