@@ -54,5 +54,8 @@
 @import './styles/reference-mosque-live.css';
 @import './styles/reference-more-hub.css';
 
+/* Cross-screen interaction polish */
+@import './styles/visual-interaction-polish.css';
+
 /* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
 @import './styles/visual-consistency.css';
