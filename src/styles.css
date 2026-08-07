@@ -58,6 +58,7 @@
 @import './styles/visual-interaction-polish.css';
 @import './styles/overlay-safety.css';
 @import './styles/micro-ui-consistency.css';
+@import './styles/filter-control-consistency.css';
 @import './styles/touch-target-consistency.css';
 
 /* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
