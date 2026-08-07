@@ -1,4 +1,6 @@
-const SERVICE_WORKER_VERSION = '9-20260807-reminder-routing';
+import { resolveAppPath } from './appPaths';
+
+const SERVICE_WORKER_VERSION = '10-20260807-base-path';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
@@ -23,6 +25,7 @@ export function registerNurPwa() {
 
   window.addEventListener('load', () => {
     let refreshing = false;
+    const serviceWorkerUrl = `${resolveAppPath('sw.js')}?v=${SERVICE_WORKER_VERSION}`;
 
     navigator.serviceWorker.addEventListener('controllerchange', () => {
       if (refreshing) return;
@@ -31,7 +34,10 @@ export function registerNurPwa() {
     });
 
     navigator.serviceWorker
-      .register(`/sw.js?v=${SERVICE_WORKER_VERSION}`, { updateViaCache: 'none' })
+      .register(serviceWorkerUrl, {
+        scope: import.meta.env.BASE_URL,
+        updateViaCache: 'none',
+      })
       .then(async (registration) => {
         await registration.update();
 
