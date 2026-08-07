@@ -11,6 +11,7 @@
   .favorite-button,
   .reference-dhikr-remembrance button,
   .reference-qibla-location button,
+  .reference-assistant-input button,
   .reference-prayer-complete-replay,
   .reference-modal-close,
   .reference-learning-completion-modal__close,
@@ -50,7 +51,8 @@
   .calendar-entry-row > button,
   .favorite-button,
   .reference-dhikr-remembrance button,
-  .reference-qibla-location button
+  .reference-qibla-location button,
+  .reference-assistant-input button
 ) {
   border-radius: 13px;
 }
@@ -72,6 +74,10 @@
   grid-template-columns: var(--compact-touch-target) minmax(0, 1fr) var(--compact-touch-target) !important;
 }
 
+.reference-assistant-input {
+  grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important;
+}
+
 /* Preserve the visual icon size while enlarging the actual hit area. */
 :where(
   .reference-quran-favorite,
@@ -81,7 +87,8 @@
   .calendar-entry-row > button,
   .favorite-button,
   .reference-dhikr-remembrance button,
-  .reference-qibla-location button
+  .reference-qibla-location button,
+  .reference-assistant-input button
 ) > svg {
   width: 18px;
   height: 18px;
@@ -97,6 +104,7 @@
     .favorite-button,
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
+    .reference-assistant-input button,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
@@ -116,6 +124,7 @@
     .favorite-button,
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
+    .reference-assistant-input button,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
@@ -131,6 +140,10 @@
   .calendar-entry-row {
     column-gap: 6px;
   }
+
+  .reference-assistant-input {
+    gap: 5px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -143,6 +156,7 @@
     .favorite-button,
     .reference-dhikr-remembrance button,
     .reference-qibla-location button,
+    .reference-assistant-input button,
     .reference-dua-card__top button,
     .reference-dua-card footer button,
     .reference-nearby-label button
