@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  createFallbackPrayerSnapshot,
   fetchPrayerTimes,
-  readCachedPrayerSnapshot,
-  readPrayerLocation,
-  readPrayerPreferences,
+  getFallbackPrayerTimesSnapshot,
+  loadCachedPrayerTimes,
+  loadPrayerLocation,
+  loadPrayerPreferences,
+  savePrayerLocation,
   savePrayerPreferences,
 } from './prayerTimesService';
 import type {
@@ -36,10 +37,10 @@ function requestDeviceCoordinates(): Promise<PrayerLocation> {
 }
 
 export function usePrayerTimes() {
-  const initialLocation = readPrayerLocation();
-  const initialPreferences = readPrayerPreferences();
-  const cached = readCachedPrayerSnapshot();
-  const fallback = createFallbackPrayerSnapshot(initialLocation, initialPreferences);
+  const initialLocation = loadPrayerLocation();
+  const initialPreferences = loadPrayerPreferences();
+  const cached = loadCachedPrayerTimes();
+  const fallback = getFallbackPrayerTimesSnapshot();
   const [snapshot, setSnapshot] = useState<PrayerTimesSnapshot>(cached ?? fallback);
   const [status, setStatus] = useState<PrayerTimesStatus>(cached ? 'cache' : 'fallback');
   const [refreshing, setRefreshing] = useState(false);
@@ -65,12 +66,12 @@ export function usePrayerTimes() {
     } catch (reason) {
       if (requestCounter.current !== requestId) return 'ignored' as const;
       const message = reason instanceof Error ? reason.message : 'Gebetszeiten konnten nicht geladen werden.';
-      const stored = readCachedPrayerSnapshot();
+      const stored = loadCachedPrayerTimes();
       if (stored) {
         setSnapshot(stored);
         setStatus('cache');
       } else {
-        setSnapshot(createFallbackPrayerSnapshot(location, preferences));
+        setSnapshot(getFallbackPrayerTimesSnapshot());
         setStatus('fallback');
       }
       setError(message);
@@ -93,6 +94,7 @@ export function usePrayerTimes() {
     setError(null);
     try {
       const location = await requestDeviceCoordinates();
+      savePrayerLocation(location);
       return await load(location, snapshot.preferences);
     } catch (reason) {
       const message = reason instanceof Error ? reason.message : 'Standort wurde nicht freigegeben.';
