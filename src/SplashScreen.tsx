@@ -13,7 +13,7 @@ export function SplashScreen() {
     >
       <div className="reference-splash__halo" />
       <PremiumImage
-        src="/premium-assets/high-res-objects/mosque-gold.webp"
+        src="/premium-assets/high-res-objects/mosque-gold-v2.webp"
         className="reference-splash__mosque"
         fallback={<MosqueScene />}
       />
@@ -24,7 +24,7 @@ export function SplashScreen() {
         transition={{ delay: .08, duration: .55, ease: [0.22, 1, 0.36, 1] }}
       >
         <PremiumImage
-          src="/premium-assets/high-res-objects/nur-logo-emblem.webp"
+          src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp"
           className="reference-splash__mark"
           fallback={<NurMark />}
         />
