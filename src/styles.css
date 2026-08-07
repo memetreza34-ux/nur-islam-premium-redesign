@@ -1,3 +1,4 @@
+/* Foundation and original screen structure */
 @import './styles/base.css';
 @import './styles/home.css';
 @import './styles/prayer.css';
@@ -9,6 +10,8 @@
 @import './styles/more-controls.css';
 @import './styles/navigation.css';
 @import './styles/premium-v2.css';
+
+/* Reference-driven visual system */
 @import './styles/reference-exact.css';
 @import './styles/reference-assets.css';
 @import './styles/reference-learning.css';
@@ -38,6 +41,8 @@
 @import './styles/reference-valid-assets-secondary.css';
 @import './styles/reference-legacy-migration.css';
 @import './styles/reference-shared-prayer.css';
+
+/* Completed feature areas */
 @import './styles/reference-names-complete.css';
 @import './styles/reference-duas-complete.css';
 @import './styles/reference-quran-complete.css';
@@ -48,3 +53,6 @@
 @import './styles/reference-prayer-reminders.css';
 @import './styles/reference-quran-online.css';
 @import './styles/reference-mosque-live.css';
+
+/* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
+@import './styles/visual-consistency.css';
