@@ -36,6 +36,19 @@
   .reference-quran-verse small,
   .reference-dhikr-goal p,
   .reference-dhikr-remembrance small,
+  .reference-name-progress small,
+  .reference-name-progress em,
+  .reference-name-list__number,
+  .reference-name-list__copy small,
+  .reference-name-modal__notice,
+  .reference-dua-progress small,
+  .reference-dua-progress em,
+  .reference-dua-results-label small,
+  .reference-dua-card__content blockquote small,
+  .reference-dua-viewed,
+  .reference-dua-modal > section small,
+  .reference-dua-modal__source small,
+  .reference-dua-modal__source em,
   .reference-learning-course-hero__progress strong,
   .reference-learning-lesson-selector small,
   .reference-learning-sources article p,
@@ -55,6 +68,8 @@
   .reference-assistant-safety strong,
   .prayer-location-card button,
   .reference-reader-unavailable > button,
+  .reference-name-modal__actions button,
+  .reference-dua-modal__actions button,
   .reference-learning-course-navigation > button,
   .reference-prayer-course-navigation > button,
   .reference-rakah-actions button,
@@ -117,6 +132,8 @@
   .prayer-location-card__icon,
   .reference-quran-library-status > span:first-child,
   .reference-quran-list__mark,
+  .reference-name-progress__icon,
+  .reference-dua-progress > span:first-child,
   .reference-prayer-learning-actions > button > span:first-child,
   .reference-five-prayer-lessons > div:last-child > button > span:first-child
 ) {
@@ -146,6 +163,9 @@
   .prayer-location-card > span:nth-child(2),
   .reference-quran-library-status > div,
   .reference-quran-list__copy,
+  .reference-name-progress > span:nth-child(2),
+  .reference-name-list__copy,
+  .reference-dua-progress > div:nth-child(2),
   .reference-learning-lesson-selector button
 ) {
   min-width: 0;
@@ -156,6 +176,8 @@
   .reference-assistant-suggestions strong,
   .reference-core-access-grid strong,
   .reference-quran-library-status strong,
+  .reference-name-progress strong,
+  .reference-dua-progress strong,
   .reference-learning-lesson-selector strong
 ) {
   overflow-wrap: anywhere;
