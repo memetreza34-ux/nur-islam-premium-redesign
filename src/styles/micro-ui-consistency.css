@@ -1,0 +1,171 @@
+:root {
+  --text-micro: .54rem;
+  --text-caption: .58rem;
+  --text-body-small: .62rem;
+  --compact-line-height: 1.42;
+  --icon-box-small: 36px;
+  --icon-box-medium: 40px;
+}
+
+/* Keep secondary information readable and visually consistent across screens. */
+:where(
+  .reference-profile-greeting p,
+  .reference-profile-row__copy small,
+  .reference-settings-toggles small,
+  .reference-assistant-greeting p,
+  .reference-assistant-safety small,
+  .prayer-location-card small,
+  .next-prayer-panel__main p,
+  .next-prayer-panel__time span,
+  .daily-prayer-progress p,
+  .calendar-month-nav p,
+  .calendar-weekdays span,
+  .reference-prayer-live-status small,
+  .reference-mosque-live-status small,
+  .reference-mosque-detail-facts strong,
+  .reference-mosque-detail-attribution,
+  .reference-core-access-grid small,
+  .reference-learning-course-hero__progress strong,
+  .reference-learning-lesson-selector small,
+  .reference-learning-sources article p,
+  .reference-learning-sources__notice,
+  .reference-learning-quiz__feedback small,
+  .reference-prayer-course-hero__progress strong,
+  .reference-prayer-lesson-summary p,
+  .reference-qibla-shortcut small,
+  .reference-prayer-lesson-steps em
+) {
+  font-size: var(--text-micro) !important;
+  line-height: var(--compact-line-height);
+}
+
+:where(
+  .reference-profile-section__label,
+  .reference-assistant-safety strong,
+  .prayer-location-card button,
+  .reference-learning-course-navigation > button,
+  .reference-prayer-course-navigation > button,
+  .reference-rakah-actions button,
+  .prayer-completion-actions > button,
+  .reference-learning-completion-actions button,
+  .reference-mosque-location-button,
+  .reference-mosque-error button,
+  .reference-mosque-detail-actions button,
+  .reference-mosque-detail-actions a
+) {
+  font-size: var(--text-caption) !important;
+  line-height: 1.3;
+}
+
+:where(
+  .reference-profile-row__copy strong,
+  .reference-settings-toggles strong,
+  .reference-assistant-suggestions strong,
+  .reference-chat-message p,
+  .reference-assistant-input input,
+  .prayer-location-card strong,
+  .reference-learning-reading p
+) {
+  font-size: var(--text-body-small) !important;
+}
+
+/* Badges and compact labels should have the same visual rhythm. */
+:where(
+  .hero-pill,
+  .reference-knowledge-progress,
+  .reference-quran-list em,
+  .reference-prayer-live-status em,
+  .reference-reader-source,
+  .reference-source-badge
+) {
+  min-height: 24px;
+  align-items: center;
+  line-height: 1.15;
+}
+
+:where(
+  .hero-pill,
+  .reference-quran-list em,
+  .reference-prayer-live-status em
+) {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border-radius: 999px;
+  white-space: normal;
+}
+
+/* Repeated list icons align on one compact grid instead of drifting by screen. */
+:where(
+  .reference-profile-row__icon,
+  .reference-assistant-suggestions button > span,
+  .prayer-location-card__icon,
+  .reference-quran-list__mark,
+  .reference-prayer-learning-actions > button > span:first-child,
+  .reference-five-prayer-lessons > div:last-child > button > span:first-child
+) {
+  width: var(--icon-box-medium);
+  min-width: var(--icon-box-medium);
+  height: var(--icon-box-medium);
+  min-height: var(--icon-box-medium);
+  border-radius: 13px;
+}
+
+/* Compact icon buttons that are not primary navigation remain visually centered. */
+:where(
+  .reference-chat-message__mark,
+  .reference-learning-key-points button > span,
+  .reference-learning-quiz__options button > span,
+  .reference-learning-lesson-selector button > span
+) {
+  display: grid;
+  place-items: center;
+}
+
+/* Avoid text touching card edges when German labels become longer. */
+:where(
+  .reference-profile-row__copy,
+  .reference-core-access-grid button > span:nth-child(2),
+  .reference-assistant-suggestions button,
+  .prayer-location-card > span:nth-child(2),
+  .reference-learning-lesson-selector button
+) {
+  min-width: 0;
+}
+
+:where(
+  .reference-profile-row__copy strong,
+  .reference-assistant-suggestions strong,
+  .reference-core-access-grid strong,
+  .reference-learning-lesson-selector strong
+) {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 370px) {
+  :root {
+    --text-micro: .53rem;
+    --text-caption: .56rem;
+    --text-body-small: .6rem;
+  }
+
+  .reference-profile-greeting {
+    grid-template-columns: 50px minmax(0, 1fr) 40px;
+    gap: 9px;
+    padding-inline: 12px;
+  }
+
+  .reference-profile-greeting__logo,
+  .reference-profile-greeting__logo img,
+  .reference-profile-greeting__logo .premium-image__fallback,
+  .reference-profile-greeting__logo svg {
+    width: 48px;
+    height: 48px;
+  }
+
+  .reference-profile-avatar {
+    width: 40px;
+    height: 40px;
+  }
+}
