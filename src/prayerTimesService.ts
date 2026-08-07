@@ -223,12 +223,16 @@ export async function fetchPrayerTimes(
     const apiSchool = payload.data.meta?.school?.trim();
     const apiTimezone = payload.data.meta?.timezone?.trim();
     const selectedMethodLabel = methodLabel(preferences);
+    const selectedSchoolLabel = selectedMethodLabel.split(' · ')[1] ?? 'Asr';
+    const liveMethodLabel = apiMethodName
+      ? `${apiMethodName}${preferences.method === 13 ? ' (experimentell)' : ''}`
+      : selectedMethodLabel.split(' · ')[0];
     const meta: PrayerScheduleMeta = {
       ...FALLBACK_PRAYER_META,
       city: location.label,
       locationLabel: location.label,
       sourceLabel: 'Live via AlAdhan',
-      methodLabel: apiMethodName ? `${apiMethodName} · ${apiSchool || selectedMethodLabel.split(' · ')[1]}` : selectedMethodLabel,
+      methodLabel: `${liveMethodLabel} · ${apiSchool || selectedSchoolLabel}`,
       timezone: apiTimezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 'lokal',
       calculationNotice: 'Berechnete Gebetszeiten können je nach örtlicher Moschee, Methode und lokalen Korrekturen abweichen. Bitte bei Unsicherheit vor Ort prüfen.',
     };
@@ -250,6 +254,18 @@ export async function fetchPrayerTimes(
 
 export function getFallbackPrayerTimesSnapshot(date = new Date()) {
   return createFallbackSnapshot(loadPrayerLocation(), loadPrayerPreferences(), date);
+}
+
+/* Compatibility aliases for older feature modules while the app migrates to the load/get naming. */
+export const readPrayerLocation = loadPrayerLocation;
+export const readPrayerPreferences = loadPrayerPreferences;
+export const readCachedPrayerSnapshot = loadCachedPrayerTimes;
+export function createFallbackPrayerSnapshot(
+  location = loadPrayerLocation(),
+  preferences = loadPrayerPreferences(),
+  date = new Date(),
+) {
+  return createFallbackSnapshot(location, preferences, date);
 }
 
 export function applyPrayerSnapshotToSharedSchedule(snapshot: PrayerTimesSnapshot) {
