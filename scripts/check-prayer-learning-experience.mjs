@@ -53,15 +53,30 @@ const requiredCompletionFeatures = [
 for (const feature of requiredCompletionFeatures) {
   if (!prayer.includes(feature)) throw new Error(`Prayer completion experience is missing: ${feature}`);
 }
-if (!prayer.includes("readSet(`nur_prayers_${dateKey}`, [])")) {
-  throw new Error('Prayer tracker must start without a fake pre-completed prayer.');
+
+const midnightSafeTrackerFeatures = [
+  'initialDateKey',
+  'currentDateKey',
+  'completedDateKey',
+  'readSet(`nur_prayers_${initialDateKey}`, [])',
+  'readSet(`nur_prayers_${currentDateKey}`, [])',
+  'writeSet(`nur_prayers_${completedDateKey}`, completed)',
+  'setCompletedDateKey(currentDateKey)',
+  'setCelebrationOpen(false)',
+];
+for (const feature of midnightSafeTrackerFeatures) {
+  if (!prayer.includes(feature)) throw new Error(`Prayer tracker day rollover is incomplete: ${feature}`);
+}
+
+if (/readSet\(`nur_prayers_[^`]+`, \[['"][^\]]+/.test(prayer)) {
+  throw new Error('Prayer tracker must not seed a fake pre-completed prayer.');
 }
 
 if (!styles.includes('.reference-prayer-learning-hub') || !styles.includes('.prayer-completion-modal')) {
   throw new Error('Prayer learning or completion styles are missing.');
 }
-if (!styleIndex.includes("reference-prayer-learning-completion.css")) {
+if (!styleIndex.includes('reference-prayer-learning-completion.css')) {
   throw new Error('Prayer learning stylesheet is not loaded.');
 }
 
-console.log('Prayer learning verified: five prayer lessons, real navigation, persisted progress, and respectful 5/5 completion effect.');
+console.log('Prayer learning verified: five prayer lessons, real navigation, persisted midnight-safe daily progress, and respectful 5/5 completion effect.');
