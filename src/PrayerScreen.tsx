@@ -130,11 +130,13 @@ async function playReminderTone() {
 }
 
 export function PrayerScreen({ onBack }: { onBack: () => void }) {
-  const dateKey = useMemo(() => getDateKey(), []);
-  const [completed, setCompleted] = useState(() => readSet(`nur_prayers_${dateKey}`, []));
+  const initialDateKey = useRef(getDateKey()).current;
+  const [now, setNow] = useState(() => new Date());
+  const currentDateKey = useMemo(() => getDateKey(now), [now]);
+  const [completedDateKey, setCompletedDateKey] = useState(initialDateKey);
+  const [completed, setCompleted] = useState(() => readSet(`nur_prayers_${initialDateKey}`, []));
   const [notifications, setNotifications] = useState(() => readSet('nur_prayer_notifications', ['fajr', 'dhuhr', 'maghrib', 'isha']));
   const [tonePlaying, setTonePlaying] = useState(false);
-  const [now, setNow] = useState(() => new Date());
   const [toast, setToast] = useState<string | null>(null);
   const [celebrationOpen, setCelebrationOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -159,11 +161,31 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const previousCompletedCount = useRef(completedCount);
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(new Date()), 30000);
-    return () => window.clearInterval(timer);
+    const syncClock = () => setNow(new Date());
+    const timer = window.setInterval(syncClock, 30000);
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') syncClock();
+    };
+    window.addEventListener('focus', syncClock);
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', syncClock);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
   }, []);
 
-  useEffect(() => writeSet(`nur_prayers_${dateKey}`, completed), [completed, dateKey]);
+  useEffect(() => {
+    if (completedDateKey === currentDateKey) return;
+    const nextCompleted = readSet(`nur_prayers_${currentDateKey}`, []);
+    setCompletedDateKey(currentDateKey);
+    setCompleted(nextCompleted);
+    previousCompletedCount.current = obligatoryIds.filter((id) => nextCompleted.has(id)).length;
+    setCompletionStreak(calculatePrayerStreak());
+    setCelebrationOpen(false);
+  }, [completedDateKey, currentDateKey]);
+
+  useEffect(() => writeSet(`nur_prayers_${completedDateKey}`, completed), [completed, completedDateKey]);
   useEffect(() => writeSet('nur_prayer_notifications', notifications), [notifications]);
   useEffect(() => {
     setDraftMethod(preferences.method);
@@ -282,6 +304,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
         <span><small>{dateLabel}</small><strong>{meta.locationLabel}</strong></span>
         <button onClick={handleLocation} disabled={refreshing} className={refreshing ? 'is-loading' : ''}><LocateFixed size={16} /> {refreshing ? 'Lädt' : 'Standort'}</button>
       </section>
+      <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>
 
       <section className="next-prayer-panel reference-next-prayer">
         <div className="next-prayer-panel__glow" />
