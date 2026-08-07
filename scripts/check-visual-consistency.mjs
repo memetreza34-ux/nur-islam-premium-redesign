@@ -1,4 +1,4 @@
-import { readFile, readdir } from 'node:fs/promises';
+import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 
 const root = process.cwd();
@@ -16,17 +16,22 @@ async function collectFiles(directory, extensions) {
 
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const guardrails = await readFile(resolve(root, 'src/styles/visual-consistency.css'), 'utf8');
+const moreHubStyles = await readFile(resolve(root, 'src/styles/reference-more-hub.css'), 'utf8');
 const base = await readFile(resolve(root, 'src/styles/base.css'), 'utf8');
 const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'utf8');
 const viewport = await readFile(resolve(root, 'src/styles/reference-mobile-viewport.css'), 'utf8');
 const sprite = await readFile(resolve(root, 'src/styles/reference-sprite.css'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
 const artworkHost = await readFile(resolve(root, 'src/ReferenceArtworkHost.tsx'), 'utf8');
+const moreScreen = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 
 const finalImport = "@import './styles/visual-consistency.css';";
 if (!styleIndex.trim().endsWith(finalImport)) {
   throw new Error('The visual consistency layer must be the final CSS import.');
+}
+if (!styleIndex.includes("@import './styles/reference-more-hub.css';")) {
+  throw new Error('The More hub stylesheet is not loaded.');
 }
 
 const requiredGuardrails = [
@@ -51,6 +56,18 @@ const requiredGuardrails = [
 for (const requirement of requiredGuardrails) {
   if (!guardrails.includes(requirement)) {
     throw new Error(`Visual guardrail is missing: ${requirement}`);
+  }
+}
+
+for (const requirement of [
+  '.reference-core-access-grid',
+  'grid-template-columns: repeat(2, minmax(0, 1fr))',
+  'min-height: 82px',
+  '.reference-core-access-grid__icon',
+  '@media (max-width: 370px)',
+]) {
+  if (!moreHubStyles.includes(requirement)) {
+    throw new Error(`More hub visual structure is incomplete: ${requirement}`);
   }
 }
 
@@ -92,9 +109,21 @@ for (const item of navigationItems) {
   if (!app.includes(item)) throw new Error(`Bottom navigation item is missing: ${item}`);
 }
 
+const moreDestinations = ['prayer', 'learn', 'quran', 'dhikr', 'qibla', 'duas', 'names', 'mosques', 'calendar', 'collections'];
+for (const destination of moreDestinations) {
+  if (!moreScreen.includes(`destination: '${destination}'`)) {
+    throw new Error(`More hub destination is missing: ${destination}`);
+  }
+}
+if (!app.includes('<MoreScreen onBack={goHome} onNavigate={(destination) => setActiveTab(destination)} />')) {
+  throw new Error('More hub shortcuts are not connected to the central app navigation.');
+}
+
 const sourceFiles = await collectFiles(resolve(root, 'src'), new Set(['.tsx']));
+const sourceContents = [];
 for (const path of sourceFiles) {
   const source = await readFile(path, 'utf8');
+  sourceContents.push(source);
   const normalizedSource = source.replaceAll('=>', '→');
 
   for (const match of normalizedSource.matchAll(/<button\b[\s\S]*?>/g)) {
@@ -113,7 +142,9 @@ for (const path of sourceFiles) {
 }
 
 const cssFiles = await collectFiles(resolve(root, 'src/styles'), new Set(['.css']));
-const allCss = (await Promise.all(cssFiles.map((path) => readFile(path, 'utf8')))).join('\n');
+const cssContents = await Promise.all(cssFiles.map((path) => readFile(path, 'utf8')));
+const allCss = cssContents.join('\n');
+const allSource = sourceContents.join('\n');
 const forbiddenImageRules = [
   /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
   /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
@@ -125,6 +156,22 @@ for (const pattern of forbiddenImageRules) {
   }
 }
 
+const referencedPremiumAssets = new Set();
+for (const match of allSource.matchAll(/["'`](\/?premium-assets\/[^"'`?\s)]+)(?:\?[^"'`\s)]*)?["'`]/g)) {
+  referencedPremiumAssets.add(match[1].replace(/^\/+/, ''));
+}
+for (const match of allCss.matchAll(/url\(\s*["']?(\/?premium-assets\/[^"')?\s]+)(?:\?[^"')\s]*)?["']?\s*\)/g)) {
+  referencedPremiumAssets.add(match[1].replace(/^\/+/, ''));
+}
+
+for (const assetPath of referencedPremiumAssets) {
+  const file = resolve(root, 'public', assetPath);
+  const details = await stat(file).catch(() => null);
+  if (!details?.isFile() || details.size < 100) {
+    throw new Error(`Referenced premium image is missing or empty: ${assetPath}`);
+  }
+}
+
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, 44px touch targets, unified headers/cards/icons, visible premium imagery, safe decorative layers, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, 44px touch targets, unified headers/cards/icons, safe decorative layers, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
