@@ -73,6 +73,15 @@
   min-width: 82px;
 }
 
+.reference-prayer-location-privacy {
+  margin: -6px 4px 0;
+  padding-left: 10px;
+  border-left: 2px solid rgba(214, 175, 55, .24);
+  color: var(--muted-green);
+  font-size: .54rem;
+  line-height: 1.5;
+}
+
 .reference-prayer-location > button:disabled,
 .reference-screen-header button:disabled,
 .reference-prayer-settings-modal .gold-button:disabled {
@@ -176,6 +185,7 @@
 
 .reference-prayer-settings-group button {
   display: grid;
+  min-width: 0;
   gap: 3px;
   min-height: 68px;
   padding: 11px;
@@ -197,6 +207,7 @@
   color: var(--cream-strong);
   font-size: .66rem;
   font-weight: 800;
+  overflow-wrap: anywhere;
 }
 
 .reference-prayer-settings-group button small {
@@ -223,6 +234,11 @@
   .reference-prayer-live-status em {
     grid-column: 2;
     width: fit-content;
+  }
+
+  .reference-prayer-location-privacy {
+    margin-top: -4px;
+    padding-left: 8px;
   }
 
   .reference-prayer-settings-group > div {
