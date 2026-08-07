@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { versionAppPath } from './appPaths';
 
 type Accent = {
   src: string;
@@ -7,7 +8,7 @@ type Accent = {
 };
 
 const VISUAL_VERSION = '20260806-visual4';
-const asset = (name: string) => `/premium-assets/high-res-objects/${name}-v2.webp?v=${VISUAL_VERSION}`;
+const asset = (name: string) => versionAppPath(`premium-assets/high-res-objects/${name}-v2.webp`, VISUAL_VERSION);
 
 const accents: Record<string, Accent[]> = {
   prayer: [{ src: asset('dome'), className: 'reference-artwork-layer__dome', label: 'Goldene Moscheekuppel' }],
