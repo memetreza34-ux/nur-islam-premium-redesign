@@ -1,0 +1,92 @@
+:root {
+  --compact-touch-target: 44px;
+}
+
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .reference-dhikr-remembrance button,
+  .reference-qibla-location button,
+  .reference-prayer-complete-replay,
+  .reference-modal-close,
+  .reference-learning-completion-modal__close,
+  .prayer-completion-modal__close,
+  .reference-prayer-settings-modal__close,
+  .reference-mosque-detail-modal__close,
+  .reference-profile-modal__close,
+  .learn-modal__close
+) {
+  width: var(--compact-touch-target) !important;
+  min-width: var(--compact-touch-target);
+  height: var(--compact-touch-target) !important;
+  min-height: var(--compact-touch-target);
+  padding: 0;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .reference-dhikr-remembrance button,
+  .reference-qibla-location button
+) {
+  border-radius: 13px;
+}
+
+/* Preserve the visual icon size while enlarging the actual hit area. */
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .reference-dhikr-remembrance button,
+  .reference-qibla-location button
+) > svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .reference-dhikr-remembrance button,
+    .reference-qibla-location button
+  ):hover {
+    border-color: rgba(232, 199, 122, .4);
+    background: rgba(214, 175, 55, .08);
+  }
+}
+
+@media (hover: none) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .reference-dhikr-remembrance button,
+    .reference-qibla-location button
+  ):active {
+    transform: scale(.97);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .reference-dhikr-remembrance button,
+    .reference-qibla-location button
+  ) {
+    transition: none !important;
+  }
+}
