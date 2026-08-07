@@ -225,6 +225,17 @@ textarea:focus-visible {
   backface-visibility: hidden;
 }
 
+/* A successfully loaded premium asset must always remain the visible renderer. */
+.premium-image > img:not([hidden]) {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.premium-image > .premium-image__fallback[hidden] {
+  display: none !important;
+}
+
 .reference-artwork-host,
 .reference-artwork-host::after,
 .reference-artwork-image {
@@ -242,6 +253,11 @@ textarea:focus-visible {
 .reference-reader-hero > .premium-image,
 .journey-card .premium-image {
   pointer-events: none;
+}
+
+/* Replace the final legacy Quran-card PNG decoration with the recovered WebP. */
+.reference-quran-verse::after {
+  background-image: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260807-visual-cleanup') !important;
 }
 
 .section-heading h2,
