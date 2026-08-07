@@ -1,5 +1,5 @@
-const VISUAL_VERSION = '20260806-reminders';
-const CACHE_NAME = `nur-islam-premium-v8-${VISUAL_VERSION}`;
+const VISUAL_VERSION = '20260807-reminder-routing';
+const CACHE_NAME = `nur-islam-premium-v9-${VISUAL_VERSION}`;
 const premiumAsset = (name) => `/premium-assets/high-res-objects/${name}?v=${VISUAL_VERSION}`;
 
 const APP_SHELL = [
@@ -64,7 +64,7 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const targetUrl = event.notification.data?.url || self.registration.scope;
+  const targetUrl = event.notification.data?.url || `${self.registration.scope}?open=prayer`;
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async (clientList) => {
@@ -75,8 +75,7 @@ self.addEventListener('notificationclick', (event) => {
         return;
       }
 
-      const openedClient = await self.clients.openWindow(targetUrl);
-      openedClient?.postMessage({ type: 'OPEN_PRAYER' });
+      await self.clients.openWindow(targetUrl);
     })
   );
 });
