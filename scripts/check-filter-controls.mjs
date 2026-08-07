@@ -21,21 +21,29 @@ if (filterIndex < 0 || finalIndex < 0 || filterIndex > finalIndex) {
 
 for (const requirement of [
   '.reference-input-search',
+  'grid-template-columns: 22px minmax(0, 1fr) 20px',
   'min-height: 48px',
+  '.reference-input-search:focus-within',
   '.reference-input-search input',
   'min-height: 44px',
+  'font-size: var(--text-body-small, .62rem)',
   '.reference-filter-tabs',
   'overflow-x: auto',
   'overflow-y: hidden',
+  'scroll-snap-type: x proximity',
   'overscroll-behavior-inline: contain',
   'touch-action: pan-x',
   '.reference-filter-tabs button',
+  'flex: 0 0 auto !important',
   'min-height: 44px',
   'min-width: max-content',
+  'border-radius: 999px',
+  'font-size: var(--text-caption, .58rem)',
   'white-space: nowrap',
   '.reference-filter-tabs button.is-active',
+  'background: linear-gradient(135deg, #efd394, #c9953a)',
+  '.reference-filter-tabs button:focus-visible',
   '@media (max-width: 370px)',
-  '.reference-filter-tabs--wide button',
   '@media (prefers-reduced-motion: reduce)',
 ]) {
   if (!filters.includes(requirement)) throw new Error(`Search/filter consistency rule is missing: ${requirement}`);
@@ -62,4 +70,4 @@ for (const [name, source] of screens) {
   }
 }
 
-console.log('Search and filter controls verified: discovery screens use touch-safe 44px filter chips, horizontally scrollable tab rows, readable search fields, and narrow-screen non-stretching behavior.');
+console.log('Search and filter controls verified: list screens use a shared focused search field, 44px pill tabs, horizontal scroll snapping, non-stretching labels, visible active states, and narrow-screen behavior.');
