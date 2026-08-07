@@ -95,15 +95,16 @@ for (const item of navigationItems) {
 const sourceFiles = await collectFiles(resolve(root, 'src'), new Set(['.tsx']));
 for (const path of sourceFiles) {
   const source = await readFile(path, 'utf8');
+  const normalizedSource = source.replaceAll('=>', '→');
 
-  for (const match of source.matchAll(/<button\b[\s\S]*?>/g)) {
+  for (const match of normalizedSource.matchAll(/<button\b[\s\S]*?>/g)) {
     const tag = match[0];
     if (tag.includes('className="icon-button"') && !tag.includes('aria-label=')) {
       throw new Error(`Icon-only button without aria-label in ${path}`);
     }
   }
 
-  for (const match of source.matchAll(/<img\b[\s\S]*?>/g)) {
+  for (const match of normalizedSource.matchAll(/<img\b[\s\S]*?>/g)) {
     const tag = match[0];
     if (!tag.includes('alt=')) {
       throw new Error(`Raw image without alt attribute in ${path}`);
