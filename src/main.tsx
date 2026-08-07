@@ -27,6 +27,22 @@ const PREVIEW_ASSETS = [
   'qibla-compass-v2.webp',
 ];
 
+function consumeInitialNavigationIntent() {
+  const url = new URL(window.location.href);
+  if (url.searchParams.get('open') !== 'prayer') return false;
+
+  try {
+    localStorage.setItem('nur_onboarding_complete', 'true');
+  } catch {
+    // Direct reminder navigation still works for the current session.
+  }
+
+  url.searchParams.delete('open');
+  const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
+  window.history.replaceState(window.history.state, '', cleanUrl);
+  return true;
+}
+
 function prepareImmediatePreview() {
   const params = new URLSearchParams(window.location.search);
   const forceOnboarding = params.get('onboarding') === '1';
@@ -53,6 +69,7 @@ function prepareImmediatePreview() {
   });
 }
 
+const openPrayerOnBoot = consumeInitialNavigationIntent();
 prepareImmediatePreview();
 const sharedPrayerTimesReady = bootstrapSharedPrayerTimes();
 
@@ -83,6 +100,12 @@ function BootRoot() {
   }, []);
 
   useEffect(() => startPrayerReminderScheduler(), []);
+
+  useEffect(() => {
+    if (!ready || !openPrayerOnBoot) return undefined;
+    const timer = window.setTimeout(() => window.dispatchEvent(new Event('nur:open-prayer')), 0);
+    return () => window.clearTimeout(timer);
+  }, [ready]);
 
   return (
     <AnimatePresence mode="wait" initial={false}>
