@@ -118,7 +118,7 @@ export function InstallAppPrompt() {
           aria-live="polite"
         >
           <button className="reference-install-prompt__close" onClick={dismiss} aria-label="Installationshinweis schließen"><X size={16} /></button>
-          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" className="reference-install-prompt__logo" fallback={<NurMark />} />
+          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="reference-install-prompt__logo" fallback={<NurMark />} />
           <div className="reference-install-prompt__copy">
             <span className="overline">Nur Islam als App</span>
             <strong>{installed ? 'App wurde installiert' : 'Direkt vom Home-Bildschirm öffnen'}</strong>
