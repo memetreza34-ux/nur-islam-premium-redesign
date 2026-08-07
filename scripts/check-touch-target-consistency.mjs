@@ -6,6 +6,7 @@ const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const touch = await readFile(resolve(root, 'src/styles/touch-target-consistency.css'), 'utf8');
 const quran = await readFile(resolve(root, 'src/styles/reference-quran-complete.css'), 'utf8');
 const names = await readFile(resolve(root, 'src/styles/reference-names-complete.css'), 'utf8');
+const calendar = await readFile(resolve(root, 'src/styles/calendar.css'), 'utf8');
 const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer-calendar.css'), 'utf8');
 const core = await readFile(resolve(root, 'src/styles/reference-core-screens.css'), 'utf8');
 
@@ -27,6 +28,7 @@ for (const requirement of [
   'height: 18px',
   '@media (hover: hover)',
   '@media (hover: none)',
+  '@media (max-width: 370px)',
   '@media (prefers-reduced-motion: reduce)',
 ]) {
   if (!touch.includes(requirement)) throw new Error(`Touch target rule is missing: ${requirement}`);
@@ -37,8 +39,14 @@ for (const selector of [
   '.reference-name-state',
   '.reference-name-list--complete .reference-name-heart',
   '.calendar-month-nav > button',
+  '.calendar-entry-row > button',
+  '.favorite-button',
   '.reference-dhikr-remembrance button',
   '.reference-qibla-location button',
+  '.reference-dua-card__top button',
+  '.reference-dua-card footer button',
+  '.selected-date-card button',
+  '.reference-nearby-label button',
   '.reference-prayer-complete-replay',
   '.reference-modal-close',
   '.reference-learning-completion-modal__close',
@@ -51,8 +59,19 @@ for (const selector of [
   if (!touch.includes(selector)) throw new Error(`Compact touch target coverage is missing: ${selector}`);
 }
 
-if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !core.includes('width: 39px')) {
+for (const gridRule of [
+  '.reference-quran-list--catalog > article',
+  'grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) !important',
+  '.reference-name-list--complete > article',
+  'grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important',
+  '.calendar-month-nav',
+  '.calendar-entry-row',
+]) {
+  if (!touch.includes(gridRule)) throw new Error(`Parent grid is not aligned to 44px compact controls: ${gridRule}`);
+}
+
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px')) {
   throw new Error('Expected legacy compact control baselines changed; review the centralized 44px overrides.');
 }
 
-console.log('Touch target consistency verified: compact Quran, Names, calendar, Dhikr, Qibla, prayer and modal controls are covered by a shared 44px hit-area layer without enlarging their icons.');
+console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
