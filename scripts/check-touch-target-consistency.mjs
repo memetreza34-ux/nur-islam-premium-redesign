@@ -1,0 +1,58 @@
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const root = process.cwd();
+const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+const touch = await readFile(resolve(root, 'src/styles/touch-target-consistency.css'), 'utf8');
+const quran = await readFile(resolve(root, 'src/styles/reference-quran-complete.css'), 'utf8');
+const names = await readFile(resolve(root, 'src/styles/reference-names-complete.css'), 'utf8');
+const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer-calendar.css'), 'utf8');
+const core = await readFile(resolve(root, 'src/styles/reference-core-screens.css'), 'utf8');
+
+const touchImport = "@import './styles/touch-target-consistency.css';";
+const finalImport = "@import './styles/visual-consistency.css';";
+const touchIndex = styleIndex.indexOf(touchImport);
+const finalIndex = styleIndex.indexOf(finalImport);
+if (touchIndex < 0 || finalIndex < 0 || touchIndex > finalIndex) {
+  throw new Error('Touch target consistency must load before the final visual guardrails.');
+}
+
+for (const requirement of [
+  '--compact-touch-target: 44px',
+  'width: var(--compact-touch-target) !important',
+  'min-width: var(--compact-touch-target)',
+  'height: var(--compact-touch-target) !important',
+  'min-height: var(--compact-touch-target)',
+  'width: 18px',
+  'height: 18px',
+  '@media (hover: hover)',
+  '@media (hover: none)',
+  '@media (prefers-reduced-motion: reduce)',
+]) {
+  if (!touch.includes(requirement)) throw new Error(`Touch target rule is missing: ${requirement}`);
+}
+
+for (const selector of [
+  '.reference-quran-favorite',
+  '.reference-name-state',
+  '.reference-name-list--complete .reference-name-heart',
+  '.calendar-month-nav > button',
+  '.reference-dhikr-remembrance button',
+  '.reference-qibla-location button',
+  '.reference-prayer-complete-replay',
+  '.reference-modal-close',
+  '.reference-learning-completion-modal__close',
+  '.prayer-completion-modal__close',
+  '.reference-prayer-settings-modal__close',
+  '.reference-mosque-detail-modal__close',
+  '.reference-profile-modal__close',
+  '.learn-modal__close',
+]) {
+  if (!touch.includes(selector)) throw new Error(`Compact touch target coverage is missing: ${selector}`);
+}
+
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !core.includes('width: 39px')) {
+  throw new Error('Expected legacy compact control baselines changed; review the centralized 44px overrides.');
+}
+
+console.log('Touch target consistency verified: compact Quran, Names, calendar, Dhikr, Qibla, prayer and modal controls are covered by a shared 44px hit-area layer without enlarging their icons.');
