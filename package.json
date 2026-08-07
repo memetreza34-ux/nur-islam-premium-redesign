@@ -14,6 +14,7 @@
     "onboarding:check": "node scripts/check-onboarding-visuals.mjs",
     "overlays:check": "node scripts/check-overlay-safety.mjs",
     "micro-ui:check": "node scripts/check-micro-ui-consistency.mjs",
+    "filter-controls:check": "node scripts/check-filter-controls.mjs",
     "touch-targets:check": "node scripts/check-touch-target-consistency.mjs",
     "layout:check": "node scripts/check-screen-layout-contract.mjs",
     "names:check": "node scripts/check-names-data.mjs",
@@ -28,7 +29,7 @@
     "learning:check": "node scripts/check-learning-courses.mjs",
     "prayer-reminders:check": "node scripts/check-prayer-reminders.mjs",
     "mosques:check": "node scripts/check-mosque-finder.mjs",
-    "check": "npm run assets:check && npm run deployment:check && npm run visual:check && npm run onboarding:check && npm run overlays:check && npm run micro-ui:check && npm run touch-targets:check && npm run layout:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run home-prayer-sync:check && npm run learning:check && npm run prayer-reminders:check && npm run mosques:check && npm run lint && npm run build"
+    "check": "npm run assets:check && npm run deployment:check && npm run visual:check && npm run onboarding:check && npm run overlays:check && npm run micro-ui:check && npm run filter-controls:check && npm run touch-targets:check && npm run layout:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run home-prayer-sync:check && npm run learning:check && npm run prayer-reminders:check && npm run mosques:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
