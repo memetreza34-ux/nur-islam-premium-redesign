@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { AnimatePresence, motion } from 'motion/react';
 import '@fontsource/inter/400.css';
@@ -12,7 +12,7 @@ import '@fontsource/amiri/400.css';
 import App from './App';
 import { AppErrorBoundary, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
 import { startPrayerReminderScheduler } from './prayerReminderService';
-import { bootstrapSharedPrayerTimes } from './prayerTimesService';
+import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
@@ -82,6 +82,7 @@ registerNurPwa();
 function BootRoot() {
   const [ready, setReady] = useState(false);
   const [, setPrayerTimesVersion] = useState(0);
+  const prayerDateKeyRef = useRef(getPrayerDateKey());
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -93,10 +94,37 @@ function BootRoot() {
 
   useEffect(() => {
     let active = true;
-    void sharedPrayerTimesReady.then(() => {
+
+    const renderLatestPrayerTimes = () => {
       if (active) setPrayerTimesVersion((version) => version + 1);
+    };
+
+    const refreshAfterDayChange = () => {
+      const currentDateKey = getPrayerDateKey();
+      if (currentDateKey === prayerDateKeyRef.current) return;
+      prayerDateKeyRef.current = currentDateKey;
+      void bootstrapSharedPrayerTimes();
+    };
+
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') refreshAfterDayChange();
+    };
+
+    window.addEventListener('nur:prayer-times-updated', renderLatestPrayerTimes);
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    const dayChangeTimer = window.setInterval(refreshAfterDayChange, 60000);
+
+    void sharedPrayerTimesReady.then(() => {
+      prayerDateKeyRef.current = getPrayerDateKey();
+      renderLatestPrayerTimes();
     });
-    return () => { active = false; };
+
+    return () => {
+      active = false;
+      window.removeEventListener('nur:prayer-times-updated', renderLatestPrayerTimes);
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.clearInterval(dayChangeTimer);
+    };
   }, []);
 
   useEffect(() => startPrayerReminderScheduler(), []);
