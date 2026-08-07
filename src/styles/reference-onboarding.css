@@ -1,10 +1,24 @@
+.app-shell--onboarding {
+  height: 100svh;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.app-shell--onboarding::-webkit-scrollbar {
+  display: none;
+}
+
 .reference-onboarding {
   position: relative;
   display: grid;
   min-height: calc(100svh - 28px);
   align-content: space-between;
   gap: 18px;
-  overflow: hidden;
+  overflow: visible;
   padding: 2px 0 8px;
 }
 
@@ -44,14 +58,14 @@
 }
 
 .reference-onboarding__topbar > button {
-  min-height: 34px;
-  padding: 0 10px;
+  min-height: 44px;
+  padding: 0 12px;
   border: 1px solid rgba(214, 175, 55, .17);
-  border-radius: 11px;
+  border-radius: 12px;
   color: var(--muted-green);
   background: rgba(8, 35, 28, .58);
   cursor: pointer;
-  font-size: .55rem;
+  font-size: .58rem;
 }
 
 .reference-onboarding__slide {
@@ -204,7 +218,8 @@
   align-items: center;
   gap: 8px;
   color: rgba(245, 239, 227, .8);
-  font-size: .56rem;
+  font-size: .58rem;
+  line-height: 1.35;
   text-align: left;
 }
 
@@ -220,7 +235,7 @@
 
 .reference-onboarding__permissions > button {
   display: grid;
-  grid-template-columns: 38px 1fr 18px;
+  grid-template-columns: 38px minmax(0, 1fr) 18px;
   align-items: center;
   gap: 9px;
   min-height: 57px;
@@ -245,16 +260,18 @@
 
 .reference-onboarding__permissions > button > span:nth-child(2) {
   display: grid;
+  min-width: 0;
   gap: 2px;
 }
 
 .reference-onboarding__permissions strong {
-  font-size: .61rem;
+  font-size: .63rem;
 }
 
 .reference-onboarding__permissions small {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .53rem;
+  line-height: 1.3;
 }
 
 .reference-onboarding__permissions > button > svg {
@@ -277,37 +294,53 @@
   gap: 6px;
   padding: 4px 5px 0;
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .52rem;
+  line-height: 1.4;
   text-align: center;
 }
 
 .reference-onboarding__privacy svg {
+  flex: 0 0 auto;
   color: #8fd4a7;
 }
 
 .reference-onboarding__footer {
   display: grid;
-  gap: 10px;
+  gap: 8px;
+  padding-bottom: max(2px, env(safe-area-inset-bottom));
 }
 
 .reference-onboarding__dots {
   display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 2px;
 }
 
 .reference-onboarding__dots button {
-  width: 7px;
-  height: 7px;
+  position: relative;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border: 0;
   border-radius: 999px;
-  background: rgba(245, 239, 227, .18);
+  background: transparent;
   cursor: pointer;
+}
+
+.reference-onboarding__dots button::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: rgba(245, 239, 227, .18);
+  transform: translate(-50%, -50%);
   transition: width .2s ease, background .2s ease;
 }
 
-.reference-onboarding__dots button.is-active {
+.reference-onboarding__dots button.is-active::after {
   width: 24px;
   background: linear-gradient(90deg, #e7c77f, #bd8b35);
 }
@@ -339,12 +372,16 @@
 .reference-onboarding__status {
   margin: 0;
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .54rem;
   line-height: 1.45;
   text-align: center;
 }
 
 @media (max-width: 370px) {
+  .reference-onboarding {
+    gap: 14px;
+  }
+
   .reference-onboarding__visual {
     min-height: 285px;
   }
@@ -357,7 +394,79 @@
     height: 222px;
   }
 
+  .reference-onboarding__copy {
+    padding-inline: 8px;
+  }
+
   .reference-onboarding__copy h1 {
     font-size: 1.9rem;
+  }
+}
+
+@media (max-height: 740px) {
+  .reference-onboarding {
+    gap: 12px;
+    align-content: start;
+  }
+
+  .reference-onboarding__slide {
+    gap: 12px;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 238px;
+  }
+
+  .reference-onboarding__visual > .premium-image,
+  .reference-onboarding__visual > .premium-image img,
+  .reference-onboarding__visual > .premium-image .premium-image__fallback,
+  .reference-onboarding__visual > .premium-image svg {
+    width: 245px;
+    height: 190px;
+  }
+
+  .reference-onboarding__visual--2 > .premium-image,
+  .reference-onboarding__visual--2 > .premium-image img,
+  .reference-onboarding__visual--2 > .premium-image .premium-image__fallback,
+  .reference-onboarding__visual--2 > .premium-image svg {
+    width: 205px;
+    height: 205px;
+  }
+
+  .reference-onboarding__visual--3 > .premium-image,
+  .reference-onboarding__visual--3 > .premium-image img,
+  .reference-onboarding__visual--3 > .premium-image .premium-image__fallback,
+  .reference-onboarding__visual--3 > .premium-image svg {
+    width: 215px;
+    height: 175px;
+  }
+
+  .reference-onboarding__tasbih {
+    width: 104px;
+    height: 104px;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 1.75rem;
+  }
+
+  .reference-onboarding__copy p {
+    font-size: .6rem;
+  }
+
+  .reference-onboarding__points {
+    gap: 5px;
+    margin-top: 1px;
+  }
+
+  .reference-onboarding__permissions > button {
+    min-height: 52px;
+    padding-block: 7px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-onboarding__dots button::after {
+    transition: none;
   }
 }
