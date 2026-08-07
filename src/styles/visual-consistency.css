@@ -378,6 +378,7 @@ textarea:focus-visible {
   .journey-card,
   .recommendation-card,
   .reference-artwork-image {
-    transform-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
