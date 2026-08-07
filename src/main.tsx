@@ -10,6 +10,7 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
+import { resolveAppPath, versionAppPath } from './appPaths';
 import { AppErrorBoundary, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
@@ -58,7 +59,7 @@ function prepareImmediatePreview() {
   document.documentElement.classList.toggle('is-preview', previewMode && !forceOnboarding);
 
   PREVIEW_ASSETS.forEach((name) => {
-    const href = `/premium-assets/high-res-objects/${name}?v=${VISUAL_VERSION}`;
+    const href = versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION);
     if (document.head.querySelector(`link[href="${href}"]`)) return;
     const link = document.createElement('link');
     link.rel = 'preload';
@@ -67,6 +68,9 @@ function prepareImmediatePreview() {
     link.type = 'image/webp';
     document.head.appendChild(link);
   });
+
+  const manifest = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
+  if (manifest) manifest.href = resolveAppPath('manifest.webmanifest');
 }
 
 const openPrayerOnBoot = consumeInitialNavigationIntent();
