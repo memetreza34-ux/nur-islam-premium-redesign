@@ -1,4 +1,4 @@
-const SERVICE_WORKER_VERSION = '8-20260806-reminders';
+const SERVICE_WORKER_VERSION = '9-20260807-reminder-routing';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
@@ -13,6 +13,7 @@ export function registerNurPwa() {
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
       if (event.data?.type === 'OPEN_PRAYER') {
+        try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
         window.dispatchEvent(new Event('nur:open-prayer'));
       }
     });
