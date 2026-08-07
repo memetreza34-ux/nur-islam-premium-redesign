@@ -13,6 +13,7 @@ const NOTIFICATION_STORAGE_KEY = 'nur_prayer_notifications';
 const REMINDER_WINDOW_MINUTES = 1;
 const CHECK_INTERVAL_MS = 20000;
 const APP_BASE = import.meta.env.BASE_URL;
+const PRAYER_TARGET_URL = `${APP_BASE}?open=prayer`;
 
 function dateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -52,7 +53,7 @@ async function showPrayerNotification(prayer: PrayerScheduleItem) {
     icon: `${APP_BASE}nur-app-icon.svg`,
     badge: `${APP_BASE}nur-app-icon.svg`,
     tag: `nur-prayer-${dateKey()}-${prayer.id}`,
-    data: { type: 'prayer-reminder', prayerId: prayer.id, url: APP_BASE },
+    data: { type: 'prayer-reminder', prayerId: prayer.id, url: PRAYER_TARGET_URL },
     silent: false,
   };
 
