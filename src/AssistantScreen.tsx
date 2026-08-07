@@ -68,11 +68,11 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>KI-Assistent</h1></div>
-        <button className="icon-button" onClick={() => flash('Quellenmodus: Quran und authentische Sunnah')}><ShieldCheck size={20} /></button>
+        <button className="icon-button" onClick={() => flash('Quellenmodus: Quran und authentische Sunnah')} aria-label="Informationen zum Quellenmodus"><ShieldCheck size={20} /></button>
       </header>
 
       <section className="reference-assistant-greeting">
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.png" fallback={<NurMark />} />
+        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} />
         <div><span className="overline">Assalamu Alaikum</span><h2>Wie kann ich dir helfen?</h2><p>Fragen zu Glauben, Gebet, Quran und islamischem Alltag.</p></div>
       </section>
 
