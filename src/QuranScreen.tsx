@@ -6,6 +6,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  CloudDownload,
   Filter,
   Heart,
   LoaderCircle,
@@ -127,14 +128,6 @@ export function QuranScreen({
     });
   };
 
-  const openSurah = (surah: Surah) => {
-    if (!OFFLINE_QURAN_SURAH_SET.has(surah.number)) {
-      flash(`${surah.englishName}: Textdaten werden noch offline migriert`);
-      return;
-    }
-    onOpenReader(surah.number);
-  };
-
   return (
     <motion.main
       className="screen reference-quran-screen reference-quran-screen--complete"
@@ -144,7 +137,7 @@ export function QuranScreen({
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Lokaler Quran</span><h1>Quran</h1></div>
+        <div><span className="overline">Quran-Bibliothek</span><h1>Quran</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Lieblingssuren`); }} aria-label="Lieblingssuren"><Heart size={20} /></button>
       </header>
 
@@ -154,20 +147,20 @@ export function QuranScreen({
           <h2>{lastSurah?.englishName ?? 'Al-Ikhlaas'}</h2>
           <p>Sure {lastRead.surahNumber} · Ayah {lastRead.ayahNumber}</p>
           <span className="reference-quran-progress"><i style={{ width: `${lastSurah ? Math.min(100, Math.max(4, (lastRead.ayahNumber / lastSurah.numberOfAyahs) * 100)) : 25}%` }} /></span>
-          <button className="reference-inline-button" onClick={() => onOpenReader(lastSurah && OFFLINE_QURAN_SURAH_SET.has(lastSurah.number) ? lastSurah.number : 112)}>Weiterlesen <ChevronRight size={16} /></button>
+          <button className="reference-inline-button" onClick={() => onOpenReader(lastSurah?.number ?? 112)}>Weiterlesen <ChevronRight size={16} /></button>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="reference-quran-continue__book" fallback={<QuranObject />} />
       </section>
 
       <section className="reference-quran-library-status glass-card">
         <span><BookOpen size={21} /></span>
-        <div><small>Quran-Verzeichnis</small><strong>114 Suren vollständig gelistet</strong><em>{OFFLINE_QURAN_SURAHS.length} Suren bereits mit Arabisch und Deutsch offline lesbar</em></div>
-        <span className="reference-quran-library-status__count">{OFFLINE_QURAN_SURAHS.length}/114</span>
+        <div><small>Quran-Verzeichnis</small><strong>Alle 114 Suren lesbar</strong><em>{OFFLINE_QURAN_SURAHS.length} Suren fest offline · weitere Suren online mit Browser-Cache</em></div>
+        <span className="reference-quran-library-status__count">114</span>
       </section>
 
-      <section className="reference-prototype-note">
+      <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Keine nicht vorhandenen Inhalte werden vorgetäuscht</strong><small>Die vollständige Navigation ist vorhanden. Nur Suren mit lokal geprüfter Dateistruktur lassen sich öffnen; der restliche Altbestand wird schrittweise übertragen.</small></span>
+        <span><strong>Offline zuerst, online nur bei Bedarf</strong><small>Die vier lokalen Suren werden ohne externe Anfrage geladen. Weitere Suren kommen aus Al Quran Cloud mit arabischem Uthmani-Text und deutscher Bubenheim-&-Elyas-Übersetzung und werden anschließend im Browser zwischengespeichert.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -193,15 +186,15 @@ export function QuranScreen({
           <div className="reference-quran-results"><span>{filter === 'all' ? 'Alle Suren' : filter === 'offline' ? 'Offline lesbar' : filter === 'favorites' ? 'Lieblingssuren' : getGermanRevelationLabel(filter)}</span><small>{visible.length} Ergebnisse</small></div>
           <div className="reference-quran-list reference-quran-list--catalog">
             {visible.map((surah, index) => {
-              const available = OFFLINE_QURAN_SURAH_SET.has(surah.number);
+              const offline = OFFLINE_QURAN_SURAH_SET.has(surah.number);
               const favorite = favorites.has(surah.number);
               return (
                 <motion.article key={surah.number} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .008, .18) }}>
-                  <button className="reference-quran-list__main" onClick={() => openSurah(surah)}>
+                  <button className="reference-quran-list__main" onClick={() => onOpenReader(surah.number)}>
                     <span className="reference-quran-list__number">{surah.number}</span>
                     <span className="reference-quran-list__copy"><strong>{surah.englishName}</strong><small>{getGermanRevelationLabel(surah.revelationType)} · {surah.numberOfAyahs} Ayat</small></span>
                     <span className="reference-quran-list__arabic" dir="rtl">{surah.name.replace('سُورَةُ ', '')}</span>
-                    <span className={available ? 'reference-quran-availability is-available' : 'reference-quran-availability'}>{available ? 'Offline' : 'Folgt'}</span>
+                    <span className={offline ? 'reference-quran-availability is-available' : 'reference-quran-availability is-online'}>{offline ? 'Offline' : <><CloudDownload size={12} /> Online</>}</span>
                   </button>
                   <button className={favorite ? 'reference-quran-favorite is-active' : 'reference-quran-favorite'} onClick={() => toggleFavorite(surah.number)} aria-label={`${surah.englishName} als Favorit markieren`} aria-pressed={favorite}>{favorite ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button>
                 </motion.article>
