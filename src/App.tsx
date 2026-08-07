@@ -394,7 +394,7 @@ export default function App() {
                     : activeTab === 'qibla'
                       ? <QiblaScreen onBack={goHome} />
                       : activeTab === 'profile'
-                        ? <MoreScreen onBack={goHome} />
+                        ? <MoreScreen onBack={goHome} onNavigate={(destination) => setActiveTab(destination)} />
                         : activeTab === 'prayer'
                           ? <PrayerScreen onBack={goHome} />
                           : activeTab === 'calendar'
