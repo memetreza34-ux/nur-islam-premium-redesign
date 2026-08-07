@@ -6,6 +6,7 @@
 .reference-learning-completion-backdrop,
 .reference-prayer-course-complete,
 .prayer-completion-backdrop {
+  z-index: 160 !important;
   box-sizing: border-box;
   overflow-x: hidden;
   overflow-y: auto;
@@ -50,6 +51,8 @@
 .reference-learning-completion-modal,
 .reference-prayer-course-complete > section,
 .prayer-completion-modal {
+  position: relative;
+  isolation: isolate;
   box-sizing: border-box;
   width: min(100%, 430px);
   max-height: calc(100dvh - max(24px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
