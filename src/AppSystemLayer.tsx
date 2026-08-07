@@ -105,6 +105,7 @@ export function PrayerReminderBanner() {
 
   const openPrayerTracker = () => {
     setReminder(null);
+    try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
     window.dispatchEvent(new Event('nur:open-prayer'));
   };
 
