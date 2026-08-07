@@ -5,6 +5,7 @@ const root = process.cwd();
 const vite = await readFile(resolve(root, 'vite.config.ts'), 'utf8');
 const paths = await readFile(resolve(root, 'src/appPaths.ts'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
+const artwork = await readFile(resolve(root, 'src/ReferenceArtworkHost.tsx'), 'utf8');
 const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
@@ -30,6 +31,12 @@ for (const requirement of [
 
 if (!visuals.includes("import { versionAppPath } from './appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
   throw new Error('PremiumImage does not resolve assets through the deployment base path.');
+}
+if (!artwork.includes("import { versionAppPath } from './appPaths';") || !artwork.includes('versionAppPath(`premium-assets/high-res-objects/${name}-v2.webp`, VISUAL_VERSION)')) {
+  throw new Error('ReferenceArtworkHost still uses root-absolute premium asset paths.');
+}
+if (artwork.includes('=> `/premium-assets/')) {
+  throw new Error('ReferenceArtworkHost contains an obsolete root-absolute asset helper.');
 }
 
 for (const requirement of [
@@ -77,4 +84,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, manifest scope, premium images, preloads, service worker registration, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, manifest scope, premium images, decorative artwork, preloads, service worker registration, and scoped offline cache.');
