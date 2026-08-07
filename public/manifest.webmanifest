@@ -4,9 +4,9 @@
   "description": "Gebetszeiten, Quran, Dhikr, Qibla und islamisches Wissen in einer ruhigen Premium-App.",
   "lang": "de",
   "dir": "ltr",
-  "id": "/",
-  "start_url": "/",
-  "scope": "/",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
   "display": "standalone",
   "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "portrait-primary",
@@ -15,13 +15,13 @@
   "categories": ["education", "lifestyle", "utilities"],
   "icons": [
     {
-      "src": "/nur-app-icon.svg",
+      "src": "./nur-app-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "any"
     },
     {
-      "src": "/nur-app-icon.svg",
+      "src": "./nur-app-icon.svg",
       "sizes": "any",
       "type": "image/svg+xml",
       "purpose": "maskable"
