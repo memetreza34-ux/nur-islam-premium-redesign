@@ -138,7 +138,7 @@ function normalizeElement(element: OverpassElement, origin: MosqueSearchOrigin):
   const coordinates = getElementCoordinates(element);
   if (!coordinates) return null;
   const tags = element.tags ?? {};
-  const name = tags['name:de'] || tags.name || tags['official_name'] || tags['short_name'] || 'Moschee / Gebetsraum';
+  const name = tags['name:de'] || tags.name || tags.official_name || tags.short_name || 'Moschee / Gebetsraum';
   const distanceKm = calculateDistanceKm(origin, coordinates);
 
   return {
@@ -234,8 +234,9 @@ async function queryEndpoint(endpoint: string, query: string) {
 export async function fetchNearbyMosques(
   origin: MosqueSearchOrigin,
   radiusMeters = DEFAULT_RADIUS_METERS,
+  forceRefresh = false,
 ): Promise<MosqueSearchSnapshot> {
-  const cached = readMosqueCache(origin, radiusMeters);
+  const cached = forceRefresh ? null : readMosqueCache(origin, radiusMeters);
   if (cached) return cached;
   const query = buildOverpassQuery(origin, radiusMeters);
   let lastError: unknown;
