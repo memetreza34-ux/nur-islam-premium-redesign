@@ -19,7 +19,8 @@
     "prayer-times:check": "node scripts/check-live-prayer-times.mjs",
     "learning:check": "node scripts/check-learning-courses.mjs",
     "prayer-reminders:check": "node scripts/check-prayer-reminders.mjs",
-    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run learning:check && npm run prayer-reminders:check && npm run lint && npm run build"
+    "mosques:check": "node scripts/check-mosque-finder.mjs",
+    "check": "npm run assets:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run learning:check && npm run prayer-reminders:check && npm run mosques:check && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
