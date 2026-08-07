@@ -2,16 +2,23 @@ import { useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
+  BookHeart,
+  BookOpen,
   Bookmark,
+  CalendarDays,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleHelp,
   Cloud,
+  Compass,
   Globe2,
+  HandHeart,
   Info,
   Languages,
+  Library,
   LogOut,
+  MapPin,
   MoonStar,
   NotebookPen,
   Palette,
@@ -19,6 +26,7 @@ import {
   Route,
   Settings2,
   Smartphone,
+  Sparkles,
   SunMedium,
   X,
 } from 'lucide-react';
@@ -26,6 +34,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { NurMark, PremiumImage } from './PremiumVisuals';
+
+export type MoreDestination = 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections';
 
 type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding';
 
@@ -35,15 +45,36 @@ type ProfileRow = {
   description: string;
   icon: LucideIcon;
   action?: ProfileAction;
+  destination?: MoreDestination;
+};
+
+type CoreShortcut = {
+  destination: MoreDestination;
+  title: string;
+  description: string;
+  icon: LucideIcon;
 };
 
 type ModalMode = ProfileAction | null;
 
+const coreShortcuts: CoreShortcut[] = [
+  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', icon: SunMedium },
+  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', icon: HandHeart },
+  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', icon: BookOpen },
+  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: Sparkles },
+  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: Compass },
+  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: BookHeart },
+  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', icon: Library },
+  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: MapPin },
+  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: CalendarDays },
+  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: Bookmark },
+];
+
 const journeyRows: ProfileRow[] = [
-  { id: 'journey', title: 'Meine Reise', description: 'Deinen spirituellen Fortschritt ansehen', icon: Route },
-  { id: 'bookmarks', title: 'Lesezeichen', description: 'Gespeicherte Verse und Inhalte', icon: Bookmark },
+  { id: 'journey', title: 'Meine Reise', description: 'Deinen spirituellen Fortschritt ansehen', icon: Route, destination: 'learn' },
+  { id: 'bookmarks', title: 'Lesezeichen', description: 'Gespeicherte Verse und Inhalte', icon: Bookmark, destination: 'collections' },
   { id: 'notes', title: 'Notizen', description: 'Deine persönlichen Gedanken', icon: NotebookPen },
-  { id: 'reminders', title: 'Erinnerungen', description: 'Gebete und Lernziele verwalten', icon: BellRing },
+  { id: 'reminders', title: 'Erinnerungen', description: 'Gebete und Lernziele verwalten', icon: BellRing, destination: 'prayer' },
 ];
 
 const preferenceRows: ProfileRow[] = [
@@ -84,7 +115,13 @@ function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: P
   );
 }
 
-export function MoreScreen({ onBack }: { onBack: () => void }) {
+export function MoreScreen({
+  onBack,
+  onNavigate,
+}: {
+  onBack: () => void;
+  onNavigate: (destination: MoreDestination) => void;
+}) {
   const [modal, setModal] = useState<ModalMode>(null);
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [theme, setTheme] = useState(() => readStored('premium_theme', 'Dunkel'));
@@ -116,8 +153,12 @@ export function MoreScreen({ onBack }: { onBack: () => void }) {
   };
 
   const selectRow = (row: ProfileRow) => {
+    if (row.destination) {
+      onNavigate(row.destination);
+      return;
+    }
     if (row.action) setModal(row.action);
-    else flash(`${row.title} geöffnet`);
+    else flash(`${row.title} ist noch nicht als eigener Bereich verbunden`);
   };
 
   const closeOrApplyModal = () => {
@@ -150,6 +191,29 @@ export function MoreScreen({ onBack }: { onBack: () => void }) {
         <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" fallback={<NurMark />} /></span>
         <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>Möge Allah deine Bemühungen annehmen und dich stets im Guten leiten.</p></div>
         <span className="reference-profile-avatar">{initials}</span>
+      </section>
+
+      <section className="reference-profile-section reference-core-access">
+        <div className="reference-core-access__heading"><span className="reference-profile-section__label">Direktzugriff</span><small>Alle zentralen Bereiche ohne Umwege</small></div>
+        <div className="reference-core-access-grid">
+          {coreShortcuts.map((shortcut, index) => {
+            const Icon = shortcut.icon;
+            return (
+              <motion.button
+                key={shortcut.destination}
+                onClick={() => onNavigate(shortcut.destination)}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: Math.min(index * .025, .18) }}
+                whileTap={{ scale: .98 }}
+              >
+                <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
+                <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
+                <ChevronRight size={16} />
+              </motion.button>
+            );
+          })}
+        </div>
       </section>
 
       <section className="reference-profile-section"><span className="reference-profile-section__label">Deine Inhalte</span><ProfileList rows={journeyRows} onSelect={selectRow} /></section>
