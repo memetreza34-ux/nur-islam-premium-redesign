@@ -12,6 +12,7 @@ const duas = await readFile(resolve(root, 'src/styles/reference-duas-complete.cs
 const names = await readFile(resolve(root, 'src/styles/reference-names-complete.css'), 'utf8');
 const installPrompt = await readFile(resolve(root, 'src/styles/reference-install-prompt.css'), 'utf8');
 const systemLayer = await readFile(resolve(root, 'src/styles/reference-system-layer.css'), 'utf8');
+const prayerReminders = await readFile(resolve(root, 'src/styles/reference-prayer-reminders.css'), 'utf8');
 
 const microImport = "@import './styles/micro-ui-consistency.css';";
 const finalImport = "@import './styles/visual-consistency.css';";
@@ -39,6 +40,8 @@ for (const selector of [
   '.prayer-location-card small',
   '.calendar-weekdays span',
   '.reference-prayer-live-status small',
+  '.reference-prayer-reminder-banner__copy small',
+  '.reference-prayer-reminder-banner__copy em',
   '.reference-mosque-live-status small',
   '.reference-core-access-grid small',
   '.reference-network-status small',
@@ -72,6 +75,7 @@ for (const requirement of [
   '.reference-name-progress__icon',
   '.reference-dua-progress > span:first-child',
   '.reference-install-prompt__action',
+  '.reference-prayer-reminder-banner__open',
   'width: var(--icon-box-medium)',
   'overflow-wrap: anywhere',
   '@media (max-width: 370px)',
@@ -86,8 +90,8 @@ if (!profile.includes('font-size: .51rem') || !assistant.includes('font-size: .4
 if (!quran.includes('font-size: .4rem') || !duas.includes('font-size: .47rem') || !names.includes('font-size: .48rem')) {
   throw new Error('Expected Quran/Dua/Names legacy micro-copy baselines changed; review the centralized overrides.');
 }
-if (!installPrompt.includes('font-size: .46rem') || !installPrompt.includes('font-size: .47rem') || !systemLayer.includes('font-size: .46rem')) {
-  throw new Error('Expected install/network legacy micro-copy baselines changed; review the centralized overrides.');
+if (!installPrompt.includes('font-size: .46rem') || !installPrompt.includes('font-size: .47rem') || !systemLayer.includes('font-size: .46rem') || !prayerReminders.includes('font-size:.49rem')) {
+  throw new Error('Expected global install/network/reminder micro-copy baselines changed; review the centralized overrides.');
 }
 
-console.log('Micro UI consistency verified: secondary text across profile, assistant, prayer, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');
+console.log('Micro UI consistency verified: secondary text across profile, assistant, prayer, reminder banner, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');
