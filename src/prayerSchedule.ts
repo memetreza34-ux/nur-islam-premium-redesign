@@ -26,7 +26,7 @@ export const PRAYER_SCHEDULE_META: PrayerScheduleMeta = {
   country: 'Deutschland',
   locationLabel: 'Berlin, Deutschland',
   sourceLabel: 'Lokaler Demo-Zeitplan',
-  methodLabel: 'Diyanet · Standard-Asr',
+  methodLabel: 'Diyanet (experimentell) · Standard-Asr',
   timezone: 'Europe/Berlin',
   calculationNotice: 'Lokaler Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
 };
