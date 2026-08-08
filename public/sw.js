@@ -1,5 +1,5 @@
-const VISUAL_VERSION = '20260807-base-path';
-const CACHE_NAME = `nur-islam-premium-v10-${VISUAL_VERSION}`;
+const VISUAL_VERSION = '20260808-release-hardening';
+const CACHE_NAME = `nur-islam-premium-v11-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
@@ -72,17 +72,18 @@ self.addEventListener('message', (event) => {
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
-  const targetUrl = event.notification.data?.url || `${self.registration.scope}?open=prayer`;
+  const target = event.notification.data?.target === 'calendar' ? 'calendar' : 'prayer';
+  const targetUrl = event.notification.data?.url || `${self.registration.scope}?open=${target}`;
+  const messageType = target === 'calendar' ? 'OPEN_CALENDAR' : 'OPEN_PRAYER';
 
   event.waitUntil(
     self.clients.matchAll({ type: 'window', includeUncontrolled: true }).then(async (clientList) => {
       const existingClient = clientList.find((client) => client.url.startsWith(self.registration.scope)) || clientList[0];
       if (existingClient) {
         await existingClient.focus();
-        existingClient.postMessage({ type: 'OPEN_PRAYER' });
+        existingClient.postMessage({ type: messageType });
         return;
       }
-
       await self.clients.openWindow(targetUrl);
     }),
   );
@@ -136,7 +137,6 @@ self.addEventListener('fetch', (event) => {
           return response;
         })
         .catch(() => cached || Response.error());
-
       return cached || network;
     }),
   );
