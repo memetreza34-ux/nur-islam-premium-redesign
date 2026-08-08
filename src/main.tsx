@@ -14,6 +14,7 @@ import { resolveAppPath, versionAppPath } from './appPaths';
 import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
 import { startCalendarReminderScheduler } from './calendarReminderService';
 import { startFastingReminderMaintenance } from './fastingReminderService';
+import { startInstallPromptCapture } from './installPromptService';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
@@ -74,6 +75,7 @@ function prepareImmediatePreview() {
   if (manifest) manifest.href = resolveAppPath('manifest.webmanifest');
 }
 
+const stopInstallPromptCapture = startInstallPromptCapture();
 const initialNavigationIntent = consumeInitialNavigationIntent();
 prepareImmediatePreview();
 const stopThemeWatcher = initializeTheme();
@@ -166,7 +168,10 @@ function BootRoot() {
   );
 }
 
-window.addEventListener('pagehide', () => stopThemeWatcher(), { once: true });
+window.addEventListener('pagehide', () => {
+  stopThemeWatcher();
+  stopInstallPromptCapture();
+}, { once: true });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
