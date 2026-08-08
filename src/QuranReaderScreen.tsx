@@ -63,10 +63,12 @@ async function copyText(text: string) {
 
 export function QuranReaderScreen({
   surahNumber,
+  initialAyahNumber = 1,
   onBack,
   onOpenSurah,
 }: {
   surahNumber: number;
+  initialAyahNumber?: number;
   onBack: () => void;
   onOpenSurah: (number: number) => void;
 }) {
@@ -76,7 +78,7 @@ export function QuranReaderScreen({
   const [reloadToken, setReloadToken] = useState(0);
   const [fontSize, setFontSize] = useState(() => readNumber('nur_reader_font_size', 34));
   const [showMeaning, setShowMeaning] = useState(true);
-  const [activeAyah, setActiveAyah] = useState(1);
+  const [activeAyah, setActiveAyah] = useState(() => Math.max(1, Math.floor(initialAyahNumber)));
   const [bookmarks, setBookmarks] = useState(() => readBookmarks(surahNumber));
   const [toast, setToast] = useState<string | null>(null);
 
@@ -86,7 +88,7 @@ export function QuranReaderScreen({
     setError(null);
     setBundle(null);
     setBookmarks(readBookmarks(surahNumber));
-    setActiveAyah(1);
+    setActiveAyah(Math.max(1, Math.floor(initialAyahNumber)));
 
     fetchSurahBundle(surahNumber)
       .then((data) => {
@@ -101,7 +103,19 @@ export function QuranReaderScreen({
       .finally(() => active && setLoading(false));
 
     return () => { active = false; };
-  }, [reloadToken, surahNumber]);
+  }, [initialAyahNumber, reloadToken, surahNumber]);
+
+  useEffect(() => {
+    if (!bundle) return undefined;
+    const targetAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, Math.floor(initialAyahNumber)));
+    setActiveAyah(targetAyah);
+    if (targetAyah <= 1) return undefined;
+
+    const timer = window.setTimeout(() => {
+      document.getElementById(`quran-ayah-${surahNumber}-${targetAyah}`)?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, [bundle, initialAyahNumber, surahNumber]);
 
   useEffect(() => {
     try { localStorage.setItem('nur_reader_font_size', String(fontSize)); } catch { /* optional */ }
@@ -223,6 +237,7 @@ export function QuranReaderScreen({
               const german = bundle.german.ayahs[index]?.text;
               return (
                 <motion.article
+                  id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}
                   key={ayahNumber}
                   className={activeAyah === ayahNumber ? 'reference-reader-verse is-active' : 'reference-reader-verse'}
                   initial={{ opacity: 0, y: 10 }}
