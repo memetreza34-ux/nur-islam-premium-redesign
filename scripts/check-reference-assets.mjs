@@ -92,6 +92,22 @@ for (const name of recoveredAssets) {
   }
 }
 
+const appleTouchPath = resolve(recoveredDirectory, 'nur-logo-emblem.png');
+const appleTouchStats = await stat(appleTouchPath);
+if (appleTouchStats.size < 1000) {
+  throw new Error(`Apple touch icon is unexpectedly small: ${appleTouchStats.size} bytes.`);
+}
+const appleTouch = await readFile(appleTouchPath);
+const pngSignature = Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]);
+if (!appleTouch.subarray(0, 8).equals(pngSignature)) {
+  throw new Error('Apple touch icon is not a valid PNG file.');
+}
+const appleTouchWidth = appleTouch.readUInt32BE(16);
+const appleTouchHeight = appleTouch.readUInt32BE(20);
+if (appleTouchWidth !== 180 || appleTouchHeight !== 180) {
+  throw new Error(`Apple touch icon must stay 180x180, found ${appleTouchWidth}x${appleTouchHeight}.`);
+}
+
 const designBoardDirectory = resolve(root, 'docs/design-references/chat');
 const designBoards = new Map([
   ['01-core-experience.webp', 5598],
@@ -191,8 +207,11 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v13-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must stay on premium v13 for the current reference visual release.');
+if (!serviceWorker.includes(`nur-islam-premium-v14-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must stay on premium v14 for the current reference visual release.');
+}
+if (!serviceWorker.includes("scoped('premium-assets/high-res-objects/nur-logo-emblem.png')")) {
+  throw new Error('Service worker must cache the reference-aligned Apple touch icon in the app shell.');
 }
 
 if (!serviceWorker.includes('meta name="theme-color" content="#001b16"')
@@ -213,5 +232,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v13 reference styling, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, 180x180 Apple touch icon, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v14 reference styling, no obsolete artwork host or global image-hiding CSS.`,
 );
