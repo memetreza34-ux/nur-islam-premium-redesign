@@ -4,11 +4,15 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [app, assistant, reader, legacy, styles, hardeningStyles, calendarService] = await Promise.all([
+const [app, assistant, reader, legacy, collections, duas, names, calendar, styles, hardeningStyles, calendarService] = await Promise.all([
   read('src/App.tsx'),
   read('src/AssistantScreen.tsx'),
   read('src/QuranReaderScreen.tsx'),
   read('src/LegacyFeatureScreens.tsx'),
+  read('src/CollectionsScreen.tsx'),
+  read('src/DuasScreen.tsx'),
+  read('src/NamesScreen.tsx'),
+  read('src/CalendarScreen.tsx'),
   read('src/styles.css'),
   read('src/styles/functional-hardening.css'),
   read('src/calendarReminderService.ts'),
@@ -35,13 +39,62 @@ requireText(app, [
   'openLastRead',
   'quranPercent',
   'Lokaler Quellenmodus',
-], 'Home synchronization');
+  'selectedDuaId',
+  'selectedNameId',
+  'selectedCalendarDate',
+  'openSavedDua',
+  'openSavedName',
+  'openSavedCalendarDate',
+  'initialDuaId={selectedDuaId}',
+  'initialNameId={selectedNameId}',
+  'initialDateKey={selectedCalendarDate}',
+  'onOpenDua={openSavedDua}',
+  'onOpenName={openSavedName}',
+  'onOpenCalendarDate={openSavedCalendarDate}',
+], 'Home and direct navigation');
 forbidText(app, [
   '33 von 100',
   "width: '25%'",
   "target === 'reader' ? onOpenReader(112)",
   "label: 'KI-Assistent'",
-], 'Home synchronization');
+  'onOpenDuas=',
+  'onOpenNames=',
+  'onOpenCalendar=',
+], 'Home and direct navigation');
+
+requireText(collections, [
+  'Array.from({ length: 114 }',
+  'nur_quran_bookmarks_${surahNumber}',
+  'onOpenDua: (id: string) => void',
+  'onOpenName: (id: string) => void',
+  'onOpenCalendarDate: (date: string) => void',
+  'onOpenDua(id)',
+  'onOpenName(id)',
+  'onOpenCalendarDate(date)',
+], 'Collection routing');
+forbidText(collections, [
+  'OFFLINE_QURAN_SURAHS',
+  'onOpenDuas',
+  'onOpenNames',
+  'onOpenCalendar:',
+], 'Collection routing');
+
+requireText(duas, [
+  'initialDuaId?: string | null',
+  'DUA_BY_ID.get(initialDuaId)',
+  'setSelected(dua)',
+], 'Dua direct open');
+requireText(names, [
+  'initialNameId?: string | null',
+  'String(entry.id) === initialNameId',
+  'setSelected(name)',
+], 'Name direct open');
+requireText(calendar, [
+  'initialDateKey?: string | null',
+  'getInitialCalendarPosition',
+  'monthOffset: (target.getFullYear()',
+  'selectedDay: target.getDate()',
+], 'Calendar direct open');
 
 requireText(assistant, [
   'LOCAL_ANSWERS',
@@ -98,4 +151,4 @@ requireText(hardeningStyles, [
   '.reference-standby-stage',
 ], 'Functional design layer');
 
-console.log('Functional hardening verified: Home uses stored progress, assistant answers only from local sourced topics, dead Quran audio UI is removed, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, and standby uses live prayer data with fullscreen support.');
+console.log('Functional hardening verified: Home uses stored progress, collection items route to exact saved content, assistant answers only from local sourced topics, dead Quran audio UI is removed, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, and standby uses live prayer data with fullscreen support.');
