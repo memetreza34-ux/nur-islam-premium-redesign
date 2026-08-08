@@ -1,0 +1,173 @@
+/* Per-slide onboarding art direction. Presentation only. */
+
+.reference-onboarding__brand > .premium-image {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.reference-onboarding__brand > .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 8%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .14), transparent 70%);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.reference-onboarding__brand > .premium-image > img {
+  object-fit: contain !important;
+  filter: drop-shadow(0 8px 13px rgba(0, 0, 0, .3)) saturate(1.02) !important;
+}
+
+/* Slide 1: mosque should feel grounded and architectural. */
+.reference-onboarding__visual--1 > .premium-image {
+  width: 330px !important;
+  height: 258px !important;
+  transform: translateY(14px) !important;
+}
+
+.reference-onboarding__visual--1 > .premium-image > img {
+  object-position: center bottom !important;
+  filter: drop-shadow(0 28px 25px rgba(0, 0, 0, .5)) saturate(.96) contrast(1.04) !important;
+}
+
+/* Slide 2: compass is a circular hero, not a bottom-anchored object. */
+.reference-onboarding__visual--2 > .premium-image {
+  width: 246px !important;
+  height: 246px !important;
+  transform: none !important;
+}
+
+.reference-onboarding__visual--2 > .premium-image::before {
+  inset: -9% !important;
+  border: 1px solid rgba(232, 199, 122, .065);
+  box-shadow: 0 0 0 25px rgba(232, 199, 122, .015), 0 0 0 51px rgba(232, 199, 122, .009);
+  background: radial-gradient(circle, rgba(232, 199, 122, .14), rgba(38, 123, 90, .05) 46%, transparent 70%) !important;
+}
+
+.reference-onboarding__visual--2 > .premium-image > img {
+  object-position: center !important;
+  filter: drop-shadow(0 27px 27px rgba(0, 0, 0, .52)) saturate(1.025) contrast(1.04) !important;
+}
+
+/* Slide 3: Quran is shifted slightly left so the Tasbih reads as a companion object. */
+.reference-onboarding__visual--3 > .premium-image {
+  width: 250px !important;
+  height: 214px !important;
+  transform: translate(-24px, 8px) !important;
+}
+
+.reference-onboarding__visual--3 > .premium-image > img {
+  object-position: center bottom !important;
+  filter: drop-shadow(0 26px 24px rgba(0, 0, 0, .49)) saturate(1.015) contrast(1.03) !important;
+  transform: rotate(-2deg);
+}
+
+.reference-onboarding__visual--3 .reference-onboarding__tasbih {
+  right: -1px !important;
+  bottom: 2px !important;
+  width: 142px !important;
+  height: 142px !important;
+  opacity: .96;
+  transform: rotate(-16deg) !important;
+}
+
+.reference-onboarding__visual--3 .reference-onboarding__tasbih::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 17%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .1), transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.reference-onboarding__visual--3 .reference-onboarding__tasbih img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 20px 19px rgba(0, 0, 0, .45)) saturate(1.03) !important;
+}
+
+/* Keep the content icon clear of the art. */
+.reference-onboarding__visual-icon {
+  z-index: 5 !important;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .reference-onboarding__visual--1:hover > .premium-image > img,
+  .reference-onboarding__visual--3:hover > .premium-image > img {
+    scale: 1.012;
+  }
+
+  .reference-onboarding__visual--2:hover > .premium-image > img {
+    scale: 1.018;
+  }
+}
+
+[data-theme='light'] .reference-onboarding__visual--1 > .premium-image > img,
+[data-theme='light'] .reference-onboarding__visual--2 > .premium-image > img,
+[data-theme='light'] .reference-onboarding__visual--3 > .premium-image > img,
+[data-theme='light'] .reference-onboarding__visual--3 .reference-onboarding__tasbih img {
+  filter: drop-shadow(0 20px 21px rgba(59, 43, 20, .2)) saturate(.96) contrast(1.02) !important;
+}
+
+@media (max-width: 390px) {
+  .reference-onboarding__visual--1 > .premium-image {
+    width: 302px !important;
+    height: 238px !important;
+  }
+
+  .reference-onboarding__visual--2 > .premium-image {
+    width: 224px !important;
+    height: 224px !important;
+  }
+
+  .reference-onboarding__visual--3 > .premium-image {
+    width: 226px !important;
+    height: 196px !important;
+    transform: translate(-20px, 8px) !important;
+  }
+
+  .reference-onboarding__visual--3 .reference-onboarding__tasbih {
+    right: -7px !important;
+    width: 128px !important;
+    height: 128px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-onboarding__visual--1 > .premium-image {
+    width: 278px !important;
+    height: 220px !important;
+  }
+
+  .reference-onboarding__visual--2 > .premium-image {
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .reference-onboarding__visual--3 > .premium-image {
+    width: 208px !important;
+    height: 182px !important;
+    transform: translate(-18px, 7px) !important;
+  }
+
+  .reference-onboarding__visual--3 .reference-onboarding__tasbih {
+    right: -13px !important;
+    width: 116px !important;
+    height: 116px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-onboarding__visual > .premium-image > img,
+  .reference-onboarding__tasbih img {
+    transition: none !important;
+    scale: 1 !important;
+  }
+}
