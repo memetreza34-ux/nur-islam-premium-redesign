@@ -1,4 +1,4 @@
-import { PRAYER_SCHEDULE } from './prayerSchedule';
+import { OBLIGATORY_PRAYER_IDS, PRAYER_SCHEDULE } from './prayerSchedule';
 import type { PrayerScheduleItem } from './prayerSchedule';
 
 export type PrayerReminderDetail = {
@@ -14,6 +14,7 @@ const REMINDER_WINDOW_MINUTES = 1;
 const CHECK_INTERVAL_MS = 20000;
 const APP_BASE = import.meta.env.BASE_URL;
 const PRAYER_TARGET_URL = `${APP_BASE}?open=prayer`;
+const OBLIGATORY_REMINDER_IDS = new Set<string>(OBLIGATORY_PRAYER_IDS);
 
 function dateKey(date = new Date()) {
   const year = date.getFullYear();
@@ -39,6 +40,13 @@ function readStringSet(key: string) {
 
 function writeStringSet(key: string, value: Set<string>) {
   try { localStorage.setItem(key, JSON.stringify([...value])); } catch { /* optional */ }
+}
+
+function readEnabledReminderSet() {
+  const stored = readStringSet(NOTIFICATION_STORAGE_KEY);
+  const valid = new Set([...stored].filter((id) => OBLIGATORY_REMINDER_IDS.has(id)));
+  if (valid.size !== stored.size) writeStringSet(NOTIFICATION_STORAGE_KEY, valid);
+  return valid;
 }
 
 function firedStorageKey(date = new Date()) {
@@ -85,7 +93,7 @@ function emitInAppReminder(prayer: PrayerScheduleItem) {
 }
 
 async function checkPrayerReminders(now = new Date()) {
-  const enabled = readStringSet(NOTIFICATION_STORAGE_KEY);
+  const enabled = readEnabledReminderSet();
   if (!enabled.size) return;
 
   const firedKey = firedStorageKey(now);
@@ -93,7 +101,7 @@ async function checkPrayerReminders(now = new Date()) {
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
 
   for (const prayer of PRAYER_SCHEDULE) {
-    if (!enabled.has(prayer.id) || fired.has(prayer.id)) continue;
+    if (!prayer.obligatory || !enabled.has(prayer.id) || fired.has(prayer.id)) continue;
     const difference = currentMinutes - timeToMinutes(prayer.time);
     if (difference < 0 || difference > REMINDER_WINDOW_MINUTES) continue;
 
