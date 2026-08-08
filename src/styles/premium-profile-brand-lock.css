@@ -11,9 +11,9 @@
   overflow: hidden;
   min-height: 124px !important;
   background:
-    radial-gradient(circle at 7% 22%, rgba(239,205,132,.13), transparent 10rem),
-    radial-gradient(circle at 94% 100%, rgba(51,141,103,.1), transparent 9rem),
-    linear-gradient(145deg, #124c3a 0%, #062a20 59%, #02140f 100%) !important;
+    radial-gradient(circle at 7% 22%, rgba(226, 191, 119, .13), transparent 10rem),
+    radial-gradient(circle at 94% 100%, rgba(13, 87, 67, .1), transparent 9rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 59%, #00120f 100%) !important;
 }
 
 .reference-profile-greeting::before {
@@ -24,9 +24,9 @@
   bottom: -70px;
   width: 180px;
   height: 180px;
-  border: 1px solid rgba(232,199,122,.045);
+  border: 1px solid rgba(226, 191, 119, .045);
   border-radius: 50%;
-  box-shadow: 0 0 0 27px rgba(232,199,122,.012), 0 0 0 53px rgba(232,199,122,.006);
+  box-shadow: 0 0 0 27px rgba(226, 191, 119, .012), 0 0 0 53px rgba(226, 191, 119, .006);
   pointer-events: none;
 }
 
@@ -47,7 +47,7 @@
   z-index: -1;
   inset: -16%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244,218,160,.16), transparent 70%);
+  background: radial-gradient(circle, rgba(242, 215, 154, .16), transparent 70%);
   filter: blur(7px);
   pointer-events: none;
 }
@@ -70,10 +70,10 @@
 .reference-profile-avatar {
   position: relative;
   overflow: hidden;
-  color: #f5dfab !important;
+  color: #f2d79a !important;
   background:
     radial-gradient(circle at 34% 26%, rgba(255,255,255,.07), transparent 55%),
-    linear-gradient(145deg, rgba(232,199,122,.13), rgba(232,199,122,.045)) !important;
+    linear-gradient(145deg, rgba(226, 191, 119, .13), rgba(226, 191, 119, .045)) !important;
 }
 
 /* ---------- Direct access / rows ---------- */
@@ -96,7 +96,7 @@
   right: -42px;
   width: 106px;
   height: 106px;
-  border: 1px solid rgba(232,199,122,.025);
+  border: 1px solid rgba(226, 191, 119, .025);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -116,7 +116,7 @@
   bottom: 0;
   left: 0;
   width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(232,199,122,.16), transparent);
+  background: linear-gradient(180deg, transparent, rgba(226, 191, 119, .16), transparent);
   opacity: 0;
   transition: opacity .18s ease;
 }
@@ -147,9 +147,9 @@
   right: -72px;
   width: 220px;
   height: 220px;
-  border: 1px solid rgba(232,199,122,.06);
+  border: 1px solid rgba(226, 191, 119, .06);
   border-radius: 50%;
-  box-shadow: 0 0 0 31px rgba(232,199,122,.014), 0 0 0 62px rgba(232,199,122,.007);
+  box-shadow: 0 0 0 31px rgba(226, 191, 119, .014), 0 0 0 62px rgba(226, 191, 119, .007);
   pointer-events: none;
 }
 
@@ -167,7 +167,7 @@
 }
 
 .reference-choice--active {
-  box-shadow: inset 3px 0 0 rgba(232,199,122,.42), inset 0 1px 0 rgba(255,255,255,.025) !important;
+  box-shadow: inset 3px 0 0 rgba(226, 191, 119, .42), inset 0 1px 0 rgba(255,255,255,.025) !important;
 }
 
 /* ---------- Account + notes finish ---------- */
@@ -189,9 +189,9 @@
   right: -52px;
   width: 145px;
   height: 145px;
-  border: 1px solid rgba(232,199,122,.03);
+  border: 1px solid rgba(226, 191, 119, .03);
   border-radius: 50%;
-  box-shadow: 0 0 0 22px rgba(232,199,122,.008);
+  box-shadow: 0 0 0 22px rgba(226, 191, 119, .008);
   pointer-events: none;
 }
 
@@ -216,7 +216,7 @@
   bottom: -52px;
   width: 120px;
   height: 120px;
-  border: 1px solid rgba(232,199,122,.025);
+  border: 1px solid rgba(226, 191, 119, .025);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -229,19 +229,19 @@
 /* ---------- Light theme ---------- */
 [data-theme='light'] .reference-profile-greeting {
   /* Keep the identity hero dark; settings below may become ivory. */
-  color: #fff8e9;
+  color: #fff8ea;
   background:
-    radial-gradient(circle at 7% 22%, rgba(239,205,132,.13), transparent 10rem),
-    radial-gradient(circle at 94% 100%, rgba(51,141,103,.1), transparent 9rem),
-    linear-gradient(145deg, #124c3a 0%, #062a20 59%, #02140f 100%) !important;
+    radial-gradient(circle at 7% 22%, rgba(226, 191, 119, .13), transparent 10rem),
+    radial-gradient(circle at 94% 100%, rgba(13, 87, 67, .1), transparent 9rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 59%, #00120f 100%) !important;
 }
 
 [data-theme='light'] .reference-profile-greeting h2 {
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
 }
 
 [data-theme='light'] .reference-profile-greeting p {
-  color: rgba(226,237,230,.76) !important;
+  color: rgba(246, 235, 214, .76) !important;
 }
 
 [data-theme='light'] .reference-profile-greeting__logo .premium-image > img {
