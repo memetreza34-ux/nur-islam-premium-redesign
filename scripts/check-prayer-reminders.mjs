@@ -30,7 +30,15 @@ for (const feature of schedulerFeatures) {
 if (!main.includes('startPrayerReminderScheduler') || !main.includes('<PrayerReminderBanner />')) {
   throw new Error('Prayer reminder scheduler or in-app banner is not started with the app.');
 }
-if (!main.includes('consumeInitialNavigationIntent') || !main.includes("url.searchParams.get('open') !== 'prayer'") || !main.includes("url.searchParams.delete('open')")) {
+if (!main.includes('const sharedPrayerTimesReady = bootstrapSharedPrayerTimes()')
+  || !main.includes('void sharedPrayerTimesReady.finally(() =>')
+  || !main.includes('stopPrayerReminders = startPrayerReminderScheduler()')) {
+  throw new Error('Prayer reminders can start before the initial shared prayer-time schedule is ready.');
+}
+if (!main.includes('consumeInitialNavigationIntent')
+  || !main.includes("const requested = url.searchParams.get('open')")
+  || !main.includes("requested === 'prayer' ? 'prayer'")
+  || !main.includes("url.searchParams.delete('open')")) {
   throw new Error('Closed PWA reminder launch URLs are not consumed and cleaned.');
 }
 if (!main.includes("localStorage.setItem('nur_onboarding_complete', 'true')") || !main.includes("new Event('nur:open-prayer')")) {
@@ -45,7 +53,7 @@ if (!app.includes("window.addEventListener('nur:open-prayer'") || !app.includes(
 if (!pwa.includes("event.data?.type === 'OPEN_PRAYER'") || !pwa.includes("new Event('nur:open-prayer')") || !pwa.includes("nur_onboarding_complete")) {
   throw new Error('PWA bridge does not persist and forward notification clicks.');
 }
-if (!serviceWorker.includes("self.addEventListener('notificationclick'") || !serviceWorker.includes("postMessage({ type: 'OPEN_PRAYER' })") || !serviceWorker.includes("?open=prayer")) {
+if (!serviceWorker.includes("self.addEventListener('notificationclick'") || !serviceWorker.includes("postMessage({ type: messageType })") || !serviceWorker.includes("?open=${target}")) {
   throw new Error('Service worker notification click handling is missing or cannot route a closed PWA.');
 }
 if (!styles.includes('.reference-prayer-reminder-banner') || !styleIndex.includes('reference-prayer-reminders.css')) {
@@ -55,4 +63,4 @@ if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 
-console.log('Prayer reminders verified: scheduler, duplicate protection, PWA notification, closed-app routing, in-app banner, and direct tracker navigation.');
+console.log('Prayer reminders verified: live/fallback schedule bootstrap precedes the scheduler, duplicate protection is active, PWA clicks route correctly, and the in-app banner opens the tracker.');
