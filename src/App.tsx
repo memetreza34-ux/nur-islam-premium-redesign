@@ -467,8 +467,17 @@ export default function App() {
       clearDirectTargets();
       setActiveTab('prayer');
     };
+    const openCalendar = () => {
+      setOnboardingComplete(true);
+      clearDirectTargets();
+      setActiveTab('calendar');
+    };
     window.addEventListener('nur:open-prayer', openPrayerTracker);
-    return () => window.removeEventListener('nur:open-prayer', openPrayerTracker);
+    window.addEventListener('nur:open-calendar', openCalendar);
+    return () => {
+      window.removeEventListener('nur:open-prayer', openPrayerTracker);
+      window.removeEventListener('nur:open-calendar', openCalendar);
+    };
   }, []);
 
   const goHome = () => {
