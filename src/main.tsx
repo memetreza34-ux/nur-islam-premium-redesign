@@ -13,6 +13,7 @@ import App from './App';
 import { resolveAppPath, versionAppPath } from './appPaths';
 import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
 import { startCalendarReminderScheduler } from './calendarReminderService';
+import { startFastingReminderMaintenance } from './fastingReminderService';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
@@ -126,6 +127,7 @@ function BootRoot() {
     let disposed = false;
     let stopPrayerReminders: (() => void) | null = null;
     const stopCalendarReminders = startCalendarReminderScheduler();
+    const stopFastingReminderMaintenance = startFastingReminderMaintenance();
 
     void sharedPrayerTimesReady.finally(() => {
       if (!disposed) stopPrayerReminders = startPrayerReminderScheduler();
@@ -135,6 +137,7 @@ function BootRoot() {
       disposed = true;
       stopPrayerReminders?.();
       stopCalendarReminders();
+      stopFastingReminderMaintenance();
     };
   }, []);
 
