@@ -34,16 +34,23 @@ function isStandalone() {
     || (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
 }
 
+function isIosDevice() {
+  const navigatorWithPlatform = window.navigator as Navigator & { platform?: string; maxTouchPoints?: number };
+  return /iphone|ipad|ipod/i.test(window.navigator.userAgent)
+    || (navigatorWithPlatform.platform === 'MacIntel' && (navigatorWithPlatform.maxTouchPoints ?? 0) > 1);
+}
+
 export function InstallAppPrompt() {
   const [mode, setMode] = useState<InstallMode>(null);
   const [installEvent, setInstallEvent] = useState<BeforeInstallPromptEvent | null>(null);
   const [iosHelp, setIosHelp] = useState(false);
   const [installed, setInstalled] = useState(false);
+  const [installError, setInstallError] = useState<string | null>(null);
 
   useEffect(() => {
     if (isStandalone() || readFlag(DISMISSED_KEY)) return;
 
-    const isIos = /iphone|ipad|ipod/i.test(window.navigator.userAgent);
+    const isIos = isIosDevice();
     let revealTimer: number | undefined;
     let onboardingPoll: number | undefined;
 
@@ -69,12 +76,14 @@ export function InstallAppPrompt() {
 
     const handlePrompt = (event: Event) => {
       event.preventDefault();
+      setInstallError(null);
       setInstallEvent(event as BeforeInstallPromptEvent);
       revealWhenReady('native');
     };
 
     const handleInstalled = () => {
       setInstalled(true);
+      setInstallError(null);
       setInstallEvent(null);
       window.setTimeout(() => setMode(null), 1700);
     };
@@ -92,18 +101,33 @@ export function InstallAppPrompt() {
 
   const dismiss = () => {
     writeFlag(DISMISSED_KEY);
+    setInstallEvent(null);
+    setInstallError(null);
     setMode(null);
   };
 
   const install = async () => {
-    if (!installEvent) return;
-    await installEvent.prompt();
-    const choice = await installEvent.userChoice;
-    if (choice.outcome === 'accepted') {
-      setInstalled(true);
-      window.setTimeout(() => setMode(null), 1500);
+    if (!installEvent) {
+      setInstallError('Der Browser stellt aktuell keinen Installationsdialog bereit. Nutze bei Bedarf das Browser-Menü.');
+      return;
     }
-    setInstallEvent(null);
+
+    const currentEvent = installEvent;
+    setInstallError(null);
+    try {
+      await currentEvent.prompt();
+      const choice = await currentEvent.userChoice;
+      setInstallEvent(null);
+      if (choice.outcome === 'accepted') {
+        setInstalled(true);
+        window.setTimeout(() => setMode(null), 1500);
+      } else {
+        setMode(null);
+      }
+    } catch {
+      setInstallEvent(null);
+      setInstallError('Die Installation konnte nicht gestartet werden. Nutze alternativ die Installationsoption deines Browsers.');
+    }
   };
 
   return (
@@ -123,12 +147,13 @@ export function InstallAppPrompt() {
             <span className="overline">Nur Islam als App</span>
             <strong>{installed ? 'App wurde installiert' : 'Direkt vom Home-Bildschirm öffnen'}</strong>
             <small>{mode === 'ios' ? 'Ohne Browserleiste und mit eigenem App-Symbol.' : 'Schneller Start, Vollbildansicht und Offline-Grundlage.'}</small>
+            {installError ? <em className="reference-install-prompt__error">{installError}</em> : null}
           </div>
 
           {installed ? (
             <span className="reference-install-prompt__success"><CircleCheck size={20} /></span>
           ) : mode === 'native' ? (
-            <button className="reference-install-prompt__action" onClick={install}><Download size={17} /> Installieren</button>
+            <button className="reference-install-prompt__action" onClick={() => void install()} disabled={!installEvent}><Download size={17} /> Installieren</button>
           ) : (
             <button className="reference-install-prompt__action" onClick={() => setIosHelp((value) => !value)}><Share2 size={17} /> Anleitung</button>
           )}
