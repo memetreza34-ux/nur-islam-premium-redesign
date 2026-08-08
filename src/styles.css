@@ -81,6 +81,10 @@
 @import './styles/premium-responsive-accessibility-pass.css';
 @import './styles/premium-state-parallel-pass.css';
 
+/* Final visual art direction: image fit, lighting, depth and effects only. */
+@import './styles/premium-art-direction-lock.css';
+@import './styles/premium-visual-effects-lock.css';
+
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
   position: static;
