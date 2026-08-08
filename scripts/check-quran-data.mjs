@@ -89,16 +89,39 @@ const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 for (const required of [
   "import { QuranReaderScreen } from './QuranReaderScreen';",
   'selectedSurahNumber',
+  'selectedAyahNumber',
   'onOpenReader={openReader}',
+  'initialAyahNumber={selectedAyahNumber}',
 ]) {
   if (!appSource.includes(required)) throw new Error(`Quran app routing is missing: ${required}`);
 }
 
-for (const required of ['fetchSurahs', 'OFFLINE_QURAN_SURAH_SET', 'nur_quran_surah_favorites', 'Alle 114 Suren lesbar', 'CloudDownload', "onOpenReader(surah.number)"]) {
+for (const required of [
+  'fetchSurahs',
+  'OFFLINE_QURAN_SURAH_SET',
+  'nur_quran_surah_favorites',
+  'Alle 114 Suren lesbar',
+  'CloudDownload',
+  'reloadToken',
+  'setReloadToken((value) => value + 1)',
+  'onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)',
+  'onOpenReader(surah.number, 1)',
+  'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
+]) {
   if (!catalogSource.includes(required)) throw new Error(`Quran catalog integration is missing: ${required}`);
 }
 
-for (const required of ['fetchSurahBundle', 'nur_quran_last_read', 'nur_quran_bookmarks_', 'bundle.source', 'translationLabel', 'reloadToken', 'Al Quran Cloud']) {
+for (const required of [
+  'fetchSurahBundle',
+  'nur_quran_last_read',
+  'nur_quran_bookmarks_',
+  'bundle.source',
+  'translationLabel',
+  'reloadToken',
+  'initialAyahNumber?: number',
+  'scrollIntoView',
+  'Al Quran Cloud',
+]) {
   if (!readerSource.includes(required)) throw new Error(`Quran reader integration is missing: ${required}`);
 }
 
@@ -112,4 +135,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, and source labels.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, catalog retry, and exact last-read Ayah resume.`);
