@@ -29,7 +29,7 @@ import { LegacyFeatureScreen, learningLegacyFeatures } from './LegacyFeatureScre
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
 import type { PrayerLessonId } from './PrayerLearningScreen';
-import { PremiumImage, QiblaObject } from './PremiumVisuals';
+import { MosqueScene, PremiumImage } from './PremiumVisuals';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
 const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
@@ -135,7 +135,7 @@ export function LearnScreen({
             <GraduationCap size={18} /> {completedPrayerLessons.size ? `${nextPrayer.label} weiterlernen` : 'Gebetskurs starten'} <ChevronRight size={17} />
           </button>
         </div>
-        <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" fallback={<QiblaObject />} />
+        <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" fallback={<MosqueScene />} />
       </section>
 
       <section className="reference-prayer-learning-actions">
