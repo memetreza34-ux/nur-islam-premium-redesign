@@ -32,6 +32,19 @@ function getDateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+function getInitialCalendarPosition(initialDateKey?: string | null) {
+  const today = new Date();
+  let target = today;
+  if (initialDateKey && /^\d{4}-\d{2}-\d{2}$/.test(initialDateKey)) {
+    const parsed = new Date(`${initialDateKey}T12:00:00`);
+    if (!Number.isNaN(parsed.getTime())) target = parsed;
+  }
+  return {
+    monthOffset: (target.getFullYear() - today.getFullYear()) * 12 + target.getMonth() - today.getMonth(),
+    selectedDay: target.getDate(),
+  };
+}
+
 function readFavorites() {
   try {
     const stored = localStorage.getItem('nur_calendar_favorites');
@@ -95,9 +108,10 @@ function getCalendarEvent(date: Date): CalendarEvent | null {
   return null;
 }
 
-export function CalendarScreen({ onBack }: { onBack: () => void }) {
-  const [monthOffset, setMonthOffset] = useState(0);
-  const [selectedDay, setSelectedDay] = useState(new Date().getDate());
+export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () => void; initialDateKey?: string | null }) {
+  const initialPosition = useMemo(() => getInitialCalendarPosition(initialDateKey), [initialDateKey]);
+  const [monthOffset, setMonthOffset] = useState(initialPosition.monthOffset);
+  const [selectedDay, setSelectedDay] = useState(initialPosition.selectedDay);
   const [favorites, setFavorites] = useState(readFavorites);
   const [entries, setEntries] = useState<PersonalCalendarEntry[]>(readCalendarEntries);
   const [showAdd, setShowAdd] = useState(false);
