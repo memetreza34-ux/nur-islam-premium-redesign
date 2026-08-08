@@ -25,6 +25,9 @@ const serviceFeatures = [
   'calculateDistanceKm',
   'getOpenStreetMapDirectionsUrl',
   'forceRefresh = false',
+  'function normalizeWebsite',
+  'new URL(candidate)',
+  "parsed.protocol !== 'https:' && parsed.protocol !== 'http:'",
 ];
 for (const feature of serviceFeatures) {
   if (!service.includes(feature)) throw new Error(`Mosque service is missing: ${feature}`);
@@ -48,6 +51,9 @@ for (const feature of screenFeatures) {
 if (screen.includes('Beispieldaten im Prototyp') || screen.includes('Demo-Eintrag') || screen.includes('Demo-Zeitplan')) {
   throw new Error('Mosque finder still contains demo data or demo actions.');
 }
+if (service.includes('return `https://${value}`')) {
+  throw new Error('Mosque website normalization still accepts unvalidated external URLs.');
+}
 if (bridge.trim() !== "export { MosqueScreen } from './MosqueScreen';") {
   throw new Error('DiscoveryScreens must route the existing app import to the live MosqueScreen.');
 }
@@ -61,4 +67,4 @@ if (!styleIndex.includes('reference-mosque-live.css')) {
   throw new Error('Live mosque stylesheet is not loaded.');
 }
 
-console.log('Mosque finder verified: live Overpass query, geolocation, distance sorting, cache, privacy notice, OSM navigation, and no demo entries.');
+console.log('Mosque finder verified: live Overpass query, geolocation, distance sorting, cache, privacy notice, OSM navigation, validated HTTP/HTTPS external websites, and no demo entries.');
