@@ -7,8 +7,8 @@
   overflow: hidden;
   min-height: 272px !important;
   background:
-    radial-gradient(circle at 82% 24%, rgba(232,199,122,.14), transparent 13rem),
-    linear-gradient(145deg, #104534 0%, #06291f 61%, #02140f 100%) !important;
+    radial-gradient(circle at 82% 24%, rgba(226,191,119,.14), transparent 13rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 61%, #00120f 100%) !important;
 }
 
 .reference-prayer-learning-hub__glow {
@@ -22,14 +22,14 @@
 
 .reference-prayer-learning-hub__copy h2 {
   max-width: 245px;
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
   text-wrap: balance;
   text-shadow: 0 11px 28px rgba(0,0,0,.28);
 }
 
 .reference-prayer-learning-hub__copy p {
   max-width: 240px;
-  color: rgba(184,204,194,.79) !important;
+  color: rgba(145,168,158,.8) !important;
   text-wrap: pretty;
 }
 
@@ -59,7 +59,7 @@
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.11), rgba(49,139,103,.045) 45%, transparent 72%);
+  background: radial-gradient(circle, rgba(226,191,119,.11), rgba(13,87,67,.045) 45%, transparent 72%);
   filter: blur(10px);
   pointer-events: none;
 }
@@ -71,8 +71,8 @@
   overflow: hidden;
   min-height: 250px !important;
   background:
-    radial-gradient(circle at 83% 24%, rgba(232,199,122,.13), transparent 12rem),
-    linear-gradient(145deg, #104333, #05271e 61%, #02130f) !important;
+    radial-gradient(circle at 83% 24%, rgba(226,191,119,.13), transparent 12rem),
+    linear-gradient(145deg, #0d5743, #07372b 61%, #00120f) !important;
 }
 
 .reference-prayer-course-hero__copy {
@@ -81,12 +81,12 @@
 }
 
 .reference-prayer-course-hero__copy h2 {
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
   text-wrap: balance;
 }
 
 .reference-prayer-course-hero__copy p {
-  color: rgba(183,203,193,.79) !important;
+  color: rgba(145,168,158,.8) !important;
   text-wrap: pretty;
 }
 
@@ -113,8 +113,8 @@
   overflow: hidden;
   min-height: 232px !important;
   background:
-    radial-gradient(circle at 79% 25%, rgba(232,199,122,.13), transparent 12rem),
-    linear-gradient(145deg, #104333, #05271e 62%, #02130f) !important;
+    radial-gradient(circle at 79% 25%, rgba(226,191,119,.13), transparent 12rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
 .reference-guide-hero > div:last-child {
@@ -124,12 +124,12 @@
 
 .reference-guide-hero > div:last-child h2 {
   max-width: 245px;
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
   text-wrap: balance;
 }
 
 .reference-guide-hero > div:last-child p {
-  color: rgba(182,202,192,.78) !important;
+  color: rgba(145,168,158,.79) !important;
 }
 
 .reference-guide-hero > .premium-image {
@@ -170,7 +170,7 @@
   box-shadow:
     0 16px 32px rgba(0,0,0,.23),
     inset 0 1px 0 rgba(255,255,255,.055),
-    0 0 28px rgba(232,199,122,.045) !important;
+    0 0 28px rgba(226,191,119,.045) !important;
 }
 
 .reference-learning-course-hero__glow {
@@ -178,7 +178,7 @@
 }
 
 .reference-learning-course-hero__copy h2 {
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
   text-wrap: balance;
 }
 
@@ -215,7 +215,7 @@
   left: 0;
   width: 2px;
   opacity: 0;
-  background: linear-gradient(180deg, transparent, rgba(232,199,122,.28), transparent);
+  background: linear-gradient(180deg, transparent, rgba(226,191,119,.28), transparent);
   transition: opacity .18s ease;
   pointer-events: none;
 }
@@ -242,20 +242,20 @@
 [data-theme='light'] .reference-prayer-course-hero,
 [data-theme='light'] .reference-guide-hero,
 [data-theme='light'] .reference-learning-course-hero {
-  color: #fff8e9;
+  color: #fff8ea;
 }
 
 [data-theme='light'] .reference-prayer-learning-hub__copy h2,
 [data-theme='light'] .reference-prayer-course-hero__copy h2,
 [data-theme='light'] .reference-guide-hero h2,
 [data-theme='light'] .reference-learning-course-hero h2 {
-  color: #fff8e9 !important;
+  color: #fff8ea !important;
 }
 
 [data-theme='light'] .reference-prayer-learning-hub__copy p,
 [data-theme='light'] .reference-prayer-course-hero__copy p,
 [data-theme='light'] .reference-guide-hero p {
-  color: rgba(226,237,230,.76) !important;
+  color: rgba(246,235,214,.76) !important;
 }
 
 /* ---------- Responsive ---------- */
