@@ -1,6 +1,8 @@
-/* Final reference geometry lock.
-   Keeps the visible mobile composition on the approved 18 / 28 / 42px system
-   even when older feature styles declare smaller local radii. */
+/* Final reference geometry + icon lock.
+   This file is intentionally the LAST imported stylesheet.
+   It keeps the visible mobile composition on the approved 18 / 28 / 42px
+   system and the Lucide icon language on 1.75 rounded strokes even when
+   older feature/art layers declare local overrides. */
 
 :where(
   .welcome-hero,
@@ -89,6 +91,15 @@
 
 .bottom-nav__item > span {
   border-radius: 13px !important;
+}
+
+/* Lucide exposes the `lucide` class on every rendered icon. Keeping this in
+   the final stylesheet means screen-specific art layers cannot silently
+   change icon weight after the reference typography layer. */
+:where(svg.lucide) {
+  stroke-width: 1.75 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
 }
 
 /* Pills, circular progress controls, avatars and round ornaments deliberately
