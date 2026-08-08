@@ -34,6 +34,22 @@
     linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .98)) !important;
 }
 
+/* Shell surfaces are repeated across many screens, so the final layer owns
+   their actual rendered emerald material rather than a previous parallel pass. */
+.app-shell--detail .reference-screen-header {
+  border-color: rgba(226, 191, 119, .14) !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important;
+}
+
+.reference-onboarding__visual {
+  border-color: rgba(242, 215, 154, .35) !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(226, 191, 119, .18), transparent 13rem),
+    radial-gradient(circle at 10% 100%, rgba(13, 87, 67, .1), transparent 10rem),
+    linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important;
+}
+
 :where(
   .welcome-hero,
   .prayer-hero--v2,
@@ -157,6 +173,10 @@
   .reference-assistant-safety,
   .reference-assistant-info-list > span,
   .reference-assistant-input > button[type='submit'],
+  .reference-onboarding__topbar > button,
+  .reference-onboarding__permissions > button,
+  .reference-onboarding__back,
+  .reference-onboarding__actions .gold-button,
   .calendar-modal input,
   .reference-legacy-search,
   .reference-fasting-reminder-settings input,
@@ -171,7 +191,8 @@
   .reference-notes-storage > svg:first-child,
   .reference-assistant-suggestions button > span,
   .reference-chat-message__mark,
-  .reference-chat-message__source
+  .reference-chat-message__source,
+  .reference-onboarding__permissions > button > span:first-child
 ) {
   border-radius: 13px !important;
 }
@@ -195,7 +216,9 @@
 }
 
 .bottom-nav {
+  border-color: rgba(226, 191, 119, .28) !important;
   border-radius: 26px !important;
+  background: linear-gradient(145deg, rgba(0, 27, 22, .96), rgba(0, 18, 15, .98)) !important;
 }
 
 .bottom-nav__item {
@@ -204,6 +227,16 @@
 
 .bottom-nav__item > span {
   border-radius: 13px !important;
+}
+
+.bottom-nav__item--active {
+  color: #f2d79a !important;
+}
+
+.bottom-nav__item--active > span {
+  border-color: rgba(226, 191, 119, .34) !important;
+  background: rgba(226, 191, 119, .12) !important;
+  box-shadow: 0 0 20px rgba(226, 191, 119, .17), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
 }
 
 /* Lucide exposes the `lucide` class on every rendered icon. Keeping this in
