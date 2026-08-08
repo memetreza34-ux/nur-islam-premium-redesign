@@ -32,12 +32,14 @@ alter table public.nur_islam_profiles enable row level security;
 alter table public.nur_islam_user_state enable row level security;
 alter table public.nur_islam_notes enable row level security;
 
-revoke all on public.nur_islam_profiles from anon;
-revoke all on public.nur_islam_user_state from anon;
-revoke all on public.nur_islam_notes from anon;
-grant select, insert, update, delete on public.nur_islam_profiles to authenticated;
-grant select, insert, update, delete on public.nur_islam_user_state to authenticated;
-grant select, insert, update, delete on public.nur_islam_notes to authenticated;
+-- Supabase projects can inherit broad default table privileges. Reset frontend
+-- roles explicitly so authenticated clients get CRUD only; RLS then scopes rows.
+revoke all privileges on table public.nur_islam_profiles from anon, authenticated;
+revoke all privileges on table public.nur_islam_user_state from anon, authenticated;
+revoke all privileges on table public.nur_islam_notes from anon, authenticated;
+grant select, insert, update, delete on table public.nur_islam_profiles to authenticated;
+grant select, insert, update, delete on table public.nur_islam_user_state to authenticated;
+grant select, insert, update, delete on table public.nur_islam_notes to authenticated;
 
 create policy "nur_islam_profiles_select_own" on public.nur_islam_profiles for select to authenticated using ((select auth.uid()) = user_id);
 create policy "nur_islam_profiles_insert_own" on public.nur_islam_profiles for insert to authenticated with check ((select auth.uid()) = user_id);
