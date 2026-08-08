@@ -128,10 +128,17 @@ function BootRoot() {
   }, []);
 
   useEffect(() => {
-    const stopPrayerReminders = startPrayerReminderScheduler();
+    let disposed = false;
+    let stopPrayerReminders: (() => void) | null = null;
     const stopCalendarReminders = startCalendarReminderScheduler();
+
+    void sharedPrayerTimesReady.finally(() => {
+      if (!disposed) stopPrayerReminders = startPrayerReminderScheduler();
+    });
+
     return () => {
-      stopPrayerReminders();
+      disposed = true;
+      stopPrayerReminders?.();
       stopCalendarReminders();
     };
   }, []);
