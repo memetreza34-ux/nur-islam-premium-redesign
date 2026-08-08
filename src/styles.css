@@ -104,6 +104,7 @@
 @import './styles/premium-system-surfaces-lock.css';
 @import './styles/premium-short-viewport-lock.css';
 @import './styles/premium-keyboard-focus-lock.css';
+@import './styles/premium-readable-type-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
