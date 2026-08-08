@@ -75,7 +75,7 @@ for (const requirement of [
 for (const requirement of [
   "resolveAppPath('sw.js')",
   'scope: import.meta.env.BASE_URL',
-  "SERVICE_WORKER_VERSION = '12-20260808-release-hardening'",
+  "SERVICE_WORKER_VERSION = '13-20260808-release-hardening'",
   'updateViaCache: \'none\'',
 ]) {
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
@@ -88,7 +88,7 @@ for (const requirement of [
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
   'caches.match(INDEX_URL)',
-  'nur-islam-premium-v12',
+  'nur-islam-premium-v13',
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);
 }
@@ -100,16 +100,20 @@ if (worker.includes("'/index.html'") || worker.includes("'/premium-assets/") || 
 if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== './') {
   throw new Error('PWA manifest must keep id, start_url, and scope relative to its deployment location.');
 }
+if (manifest.background_color !== '#00120f' || manifest.theme_color !== '#001b16') {
+  throw new Error('PWA manifest colors must match the dark reference palette.');
+}
 if (!Array.isArray(manifest.icons) || manifest.icons.some((icon) => icon.src !== './nur-app-icon.svg')) {
   throw new Error('PWA manifest icons are not relative to the deployment scope.');
 }
 
 for (const requirement of [
+  'meta name="theme-color" content="#001b16"',
   'href="%BASE_URL%manifest.webmanifest"',
   'href="%BASE_URL%nur-app-icon.svg"',
   'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png"',
 ]) {
-  if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
+  if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, current v12 service worker registration, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, current v13 service worker registration, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
