@@ -3,6 +3,7 @@ import {
   ChevronLeft,
   CircleCheck,
   Cloud,
+  CloudUpload,
   LoaderCircle,
   NotebookPen,
   Plus,
@@ -50,9 +51,14 @@ function writeLocalNotes(notes: LocalNote[]) {
   try { localStorage.setItem(LOCAL_KEY, JSON.stringify(notes)); } catch { /* optional */ }
 }
 
+function noteSignature(title: string, body: string) {
+  return `${title.trim().toLocaleLowerCase('de-DE')}\u0000${body.trim()}`;
+}
+
 export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onOpenAccount: () => void }) {
   const [session, setSession] = useState<NurSession | null>(null);
   const [notes, setNotes] = useState<NoteItem[]>([]);
+  const [localNotesPending, setLocalNotesPending] = useState<LocalNote[]>(readLocalNotes);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
@@ -66,12 +72,14 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
     void getSession().then(async (current) => {
       if (!active) return;
       setSession(current);
+      const local = readLocalNotes();
+      setLocalNotesPending(local);
       if (current) {
         const cloud = await listCloudNotes().catch(() => []);
         if (!active) return;
         setNotes(cloud);
       } else {
-        setNotes(readLocalNotes());
+        setNotes(local);
       }
       setBusy(false);
     });
@@ -122,11 +130,41 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         }
         next.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
         setNotes(next);
+        setLocalNotesPending(next);
         writeLocalNotes(next);
         setStatus('Notiz lokal auf diesem Gerät gespeichert.');
       }
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Speichern fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const importLocalNotes = async () => {
+    if (!session || localNotesPending.length === 0 || busy) return;
+    setBusy(true);
+    setStatus(null);
+    try {
+      const cloud = await listCloudNotes();
+      const existing = new Set(cloud.map((note) => noteSignature(note.title, note.body)));
+      let imported = 0;
+      for (const note of localNotesPending) {
+        const cleanTitle = note.title.trim().slice(0, 160) || 'Notiz';
+        const cleanBody = note.body.slice(0, 20000);
+        const signature = noteSignature(cleanTitle, cleanBody);
+        if (existing.has(signature)) continue;
+        await createCloudNote(cleanTitle, cleanBody);
+        existing.add(signature);
+        imported += 1;
+      }
+      const refreshed = await listCloudNotes();
+      setNotes(refreshed);
+      writeLocalNotes([]);
+      setLocalNotesPending([]);
+      setStatus(imported > 0 ? `${imported} lokale Notiz${imported === 1 ? '' : 'en'} in Nur Cloud übernommen.` : 'Lokale Notizen waren bereits in Nur Cloud vorhanden. Lokale Kopien wurden bereinigt.');
+    } catch (reason) {
+      setStatus(reason instanceof Error ? `Import nicht abgeschlossen: ${reason.message}. Lokale Notizen bleiben erhalten.` : 'Import nicht abgeschlossen. Lokale Notizen bleiben erhalten.');
     } finally {
       setBusy(false);
     }
@@ -142,6 +180,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
       } else {
         const next = (notes as LocalNote[]).filter((note) => note.id !== selectedId);
         setNotes(next);
+        setLocalNotesPending(next);
         writeLocalNotes(next);
       }
       beginNew();
@@ -163,8 +202,12 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
 
       <section className="reference-notes-storage">
         {session ? <Cloud size={18} /> : <NotebookPen size={18} />}
-        <span><strong>{session ? 'Cloud-Notizen aktiv' : 'Lokale Notizen'}</strong><small>{session ? 'Diese Notizen liegen in deinem geschützten Konto.' : 'Ohne Konto bleiben Notizen nur auf diesem Gerät.'}</small></span>
-        {!session ? <button onClick={onOpenAccount}>Cloud aktivieren</button> : <CircleCheck size={18} />}
+        <span><strong>{session ? 'Cloud-Notizen aktiv' : 'Lokale Notizen'}</strong><small>{session ? localNotesPending.length ? `${localNotesPending.length} lokale Notiz${localNotesPending.length === 1 ? '' : 'en'} wartet noch auf Import.` : 'Diese Notizen liegen in deinem geschützten Konto.' : 'Ohne Konto bleiben Notizen nur auf diesem Gerät.'}</small></span>
+        {!session
+          ? <button onClick={onOpenAccount}>Cloud aktivieren</button>
+          : localNotesPending.length
+            ? <button onClick={() => void importLocalNotes()} disabled={busy}><CloudUpload size={14} /> Importieren</button>
+            : <CircleCheck size={18} />}
       </section>
 
       {busy && notes.length === 0 ? <div className="reference-notes-loading"><LoaderCircle size={24} className="is-spinning" /> Notizen werden geladen …</div> : null}
