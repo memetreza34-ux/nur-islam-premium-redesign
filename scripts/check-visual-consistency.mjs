@@ -154,6 +154,9 @@ if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
 if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {
   throw new Error('Home daily Ayah card must use the Mihrab artwork from the reference composition.');
 }
+if (!app.includes("onNavigate('prayer')") || !app.includes('<BellRing size={20} />')) {
+  throw new Error('Home header must keep the reference notification icon connected to the real prayer/reminder screen.');
+}
 
 const moreDestinations = ['prayer', 'learn', 'quran', 'dhikr', 'qibla', 'duas', 'names', 'mosques', 'calendar', 'collections'];
 for (const destination of moreDestinations) {
@@ -199,6 +202,7 @@ const allSource = sourceContents.join('\n');
 const forbiddenImageRules = [
   /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
   /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
+  /\.premium-image[^{}]*>\s*img\s*\{[^}]*content\s*:\s*url\s*\(/si,
   /(?:\.welcome-hero__visual|\.reference-mosque-hero\s*>\s*\.premium-image|\.reference-dhikr-counter__tasbih|\.reference-qibla-stage__compass)[^{]*>\s*img[^{]*\{[^}]*opacity\s*:\s*0(?:\s*!important)?\s*;/si,
 ];
 for (const pattern of forbiddenImageRules) {
@@ -236,5 +240,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, reference navigation icon states and labels, Mihrab daily Ayah artwork, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, reference navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
