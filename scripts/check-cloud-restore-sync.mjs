@@ -10,8 +10,13 @@ for (const requirement of [
   'restoreCloudState',
   'dispatchEvent',
   'CLOUD_RESTORED_EVENT',
+  "'nur_prayer_location'",
+  "'nur_mosque_location_v1'",
+  "'nur_install_prompt_dismissed'",
+  "key.startsWith('nur_prayer_reminders_fired_')",
+  "key.startsWith('nur_calendar_reminders_fired_')",
 ]) {
-  if (!backend.includes(requirement)) throw new Error(`Cloud restore event integration is missing: ${requirement}`);
+  if (!backend.includes(requirement)) throw new Error(`Cloud restore/privacy integration is missing: ${requirement}`);
 }
 
 for (const requirement of [
@@ -25,4 +30,4 @@ for (const requirement of [
   if (!theme.includes(requirement)) throw new Error(`Theme restore synchronization is missing: ${requirement}`);
 }
 
-console.log('Cloud restore synchronization verified: backend emits a restore event and the theme layer immediately reapplies restored dark/light/system state with proper listener cleanup.');
+console.log('Cloud restore synchronization verified: restore events reapply theme state immediately, while coordinates, fired-reminder markers and device-specific install-prompt state stay out of cloud backups.');
