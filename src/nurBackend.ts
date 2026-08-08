@@ -63,6 +63,7 @@ const EXCLUDED_BACKUP_KEYS = new Set([
   'nur_mosque_location_v1',
   'nur_mosque_search_cache_v1',
   'nur_install_prompt_dismissed',
+  'nur_onboarding_complete',
 ]);
 
 function safeJsonParse<T>(raw: string | null): T | null {
