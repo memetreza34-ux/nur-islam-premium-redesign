@@ -72,9 +72,14 @@ function readStringSet(key: string) {
   }
 }
 
-function readNumber(key: string, fallback: number) {
+export function readNumber(key: string, fallback: number) {
   try {
-    const value = Number(localStorage.getItem(key));
+    const raw = localStorage.getItem(key);
+    // Number(null) and Number('') are 0, which is finite, so an absent value
+    // used to return 0 instead of the fallback. Every current caller clamps
+    // that back to the same result, but the next one might not.
+    if (raw === null || raw.trim() === '') return fallback;
+    const value = Number(raw);
     return Number.isFinite(value) ? value : fallback;
   } catch {
     return fallback;

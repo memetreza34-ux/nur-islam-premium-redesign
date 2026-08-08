@@ -60,7 +60,7 @@ function writeStringSet(key: string, value: Set<string>) {
   try { localStorage.setItem(key, JSON.stringify([...value])); } catch { /* optional */ }
 }
 
-function readLastLesson(categoryId: LearningCategoryId, lessons: LearningLesson[]) {
+export function readLastLesson(categoryId: LearningCategoryId, lessons: LearningLesson[]) {
   try {
     const candidate = localStorage.getItem(`nur_learning_last_${categoryId}`);
     return lessons.some((lesson) => lesson.id === candidate) ? candidate as string : lessons[0]?.id ?? '';
