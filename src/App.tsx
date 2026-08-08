@@ -6,7 +6,6 @@ import {
   BrainCircuit,
   CalendarDays,
   ChevronRight,
-  CircleCheck,
   Compass,
   Globe2,
   HandHeart,
@@ -204,7 +203,6 @@ function PremiumHome({
   onNavigate: (tab: Tab) => void;
   onOpenReader: (surahNumber: number, ayahNumber?: number) => void;
 }) {
-  const [toast, setToast] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
   const [quranProgress, setQuranProgress] = useState(readHomeQuranProgress);
   const [dhikrTotal, setDhikrTotal] = useState(readDhikrTotalToday);
@@ -259,11 +257,6 @@ function PremiumHome({
     return () => { active = false; };
   }, []);
 
-  const showToast = (message: string) => {
-    setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
-  };
-
   const openLastRead = () => onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber);
 
   return (
@@ -275,10 +268,10 @@ function PremiumHome({
       transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
     >
       <header className="brand-bar">
-        <button className="brand-lockup" onClick={() => showToast('Nur Islam')} aria-label="Nur Islam">
+        <div className="brand-lockup" aria-label="Nur Islam">
           <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="brand-lockup__mark" fallback={<NurMark />} />
           <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
-        </button>
+        </div>
         <div className="brand-bar__actions">
           <button className="icon-button" onClick={() => onNavigate('qibla')} aria-label="Qibla öffnen"><Compass size={20} /></button>
           <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Mehr öffnen"><Menu size={20} /></button>
@@ -400,8 +393,6 @@ function PremiumHome({
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
       </section>
-
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
