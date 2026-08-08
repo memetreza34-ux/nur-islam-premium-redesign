@@ -1,0 +1,30 @@
+#!/bin/sh
+# Refuse to push a red branch.
+#
+# GitHub Actions cannot run while the account's billing is blocked, so this is
+# currently the only automated gate between a broken commit and the shared
+# branch. Both a red merge and a red design pass have reached origin this way.
+#
+# Bypass deliberately with: git push --no-verify
+
+if [ -n "$NUR_SKIP_PREPUSH" ]; then
+  echo "pre-push: skipped via NUR_SKIP_PREPUSH"
+  exit 0
+fi
+
+echo "pre-push: running npm run check ..."
+
+if ! npm run check >/tmp/nur-prepush.log 2>&1; then
+  echo
+  echo "pre-push: BLOCKED — npm run check failed."
+  echo
+  # The first thrown error is the useful one; the tail is usually npm noise.
+  grep -m1 -A3 -iE "^Error|error TS" /tmp/nur-prepush.log || tail -20 /tmp/nur-prepush.log
+  echo
+  echo "Full log: /tmp/nur-prepush.log"
+  echo "Push anyway (only if you know why): git push --no-verify"
+  exit 1
+fi
+
+echo "pre-push: check passed."
+exit 0

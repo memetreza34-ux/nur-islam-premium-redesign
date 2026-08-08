@@ -39,7 +39,17 @@ The intended full validation command is:
 npm run check
 ```
 
-It covers content/data checks, navigation and interaction checks, release and functional-hardening checks, TypeScript (`tsc --noEmit`) and the Vite production build.
+It covers content/data checks, navigation and interaction checks, release and functional-hardening checks, unit tests (`vitest run`), TypeScript (`tsc --noEmit`) and the Vite production build.
+
+### Pre-push hook
+
+While Actions cannot run, a local hook is the only automated gate before the shared branch, and red commits have reached it more than once. Enable it once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+It runs `npm run check` and refuses the push when it fails. Bypass deliberately with `git push --no-verify`.
 
 GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. Therefore the complete `npm run check`, TypeScript build validation and real browser/device QA have **not** yet been certified for this branch. The source-level regression suite has been updated to represent the intended behavior, but it still needs an executable runner before release.
 
