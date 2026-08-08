@@ -43,7 +43,8 @@ const requiredCollectionHandlers = [
   'onClick={onOpenHadith}',
   'onOpenCalendarDate(date)',
   'Array.from({ length: 114 }',
-  'group.bookmarks].sort((a, b) => a - b)',
+  '[...group.bookmarks]',
+  '.sort((a, b) => a - b)',
 ];
 
 for (const fragment of requiredCollectionHandlers) {
