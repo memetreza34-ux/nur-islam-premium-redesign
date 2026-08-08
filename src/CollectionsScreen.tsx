@@ -108,7 +108,7 @@ function readQuranBookmarkGroups() {
 type CollectionsScreenProps = {
   onBack: () => void;
   onOpenQuran: () => void;
-  onOpenReader: (surahNumber: number) => void;
+  onOpenReader: (surahNumber: number, ayahNumber?: number) => void;
   onOpenDua: (id: string) => void;
   onOpenName: (id: string) => void;
   onOpenAyah: () => void;
@@ -181,15 +181,17 @@ export function CollectionsScreen({
             </button>
           </div>
           <div className="reference-collection-rows">
-            {quranBookmarkGroups.map((group) => (
-              <button key={`bookmark-${group.surahNumber}`} onClick={() => onOpenReader(group.surahNumber)}>
-                <span><BookOpen size={18} /></span>
-                <span><strong>{group.label}</strong><small>Sure {group.surahNumber} · {group.bookmarks.size} gespeicherte Ayat</small></span>
-                <ChevronRight size={17} />
-              </button>
-            ))}
-            {[...quranSurahFavorites].map((surahNumber) => (
-              <button key={`favorite-${surahNumber}`} onClick={() => onOpenReader(surahNumber)}>
+            {quranBookmarkGroups.flatMap((group) => [...group.bookmarks]
+              .sort((a, b) => a - b)
+              .map((ayahNumber) => (
+                <button key={`bookmark-${group.surahNumber}-${ayahNumber}`} onClick={() => onOpenReader(group.surahNumber, ayahNumber)} aria-label={`${group.label} Ayah ${ayahNumber} direkt öffnen`}>
+                  <span><BookOpen size={18} /></span>
+                  <span><strong>{group.label} · Ayah {ayahNumber}</strong><small>Sure {group.surahNumber}:{ayahNumber} · gespeichertes Lesezeichen</small></span>
+                  <ChevronRight size={17} />
+                </button>
+              )))}
+            {[...quranSurahFavorites].sort((a, b) => a - b).map((surahNumber) => (
+              <button key={`favorite-${surahNumber}`} onClick={() => onOpenReader(surahNumber, 1)}>
                 <span><Sparkles size={18} /></span>
                 <span><strong>{knownSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span>
                 <ChevronRight size={17} />
@@ -247,7 +249,7 @@ export function CollectionsScreen({
         <section className="reference-collection-section">
           <div className="section-heading"><div><span className="overline">Kalender</span><h2>Gespeicherte Tage</h2></div></div>
           <div className="reference-collection-rows">
-            {[...calendarFavorites].map((date) => (
+            {[...calendarFavorites].sort().map((date) => (
               <button key={date} onClick={() => onOpenCalendarDate(date)}>
                 <span><CalendarDays size={18} /></span>
                 <span><strong>{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${date}T12:00:00`))}</strong><small>Islamischer Kalenderhinweis</small></span>
