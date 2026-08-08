@@ -1,0 +1,382 @@
+/* Parallel visual finish for legacy/utility features.
+   CSS only: no feature logic, storage, scheduling or navigation changes. */
+
+.reference-legacy-screen,
+.reference-standby-screen {
+  --legacy-panel: linear-gradient(145deg, rgba(12, 56, 43, .92), rgba(3, 23, 18, .985));
+  --legacy-border: rgba(232, 199, 122, .16);
+  --legacy-border-strong: rgba(247, 226, 178, .32);
+  --legacy-gold: #e8c77d;
+  --legacy-gold-bright: #f7e2b2;
+  --legacy-text: #fff8e9;
+  --legacy-muted: rgba(171, 191, 181, .78);
+  --legacy-shadow: 0 18px 44px rgba(0,0,0,.23), inset 0 1px 0 rgba(255,255,255,.026);
+  --legacy-shadow-strong: 0 26px 64px rgba(0,0,0,.31), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.reference-legacy-screen {
+  gap: 16px !important;
+}
+
+.reference-legacy-header-icon {
+  border-color: rgba(232,199,122,.18) !important;
+  border-radius: 14px !important;
+  color: var(--legacy-gold-bright) !important;
+  background: rgba(232,199,122,.055) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.reference-legacy-hero {
+  min-height: 225px !important;
+  border-color: var(--legacy-border-strong) !important;
+  border-radius: 29px !important;
+  background:
+    radial-gradient(circle at 84% 18%, rgba(232,199,122,.16), transparent 12rem),
+    radial-gradient(circle at 0% 100%, rgba(55,140,104,.08), transparent 10rem),
+    linear-gradient(150deg, #104936, #05251d 64%, #02130f) !important;
+  box-shadow: var(--legacy-shadow-strong) !important;
+}
+
+.reference-legacy-hero img {
+  filter: drop-shadow(0 22px 22px rgba(0,0,0,.45)) !important;
+}
+
+.reference-legacy-section,
+.reference-quiz-card,
+.reference-quiz-result,
+.reference-legacy-toggle,
+.reference-hadith-library article,
+.reference-fasting-reminder-settings,
+.reference-zakat-calculator {
+  border-color: var(--legacy-border) !important;
+  background: var(--legacy-panel) !important;
+  box-shadow: var(--legacy-shadow) !important;
+}
+
+.reference-legacy-section,
+.reference-quiz-card,
+.reference-quiz-result,
+.reference-fasting-reminder-settings,
+.reference-zakat-calculator {
+  border-radius: 22px !important;
+}
+
+.reference-legacy-count {
+  border: 1px solid rgba(232,199,122,.14);
+  color: var(--legacy-gold-bright) !important;
+  background: rgba(232,199,122,.065) !important;
+}
+
+.reference-legacy-list {
+  gap: 8px !important;
+}
+
+.reference-legacy-list > button,
+.reference-legacy-list--overview > article {
+  min-height: 62px !important;
+  border-color: rgba(232,199,122,.1) !important;
+  border-radius: 16px !important;
+  background: rgba(255,255,255,.018) !important;
+}
+
+.reference-legacy-list > button > span:first-child,
+.reference-legacy-list--overview > article > span {
+  border-color: rgba(232,199,122,.15) !important;
+  border-radius: 11px !important;
+  color: var(--legacy-gold) !important;
+  background: rgba(232,199,122,.05) !important;
+}
+
+.reference-legacy-list > button.is-complete {
+  border-color: rgba(101,208,153,.26) !important;
+  background: rgba(63,170,111,.06) !important;
+}
+
+.reference-legacy-notice {
+  border-color: rgba(232,199,122,.13) !important;
+  border-radius: 17px !important;
+  background: rgba(232,199,122,.035) !important;
+}
+
+/* Fasting */
+.reference-fasting-grid {
+  gap: 9px !important;
+}
+
+.reference-fasting-grid article {
+  min-height: 78px !important;
+  border-color: rgba(232,199,122,.11) !important;
+  border-radius: 17px !important;
+  background: rgba(255,255,255,.019) !important;
+}
+
+.reference-fasting-grid article svg {
+  width: 34px;
+  height: 34px;
+  padding: 8px;
+  border: 1px solid rgba(232,199,122,.14);
+  border-radius: 11px;
+  background: rgba(232,199,122,.045);
+}
+
+.reference-legacy-toggle {
+  min-height: 76px !important;
+  border-radius: 19px !important;
+}
+
+.reference-fasting-reminder-settings {
+  padding: 14px !important;
+}
+
+.reference-fasting-reminder-settings > label,
+.reference-fasting-reminder-settings .reference-legacy-toggle {
+  border-color: rgba(232,199,122,.11) !important;
+  border-radius: 15px !important;
+  background: rgba(255,255,255,.018) !important;
+}
+
+.reference-fasting-reminder-settings input[type='time'] {
+  border-color: rgba(232,199,122,.16) !important;
+  background: rgba(1,16,12,.54) !important;
+}
+
+/* Hadith library */
+.reference-legacy-search {
+  min-height: 52px !important;
+  border-color: rgba(232,199,122,.16) !important;
+  border-radius: 17px !important;
+  background: rgba(4,30,23,.82) !important;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.02);
+}
+
+.reference-legacy-search:focus-within {
+  border-color: rgba(247,226,178,.4) !important;
+  box-shadow: 0 0 0 3px rgba(232,199,122,.055);
+}
+
+.reference-hadith-library {
+  gap: 9px !important;
+}
+
+.reference-hadith-library article {
+  padding: 16px !important;
+  border-radius: 19px !important;
+}
+
+.reference-hadith-library article > button {
+  border-color: rgba(232,199,122,.13) !important;
+  border-radius: 12px !important;
+  background: rgba(232,199,122,.035) !important;
+}
+
+.reference-hadith-library article > button.is-saved {
+  border-color: rgba(247,226,178,.32) !important;
+  color: var(--legacy-gold-bright) !important;
+  background: rgba(232,199,122,.075) !important;
+}
+
+/* Quiz */
+.reference-quiz-card {
+  padding: 19px !important;
+}
+
+.reference-quiz-progress {
+  height: 6px !important;
+  background: rgba(255,255,255,.055) !important;
+}
+
+.reference-quiz-answers {
+  gap: 8px !important;
+}
+
+.reference-quiz-answers > button {
+  min-height: 56px !important;
+  border-color: rgba(232,199,122,.1) !important;
+  border-radius: 15px !important;
+  background: rgba(255,255,255,.018) !important;
+}
+
+.reference-quiz-answers > button > span {
+  border: 1px solid rgba(232,199,122,.13);
+  border-radius: 10px !important;
+  background: rgba(232,199,122,.045) !important;
+}
+
+.reference-quiz-answers > button.is-correct {
+  border-color: rgba(101,208,153,.32) !important;
+  background: rgba(63,170,111,.075) !important;
+}
+
+.reference-quiz-answers > button.is-wrong {
+  border-color: rgba(218,121,100,.31) !important;
+  background: rgba(180,70,53,.065) !important;
+}
+
+.reference-quiz-result {
+  min-height: 270px !important;
+  background:
+    radial-gradient(circle at 50% 10%, rgba(232,199,122,.09), transparent 10rem),
+    var(--legacy-panel) !important;
+}
+
+.reference-quiz-result > span {
+  border: 1px solid rgba(247,226,178,.24);
+  box-shadow: 0 12px 28px rgba(0,0,0,.2);
+}
+
+/* Zakat */
+.reference-zakat-calculator {
+  padding: 20px !important;
+  border-color: var(--legacy-border-strong) !important;
+  background:
+    radial-gradient(circle at 88% 8%, rgba(232,199,122,.105), transparent 11rem),
+    var(--legacy-panel) !important;
+  box-shadow: var(--legacy-shadow-strong) !important;
+}
+
+.reference-zakat-calculator input {
+  min-height: 50px !important;
+  border-color: rgba(232,199,122,.13) !important;
+  border-radius: 15px !important;
+  background: rgba(255,255,255,.018) !important;
+}
+
+.reference-zakat-result > span {
+  border-color: rgba(232,199,122,.12) !important;
+  border-radius: 17px !important;
+  background: rgba(255,255,255,.018) !important;
+}
+
+/* Standby */
+.reference-standby-stage {
+  min-height: 465px !important;
+  border-color: var(--legacy-border-strong) !important;
+  border-radius: 32px !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(232,199,122,.16), transparent 14rem),
+    radial-gradient(circle at 50% 88%, rgba(45,137,98,.14), transparent 18rem),
+    linear-gradient(165deg, #0d4938, #04251c 58%, #010b08) !important;
+  box-shadow: 0 32px 86px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.04) !important;
+}
+
+.reference-standby-stage::before {
+  border-color: rgba(247,226,178,.09) !important;
+  box-shadow: 0 0 0 44px rgba(232,199,122,.021), 0 0 0 92px rgba(232,199,122,.012) !important;
+}
+
+.reference-standby-stage h2 {
+  text-shadow: 0 8px 26px rgba(0,0,0,.25);
+}
+
+.reference-standby-stage .gold-button {
+  min-height: 49px !important;
+  border-radius: 15px !important;
+}
+
+/* Interactive polish */
+@media (hover:hover) and (pointer:fine) {
+  .reference-legacy-list > button:hover,
+  .reference-legacy-toggle:hover,
+  .reference-hadith-library article:hover,
+  .reference-quiz-answers > button:hover,
+  .reference-fasting-grid article:hover {
+    border-color: rgba(247,226,178,.27) !important;
+    transform: translateY(-1px);
+  }
+}
+
+/* Light theme */
+[data-theme='light'] .reference-legacy-screen,
+[data-theme='light'] .reference-standby-screen {
+  --legacy-panel: linear-gradient(145deg, rgba(255,254,249,.99), rgba(243,237,222,.98));
+  --legacy-border: rgba(117,87,37,.14);
+  --legacy-border-strong: rgba(117,87,37,.24);
+  --legacy-gold: #956c28;
+  --legacy-gold-bright: #76521d;
+  --legacy-text: #17382c;
+  --legacy-muted: rgba(57,78,67,.72);
+  --legacy-shadow: 0 16px 36px rgba(61,46,23,.09), inset 0 1px 0 rgba(255,255,255,.78);
+  --legacy-shadow-strong: 0 22px 54px rgba(61,46,23,.12), inset 0 1px 0 rgba(255,255,255,.82);
+}
+
+[data-theme='light'] .reference-legacy-hero,
+[data-theme='light'] .reference-standby-stage {
+  color: #17382c;
+  background:
+    radial-gradient(circle at 85% 0%, rgba(166,122,43,.09), transparent 11rem),
+    linear-gradient(145deg, #fffdf7, #eee5d0) !important;
+}
+
+[data-theme='light'] .reference-legacy-section,
+[data-theme='light'] .reference-quiz-card,
+[data-theme='light'] .reference-quiz-result,
+[data-theme='light'] .reference-legacy-toggle,
+[data-theme='light'] .reference-hadith-library article,
+[data-theme='light'] .reference-fasting-reminder-settings,
+[data-theme='light'] .reference-zakat-calculator {
+  color: #17382c;
+  background: var(--legacy-panel) !important;
+  box-shadow: var(--legacy-shadow) !important;
+}
+
+[data-theme='light'] .reference-legacy-list > button,
+[data-theme='light'] .reference-legacy-list--overview > article,
+[data-theme='light'] .reference-fasting-grid article,
+[data-theme='light'] .reference-quiz-answers > button,
+[data-theme='light'] .reference-fasting-reminder-settings > label,
+[data-theme='light'] .reference-fasting-reminder-settings .reference-legacy-toggle,
+[data-theme='light'] .reference-zakat-calculator input,
+[data-theme='light'] .reference-zakat-result > span {
+  color: #29483d;
+  background: rgba(255,252,243,.72) !important;
+}
+
+[data-theme='light'] .reference-legacy-search {
+  color: #8a6529;
+  background: rgba(255,252,243,.78) !important;
+}
+
+[data-theme='light'] .reference-legacy-search input {
+  color: #17382c !important;
+}
+
+@media (max-width:390px) {
+  .reference-legacy-hero {
+    min-height: 205px !important;
+    border-radius: 25px !important;
+  }
+
+  .reference-zakat-calculator,
+  .reference-quiz-card,
+  .reference-legacy-section {
+    padding: 16px !important;
+  }
+
+  .reference-standby-stage {
+    min-height: 430px !important;
+    border-radius: 27px !important;
+  }
+}
+
+@media (max-width:350px) {
+  .reference-legacy-hero {
+    grid-template-columns: minmax(0,1fr) 80px !important;
+  }
+
+  .reference-legacy-hero img {
+    width: 96px !important;
+  }
+
+  .reference-zakat-result {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+@media (prefers-reduced-motion:reduce) {
+  .reference-legacy-screen button,
+  .reference-legacy-screen article,
+  .reference-standby-screen button {
+    transition: none !important;
+    transform: none !important;
+  }
+}
