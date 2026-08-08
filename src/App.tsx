@@ -174,7 +174,7 @@ function readDhikrTotalToday() {
     if (!raw) return 0;
     const parsed = JSON.parse(raw) as { date?: unknown; counts?: unknown };
     if (parsed.date !== getLocalDateKey() || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return 0;
-    return Object.values(parsed.counts as Record<string, unknown>).reduce((sum, value) => {
+    return Object.values(parsed.counts as Record<string, unknown>).reduce<number>((sum, value) => {
       return sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
     }, 0);
   } catch {

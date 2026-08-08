@@ -26,9 +26,34 @@ const artworkHost = await readFile(resolve(root, 'src/ReferenceArtworkHost.tsx')
 const moreScreen = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 
-const finalImport = "@import './styles/visual-consistency.css';";
-if (!styleIndex.trim().endsWith(finalImport)) {
-  throw new Error('The visual consistency layer must be the final CSS import.');
+const guardrailImport = "@import './styles/visual-consistency.css';";
+// Deliberate override layers that load after the shared guardrails. New late
+// layers must be listed here so they stay a conscious decision, not a silent
+// append that quietly outranks the guardrails.
+const postGuardrailLayers = [
+  'release-hardening.css',
+  'premium-release-design.css',
+  'premium-core-screens.css',
+  'premium-entry-system.css',
+  'premium-visual-lock.css',
+  'premium-flow-lock.css',
+  'premium-depth-lock.css',
+  'functional-hardening.css',
+  'functional-legacy-overview.css',
+];
+const guardrailIndex = styleIndex.indexOf(guardrailImport);
+if (guardrailIndex === -1) {
+  throw new Error('The visual consistency layer is not loaded.');
+}
+if (guardrailIndex < styleIndex.indexOf("@import './styles/touch-target-consistency.css';")) {
+  throw new Error('The visual consistency layer must load after the shared polish layers.');
+}
+const lateLayers = [...styleIndex.slice(guardrailIndex + guardrailImport.length).matchAll(/@import '\.\/styles\/([^']+)';/g)]
+  .map((match) => match[1]);
+for (const layer of lateLayers) {
+  if (!postGuardrailLayers.includes(layer)) {
+    throw new Error(`Unexpected stylesheet after the visual guardrails: ${layer}`);
+  }
 }
 if (!styleIndex.includes("@import './styles/reference-more-hub.css';")) {
   throw new Error('The More hub stylesheet is not loaded.');
@@ -122,7 +147,12 @@ for (const destination of moreDestinations) {
     throw new Error(`More hub destination is missing: ${destination}`);
   }
 }
-if (!app.includes('<MoreScreen onBack={goHome} onNavigate={(destination) => setActiveTab(destination)} />')) {
+const moreScreenUsage = app.match(/<MoreScreen[\s\S]*?\/>/);
+if (!moreScreenUsage) {
+  throw new Error('The More hub screen is not rendered.');
+}
+if (!moreScreenUsage[0].includes('onBack={goHome}')
+  || !/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
   throw new Error('More hub shortcuts are not connected to the central app navigation.');
 }
 

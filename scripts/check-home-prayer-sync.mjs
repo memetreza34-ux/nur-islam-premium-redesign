@@ -25,13 +25,23 @@ for (const requirement of mainRequirements) {
 
 const serviceRequirements = [
   "window.dispatchEvent(new CustomEvent('nur:prayer-times-updated'",
-  'applyPrayerSnapshotToSharedSchedule(snapshot)',
+  'export function applyPrayerSnapshotToSharedSchedule',
   'export function getPrayerDateKey',
   'export async function bootstrapSharedPrayerTimes',
 ];
 
 for (const requirement of serviceRequirements) {
   if (!service.includes(requirement)) throw new Error(`Prayer-time service integration is missing: ${requirement}`);
+}
+
+// The shared schedule has to be refreshed on every bootstrap outcome, otherwise
+// one path silently leaves the home hero on stale times.
+const bootstrapBody = service.slice(service.indexOf('export async function bootstrapSharedPrayerTimes'));
+const appliedSnapshots = [...bootstrapBody.matchAll(/applyPrayerSnapshotToSharedSchedule\((\w+)\)/g)].map((match) => match[1]);
+for (const path of ['cached', 'live', 'fallback']) {
+  if (!appliedSnapshots.includes(path)) {
+    throw new Error(`Shared prayer schedule is not updated on the ${path} bootstrap path.`);
+  }
 }
 
 const homeRequirements = [

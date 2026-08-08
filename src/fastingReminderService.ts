@@ -57,7 +57,7 @@ export function isManagedFastingReminder(entry: PersonalCalendarEntry) {
 }
 
 export function buildRollingFastingReminders(now = new Date()) {
-  const enabled = readJsonValue(FASTING_ENABLED_KEY, false) === true;
+  const enabled = readJsonValue<unknown>(FASTING_ENABLED_KEY, false) === true;
   if (!enabled) return [] as PersonalCalendarEntry[];
 
   const time = readReminderTime();

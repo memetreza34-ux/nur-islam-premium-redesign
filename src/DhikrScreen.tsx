@@ -22,7 +22,7 @@ type DailyDhikrState = {
   counts: Record<string, number>;
 };
 
-const DHIKR_TARGET_BY_KEY = new Map(
+const DHIKR_TARGET_BY_KEY = new Map<string, number>(
   DHIKR_ROUTINES.flatMap((routine) => routine.items.map((item) => [`${routine.id}:${item.id}`, item.target] as const)),
 );
 

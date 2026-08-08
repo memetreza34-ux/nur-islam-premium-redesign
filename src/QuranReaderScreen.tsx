@@ -186,9 +186,13 @@ export function QuranReaderScreen({
     if (!bundle) return;
     const text = `${bundle.arabic.ayahs[index]?.text ?? ''}\n\n${germanAttribution}:\n${bundle.german.ayahs[index]?.text ?? ''}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`;
     try {
-      if (navigator.share) await navigator.share({ title: `${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`, text });
-      else await copyText(text);
-      flash(navigator.share ? 'Ayah geteilt' : 'Ayah kopiert');
+      if (typeof navigator.share === 'function') {
+        await navigator.share({ title: `${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`, text });
+        flash('Ayah geteilt');
+      } else {
+        await copyText(text);
+        flash('Ayah kopiert');
+      }
     } catch (reason) {
       if ((reason as DOMException)?.name !== 'AbortError') flash('Teilen war nicht möglich');
     }

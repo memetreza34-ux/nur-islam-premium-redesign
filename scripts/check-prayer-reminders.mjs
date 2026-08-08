@@ -59,7 +59,10 @@ if (!main.includes('consumeInitialNavigationIntent')
   || !main.includes("url.searchParams.delete('open')")) {
   throw new Error('Closed PWA reminder launch URLs are not consumed and cleaned.');
 }
-if (!main.includes("localStorage.setItem('nur_onboarding_complete', 'true')") || !main.includes("new Event('nur:open-prayer')")) {
+// The launch intent may resolve to more than one destination, so match the
+// dispatched event rather than one hard-coded call shape.
+if (!main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
+  || !/new Event\([^)]*'nur:open-prayer'/.test(main)) {
   throw new Error('Reminder launch does not persist onboarding and open the prayer tracker.');
 }
 if (!systemLayer.includes('PrayerReminderBanner') || !systemLayer.includes("new Event('nur:open-prayer')")) {
