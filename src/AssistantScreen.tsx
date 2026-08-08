@@ -2,10 +2,10 @@ import { FormEvent, useState } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
-  CircleCheck,
   Send,
   ShieldCheck,
   Sparkles,
+  X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { NurMark, PremiumImage } from './PremiumVisuals';
@@ -97,12 +97,7 @@ function findLocalAnswer(question: string): LocalAnswer | null {
 export function AssistantScreen({ onBack }: { onBack: () => void }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
-  const [toast, setToast] = useState<string | null>(null);
-
-  const flash = (message: string) => {
-    setToast(message);
-    window.setTimeout(() => setToast(null), 2100);
-  };
+  const [infoOpen, setInfoOpen] = useState(false);
 
   const answerQuestion = (question: string) => {
     const match = findLocalAnswer(question);
@@ -141,7 +136,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Lokaler Quellenmodus</span><h1>Nur Assistent</h1></div>
-        <button className="icon-button" onClick={() => flash('Nur Antworten mit lokal hinterlegter Quelle werden ausgegeben')} aria-label="Informationen zum Quellenmodus"><ShieldCheck size={20} /></button>
+        <button className="icon-button" onClick={() => setInfoOpen(true)} aria-label="Informationen zum Quellenmodus"><ShieldCheck size={20} /></button>
       </header>
 
       <section className="reference-assistant-greeting">
@@ -180,7 +175,30 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
         <button type="submit" aria-label="Senden" disabled={!input.trim()}><Send size={18} /></button>
       </form>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>
+        {infoOpen ? (
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setInfoOpen(false)}>
+            <motion.section className="reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+              <button className="reference-modal-close" onClick={() => setInfoOpen(false)} aria-label="Schließen"><X size={18} /></button>
+              <span className="reference-assistant-info-modal__icon"><ShieldCheck size={28} /></span>
+              <span className="overline">Quellenmodus</span>
+              <h2>Was dieser Assistent wirklich kann</h2>
+              <p>Er durchsucht keinen freien KI-Dienst und erzeugt keine neuen religiösen Urteile. Antworten kommen nur aus den lokal hinterlegten Themen und zeigen einen Quellen- oder Funktionshinweis.</p>
+              <div className="reference-assistant-info-list">
+                <span><CircleCheckIcon /> Quran 97 und 112</span>
+                <span><CircleCheckIcon /> Gebetszeiten, Qibla und Wudu-Funktionen</span>
+                <span><CircleCheckIcon /> Dhikr- und Dua-Navigation</span>
+                <span><ShieldCheck size={15} /> Unbekannte Fragen werden ausdrücklich nicht beantwortet</span>
+              </div>
+              <button className="gold-button" onClick={() => setInfoOpen(false)}>Verstanden</button>
+            </motion.section>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </motion.main>
   );
+}
+
+function CircleCheckIcon() {
+  return <span className="reference-assistant-info-check" aria-hidden="true">✓</span>;
 }
