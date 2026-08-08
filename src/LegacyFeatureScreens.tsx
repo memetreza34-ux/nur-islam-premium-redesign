@@ -84,7 +84,7 @@ export const serviceLegacyFeatures: LegacyFeatureItem[] = [
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
 
-type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'zakat' | 'standby'>;
+type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby'>;
 
 const featureContent: Record<GenericFeatureId, string[]> = {
   knowledge: ['Grundlagen des Glaubens', 'Anbetung und Alltag', 'Islamische Geschichte', 'Charakter und Verhalten'],
@@ -94,8 +94,14 @@ const featureContent: Record<GenericFeatureId, string[]> = {
   sins: ['Fehler ehrlich erkennen', 'Die Handlung beenden', 'Allah um Vergebung bitten', 'Entschlossen nicht zurückzukehren', 'Rechte anderer wiederherstellen', 'Hoffnung nicht verlieren'],
   ummah: ['Gemeinschaften nach Region', 'Moscheen und Bildungsorte', 'Sprachen und Kulturen', 'Lokale Veranstaltungen'],
   places: ['Al-Masjid al-Haram in Makkah', 'Al-Masjid an-Nabawi in Madinah', 'Al-Masjid al-Aqsa in Jerusalem'],
-  jumuah: ['Ghusl und saubere Kleidung', 'Frühzeitig zur Moschee gehen', 'Khutbah aufmerksam zuhören', 'Salawat und Dua vermehren'],
 };
+
+const jumuahChecklist = [
+  'Ghusl und saubere Kleidung',
+  'Frühzeitig zur Moschee gehen',
+  'Khutbah aufmerksam zuhören',
+  'Salawat und Dua vermehren',
+] as const;
 
 const quizQuestions = [
   { question: 'Wie viele Pflichtgebete gibt es täglich?', answers: ['Drei', 'Vier', 'Fünf', 'Sechs'], correct: 2 },
@@ -456,26 +462,51 @@ function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   );
 }
 
-function GenericFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  const entries = featureContent[feature.id as GenericFeatureId] ?? [];
-  const [completed, setCompleted] = useState<string[]>(() => readStored(`nur_feature_${feature.id}_progress`, []));
+function JumuahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const [completed, setCompleted] = useState<string[]>(() => {
+    const stored = readStored<string[]>('nur_feature_jumuah_progress', []);
+    return stored.filter((entry) => jumuahChecklist.includes(entry as typeof jumuahChecklist[number]));
+  });
 
   const toggle = (entry: string) => {
     const value = completed.includes(entry) ? completed.filter((item) => item !== entry) : [...completed, entry];
     setCompleted(value);
-    writeStored(`nur_feature_${feature.id}_progress`, value);
+    writeStored('nur_feature_jumuah_progress', value);
   };
 
   return (
     <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{completed.length}/{entries.length}</span></div>
-        <div className="reference-legacy-list">
-          {entries.map((entry, index) => <button key={entry} onClick={() => toggle(entry)} className={completed.includes(entry) ? 'is-complete' : ''}><span>{completed.includes(entry) ? <CircleCheck size={19} /> : index + 1}</span><strong>{entry}</strong><ChevronRight size={18} /></button>)}
+        <div className="section-heading"><div><span className="overline">Lokal gespeichert</span><h2>Freitags-Checkliste</h2></div><span className="reference-legacy-count">{completed.length}/{jumuahChecklist.length}</span></div>
+        <div className="reference-legacy-list reference-legacy-list--checklist">
+          {jumuahChecklist.map((entry, index) => (
+            <button key={entry} onClick={() => toggle(entry)} className={completed.includes(entry) ? 'is-complete' : ''} aria-pressed={completed.includes(entry)}>
+              <span>{completed.includes(entry) ? <CircleCheck size={19} /> : index + 1}</span><strong>{entry}</strong><Check size={17} />
+            </button>
+          ))}
         </div>
       </section>
-      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Religiöse oder finanzielle Inhalte ersetzen keine individuelle Auskunft durch eine qualifizierte Stelle.</p></section>
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die Checkliste ist eine persönliche Merkhilfe. Einzelheiten zur Freitagsvorbereitung sollten vor Veröffentlichung fachlich geprüft werden.</p></section>
+    </motion.main>
+  );
+}
+
+function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const entries = featureContent[feature.id as GenericFeatureId] ?? [];
+
+  return (
+    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
+        <div className="reference-legacy-list reference-legacy-list--overview">
+          {entries.map((entry, index) => (
+            <article key={entry}><span>{index + 1}</span><strong>{entry}</strong></article>
+          ))}
+        </div>
+      </section>
+      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Dieser Bereich ist aktuell eine Übersicht ohne vorgetäuschte Detail-Navigation. Vertiefende religiöse Inhalte werden erst als anklickbare Lektionen freigeschaltet, wenn Inhalt und Quellen fachlich geprüft sind.</p></section>
     </motion.main>
   );
 }
@@ -485,7 +516,8 @@ export function LegacyFeatureScreen({ featureId, onBack }: { featureId: LegacyFe
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
   if (featureId === 'fasting') return <FastingFeature feature={feature} onBack={onBack} />;
   if (featureId === 'hadith-library') return <HadithLibraryFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'jumuah') return <JumuahFeature feature={feature} onBack={onBack} />;
   if (featureId === 'zakat') return <ZakatFeature feature={feature} onBack={onBack} />;
   if (featureId === 'standby') return <StandbyFeature feature={feature} onBack={onBack} />;
-  return <GenericFeature feature={feature} onBack={onBack} />;
+  return <GenericOverviewFeature feature={feature} onBack={onBack} />;
 }
