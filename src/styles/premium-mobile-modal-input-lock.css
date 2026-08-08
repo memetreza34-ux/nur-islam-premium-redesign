@@ -15,15 +15,16 @@
 .reference-mosque-detail-modal,
 .reference-prayer-course-complete > section {
   isolation: isolate;
-  border: 1px solid rgba(247, 226, 178, .27) !important;
+  border: 1px solid rgba(226, 191, 119, .27) !important;
+  border-radius: 28px !important;
   background:
-    radial-gradient(circle at 84% 0%, rgba(232, 199, 122, .105), transparent 12rem),
-    radial-gradient(circle at 0% 100%, rgba(52, 139, 103, .07), transparent 10rem),
-    linear-gradient(150deg, #104334, #04231b 64%, #02130f) !important;
+    radial-gradient(circle at 84% 0%, rgba(226, 191, 119, .105), transparent 12rem),
+    radial-gradient(circle at 0% 100%, rgba(13, 87, 67, .07), transparent 10rem),
+    linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important;
   box-shadow:
     0 36px 94px rgba(0, 0, 0, .58),
     inset 0 1px 0 rgba(255, 255, 255, .042),
-    inset 0 -1px 0 rgba(232, 199, 122, .025) !important;
+    inset 0 -1px 0 rgba(226, 191, 119, .025) !important;
   scrollbar-gutter: stable;
 }
 
@@ -51,7 +52,7 @@
   border: 0 !important;
   border-radius: 0;
   opacity: 1;
-  background: linear-gradient(90deg, transparent, rgba(255, 237, 196, .34), transparent);
+  background: linear-gradient(90deg, transparent, rgba(242, 215, 154, .34), transparent);
   box-shadow: none !important;
   filter: none;
   transform: none;
@@ -64,9 +65,10 @@
 .reference-mosque-detail-modal__close,
 .reference-learning-completion-modal__close,
 .prayer-completion-modal__close {
-  border: 1px solid rgba(247, 226, 178, .16) !important;
-  color: #f4ead5 !important;
-  background: rgba(3, 27, 21, .88) !important;
+  border: 1px solid rgba(226, 191, 119, .16) !important;
+  border-radius: 18px !important;
+  color: #f6ebd6 !important;
+  background: rgba(0, 27, 22, .88) !important;
   box-shadow: 0 10px 26px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
 }
 
@@ -79,8 +81,8 @@
 .prayer-completion-backdrop,
 .calendar-modal-backdrop {
   background:
-    radial-gradient(circle at 50% 100%, rgba(27, 90, 66, .1), transparent 22rem),
-    rgba(0, 9, 7, .79) !important;
+    radial-gradient(circle at 50% 100%, rgba(13, 87, 67, .1), transparent 22rem),
+    rgba(0, 18, 15, .79) !important;
   backdrop-filter: blur(16px) saturate(.94);
   -webkit-backdrop-filter: blur(16px) saturate(.94);
 }
@@ -96,6 +98,7 @@
 .reference-legacy-search,
 .reference-fasting-reminder-settings input,
 .reference-zakat-calculator input {
+  border-radius: 18px !important;
   transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
 }
 
@@ -109,8 +112,8 @@
 .reference-legacy-search:focus-within,
 .reference-fasting-reminder-settings input:focus,
 .reference-zakat-calculator input:focus {
-  border-color: rgba(247, 226, 178, .4) !important;
-  box-shadow: 0 0 0 3px rgba(232, 199, 122, .052), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
+  border-color: rgba(226, 191, 119, .4) !important;
+  box-shadow: 0 0 0 3px rgba(226, 191, 119, .052), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
 }
 
 .reference-note-editor > textarea {
@@ -205,7 +208,7 @@
   .learn-modal,
   .reference-mosque-detail-modal,
   .reference-prayer-course-complete > section {
-    border-radius: 20px !important;
+    border-radius: 28px !important;
   }
 }
 
@@ -220,7 +223,7 @@
   .calendar-modal-backdrop {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-    background: rgba(0, 9, 7, .94) !important;
+    background: rgba(0, 18, 15, .94) !important;
   }
 }
 
