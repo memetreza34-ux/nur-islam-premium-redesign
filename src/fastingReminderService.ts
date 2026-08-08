@@ -6,7 +6,7 @@ const FASTING_TIME_KEY = 'nur_fasting_reminder_time';
 const FASTING_REMINDER_ID_BASE = 7_100_000_000_000;
 const FASTING_REMINDER_ID_MAX = 8_100_000_000_000;
 const LOOKAHEAD_DAYS = 45;
-const MAINTENANCE_INTERVAL_MS = 15_000;
+const MAINTENANCE_INTERVAL_MS = 15 * 60_000;
 
 function localDateKey(date: Date) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
