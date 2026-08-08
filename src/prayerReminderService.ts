@@ -10,7 +10,7 @@ export type PrayerReminderDetail = {
 };
 
 const NOTIFICATION_STORAGE_KEY = 'nur_prayer_notifications';
-const REMINDER_WINDOW_MINUTES = 1;
+const REMINDER_WINDOW_MINUTES = 5;
 const CHECK_INTERVAL_MS = 20000;
 const APP_BASE = import.meta.env.BASE_URL;
 const PRAYER_TARGET_URL = `${APP_BASE}?open=prayer`;
@@ -32,7 +32,7 @@ function readStringSet(key: string) {
   try {
     const raw = localStorage.getItem(key);
     const parsed = raw ? JSON.parse(raw) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.map(String) : []);
+    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is string => typeof value === 'string') : []);
   } catch {
     return new Set<string>();
   }
@@ -127,12 +127,14 @@ export function startPrayerReminderScheduler() {
 
   run();
   timer = window.setInterval(run, CHECK_INTERVAL_MS);
+  window.addEventListener('focus', run);
   document.addEventListener('visibilitychange', handleVisibility);
   window.addEventListener('nur:prayer-times-updated', run);
 
   return () => {
     active = false;
     if (timer) window.clearInterval(timer);
+    window.removeEventListener('focus', run);
     document.removeEventListener('visibilitychange', handleVisibility);
     window.removeEventListener('nur:prayer-times-updated', run);
   };
