@@ -61,6 +61,7 @@ import {
   PRAYER_SCHEDULE,
   PRAYER_SCHEDULE_META,
 } from './prayerSchedule';
+import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from './quranService';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
@@ -74,13 +75,21 @@ type QuickAction = {
   target?: Tab;
 };
 
+type HomeQuranProgress = {
+  surahNumber: number;
+  ayahNumber: number;
+  englishName: string;
+  numberOfAyahs: number | null;
+  offline: boolean;
+};
+
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Offline weiterlesen', icon: BookOpen, accent: 'gold', target: 'reader' },
+  { label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen, accent: 'gold', target: 'reader' },
   { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart, accent: 'cream', target: 'learn' },
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
   { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'duas' },
-  { label: 'KI-Assistent', eyebrow: 'Quellenbasierter Modus', icon: MessageCircleQuestion, accent: 'emerald', target: 'assistant' },
+  { label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: MessageCircleQuestion, accent: 'emerald', target: 'assistant' },
 ];
 
 const screensWithBottomNavigation = new Set<Tab>([
@@ -126,6 +135,54 @@ function getHomeGreeting(date: Date) {
   return 'Ein gesegneter Abend für deinen Glauben.';
 }
 
+function getLocalDateKey(date = new Date()) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function readHomeQuranProgress(): HomeQuranProgress {
+  const fallback: HomeQuranProgress = {
+    surahNumber: 112,
+    ayahNumber: 1,
+    englishName: 'Al-Ikhlaas',
+    numberOfAyahs: 4,
+    offline: true,
+  };
+  try {
+    const raw = localStorage.getItem('nur_quran_last_read');
+    if (!raw) return fallback;
+    const parsed = JSON.parse(raw) as { surahNumber?: unknown; ayahNumber?: unknown };
+    const surahNumber = typeof parsed.surahNumber === 'number' && Number.isInteger(parsed.surahNumber) && parsed.surahNumber >= 1 && parsed.surahNumber <= 114
+      ? parsed.surahNumber
+      : fallback.surahNumber;
+    const ayahNumber = typeof parsed.ayahNumber === 'number' && Number.isInteger(parsed.ayahNumber) && parsed.ayahNumber >= 1
+      ? parsed.ayahNumber
+      : 1;
+    return {
+      surahNumber,
+      ayahNumber,
+      englishName: surahNumber === 112 ? 'Al-Ikhlaas' : `Sure ${surahNumber}`,
+      numberOfAyahs: surahNumber === 112 ? 4 : null,
+      offline: OFFLINE_QURAN_SURAH_SET.has(surahNumber),
+    };
+  } catch {
+    return fallback;
+  }
+}
+
+function readDhikrTotalToday() {
+  try {
+    const raw = localStorage.getItem('nur_dhikr_daily_v2');
+    if (!raw) return 0;
+    const parsed = JSON.parse(raw) as { date?: unknown; counts?: unknown };
+    if (parsed.date !== getLocalDateKey() || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return 0;
+    return Object.values(parsed.counts as Record<string, unknown>).reduce((sum, value) => {
+      return sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
+    }, 0);
+  } catch {
+    return 0;
+  }
+}
+
 function PrayerVisual({ visual, size = 14 }: { visual: 'moon' | 'sunrise' | 'sun'; size?: number }) {
   if (visual === 'moon') return <MoonStar size={size} />;
   if (visual === 'sunrise') return <Sunrise size={size} />;
@@ -149,19 +206,65 @@ function PremiumHome({
 }) {
   const [toast, setToast] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
+  const [quranProgress, setQuranProgress] = useState(readHomeQuranProgress);
+  const [dhikrTotal, setDhikrTotal] = useState(readDhikrTotalToday);
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
   const greeting = getHomeGreeting(now);
+  const quranPercent = quranProgress.numberOfAyahs
+    ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
+    : 1;
 
   useEffect(() => {
-    const timer = window.setInterval(() => setNow(new Date()), 30000);
-    return () => window.clearInterval(timer);
+    const syncLocalProgress = () => {
+      setQuranProgress(readHomeQuranProgress());
+      setDhikrTotal(readDhikrTotalToday());
+    };
+    const timer = window.setInterval(() => {
+      setNow(new Date());
+      syncLocalProgress();
+    }, 30000);
+    const handleFocus = () => {
+      setNow(new Date());
+      syncLocalProgress();
+    };
+    window.addEventListener('focus', handleFocus);
+    document.addEventListener('visibilitychange', handleFocus);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', handleFocus);
+      document.removeEventListener('visibilitychange', handleFocus);
+    };
+  }, []);
+
+  useEffect(() => {
+    let active = true;
+    const stored = readHomeQuranProgress();
+    void fetchSurahs()
+      .then((surahs) => {
+        if (!active) return;
+        const surah = surahs.find((item) => item.number === stored.surahNumber);
+        if (!surah) return;
+        setQuranProgress({
+          surahNumber: surah.number,
+          ayahNumber: Math.min(stored.ayahNumber, surah.numberOfAyahs),
+          englishName: surah.englishName,
+          numberOfAyahs: surah.numberOfAyahs,
+          offline: OFFLINE_QURAN_SURAH_SET.has(surah.number),
+        });
+      })
+      .catch(() => {
+        // The localStorage fallback remains useful even if metadata cannot load.
+      });
+    return () => { active = false; };
   }, []);
 
   const showToast = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(null), 2200);
   };
+
+  const openLastRead = () => onOpenReader(quranProgress.surahNumber);
 
   return (
     <motion.main
@@ -232,13 +335,13 @@ function PremiumHome({
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
         <div className="journey-grid">
-          <button className="journey-card journey-card--quran" onClick={() => onOpenReader(112)}>
+          <button className="journey-card journey-card--quran" onClick={openLastRead}>
             <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
-            <span><small>Offline weiterlesen</small><strong>Surah Al-Ikhlaas</strong><em>4 Ayat vollständig verfügbar</em></span>
+            <span><small>{quranProgress.offline ? 'Offline weiterlesen' : 'Zuletzt gelesen'}</small><strong>{quranProgress.englishName}</strong><em>Ayah {quranProgress.ayahNumber}{quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''}</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('dhikr')}>
             <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} />
-            <span><small>Tägliches Ziel</small><strong>Dhikr</strong><em>33 von 100</em></span>
+            <span><small>Heute gezählt</small><strong>Dhikr</strong><em>{dhikrTotal} Wiederholungen</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('qibla')}>
             <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" fallback={<QiblaObject />} />
@@ -254,7 +357,7 @@ function PremiumHome({
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
-              onClick={() => target === 'reader' ? onOpenReader(112) : target ? onNavigate(target) : undefined}
+              onClick={() => target === 'reader' ? openLastRead() : target ? onNavigate(target) : undefined}
               whileTap={{ scale: 0.97 }}
               initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
@@ -268,8 +371,8 @@ function PremiumHome({
 
       <section className="continue-card continue-card--v2 glass-card">
         <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /></div>
-        <div className="continue-card__body"><span className="overline">Offline verfügbar</span><h3>Surah Al-Ikhlaas</h3><p>Arabisch und deutsche Bedeutung · 4 Ayat</p><div className="reading-progress"><span style={{ width: '25%' }} /></div></div>
-        <button className="play-button" aria-label="Weiterlesen" onClick={() => onOpenReader(112)}><Play size={20} fill="currentColor" /></button>
+        <div className="continue-card__body"><span className="overline">{quranProgress.offline ? 'Offline verfügbar' : 'Zuletzt gelesen'}</span><h3>{quranProgress.englishName}</h3><p>Ayah {quranProgress.ayahNumber}{quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''} · {quranPercent}%</p><div className="reading-progress"><span style={{ width: `${quranPercent}%` }} /></div></div>
+        <button className="play-button" aria-label="Weiterlesen" onClick={openLastRead}><Play size={20} fill="currentColor" /></button>
       </section>
 
       <section className="inspiration-grid inspiration-grid--v2">
@@ -284,15 +387,15 @@ function PremiumHome({
 
       <button className="ai-preview" onClick={() => onNavigate('assistant')}>
         <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="ai-preview__mark" fallback={<NurMark />} />
-        <span><small>Nur Assistent</small><strong>Assalamu Alaikum</strong><p>Quellenbasierter Bereich für Fragen zu Glauben und Alltag.</p></span>
+        <span><small>Nur Assistent</small><strong>Lokaler Quellenmodus</strong><p>Antwortet nur auf unterstützte Themen mit sichtbarem Quellenhinweis – ohne erfundene religiöse Antworten.</p></span>
         <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
       </button>
 
       <section className="content-section recommendations">
         <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
         <div className="recommendation-list">
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Montag- und Donnerstagfasten</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Weltkarte</small><strong>Muslime weltweit entdecken</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Übersicht</small><strong>Regionen und Gemeinschaften entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
