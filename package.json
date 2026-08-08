@@ -12,6 +12,7 @@
     "test:watch": "vitest",
     "rls:verify": "node scripts/verify-rls.mjs",
     "assets:check": "node scripts/check-reference-assets.mjs",
+    "image-map:check": "node scripts/check-reference-image-map.mjs",
     "deployment:check": "node scripts/check-deployment-paths.mjs",
     "visual:check": "node scripts/check-visual-consistency.mjs",
     "onboarding:check": "node scripts/check-onboarding-visuals.mjs",
@@ -42,7 +43,7 @@
     "release:check": "node scripts/check-release-hardening.mjs",
     "functional:check": "node scripts/check-functional-hardening.mjs",
     "check-chain:check": "node scripts/check-check-chain.mjs",
-    "check": "npm run assets:check && npm run deployment:check && npm run visual:check && npm run onboarding:check && npm run overlays:check && npm run micro-ui:check && npm run filter-controls:check && npm run touch-targets:check && npm run layout:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run pending-navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run home-prayer-sync:check && npm run learning:check && npm run prayer-reminders:check && npm run reminder-grace:check && npm run fasting-reminders:check && npm run install-prompt:check && npm run cloud-restore-sync:check && npm run static-controls:check && npm run persistence:check && npm run mosques:check && npm run release:check && npm run functional:check && npm run check-chain:check && npm run test && npm run lint && npm run build"
+    "check": "npm run assets:check && npm run image-map:check && npm run deployment:check && npm run visual:check && npm run onboarding:check && npm run overlays:check && npm run micro-ui:check && npm run filter-controls:check && npm run touch-targets:check && npm run layout:check && npm run names:check && npm run duas:check && npm run quran:check && npm run dhikr:check && npm run navigation:check && npm run pending-navigation:check && npm run qibla:check && npm run prayer-learning:check && npm run prayer-times:check && npm run home-prayer-sync:check && npm run learning:check && npm run prayer-reminders:check && npm run reminder-grace:check && npm run fasting-reminders:check && npm run install-prompt:check && npm run cloud-restore-sync:check && npm run static-controls:check && npm run persistence:check && npm run mosques:check && npm run release:check && npm run functional:check && npm run check-chain:check && npm run test && npm run lint && npm run build"
   },
   "dependencies": {
     "@fontsource/amiri": "^5.2.8",
