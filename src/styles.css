@@ -95,6 +95,7 @@
 @import './styles/premium-devotional-art-lock.css';
 @import './styles/premium-worship-art-lock.css';
 @import './styles/premium-discovery-collection-art-lock.css';
+@import './styles/premium-visual-runtime-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
