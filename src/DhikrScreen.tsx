@@ -11,6 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
   SunMedium,
+  X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { DHIKR_ROUTINES, DHIKR_ROUTINE_BY_ID } from './dhikrData';
@@ -20,6 +21,10 @@ type DailyDhikrState = {
   date: string;
   counts: Record<string, number>;
 };
+
+const DHIKR_TARGET_BY_KEY = new Map(
+  DHIKR_ROUTINES.flatMap((routine) => routine.items.map((item) => [`${routine.id}:${item.id}`, item.target] as const)),
+);
 
 function todayKey() {
   const now = new Date();
@@ -34,8 +39,8 @@ function readDailyState(): DailyDhikrState {
     const parsed = JSON.parse(raw) as Partial<DailyDhikrState>;
     if (parsed.date !== fallback.date || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return fallback;
     const counts = Object.fromEntries(Object.entries(parsed.counts as Record<string, unknown>)
-      .filter(([, value]) => typeof value === 'number' && Number.isFinite(value) && value >= 0)
-      .map(([key, value]) => [key, Math.floor(value as number)]));
+      .filter(([key, value]) => DHIKR_TARGET_BY_KEY.has(key) && typeof value === 'number' && Number.isFinite(value) && value >= 0)
+      .map(([key, value]) => [key, Math.min(DHIKR_TARGET_BY_KEY.get(key) ?? 0, Math.floor(value as number))]));
     return { date: parsed.date, counts };
   } catch {
     return fallback;
@@ -62,6 +67,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const [dailyState, setDailyState] = useState(readDailyState);
   const [activeRoutineId, setActiveRoutineId] = useState(readRoutineId);
   const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [statsOpen, setStatsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
 
   const routine = DHIKR_ROUTINE_BY_ID.get(activeRoutineId) ?? DHIKR_ROUTINES[0];
@@ -79,7 +85,14 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
     return { completed, target, progress: Math.round((completed / target) * 100) };
   }, [dailyState.counts, routine]);
 
+  const allRoutineStats = useMemo(() => DHIKR_ROUTINES.map((entry) => {
+    const completed = entry.items.reduce((sum, part) => sum + Math.min(part.target, dailyState.counts[`${entry.id}:${part.id}`] ?? 0), 0);
+    const target = entry.items.reduce((sum, part) => sum + part.target, 0);
+    return { id: entry.id, title: entry.shortTitle, completed, target, progress: target ? Math.round((completed / target) * 100) : 0 };
+  }), [dailyState.counts]);
+
   const totalToday = useMemo(() => Object.values(dailyState.counts).reduce((sum, value) => sum + Math.max(0, value), 0), [dailyState.counts]);
+  const completedRoutines = allRoutineStats.filter((entry) => entry.target > 0 && entry.completed >= entry.target).length;
 
   useEffect(() => {
     try {
@@ -168,7 +181,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Tägliche Erinnerung</span><h1>Dhikr</h1></div>
-        <button className="icon-button" onClick={() => flash(`${totalToday} Wiederholungen heute`)} aria-label="Heutige Statistik"><BarChart3 size={20} /></button>
+        <button className="icon-button" onClick={() => setStatsOpen(true)} aria-label="Heutige Statistik öffnen"><BarChart3 size={20} /></button>
       </header>
 
       <section className="reference-dhikr-counter">
@@ -223,7 +236,34 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <button className="reference-dhikr-routine-reset" onClick={resetRoutine}><ListRestart size={17} /> Gesamte ausgewählte Routine zurücksetzen</button>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>
+        {statsOpen ? (
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setStatsOpen(false)}>
+            <motion.section className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+              <button className="reference-modal-close" onClick={() => setStatsOpen(false)} aria-label="Statistik schließen"><X size={18} /></button>
+              <span className="reference-dhikr-stats-modal__icon"><BarChart3 size={26} /></span>
+              <span className="overline">Heute</span>
+              <h2>Deine Dhikr-Statistik</h2>
+              <div className="reference-dhikr-stats-summary">
+                <span><strong>{totalToday}</strong><small>Wiederholungen</small></span>
+                <span><strong>{completedRoutines}</strong><small>Routinen abgeschlossen</small></span>
+                <span><strong>{routineStats.progress}%</strong><small>{routine.shortTitle}</small></span>
+              </div>
+              <div className="reference-dhikr-stats-list">
+                {allRoutineStats.map((entry) => (
+                  <article key={entry.id}>
+                    <span><strong>{entry.title}</strong><small>{entry.completed} von {entry.target}</small></span>
+                    <div><i style={{ width: `${entry.progress}%` }} /></div>
+                    <em>{entry.progress}%</em>
+                  </article>
+                ))}
+              </div>
+              <small className="reference-dhikr-stats-note">Die Statistik gilt nur für den heutigen lokalen Kalendertag und wird auf diesem Gerät gespeichert.</small>
+            </motion.section>
+          </motion.div>
+        ) : null}
+        {toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}
+      </AnimatePresence>
     </motion.main>
   );
 }
