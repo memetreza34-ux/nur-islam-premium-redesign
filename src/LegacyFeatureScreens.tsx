@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BadgeDollarSign,
+  BellRing,
   BookOpenCheck,
   Bookmark,
   BrainCircuit,
@@ -10,11 +11,14 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  Clock3,
   Globe2,
   HeartHandshake,
   Library,
   MapPinned,
+  Maximize2,
   Milestone,
+  Minimize2,
   MoonStar,
   Mountain,
   Radio,
@@ -26,6 +30,9 @@ import {
   TriangleAlert,
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
+import type { PersonalCalendarEntry } from './calendarReminderService';
+import { formatPrayerRemaining, getNextPrayer } from './prayerSchedule';
 
 export type LegacyFeatureId =
   | 'fasting'
@@ -53,6 +60,8 @@ export type LegacyFeatureItem = {
 
 const VISUAL_REVISION = '8';
 const visual = (path: string) => `${path}?v=${VISUAL_REVISION}`;
+const FASTING_REMINDER_ID_BASE = 7_100_000_000_000;
+const FASTING_REMINDER_ID_MAX = FASTING_REMINDER_ID_BASE + 1_000_000_000;
 
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Hadithe durchsuchen, lesen und lokal speichern.', icon: Library, art: '/premium-assets/high-res-objects/lantern-v2.webp' },
@@ -65,17 +74,17 @@ export const learningLegacyFeatures: LegacyFeatureItem[] = [
 ];
 
 export const serviceLegacyFeatures: LegacyFeatureItem[] = [
-  { id: 'fasting', title: 'Fasten-Assistent', subtitle: 'Freiwillige Fastentage', description: 'Montag, Donnerstag und weiße Tage im Blick behalten.', icon: MoonStar, art: '/premium-assets/high-res-objects/calendar-chip-v2.webp' },
-  { id: 'ummah', title: 'Ummah-Weltkarte', subtitle: 'Muslime weltweit', description: 'Regionen, Orte und Gemeinschaften entdecken.', icon: Globe2, art: '/premium-assets/high-res-objects/dome-v2.webp' },
+  { id: 'fasting', title: 'Fasten-Assistent', subtitle: 'Freiwillige Fastentage', description: 'Montag, Donnerstag und berechnete weiße Tage mit echten lokalen Erinnerungen planen.', icon: MoonStar, art: '/premium-assets/high-res-objects/calendar-chip-v2.webp' },
+  { id: 'ummah', title: 'Ummah-Übersicht', subtitle: 'Muslime weltweit', description: 'Regionen, Orte und Gemeinschaften als Lernübersicht entdecken.', icon: Globe2, art: '/premium-assets/high-res-objects/dome-v2.webp' },
   { id: 'places', title: 'Islamische Orte', subtitle: 'Makkah, Madinah & Al-Aqsa', description: 'Bedeutende Orte mit kompakten Einführungen.', icon: MapPinned, art: '/premium-assets/high-res-objects/mosque-gold-v2.webp' },
-  { id: 'jumuah', title: 'Jumuah', subtitle: 'Freitag vorbereiten', description: 'Checkliste und Erinnerungen für den Freitag.', icon: CalendarHeart, art: '/premium-assets/high-res-objects/mihrab-arch-v2.webp' },
-  { id: 'zakat', title: 'Zakat', subtitle: 'Grundlagen verstehen', description: 'Begriffe, Vermögensarten und Hinweise zur Berechnung.', icon: BadgeDollarSign, art: '/premium-assets/high-res-objects/bookmark-v2.webp' },
-  { id: 'standby', title: 'Gebetsanzeige', subtitle: 'Standby-Modus', description: 'Ruhige Vollbildansicht für das nächste Gebet.', icon: Radio, art: '/premium-assets/high-res-objects/qibla-compass-v2.webp' },
+  { id: 'jumuah', title: 'Jumuah', subtitle: 'Freitag vorbereiten', description: 'Eine lokal gespeicherte Checkliste für die Freitagsvorbereitung.', icon: CalendarHeart, art: '/premium-assets/high-res-objects/mihrab-arch-v2.webp' },
+  { id: 'zakat', title: 'Zakat-Rechner', subtitle: 'Planungshilfe', description: 'Eine transparente 2,5%-Planungsrechnung für eine zuvor fachlich bestimmte Bemessungsgrundlage.', icon: BadgeDollarSign, art: '/premium-assets/high-res-objects/bookmark-v2.webp' },
+  { id: 'standby', title: 'Gebetsanzeige', subtitle: 'Standby-Modus', description: 'Ruhige Live-Ansicht für das nächste Gebet mit optionalem Vollbild.', icon: Radio, art: '/premium-assets/high-res-objects/qibla-compass-v2.webp' },
 ];
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
 
-type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library'>;
+type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'zakat' | 'standby'>;
 
 const featureContent: Record<GenericFeatureId, string[]> = {
   knowledge: ['Grundlagen des Glaubens', 'Anbetung und Alltag', 'Islamische Geschichte', 'Charakter und Verhalten'],
@@ -86,8 +95,6 @@ const featureContent: Record<GenericFeatureId, string[]> = {
   ummah: ['Gemeinschaften nach Region', 'Moscheen und Bildungsorte', 'Sprachen und Kulturen', 'Lokale Veranstaltungen'],
   places: ['Al-Masjid al-Haram in Makkah', 'Al-Masjid an-Nabawi in Madinah', 'Al-Masjid al-Aqsa in Jerusalem'],
   jumuah: ['Ghusl und saubere Kleidung', 'Frühzeitig zur Moschee gehen', 'Khutbah aufmerksam zuhören', 'Salawat und Dua vermehren'],
-  zakat: ['Zakatpflichtige Vermögensarten erfassen', 'Nisab und Besitzdauer prüfen', 'Schulden und verfügbare Mittel einordnen', 'Bei Unsicherheit eine qualifizierte Stelle fragen'],
-  standby: ['Nächstes Gebet groß anzeigen', 'Restzeit ruhig darstellen', 'Bildschirm wach halten', 'Helligkeit reduzieren'],
 };
 
 const quizQuestions = [
@@ -130,6 +137,17 @@ function formatDate(date: Date) {
   return new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: '2-digit', month: 'long' }).format(date);
 }
 
+function dateKey(date: Date) {
+  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function previousDay(date: Date) {
+  const value = new Date(date);
+  value.setHours(12, 0, 0, 0);
+  value.setDate(value.getDate() - 1);
+  return value;
+}
+
 function nextWeekday(target: number) {
   const date = new Date();
   const difference = (target - date.getDay() + 7) % 7 || 7;
@@ -154,6 +172,33 @@ function findNextWhiteDay() {
     if (hijriDay >= 13 && hijriDay <= 15) return { date: candidate, day: hijriDay };
   }
   return null;
+}
+
+function fastingReminderId(date: Date, index: number) {
+  return FASTING_REMINDER_ID_BASE + Number(dateKey(date).replaceAll('-', '')) * 10 + index;
+}
+
+function isFastingReminder(entry: PersonalCalendarEntry) {
+  return entry.id >= FASTING_REMINDER_ID_BASE && entry.id < FASTING_REMINDER_ID_MAX;
+}
+
+function buildFastingReminderEntries(time: string, monday: Date, thursday: Date, whiteDay: ReturnType<typeof findNextWhiteDay>) {
+  const items: Array<{ date: Date; title: string; index: number }> = [
+    { date: monday, title: 'Fasten morgen · Montag', index: 1 },
+    { date: thursday, title: 'Fasten morgen · Donnerstag', index: 2 },
+  ];
+  if (whiteDay) items.push({ date: whiteDay.date, title: `Fasten morgen · ${whiteDay.day}. berechneter Hijri-Tag`, index: 3 });
+
+  return items.map(({ date, title, index }): PersonalCalendarEntry => {
+    const reminderDate = previousDay(date);
+    return {
+      id: fastingReminderId(date, index),
+      date: dateKey(reminderDate),
+      title,
+      time,
+      reminder: true,
+    };
+  });
 }
 
 function FeatureHeader({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
@@ -190,7 +235,6 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
   const next = () => {
     if (selected === null) return;
     if (index === quizQuestions.length - 1) {
-      // Die richtige Antwort wurde bereits in answer() gezählt. Kein doppeltes Addieren.
       const finalScore = Math.min(quizQuestions.length, score);
       const nextBest = Math.max(bestScore, finalScore);
       setBestScore(nextBest);
@@ -250,14 +294,40 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
 
 function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const [reminders, setReminders] = useState(() => readStored('nur_fasting_reminders', false));
+  const [reminderTime, setReminderTime] = useState(() => readStored('nur_fasting_reminder_time', '20:00'));
+  const [status, setStatus] = useState<string | null>(null);
   const nextMonday = useMemo(() => nextWeekday(1), []);
   const nextThursday = useMemo(() => nextWeekday(4), []);
   const whiteDay = useMemo(findNextWhiteDay, []);
 
-  const toggle = () => {
+  useEffect(() => {
+    writeStored('nur_fasting_reminders', reminders);
+    writeStored('nur_fasting_reminder_time', reminderTime);
+    const retained = readCalendarEntries().filter((entry) => !isFastingReminder(entry));
+    const fastingEntries = reminders ? buildFastingReminderEntries(reminderTime, nextMonday, nextThursday, whiteDay) : [];
+    writeCalendarEntries([...retained, ...fastingEntries]);
+  }, [nextMonday, nextThursday, reminderTime, reminders, whiteDay]);
+
+  const toggle = async () => {
     const value = !reminders;
     setReminders(value);
-    writeStored('nur_fasting_reminders', value);
+    if (!value) {
+      setStatus('Fasten-Erinnerungen wurden entfernt.');
+      return;
+    }
+
+    if ('Notification' in window && Notification.permission === 'default') {
+      try {
+        const permission = await Notification.requestPermission();
+        setStatus(permission === 'granted'
+          ? 'Erinnerungen geplant. Systemmeldungen sind freigegeben.'
+          : 'Erinnerungen geplant. Ohne Systemfreigabe erscheinen sie nur bei aktiver App/PWA.');
+        return;
+      } catch {
+        // In-app reminders still work while the app is active.
+      }
+    }
+    setStatus('Erinnerungen für den Vorabend wurden geplant.');
   };
 
   return (
@@ -272,10 +342,14 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
         </div>
       </section>
       <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können je nach Region und lokaler Mondsichtung abweichen.</p></section>
-      <button className="reference-legacy-toggle" onClick={toggle} aria-pressed={reminders}>
-        <span><CalendarHeart size={20} /><span><strong>Fasten-Erinnerungen</strong><small>Lokal auf diesem Gerät speichern</small></span></span>
-        <em className={reminders ? 'is-on' : ''}><i /></em>
-      </button>
+      <section className="reference-fasting-reminder-settings">
+        <label><span><Clock3 size={17} /> Erinnerung am Vorabend</span><input type="time" value={reminderTime} onChange={(event) => setReminderTime(event.target.value)} /></label>
+        <button className="reference-legacy-toggle" onClick={() => void toggle()} aria-pressed={reminders}>
+          <span><BellRing size={20} /><span><strong>Fasten-Erinnerungen</strong><small>{reminders ? `Geplant für ${reminderTime} Uhr` : 'Für die nächsten angezeigten Fastentage'}</small></span></span>
+          <em className={reminders ? 'is-on' : ''}><i /></em>
+        </button>
+        {status ? <small className="reference-fasting-reminder-status">{status}</small> : null}
+      </section>
     </motion.main>
   );
 }
@@ -309,6 +383,79 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
   );
 }
 
+function ZakatFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const [base, setBase] = useState(() => readStored('nur_zakat_base', ''));
+  const [deductions, setDeductions] = useState(() => readStored('nur_zakat_deductions', ''));
+  const baseValue = Math.max(0, Number(base) || 0);
+  const deductionValue = Math.max(0, Number(deductions) || 0);
+  const net = Math.max(0, baseValue - deductionValue);
+  const estimate = net * 0.025;
+
+  useEffect(() => {
+    writeStored('nur_zakat_base', base);
+    writeStored('nur_zakat_deductions', deductions);
+  }, [base, deductions]);
+
+  const money = (value: number) => value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  return (
+    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-zakat-calculator">
+        <span className="overline">Planungsrechnung</span>
+        <h2>2,5%-Schätzung</h2>
+        <p>Trage nur eine Bemessungsgrundlage ein, für die nach deiner verlässlichen fachlichen Prüfung tatsächlich die 2,5%-Berechnung anwendbar ist.</p>
+        <label>Bemessungsgrundlage in €<input type="number" min="0" step="0.01" inputMode="decimal" value={base} onChange={(event) => setBase(event.target.value)} placeholder="0,00" /></label>
+        <label>Berücksichtigte Abzüge in €<input type="number" min="0" step="0.01" inputMode="decimal" value={deductions} onChange={(event) => setDeductions(event.target.value)} placeholder="0,00" /></label>
+        <div className="reference-zakat-result"><span><small>Rechenbasis</small><strong>{money(net)} €</strong></span><span><small>2,5 % davon</small><strong>{money(estimate)} €</strong></span></div>
+      </section>
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Diese Rechnung entscheidet nicht, ob Zakat fällig ist. Nisab, Besitzdauer, Vermögensart, Schulden und weitere Regeln müssen fachlich geprüft werden.</p></section>
+    </motion.main>
+  );
+}
+
+function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const [now, setNow] = useState(() => new Date());
+  const [fullscreen, setFullscreen] = useState(() => Boolean(document.fullscreenElement));
+  const [status, setStatus] = useState<string | null>(null);
+  const nextPrayer = getNextPrayer(now);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNow(new Date()), 15_000);
+    const syncFullscreen = () => setFullscreen(Boolean(document.fullscreenElement));
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('fullscreenchange', syncFullscreen);
+    };
+  }, []);
+
+  const toggleFullscreen = async () => {
+    try {
+      if (document.fullscreenElement) await document.exitFullscreen();
+      else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+      else setStatus('Vollbild wird von diesem Browser nicht unterstützt.');
+    } catch {
+      setStatus('Vollbild konnte nicht gestartet werden.');
+    }
+  };
+
+  return (
+    <motion.main className="screen reference-legacy-screen reference-standby-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-standby-stage">
+        <span className="overline">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
+        <p className="reference-standby-arabic" dir="rtl">{nextPrayer.prayer.arabic}</p>
+        <h2>{nextPrayer.prayer.label}</h2>
+        <strong>{nextPrayer.prayer.time}</strong>
+        <span className="reference-standby-countdown">noch {formatPrayerRemaining(nextPrayer.remaining)}</span>
+        <button className="gold-button" onClick={() => void toggleFullscreen()}>{fullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}{fullscreen ? 'Vollbild beenden' : 'Vollbild starten'}</button>
+      </section>
+      {status ? <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>{status}</p></section> : null}
+    </motion.main>
+  );
+}
+
 function GenericFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const entries = featureContent[feature.id as GenericFeatureId] ?? [];
   const [completed, setCompleted] = useState<string[]>(() => readStored(`nur_feature_${feature.id}_progress`, []));
@@ -338,5 +485,7 @@ export function LegacyFeatureScreen({ featureId, onBack }: { featureId: LegacyFe
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
   if (featureId === 'fasting') return <FastingFeature feature={feature} onBack={onBack} />;
   if (featureId === 'hadith-library') return <HadithLibraryFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'zakat') return <ZakatFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'standby') return <StandbyFeature feature={feature} onBack={onBack} />;
   return <GenericFeature feature={feature} onBack={onBack} />;
 }
