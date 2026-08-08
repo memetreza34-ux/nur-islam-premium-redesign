@@ -1,3 +1,5 @@
+import { resolveAppPath } from './appPaths';
+
 export type PersonalCalendarEntry = {
   id: number;
   date: string;
@@ -10,6 +12,15 @@ export type CalendarReminderDetail = PersonalCalendarEntry & {
   firedAt: string;
 };
 
+type LegacyCalendarEntry = {
+  id?: unknown;
+  date?: unknown;
+  dateKey?: unknown;
+  title?: unknown;
+  time?: unknown;
+  reminder?: unknown;
+};
+
 const STORAGE_KEY = 'nur_calendar_entries';
 const FIRED_PREFIX = 'nur_calendar_reminders_fired_';
 const CHECK_INTERVAL_MS = 20_000;
@@ -18,18 +29,16 @@ function dateKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
 }
 
-function isValidEntry(value: unknown): value is PersonalCalendarEntry {
-  if (!value || typeof value !== 'object') return false;
-  const entry = value as Partial<PersonalCalendarEntry>;
-  return Number.isSafeInteger(entry.id)
-    && typeof entry.date === 'string'
-    && /^\d{4}-\d{2}-\d{2}$/.test(entry.date)
-    && typeof entry.title === 'string'
-    && entry.title.trim().length > 0
-    && entry.title.length <= 120
-    && typeof entry.time === 'string'
-    && /^([01]\d|2[0-3]):[0-5]\d$/.test(entry.time)
-    && typeof entry.reminder === 'boolean';
+function normalizeEntry(value: unknown): PersonalCalendarEntry | null {
+  if (!value || typeof value !== 'object') return null;
+  const entry = value as LegacyCalendarEntry;
+  const date = typeof entry.date === 'string' ? entry.date : typeof entry.dateKey === 'string' ? entry.dateKey : '';
+  const id = typeof entry.id === 'number' && Number.isSafeInteger(entry.id) ? entry.id : Number.NaN;
+  const title = typeof entry.title === 'string' ? entry.title.trim().slice(0, 120) : '';
+  const time = typeof entry.time === 'string' ? entry.time : '';
+  const reminder = typeof entry.reminder === 'boolean' ? entry.reminder : false;
+  if (!Number.isSafeInteger(id) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !title || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return null;
+  return { id, date, title, time, reminder };
 }
 
 export function readCalendarEntries() {
@@ -37,16 +46,17 @@ export function readCalendarEntries() {
     const raw = localStorage.getItem(STORAGE_KEY);
     const parsed = raw ? JSON.parse(raw) as unknown : [];
     if (!Array.isArray(parsed)) return [];
-    const valid = parsed.filter(isValidEntry);
-    if (valid.length !== parsed.length) localStorage.setItem(STORAGE_KEY, JSON.stringify(valid));
-    return valid;
+    const migrated = parsed.map(normalizeEntry).filter((entry): entry is PersonalCalendarEntry => entry !== null);
+    const normalizedJson = JSON.stringify(migrated);
+    if (normalizedJson !== JSON.stringify(parsed)) localStorage.setItem(STORAGE_KEY, normalizedJson);
+    return migrated;
   } catch {
     return [];
   }
 }
 
 export function writeCalendarEntries(entries: PersonalCalendarEntry[]) {
-  const valid = entries.filter(isValidEntry);
+  const valid = entries.map(normalizeEntry).filter((entry): entry is PersonalCalendarEntry => entry !== null);
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(valid)); } catch { /* optional */ }
 }
 
@@ -66,16 +76,20 @@ function writeFiredSet(key: string, values: Set<string>) {
 async function showSystemNotification(entry: PersonalCalendarEntry) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
   const title = `Nur Islam · ${entry.title}`;
+  const targetUrl = new URL(resolveAppPath(''), window.location.origin).toString();
+  const notificationUrl = new URL(targetUrl);
+  notificationUrl.searchParams.set('open', 'calendar');
+  const icon = resolveAppPath('nur-app-icon.svg');
   const options: NotificationOptions = {
     body: `Dein Termin beginnt um ${entry.time} Uhr.`,
-    icon: './nur-app-icon.svg',
-    badge: './nur-app-icon.svg',
+    icon,
+    badge: icon,
     tag: `nur-calendar-${entry.id}-${entry.date}`,
-    data: { target: 'calendar', url: '?open=calendar' },
+    data: { target: 'calendar', url: notificationUrl.toString() },
   };
 
   try {
-    const registration = await navigator.serviceWorker?.getRegistration();
+    const registration = 'serviceWorker' in navigator ? await navigator.serviceWorker.getRegistration() : undefined;
     if (registration) await registration.showNotification(title, options);
     else new Notification(title, options);
   } catch {
