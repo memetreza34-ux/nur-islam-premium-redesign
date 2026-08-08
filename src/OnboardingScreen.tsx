@@ -12,6 +12,9 @@ import {
   Sparkles,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { saveMosqueOrigin } from './mosqueService';
+import { OBLIGATORY_PRAYER_IDS } from './prayerSchedule';
+import { bootstrapSharedPrayerTimes, savePrayerLocation } from './prayerTimesService';
 import {
   MosqueScene,
   NurMark,
@@ -78,14 +81,19 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
 
     setStatus('Standort wird angefragt …');
     navigator.geolocation.getCurrentPosition(
-      () => {
+      (position) => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        savePrayerLocation({ latitude, longitude, label: 'Aktueller Gerätestandort', source: 'device' });
+        saveMosqueOrigin({ latitude, longitude, label: 'Aktueller Gerätestandort', source: 'device' });
         setLocationReady(true);
-        setStatus('Standort wurde für lokale Funktionen freigegeben.');
+        setStatus('Standort gespeichert. Gebetszeiten und Moschee-Suche verwenden jetzt deinen Gerätestandort.');
+        void bootstrapSharedPrayerTimes();
       },
       () => {
-        setStatus('Standort wurde nicht freigegeben. Du kannst ihn später in den Einstellungen ändern.');
+        setStatus('Standort wurde nicht freigegeben. Du kannst ihn später bei Gebetszeiten oder Moscheen aktivieren.');
       },
-      { enableHighAccuracy: false, timeout: 7000, maximumAge: 300000 },
+      { enableHighAccuracy: true, timeout: 9000, maximumAge: 300000 },
     );
   };
 
@@ -98,10 +106,11 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
     try {
       const permission = await Notification.requestPermission();
       if (permission === 'granted') {
+        try { localStorage.setItem('nur_prayer_notifications', JSON.stringify(OBLIGATORY_PRAYER_IDS)); } catch { /* optional */ }
         setNotificationsReady(true);
-        setStatus('Benachrichtigungen wurden freigegeben.');
+        setStatus('Gebetserinnerungen sind für alle fünf Pflichtgebete aktiviert. Sie funktionieren zuverlässig, solange die App oder PWA aktiv ist.');
       } else {
-        setStatus('Benachrichtigungen wurden nicht freigegeben. Du kannst sie später aktivieren.');
+        setStatus('Benachrichtigungen wurden nicht freigegeben. Du kannst sie später bei den Gebetszeiten aktivieren.');
       }
     } catch {
       setStatus('Benachrichtigungen konnten nicht angefragt werden.');
@@ -109,7 +118,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   };
 
   const finish = () => {
-    localStorage.setItem('nur_onboarding_complete', 'true');
+    try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
     onComplete();
   };
 
@@ -160,10 +169,10 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
               </button>
               <button className={notificationsReady ? 'is-ready' : ''} onClick={requestNotifications}>
                 <span><BellRing size={19} /></span>
-                <span><strong>Erinnerungen</strong><small>Für Gebete und persönliche Ziele</small></span>
+                <span><strong>Gebetserinnerungen</strong><small>Für alle fünf Pflichtgebete</small></span>
                 {notificationsReady ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
               </button>
-              <span className="reference-onboarding__privacy"><ShieldCheck size={15} /> Freigaben sind optional und können später geändert werden.</span>
+              <span className="reference-onboarding__privacy"><ShieldCheck size={15} /> Freigaben sind optional. Standortdaten werden für Live-Funktionen an die jeweils ausgewiesenen externen Dienste übermittelt.</span>
             </div>
           ) : null}
         </motion.section>
