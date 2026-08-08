@@ -182,8 +182,12 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
     let systemNotificationAvailable = 'Notification' in window && Notification.permission === 'granted';
     if ('Notification' in window && Notification.permission === 'default') {
-      const permission = await Notification.requestPermission();
-      systemNotificationAvailable = permission === 'granted';
+      try {
+        const permission = await Notification.requestPermission();
+        systemNotificationAvailable = permission === 'granted';
+      } catch {
+        systemNotificationAvailable = false;
+      }
     }
 
     try { localStorage.setItem('nur_prayer_notifications', JSON.stringify(OBLIGATORY_PRAYER_IDS)); } catch { /* optional */ }
