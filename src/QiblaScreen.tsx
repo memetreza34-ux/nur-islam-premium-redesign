@@ -29,7 +29,7 @@ type DeviceOrientationEventConstructorWithPermission = typeof DeviceOrientationE
   requestPermission?: () => Promise<'granted' | 'denied'>;
 };
 
-const KAABA: Coordinates = { latitude: 21.4225, longitude: 39.8262 };
+export const KAABA: Coordinates = { latitude: 21.4225, longitude: 39.8262 };
 
 function toRadians(value: number) {
   return value * Math.PI / 180;
@@ -43,7 +43,7 @@ function normalizeDegrees(value: number) {
   return (value % 360 + 360) % 360;
 }
 
-function calculateBearing(from: Coordinates, to: Coordinates) {
+export function calculateBearing(from: Coordinates, to: Coordinates) {
   const latitudeOne = toRadians(from.latitude);
   const latitudeTwo = toRadians(to.latitude);
   const longitudeDifference = toRadians(to.longitude - from.longitude);
@@ -52,7 +52,7 @@ function calculateBearing(from: Coordinates, to: Coordinates) {
   return normalizeDegrees(toDegrees(Math.atan2(y, x)));
 }
 
-function calculateDistance(from: Coordinates, to: Coordinates) {
+export function calculateDistance(from: Coordinates, to: Coordinates) {
   const earthRadius = 6371;
   const latitudeDifference = toRadians(to.latitude - from.latitude);
   const longitudeDifference = toRadians(to.longitude - from.longitude);
