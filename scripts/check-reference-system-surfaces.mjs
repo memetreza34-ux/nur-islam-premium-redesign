@@ -4,10 +4,11 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [navigation, systemSurfaces, modalInput, runtimeLock, finalLock, styleIndex] = await Promise.all([
+const [navigation, systemSurfaces, modalInput, assistantBase, runtimeLock, finalLock, styleIndex] = await Promise.all([
   read('src/styles/navigation.css'),
   read('src/styles/premium-system-surfaces-lock.css'),
   read('src/styles/premium-mobile-modal-input-lock.css'),
+  read('src/styles/reference-assistant.css'),
   read('src/styles/premium-visual-runtime-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
   read('src/styles.css'),
@@ -56,8 +57,31 @@ requireTokens(modalInput, 'Modal/input surfaces', [
   'rgba(0, 18, 15, .94) !important',
 ]);
 
+requireTokens(assistantBase, 'Assistant base surfaces', [
+  'border-radius: 28px',
+  'linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .98))',
+  'grid-template-columns: minmax(0, 1fr) 44px',
+  'background: rgba(0, 27, 22, .95)',
+  'border-radius: 18px',
+  'border-radius: 13px',
+  'linear-gradient(135deg, #f2d79a, #e2bf77)',
+  'border-radius: 18px 18px 18px 6px',
+  'border-radius: 18px 18px 6px 18px',
+]);
+
 requireTokens(runtimeLock, 'No-blur fallback', [
   'background-color: rgba(0, 27, 22, .97) !important',
+]);
+
+requireTokens(finalLock, 'Account/notes/assistant final utility material', [
+  '--utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99))',
+  '--utility-surface-soft: rgba(7, 55, 43, .82)',
+  '--utility-border: rgba(226, 191, 119, .15)',
+  '--utility-border-strong: rgba(242, 215, 154, .3)',
+  '--utility-text: #fff8ea',
+  '--utility-muted: rgba(145, 168, 158, .79)',
+  '--utility-gold: #e2bf77',
+  'linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important',
 ]);
 
 for (const selector of [
@@ -87,8 +111,23 @@ for (const selector of [
   '.reference-legacy-search',
   '.reference-fasting-reminder-settings input',
   '.reference-zakat-calculator input',
+  '.reference-account-form',
+  '.reference-account-cloud-grid > button',
+  '.reference-account-security',
+  '.reference-account-header-icon',
+  '.reference-account-tabs',
+  '.reference-account-tabs > button',
+  '.reference-account-status',
+  '.reference-account-logout',
+  '.reference-notes-storage > button',
+  '.reference-notes-list > button',
+  '.reference-note-editor__heading > button',
+  '.reference-assistant-suggestions button',
+  '.reference-assistant-safety',
+  '.reference-assistant-info-list > span',
+  ".reference-assistant-input > button[type='submit']",
 ]) {
-  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/modal surface: ${selector}`);
+  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility surface: ${selector}`);
 }
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
@@ -111,4 +150,16 @@ for (const stale of [
   }
 }
 
-console.log('Reference system surfaces verified: navigation, network/reminder/install/toast/error, modals, inputs and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28 geometry.');
+for (const staleAssistant of [
+  'grid-template-columns: 1fr 38px 42px',
+  'border-radius: 15px',
+  'border-radius: 12px',
+  'background: rgba(5, 29, 23, .95)',
+  'linear-gradient(135deg, #efd394, #c9953a)',
+]) {
+  if (assistantBase.includes(staleAssistant)) {
+    throw new Error(`Assistant base layer still contains a stale pre-reference value: ${staleAssistant}`);
+  }
+}
+
+console.log('Reference system surfaces verified: navigation, system banners, modals, inputs, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry.');
