@@ -9,7 +9,6 @@ import {
   CloudDownload,
   Copy,
   Database,
-  Headphones,
   LoaderCircle,
   Minus,
   Plus,
@@ -184,7 +183,7 @@ export function QuranReaderScreen({
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zum Quran"><ChevronLeft size={20} /></button>
         <div><span className="overline">{readerLabel}</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
-        <button className="icon-button" onClick={() => flash('Schrift und Bedeutung lassen sich unterhalb anpassen')} aria-label="Leseeinstellungen"><Settings2 size={20} /></button>
+        <button className="icon-button" onClick={() => flash('Schriftgröße und deutsche Bedeutung kannst du direkt unter dem Suren-Kopf anpassen')} aria-label="Leseeinstellungen"><Settings2 size={20} /></button>
       </header>
 
       {loading ? (
@@ -204,8 +203,7 @@ export function QuranReaderScreen({
           </section>
 
           <section className="reference-reader-controls">
-            <button onClick={() => flash('Audio wird erst mit einer geprüften Rezitationsquelle aktiviert')}><Headphones size={18} /><span>Audio folgt</span></button>
-            <button onClick={() => setShowMeaning((value) => !value)} className={showMeaning ? 'is-active' : ''}><BookOpen size={18} /><span>Bedeutung</span></button>
+            <button onClick={() => setShowMeaning((value) => !value)} className={showMeaning ? 'is-active' : ''} aria-pressed={showMeaning}><BookOpen size={18} /><span>{showMeaning ? 'Bedeutung an' : 'Bedeutung aus'}</span></button>
             <div className="reference-font-control"><button onClick={() => setFontSize((value) => Math.max(26, value - 2))} aria-label="Schrift verkleinern"><Minus size={16} /></button><strong>Aa</strong><button onClick={() => setFontSize((value) => Math.min(48, value + 2))} aria-label="Schrift vergrößern"><Plus size={16} /></button></div>
           </section>
 
