@@ -101,12 +101,6 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     sensorTimeoutRef.current = null;
   }, []);
 
-  const removeOrientationListeners = useCallback(() => {
-    window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
-    window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const handleOrientation = useCallback((rawEvent: Event) => {
     const event = rawEvent as CompassOrientationEvent;
     let nextHeading: number | null = null;
