@@ -111,6 +111,14 @@ if (!base.includes('button:focus-visible') || !guardrails.includes('a:focus-visi
 if (!navigation.includes('.bottom-nav') || !viewport.includes('env(safe-area-inset-bottom)')) {
   throw new Error('Bottom navigation or safe-area handling is missing.');
 }
+for (const requirement of [
+  'color: rgba(246, 235, 214, 0.64)',
+  'color: #f2d79a',
+  'vector-effect: non-scaling-stroke',
+  'box-shadow: 0 0 20px rgba(226, 191, 119, 0.17)',
+]) {
+  if (!navigation.includes(requirement)) throw new Error(`Reference navigation icon state is missing: ${requirement}`);
+}
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');
 }
@@ -131,14 +139,20 @@ for (const requirement of requiredImageBehavior) {
 }
 
 const navigationItems = [
-  "{ id: 'home', label: 'Home'",
+  "{ id: 'home', label: 'Start'",
   "{ id: 'prayer', label: 'Gebete'",
   "{ id: 'calendar', label: 'Kalender'",
-  "{ id: 'learn', label: 'Lernen'",
+  "{ id: 'learn', label: 'Islam verstehen'",
   "{ id: 'profile', label: 'Mehr'",
 ];
 for (const item of navigationItems) {
   if (!app.includes(item)) throw new Error(`Bottom navigation item is missing: ${item}`);
+}
+if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
+  throw new Error('Bottom navigation must expose the active page semantically.');
+}
+if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {
+  throw new Error('Home daily Ayah card must use the Mihrab artwork from the reference composition.');
 }
 
 const moreDestinations = ['prayer', 'learn', 'quran', 'dhikr', 'qibla', 'duas', 'names', 'mosques', 'calendar', 'collections'];
@@ -222,5 +236,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, reference navigation icon states and labels, Mihrab daily Ayah artwork, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
