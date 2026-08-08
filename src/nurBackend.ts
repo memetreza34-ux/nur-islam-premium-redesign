@@ -59,6 +59,8 @@ const EXCLUDED_BACKUP_KEYS = new Set([
   'nur_pending_display_name',
   'nur_local_notes_v1',
   'nur_prayer_times_latest',
+  'nur_prayer_location',
+  'nur_mosque_location_v1',
   'nur_mosque_search_cache_v1',
 ]);
 
