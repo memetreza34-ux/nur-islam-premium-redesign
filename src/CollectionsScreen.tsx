@@ -5,11 +5,10 @@ import {
   CalendarDays,
   ChevronLeft,
   ChevronRight,
-  CircleCheck,
-  Search,
+  RotateCcw,
   Sparkles,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { motion } from 'motion/react';
 import { DUA_BY_ID } from './duaData';
 import { NAMES_OF_ALLAH } from './namesOfAllahData';
 import { PremiumImage, QuranObject } from './PremiumVisuals';
@@ -127,7 +126,6 @@ export function CollectionsScreen({
   onOpenCalendarDate,
 }: CollectionsScreenProps) {
   const [filter, setFilter] = useState('Alle');
-  const [toast, setToast] = useState<string | null>(null);
   const quranBookmarkGroups = useMemo(readQuranBookmarkGroups, []);
   const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites'), []);
   const duaFavorites = useMemo(readDuaFavoriteSet, []);
@@ -135,11 +133,6 @@ export function CollectionsScreen({
   const calendarFavorites = useMemo(() => readStringSet('nur_calendar_favorites'), []);
   const ayahSaved = useMemo(() => readBoolean('nur_daily_ayah_saved'), []);
   const hadithSaved = useMemo(() => readBoolean('nur_daily_hadith_saved'), []);
-
-  const flash = (message: string) => {
-    setToast(message);
-    window.setTimeout(() => setToast(null), 2100);
-  };
 
   const showQuran = filter === 'Alle' || filter === 'Quran';
   const showDuas = filter === 'Alle' || filter === 'Duas';
@@ -161,7 +154,15 @@ export function CollectionsScreen({
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Gespeichert</span><h1>Meine Sammlung</h1></div>
-        <button className="icon-button" onClick={() => { setFilter('Alle'); flash('Alle gespeicherten Inhalte werden angezeigt'); }} aria-label="Alle gespeicherten Inhalte anzeigen"><Search size={20} /></button>
+        <button
+          className="icon-button"
+          onClick={() => setFilter('Alle')}
+          aria-label="Sammlungsfilter zurücksetzen"
+          title="Filter zurücksetzen"
+          disabled={filter === 'Alle'}
+        >
+          <RotateCcw size={20} />
+        </button>
       </header>
 
       <div className="reference-filter-tabs reference-filter-tabs--wide">
@@ -261,8 +262,6 @@ export function CollectionsScreen({
       ) : null}
 
       {emptyForFilter ? <div className="reference-empty-result"><Bookmark size={25} /><strong>Noch nichts gespeichert</strong><small>Favorisiere Inhalte in Quran, Duas, Namen, Hadith oder Kalender.</small></div> : null}
-
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
