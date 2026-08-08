@@ -10,6 +10,7 @@ import {
   Filter,
   Heart,
   LoaderCircle,
+  RefreshCw,
   Search,
   ShieldCheck,
   Sparkles,
@@ -44,17 +45,24 @@ function readNumberSet(key: string) {
 }
 
 function readLastRead(): LastRead {
+  const fallback = { surahNumber: 112, ayahNumber: 1, updatedAt: new Date().toISOString() };
   try {
     const raw = localStorage.getItem('nur_quran_last_read');
-    if (!raw) return { surahNumber: 112, ayahNumber: 1, updatedAt: new Date().toISOString() };
+    if (!raw) return fallback;
     const parsed = JSON.parse(raw) as Partial<LastRead>;
+    const surahNumber = typeof parsed.surahNumber === 'number' && Number.isInteger(parsed.surahNumber) && parsed.surahNumber >= 1 && parsed.surahNumber <= 114
+      ? parsed.surahNumber
+      : fallback.surahNumber;
+    const ayahNumber = typeof parsed.ayahNumber === 'number' && Number.isInteger(parsed.ayahNumber) && parsed.ayahNumber >= 1
+      ? parsed.ayahNumber
+      : fallback.ayahNumber;
     return {
-      surahNumber: typeof parsed.surahNumber === 'number' ? parsed.surahNumber : 112,
-      ayahNumber: typeof parsed.ayahNumber === 'number' ? parsed.ayahNumber : 1,
-      updatedAt: typeof parsed.updatedAt === 'string' ? parsed.updatedAt : new Date().toISOString(),
+      surahNumber,
+      ayahNumber,
+      updatedAt: typeof parsed.updatedAt === 'string' ? parsed.updatedAt : fallback.updatedAt,
     };
   } catch {
-    return { surahNumber: 112, ayahNumber: 1, updatedAt: new Date().toISOString() };
+    return fallback;
   }
 }
 
@@ -68,7 +76,7 @@ export function QuranScreen({
   onOpenAyah,
 }: {
   onBack: () => void;
-  onOpenReader: (surahNumber: number) => void;
+  onOpenReader: (surahNumber: number, ayahNumber?: number) => void;
   onOpenAyah: () => void;
 }) {
   const [surahs, setSurahs] = useState<Surah[]>([]);
@@ -78,10 +86,13 @@ export function QuranScreen({
   const [lastRead] = useState(readLastRead);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadToken, setReloadToken] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
+    setLoading(true);
+    setError(null);
     fetchSurahs()
       .then((items) => {
         if (!active) return;
@@ -94,7 +105,7 @@ export function QuranScreen({
       })
       .finally(() => active && setLoading(false));
     return () => { active = false; };
-  }, []);
+  }, [reloadToken]);
 
   useEffect(() => persistSet('nur_quran_surah_favorites', favorites), [favorites]);
 
@@ -118,6 +129,7 @@ export function QuranScreen({
 
   const lastSurah = surahs.find((surah) => surah.number === lastRead.surahNumber)
     ?? surahs.find((surah) => surah.number === 112);
+  const lastAyah = lastSurah ? Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs) : lastRead.ayahNumber;
 
   const toggleFavorite = (number: number) => {
     setFavorites((current) => {
@@ -144,10 +156,10 @@ export function QuranScreen({
       <section className="reference-quran-continue">
         <div className="reference-quran-continue__copy">
           <span className="hero-pill">Weiterlesen</span>
-          <h2>{lastSurah?.englishName ?? 'Al-Ikhlaas'}</h2>
-          <p>Sure {lastRead.surahNumber} · Ayah {lastRead.ayahNumber}</p>
-          <span className="reference-quran-progress"><i style={{ width: `${lastSurah ? Math.min(100, Math.max(4, (lastRead.ayahNumber / lastSurah.numberOfAyahs) * 100)) : 25}%` }} /></span>
-          <button className="reference-inline-button" onClick={() => onOpenReader(lastSurah?.number ?? 112)}>Weiterlesen <ChevronRight size={16} /></button>
+          <h2>{lastSurah?.englishName ?? `Sure ${lastRead.surahNumber}`}</h2>
+          <p>Sure {lastRead.surahNumber} · Ayah {lastAyah}</p>
+          <span className="reference-quran-progress"><i style={{ width: `${lastSurah ? Math.min(100, Math.max(4, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 4}%` }} /></span>
+          <button className="reference-inline-button" onClick={() => onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)}>Weiterlesen <ChevronRight size={16} /></button>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="reference-quran-continue__book" fallback={<QuranObject />} />
       </section>
@@ -180,7 +192,7 @@ export function QuranScreen({
       {loading ? (
         <div className="reference-quran-loading"><LoaderCircle size={24} className="is-spinning" /><strong>Surenliste wird geladen</strong></div>
       ) : error ? (
-        <div className="reference-empty-result"><WifiOff size={25} /><strong>Quran-Verzeichnis nicht verfügbar</strong><small>{error}</small></div>
+        <div className="reference-empty-result"><WifiOff size={25} /><strong>Quran-Verzeichnis nicht verfügbar</strong><small>{error}</small><button className="reference-inline-button" onClick={() => setReloadToken((value) => value + 1)}><RefreshCw size={16} /> Erneut versuchen</button></div>
       ) : visible.length ? (
         <section className="reference-quran-catalog">
           <div className="reference-quran-results"><span>{filter === 'all' ? 'Alle Suren' : filter === 'offline' ? 'Offline lesbar' : filter === 'favorites' ? 'Lieblingssuren' : getGermanRevelationLabel(filter)}</span><small>{visible.length} Ergebnisse</small></div>
@@ -190,7 +202,7 @@ export function QuranScreen({
               const favorite = favorites.has(surah.number);
               return (
                 <motion.article key={surah.number} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .008, .18) }}>
-                  <button className="reference-quran-list__main" onClick={() => onOpenReader(surah.number)}>
+                  <button className="reference-quran-list__main" onClick={() => onOpenReader(surah.number, 1)}>
                     <span className="reference-quran-list__number">{surah.number}</span>
                     <span className="reference-quran-list__copy"><strong>{surah.englishName}</strong><small>{getGermanRevelationLabel(surah.revelationType)} · {surah.numberOfAyahs} Ayat</small></span>
                     <span className="reference-quran-list__arabic" dir="rtl">{surah.name.replace('سُورَةُ ', '')}</span>
