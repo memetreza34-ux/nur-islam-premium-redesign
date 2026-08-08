@@ -1,4 +1,5 @@
 import { resolveAppPath } from './appPaths';
+import { queuePendingNavigation } from './pendingNavigation';
 
 const SERVICE_WORKER_VERSION = '11-20260808-release-hardening';
 
@@ -14,13 +15,17 @@ export function registerNurPwa() {
 
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.addEventListener('message', (event) => {
+      // This listener is installed before React mounts, so queue the intent as
+      // well: the live event is lost when the app is still on the splash.
       if (event.data?.type === 'OPEN_PRAYER') {
         try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
+        queuePendingNavigation('prayer');
         window.dispatchEvent(new Event('nur:open-prayer'));
         return;
       }
       if (event.data?.type === 'OPEN_CALENDAR') {
         try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
+        queuePendingNavigation('calendar');
         window.dispatchEvent(new Event('nur:open-calendar'));
       }
     });

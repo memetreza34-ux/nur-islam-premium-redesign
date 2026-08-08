@@ -35,6 +35,8 @@ import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { MoreScreen } from './MoreScreen';
 import { NamesScreen } from './NamesScreen';
 import { OnboardingScreen } from './OnboardingScreen';
+import { consumePendingNavigation } from './pendingNavigation';
+import type { PendingNavigationIntent } from './pendingNavigation';
 import { PrayerScreen } from './PrayerScreen';
 import { QiblaScreen } from './QiblaScreen';
 import { QuranReaderScreen } from './QuranReaderScreen';
@@ -463,8 +465,17 @@ export default function App() {
       clearDirectTargets();
       setActiveTab('calendar');
     };
+    const applyNavigationIntent = (intent: PendingNavigationIntent) => {
+      if (intent === 'prayer') openPrayerTracker();
+      else openCalendar();
+    };
     window.addEventListener('nur:open-prayer', openPrayerTracker);
     window.addEventListener('nur:open-calendar', openCalendar);
+    // A notification can wake the PWA before this screen exists, so the live
+    // event above would fire into nothing. Drain the queued intent only after
+    // the listeners are in place.
+    const pending = consumePendingNavigation();
+    if (pending) applyNavigationIntent(pending);
     return () => {
       window.removeEventListener('nur:open-prayer', openPrayerTracker);
       window.removeEventListener('nur:open-calendar', openCalendar);

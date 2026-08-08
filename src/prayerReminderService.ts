@@ -10,7 +10,10 @@ export type PrayerReminderDetail = {
 };
 
 const NOTIFICATION_STORAGE_KEY = 'nur_prayer_notifications';
-const REMINDER_WINDOW_MINUTES = 1;
+// Background tabs get their timers throttled to a minute or worse, so a
+// one-minute window silently dropped reminders. The calendar reminders already
+// allow five minutes of catch-up; prayers follow the same rule.
+const REMINDER_WINDOW_MINUTES = 5;
 const CHECK_INTERVAL_MS = 20000;
 const APP_BASE = import.meta.env.BASE_URL;
 const PRAYER_TARGET_URL = `${APP_BASE}?open=prayer`;
@@ -128,12 +131,14 @@ export function startPrayerReminderScheduler() {
   run();
   timer = window.setInterval(run, CHECK_INTERVAL_MS);
   document.addEventListener('visibilitychange', handleVisibility);
+  window.addEventListener('focus', run);
   window.addEventListener('nur:prayer-times-updated', run);
 
   return () => {
     active = false;
     if (timer) window.clearInterval(timer);
     document.removeEventListener('visibilitychange', handleVisibility);
+    window.removeEventListener('focus', run);
     window.removeEventListener('nur:prayer-times-updated', run);
   };
 }
