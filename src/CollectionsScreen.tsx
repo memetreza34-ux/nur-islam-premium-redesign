@@ -72,7 +72,7 @@ function writeStringSet(key: string, value: Set<string>) {
   }
 }
 
-function readDuaFavoriteSet() {
+export function readDuaFavoriteSet() {
   const migrated = new Set<string>();
   readUnknownArray('nur_dua_favorites').forEach((value) => {
     const candidate = String(value);
@@ -83,7 +83,7 @@ function readDuaFavoriteSet() {
   return migrated;
 }
 
-function readNameFavoriteSet() {
+export function readNameFavoriteSet() {
   const migrated = new Set<string>();
   readUnknownArray('nur_name_favorites').forEach((value) => {
     const candidate = String(value);
