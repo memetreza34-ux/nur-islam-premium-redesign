@@ -16,17 +16,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.app-shell:not(.app-shell--onboarding),
-.reference-artwork-host {
+.app-shell:not(.app-shell--onboarding) {
   width: min(100%, var(--app-content-width));
 }
 
 .app-shell {
   z-index: 3;
-}
-
-.reference-artwork-host {
-  z-index: 1;
 }
 
 .screen-transition-frame,
@@ -236,16 +231,11 @@ textarea:focus-visible {
   display: none !important;
 }
 
-.reference-artwork-host,
-.reference-artwork-host::after,
-.reference-artwork-image {
-  pointer-events: none;
-  user-select: none;
-}
-
 .reference-artwork-image {
   max-width: 42vw;
   max-height: 42vh;
+  pointer-events: none;
+  user-select: none;
 }
 
 .welcome-hero__visual,
@@ -255,9 +245,9 @@ textarea:focus-visible {
   pointer-events: none;
 }
 
-/* Replace the final legacy Quran-card PNG decoration with the recovered WebP. */
+/* Keep the Quran daily card on the same current Mihrab asset as the final art layer. */
 .reference-quran-verse::after {
-  background-image: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260807-visual-cleanup') !important;
+  background-image: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260808-release-hardening') !important;
 }
 
 .section-heading h2,
