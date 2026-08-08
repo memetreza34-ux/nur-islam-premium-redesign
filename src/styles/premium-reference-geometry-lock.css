@@ -81,6 +81,7 @@
   .reference-calendar-month,
   .reference-calendar-event,
   .reference-collection-section,
+  .reference-profile-list,
   .reference-account-entry,
   .reference-account-form,
   .reference-account-cloud-grid > button,
@@ -136,6 +137,10 @@
   .reference-install-prompt__action,
   .reference-input-search,
   .reference-assistant-input,
+  .reference-profile-logout,
+  .reference-profile-modal__icon,
+  .reference-choice,
+  .reference-settings-toggles > button,
   .reference-account-header-icon,
   .reference-account-tabs,
   .reference-account-tabs > button,
@@ -162,6 +167,7 @@
 }
 
 :where(
+  .reference-profile-row__icon,
   .reference-notes-storage > svg:first-child,
   .reference-assistant-suggestions button > span,
   .reference-chat-message__mark,
