@@ -82,8 +82,15 @@ for (const gridRule of [
   if (!touch.includes(gridRule)) throw new Error(`Parent grid is not aligned to 44px compact controls: ${gridRule}`);
 }
 
-if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !assistant.includes('width: 38px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
-  throw new Error('Expected legacy compact control baselines changed; review the centralized 44px overrides.');
+// Tripwire, not an invariant: these are the undersized baselines the central
+// 44px layer lifts. If one moves, the override may no longer match, so the
+// change has to be looked at rather than assumed harmless. Updating an entry
+// here is the way to record that the look happened.
+//
+// reference-assistant.css previously listed 38px. The assistant input button
+// was raised to a native 44px, so it no longer depends on the override at all.
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !assistant.includes('width: 44px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
+  throw new Error('Expected compact control baselines changed; review the centralized 44px overrides.');
 }
 
 console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, assistant, install prompt, prayer reminder, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
