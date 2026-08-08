@@ -217,18 +217,20 @@ button:disabled:not(.gold-button),
 }
 
 /* ---------- Light theme ---------- */
+/* The Home welcome hero intentionally remains dark emerald in both themes,
+   therefore its foreground stays light for contrast. */
 [data-theme='light'] .premium-home--v2 .welcome-hero__copy h1 {
-  color: #17382c !important;
-  text-shadow: none;
+  color: #fff8e9 !important;
+  text-shadow: 0 13px 34px rgba(0, 0, 0, .28) !important;
 }
 
 [data-theme='light'] .premium-home--v2 .welcome-hero__copy p {
-  color: rgba(42, 66, 55, .75) !important;
+  color: rgba(234, 239, 231, .76) !important;
 }
 
 [data-theme='light'] .premium-home--v2 .welcome-hero__copy .overline {
-  color: #8c6324 !important;
-  text-shadow: none;
+  color: #f0cf89 !important;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, .24) !important;
 }
 
 [data-theme='light'] .reference-reader-verse > p[dir='rtl'],
