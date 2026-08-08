@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
+  BellRing,
   BookHeart,
   BookOpen,
   BrainCircuit,
   CalendarDays,
   ChevronRight,
-  Compass,
   Globe2,
   HandHeart,
   Home,
@@ -274,7 +274,7 @@ function PremiumHome({
           <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
         </div>
         <div className="brand-bar__actions">
-          <button className="icon-button" onClick={() => onNavigate('qibla')} aria-label="Qibla öffnen"><Compass size={20} /></button>
+          <button className="icon-button" onClick={() => onNavigate('prayer')} aria-label="Gebete und Erinnerungen öffnen"><BellRing size={20} /></button>
           <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Mehr öffnen"><Menu size={20} /></button>
         </div>
       </header>
