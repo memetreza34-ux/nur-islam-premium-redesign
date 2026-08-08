@@ -38,7 +38,11 @@ function readNumberSet(key: string) {
   try {
     const raw = localStorage.getItem(key);
     const parsed = raw ? JSON.parse(raw) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is number => typeof value === 'number') : []);
+    const values = Array.isArray(parsed) ? parsed : [];
+    const valid = values
+      .map((value) => typeof value === 'number' ? value : typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : Number.NaN)
+      .filter((value) => Number.isInteger(value) && value >= 1 && value <= 114);
+    return new Set(valid);
   } catch {
     return new Set<number>();
   }
