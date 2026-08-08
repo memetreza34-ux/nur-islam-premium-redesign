@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   ChevronLeft,
   CircleCheck,
@@ -84,6 +84,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const [sensorStatus, setSensorStatus] = useState<SensorStatus>('idle');
   const [sensorAccuracy, setSensorAccuracy] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const sensorTimeoutRef = useRef<number | null>(null);
   const direction = useMemo(() => calculateBearing(coordinates, KAABA), [coordinates]);
   const distance = useMemo(() => calculateDistance(coordinates, KAABA), [coordinates]);
   const roundedDirection = Math.round(direction);
@@ -93,6 +94,18 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     setToast(message);
     window.setTimeout(() => setToast(null), 2100);
   };
+
+  const clearSensorTimeout = useCallback(() => {
+    if (sensorTimeoutRef.current === null) return;
+    window.clearTimeout(sensorTimeoutRef.current);
+    sensorTimeoutRef.current = null;
+  }, []);
+
+  const removeOrientationListeners = useCallback(() => {
+    window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+    window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleOrientation = useCallback((rawEvent: Event) => {
     const event = rawEvent as CompassOrientationEvent;
@@ -109,22 +122,25 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     }
 
     if (nextHeading === null) return;
+    clearSensorTimeout();
     setHeading(normalizeDegrees(nextHeading + getScreenOrientationAngle()));
     setSensorStatus('active');
-  }, []);
+  }, [clearSensorTimeout]);
 
   const stopCompass = useCallback(() => {
+    clearSensorTimeout();
     window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
     window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
     setHeading(null);
     setSensorAccuracy(null);
     setSensorStatus('idle');
-  }, [handleOrientation]);
+  }, [clearSensorTimeout, handleOrientation]);
 
   useEffect(() => () => {
+    clearSensorTimeout();
     window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
     window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
-  }, [handleOrientation]);
+  }, [clearSensorTimeout, handleOrientation]);
 
   const startCompass = async () => {
     if (sensorStatus === 'active') {
@@ -140,6 +156,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       return;
     }
 
+    clearSensorTimeout();
     setSensorStatus('requesting');
     try {
       if (typeof OrientationEvent.requestPermission === 'function') {
@@ -156,7 +173,12 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       window.addEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
       window.addEventListener('deviceorientation', handleOrientation as EventListener, true);
 
-      window.setTimeout(() => {
+      sensorTimeoutRef.current = window.setTimeout(() => {
+        sensorTimeoutRef.current = null;
+        window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+        window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+        setHeading(null);
+        setSensorAccuracy(null);
         setSensorStatus((current) => {
           if (current === 'active') return current;
           flash('Kein Kompasssignal empfangen – Gerät bewegen oder Browserberechtigung prüfen');
@@ -164,6 +186,9 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         });
       }, 2500);
     } catch {
+      clearSensorTimeout();
+      window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+      window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
       setSensorStatus('denied');
       flash('Kompasszugriff konnte nicht gestartet werden');
     }
