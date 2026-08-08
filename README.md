@@ -33,15 +33,15 @@ The complete application lives on `premium-home-redesign`. The current design + 
 
 ## Validation
 
-Run:
+The intended full validation command is:
 
 ```bash
 npm run check
 ```
 
-This runs content/data checks, navigation and interaction checks, release and functional-hardening checks, TypeScript (`tsc --noEmit`) and the Vite production build.
+It covers content/data checks, navigation and interaction checks, release and functional-hardening checks, TypeScript (`tsc --noEmit`) and the Vite production build.
 
-GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. That CI infrastructure failure is not evidence of a successful or failed app build. A real browser/device QA pass is still required before release.
+GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. Therefore the complete `npm run check`, TypeScript build validation and real browser/device QA have **not** yet been certified for this branch. The source-level regression suite has been updated to represent the intended behavior, but it still needs an executable runner before release.
 
 ## Backend
 
