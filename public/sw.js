@@ -1,5 +1,5 @@
 const VISUAL_VERSION = '20260808-release-hardening';
-const CACHE_NAME = `nur-islam-premium-v13-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v14-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
@@ -11,6 +11,7 @@ const APP_SHELL = [
   INDEX_URL,
   scoped('manifest.webmanifest'),
   scoped('nur-app-icon.svg'),
+  scoped('premium-assets/high-res-objects/nur-logo-emblem.png'),
   premiumAsset('nur-logo-emblem-v2.webp'),
   premiumAsset('mosque-gold-v2.webp'),
   premiumAsset('mosque-v2.webp'),
