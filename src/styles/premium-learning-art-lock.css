@@ -142,15 +142,15 @@
   overflow: visible;
 }
 
+/* The component already renders this exact asset via its src; swapping it again
+   with content: url() only hides load failures from the image fallback. */
 .reference-guide-hero--wudu > .premium-image > img {
-  content: url('/premium-assets/high-res-objects/mosque-gold-v2.webp');
   object-fit: contain !important;
   object-position: center bottom !important;
   filter: drop-shadow(0 24px 22px rgba(0,0,0,.46)) saturate(.95) contrast(1.035) !important;
 }
 
 .reference-guide-hero--salah > .premium-image > img {
-  content: url('/premium-assets/high-res-objects/qibla-compass-v2.webp');
   object-fit: contain !important;
   object-position: center !important;
   transform: scale(.9);
