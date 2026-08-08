@@ -1,6 +1,9 @@
-/* Final reference geometry lock.
-   Keeps the visible mobile composition on the approved 18 / 28 / 42px system
-   even when older feature styles declare smaller local radii. */
+/* Final reference geometry + icon + focal-image lock.
+   This file is intentionally the LAST imported stylesheet.
+   It keeps the visible mobile composition on the approved 18 / 28 / 42px
+   system, the Lucide icon language on 1.75 rounded strokes and the primary
+   reference artwork on its approved fit/anchor even when older layers declare
+   local overrides. */
 
 :where(
   .welcome-hero,
@@ -56,7 +59,22 @@
   .reference-quiz-card,
   .reference-quiz-result,
   .reference-zakat-calculator,
-  .reference-fasting-reminder-settings
+  .reference-fasting-reminder-settings,
+  .reference-prayer-reminder-banner,
+  .reference-calendar-reminder-banner,
+  .reference-install-prompt,
+  .reference-profile-modal,
+  .reference-dua-modal,
+  .reference-name-modal,
+  .reference-dhikr-stats-modal,
+  .reference-prayer-settings-modal,
+  .prayer-completion-modal,
+  .reference-learning-completion-modal,
+  .reference-learning-plan-modal,
+  .calendar-modal,
+  .learn-modal,
+  .reference-mosque-detail-modal,
+  .reference-prayer-course-complete > section
 ) {
   border-radius: 28px !important;
 }
@@ -74,7 +92,27 @@
   .reference-reader-controls > button,
   .reference-filter-tabs button,
   .reference-modal-close,
-  .reference-mosque-detail-modal__close
+  .learn-modal__close,
+  .reference-prayer-settings-modal__close,
+  .reference-mosque-detail-modal__close,
+  .reference-learning-completion-modal__close,
+  .prayer-completion-modal__close,
+  .reference-network-status,
+  .reference-prayer-reminder-banner__open,
+  .reference-prayer-reminder-banner__close,
+  .reference-install-prompt__close,
+  .reference-install-prompt__action,
+  .reference-input-search,
+  .reference-assistant-input,
+  .reference-account-form label > div,
+  .reference-account-form label > input,
+  .reference-note-editor > input,
+  .reference-note-editor > textarea,
+  .calendar-modal input,
+  .reference-legacy-search,
+  .reference-fasting-reminder-settings input,
+  .reference-zakat-calculator input,
+  .toast
 ) {
   border-radius: 18px !important;
 }
@@ -89,6 +127,53 @@
 
 .bottom-nav__item > span {
   border-radius: 13px !important;
+}
+
+/* Lucide exposes the `lucide` class on every rendered icon. Keeping this in
+   the final stylesheet means screen-specific art layers cannot silently
+   change icon weight after the reference typography layer. */
+:where(svg.lucide) {
+  stroke-width: 1.75 !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+}
+
+/* Focal artwork fit/anchor. Correct artwork with the wrong crop is still a
+   visual mismatch, so the primary image roles are protected here as well. */
+:where(
+  .premium-home--v2 .welcome-hero__visual > img,
+  .reference-mosque-hero > .premium-image > img
+) {
+  object-fit: contain !important;
+  object-position: right bottom !important;
+}
+
+:where(
+  .reference-quran-continue__book > img,
+  .reference-reader-hero > .premium-image > img
+) {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+}
+
+:where(
+  .reference-dhikr-counter__tasbih > img,
+  .reference-qibla-stage__compass > img,
+  .brand-lockup__mark > img,
+  .ai-preview__mark > img,
+  .reference-profile-greeting__logo > img,
+  .reference-install-prompt__logo > img
+) {
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+:where(
+  .verse-card__art > img,
+  .reference-ayah-hero__art > img
+) {
+  object-fit: cover !important;
+  object-position: center 42% !important;
 }
 
 /* Pills, circular progress controls, avatars and round ornaments deliberately

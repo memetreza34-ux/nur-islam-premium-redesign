@@ -6,10 +6,10 @@
 .reference-calendar-reminder-banner,
 .reference-install-prompt,
 .toast {
-  border-color: rgba(247, 226, 178, .2) !important;
+  border-color: rgba(226, 191, 119, .2) !important;
   background:
-    radial-gradient(circle at 0% 0%, rgba(232, 199, 122, .07), transparent 8rem),
-    linear-gradient(145deg, rgba(8, 47, 35, .975), rgba(2, 18, 14, .995)) !important;
+    radial-gradient(circle at 0% 0%, rgba(226, 191, 119, .07), transparent 8rem),
+    linear-gradient(145deg, rgba(7, 55, 43, .975), rgba(0, 18, 15, .995)) !important;
   box-shadow: 0 21px 58px rgba(0, 0, 0, .43), inset 0 1px 0 rgba(255, 255, 255, .03) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.04);
   backdrop-filter: blur(24px) saturate(1.04);
@@ -19,7 +19,7 @@
 .reference-network-status {
   min-height: 54px;
   padding: 10px 13px !important;
-  border-radius: 17px !important;
+  border-radius: 18px !important;
 }
 
 .reference-network-status > svg {
@@ -39,21 +39,21 @@
 .reference-prayer-reminder-banner,
 .reference-calendar-reminder-banner {
   min-height: 70px;
-  border-radius: 20px !important;
+  border-radius: 28px !important;
 }
 
 .reference-prayer-reminder-banner__icon {
-  border-color: rgba(255, 243, 212, .26) !important;
-  box-shadow: 0 10px 22px rgba(158, 105, 31, .19), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
+  border-color: rgba(242, 215, 154, .26) !important;
+  box-shadow: 0 10px 22px rgba(141, 109, 57, .19), inset 0 1px 0 rgba(255, 255, 255, .36) !important;
 }
 
 .reference-calendar-reminder-banner .reference-prayer-reminder-banner__icon {
-  color: #17372b;
-  background: linear-gradient(145deg, #efd7a0, #ba8737) !important;
+  color: #001b16;
+  background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
 }
 
 .reference-prayer-reminder-banner__copy strong {
-  color: #fff8e9;
+  color: #fff8ea;
   letter-spacing: -.01em;
 }
 
@@ -64,9 +64,9 @@
 .reference-prayer-reminder-banner__open {
   min-height: 44px !important;
   padding-inline: 11px !important;
-  border: 1px solid rgba(255, 245, 219, .22) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 8px 18px rgba(142, 92, 25, .15), inset 0 1px 0 rgba(255, 255, 255, .35);
+  border: 1px solid rgba(242, 215, 154, .22) !important;
+  border-radius: 18px !important;
+  box-shadow: 0 8px 18px rgba(141, 109, 57, .15), inset 0 1px 0 rgba(255, 255, 255, .35);
 }
 
 .reference-prayer-reminder-banner__close {
@@ -74,8 +74,8 @@
   min-width: 44px !important;
   height: 44px !important;
   min-height: 44px !important;
-  border-color: rgba(247, 226, 178, .13) !important;
-  border-radius: 13px !important;
+  border-color: rgba(226, 191, 119, .13) !important;
+  border-radius: 18px !important;
   background: rgba(255, 255, 255, .025) !important;
 }
 
@@ -83,7 +83,7 @@
 .reference-install-prompt {
   min-height: 76px;
   padding: 13px 14px !important;
-  border-radius: 21px !important;
+  border-radius: 28px !important;
 }
 
 .reference-install-prompt__logo {
@@ -91,7 +91,7 @@
 }
 
 .reference-install-prompt__copy strong {
-  color: #fff8e9;
+  color: #fff8ea;
   font-size: 1rem !important;
 }
 
@@ -107,50 +107,50 @@
   min-width: 44px !important;
   height: 44px !important;
   min-height: 44px !important;
-  border: 1px solid rgba(247, 226, 178, .18) !important;
-  border-radius: 13px !important;
-  color: #d9cdb5 !important;
-  background: #061d17 !important;
+  border: 1px solid rgba(226, 191, 119, .18) !important;
+  border-radius: 18px !important;
+  color: #f6ebd6 !important;
+  background: #001b16 !important;
   box-shadow: 0 10px 24px rgba(0, 0, 0, .35) !important;
 }
 
 .reference-install-prompt__action {
   min-height: 44px !important;
-  border-radius: 12px !important;
+  border-radius: 18px !important;
 }
 
 .reference-install-prompt__ios {
   padding-top: 10px !important;
-  border-top-color: rgba(232, 199, 122, .1) !important;
+  border-top-color: rgba(226, 191, 119, .1) !important;
 }
 
 /* ---------- Toast ---------- */
 .toast {
   min-height: 48px;
   padding: 10px 13px !important;
-  border-radius: 17px !important;
-  color: #f7f0df;
+  border-radius: 18px !important;
+  color: #f6ebd6;
 }
 
 .toast > svg {
   flex: 0 0 auto;
-  color: #e8c77d;
+  color: #e2bf77;
 }
 
 /* ---------- Fatal error ---------- */
 .reference-system-error {
   background:
-    radial-gradient(circle at 50% 24%, rgba(46, 139, 102, .22), transparent 19rem),
-    radial-gradient(circle at 50% 70%, rgba(232, 199, 122, .055), transparent 15rem),
-    linear-gradient(165deg, #09271f 0%, #03140f 58%, #010806 100%) !important;
+    radial-gradient(circle at 50% 24%, rgba(13, 87, 67, .22), transparent 19rem),
+    radial-gradient(circle at 50% 70%, rgba(226, 191, 119, .055), transparent 15rem),
+    linear-gradient(165deg, #042a21 0%, #001b16 58%, #00120f 100%) !important;
 }
 
 .reference-system-error__halo {
   width: 286px !important;
   height: 286px !important;
-  border-color: rgba(247, 226, 178, .09) !important;
-  background: radial-gradient(circle, rgba(232, 199, 122, .09), transparent 69%) !important;
-  box-shadow: 0 0 0 34px rgba(232, 199, 122, .012), 0 0 0 70px rgba(232, 199, 122, .007);
+  border-color: rgba(226, 191, 119, .09) !important;
+  background: radial-gradient(circle, rgba(226, 191, 119, .09), transparent 69%) !important;
+  box-shadow: 0 0 0 34px rgba(226, 191, 119, .012), 0 0 0 70px rgba(226, 191, 119, .007);
 }
 
 .reference-system-error__logo {
@@ -158,8 +158,8 @@
 }
 
 .reference-system-error__icon {
-  border-color: rgba(247, 226, 178, .2) !important;
-  background: rgba(232, 199, 122, .05) !important;
+  border-color: rgba(226, 191, 119, .2) !important;
+  background: rgba(226, 191, 119, .05) !important;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .022);
 }
 
@@ -169,7 +169,7 @@
 }
 
 .reference-system-error p {
-  color: rgba(170, 191, 180, .8) !important;
+  color: rgba(145, 168, 158, .8) !important;
 }
 
 /* ---------- Very narrow phones ---------- */
@@ -259,7 +259,7 @@
 /* Reminder banners intentionally stay emerald in light theme for urgent hierarchy. */
 [data-theme='light'] .reference-prayer-reminder-banner,
 [data-theme='light'] .reference-calendar-reminder-banner {
-  color: #fff8e9;
+  color: #fff8ea;
 }
 
 @media (prefers-reduced-transparency: reduce) {

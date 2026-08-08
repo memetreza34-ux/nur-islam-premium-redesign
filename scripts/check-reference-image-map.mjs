@@ -23,6 +23,7 @@ const [
   dailyCss,
   discoveryCss,
   worshipCss,
+  finalLock,
 ] = await Promise.all([
   read('src/App.tsx'),
   read('src/OnboardingScreen.tsx'),
@@ -42,6 +43,7 @@ const [
   read('src/styles/premium-daily-inspiration-art-lock.css'),
   read('src/styles/premium-discovery-collection-art-lock.css'),
   read('src/styles/premium-worship-art-lock.css'),
+  read('src/styles/premium-reference-geometry-lock.css'),
 ]);
 
 function requireFragments(source, label, fragments) {
@@ -71,6 +73,15 @@ function requireCssAsset(source, label, selector, filename) {
   const rule = cssRule(source, selector);
   if (!rule.includes(filename)) {
     throw new Error(`${label} must keep ${filename} on ${selector}.`);
+  }
+}
+
+function requireCssFit(source, label, selector, declarations) {
+  const rule = cssRule(source, selector);
+  for (const declaration of declarations) {
+    if (!rule.includes(declaration)) {
+      throw new Error(`${label} focal artwork must keep ${declaration} on ${selector}.`);
+    }
   }
 }
 
@@ -171,6 +182,35 @@ requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-sec
 requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260808-release-hardening');
 requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260808-release-hardening');
 
+requireCssFit(finalLock, 'Home hero', '.premium-home--v2 .welcome-hero__visual > img', [
+  'object-fit: contain !important',
+  'object-position: right bottom !important',
+]);
+requireCssFit(finalLock, 'Mosque hero', '.reference-mosque-hero > .premium-image > img', [
+  'object-fit: contain !important',
+  'object-position: right bottom !important',
+]);
+requireCssFit(finalLock, 'Quran continue', '.reference-quran-continue__book > img', [
+  'object-fit: contain !important',
+  'object-position: center bottom !important',
+]);
+requireCssFit(finalLock, 'Quran reader', '.reference-reader-hero > .premium-image > img', [
+  'object-fit: contain !important',
+  'object-position: center bottom !important',
+]);
+requireCssFit(finalLock, 'Dhikr', '.reference-dhikr-counter__tasbih > img', [
+  'object-fit: contain !important',
+  'object-position: center !important',
+]);
+requireCssFit(finalLock, 'Qibla', '.reference-qibla-stage__compass > img', [
+  'object-fit: contain !important',
+  'object-position: center !important',
+]);
+requireCssFit(finalLock, 'Daily Ayah background', '.reference-ayah-hero__art > img', [
+  'object-fit: cover !important',
+  'object-position: center 42% !important',
+]);
+
 const forbiddenPairs = [
   [dhikr, 'quran-closed-v2.webp', 'Dhikr must not use a Quran cover as its focal image.'],
   [qibla, 'tasbih-v2.webp', 'Qibla must not use Tasbih as its focal image.'],
@@ -189,4 +229,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens, all 13 additional features and CSS-driven Prayer/Qibla/Ayah/Hadith/Dua/Calendar artwork keep exact selector-or-ID to asset pairs; visible TSX uses final -v2 WebPs.');
+console.log('Reference image map verified: primary screens, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs, focal Home/Mosque/Quran/Dhikr/Qibla/Ayah crop rules are final-locked, and visible TSX uses final -v2 WebPs.');
