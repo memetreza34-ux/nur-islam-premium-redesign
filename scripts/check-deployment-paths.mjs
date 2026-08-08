@@ -62,7 +62,8 @@ for (const requirement of [
 for (const requirement of [
   "resolveAppPath('sw.js')",
   'scope: import.meta.env.BASE_URL',
-  "SERVICE_WORKER_VERSION = '10-20260807-base-path'",
+  "SERVICE_WORKER_VERSION = '11-20260808-release-hardening'",
+  'updateViaCache: \'none\'',
 ]) {
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
 }
@@ -74,6 +75,7 @@ for (const requirement of [
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
   'caches.match(INDEX_URL)',
+  'nur-islam-premium-v11',
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);
 }
@@ -97,4 +99,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, legacy-to-v2 premium aliases, decorative artwork, preloads, manifest scope, service worker registration, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, current v11 service worker registration, legacy-to-v2 premium aliases, decorative artwork, preloads, manifest scope, and scoped offline cache.');
