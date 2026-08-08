@@ -25,7 +25,7 @@
   width: 80%;
   height: 68%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.18), rgba(50,139,103,.07) 48%, transparent 73%);
+  background: radial-gradient(circle, rgba(226, 191, 119, .18), rgba(13, 87, 67, .07) 48%, transparent 73%);
   filter: blur(14px);
   pointer-events: none;
 }
@@ -56,7 +56,7 @@
   z-index: -1;
   inset: -18%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(244,218,160,.22), rgba(232,199,122,.06) 48%, transparent 72%);
+  background: radial-gradient(circle, rgba(242, 215, 154, .22), rgba(226, 191, 119, .06) 48%, transparent 72%);
   filter: blur(10px);
   pointer-events: none;
 }
@@ -68,7 +68,7 @@
 
 .reference-splash__brand h1 {
   letter-spacing: -.045em;
-  text-shadow: 0 15px 38px rgba(0,0,0,.32), 0 0 22px rgba(232,199,122,.045) !important;
+  text-shadow: 0 15px 38px rgba(0,0,0,.32), 0 0 22px rgba(226, 191, 119, .045) !important;
 }
 
 .reference-splash__loader {
@@ -80,7 +80,7 @@
 }
 
 .reference-splash__loader span {
-  box-shadow: 0 0 10px rgba(244,218,160,.3);
+  box-shadow: 0 0 10px rgba(242, 215, 154, .3);
 }
 
 /* Error state remains visually part of the same brand family. */
@@ -102,7 +102,7 @@
   z-index: -1;
   inset: -16%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.17), transparent 70%);
+  background: radial-gradient(circle, rgba(226, 191, 119, .17), transparent 70%);
   filter: blur(9px);
   pointer-events: none;
 }
