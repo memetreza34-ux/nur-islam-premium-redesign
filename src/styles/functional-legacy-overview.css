@@ -1,0 +1,62 @@
+/* Legacy feature honesty: overviews are visually rich but not fake navigation. */
+.reference-legacy-list--overview > article {
+  min-height: 58px;
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 15px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .016));
+  color: var(--premium-cream, #fff7e8);
+}
+
+.reference-legacy-list--overview > article > span {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 10px;
+  color: var(--premium-gold, #e6c57f);
+  background: rgba(232, 199, 122, .075);
+  font-size: .76rem;
+  font-weight: 800;
+}
+
+.reference-legacy-list--overview > article > strong {
+  min-width: 0;
+  color: var(--premium-cream, #fff7e8);
+  font-size: .78rem;
+  line-height: 1.42;
+}
+
+.reference-legacy-list--checklist > button {
+  cursor: pointer;
+}
+
+.reference-legacy-list--checklist > button > svg:last-child {
+  color: rgba(157, 184, 171, .45);
+}
+
+.reference-legacy-list--checklist > button.is-complete > svg:last-child {
+  color: var(--premium-gold, #e6c57f);
+}
+
+[data-theme='light'] .reference-legacy-list--overview > article {
+  border-color: rgba(96, 74, 31, .12);
+  color: #20372e;
+  background: rgba(255, 255, 255, .58);
+}
+
+[data-theme='light'] .reference-legacy-list--overview > article > strong {
+  color: #20372e;
+}
+
+@media (max-width: 370px) {
+  .reference-legacy-list--overview > article {
+    padding-inline: 10px;
+  }
+}
