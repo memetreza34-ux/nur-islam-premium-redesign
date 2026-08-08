@@ -9,6 +9,7 @@ const legacyFeatures = await readFile(resolve(root, 'src/LegacyFeatureScreens.ts
 const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
+const appIcon = await readFile(resolve(root, 'public/nur-app-icon.svg'), 'utf8');
 const manifest = JSON.parse(await readFile(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
 
@@ -111,6 +112,13 @@ if (worker.includes("'/index.html'") || worker.includes("'/premium-assets/") || 
   throw new Error('Service worker still contains root-absolute app-shell paths.');
 }
 
+for (const color of ['#042a21', '#001b16', '#00120f', '#e2bf77', '#f2d79a', '#fff8ea']) {
+  if (!appIcon.includes(color)) throw new Error(`PWA SVG app icon is missing reference palette color: ${color}`);
+}
+if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Halbmond und Stern')) {
+  throw new Error('PWA SVG app icon must keep the Nur Islam identity metadata.');
+}
+
 if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== './') {
   throw new Error('PWA manifest must keep id, start_url, and scope relative to its deployment location.');
 }
@@ -130,4 +138,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
