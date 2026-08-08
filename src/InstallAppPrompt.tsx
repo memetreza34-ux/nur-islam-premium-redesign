@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { CircleCheck, Download, PlusSquare, Share2, X } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import {
+  clearPendingInstallPrompt,
+  subscribeInstallPrompt,
+} from './installPromptService';
+import type { BeforeInstallPromptEvent } from './installPromptService';
 import { NurMark, PremiumImage } from './PremiumVisuals';
 
 type InstallMode = 'native' | 'ios' | null;
-
-type BeforeInstallPromptEvent = Event & {
-  prompt: () => Promise<void>;
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
-};
 
 const DISMISSED_KEY = 'nur_install_prompt_dismissed';
 const ONBOARDING_KEY = 'nur_onboarding_complete';
@@ -53,11 +53,14 @@ export function InstallAppPrompt() {
     const isIos = isIosDevice();
     let revealTimer: number | undefined;
     let onboardingPoll: number | undefined;
+    let requestedMode: Exclude<InstallMode, null> | null = null;
 
     const revealWhenReady = (nextMode: Exclude<InstallMode, null>) => {
+      requestedMode = nextMode;
       const reveal = () => {
-        if (readFlag(DISMISSED_KEY) || isStandalone()) return;
-        revealTimer = window.setTimeout(() => setMode(nextMode), 1500);
+        if (readFlag(DISMISSED_KEY) || isStandalone() || !requestedMode) return;
+        if (revealTimer) window.clearTimeout(revealTimer);
+        revealTimer = window.setTimeout(() => setMode(requestedMode), 1500);
       };
 
       if (readFlag(ONBOARDING_KEY)) {
@@ -65,21 +68,23 @@ export function InstallAppPrompt() {
         return;
       }
 
+      if (onboardingPoll) return;
       onboardingPoll = window.setInterval(() => {
         if (!readFlag(ONBOARDING_KEY)) return;
         if (onboardingPoll) window.clearInterval(onboardingPoll);
+        onboardingPoll = undefined;
         reveal();
       }, 700);
     };
 
     if (isIos) revealWhenReady('ios');
 
-    const handlePrompt = (event: Event) => {
-      event.preventDefault();
+    const stopPromptSubscription = subscribeInstallPrompt((event) => {
+      setInstallEvent(event);
+      if (!event) return;
       setInstallError(null);
-      setInstallEvent(event as BeforeInstallPromptEvent);
       revealWhenReady('native');
-    };
+    });
 
     const handleInstalled = () => {
       setInstalled(true);
@@ -88,19 +93,19 @@ export function InstallAppPrompt() {
       window.setTimeout(() => setMode(null), 1700);
     };
 
-    window.addEventListener('beforeinstallprompt', handlePrompt);
     window.addEventListener('appinstalled', handleInstalled);
 
     return () => {
       if (revealTimer) window.clearTimeout(revealTimer);
       if (onboardingPoll) window.clearInterval(onboardingPoll);
-      window.removeEventListener('beforeinstallprompt', handlePrompt);
+      stopPromptSubscription();
       window.removeEventListener('appinstalled', handleInstalled);
     };
   }, []);
 
   const dismiss = () => {
     writeFlag(DISMISSED_KEY);
+    clearPendingInstallPrompt();
     setInstallEvent(null);
     setInstallError(null);
     setMode(null);
@@ -117,6 +122,7 @@ export function InstallAppPrompt() {
     try {
       await currentEvent.prompt();
       const choice = await currentEvent.userChoice;
+      clearPendingInstallPrompt();
       setInstallEvent(null);
       if (choice.outcome === 'accepted') {
         setInstalled(true);
@@ -125,6 +131,7 @@ export function InstallAppPrompt() {
         setMode(null);
       }
     } catch {
+      clearPendingInstallPrompt();
       setInstallEvent(null);
       setInstallError('Die Installation konnte nicht gestartet werden. Nutze alternativ die Installationsoption deines Browsers.');
     }
