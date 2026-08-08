@@ -5,6 +5,7 @@ const root = process.cwd();
 const vite = await readFile(resolve(root, 'vite.config.ts'), 'utf8');
 const paths = await readFile(resolve(root, 'src/appPaths.ts'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
+const legacyFeatures = await readFile(resolve(root, 'src/LegacyFeatureScreens.tsx'), 'utf8');
 const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
@@ -47,6 +48,18 @@ if (!visuals.includes("import { versionAppPath } from './appPaths';") || !visual
 if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260808-release-hardening';")) {
   throw new Error('PremiumImage is not pinned to the current release asset version.');
 }
+
+for (const requirement of [
+  "import { versionAppPath } from './appPaths';",
+  "const VISUAL_VERSION = '20260808-release-hardening';",
+  'const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);',
+]) {
+  if (!legacyFeatures.includes(requirement)) throw new Error(`Legacy hero assets are not deployment-safe: ${requirement}`);
+}
+if (legacyFeatures.includes("const VISUAL_REVISION = '8'") || legacyFeatures.includes('`${path}?v=${VISUAL_REVISION}`')) {
+  throw new Error('Legacy feature heroes still use the obsolete independent visual revision.');
+}
+
 if (main.includes('ReferenceArtworkHost')) {
   throw new Error('Main still mounts the obsolete fixed artwork host.');
 }
@@ -99,4 +112,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, current v12 service worker registration, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, current v12 service worker registration, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
