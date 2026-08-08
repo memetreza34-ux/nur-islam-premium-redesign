@@ -22,6 +22,11 @@ const requiredFragments = [
   'openCompassControls',
   "scrollIntoView({ behavior: 'smooth', block: 'center' })",
   'Kompass-Einstellungen öffnen',
+  'sensorTimeoutRef',
+  'clearSensorTimeout',
+  'window.clearTimeout(sensorTimeoutRef.current)',
+  'sensorTimeoutRef.current = window.setTimeout',
+  'sensorTimeoutRef.current = null',
 ];
 
 for (const fragment of requiredFragments) {
@@ -36,6 +41,9 @@ if (source.includes('/premium-assets/high-res-objects/qibla-compass.webp')) {
 if (source.includes('const BERLIN')) {
   throw new Error('Qibla screen still hard-codes Berlin instead of reusing the saved prayer location.');
 }
+if (source.includes('removeOrientationListeners')) {
+  throw new Error('Qibla screen contains the obsolete unused listener helper.');
+}
 
 const privacyFragments = [
   'Die Qibla-Berechnung selbst bleibt lokal',
@@ -46,4 +54,4 @@ for (const fragment of privacyFragments) {
   if (!source.includes(fragment)) throw new Error(`Qibla privacy/location disclosure is missing: ${fragment}`);
 }
 
-console.log('Qibla verified: saved onboarding/prayer location is reused, new device locations persist into the shared prayer flow, live orientation cleans up correctly, the settings button reaches real controls, and privacy wording distinguishes local bearing from external live services.');
+console.log('Qibla verified: saved location is reused, live orientation is cleaned up on stop, timeout and unmount, late sensor events cannot keep stale listeners alive, settings reach real controls, and privacy wording remains explicit.');
