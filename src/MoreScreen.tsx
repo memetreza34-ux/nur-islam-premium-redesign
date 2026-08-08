@@ -100,7 +100,7 @@ const supportRows: ProfileRow[] = [
 function readReminderEnabled() {
   try {
     const parsed = JSON.parse(localStorage.getItem('nur_prayer_notifications') || '[]') as unknown;
-    return Array.isArray(parsed) && parsed.length > 0;
+    return Array.isArray(parsed) && parsed.some((value) => typeof value === 'string' && OBLIGATORY_PRAYER_IDS.some((id) => id === value));
   } catch {
     return false;
   }
@@ -180,18 +180,17 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       return;
     }
 
-    if (!('Notification' in window)) {
-      flash('Systembenachrichtigungen werden auf diesem Gerät nicht unterstützt');
-      return;
+    let systemNotificationAvailable = 'Notification' in window && Notification.permission === 'granted';
+    if ('Notification' in window && Notification.permission === 'default') {
+      const permission = await Notification.requestPermission();
+      systemNotificationAvailable = permission === 'granted';
     }
-    const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
-    if (permission !== 'granted') {
-      flash('Benachrichtigungen wurden nicht freigegeben');
-      return;
-    }
+
     try { localStorage.setItem('nur_prayer_notifications', JSON.stringify(OBLIGATORY_PRAYER_IDS)); } catch { /* optional */ }
     setNotifications(true);
-    flash('Alle fünf Pflichtgebete sind für Erinnerungen aktiviert');
+    flash(systemNotificationAvailable
+      ? 'Alle fünf Pflichtgebete sind mit Systembenachrichtigungen aktiviert'
+      : 'Alle fünf Pflichtgebete sind als In-App-Erinnerungen aktiviert; Systembenachrichtigungen sind nicht verfügbar');
   };
 
   const repeatOnboarding = () => {
