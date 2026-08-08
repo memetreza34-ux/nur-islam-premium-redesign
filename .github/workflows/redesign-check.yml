@@ -3,9 +3,9 @@ name: Premium redesign check
 on:
   workflow_dispatch:
   push:
-    branches: [premium-home-redesign]
+    branches: [premium-home-redesign, premium-design-finish]
   pull_request:
-    branches: [main]
+    branches: [main, premium-home-redesign]
 
 permissions:
   contents: read
