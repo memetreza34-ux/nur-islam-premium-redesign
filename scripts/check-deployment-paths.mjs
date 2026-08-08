@@ -75,10 +75,23 @@ for (const requirement of [
 for (const requirement of [
   "resolveAppPath('sw.js')",
   'scope: import.meta.env.BASE_URL',
-  "SERVICE_WORKER_VERSION = '13-20260808-release-hardening'",
   'updateViaCache: \'none\'',
 ]) {
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
+}
+
+// The registration version has to match the worker's cache name, otherwise a
+// deployed worker is never picked up. Derived from the worker rather than
+// written out here: a hard-coded number has to be edited on every bump, and
+// the one time that was forgotten the two silently diverged.
+const workerCache = worker.match(/const CACHE_NAME = `nur-islam-premium-v(\d+)-\$\{VISUAL_VERSION\}`/);
+const workerVisual = worker.match(/const VISUAL_VERSION = '([^']+)'/);
+if (!workerCache || !workerVisual) {
+  throw new Error('Cannot read the service worker cache version; the naming scheme changed.');
+}
+const expectedRegistrationVersion = `${workerCache[1]}-${workerVisual[1]}`;
+if (!pwa.includes(`SERVICE_WORKER_VERSION = '${expectedRegistrationVersion}'`)) {
+  throw new Error(`PWA registration version must match the worker cache: expected '${expectedRegistrationVersion}'.`);
 }
 
 for (const requirement of [
@@ -88,7 +101,7 @@ for (const requirement of [
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
   'caches.match(INDEX_URL)',
-  'nur-islam-premium-v13',
+  `nur-islam-premium-v${workerCache[1]}`,
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);
 }
@@ -116,4 +129,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, current v13 service worker registration, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
+console.log(`Deployment paths verified: GitHub Pages base, matching v${workerCache[1]} service worker registration, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);

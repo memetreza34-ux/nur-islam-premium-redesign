@@ -167,16 +167,24 @@ requireText(main, [
   "'nur:open-calendar'",
 ], 'Application bootstrap');
 forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
+// Derived from the worker so a version bump cannot leave the registration and
+// the cache pointing at different generations.
+const swCacheMajor = sw.match(/const CACHE_NAME = `nur-islam-premium-v(\d+)-/)?.[1];
+const swVisual = sw.match(/const VISUAL_VERSION = '([^']+)'/)?.[1];
+if (!swCacheMajor || !swVisual) {
+  throw new Error('Cannot read the service worker cache version; the naming scheme changed.');
+}
+
 requireText(pwa, [
   'OPEN_CALENDAR',
-  '13-20260808-release-hardening',
+  `${swCacheMajor}-${swVisual}`,
   "window.dispatchEvent(new Event('nur:open-calendar'))",
 ], 'PWA registration');
 forbidText(pwa, ["url.searchParams.set('open', 'calendar')", 'window.location.assign(url.toString())'], 'PWA registration');
 requireText(sw, [
   'OPEN_CALENDAR',
   "event.notification.data?.target === 'calendar'",
-  'nur-islam-premium-v13',
+  `nur-islam-premium-v${swCacheMajor}`,
   'meta name="theme-color" content="#001b16"',
   'background:#00120f',
   'border-radius:28px',
@@ -208,4 +216,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v13 shell/colors, direct routing and accessibility.');
+console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors, direct routing and accessibility.`);
