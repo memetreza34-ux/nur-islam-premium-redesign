@@ -17,6 +17,7 @@ const [
   collections,
   assistant,
   more,
+  legacy,
   reading,
   devotionalCss,
   dailyCss,
@@ -35,6 +36,7 @@ const [
   read('src/CollectionsScreen.tsx'),
   read('src/AssistantScreen.tsx'),
   read('src/MoreScreen.tsx'),
+  read('src/LegacyFeatureScreens.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
   read('src/styles/premium-devotional-art-lock.css'),
   read('src/styles/premium-daily-inspiration-art-lock.css'),
@@ -109,6 +111,34 @@ requireFragments(more, 'Profile / More', [
   'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
 ]);
 
+requireFragments(legacy, 'Legacy feature artwork', [
+  "id: 'hadith-library'",
+  "art: '/premium-assets/high-res-objects/lantern-v2.webp'",
+  "id: 'knowledge'",
+  "art: '/premium-assets/high-res-objects/quran-open-v2.webp'",
+  "id: 'prophets'",
+  "art: '/premium-assets/high-res-objects/mihrab-v2.webp'",
+  "id: 'quiz'",
+  "art: '/premium-assets/high-res-objects/quran-closed-v2.webp'",
+  "id: 'hajj'",
+  "art: '/premium-assets/high-res-objects/kaaba-v2.webp'",
+  "id: 'sunnah'",
+  "art: '/premium-assets/high-res-objects/sun-emblem-v2.webp'",
+  "id: 'sins'",
+  "art: '/premium-assets/high-res-objects/dome-v2.webp'",
+  "id: 'fasting'",
+  "art: '/premium-assets/high-res-objects/calendar-chip-v2.webp'",
+  "id: 'ummah'",
+  "id: 'places'",
+  "art: '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
+  "id: 'jumuah'",
+  "art: '/premium-assets/high-res-objects/mihrab-arch-v2.webp'",
+  "id: 'zakat'",
+  "art: '/premium-assets/high-res-objects/bookmark-v2.webp'",
+  "id: 'standby'",
+  "art: '/premium-assets/high-res-objects/qibla-compass-v2.webp'",
+]);
+
 requireFragments(reading, 'Daily Ayah and worship guides', [
   'mihrab-arch-v2.webp" className="reference-ayah-hero__art"',
   "? '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
@@ -144,4 +174,4 @@ for (const [source, forbidden, message] of forbiddenPairs) {
   if (source.includes(forbidden)) throw new Error(message);
 }
 
-console.log('Reference image map verified: Home, onboarding, splash, Quran, reader, Dhikr, Qibla, mosque discovery, learning, collections, assistant, profile, daily Ayah/Hadith, Duas, calendar and worship screens use their intended premium artwork.');
+console.log('Reference image map verified: all primary screens plus the 13 legacy/additional feature areas use their intended premium artwork.');
