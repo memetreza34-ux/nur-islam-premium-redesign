@@ -33,6 +33,10 @@ type NoteItem = LocalNote | NurNote;
 
 const LOCAL_KEY = 'nur_local_notes_v1';
 
+function hasValidDate(value: unknown): value is string {
+  return typeof value === 'string' && Number.isFinite(Date.parse(value));
+}
+
 function readLocalNotes() {
   try {
     const parsed = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]') as unknown;
@@ -40,7 +44,11 @@ function readLocalNotes() {
     return parsed.filter((value): value is LocalNote => {
       if (!value || typeof value !== 'object') return false;
       const note = value as Partial<LocalNote>;
-      return typeof note.id === 'string' && typeof note.title === 'string' && typeof note.body === 'string' && typeof note.created_at === 'string' && typeof note.updated_at === 'string';
+      return typeof note.id === 'string'
+        && typeof note.title === 'string'
+        && typeof note.body === 'string'
+        && hasValidDate(note.created_at)
+        && hasValidDate(note.updated_at);
     });
   } catch {
     return [];
@@ -75,13 +83,19 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
       const local = readLocalNotes();
       setLocalNotesPending(local);
       if (current) {
-        const cloud = await listCloudNotes().catch(() => []);
-        if (!active) return;
-        setNotes(cloud);
+        try {
+          const cloud = await listCloudNotes();
+          if (!active) return;
+          setNotes(cloud);
+        } catch (reason) {
+          if (!active) return;
+          setNotes([]);
+          setStatus(reason instanceof Error ? `Cloud-Notizen konnten nicht geladen werden: ${reason.message}` : 'Cloud-Notizen konnten nicht geladen werden.');
+        }
       } else {
         setNotes(local);
       }
-      setBusy(false);
+      if (active) setBusy(false);
     });
     return () => { active = false; };
   }, []);
@@ -219,7 +233,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
             <em>{new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(note.updated_at))}</em>
           </button>
         ))}
-        {!busy && notes.length === 0 ? <div className="reference-empty-result"><NotebookPen size={25} /><strong>Noch keine Notizen</strong><small>Erstelle eine persönliche Notiz. Religiöse Rechtsfragen sollten nicht nur anhand persönlicher Notizen entschieden werden.</small></div> : null}
+        {!busy && notes.length === 0 ? <div className="reference-empty-result"><NotebookPen size={25} /><strong>Noch keine Notizen geladen</strong><small>{status?.startsWith('Cloud-Notizen konnten') ? 'Prüfe deine Verbindung oder Sitzung und öffne den Bereich erneut.' : 'Erstelle eine persönliche Notiz. Religiöse Rechtsfragen sollten nicht nur anhand persönlicher Notizen entschieden werden.'}</small></div> : null}
       </section>
 
       <section className="reference-note-editor">
