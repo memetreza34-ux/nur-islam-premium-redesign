@@ -1,0 +1,725 @@
+/* Premium visual lock for learning, profile and onboarding flows.
+   Presentation-only layer; loaded after the primary visual lock. */
+
+.reference-learn-screen,
+.reference-profile-screen,
+.reference-onboarding {
+  --flow-border: rgba(232, 199, 122, .16);
+  --flow-border-strong: rgba(232, 199, 122, .3);
+  --flow-panel: linear-gradient(145deg, rgba(9, 49, 37, .9), rgba(2, 21, 16, .98));
+  --flow-panel-soft: linear-gradient(145deg, rgba(12, 60, 45, .72), rgba(3, 26, 20, .94));
+  --flow-text: #fff7e8;
+  --flow-muted: rgba(155, 177, 166, .8);
+  --flow-gold: #e8c984;
+  --flow-shadow: 0 18px 42px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .025);
+}
+
+/* ---------- Learning ---------- */
+.reference-learn-screen {
+  gap: 14px;
+}
+
+.reference-prayer-learning-hub {
+  position: relative;
+  min-height: 292px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--flow-border-strong);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(242, 205, 126, .18), transparent 11rem),
+    linear-gradient(145deg, #104f3c 0%, #062d22 56%, #02140f 100%);
+  box-shadow: 0 28px 66px rgba(0, 0, 0, .31), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-prayer-learning-hub::after {
+  position: absolute;
+  right: -70px;
+  bottom: -86px;
+  width: 230px;
+  height: 230px;
+  border: 1px solid rgba(232, 199, 122, .07);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(232, 199, 122, .018), 0 0 0 58px rgba(232, 199, 122, .012);
+  content: '';
+  pointer-events: none;
+}
+
+.reference-prayer-learning-hub__copy {
+  position: relative;
+  z-index: 3;
+  max-width: 70%;
+}
+
+.reference-prayer-learning-hub__copy h2 {
+  margin-top: 13px;
+  color: var(--flow-text);
+  font-size: clamp(2.35rem, 10vw, 3rem);
+  font-weight: 600;
+  line-height: .9;
+  letter-spacing: -.045em;
+}
+
+.reference-prayer-learning-hub__copy > p {
+  max-width: 245px;
+  margin-top: 12px;
+  color: rgba(175, 195, 185, .75);
+  font-size: .64rem;
+  line-height: 1.6;
+}
+
+.reference-prayer-learning-hub > .premium-image {
+  right: -36px;
+  bottom: -8px;
+  width: 210px;
+  height: 240px;
+  opacity: .9;
+  filter: drop-shadow(0 28px 26px rgba(0, 0, 0, .4));
+}
+
+.reference-prayer-learning-hub__progress {
+  gap: 7px;
+  margin-top: 16px;
+}
+
+.reference-prayer-learning-hub__progress > span {
+  height: 5px;
+  background: rgba(255, 255, 255, .065);
+}
+
+.reference-prayer-learning-hub__progress > span > i {
+  background: linear-gradient(90deg, #bd8530, #f0d594);
+  box-shadow: 0 0 16px rgba(232, 199, 122, .22);
+}
+
+.reference-prayer-learning-hub__copy > .gold-button {
+  min-height: 44px;
+  margin-top: 15px;
+  padding-inline: 14px;
+  border-radius: 14px;
+}
+
+.reference-prayer-learning-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-prayer-learning-actions > button {
+  min-height: 118px;
+  align-content: start;
+  justify-items: start;
+  gap: 8px;
+  padding: 13px;
+  border: 1px solid var(--flow-border);
+  border-radius: 20px;
+  background: var(--flow-panel);
+  box-shadow: var(--flow-shadow);
+  text-align: left;
+}
+
+.reference-prayer-learning-actions > button > span:first-child {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .18);
+  border-radius: 14px;
+  color: var(--flow-gold);
+  background: rgba(232, 199, 122, .055);
+}
+
+.reference-prayer-learning-actions > button > span:nth-child(2) {
+  display: grid;
+  gap: 3px;
+}
+
+.reference-prayer-learning-actions > button strong {
+  color: var(--flow-text);
+  font-size: .66rem;
+}
+
+.reference-prayer-learning-actions > button small {
+  color: var(--flow-muted);
+  font-size: .48rem;
+  line-height: 1.4;
+}
+
+.reference-prayer-learning-actions > button > svg {
+  position: absolute;
+  top: 14px;
+  right: 12px;
+  color: rgba(232, 199, 122, .45);
+}
+
+.reference-five-prayer-lessons > div:last-child {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-five-prayer-lessons > div:last-child > button {
+  min-height: 74px;
+  padding: 9px 11px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(8, 44, 33, .72), rgba(2, 22, 17, .91));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-five-prayer-lessons > div:last-child > button.is-complete {
+  border-color: rgba(104, 194, 135, .18);
+  background:
+    radial-gradient(circle at 0 50%, rgba(85, 176, 116, .055), transparent 8rem),
+    linear-gradient(145deg, rgba(8, 48, 35, .78), rgba(2, 23, 17, .92));
+}
+
+.reference-five-prayer-lessons > div:last-child > button > span:first-child {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 14px;
+  color: var(--flow-gold);
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-knowledge-overview {
+  padding: 10px 12px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .02);
+}
+
+.reference-category-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.reference-category-card {
+  min-height: 142px;
+  padding: 15px;
+  border-radius: 21px;
+}
+
+.reference-category-card__icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+}
+
+.reference-category-card strong {
+  color: var(--flow-text);
+  font-size: .78rem;
+}
+
+.reference-category-card small,
+.reference-category-card em {
+  color: var(--flow-muted);
+}
+
+.reference-expanded-learning-grid {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-expanded-learning-grid > button {
+  min-height: 76px;
+  padding: 10px 12px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 18px;
+  background: var(--flow-panel);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-expanded-learning-grid__icon {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 14px;
+  color: var(--flow-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-knowledge-quote {
+  padding: 17px;
+  border: 1px solid rgba(232, 199, 122, .14);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 10% 50%, rgba(232, 199, 122, .07), transparent 8rem),
+    var(--flow-panel);
+  box-shadow: var(--flow-shadow);
+}
+
+/* ---------- More / profile ---------- */
+.reference-profile-screen {
+  gap: 14px;
+}
+
+.reference-profile-greeting {
+  grid-template-columns: 52px minmax(0, 1fr) 44px;
+  min-height: 124px;
+  padding: 16px;
+  border-radius: 25px !important;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(232, 199, 122, .1), transparent 10rem),
+    linear-gradient(145deg, #0e4c39, #052a20 58%, #02140f) !important;
+  box-shadow: 0 23px 54px rgba(0, 0, 0, .27), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-profile-greeting__logo {
+  width: 50px;
+  height: 50px;
+  border: 1px solid rgba(232, 199, 122, .18);
+  border-radius: 16px;
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-profile-greeting h2 {
+  margin-top: 3px;
+  color: var(--flow-text);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: .96;
+}
+
+.reference-profile-greeting p {
+  margin-top: 6px;
+  color: var(--flow-muted);
+  font-size: .52rem;
+  line-height: 1.5;
+}
+
+.reference-profile-avatar {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .26);
+  border-radius: 14px;
+  color: #17362b;
+  background: linear-gradient(145deg, #f3dda8, #c79441);
+  font-size: .58rem;
+  font-weight: 850;
+}
+
+.reference-account-entry {
+  min-height: 76px;
+  padding: 11px 12px !important;
+  border-radius: 20px !important;
+  background:
+    radial-gradient(circle at 0 50%, rgba(232, 199, 122, .055), transparent 7rem),
+    var(--flow-panel) !important;
+}
+
+.reference-profile-section {
+  display: grid;
+  gap: 9px;
+}
+
+.reference-core-access__heading {
+  align-items: end;
+}
+
+.reference-core-access-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-core-access-grid > button {
+  min-height: 88px;
+  padding: 12px;
+  border-radius: 19px !important;
+}
+
+.reference-core-access-grid__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px !important;
+}
+
+.reference-core-access-grid > button strong {
+  color: var(--flow-text);
+  font-size: .64rem;
+}
+
+.reference-core-access-grid > button small {
+  color: var(--flow-muted);
+}
+
+.reference-profile-list {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-profile-row {
+  min-height: 68px;
+  padding: 10px 11px !important;
+  border-radius: 18px !important;
+}
+
+.reference-profile-row__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px !important;
+}
+
+.reference-profile-row__copy strong {
+  color: var(--flow-text);
+  font-size: .62rem;
+}
+
+.reference-profile-row__copy small {
+  color: var(--flow-muted);
+  font-size: .48rem;
+}
+
+.reference-services-section__intro {
+  margin: -2px 1px 1px;
+  color: rgba(150, 172, 162, .68);
+  font-size: .49rem;
+  line-height: 1.5;
+}
+
+.reference-services-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-services-grid > button {
+  min-height: 86px;
+  padding: 11px;
+  border-radius: 19px !important;
+}
+
+.reference-services-grid__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px !important;
+}
+
+.reference-profile-logout {
+  min-height: 48px;
+  border-radius: 15px;
+}
+
+.reference-profile-modal,
+.reference-learning-plan-modal {
+  border-color: rgba(232, 199, 122, .25) !important;
+  border-radius: 27px !important;
+  background:
+    radial-gradient(circle at 78% 5%, rgba(232, 199, 122, .085), transparent 11rem),
+    linear-gradient(155deg, #0b3d2f, #031b15 66%, #020e0b) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-choice-grid {
+  gap: 8px;
+}
+
+.reference-choice {
+  min-height: 66px;
+  border-radius: 17px;
+}
+
+.reference-choice--active {
+  border-color: rgba(232, 199, 122, .32);
+  box-shadow: 0 8px 20px rgba(193, 139, 48, .14);
+}
+
+/* ---------- Onboarding ---------- */
+.app-shell--onboarding {
+  width: min(calc(100% - 18px), 446px);
+}
+
+.reference-onboarding {
+  min-height: calc(100svh - 18px - max(10px, env(safe-area-inset-bottom)));
+  gap: 14px;
+}
+
+.reference-onboarding__topbar {
+  min-height: 48px;
+}
+
+.reference-onboarding__brand {
+  gap: 8px;
+}
+
+.reference-onboarding__brand .premium-image {
+  width: 34px;
+  height: 34px;
+}
+
+.reference-onboarding__brand strong {
+  color: var(--flow-text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+.reference-onboarding__topbar > button {
+  min-height: 38px;
+  padding-inline: 12px;
+  border-radius: 12px;
+}
+
+.reference-onboarding__slide {
+  gap: 15px;
+}
+
+.reference-onboarding__visual {
+  min-height: 344px;
+  overflow: hidden;
+  border-radius: 31px;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(240, 202, 124, .14), transparent 12rem),
+    linear-gradient(155deg, #0d4736 0%, #05261d 60%, #02120e 100%);
+  box-shadow: 0 30px 76px rgba(0, 0, 0, .36), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-onboarding__visual > .premium-image {
+  filter: saturate(.94) drop-shadow(0 28px 26px rgba(0, 0, 0, .42));
+}
+
+.reference-onboarding__visual-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+}
+
+.reference-onboarding__copy {
+  padding-inline: 4px;
+}
+
+.reference-onboarding__copy .overline {
+  display: inline-flex;
+  width: fit-content;
+  min-height: 23px;
+  align-items: center;
+  padding: 0 9px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 999px;
+  background: rgba(232, 199, 122, .035);
+}
+
+.reference-onboarding__copy h1 {
+  max-width: 380px;
+  margin-top: 7px;
+  font-size: clamp(2.25rem, 9.6vw, 2.8rem);
+  line-height: .92;
+  letter-spacing: -.042em;
+}
+
+.reference-onboarding__copy p {
+  max-width: 385px;
+  margin-top: 3px;
+  color: rgba(166, 187, 177, .82);
+  font-size: .61rem;
+}
+
+.reference-onboarding__points {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.reference-onboarding__points span {
+  min-height: 64px;
+  align-content: start;
+  padding: 10px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 15px;
+  color: rgba(238, 235, 224, .78);
+  background: rgba(255, 255, 255, .018);
+  font-size: .48rem;
+  line-height: 1.42;
+}
+
+.reference-onboarding__points span svg {
+  color: var(--flow-gold);
+}
+
+.reference-onboarding__permissions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.reference-onboarding__permissions > button {
+  min-height: 76px;
+  align-items: center;
+  padding: 10px 11px;
+  border-radius: 18px;
+}
+
+.reference-onboarding__permissions > button > span:first-child {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 13px;
+  color: var(--flow-gold);
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-onboarding__permissions > button strong {
+  color: var(--flow-text);
+}
+
+.reference-onboarding__permissions > button small {
+  color: var(--flow-muted);
+}
+
+.reference-onboarding__privacy {
+  grid-column: 1 / -1;
+  padding: 8px 10px;
+  border: 1px solid rgba(100, 190, 129, .1);
+  border-radius: 13px;
+  color: rgba(145, 184, 157, .75);
+  background: rgba(74, 159, 99, .035);
+}
+
+.reference-onboarding__footer {
+  position: sticky;
+  z-index: 10;
+  bottom: 0;
+  gap: 8px;
+  padding: 8px 4px max(5px, env(safe-area-inset-bottom));
+  background: linear-gradient(180deg, transparent, rgba(2, 13, 10, .9) 36%, rgba(2, 13, 10, .98));
+}
+
+.reference-onboarding__dots {
+  min-height: 16px;
+}
+
+.reference-onboarding__actions {
+  gap: 8px;
+}
+
+.reference-onboarding__actions > button {
+  min-height: 48px;
+  border-radius: 14px;
+}
+
+.reference-onboarding__actions .gold-button {
+  flex: 1.15;
+}
+
+.reference-onboarding__status {
+  margin: 0;
+  padding: 9px 10px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 13px;
+  color: rgba(224, 233, 227, .78);
+  background: rgba(3, 25, 19, .94);
+  line-height: 1.45;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-prayer-learning-hub {
+    min-height: 280px;
+    padding: 19px;
+  }
+
+  .reference-prayer-learning-hub__copy {
+    max-width: 76%;
+  }
+
+  .reference-prayer-learning-hub > .premium-image {
+    right: -58px;
+    width: 198px;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 314px;
+  }
+
+  .reference-onboarding__points {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-onboarding__points span {
+    min-height: 44px;
+    grid-template-columns: 20px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .reference-onboarding__permissions {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-onboarding__privacy {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-prayer-learning-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-prayer-learning-actions > button {
+    min-height: 72px;
+    grid-template-columns: 42px minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .reference-core-access-grid,
+  .reference-services-grid,
+  .reference-category-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 278px;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 2rem;
+  }
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-learn-screen,
+[data-theme='light'] .reference-profile-screen,
+[data-theme='light'] .reference-onboarding {
+  --flow-border: rgba(119, 89, 37, .14);
+  --flow-border-strong: rgba(119, 89, 37, .23);
+  --flow-panel: linear-gradient(145deg, rgba(255, 253, 247, .98), rgba(243, 237, 222, .97));
+  --flow-panel-soft: linear-gradient(145deg, rgba(255, 252, 243, .96), rgba(238, 231, 213, .96));
+  --flow-text: #17372c;
+  --flow-muted: rgba(55, 76, 66, .7);
+  --flow-gold: #98702c;
+  --flow-shadow: 0 15px 32px rgba(55, 43, 22, .09), inset 0 1px 0 rgba(255, 255, 255, .72);
+}
+
+[data-theme='light'] .reference-prayer-learning-actions > button,
+[data-theme='light'] .reference-five-prayer-lessons > div:last-child > button,
+[data-theme='light'] .reference-expanded-learning-grid > button,
+[data-theme='light'] .reference-core-access-grid > button,
+[data-theme='light'] .reference-profile-row,
+[data-theme='light'] .reference-services-grid > button,
+[data-theme='light'] .reference-account-entry {
+  color: #17372c;
+  background: var(--flow-panel) !important;
+  box-shadow: var(--flow-shadow) !important;
+}
+
+[data-theme='light'] .reference-profile-greeting {
+  color: #17372c;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reference-prayer-learning-actions > button:hover,
+  .reference-five-prayer-lessons > div:last-child > button:hover,
+  .reference-category-card:hover,
+  .reference-expanded-learning-grid > button:hover,
+  .reference-core-access-grid > button:hover,
+  .reference-profile-row:hover,
+  .reference-services-grid > button:hover,
+  .reference-onboarding__permissions > button:hover {
+    border-color: rgba(232, 199, 122, .29) !important;
+    transform: translateY(-1px);
+  }
+}
