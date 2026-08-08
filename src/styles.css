@@ -69,6 +69,7 @@
 @import './styles/premium-entry-system.css';
 @import './styles/premium-visual-lock.css';
 @import './styles/premium-flow-lock.css';
+@import './styles/premium-depth-lock.css';
 
 /* Small lock correction: preserve the original card grid alignment. */
 .reference-prayer-learning-actions > button > svg {
