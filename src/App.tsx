@@ -19,7 +19,6 @@ import {
   Sparkles,
   Sunrise,
   SunMedium,
-  UsersRound,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import { AssistantScreen } from './AssistantScreen';
@@ -372,7 +371,7 @@ function PremiumHome({
 
       <section className="inspiration-grid inspiration-grid--v2">
         <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
-          <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
+          <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
           <div className="card-title-row"><span><Sparkles size={16} /> Ayah des Tages</span><span><BookHeart size={18} /></span></div>
           <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
@@ -391,7 +390,7 @@ function PremiumHome({
         <div className="recommendation-list">
           <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Übersicht</small><strong>Regionen und Gemeinschaften entdecken</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><UsersRound size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><MapPin size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
         </div>
       </section>
@@ -401,17 +400,17 @@ function PremiumHome({
 
 function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: (tab: PrimaryTab) => void }) {
   const items: Array<{ id: PrimaryTab; label: string; icon: LucideIcon }> = [
-    { id: 'home', label: 'Home', icon: Home },
+    { id: 'home', label: 'Start', icon: Home },
     { id: 'prayer', label: 'Gebete', icon: SunMedium },
     { id: 'calendar', label: 'Kalender', icon: CalendarDays },
-    { id: 'learn', label: 'Lernen', icon: BookOpen },
+    { id: 'learn', label: 'Islam verstehen', icon: BookOpen },
     { id: 'profile', label: 'Mehr', icon: Menu },
   ];
 
   return (
     <nav className="bottom-nav" aria-label="Hauptnavigation">
       {items.map(({ id, label, icon: Icon }) => (
-        <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)}>
+        <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
           <span><Icon size={20} /></span><small>{label}</small>
         </button>
       ))}
