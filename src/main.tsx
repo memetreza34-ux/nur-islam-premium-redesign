@@ -82,11 +82,6 @@ if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'm
 window.scrollTo(0, 0);
 registerNurPwa();
 
-function openCalendarFromShell() {
-  const navigationItems = document.querySelectorAll<HTMLButtonElement>('.bottom-nav__item');
-  navigationItems[2]?.click();
-}
-
 function BootRoot() {
   const [ready, setReady] = useState(false);
   const [, setPrayerTimesVersion] = useState(0);
@@ -146,8 +141,7 @@ function BootRoot() {
   useEffect(() => {
     if (!ready || !initialNavigationIntent) return undefined;
     const timer = window.setTimeout(() => {
-      if (initialNavigationIntent === 'prayer') window.dispatchEvent(new Event('nur:open-prayer'));
-      else openCalendarFromShell();
+      window.dispatchEvent(new Event(initialNavigationIntent === 'prayer' ? 'nur:open-prayer' : 'nur:open-calendar'));
     }, 80);
     return () => window.clearTimeout(timer);
   }, [ready]);
