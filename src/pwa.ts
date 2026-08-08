@@ -1,6 +1,6 @@
 import { resolveAppPath } from './appPaths';
 
-const SERVICE_WORKER_VERSION = '10-20260807-base-path';
+const SERVICE_WORKER_VERSION = '11-20260808-release-hardening';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
@@ -17,6 +17,13 @@ export function registerNurPwa() {
       if (event.data?.type === 'OPEN_PRAYER') {
         try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
         window.dispatchEvent(new Event('nur:open-prayer'));
+        return;
+      }
+      if (event.data?.type === 'OPEN_CALENDAR') {
+        try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
+        const url = new URL(window.location.href);
+        url.searchParams.set('open', 'calendar');
+        window.location.assign(url.toString());
       }
     });
   }
@@ -40,19 +47,12 @@ export function registerNurPwa() {
       })
       .then(async (registration) => {
         await registration.update();
-
-        if (registration.waiting) {
-          registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-        }
-
+        if (registration.waiting) registration.waiting.postMessage({ type: 'SKIP_WAITING' });
         registration.addEventListener('updatefound', () => {
           const worker = registration.installing;
           if (!worker) return;
-
           worker.addEventListener('statechange', () => {
-            if (worker.state === 'installed' && navigator.serviceWorker.controller) {
-              worker.postMessage({ type: 'SKIP_WAITING' });
-            }
+            if (worker.state === 'installed' && navigator.serviceWorker.controller) worker.postMessage({ type: 'SKIP_WAITING' });
           });
         });
       })
