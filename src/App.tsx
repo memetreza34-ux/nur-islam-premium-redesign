@@ -202,7 +202,7 @@ function PremiumHome({
   onOpenReader,
 }: {
   onNavigate: (tab: Tab) => void;
-  onOpenReader: (surahNumber: number) => void;
+  onOpenReader: (surahNumber: number, ayahNumber?: number) => void;
 }) {
   const [toast, setToast] = useState<string | null>(null);
   const [now, setNow] = useState(() => new Date());
@@ -264,7 +264,7 @@ function PremiumHome({
     window.setTimeout(() => setToast(null), 2200);
   };
 
-  const openLastRead = () => onOpenReader(quranProgress.surahNumber);
+  const openLastRead = () => onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber);
 
   return (
     <motion.main
@@ -430,6 +430,7 @@ export default function App() {
   const [onboardingComplete, setOnboardingComplete] = useState(hasCompletedOnboarding);
   const [activeTab, setActiveTab] = useState<Tab>('home');
   const [selectedSurahNumber, setSelectedSurahNumber] = useState(112);
+  const [selectedAyahNumber, setSelectedAyahNumber] = useState(1);
   const [selectedDuaId, setSelectedDuaId] = useState<string | null>(null);
   const [selectedNameId, setSelectedNameId] = useState<string | null>(null);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<string | null>(null);
@@ -445,7 +446,7 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, onboardingComplete, selectedSurahNumber, selectedDuaId, selectedNameId, selectedCalendarDate]);
+  }, [activeTab, onboardingComplete, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate]);
 
   const clearDirectTargets = () => {
     setSelectedDuaId(null);
@@ -474,11 +475,15 @@ export default function App() {
     clearDirectTargets();
     setActiveTab('home');
   };
-  const goQuran = () => setActiveTab('quran');
+  const goQuran = () => {
+    setSelectedAyahNumber(1);
+    setActiveTab('quran');
+  };
   const goLearn = () => setActiveTab('learn');
-  const openReader = (surahNumber: number) => {
+  const openReader = (surahNumber: number, ayahNumber = 1) => {
     clearDirectTargets();
     setSelectedSurahNumber(surahNumber);
+    setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)));
     setActiveTab('reader');
   };
   const openSavedDua = (id: string) => {
@@ -523,7 +528,7 @@ export default function App() {
       : activeTab === 'quran'
         ? <QuranScreen onBack={goHome} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
         : activeTab === 'reader'
-          ? <QuranReaderScreen surahNumber={selectedSurahNumber} onBack={goQuran} onOpenSurah={setSelectedSurahNumber} />
+          ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goQuran} onOpenSurah={(number) => openReader(number, 1)} />
           : activeTab === 'ayah'
             ? <AyahDetailScreen onBack={goHome} />
             : activeTab === 'hadith'
@@ -569,7 +574,7 @@ export default function App() {
       <div className="background-orbit background-orbit--two" />
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
         <AnimatePresence mode="wait">
-          <motion.div key={`${activeTab}-${activeTab === 'reader' ? selectedSurahNumber : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
+          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
             {screen}
           </motion.div>
         </AnimatePresence>
