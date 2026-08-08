@@ -5,18 +5,18 @@
   width: min(calc(100% - 22px), 430px);
   min-height: calc(100svh - max(18px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)));
   padding: 40px 20px;
-  border-color: rgba(232, 199, 122, .2);
-  border-radius: 31px;
+  border-color: rgba(226, 191, 119, .2);
+  border-radius: 42px;
   background:
-    radial-gradient(circle at 50% 23%, rgba(49, 136, 99, .2), transparent 18rem),
-    radial-gradient(circle at 50% 64%, rgba(225, 184, 96, .09), transparent 15rem),
-    linear-gradient(165deg, #09281f 0%, #03140f 59%, #010806 100%);
+    radial-gradient(circle at 50% 23%, rgba(13, 87, 67, .2), transparent 18rem),
+    radial-gradient(circle at 50% 64%, rgba(226, 191, 119, .09), transparent 15rem),
+    linear-gradient(165deg, #042a21 0%, #001b16 59%, #00120f 100%);
   box-shadow: 0 32px 90px rgba(0, 0, 0, .44), inset 0 1px 0 rgba(255, 255, 255, .035);
 }
 
 .reference-splash__halo {
-  border-color: rgba(232, 199, 122, .1);
-  background: radial-gradient(circle, rgba(232, 199, 122, .09), transparent 68%);
+  border-color: rgba(226, 191, 119, .1);
+  background: radial-gradient(circle, rgba(226, 191, 119, .09), transparent 68%);
 }
 
 .reference-splash__mosque {
@@ -29,13 +29,13 @@
 }
 
 .reference-splash h1 {
-  color: #fff8e9;
+  color: #fff8ea;
   font-weight: 600;
   text-shadow: 0 12px 34px rgba(0, 0, 0, .3);
 }
 
 .reference-splash p {
-  color: rgba(241, 234, 218, .6);
+  color: rgba(246, 235, 214, .6);
 }
 
 .reference-splash__loader {
@@ -44,7 +44,7 @@
 }
 
 .reference-splash__loader span {
-  background: linear-gradient(90deg, transparent, #f4dca3, transparent);
+  background: linear-gradient(90deg, transparent, #f2d79a, transparent);
 }
 
 /* Onboarding */
@@ -60,7 +60,7 @@
 
 .reference-onboarding::before {
   opacity: .8;
-  background: radial-gradient(circle at 50% 32%, rgba(42, 126, 91, .22), transparent 62%);
+  background: radial-gradient(circle at 50% 32%, rgba(13, 87, 67, .22), transparent 62%);
 }
 
 .reference-onboarding__topbar {
@@ -68,36 +68,38 @@
 }
 
 .reference-onboarding__topbar > button {
-  border-color: rgba(232, 199, 122, .14);
-  color: rgba(169, 188, 178, .82);
-  background: rgba(4, 28, 22, .62);
+  border-color: rgba(226, 191, 119, .14);
+  border-radius: 18px;
+  color: rgba(145, 168, 158, .82);
+  background: rgba(0, 27, 22, .62);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .02);
 }
 
 .reference-onboarding__visual {
   min-height: 324px;
-  border-color: rgba(232, 199, 122, .25);
-  border-radius: 29px;
+  border-color: rgba(242, 215, 154, .25);
+  border-radius: 42px;
   background:
-    radial-gradient(circle at 50% 28%, rgba(232, 199, 122, .11), transparent 12rem),
-    linear-gradient(150deg, rgba(13, 57, 43, .98), rgba(3, 20, 15, .995));
+    radial-gradient(circle at 50% 28%, rgba(226, 191, 119, .11), transparent 12rem),
+    linear-gradient(150deg, rgba(13, 87, 67, .98), rgba(0, 18, 15, .995));
   box-shadow: 0 28px 70px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .03);
 }
 
 .reference-onboarding__visual::after {
   background:
-    linear-gradient(0deg, rgba(1, 11, 8, .68), transparent 50%),
-    radial-gradient(circle at 50% 50%, transparent 38%, rgba(1, 9, 7, .38) 100%);
+    linear-gradient(0deg, rgba(0, 18, 15, .68), transparent 50%),
+    radial-gradient(circle at 50% 50%, transparent 38%, rgba(0, 18, 15, .38) 100%);
 }
 
 .reference-onboarding__halo {
-  border-color: rgba(232, 199, 122, .1);
-  box-shadow: 0 0 0 32px rgba(232, 199, 122, .018), 0 0 0 68px rgba(232, 199, 122, .012);
+  border-color: rgba(226, 191, 119, .1);
+  box-shadow: 0 0 0 32px rgba(226, 191, 119, .018), 0 0 0 68px rgba(226, 191, 119, .012);
 }
 
 .reference-onboarding__visual-icon {
-  border-color: rgba(232, 199, 122, .2);
-  background: rgba(3, 25, 19, .72);
+  border-color: rgba(226, 191, 119, .2);
+  border-radius: 13px;
+  background: rgba(0, 27, 22, .72);
   box-shadow: 0 10px 24px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
 }
 
@@ -106,7 +108,7 @@
 }
 
 .reference-onboarding__copy h1 {
-  color: #fff8e9;
+  color: #fff8ea;
   font-size: 2.22rem;
   font-weight: 600;
   letter-spacing: -.03em;
@@ -114,43 +116,42 @@
 }
 
 .reference-onboarding__copy p {
-  color: rgba(156, 178, 167, .9);
+  color: rgba(145, 168, 158, .9);
   line-height: 1.62;
 }
 
 .reference-onboarding__points span {
-  color: rgba(242, 236, 222, .78);
+  color: rgba(246, 235, 214, .78);
 }
 
 .reference-onboarding__permissions > button {
   min-height: 60px;
-  border-color: rgba(232, 199, 122, .14);
-  border-radius: 17px;
-  background: linear-gradient(145deg, rgba(8, 44, 34, .78), rgba(3, 23, 18, .92));
+  border-color: rgba(226, 191, 119, .14);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(7, 55, 43, .78), rgba(0, 18, 15, .92));
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
 }
 
 .reference-onboarding__permissions > button.is-ready {
   border-color: rgba(115, 192, 139, .22);
-  background: linear-gradient(145deg, rgba(13, 61, 45, .88), rgba(3, 28, 21, .96));
+  background: linear-gradient(145deg, rgba(13, 87, 67, .64), rgba(0, 27, 22, .96));
 }
 
 .reference-onboarding__footer {
   padding-bottom: max(4px, env(safe-area-inset-bottom));
 }
 
-.reference-onboarding__dots button {
-  background: rgba(255, 255, 255, .09);
-}
-
+/* The actual page indicator is the ::after track defined by reference-onboarding.css. */
+.reference-onboarding__dots button,
 .reference-onboarding__dots button.is-active {
-  background: linear-gradient(90deg, #f1d697, #c8953f);
-  box-shadow: 0 0 14px rgba(232, 199, 122, .18);
+  background: transparent;
+  box-shadow: none;
 }
 
 .reference-onboarding__actions .gold-button {
   min-height: 46px;
-  box-shadow: 0 10px 24px rgba(117, 77, 22, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
+  border-radius: 18px;
+  box-shadow: 0 10px 24px rgba(141, 109, 57, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
 }
 
 /* Assistant */
@@ -163,38 +164,38 @@
 .reference-assistant-suggestions > div > button,
 .reference-chat-message--assistant,
 .reference-assistant-input {
-  border-color: rgba(232, 199, 122, .15) !important;
+  border-color: rgba(226, 191, 119, .15) !important;
   box-shadow: 0 13px 30px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
 }
 
 .reference-assistant-greeting {
-  border-radius: 23px !important;
+  border-radius: 28px !important;
   background:
-    radial-gradient(circle at 0% 0%, rgba(232, 199, 122, .075), transparent 9rem),
-    linear-gradient(145deg, rgba(10, 54, 41, .9), rgba(3, 23, 18, .98)) !important;
+    radial-gradient(circle at 0% 0%, rgba(226, 191, 119, .075), transparent 9rem),
+    linear-gradient(145deg, rgba(13, 87, 67, .9), rgba(0, 18, 15, .98)) !important;
 }
 
 .reference-assistant-suggestions > div > button,
 .reference-chat-message--assistant {
   border-radius: 18px !important;
-  background: linear-gradient(145deg, rgba(8, 45, 34, .78), rgba(3, 23, 18, .94)) !important;
+  background: linear-gradient(145deg, rgba(7, 55, 43, .78), rgba(0, 18, 15, .94)) !important;
 }
 
 .reference-chat-message--user {
   border-radius: 18px !important;
-  color: #143027 !important;
-  background: linear-gradient(145deg, #f3dba3, #c99848) !important;
-  box-shadow: 0 10px 24px rgba(151, 103, 30, .18) !important;
+  color: #001b16 !important;
+  background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
+  box-shadow: 0 10px 24px rgba(141, 109, 57, .18) !important;
 }
 
 .reference-assistant-safety {
-  border-radius: 17px !important;
-  background: rgba(71, 151, 96, .045) !important;
+  border-radius: 18px !important;
+  background: rgba(13, 87, 67, .1) !important;
 }
 
 .reference-assistant-input {
   border-radius: 18px !important;
-  background: rgba(3, 24, 19, .92) !important;
+  background: rgba(0, 27, 22, .92) !important;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
 }
@@ -204,26 +205,27 @@
   right: 12px;
   left: 12px;
   width: min(calc(100% - 24px), 410px);
-  border-color: rgba(232, 199, 122, .22);
-  border-radius: 20px;
+  border-color: rgba(226, 191, 119, .22);
+  border-radius: 28px;
   background:
-    radial-gradient(circle at 8% 50%, rgba(232, 199, 122, .08), transparent 7rem),
-    linear-gradient(145deg, rgba(9, 49, 37, .97), rgba(2, 18, 14, .99));
+    radial-gradient(circle at 8% 50%, rgba(226, 191, 119, .08), transparent 7rem),
+    linear-gradient(145deg, rgba(7, 55, 43, .97), rgba(0, 18, 15, .99));
   box-shadow: 0 24px 65px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .03);
   backdrop-filter: blur(28px) saturate(1.06);
   -webkit-backdrop-filter: blur(28px) saturate(1.06);
 }
 
 .reference-install-prompt__action {
-  min-height: 40px;
-  border-color: rgba(255, 244, 215, .24);
-  border-radius: 12px;
-  background: linear-gradient(135deg, #f3dba0, #c9953e);
+  min-height: 44px;
+  border-color: rgba(242, 215, 154, .24);
+  border-radius: 18px;
+  background: linear-gradient(135deg, #f2d79a, #e2bf77);
 }
 
 .reference-install-prompt__close {
-  border-color: rgba(232, 199, 122, .18);
-  background: #041b15;
+  border-color: rgba(226, 191, 119, .18);
+  border-radius: 18px;
+  background: #001b16;
 }
 
 /* System banners */
@@ -231,10 +233,10 @@
 .reference-prayer-reminder-banner,
 .reference-calendar-reminder-banner,
 .toast {
-  border-color: rgba(232, 199, 122, .22) !important;
+  border-color: rgba(226, 191, 119, .22) !important;
   background:
-    radial-gradient(circle at 0% 0%, rgba(232, 199, 122, .06), transparent 8rem),
-    linear-gradient(145deg, rgba(8, 47, 35, .97), rgba(2, 18, 14, .99)) !important;
+    radial-gradient(circle at 0% 0%, rgba(226, 191, 119, .06), transparent 8rem),
+    linear-gradient(145deg, rgba(7, 55, 43, .97), rgba(0, 18, 15, .99)) !important;
   box-shadow: 0 20px 55px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
   backdrop-filter: blur(24px) saturate(1.05) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.05) !important;
@@ -242,23 +244,23 @@
 
 .reference-network-status,
 .toast {
-  border-radius: 16px;
+  border-radius: 18px;
 }
 
 .reference-prayer-reminder-banner,
 .reference-calendar-reminder-banner {
-  border-radius: 19px;
+  border-radius: 28px;
 }
 
 .reference-system-error {
   background:
-    radial-gradient(circle at 50% 28%, rgba(40, 126, 91, .2), transparent 18rem),
-    linear-gradient(165deg, #08271e 0%, #03140f 58%, #010806 100%);
+    radial-gradient(circle at 50% 28%, rgba(13, 87, 67, .2), transparent 18rem),
+    linear-gradient(165deg, #042a21 0%, #001b16 58%, #00120f 100%);
 }
 
 .reference-system-error__icon {
-  border-color: rgba(232, 199, 122, .2);
-  background: rgba(232, 199, 122, .055);
+  border-color: rgba(226, 191, 119, .2);
+  background: rgba(226, 191, 119, .055);
 }
 
 @media (max-width: 370px) {
@@ -268,7 +270,7 @@
 
   .reference-onboarding__visual {
     min-height: 294px;
-    border-radius: 25px;
+    border-radius: 42px;
   }
 
   .reference-onboarding__copy h1 {
