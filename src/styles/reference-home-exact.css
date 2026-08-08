@@ -46,10 +46,6 @@
   transform: scale(.72);
 }
 
-.premium-home--v2 .brand-bar__actions .icon-button:first-child {
-  display: none;
-}
-
 .premium-home--v2 .brand-bar__actions .icon-button {
   border-color: rgba(232, 199, 122, .25);
   background: rgba(5, 32, 25, .7);
@@ -66,19 +62,19 @@
 }
 
 .premium-home--v2 .welcome-hero__copy h1 {
-  max-width: 225px;
-  font-size: 0;
+  max-width: 270px;
+  margin: 8px 0 0;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.05rem, 8.5vw, 2.7rem);
+  font-weight: 600;
+  line-height: .94;
+  letter-spacing: -.035em;
+  text-wrap: balance;
 }
 
 .premium-home--v2 .welcome-hero__copy h1::after {
-  content: 'Möge Allah deinen Tag segnen und dir Frieden schenken.';
-  display: block;
-  color: rgba(255, 248, 231, .82);
-  font-family: Inter, system-ui, sans-serif;
-  font-size: .73rem;
-  font-weight: 500;
-  line-height: 1.55;
-  letter-spacing: 0;
+  content: none;
 }
 
 .premium-home--v2 .prayer-hero--v2 .gold-button {
@@ -94,19 +90,15 @@
 }
 
 .premium-home--v2 .content-section:has(.journey-grid) .section-heading .overline {
-  display: none;
+  display: block;
 }
 
 .premium-home--v2 .content-section:has(.journey-grid) .section-heading h2 {
-  font-size: 0;
+  font-size: 1.48rem;
 }
 
 .premium-home--v2 .content-section:has(.journey-grid) .section-heading h2::after {
-  content: 'Deine Reise fortsetzen';
-  color: var(--cream-strong);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.48rem;
-  font-weight: 600;
+  content: none;
 }
 
 .premium-home--v2 .content-section:has(.journey-grid) .text-button {
@@ -132,10 +124,16 @@
 
 @media (max-width: 370px) {
   .premium-home--v2 .welcome-hero {
-    min-height: 375px;
+    min-height: 390px;
   }
 
   .premium-home--v2 .welcome-hero__copy {
+    max-width: 82%;
     padding-top: 76px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy h1 {
+    max-width: 228px;
+    font-size: 2.05rem;
   }
 }
