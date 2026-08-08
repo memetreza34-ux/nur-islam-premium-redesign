@@ -17,7 +17,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import {
   backupLocalState,
-  deleteAccount,
+  deleteCloudData,
   exportAccountData,
   getCachedSession,
   getSession,
@@ -160,14 +160,15 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
     }
   };
 
-  const removeAccount = async () => {
+  const removeCloudData = async () => {
     setBusy(true);
     setStatus(null);
     try {
-      await deleteAccount();
+      await deleteCloudData();
       setSession(null);
       setConfirmDelete(false);
-      setStatus('Dein Konto und alle Cloud-Daten wurden gelöscht. Die Daten auf diesem Gerät bleiben erhalten.');
+      setCloudUpdatedAt(null);
+      setStatus('Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
     } finally {
@@ -224,15 +225,15 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
           <section className="reference-account-data">
             <button onClick={() => void exportData()} disabled={busy}><Download size={18} /> Meine Daten exportieren</button>
             {confirmDelete ? (
-              <div className="reference-account-data-confirm" role="alertdialog" aria-label="Konto endgültig löschen">
-                <p>Konto, Cloud-Backup und Cloud-Notizen endgültig löschen? Das lässt sich nicht rückgängig machen.</p>
+              <div className="reference-account-data-confirm" role="alertdialog" aria-label="Cloud-Daten endgültig löschen">
+                <p>Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Deine Anmeldung bleibt bestehen, und die Daten auf diesem Gerät werden nicht angetastet.</p>
                 <div>
                   <button onClick={() => setConfirmDelete(false)} disabled={busy}>Abbrechen</button>
-                  <button className="is-destructive" onClick={() => void removeAccount()} disabled={busy}>Endgültig löschen</button>
+                  <button className="is-destructive" onClick={() => void removeCloudData()} disabled={busy}>Endgültig löschen</button>
                 </div>
               </div>
             ) : (
-              <button className="is-destructive" onClick={() => setConfirmDelete(true)} disabled={busy}><Trash2 size={18} /> Konto löschen</button>
+              <button className="is-destructive" onClick={() => setConfirmDelete(true)} disabled={busy}><Trash2 size={18} /> Cloud-Daten löschen</button>
             )}
           </section>
 

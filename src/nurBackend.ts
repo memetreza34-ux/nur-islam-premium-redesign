@@ -357,10 +357,15 @@ export async function exportAccountData(): Promise<NurAccountExport> {
   };
 }
 
-export async function deleteAccount() {
+/**
+ * Erases this app's cloud data. The Supabase project behind it is shared with
+ * other apps that hang off the same auth user, so the login itself is left
+ * intact on purpose: removing it here would cascade into unrelated data.
+ */
+export async function deleteCloudData() {
   const session = await getSession();
   if (!session) throw new Error('Bitte melde dich zuerst an.');
-  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/delete_nur_islam_account`, {
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/delete_nur_islam_data`, {
     method: 'POST',
     headers: {
       apikey: PUBLISHABLE_KEY,
@@ -370,6 +375,6 @@ export async function deleteAccount() {
     body: '{}',
   });
   if (!response.ok) throw new Error(await readError(response));
-  // The account is gone, so the cached session can never be refreshed again.
-  persistSession(null);
+  // Nothing of this account remains in the cloud, so end the local session too.
+  await signOut();
 }
