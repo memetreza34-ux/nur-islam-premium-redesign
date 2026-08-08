@@ -13,7 +13,7 @@
   width: 270px !important;
   height: 212px !important;
   opacity: .29 !important;
-  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 25px 23px rgba(0, 0, 0, .47)) saturate(.92) contrast(1.035) !important;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
@@ -138,7 +138,7 @@
   width: 88px !important;
   height: 88px !important;
   opacity: .94 !important;
-  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260806-visual4') center / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center / contain no-repeat !important;
   filter: drop-shadow(0 15px 20px rgba(0,0,0,.53)) saturate(1.01) contrast(1.05) !important;
 }
 

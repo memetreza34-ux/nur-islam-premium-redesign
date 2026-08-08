@@ -17,13 +17,12 @@ import { startFastingReminderMaintenance } from './fastingReminderService';
 import { startInstallPromptCapture } from './installPromptService';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
-import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
 import { initializeTheme } from './themeService';
 import './styles.css';
 
-const VISUAL_VERSION = '20260806-visual4';
+const VISUAL_VERSION = '20260808-release-hardening';
 const PREVIEW_ASSETS = [
   'nur-logo-emblem-v2.webp',
   'mosque-gold-v2.webp',
@@ -157,7 +156,6 @@ function BootRoot() {
         <motion.div key="app" className="app-entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28 }}>
           <AppErrorBoundary>
             <App />
-            <ReferenceArtworkHost />
             <NetworkStatus />
             <PrayerReminderBanner />
             <CalendarReminderBanner />

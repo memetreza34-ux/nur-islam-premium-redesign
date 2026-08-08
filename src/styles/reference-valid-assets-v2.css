@@ -18,7 +18,7 @@
 }
 
 .account-card::before {
-  background: url('/premium-assets/high-res-objects/nur-logo-emblem-v2.webp?v=20260806-visual4') center / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/nur-logo-emblem-v2.webp?v=20260808-release-hardening') center / contain no-repeat !important;
 }
 
 .welcome-hero__visual,
@@ -39,7 +39,7 @@
 
 .next-prayer-panel::before,
 .reference-learning-hero::before {
-  background-image: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260806-visual4') !important;
+  background-image: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260808-release-hardening') !important;
 }
 
 .journey-card--quran > .premium-image,
@@ -97,7 +97,7 @@
   width: 145px;
   height: 170px;
   opacity: .24;
-  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260806-visual4') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
   filter: drop-shadow(0 18px 18px rgba(0, 0, 0, .35));
   pointer-events: none;
 }
@@ -112,7 +112,7 @@
   height: 92px;
   transform: translate(-50%, -50%);
   opacity: .88;
-  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260806-visual4') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
   filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .45));
   pointer-events: none;
 }

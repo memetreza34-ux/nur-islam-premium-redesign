@@ -16,7 +16,7 @@
   width: 174px !important;
   height: 170px !important;
   opacity: .78 !important;
-  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 21px 21px rgba(0, 0, 0, .42)) saturate(.98) contrast(1.025) !important;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);

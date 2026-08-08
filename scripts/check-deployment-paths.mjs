@@ -5,7 +5,7 @@ const root = process.cwd();
 const vite = await readFile(resolve(root, 'vite.config.ts'), 'utf8');
 const paths = await readFile(resolve(root, 'src/appPaths.ts'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
-const artwork = await readFile(resolve(root, 'src/ReferenceArtworkHost.tsx'), 'utf8');
+const legacyFeatures = await readFile(resolve(root, 'src/LegacyFeatureScreens.tsx'), 'utf8');
 const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
@@ -45,15 +45,28 @@ for (const alias of requiredAssetAliases) {
 if (!visuals.includes("import { versionAppPath } from './appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
   throw new Error('PremiumImage does not resolve assets through the deployment base path.');
 }
-if (!artwork.includes("import { versionAppPath } from './appPaths';") || !artwork.includes('versionAppPath(`premium-assets/high-res-objects/${name}-v2.webp`, VISUAL_VERSION)')) {
-  throw new Error('ReferenceArtworkHost still uses root-absolute premium asset paths.');
+if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260808-release-hardening';")) {
+  throw new Error('PremiumImage is not pinned to the current release asset version.');
 }
-if (artwork.includes('=> `/premium-assets/')) {
-  throw new Error('ReferenceArtworkHost contains an obsolete root-absolute asset helper.');
+
+for (const requirement of [
+  "import { versionAppPath } from './appPaths';",
+  "const VISUAL_VERSION = '20260808-release-hardening';",
+  'const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);',
+]) {
+  if (!legacyFeatures.includes(requirement)) throw new Error(`Legacy hero assets are not deployment-safe: ${requirement}`);
+}
+if (legacyFeatures.includes("const VISUAL_REVISION = '8'") || legacyFeatures.includes('`${path}?v=${VISUAL_REVISION}`')) {
+  throw new Error('Legacy feature heroes still use the obsolete independent visual revision.');
+}
+
+if (main.includes('ReferenceArtworkHost')) {
+  throw new Error('Main still mounts the obsolete fixed artwork host.');
 }
 
 for (const requirement of [
   "versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION)",
+  "const VISUAL_VERSION = '20260808-release-hardening';",
   "resolveAppPath('manifest.webmanifest')",
 ]) {
   if (!main.includes(requirement)) throw new Error(`Main preload path is not deployment-safe: ${requirement}`);
@@ -62,7 +75,7 @@ for (const requirement of [
 for (const requirement of [
   "resolveAppPath('sw.js')",
   'scope: import.meta.env.BASE_URL',
-  "SERVICE_WORKER_VERSION = '11-20260808-release-hardening'",
+  "SERVICE_WORKER_VERSION = '12-20260808-release-hardening'",
   'updateViaCache: \'none\'',
 ]) {
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
@@ -75,7 +88,7 @@ for (const requirement of [
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
   'caches.match(INDEX_URL)',
-  'nur-islam-premium-v11',
+  'nur-islam-premium-v12',
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);
 }
@@ -99,4 +112,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML base token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, current v11 service worker registration, legacy-to-v2 premium aliases, decorative artwork, preloads, manifest scope, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, current v12 service worker registration, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');

@@ -1,9 +1,0 @@
-/* The original fixed ReferenceArtworkHost duplicates artwork that is now
-   integrated directly into every affected screen (prayer, calendar, duas,
-   qibla, ayah, hadith, learn, profile and collections). Keeping both layers
-   causes floating/duplicated motifs and inconsistent scroll composition.
-   Presentation-only: the host still exists in React; it is simply not painted. */
-
-.reference-artwork-host {
-  display: none !important;
-}

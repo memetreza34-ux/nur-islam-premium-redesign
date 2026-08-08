@@ -2,6 +2,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 
 const root = process.cwd();
+const expectedVisualVersion = '20260808-release-hardening';
 const chunksDirectory = resolve(root, 'src/assets');
 const chunkNames = (await readdir(chunksDirectory))
   .filter((name) => /^referenceSpriteChunk\d{2}\.ts$/.test(name))
@@ -143,7 +144,7 @@ for (const name of recoveredAssets) {
 
 const allCss = sourceFiles
   .filter((path) => extname(path) === '.css')
-  .map((path, index) => sourceParts[sourceFiles.indexOf(path)])
+  .map((path) => sourceParts[sourceFiles.indexOf(path)])
   .join('\n');
 
 const forbiddenGlobalRules = [
@@ -167,6 +168,43 @@ if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVis
   throw new Error('PremiumImage must switch to its SVG fallback only after an actual image error.');
 }
 
+const mainSource = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
+const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
+const stylesEntry = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+const sourceRootEntries = await readdir(resolve(root, 'src'));
+const styleEntries = await readdir(resolve(root, 'src/styles'));
+
+const versionAssertions = [
+  ['PremiumVisuals', premiumVisuals],
+  ['main preload', mainSource],
+  ['service worker', serviceWorker],
+];
+for (const [label, source] of versionAssertions) {
+  if (!source.includes(expectedVisualVersion)) {
+    throw new Error(`${label} does not use the shared premium visual version ${expectedVisualVersion}.`);
+  }
+}
+
+for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
+  if (completeSource.includes(staleVersion)) {
+    throw new Error(`Active app source still references stale premium visual version: ${staleVersion}.`);
+  }
+}
+
+if (!serviceWorker.includes(`nur-islam-premium-v12-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must stay on premium v12 for the current visual release.');
+}
+
+if (mainSource.includes('ReferenceArtworkHost')) {
+  throw new Error('The obsolete fixed ReferenceArtworkHost must not be mounted; artwork is integrated per screen.');
+}
+if (sourceRootEntries.includes('ReferenceArtworkHost.tsx')) {
+  throw new Error('Obsolete ReferenceArtworkHost.tsx should remain removed from the source tree.');
+}
+if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includes('premium-artwork-host-lock.css')) {
+  throw new Error('Obsolete artwork-host hiding CSS should remain removed with the host runtime.');
+}
+
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, no global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, no obsolete artwork host or global image-hiding CSS.`,
 );

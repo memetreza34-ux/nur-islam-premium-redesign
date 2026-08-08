@@ -3,19 +3,19 @@
 /* Replace legacy visual aliases without touching React while another agent
    works on functionality. These are equivalent v2 assets already in repo. */
 .reference-profile-greeting__logo .premium-image > img {
-  content: url('/premium-assets/high-res-objects/nur-logo-emblem-v2.webp');
+  content: url('/premium-assets/high-res-objects/nur-logo-emblem-v2.webp?v=20260808-release-hardening');
 }
 
 .reference-ayah-hero__art > img {
-  content: url('/premium-assets/high-res-objects/mosque-gold-v2.webp');
+  content: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260808-release-hardening');
 }
 
 .reference-guide-hero--wudu > .premium-image > img {
-  content: url('/premium-assets/high-res-objects/mosque-gold-v2.webp');
+  content: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260808-release-hardening');
 }
 
 .reference-guide-hero--salah > .premium-image > img {
-  content: url('/premium-assets/high-res-objects/qibla-compass-v2.webp');
+  content: url('/premium-assets/high-res-objects/qibla-compass-v2.webp?v=20260808-release-hardening');
 }
 
 /* ---------- Profile greeting ---------- */

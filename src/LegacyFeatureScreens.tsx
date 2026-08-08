@@ -30,6 +30,7 @@ import {
   TriangleAlert,
 } from 'lucide-react';
 import { motion } from 'motion/react';
+import { versionAppPath } from './appPaths';
 import { syncRollingFastingReminders } from './fastingReminderService';
 import { formatPrayerRemaining, getNextPrayer } from './prayerSchedule';
 
@@ -57,8 +58,8 @@ export type LegacyFeatureItem = {
   art: string;
 };
 
-const VISUAL_REVISION = '8';
-const visual = (path: string) => `${path}?v=${VISUAL_REVISION}`;
+const VISUAL_VERSION = '20260808-release-hardening';
+const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);
 
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Hadithe durchsuchen, lesen und lokal speichern.', icon: Library, art: '/premium-assets/high-res-objects/lantern-v2.webp' },
