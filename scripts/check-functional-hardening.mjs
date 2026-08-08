@@ -17,6 +17,7 @@ const [
   calendar,
   dhikr,
   prayer,
+  more,
   prayerReminder,
   backend,
   account,
@@ -25,6 +26,7 @@ const [
   installPrompt,
   styles,
   hardeningStyles,
+  legacyOverviewStyles,
   installStyles,
   calendarService,
 ] = await Promise.all([
@@ -40,6 +42,7 @@ const [
   read('src/CalendarScreen.tsx'),
   read('src/DhikrScreen.tsx'),
   read('src/PrayerScreen.tsx'),
+  read('src/MoreScreen.tsx'),
   read('src/prayerReminderService.ts'),
   read('src/nurBackend.ts'),
   read('src/AccountScreen.tsx'),
@@ -48,6 +51,7 @@ const [
   read('src/InstallAppPrompt.tsx'),
   read('src/styles.css'),
   read('src/styles/functional-hardening.css'),
+  read('src/styles/functional-legacy-overview.css'),
   read('src/styles/reference-install-prompt.css'),
   read('src/calendarReminderService.ts'),
 ]);
@@ -235,6 +239,18 @@ requireText(prayerReminder, [
   '!prayer.obligatory',
 ], 'Prayer reminder scheduler');
 
+requireText(more, [
+  'readReminderEnabled',
+  'OBLIGATORY_PRAYER_IDS.some',
+  'systemNotificationAvailable',
+  "JSON.stringify(OBLIGATORY_PRAYER_IDS)",
+  'In-App-Erinnerungen aktiviert; Systembenachrichtigungen sind nicht verfügbar',
+], 'Global reminder settings');
+forbidText(more, [
+  "flash('Systembenachrichtigungen werden auf diesem Gerät nicht unterstützt')",
+  "flash('Benachrichtigungen wurden nicht freigegeben')",
+], 'Global reminder settings');
+
 requireText(backend, [
   "'nur_prayer_location'",
   "'nur_mosque_location_v1'",
@@ -279,8 +295,18 @@ requireText(legacy, [
   'StandbyFeature',
   'getNextPrayer(now)',
   'requestFullscreen',
+  'JumuahFeature',
+  'nur_feature_jumuah_progress',
+  'GenericOverviewFeature',
+  'reference-legacy-list--overview',
+  'Dieser Bereich ist aktuell eine Übersicht ohne vorgetäuschte Detail-Navigation',
+  "featureId === 'jumuah'",
   "featureId === 'zakat'",
   "featureId === 'standby'",
+], 'Legacy functional tools');
+forbidText(legacy, [
+  'function GenericFeature(',
+  'nur_feature_${feature.id}_progress',
 ], 'Legacy functional tools');
 
 requireText(calendarService, [
@@ -289,7 +315,10 @@ requireText(calendarService, [
   'showSystemNotification',
 ], 'Shared reminder engine');
 
-requireText(styles, ["@import './styles/functional-hardening.css';"], 'Style index');
+requireText(styles, [
+  "@import './styles/functional-hardening.css';",
+  "@import './styles/functional-legacy-overview.css';",
+], 'Style index');
 requireText(hardeningStyles, [
   '.reference-reader-verse {',
   'scroll-margin-top: 88px',
@@ -301,9 +330,13 @@ requireText(hardeningStyles, [
   '.reference-zakat-calculator',
   '.reference-standby-stage',
 ], 'Functional design layer');
+requireText(legacyOverviewStyles, [
+  '.reference-legacy-list--overview > article',
+  '.reference-legacy-list--checklist > button',
+], 'Honest legacy overview styles');
 requireText(installStyles, [
   '.reference-install-prompt__error',
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home branding has no fake click, exact Quran resume/deep links and retry work, Assistant information opens a real premium modal, Dhikr statistics are real, prayer reminders are obligatory-only, copy/share actions use browser APIs, mosque URLs are safe, cloud backup excludes device locations, note failures stay visible, PWA install actions cannot remain dead, and legacy fasting/Zakat/standby remain functional.');
+console.log('Functional hardening verified: fake Home/Assistant/legacy interactions are removed, exact Quran resume and saved-content routing work, Dhikr statistics are real, prayer reminders stay useful with or without system notification permission, mosque URLs are safe, cloud backup excludes device locations, note failures remain visible, and PWA install actions cannot remain dead.');
