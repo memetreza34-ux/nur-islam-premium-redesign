@@ -1,0 +1,1363 @@
+/* Premium depth lock for secondary product areas.
+   Presentation-only. This pass brings calendar, remembrance, discovery,
+   assistant and personal-data screens onto the same visual hierarchy as Home/Quran. */
+
+.reference-calendar-screen,
+.reference-dhikr-screen--complete,
+.reference-duas-screen--complete,
+.reference-names-screen--complete,
+.reference-qibla-screen,
+.reference-mosque-screen--live,
+.reference-assistant-screen,
+.reference-account-screen,
+.reference-notes-screen {
+  --depth-panel: linear-gradient(145deg, rgba(9, 49, 37, .9), rgba(2, 21, 16, .98));
+  --depth-panel-soft: linear-gradient(145deg, rgba(12, 60, 45, .7), rgba(3, 26, 20, .94));
+  --depth-border: rgba(232, 199, 122, .16);
+  --depth-border-strong: rgba(232, 199, 122, .3);
+  --depth-gold: #e8c984;
+  --depth-gold-bright: #f6dfac;
+  --depth-text: #fff7e8;
+  --depth-muted: rgba(157, 179, 168, .8);
+  --depth-shadow: 0 18px 44px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .025);
+}
+
+.reference-calendar-screen,
+.reference-dhikr-screen--complete,
+.reference-duas-screen--complete,
+.reference-names-screen--complete,
+.reference-qibla-screen,
+.reference-mosque-screen--live,
+.reference-assistant-screen,
+.reference-account-screen,
+.reference-notes-screen {
+  gap: 14px;
+}
+
+/* ---------- Shared secondary controls ---------- */
+.reference-duas-screen--complete .reference-input-search,
+.reference-names-screen--complete .reference-input-search,
+.reference-mosque-screen--live .reference-input-search {
+  min-height: 52px;
+  padding-inline: 14px;
+  border: 1px solid var(--depth-border);
+  border-radius: 17px;
+  background: rgba(4, 30, 23, .84);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .02);
+}
+
+.reference-duas-screen--complete .reference-input-search:focus-within,
+.reference-names-screen--complete .reference-input-search:focus-within,
+.reference-mosque-screen--live .reference-input-search:focus-within {
+  border-color: rgba(232, 199, 122, .43);
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .055), inset 0 1px 0 rgba(255, 255, 255, .02);
+}
+
+.reference-dua-filter-tabs,
+.reference-name-filter-tabs {
+  gap: 6px;
+  padding-bottom: 2px;
+  scrollbar-width: none;
+}
+
+.reference-dua-filter-tabs::-webkit-scrollbar,
+.reference-name-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-dua-filter-tabs > button,
+.reference-name-filter-tabs > button {
+  min-height: 38px;
+  padding-inline: 13px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 999px;
+  background: rgba(4, 31, 24, .74);
+}
+
+.reference-dua-filter-tabs > button.is-active,
+.reference-name-filter-tabs > button.is-active {
+  border-color: rgba(232, 199, 122, .32);
+  color: #17362b;
+  background: linear-gradient(145deg, #f2dca4, #c79340);
+  box-shadow: 0 8px 18px rgba(197, 145, 59, .15);
+}
+
+.reference-calendar-screen .reference-empty-result,
+.reference-duas-screen--complete .reference-empty-result,
+.reference-names-screen--complete .reference-empty-result,
+.reference-mosque-screen--live .reference-empty-result,
+.reference-notes-screen .reference-empty-result,
+.reference-mosque-loading,
+.reference-mosque-error,
+.reference-notes-loading {
+  min-height: 138px;
+  padding: 20px;
+  border: 1px dashed rgba(232, 199, 122, .17);
+  border-radius: 21px;
+  color: var(--depth-muted);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(232, 199, 122, .05), transparent 9rem),
+    rgba(4, 27, 21, .58);
+}
+
+/* ---------- Calendar ---------- */
+.reference-calendar-month {
+  overflow: hidden;
+  padding: 16px;
+  border: 1px solid var(--depth-border-strong) !important;
+  border-radius: 27px !important;
+  background:
+    radial-gradient(circle at 82% 5%, rgba(232, 199, 122, .09), transparent 10rem),
+    linear-gradient(145deg, rgba(12, 59, 45, .94), rgba(3, 23, 18, .99)) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, .27), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-calendar-month .calendar-month-nav {
+  min-height: 62px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.reference-calendar-month .calendar-month-nav > button {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 14px;
+  color: var(--depth-gold);
+  background: rgba(1, 18, 14, .32);
+}
+
+.reference-calendar-month .calendar-month-nav h2 {
+  color: var(--depth-text);
+  font-size: 1.55rem;
+  line-height: .96;
+  letter-spacing: -.03em;
+}
+
+.reference-calendar-month .calendar-month-nav p {
+  color: var(--depth-muted);
+}
+
+.reference-calendar-screen .calendar-weekdays {
+  padding: 8px 3px 6px;
+  border-top: 1px solid rgba(232, 199, 122, .075);
+}
+
+.reference-calendar-screen .calendar-weekdays > span {
+  color: rgba(232, 199, 122, .68);
+  font-size: .47rem;
+  font-weight: 800;
+  letter-spacing: .04em;
+}
+
+.reference-calendar-grid {
+  gap: 5px;
+}
+
+.reference-calendar-grid .calendar-day {
+  min-height: 51px;
+  padding: 5px 2px;
+  border: 1px solid transparent;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .018);
+}
+
+.reference-calendar-grid .calendar-day:not(.calendar-day--selected):not(.calendar-day--empty):hover {
+  border-color: rgba(232, 199, 122, .11);
+  background: rgba(232, 199, 122, .035);
+}
+
+.reference-calendar-grid .calendar-day--today:not(.calendar-day--selected) {
+  border-color: rgba(232, 199, 122, .24);
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-calendar-grid .calendar-day--selected {
+  border-color: rgba(255, 243, 211, .34);
+  color: #17362b;
+  background: linear-gradient(145deg, #f5dfa9, #c7923c);
+  box-shadow: 0 8px 18px rgba(195, 137, 44, .18), inset 0 1px 0 rgba(255, 255, 255, .42);
+}
+
+.reference-calendar-grid .calendar-day strong {
+  font-size: .6rem;
+}
+
+.reference-calendar-grid .calendar-day em {
+  font-size: .43rem;
+}
+
+.reference-calendar-calculation-note {
+  border-radius: 16px !important;
+  background: rgba(75, 160, 101, .045) !important;
+}
+
+.reference-selected-date {
+  grid-template-columns: 46px minmax(0, 1fr) auto;
+  min-height: 82px;
+  padding: 12px;
+  border-radius: 21px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-selected-date .selected-date-card__icon {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(232, 199, 122, .18);
+  border-radius: 14px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-selected-date > button {
+  min-height: 38px;
+  padding-inline: 11px;
+  border-radius: 12px;
+}
+
+.reference-calendar-event {
+  padding: 16px;
+  border-color: rgba(232, 199, 122, .19) !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .07), transparent 9rem),
+    var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-calendar-event h3 {
+  margin-top: 12px;
+  color: var(--depth-text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.55rem;
+  line-height: .96;
+}
+
+.reference-calendar-event .fasting-chip {
+  border-color: rgba(232, 199, 122, .17);
+  border-radius: 999px;
+  color: var(--depth-gold-bright);
+  background: rgba(232, 199, 122, .05);
+}
+
+.calendar-entry-list {
+  display: grid;
+  gap: 7px;
+}
+
+.calendar-entry-row {
+  min-height: 72px;
+  padding: 10px 11px;
+  border: 1px solid rgba(232, 199, 122, .11) !important;
+  border-radius: 18px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018) !important;
+}
+
+.calendar-entry-row__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 13px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.calendar-empty-state {
+  min-height: 130px;
+  border: 1px dashed rgba(232, 199, 122, .16);
+  border-radius: 20px;
+  background: rgba(4, 28, 22, .52);
+}
+
+.calendar-modal {
+  padding: 20px !important;
+  border-color: rgba(232, 199, 122, .25) !important;
+  border-radius: 27px !important;
+  background:
+    radial-gradient(circle at 80% 5%, rgba(232, 199, 122, .085), transparent 10rem),
+    linear-gradient(155deg, #0b3d2f, #031b15 66%, #020e0b) !important;
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.calendar-modal input,
+.calendar-reminder-row {
+  min-height: 48px;
+  border-radius: 14px !important;
+  background: rgba(255, 255, 255, .025) !important;
+}
+
+/* ---------- Dhikr ---------- */
+.reference-dhikr-counter {
+  min-height: 430px;
+  overflow: hidden;
+  padding: 23px 20px 18px;
+  border: 1px solid var(--depth-border-strong);
+  border-radius: 31px;
+  background:
+    radial-gradient(circle at 50% 16%, rgba(240, 203, 124, .17), transparent 13rem),
+    linear-gradient(160deg, #0d4b39 0%, #052b21 58%, #02130f 100%);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-dhikr-counter__tasbih {
+  opacity: .28;
+  filter: saturate(.88) drop-shadow(0 20px 24px rgba(0, 0, 0, .36));
+}
+
+.reference-dhikr-ring {
+  width: 174px;
+  height: 174px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  box-shadow: 0 22px 54px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-dhikr-ring::before {
+  background: conic-gradient(var(--depth-gold) var(--dhikr-progress), rgba(255, 255, 255, .05) 0deg);
+  filter: drop-shadow(0 0 12px rgba(232, 199, 122, .17));
+}
+
+.reference-dhikr-ring strong {
+  color: var(--depth-text);
+  font-size: 3rem;
+  letter-spacing: -.06em;
+}
+
+.reference-dhikr-copy {
+  max-width: 345px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.reference-dhikr-copy h2 {
+  color: var(--depth-text);
+  font-size: 1.65rem;
+  line-height: .96;
+}
+
+.reference-dhikr-copy > p[dir='rtl'] {
+  margin-top: 10px;
+  color: var(--depth-gold-bright);
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  font-size: 1.55rem;
+  line-height: 1.85;
+}
+
+.reference-dhikr-copy > small {
+  color: rgba(190, 205, 197, .76);
+  line-height: 1.55;
+}
+
+.reference-dhikr-reset {
+  min-height: 38px;
+  padding-inline: 12px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 12px;
+  background: rgba(1, 17, 13, .28);
+}
+
+.reference-dhikr-goal {
+  padding: 14px;
+  border-radius: 20px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-dhikr-goal > span {
+  height: 5px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.reference-dhikr-goal > span i {
+  background: linear-gradient(90deg, #bb8230, #f1d79b);
+  box-shadow: 0 0 15px rgba(232, 199, 122, .2);
+}
+
+.reference-dhikr-step-tabs {
+  gap: 7px;
+}
+
+.reference-dhikr-step-tabs > button {
+  min-height: 70px;
+  padding: 9px;
+  border-radius: 17px;
+}
+
+.reference-dhikr-step-tabs > button > span {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+}
+
+.reference-dhikr-category-grid {
+  gap: 8px;
+}
+
+.reference-dhikr-category-grid > button {
+  min-height: 104px;
+  padding: 12px;
+  border-radius: 19px;
+}
+
+.reference-dhikr-category-grid > button > span {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+
+.reference-dhikr-source {
+  padding: 14px;
+  border-radius: 20px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-dhikr-routine-reset {
+  min-height: 46px;
+  border: 1px solid rgba(232, 199, 122, .13);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .018);
+}
+
+/* ---------- Duas ---------- */
+.reference-duas-hero,
+.reference-names-hero {
+  position: relative;
+  min-height: 226px;
+  overflow: hidden;
+  padding: 22px;
+  border: 1px solid var(--depth-border-strong);
+  border-radius: 29px;
+  background:
+    radial-gradient(circle at 86% 14%, rgba(241, 204, 125, .16), transparent 11rem),
+    linear-gradient(145deg, #104d3b, #062c22 56%, #02140f);
+  box-shadow: 0 27px 62px rgba(0, 0, 0, .29), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-duas-hero::after,
+.reference-names-hero::after {
+  position: absolute;
+  right: -70px;
+  bottom: -95px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(232, 199, 122, .07);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(232, 199, 122, .016), 0 0 0 56px rgba(232, 199, 122, .01);
+  content: '';
+  pointer-events: none;
+}
+
+.reference-duas-hero h2,
+.reference-names-hero h2 {
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+  color: var(--depth-text);
+  font-size: clamp(2.15rem, 9.2vw, 2.75rem);
+  font-weight: 600;
+  line-height: .91;
+  letter-spacing: -.04em;
+}
+
+.reference-duas-hero p,
+.reference-names-hero p {
+  position: relative;
+  z-index: 2;
+  max-width: 300px;
+  margin-top: 12px;
+  color: rgba(171, 192, 182, .76);
+  font-size: .62rem;
+  line-height: 1.58;
+}
+
+.reference-duas-hero__ornament {
+  color: rgba(232, 199, 122, .13);
+}
+
+.reference-dua-progress,
+.reference-name-progress {
+  min-height: 82px;
+  padding: 13px;
+  border-radius: 20px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-dua-progress > span:first-child,
+.reference-name-progress__icon {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(232, 199, 122, .17);
+  border-radius: 14px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-dua-progress__bar,
+.reference-name-progress__bar {
+  height: 5px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.reference-dua-progress__bar > span,
+.reference-name-progress__bar > span {
+  background: linear-gradient(90deg, #bb8230, #f1d79b);
+}
+
+.reference-dua-grid--complete {
+  gap: 10px;
+}
+
+.reference-dua-card--complete {
+  overflow: hidden;
+  padding: 0 !important;
+  border-radius: 22px !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .05), transparent 9rem),
+    var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-dua-card__top {
+  min-height: 44px;
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(232, 199, 122, .075);
+}
+
+.reference-dua-card__top > button {
+  width: 34px;
+  height: 34px;
+  border-radius: 11px;
+}
+
+.reference-dua-card__content {
+  padding: 15px 14px 13px;
+}
+
+.reference-dua-card__content h2 {
+  color: var(--depth-text);
+  font-size: 1.45rem;
+  line-height: .98;
+}
+
+.reference-dua-card__arabic {
+  margin-block: 16px;
+  color: var(--depth-gold-bright);
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  font-size: 1.55rem;
+  line-height: 1.9;
+}
+
+.reference-dua-card__content blockquote {
+  padding: 12px 13px;
+  border-left: 2px solid rgba(232, 199, 122, .28);
+  border-radius: 0 13px 13px 0;
+  background: rgba(255, 255, 255, .022);
+  line-height: 1.58;
+}
+
+.reference-dua-card--complete > footer {
+  min-height: 44px;
+  padding: 8px 12px;
+  border-top: 1px solid rgba(232, 199, 122, .075);
+}
+
+.reference-dua-modal,
+.reference-name-modal {
+  width: min(calc(100% - 24px), 430px);
+  max-height: min(86svh, 760px);
+  overflow: auto;
+  padding: 22px !important;
+  border-radius: 28px !important;
+  box-shadow: 0 30px 84px rgba(0, 0, 0, .52), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-dua-modal__arabic,
+.reference-name-modal__arabic {
+  padding: 18px;
+  border: 1px solid rgba(232, 199, 122, .13);
+  border-radius: 18px;
+  color: var(--depth-gold-bright);
+  background: rgba(0, 0, 0, .1);
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  line-height: 1.9;
+}
+
+/* ---------- Names ---------- */
+.reference-names-hero__allah {
+  position: absolute;
+  z-index: 1;
+  right: 20px;
+  bottom: -18px;
+  color: rgba(247, 222, 169, .12);
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  font-size: 8.5rem;
+  line-height: 1;
+}
+
+.reference-name-list--complete {
+  display: grid;
+  gap: 7px;
+  overflow: visible !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.reference-name-list--complete > article {
+  position: relative;
+  min-height: 84px;
+  overflow: hidden;
+  border: 1px solid rgba(232, 199, 122, .1) !important;
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(8, 44, 33, .73), rgba(2, 22, 17, .91));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-name-list__main {
+  min-height: 84px;
+  padding: 10px 84px 10px 10px;
+}
+
+.reference-name-list__number {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+
+.reference-name-list__arabic {
+  color: var(--depth-gold-bright);
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  font-size: 1.25rem;
+}
+
+.reference-name-list__copy strong {
+  color: var(--depth-text);
+  font-size: .69rem;
+}
+
+.reference-name-state,
+.reference-name-heart {
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 11px;
+  background: rgba(1, 18, 14, .42);
+}
+
+.reference-name-state.is-active,
+.reference-name-heart.is-active {
+  border-color: rgba(232, 199, 122, .24);
+  color: var(--depth-gold-bright);
+  background: rgba(232, 199, 122, .07);
+}
+
+.reference-name-modal h2 {
+  color: var(--depth-text);
+  font-size: 2rem;
+  line-height: .95;
+}
+
+.reference-name-modal__meaning {
+  color: rgba(222, 232, 225, .85);
+  line-height: 1.6;
+}
+
+/* ---------- Qibla ---------- */
+.reference-qibla-stage {
+  min-height: 470px;
+  overflow: hidden;
+  padding: 20px;
+  border: 1px solid var(--depth-border-strong) !important;
+  border-radius: 31px !important;
+  background:
+    radial-gradient(circle at 50% 35%, rgba(240, 203, 124, .13), transparent 14rem),
+    linear-gradient(160deg, #0c4938, #052a20 58%, #02130f) !important;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+}
+
+.reference-qibla-stage__halo {
+  border-color: rgba(232, 199, 122, .09);
+  box-shadow: 0 0 0 34px rgba(232, 199, 122, .017), 0 0 0 72px rgba(232, 199, 122, .01);
+}
+
+.reference-qibla-stage__compass {
+  filter: saturate(.92) drop-shadow(0 30px 30px rgba(0, 0, 0, .42));
+}
+
+.reference-qibla-stage__needle {
+  color: var(--depth-gold-bright);
+  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, .32));
+}
+
+.reference-qibla-stage__copy {
+  padding: 14px 16px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 18px;
+  background: rgba(1, 16, 12, .36);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.reference-qibla-stage__copy h2 {
+  margin-top: 4px;
+  color: var(--depth-text);
+  font-size: 1.78rem;
+  line-height: .95;
+}
+
+.reference-qibla-stage__copy p {
+  color: var(--depth-muted);
+}
+
+.reference-qibla-location,
+.reference-qibla-calibration,
+.reference-qibla-tip {
+  border: 1px solid var(--depth-border) !important;
+  border-radius: 20px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-qibla-location {
+  min-height: 78px;
+  padding: 12px;
+}
+
+.reference-qibla-location__icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+}
+
+.reference-qibla-calibration {
+  padding: 15px;
+}
+
+.reference-calibration-button {
+  min-height: 42px;
+  border-radius: 13px;
+}
+
+.reference-qibla-tip {
+  padding: 13px;
+  color: rgba(199, 218, 207, .8);
+}
+
+/* ---------- Mosque finder ---------- */
+.reference-mosque-hero {
+  position: relative;
+  min-height: 270px;
+  overflow: hidden;
+  border: 1px solid var(--depth-border-strong);
+  border-radius: 30px;
+  background:
+    radial-gradient(circle at 78% 22%, rgba(241, 203, 122, .17), transparent 12rem),
+    linear-gradient(145deg, #104e3b, #062c22 56%, #02140f);
+  box-shadow: 0 28px 66px rgba(0, 0, 0, .31), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-mosque-hero > .premium-image {
+  right: -34px;
+  bottom: -18px;
+  width: 230px;
+  height: 250px;
+  opacity: .86;
+  filter: saturate(.9) drop-shadow(0 28px 28px rgba(0, 0, 0, .42));
+}
+
+.reference-mosque-hero > div {
+  position: relative;
+  z-index: 2;
+  max-width: 67%;
+  padding: 22px;
+}
+
+.reference-mosque-hero h2 {
+  margin-top: 13px;
+  color: var(--depth-text);
+  font-size: clamp(2.1rem, 9vw, 2.7rem);
+  line-height: .91;
+  letter-spacing: -.04em;
+}
+
+.reference-mosque-hero p {
+  max-width: 250px;
+  margin-top: 11px;
+  color: var(--depth-muted);
+  line-height: 1.56;
+}
+
+.reference-mosque-location-button {
+  min-height: 42px;
+  margin-top: 14px;
+  padding-inline: 12px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 13px;
+  color: var(--depth-gold-bright);
+  background: rgba(1, 18, 14, .32);
+}
+
+.reference-mosque-live-status {
+  min-height: 56px;
+  padding: 10px 12px;
+  border: 1px solid rgba(104, 194, 135, .13);
+  border-radius: 16px;
+  background: rgba(62, 154, 91, .045);
+}
+
+.reference-mosque-source-note {
+  border-radius: 16px;
+}
+
+.reference-nearby-label {
+  padding-inline: 3px;
+}
+
+.reference-nearby-label > button,
+.reference-map-button {
+  border-radius: 13px;
+}
+
+.reference-mosque-list--live {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-mosque-list--live > button {
+  min-height: 82px;
+  padding: 10px 11px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(8, 44, 33, .73), rgba(2, 22, 17, .91));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-mosque-list__pin {
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 14px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-mosque-list--live > button strong {
+  color: var(--depth-text);
+  font-size: .67rem;
+}
+
+.reference-mosque-list--live > button small,
+.reference-mosque-list--live > button em {
+  color: var(--depth-muted);
+}
+
+.reference-mosque-distance {
+  padding: 5px 8px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 999px;
+  color: var(--depth-gold-bright);
+  background: rgba(232, 199, 122, .035);
+}
+
+.reference-map-button {
+  min-height: 48px;
+  border: 1px solid rgba(232, 199, 122, .14);
+  background: rgba(255, 255, 255, .018);
+}
+
+.reference-mosque-detail-modal {
+  width: min(calc(100% - 24px), 430px);
+  max-height: min(88svh, 780px);
+  overflow: auto;
+  padding: 22px !important;
+  border-radius: 28px !important;
+  background:
+    radial-gradient(circle at 80% 6%, rgba(232, 199, 122, .09), transparent 12rem),
+    linear-gradient(155deg, #0b3d2f, #031b15 66%, #020e0b) !important;
+  box-shadow: 0 30px 84px rgba(0, 0, 0, .52), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-mosque-detail-modal__pin {
+  width: 52px;
+  height: 52px;
+  border-radius: 17px;
+}
+
+.reference-mosque-detail-modal h2 {
+  color: var(--depth-text);
+  font-size: 1.9rem;
+  line-height: .96;
+}
+
+.reference-mosque-detail-facts {
+  gap: 7px;
+}
+
+.reference-mosque-detail-facts > span {
+  min-height: 48px;
+  padding: 9px 10px;
+  border: 1px solid rgba(232, 199, 122, .09);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, .02);
+}
+
+/* ---------- Assistant ---------- */
+.reference-assistant-greeting {
+  min-height: 136px;
+  padding: 17px !important;
+  border-radius: 25px !important;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(232, 199, 122, .11), transparent 9rem),
+    linear-gradient(145deg, #0e4b39, #052a20 58%, #02140f) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, .27), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-assistant-greeting > .premium-image {
+  width: 54px;
+  height: 54px;
+  padding: 5px;
+  border: 1px solid rgba(232, 199, 122, .17);
+  border-radius: 17px;
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-assistant-greeting h2 {
+  color: var(--depth-text);
+  font-size: 1.6rem;
+  line-height: .96;
+}
+
+.reference-assistant-greeting p {
+  color: var(--depth-muted);
+}
+
+.reference-assistant-suggestions > div:last-child {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-assistant-suggestions > div:last-child > button {
+  min-height: 68px;
+  padding: 10px 11px;
+  border-radius: 18px !important;
+  background: var(--depth-panel) !important;
+}
+
+.reference-assistant-suggestions > div:last-child > button > span {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-chat-thread {
+  display: grid;
+  gap: 9px;
+}
+
+.reference-chat-message {
+  max-width: 88%;
+  padding: 12px 13px;
+  border-radius: 18px;
+  line-height: 1.55;
+}
+
+.reference-chat-message--assistant {
+  justify-self: start;
+  background: var(--depth-panel) !important;
+}
+
+.reference-chat-message--user {
+  justify-self: end;
+  border-radius: 18px 18px 5px 18px !important;
+}
+
+.reference-assistant-safety {
+  padding: 12px 13px;
+  border-radius: 17px !important;
+}
+
+.reference-assistant-input {
+  position: sticky;
+  z-index: 20;
+  bottom: 86px;
+  min-height: 58px;
+  padding: 7px 8px 7px 13px;
+  border-radius: 20px !important;
+  background: rgba(3, 24, 19, .95) !important;
+  box-shadow: 0 18px 46px rgba(0, 0, 0, .35), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+}
+
+.reference-assistant-input > button {
+  width: 42px;
+  height: 42px;
+  border-radius: 13px;
+}
+
+.reference-assistant-input > button[type='submit'] {
+  color: #17362b;
+  background: linear-gradient(145deg, #f3dda6, #c79340);
+}
+
+/* ---------- Account ---------- */
+.reference-account-hero {
+  min-height: 126px;
+  padding: 17px !important;
+  border-radius: 25px !important;
+  background:
+    radial-gradient(circle at 8% 8%, rgba(232, 199, 122, .1), transparent 10rem),
+    linear-gradient(145deg, #0e4b39, #052a20 58%, #02140f) !important;
+  box-shadow: 0 24px 56px rgba(0, 0, 0, .27), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+}
+
+.reference-account-hero > span {
+  width: 54px;
+  height: 54px;
+  border-radius: 17px;
+}
+
+.reference-account-hero h2 {
+  color: var(--depth-text);
+  font-size: 1.55rem;
+  line-height: .96;
+}
+
+.reference-account-hero p {
+  color: var(--depth-muted);
+  line-height: 1.55;
+}
+
+.reference-account-tabs {
+  padding: 5px;
+  border-radius: 18px !important;
+  background: rgba(3, 25, 19, .86) !important;
+}
+
+.reference-account-tabs > button {
+  min-height: 46px;
+  border-radius: 13px;
+}
+
+.reference-account-form {
+  gap: 12px;
+  padding: 16px !important;
+  border-radius: 21px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-account-form label > span {
+  color: rgba(232, 199, 122, .8);
+  font-size: .51rem;
+  font-weight: 800;
+}
+
+.reference-account-form label > div,
+.reference-account-form > label > input {
+  min-height: 49px;
+  border-radius: 14px !important;
+}
+
+.reference-account-form .gold-button {
+  min-height: 48px;
+  margin-top: 2px;
+  border-radius: 14px;
+}
+
+.reference-account-cloud-grid {
+  gap: 9px;
+}
+
+.reference-account-cloud-grid > button {
+  min-height: 142px;
+  padding: 15px !important;
+  border-radius: 21px !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .055), transparent 8rem),
+    var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-account-cloud-grid > button > svg {
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border: 1px solid rgba(232, 199, 122, .17);
+  border-radius: 14px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .05);
+}
+
+.reference-account-security {
+  padding: 12px 13px !important;
+  border-radius: 17px !important;
+}
+
+.reference-account-status {
+  padding: 11px 12px;
+  border-radius: 15px;
+  box-shadow: var(--depth-shadow);
+}
+
+/* ---------- Notes ---------- */
+.reference-notes-storage {
+  min-height: 72px;
+  padding: 11px 12px !important;
+  border-radius: 20px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-notes-storage > svg {
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 13px;
+  color: var(--depth-gold);
+  background: rgba(232, 199, 122, .045);
+}
+
+.reference-notes-list {
+  gap: 7px;
+}
+
+.reference-notes-list > button {
+  min-height: 68px;
+  padding: 10px 11px !important;
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(8, 44, 33, .72), rgba(2, 22, 17, .9)) !important;
+}
+
+.reference-notes-list > button.is-active {
+  border-color: rgba(232, 199, 122, .32) !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .055), transparent 8rem),
+    linear-gradient(145deg, rgba(12, 58, 43, .88), rgba(3, 25, 20, .96)) !important;
+}
+
+.reference-note-editor {
+  gap: 10px;
+  padding: 15px !important;
+  border-radius: 22px !important;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+.reference-note-editor__heading {
+  min-height: 42px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(232, 199, 122, .075);
+}
+
+.reference-note-editor input {
+  min-height: 48px;
+  padding-inline: 12px;
+  border-radius: 14px !important;
+}
+
+.reference-note-editor textarea {
+  min-height: 190px;
+  padding: 12px;
+  border-radius: 16px !important;
+  line-height: 1.58;
+  resize: vertical;
+}
+
+.reference-note-editor .gold-button {
+  min-height: 47px;
+  border-radius: 14px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-calendar-month {
+    padding: 13px;
+  }
+
+  .reference-calendar-grid {
+    gap: 4px;
+  }
+
+  .reference-calendar-grid .calendar-day {
+    min-height: 47px;
+  }
+
+  .reference-selected-date {
+    grid-template-columns: 42px minmax(0, 1fr);
+  }
+
+  .reference-selected-date > button {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+
+  .reference-dhikr-counter {
+    min-height: 414px;
+  }
+
+  .reference-dhikr-ring {
+    width: 158px;
+    height: 158px;
+  }
+
+  .reference-duas-hero,
+  .reference-names-hero {
+    min-height: 218px;
+    padding: 19px;
+  }
+
+  .reference-qibla-stage {
+    min-height: 445px;
+  }
+
+  .reference-mosque-hero > div {
+    max-width: 73%;
+    padding: 19px;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -62px;
+    width: 220px;
+  }
+
+  .reference-account-cloud-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-calendar-grid .calendar-day {
+    min-height: 43px;
+  }
+
+  .reference-dhikr-step-tabs,
+  .reference-dhikr-category-grid,
+  .reference-account-cloud-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-dhikr-step-tabs > button,
+  .reference-dhikr-category-grid > button {
+    min-height: 64px;
+  }
+
+  .reference-dua-card__arabic {
+    font-size: 1.35rem;
+  }
+
+  .reference-name-list__main {
+    padding-right: 75px;
+  }
+
+  .reference-qibla-stage {
+    min-height: 420px;
+  }
+
+  .reference-mosque-hero {
+    min-height: 285px;
+  }
+
+  .reference-mosque-hero > div {
+    max-width: 84%;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -105px;
+    opacity: .55;
+  }
+
+  .reference-chat-message {
+    max-width: 94%;
+  }
+}
+
+/* ---------- Light theme safeguards ---------- */
+[data-theme='light'] .reference-calendar-screen,
+[data-theme='light'] .reference-dhikr-screen--complete,
+[data-theme='light'] .reference-duas-screen--complete,
+[data-theme='light'] .reference-names-screen--complete,
+[data-theme='light'] .reference-qibla-screen,
+[data-theme='light'] .reference-mosque-screen--live,
+[data-theme='light'] .reference-assistant-screen,
+[data-theme='light'] .reference-account-screen,
+[data-theme='light'] .reference-notes-screen {
+  --depth-panel: linear-gradient(145deg, rgba(255, 253, 247, .98), rgba(243, 237, 222, .97));
+  --depth-panel-soft: linear-gradient(145deg, rgba(255, 252, 243, .96), rgba(238, 231, 213, .96));
+  --depth-border: rgba(119, 89, 37, .14);
+  --depth-border-strong: rgba(119, 89, 37, .23);
+  --depth-gold: #98702c;
+  --depth-gold-bright: #7e5a20;
+  --depth-text: #17372c;
+  --depth-muted: rgba(55, 76, 66, .7);
+  --depth-shadow: 0 15px 32px rgba(55, 43, 22, .09), inset 0 1px 0 rgba(255, 255, 255, .72);
+}
+
+[data-theme='light'] .reference-calendar-month,
+[data-theme='light'] .reference-calendar-event,
+[data-theme='light'] .reference-dhikr-goal,
+[data-theme='light'] .reference-dhikr-source,
+[data-theme='light'] .reference-dua-card--complete,
+[data-theme='light'] .reference-name-list--complete > article,
+[data-theme='light'] .reference-qibla-location,
+[data-theme='light'] .reference-qibla-calibration,
+[data-theme='light'] .reference-qibla-tip,
+[data-theme='light'] .reference-mosque-list--live > button,
+[data-theme='light'] .reference-assistant-suggestions > div:last-child > button,
+[data-theme='light'] .reference-chat-message--assistant,
+[data-theme='light'] .reference-account-form,
+[data-theme='light'] .reference-account-cloud-grid > button,
+[data-theme='light'] .reference-notes-storage,
+[data-theme='light'] .reference-notes-list > button,
+[data-theme='light'] .reference-note-editor {
+  color: #17372c;
+  background: var(--depth-panel) !important;
+  box-shadow: var(--depth-shadow) !important;
+}
+
+[data-theme='light'] .reference-dua-card__content h2,
+[data-theme='light'] .reference-name-list__copy strong,
+[data-theme='light'] .reference-mosque-list--live > button strong,
+[data-theme='light'] .reference-assistant-greeting h2,
+[data-theme='light'] .reference-account-hero h2 {
+  color: #17372c;
+}
+
+[data-theme='light'] .reference-dua-card__arabic,
+[data-theme='light'] .reference-name-list__arabic,
+[data-theme='light'] .reference-reader-verse > p[dir='rtl'] {
+  color: #36584b;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .calendar-entry-row:hover,
+  .reference-dhikr-step-tabs > button:hover,
+  .reference-dhikr-category-grid > button:hover,
+  .reference-dua-card--complete:hover,
+  .reference-name-list--complete > article:hover,
+  .reference-mosque-list--live > button:hover,
+  .reference-assistant-suggestions > div:last-child > button:hover,
+  .reference-account-cloud-grid > button:hover,
+  .reference-notes-list > button:hover {
+    border-color: rgba(232, 199, 122, .27) !important;
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-calendar-screen *,
+  .reference-dhikr-screen--complete *,
+  .reference-duas-screen--complete *,
+  .reference-names-screen--complete *,
+  .reference-qibla-screen *,
+  .reference-mosque-screen--live *,
+  .reference-assistant-screen *,
+  .reference-account-screen *,
+  .reference-notes-screen * {
+    scroll-behavior: auto !important;
+  }
+}
