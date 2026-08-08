@@ -34,8 +34,6 @@ function migrateNameSet(key: string, fallback: string[] = []) {
         return;
       }
 
-      // Frühere Versionen speicherten die Transliteration. Mehrdeutige alte
-      // Werte werden kontrolliert auf den ersten Eintrag migriert.
       const legacyMatch = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
       if (legacyMatch) migrated.add(nameId(legacyMatch));
     });
@@ -55,12 +53,13 @@ function writeSet(key: string, value: Set<string>) {
   }
 }
 
-export function NamesScreen({ onBack }: { onBack: () => void }) {
+export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => void; initialNameId?: string | null }) {
+  const initialName = initialNameId ? NAMES_OF_ALLAH.find((entry) => String(entry.id) === initialNameId) ?? null : null;
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<NameFilter>('all');
   const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites', ['1']));
   const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
-  const [selected, setSelected] = useState<NameOfAllah | null>(null);
+  const [selected, setSelected] = useState<NameOfAllah | null>(initialName);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => writeSet('nur_name_favorites', favorites), [favorites]);
@@ -134,10 +133,7 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-prototype-note">
         <ShieldCheck size={16} />
-        <span>
-          <strong>Vollständiger Altbestand migriert</strong>
-          <small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben benötigen vor Veröffentlichung eine fachliche und redaktionelle Endprüfung.</small>
-        </span>
+        <span><strong>Vollständiger Altbestand migriert</strong><small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben benötigen vor Veröffentlichung eine fachliche und redaktionelle Endprüfung.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -159,12 +155,7 @@ export function NamesScreen({ onBack }: { onBack: () => void }) {
             const isFavorite = favorites.has(id);
             const isLearned = learned.has(id);
             return (
-              <motion.article
-                key={id}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(index * .012, .22) }}
-              >
+              <motion.article key={id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .012, .22) }}>
                 <button className="reference-name-list__main" onClick={() => setSelected(name)}>
                   <span className="reference-name-list__number">{String(name.id).padStart(2, '0')}</span>
                   <span className="reference-name-list__arabic" dir="rtl">{name.arabic}</span>
