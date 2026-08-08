@@ -185,6 +185,7 @@ requireText(sw, [
   'OPEN_CALENDAR',
   "event.notification.data?.target === 'calendar'",
   `nur-islam-premium-v${swCacheMajor}`,
+  "scoped('premium-assets/high-res-objects/nur-logo-emblem.png')",
   'meta name="theme-color" content="#001b16"',
   'background:#00120f',
   'border-radius:28px',
@@ -201,7 +202,12 @@ requireText(styles, ["@import './styles/release-hardening.css';", "@import './st
 requireText(releaseStyles, ["html[data-theme='light']", '.reference-account-screen', '.reference-notes-screen'], 'Release styles');
 
 if (html.includes('maximum-scale=1')) throw new Error('Viewport still blocks user zoom.');
-requireText(html, ['viewport-fit=cover', 'color-scheme" content="dark light', 'meta name="theme-color" content="#001b16"'], 'HTML accessibility/reference shell');
+requireText(html, [
+  'viewport-fit=cover',
+  'color-scheme" content="dark light',
+  'meta name="theme-color" content="#001b16"',
+  'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png"',
+], 'HTML accessibility/reference shell');
 
 requireText(migration, [
   'create table if not exists public.nur_islam_profiles',
@@ -216,4 +222,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors, direct routing and accessibility.`);
+console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors/icons, direct routing and accessibility.`);
