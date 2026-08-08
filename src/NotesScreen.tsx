@@ -37,7 +37,7 @@ function hasValidDate(value: unknown): value is string {
   return typeof value === 'string' && Number.isFinite(Date.parse(value));
 }
 
-function readLocalNotes() {
+export function readLocalNotes() {
   try {
     const parsed = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]') as unknown;
     if (!Array.isArray(parsed)) return [];
@@ -55,11 +55,11 @@ function readLocalNotes() {
   }
 }
 
-function writeLocalNotes(notes: LocalNote[]) {
+export function writeLocalNotes(notes: LocalNote[]) {
   try { localStorage.setItem(LOCAL_KEY, JSON.stringify(notes)); } catch { /* optional */ }
 }
 
-function noteSignature(title: string, body: string) {
+export function noteSignature(title: string, body: string) {
   return `${title.trim().toLocaleLowerCase('de-DE')}\u0000${body.trim()}`;
 }
 
