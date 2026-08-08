@@ -40,12 +40,21 @@
 .reference-mosque-detail-modal::before {
   content: '';
   position: absolute;
-  z-index: -1;
+  z-index: 1;
   top: 0;
   right: 18%;
+  bottom: auto;
   left: 18%;
+  width: auto;
   height: 1px;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0;
+  opacity: 1;
   background: linear-gradient(90deg, transparent, rgba(255, 237, 196, .34), transparent);
+  box-shadow: none !important;
+  filter: none;
+  transform: none;
   pointer-events: none;
 }
 
