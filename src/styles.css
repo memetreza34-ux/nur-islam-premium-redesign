@@ -77,6 +77,7 @@
 @import './styles/premium-shell-parallel-pass.css';
 @import './styles/premium-secondary-parallel-pass.css';
 @import './styles/premium-learning-reading-parallel-pass.css';
+@import './styles/premium-legacy-parallel-pass.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
