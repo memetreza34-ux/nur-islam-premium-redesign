@@ -5,6 +5,35 @@
    reference artwork on its approved fit/anchor even when older layers declare
    local overrides. */
 
+/* Account, notes and assistant share the same final emerald/gold utility
+   material instead of keeping their older near-match palette. */
+:where(
+  .reference-account-screen,
+  .reference-notes-screen,
+  .reference-assistant-screen
+) {
+  --utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99));
+  --utility-surface-soft: rgba(7, 55, 43, .82);
+  --utility-border: rgba(226, 191, 119, .15);
+  --utility-border-strong: rgba(242, 215, 154, .3);
+  --utility-text: #fff8ea;
+  --utility-muted: rgba(145, 168, 158, .79);
+  --utility-gold: #e2bf77;
+}
+
+.reference-account-hero {
+  background:
+    radial-gradient(circle at 8% 18%, rgba(226, 191, 119, .14), transparent 10rem),
+    radial-gradient(circle at 100% 100%, rgba(13, 87, 67, .13), transparent 12rem),
+    linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important;
+}
+
+.reference-assistant-greeting {
+  background:
+    radial-gradient(circle at 14% 50%, rgba(226, 191, 119, .12), transparent 7rem),
+    linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .98)) !important;
+}
+
 :where(
   .welcome-hero,
   .prayer-hero--v2,
@@ -53,6 +82,9 @@
   .reference-calendar-event,
   .reference-collection-section,
   .reference-account-entry,
+  .reference-account-form,
+  .reference-account-cloud-grid > button,
+  .reference-account-security,
   .reference-notes-storage,
   .reference-note-editor,
   .reference-assistant-greeting,
@@ -104,10 +136,22 @@
   .reference-install-prompt__action,
   .reference-input-search,
   .reference-assistant-input,
+  .reference-account-header-icon,
+  .reference-account-tabs,
+  .reference-account-tabs > button,
   .reference-account-form label > div,
   .reference-account-form label > input,
+  .reference-account-status,
+  .reference-account-logout,
+  .reference-notes-storage > button,
+  .reference-notes-list > button,
+  .reference-note-editor__heading > button,
   .reference-note-editor > input,
   .reference-note-editor > textarea,
+  .reference-assistant-suggestions button,
+  .reference-assistant-safety,
+  .reference-assistant-info-list > span,
+  .reference-assistant-input > button[type='submit'],
   .calendar-modal input,
   .reference-legacy-search,
   .reference-fasting-reminder-settings input,
@@ -115,6 +159,33 @@
   .toast
 ) {
   border-radius: 18px !important;
+}
+
+:where(
+  .reference-notes-storage > svg:first-child,
+  .reference-assistant-suggestions button > span,
+  .reference-chat-message__mark,
+  .reference-chat-message__source
+) {
+  border-radius: 13px !important;
+}
+
+.reference-chat-message--assistant {
+  border-radius: 18px 18px 18px 6px !important;
+}
+
+.reference-chat-message--user {
+  border-radius: 18px 18px 6px 18px !important;
+}
+
+:where(
+  .reference-account-tabs > button.is-active,
+  .reference-notes-storage > button,
+  .reference-assistant-input > button[type='submit']
+) {
+  border-color: rgba(242, 215, 154, .24) !important;
+  color: #001b16 !important;
+  background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
 }
 
 .bottom-nav {
