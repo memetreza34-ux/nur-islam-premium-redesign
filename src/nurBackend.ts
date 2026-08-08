@@ -50,6 +50,7 @@ const DEFAULT_PUBLISHABLE_KEY = 'sb_publishable_xSJ2M5rIDQ3Y3acgH2IKmg_QYLOTI-R'
 const SUPABASE_URL = (import.meta.env.VITE_SUPABASE_URL || DEFAULT_SUPABASE_URL).replace(/\/$/, '');
 const PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || DEFAULT_PUBLISHABLE_KEY;
 const SESSION_KEY = 'nur_auth_session_v1';
+const SESSION_REFRESH_MARGIN_MS = 90_000;
 const AUTH_EVENT = 'nur:auth-changed';
 const CLOUD_RESTORED_EVENT = 'nur:cloud-restored';
 const STORAGE_SCHEMA_VERSION = 1;
@@ -63,6 +64,8 @@ const EXCLUDED_BACKUP_KEYS = new Set([
   'nur_mosque_location_v1',
   'nur_mosque_search_cache_v1',
 ]);
+
+let refreshInFlight: Promise<NurSession | null> | null = null;
 
 function safeJsonParse<T>(raw: string | null): T | null {
   if (!raw) return null;
@@ -143,16 +146,35 @@ export async function refreshSession(session = getCachedSession()) {
   const payload = await authRequest('/auth/v1/token?grant_type=refresh_token', { refresh_token: session.refreshToken });
   const refreshed = normalizeSession(payload);
   if (!refreshed) throw new Error('Die Cloud-Sitzung konnte nicht erneuert werden.');
+  // Signing out while this request was in flight must win; otherwise the
+  // refreshed token would silently resurrect the session after logout.
+  if (!getCachedSession()) return null;
   persistSession(refreshed);
   return refreshed;
+}
+
+function isUsableSession(session: NurSession | null): session is NurSession {
+  return !!session && session.expiresAt > Date.now() + SESSION_REFRESH_MARGIN_MS;
+}
+
+async function refreshSharedSession() {
+  // Another tab writes to the same storage and may have rotated the token
+  // while this refresh was queued, so re-read before spending it.
+  const latest = getCachedSession();
+  if (isUsableSession(latest)) return latest;
+  return refreshSession(latest);
 }
 
 export async function getSession() {
   const session = getCachedSession();
   if (!session) return null;
-  if (session.expiresAt > Date.now() + 90_000) return session;
+  if (isUsableSession(session)) return session;
+  // Supabase rotates the refresh token on every use, so two refreshes racing on
+  // the same token sign the user out: the loser is rejected and the cached
+  // session is dropped. Every caller shares one in-flight refresh instead.
+  refreshInFlight ??= refreshSharedSession().finally(() => { refreshInFlight = null; });
   try {
-    return await refreshSession(session);
+    return await refreshInFlight;
   } catch {
     persistSession(null);
     return null;
@@ -160,6 +182,7 @@ export async function getSession() {
 }
 
 export async function signOut() {
+  refreshInFlight = null;
   const session = getCachedSession();
   if (session) {
     await fetch(`${SUPABASE_URL}/auth/v1/logout`, {
