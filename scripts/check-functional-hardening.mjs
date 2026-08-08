@@ -73,6 +73,7 @@ requireText(app, [
   'openLastRead',
   'quranPercent',
   'onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber)',
+  '<div className="brand-lockup" aria-label="Nur Islam">',
   'selectedAyahNumber',
   'initialAyahNumber={selectedAyahNumber}',
   'Lokaler Quellenmodus',
@@ -94,6 +95,8 @@ forbidText(app, [
   "width: '25%'",
   "target === 'reader' ? onOpenReader(112)",
   "label: 'KI-Assistent'",
+  '<button className="brand-lockup"',
+  "showToast('Nur Islam')",
   'onOpenDuas=',
   'onOpenNames=',
   'onOpenCalendar=',
@@ -166,11 +169,18 @@ requireText(assistant, [
   'Kein lokaler Quellen-Treffer',
   'Kein Fake-KI-Modus',
   'reference-chat-message__source',
+  'infoOpen',
+  'setInfoOpen(true)',
+  'reference-profile-modal reference-assistant-info-modal',
+  'Was dieser Assistent wirklich kann',
+  'Unbekannte Fragen werden ausdrücklich nicht beantwortet',
 ], 'Nur local assistant');
 forbidText(assistant, [
   'Die Oberfläche ist vorbereitet',
   'Aktuell ist noch kein KI-Anbieter verbunden',
   '<Mic',
+  'CircleCheckIcon',
+  "flash('Nur Antworten",
 ], 'Nur local assistant');
 
 requireText(readingScreens, [
@@ -296,4 +306,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: exact Quran resume/deep links and retry, real Dhikr statistics, obligatory-only prayer reminders, local sourced assistant, real copy/share actions, safe mosque URLs, privacy-scoped cloud backup, visible note failures, non-dead PWA install actions, fasting reminders, Zakat planning, live standby, and persisted worship-guide completion.');
+console.log('Functional hardening verified: Home branding has no fake click, exact Quran resume/deep links and retry work, Assistant information opens a real premium modal, Dhikr statistics are real, prayer reminders are obligatory-only, copy/share actions use browser APIs, mosque URLs are safe, cloud backup excludes device locations, note failures stay visible, PWA install actions cannot remain dead, and legacy fasting/Zakat/standby remain functional.');
