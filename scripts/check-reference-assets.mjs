@@ -191,8 +191,15 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v12-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must stay on premium v12 for the current visual release.');
+if (!serviceWorker.includes(`nur-islam-premium-v13-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must stay on premium v13 for the current reference visual release.');
+}
+
+if (!serviceWorker.includes('meta name="theme-color" content="#001b16"')
+  || !serviceWorker.includes('background:#00120f')
+  || !serviceWorker.includes('border-radius:28px')
+  || !serviceWorker.includes('border-radius:18px')) {
+  throw new Error('Offline PWA document must stay aligned with the current reference palette and geometry.');
 }
 
 if (mainSource.includes('ReferenceArtworkHost')) {
@@ -206,5 +213,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v13 reference styling, no obsolete artwork host or global image-hiding CSS.`,
 );
