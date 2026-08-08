@@ -62,11 +62,35 @@ requireText(backend, [
   'nur_islam_notes',
   'backupLocalState',
   'restoreCloudState',
+  "'nur_local_notes_v1'",
+  "'nur_prayer_location'",
+  "'nur_mosque_location_v1'",
+  "'nur_prayer_times_latest'",
+  "'nur_mosque_search_cache_v1'",
 ], 'Cloud backend');
 forbidText(backend, ['service_role', 'SUPABASE_SERVICE_ROLE'], 'Cloud backend');
 
-requireText(account, ['signInWithPassword', 'signUp', 'backupLocalState', 'restoreCloudState', 'signOut'], 'Account screen');
-requireText(notes, ['createCloudNote', 'updateCloudNote', 'deleteCloudNote', 'nur_local_notes_v1'], 'Notes screen');
+requireText(account, [
+  'signInWithPassword',
+  'signUp',
+  'backupLocalState',
+  'restoreCloudState',
+  'signOut',
+  'Standortkoordinaten und lokale Notizen sind nicht Teil dieses Backups',
+  'Die Übertragung erfolgt per HTTPS',
+  'nicht als Ende-zu-Ende-verschlüsselter Tresor beworben',
+], 'Account screen');
+forbidText(account, ['verschlüsselt per HTTPS'], 'Account screen');
+
+requireText(notes, [
+  'createCloudNote',
+  'updateCloudNote',
+  'deleteCloudNote',
+  'nur_local_notes_v1',
+  'hasValidDate',
+  'Cloud-Notizen konnten nicht geladen werden',
+  'Prüfe deine Verbindung oder Sitzung',
+], 'Notes screen');
 
 requireText(onboarding, [
   'savePrayerLocation',
@@ -138,4 +162,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: real account/cloud/notes, least-privilege CRUD grants with RLS, unified reminders, calendar scheduling and migration, Hijri disclosure, Dhikr midnight rollover, functional themes, PWA routing and accessibility.');
+console.log('Release hardening verified: real account/cloud/notes, exact device locations excluded from generic cloud backup, truthful HTTPS/RLS wording, visible cloud-note failures, least-privilege CRUD grants with RLS, unified reminders, functional themes, PWA routing and accessibility.');
