@@ -15,8 +15,12 @@ const [
   mosque,
   learn,
   collections,
+  assistant,
+  more,
   reading,
   devotionalCss,
+  dailyCss,
+  discoveryCss,
   worshipCss,
 ] = await Promise.all([
   read('src/App.tsx'),
@@ -29,8 +33,12 @@ const [
   read('src/MosqueScreen.tsx'),
   read('src/LearnScreen.tsx'),
   read('src/CollectionsScreen.tsx'),
+  read('src/AssistantScreen.tsx'),
+  read('src/MoreScreen.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
   read('src/styles/premium-devotional-art-lock.css'),
+  read('src/styles/premium-daily-inspiration-art-lock.css'),
+  read('src/styles/premium-discovery-collection-art-lock.css'),
   read('src/styles/premium-worship-art-lock.css'),
 ]);
 
@@ -93,6 +101,14 @@ requireFragments(collections, 'Collections', [
   'quran-closed-v2.webp" fallback={<QuranObject />}',
 ]);
 
+requireFragments(assistant, 'Assistant', [
+  'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
+]);
+
+requireFragments(more, 'Profile / More', [
+  'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
+]);
+
 requireFragments(reading, 'Daily Ayah and worship guides', [
   'mihrab-arch-v2.webp" className="reference-ayah-hero__art"',
   "? '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
@@ -101,6 +117,16 @@ requireFragments(reading, 'Daily Ayah and worship guides', [
 
 requireFragments(devotionalCss, 'Dua hero', [
   'dua-hands-v2.webp?v=20260808-release-hardening',
+]);
+
+requireFragments(dailyCss, 'Daily Ayah / Hadith artwork', [
+  'mihrab-arch-v2.webp?v=20260808-release-hardening',
+  'lantern-v2.webp?v=20260808-release-hardening',
+]);
+
+requireFragments(discoveryCss, 'Calendar artwork', [
+  'sun-emblem-v2.webp?v=20260808-release-hardening',
+  'calendar-chip-v2.webp?v=20260808-release-hardening',
 ]);
 
 requireFragments(worshipCss, 'Worship artwork', [
@@ -112,9 +138,10 @@ const forbiddenPairs = [
   [dhikr, 'quran-closed-v2.webp', 'Dhikr must not use a Quran cover as its focal image.'],
   [qibla, 'tasbih-v2.webp', 'Qibla must not use Tasbih as its focal image.'],
   [quran, 'qibla-compass-v2.webp', 'Quran catalog must not use the Qibla compass as its focal image.'],
+  [assistant, 'quran-closed-v2.webp', 'Assistant greeting must use the Nur identity mark, not a Quran cover.'],
 ];
 for (const [source, forbidden, message] of forbiddenPairs) {
   if (source.includes(forbidden)) throw new Error(message);
 }
 
-console.log('Reference image map verified: Home, onboarding, splash, Quran, reader, Dhikr, Qibla, mosque discovery, learning, collections, daily Ayah, Duas and worship screens use their intended premium artwork.');
+console.log('Reference image map verified: Home, onboarding, splash, Quran, reader, Dhikr, Qibla, mosque discovery, learning, collections, assistant, profile, daily Ayah/Hadith, Duas, calendar and worship screens use their intended premium artwork.');
