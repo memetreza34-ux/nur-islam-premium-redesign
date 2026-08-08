@@ -169,11 +169,11 @@ requireText(main, [
 forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
 requireText(pwa, [
   'OPEN_CALENDAR',
-  '11-20260808-release-hardening',
+  '12-20260808-release-hardening',
   "window.dispatchEvent(new Event('nur:open-calendar'))",
 ], 'PWA registration');
 forbidText(pwa, ["url.searchParams.set('open', 'calendar')", 'window.location.assign(url.toString())'], 'PWA registration');
-requireText(sw, ['OPEN_CALENDAR', "event.notification.data?.target === 'calendar'", 'nur-islam-premium-v11'], 'Service worker');
+requireText(sw, ['OPEN_CALENDAR', "event.notification.data?.target === 'calendar'", 'nur-islam-premium-v12'], 'Service worker');
 
 requireText(theme, ["export type NurTheme = 'dark' | 'light' | 'system'", 'dataset.theme', 'prefers-color-scheme: light'], 'Theme service');
 requireText(styles, ["@import './styles/release-hardening.css';"], 'Style index');
