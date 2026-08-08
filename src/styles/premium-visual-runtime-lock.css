@@ -114,7 +114,7 @@
   .app-shell--detail .reference-screen-header,
   .reference-assistant-input,
   .glass-card {
-    background-color: rgba(3, 27, 21, .97) !important;
+    background-color: rgba(0, 27, 22, .97) !important;
   }
 
   [data-theme='light'] .bottom-nav,
