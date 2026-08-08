@@ -22,9 +22,9 @@ const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'u
 const viewport = await readFile(resolve(root, 'src/styles/reference-mobile-viewport.css'), 'utf8');
 const sprite = await readFile(resolve(root, 'src/styles/reference-sprite.css'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
-const artworkHost = await readFile(resolve(root, 'src/ReferenceArtworkHost.tsx'), 'utf8');
 const moreScreen = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
+const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
 // Layers may load after the shared guardrails, but only as a declared kind of
@@ -59,8 +59,11 @@ for (const layer of lateLayers) {
 if (!styleIndex.includes("@import './styles/reference-more-hub.css';")) {
   throw new Error('The More hub stylesheet is not loaded.');
 }
-if (styleIndex.includes("reference-webp-assets.css")) {
+if (styleIndex.includes('reference-webp-assets.css')) {
   throw new Error('The obsolete background-image layer must not be active because it hides real premium images.');
+}
+if (styleIndex.includes('premium-artwork-host-lock.css') || main.includes('ReferenceArtworkHost')) {
+  throw new Error('The obsolete fixed artwork host must remain removed; artwork is integrated per screen.');
 }
 
 const requiredGuardrails = [
@@ -72,15 +75,13 @@ const requiredGuardrails = [
   'grid-template-columns: var(--tap-target) minmax(0, 1fr) var(--tap-target)',
   'width: var(--tap-target) !important',
   'min-height: 72px',
-  '.reference-artwork-host',
-  'z-index: 1',
   '.app-shell',
   'z-index: 3',
   'stroke-width: var(--icon-stroke)',
   '.premium-image > img:not([hidden])',
   'visibility: visible !important',
   '.premium-image > .premium-image__fallback[hidden]',
-  "mosque-gold-v2.webp?v=20260807-visual-cleanup",
+  'mihrab-arch-v2.webp?v=20260808-release-hardening',
   '@media (max-width: 370px)',
   'grid-template-columns: repeat(2, minmax(0, 1fr))',
   '@media (prefers-reduced-motion: reduce)',
@@ -116,6 +117,7 @@ if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-ev
 
 const requiredImageBehavior = [
   "import { versionAppPath } from './appPaths';",
+  "const PREMIUM_ASSET_VERSION = '20260808-release-hardening';",
   'onLoad={(event) =>',
   'event.currentTarget.hidden = false',
   'onError={(event) =>',
@@ -126,9 +128,6 @@ for (const requirement of requiredImageBehavior) {
   if (!visuals.includes(requirement)) {
     throw new Error(`Premium image behavior is incomplete: ${requirement}`);
   }
-}
-if (!artworkHost.includes('aria-hidden="true"') || !artworkHost.includes('loading="eager"')) {
-  throw new Error('Decorative artwork host must remain hidden from assistive technology and load predictably.');
 }
 
 const navigationItems = [
@@ -187,11 +186,16 @@ const forbiddenImageRules = [
   /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
   /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
   /(?:\.welcome-hero__visual|\.reference-mosque-hero\s*>\s*\.premium-image|\.reference-dhikr-counter__tasbih|\.reference-qibla-stage__compass)[^{]*>\s*img[^{]*\{[^}]*opacity\s*:\s*0(?:\s*!important)?\s*;/si,
-  /\.reference-artwork-host\s*\{[^}]*pointer-events\s*:\s*auto/si,
 ];
 for (const pattern of forbiddenImageRules) {
   if (pattern.test(allCss)) {
     throw new Error(`Visual stylesheet contains a forbidden image or overlay rule: ${pattern}`);
+  }
+}
+
+for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
+  if (allCss.includes(staleVersion) || allSource.includes(staleVersion)) {
+    throw new Error(`Visual source still contains stale premium asset version: ${staleVersion}`);
   }
 }
 
@@ -218,5 +222,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, no active image-hiding layer, 44px touch targets, unified headers/cards/icons, safe decorative layers, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
