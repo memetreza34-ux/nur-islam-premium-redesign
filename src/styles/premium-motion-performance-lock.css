@@ -1,0 +1,100 @@
+/* Final motion/performance direction. Presentation only. */
+
+/* Touch feedback without fighting Motion's transform animations. */
+@media (pointer: coarse) {
+  .gold-button:not(:disabled):active,
+  .icon-button:not(:disabled):active,
+  .bottom-nav__item:not(:disabled):active,
+  .reference-filter-tabs button:not(:disabled):active,
+  .reference-account-tabs button:not(:disabled):active,
+  .reference-assistant-input button:not(:disabled):active,
+  .reference-notes-storage > button:not(:disabled):active {
+    filter: brightness(.94) saturate(.96);
+  }
+
+  .journey-card:active,
+  .quick-card:active,
+  .recommendation-card:active,
+  .reference-core-access-grid button:active,
+  .reference-services-grid > button:active,
+  .reference-collection-rows > button:active,
+  .reference-quran-list--catalog > article:active,
+  .reference-dua-card__content:active,
+  .reference-name-list__main:active,
+  .reference-mosque-list--live > button:active,
+  .reference-assistant-suggestions button:active {
+    filter: brightness(.965);
+  }
+}
+
+/* Dynamic progress remains smooth but never theatrical. */
+.reading-progress > span,
+.reference-reader-progress > i,
+.reference-name-progress__bar > span,
+.reference-dua-progress__bar > span,
+.reference-dhikr-goal > span > i,
+.reference-prayer-lesson-progress > span,
+.next-prayer-panel__progress > span,
+.reference-learning-course-hero__progress i,
+.reference-prayer-course-hero__progress i,
+.reference-guide-progress i {
+  transition: width .32s cubic-bezier(.22, 1, .36, 1), transform .32s cubic-bezier(.22, 1, .36, 1);
+}
+
+/* Browsers that report a slow visual update rate get the premium hierarchy
+   without expensive continuous animation or heavy glass composition. */
+@media (update: slow) {
+  .premium-home--v2 .welcome-hero__visual::before,
+  .reference-mosque-hero > .premium-image::before,
+  .reference-onboarding__visual > .premium-image::before,
+  .hero-orb__ring,
+  .background-orbit {
+    animation: none !important;
+  }
+
+  .bottom-nav,
+  .app-shell--detail .reference-screen-header,
+  .reference-assistant-input,
+  .reference-modal-backdrop,
+  .learn-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-mosque-detail-backdrop,
+  .calendar-modal-backdrop {
+    -webkit-backdrop-filter: blur(10px) !important;
+    backdrop-filter: blur(10px) !important;
+  }
+
+  .premium-image > img,
+  .reference-legacy-hero img {
+    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .34)) !important;
+  }
+}
+
+/* Battery-friendly restraint on the minimum phone width. */
+@media (max-width: 350px) {
+  .glass-card,
+  .reference-account-form,
+  .reference-note-editor,
+  .reference-learning-lesson-card,
+  .reference-learning-key-points,
+  .reference-learning-sources,
+  .reference-learning-quiz {
+    -webkit-backdrop-filter: blur(10px) saturate(1.01) !important;
+    backdrop-filter: blur(10px) saturate(1.01) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reading-progress > span,
+  .reference-reader-progress > i,
+  .reference-name-progress__bar > span,
+  .reference-dua-progress__bar > span,
+  .reference-dhikr-goal > span > i,
+  .reference-prayer-lesson-progress > span,
+  .next-prayer-panel__progress > span,
+  .reference-learning-course-hero__progress i,
+  .reference-prayer-course-hero__progress i,
+  .reference-guide-progress i {
+    transition: none !important;
+  }
+}
