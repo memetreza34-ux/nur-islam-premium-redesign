@@ -16,6 +16,7 @@ const [
   more,
   mosque,
   learn,
+  legacy,
   iconCss,
 ] = await Promise.all([
   read('src/App.tsx'),
@@ -29,6 +30,7 @@ const [
   read('src/MoreScreen.tsx'),
   read('src/MosqueScreen.tsx'),
   read('src/LearnScreen.tsx'),
+  read('src/LegacyFeatureScreens.tsx'),
   read('src/styles/premium-typography-icon-lock.css'),
 ]);
 
@@ -126,6 +128,35 @@ requireFragments(learn, 'Learning controls', [
   '<Compass size={22} />',
 ]);
 
+requireFragments(legacy, 'Legacy feature semantic icons', [
+  "id: 'hadith-library'",
+  'icon: Library',
+  "id: 'knowledge'",
+  'icon: BookOpenCheck',
+  "id: 'prophets'",
+  'icon: Milestone',
+  "id: 'quiz'",
+  'icon: BrainCircuit',
+  "id: 'hajj'",
+  'icon: Mountain',
+  "id: 'sunnah'",
+  'icon: Sparkles',
+  "id: 'sins'",
+  'icon: ShieldCheck',
+  "id: 'fasting'",
+  'icon: MoonStar',
+  "id: 'ummah'",
+  'icon: Globe2',
+  "id: 'places'",
+  'icon: MapPinned',
+  "id: 'jumuah'",
+  'icon: CalendarHeart',
+  "id: 'zakat'",
+  'icon: BadgeDollarSign',
+  "id: 'standby'",
+  'icon: Radio',
+]);
+
 for (const requirement of [
   'stroke-width: 1.75',
   'stroke-linecap: round',
@@ -134,4 +165,4 @@ for (const requirement of [
   if (!iconCss.includes(requirement)) throw new Error(`Reference icon styling is missing: ${requirement}`);
 }
 
-console.log('Reference icon map verified: primary navigation, Home actions and all core screen-header controls use functional semantic icons with uniform 1.75 rounded strokes.');
+console.log('Reference icon map verified: primary navigation, Home actions, core screen controls and all 13 legacy/additional features use functional semantic icons with uniform 1.75 rounded strokes.');
