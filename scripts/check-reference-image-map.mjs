@@ -12,7 +12,7 @@ const [
   reader,
   dhikr,
   qibla,
-  discovery,
+  mosque,
   learn,
   collections,
   reading,
@@ -26,7 +26,7 @@ const [
   read('src/QuranReaderScreen.tsx'),
   read('src/DhikrScreen.tsx'),
   read('src/QiblaScreen.tsx'),
-  read('src/DiscoveryScreens.tsx'),
+  read('src/MosqueScreen.tsx'),
   read('src/LearnScreen.tsx'),
   read('src/CollectionsScreen.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
@@ -81,7 +81,7 @@ requireFragments(qibla, 'Qibla', [
   'qibla-compass-v2.webp" className="reference-qibla-stage__compass"',
 ]);
 
-requireFragments(discovery, 'Mosque discovery', [
+requireFragments(mosque, 'Mosque discovery', [
   'mosque-gold-v2.webp" fallback={<MosqueScene />}',
 ]);
 
