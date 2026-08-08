@@ -1,0 +1,168 @@
+/* Final visual rendering safeguards. Presentation only. */
+
+/* Premium images must never contribute stray baseline space or broken-image text. */
+.premium-image,
+.premium-image__fallback {
+  line-height: 0;
+}
+
+.premium-image > img {
+  display: block;
+  max-inline-size: 100%;
+  color: transparent;
+  background: transparent;
+}
+
+.premium-image > img[hidden] {
+  display: none !important;
+}
+
+.premium-image > .premium-image__fallback[hidden] {
+  display: none !important;
+}
+
+.premium-image > .premium-image__fallback:not([hidden]) {
+  display: grid !important;
+  place-items: center;
+}
+
+/* Decorative layers never intercept taps or text selection. */
+.welcome-hero::before,
+.welcome-hero::after,
+.prayer-hero::before,
+.prayer-hero::after,
+.reference-next-prayer::before,
+.reference-next-prayer::after,
+.reference-dhikr-counter::before,
+.reference-dhikr-counter::after,
+.reference-qibla-stage::before,
+.reference-qibla-stage::after,
+.reference-duas-hero::before,
+.reference-duas-hero::after,
+.reference-names-hero::before,
+.reference-names-hero::after,
+.reference-mosque-hero::before,
+.reference-mosque-hero::after,
+.reference-quran-verse::before,
+.reference-quran-verse::after,
+.reference-ayah-hero::before,
+.reference-ayah-hero::after,
+.reference-hadith-hero::before,
+.reference-hadith-hero::after,
+.reference-legacy-hero::before,
+.reference-legacy-hero::after,
+.reference-onboarding__visual::before,
+.reference-onboarding__visual::after,
+.reference-calendar-month::before,
+.reference-calendar-month::after,
+.reference-calendar-event::before,
+.reference-calendar-event::after,
+.reference-collection-section::before,
+.reference-collection-section::after {
+  pointer-events: none !important;
+  user-select: none;
+}
+
+/* Make foreground content explicit so artwork can never win the stacking order. */
+.welcome-hero__copy,
+.welcome-hero__date,
+.prayer-hero__content,
+.reference-next-prayer > :not(.next-prayer-panel__glow),
+.reference-dhikr-ring,
+.reference-dhikr-copy,
+.reference-dhikr-reset,
+.reference-qibla-stage__needle,
+.reference-qibla-stage__copy,
+.reference-duas-hero > :not(.reference-duas-hero__ornament),
+.reference-names-hero > :not(.reference-names-hero__allah),
+.reference-mosque-hero > div,
+.reference-quran-verse > *,
+.reference-ayah-hero > :not(.reference-ayah-hero__art),
+.reference-hadith-hero > *,
+.reference-legacy-hero__copy,
+.reference-calendar-month > *,
+.reference-calendar-event > *,
+.reference-collection-section > * {
+  position: relative;
+  z-index: 3;
+}
+
+/* Avoid expensive filter stacks on the smallest phones while preserving the look. */
+@media (max-width: 350px) {
+  .premium-image > img,
+  .reference-legacy-hero img {
+    filter: drop-shadow(0 14px 16px rgba(0, 0, 0, .36)) !important;
+  }
+
+  .brand-lockup__mark > img,
+  .reference-splash__mark > img,
+  .reference-onboarding__brand > .premium-image > img,
+  .reference-assistant-greeting > .premium-image > img {
+    filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .28)) !important;
+  }
+
+  .app-shell--detail .reference-screen-header,
+  .bottom-nav {
+    -webkit-backdrop-filter: blur(18px) !important;
+    backdrop-filter: blur(18px) !important;
+  }
+}
+
+/* Graceful rendering where backdrop-filter is unavailable. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .bottom-nav,
+  .app-shell--detail .reference-screen-header,
+  .reference-assistant-input,
+  .glass-card {
+    background-color: rgba(3, 27, 21, .97) !important;
+  }
+
+  [data-theme='light'] .bottom-nav,
+  [data-theme='light'] .app-shell--detail .reference-screen-header,
+  [data-theme='light'] .glass-card {
+    background-color: rgba(250, 246, 235, .98) !important;
+  }
+}
+
+/* Users who ask the OS for less transparency get the same hierarchy without glass. */
+@media (prefers-reduced-transparency: reduce) {
+  .bottom-nav,
+  .app-shell--detail .reference-screen-header,
+  .glass-card,
+  .reference-assistant-input,
+  .reference-profile-modal,
+  .reference-dua-modal,
+  .reference-name-modal,
+  .reference-mosque-detail-modal,
+  .calendar-modal {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+}
+
+/* Forced-colors keeps controls legible instead of preserving decorative gradients. */
+@media (forced-colors: active) {
+  .premium-image {
+    forced-color-adjust: auto;
+  }
+
+  .gold-button,
+  .icon-button,
+  .bottom-nav,
+  .reference-filter-tabs button,
+  .reference-calendar-grid .calendar-day,
+  .reference-guide-tabs button {
+    border: 1px solid ButtonText !important;
+    box-shadow: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-image,
+  .premium-image > img,
+  .background-orbit,
+  .hero-orb__ring {
+    animation: none !important;
+    transition: none !important;
+  }
+}
