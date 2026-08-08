@@ -21,9 +21,9 @@
   top: max(7px, env(safe-area-inset-top));
   margin: -2px -2px 2px;
   padding: 7px 3px;
-  border: 1px solid rgba(214, 175, 55, .12);
-  border-radius: 16px;
-  background: rgba(3, 18, 14, .82);
+  border: 1px solid rgba(226, 191, 119, .14);
+  border-radius: 18px;
+  background: rgba(0, 27, 22, .9);
   box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
