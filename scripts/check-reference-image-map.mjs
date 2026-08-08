@@ -94,7 +94,7 @@ requireFragments(mosque, 'Mosque discovery', [
 ]);
 
 requireFragments(learn, 'Learning hub', [
-  'mihrab-arch-v2.webp" fallback={<QiblaObject />}',
+  'mihrab-arch-v2.webp" fallback={<MosqueScene />}',
 ]);
 
 requireFragments(collections, 'Collections', [
