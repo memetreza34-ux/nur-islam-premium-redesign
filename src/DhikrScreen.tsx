@@ -32,8 +32,11 @@ function readDailyState(): DailyDhikrState {
     const raw = localStorage.getItem('nur_dhikr_daily_v2');
     if (!raw) return fallback;
     const parsed = JSON.parse(raw) as Partial<DailyDhikrState>;
-    if (parsed.date !== fallback.date || !parsed.counts || typeof parsed.counts !== 'object') return fallback;
-    return { date: parsed.date, counts: parsed.counts as Record<string, number> };
+    if (parsed.date !== fallback.date || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return fallback;
+    const counts = Object.fromEntries(Object.entries(parsed.counts as Record<string, unknown>)
+      .filter(([, value]) => typeof value === 'number' && Number.isFinite(value) && value >= 0)
+      .map(([key, value]) => [key, Math.floor(value as number)]));
+    return { date: parsed.date, counts };
   } catch {
     return fallback;
   }
@@ -93,12 +96,37 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
     setActiveItemIndex(firstIncomplete === -1 ? Math.max(0, routine.items.length - 1) : firstIncomplete);
   }, [activeRoutineId, dailyState.counts, routine]);
 
+  useEffect(() => {
+    const syncDay = () => {
+      const currentDate = todayKey();
+      setDailyState((current) => current.date === currentDate ? current : { date: currentDate, counts: {} });
+    };
+    const handleVisibility = () => {
+      if (document.visibilityState === 'visible') syncDay();
+    };
+    const timer = window.setInterval(syncDay, 60_000);
+    window.addEventListener('focus', syncDay);
+    document.addEventListener('visibilitychange', handleVisibility);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', syncDay);
+      document.removeEventListener('visibilitychange', handleVisibility);
+    };
+  }, []);
+
   const flash = (message: string) => {
     setToast(message);
     window.setTimeout(() => setToast(null), 2200);
   };
 
   const increment = () => {
+    const currentDate = todayKey();
+    if (dailyState.date !== currentDate) {
+      setDailyState({ date: currentDate, counts: { [itemKey]: 1 } });
+      setActiveItemIndex(0);
+      return;
+    }
+
     if (count >= item.target) {
       const nextIndex = activeItemIndex + 1;
       if (nextIndex < routine.items.length) setActiveItemIndex(nextIndex);
@@ -107,10 +135,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
     }
 
     const nextCount = count + 1;
-    setDailyState((current) => ({
-      ...current,
-      counts: { ...current.counts, [itemKey]: nextCount },
-    }));
+    setDailyState((current) => ({ ...current, counts: { ...current.counts, [itemKey]: nextCount } }));
 
     if (nextCount === item.target) {
       const nextIndex = activeItemIndex + 1;
@@ -164,7 +189,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       <section className="reference-dhikr-goal">
         <div><span className="overline">Routine-Fortschritt</span><strong>{routineStats.progress}%</strong></div>
         <span><i style={{ width: `${routineStats.progress}%` }} /></span>
-        <p>{routineStats.progress >= 100 ? 'Routine abgeschlossen. Der Fortschritt wird morgen automatisch neu begonnen.' : `${routineStats.target - routineStats.completed} Wiederholungen bis zum Abschluss dieser Routine.`}</p>
+        <p>{routineStats.progress >= 100 ? 'Routine abgeschlossen. Der Fortschritt wird beim lokalen Tageswechsel automatisch neu begonnen.' : `${routineStats.target - routineStats.completed} Wiederholungen bis zum Abschluss dieser Routine.`}</p>
       </section>
 
       <section className="reference-dhikr-step-tabs" aria-label="Dhikr-Schritte">
