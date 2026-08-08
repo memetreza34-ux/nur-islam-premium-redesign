@@ -1,0 +1,210 @@
+{
+  "schema_version": "1.1",
+  "project": {
+    "name": "Nur Islam Premium",
+    "source_repository": "memetreza34-ux/nur-islam-premium-redesign",
+    "source_branch": "premium-home-redesign",
+    "audited_head": "25e744a460b2c482b31d7b8c083a4998f6523e10",
+    "status": "frontend_pwa_prototype_preproduction",
+    "last_reviewed": "2026-08-08",
+    "risk_level": "elevated_content_and_privacy"
+  },
+  "platforms": {
+    "web": true,
+    "pwa": true,
+    "ios": "planned_after_native_strategy_gate",
+    "android": "planned_after_native_strategy_gate",
+    "preferred_mobile_evaluation": "stabilize_pwa_then_capacitor_poc_before_any_rewrite"
+  },
+  "current_stack": {
+    "frontend": "React 19",
+    "language": "TypeScript",
+    "build": "Vite 6",
+    "motion": "motion/react",
+    "icons": "lucide-react",
+    "fonts": ["Amiri", "Cormorant Garamond", "Inter"],
+    "persistence": ["localStorage", "Cache Storage", "Service Worker"],
+    "backend": null,
+    "auth": null,
+    "cloud_sync": false,
+    "payments": false,
+    "ai_provider": null,
+    "native_wrapper": null
+  },
+  "current_external_sources": {
+    "prayer_times": {
+      "provider": "AlAdhan",
+      "endpoint": "api.aladhan.com",
+      "data_sent": ["latitude", "longitude", "date", "calculation_method", "asr_school"],
+      "status": "live_with_cache_and_fallback"
+    },
+    "quran_online": {
+      "provider": "Al Quran Cloud",
+      "endpoint": "api.alquran.cloud",
+      "editions": ["quran-uthmani", "de.bubenheim"],
+      "status": "live_for_non_offline_surahs"
+    },
+    "mosque_search": {
+      "provider": "OpenStreetMap / public Overpass instances",
+      "data_sent": ["latitude", "longitude", "radius"],
+      "status": "live_with_local_cache"
+    }
+  },
+  "capabilities": {
+    "onboarding": true,
+    "prayer_times": true,
+    "prayer_tracker": true,
+    "prayer_reminders": "limited_web_pwa",
+    "qibla": true,
+    "quran_catalog": true,
+    "quran_reader": true,
+    "quran_full_offline": false,
+    "quran_audio": false,
+    "dhikr": true,
+    "duas": true,
+    "names_of_allah": true,
+    "islamic_calendar": true,
+    "learning": true,
+    "mosque_finder": true,
+    "collections": true,
+    "accounts": false,
+    "cloud_sync": false,
+    "premium_entitlements": false,
+    "productive_ai_assistant": false
+  },
+  "content_governance": {
+    "quran_review_complete": false,
+    "hadith_review_complete": false,
+    "dua_review_complete": false,
+    "dhikr_review_complete": false,
+    "names_review_complete": false,
+    "learning_review_complete": false,
+    "source_registry_required": true,
+    "religious_expert_review_required": true,
+    "release_status_model": ["R0", "R1", "R2", "R3", "R4", "RX"],
+    "stable_content_ids_required": true,
+    "critical_content_kill_switch_required": true,
+    "content_incident_severity": ["C0", "C1", "C2", "C3"]
+  },
+  "market_validation": {
+    "competitor_matrix_required": true,
+    "user_interviews_required": true,
+    "review_mining_required": true,
+    "positioning_test_required": true,
+    "pricing_validation_required": true,
+    "go_pivot_stop_criteria_required": true
+  },
+  "native_strategy": {
+    "pwa_first": true,
+    "capacitor_poc_recommended": true,
+    "full_rewrite_default": false,
+    "critical_poc_capabilities": ["qibla_sensor", "geolocation", "push", "deep_links", "iap", "offline_storage", "app_lifecycle"],
+    "apple_account_deletion_required_if_accounts": true,
+    "google_in_app_and_external_account_deletion_required_if_accounts": true
+  },
+  "growth": {
+    "landing_page_required": true,
+    "aso_required": true,
+    "organic_content_plan_required": true,
+    "creator_partner_plan_required": true,
+    "retention_metrics": ["D1", "D7", "D30"],
+    "paid_marketing_requires_unit_economics": true,
+    "dark_patterns_forbidden": true
+  },
+  "finance": {
+    "mau_scenarios": [100, 1000, 10000, 100000],
+    "model_fixed_costs": true,
+    "model_variable_costs": true,
+    "model_ai_costs": true,
+    "model_audio_cdn_costs": true,
+    "model_store_payment_fees": true,
+    "model_support_and_review_costs": true,
+    "sensitivity_analysis_required": true,
+    "budget_alerts_required": true
+  },
+  "internationalization": {
+    "primary_locale": "de-DE",
+    "recommended_sequence": ["de-DE", "en", "ar"],
+    "rtl_required_for_arabic": true,
+    "religious_content_review_per_language": true,
+    "store_localization_per_market": true,
+    "support_path_per_launched_language": true
+  },
+  "audio_strategy": {
+    "enabled_today": false,
+    "source_and_reciter_registry_required": true,
+    "license_required": true,
+    "ayah_mapping_validation_required": true,
+    "offline_download_integrity_required_if_enabled": true,
+    "cdn_cost_model_required": true,
+    "content_rollback_required": true
+  },
+  "target_stack_decisions": {
+    "keep_current_frontend_until_core_flows_proven": true,
+    "backend_candidate": "Supabase/PostgreSQL or equivalent",
+    "auth_required_if_cloud_sync_or_premium_accounts": true,
+    "server_side_authorization_required": true,
+    "rls_or_equivalent_required": true,
+    "error_monitoring_candidate": "Sentry or equivalent",
+    "uptime_monitoring_required": true,
+    "analytics": "minimal_privacy_aware_product_analytics",
+    "payments": "store_compliant_mobile_iap_and_or_web_psp",
+    "ai": "server_gateway_plus_reviewed_rag_only",
+    "transactional_email": "provider_with_spf_dkim_dmarc",
+    "push": "native_apns_fcm_or_managed_equivalent",
+    "provider_exit_plan_required": true
+  },
+  "security": {
+    "no_privileged_secrets_in_client": true,
+    "rate_limiting_required_with_backend": true,
+    "admin_mfa_required": true,
+    "two_user_negative_tests_required": true,
+    "account_export_required_if_accounts": true,
+    "account_deletion_required_if_accounts": true,
+    "backup_restore_required_if_cloud_data": true,
+    "ai_prompt_injection_tests_required": true,
+    "least_privilege_provider_access_required": true,
+    "secret_registry_and_rotation_required": true
+  },
+  "privacy": {
+    "location_data": true,
+    "religious_usage_data_potentially_sensitive": true,
+    "ai_chat_data_potentially_sensitive": true,
+    "data_minimization_required": true,
+    "provider_register_required": true,
+    "privacy_policy_required_before_public_release": true,
+    "store_privacy_disclosures_required": true,
+    "avoid_unnecessary_detailed_religious_behavior_tracking": true
+  },
+  "release_blockers": [
+    "no_confirmed_full_build_and_ci_evidence",
+    "no_complete_real_device_visual_acceptance",
+    "religious_core_content_not_fully_release_reviewed",
+    "privacy_legal_store_package_not_final",
+    "productive_accounts_sync_payments_not_implemented_if_required_for_v1",
+    "productive_ai_assistant_not_safety_ready",
+    "market_positioning_and_pricing_not_fully_validated",
+    "native_store_path_not_proven_if_native_release_is_planned",
+    "unit_economics_not_final_for_paid_scale",
+    "content_operations_and_incident_process_not_proven"
+  ],
+  "release_gates": {
+    "build_green": false,
+    "ci_green": false,
+    "real_device_qa": false,
+    "content_release_review": false,
+    "security_gate": false,
+    "privacy_gate": false,
+    "market_validation_gate": false,
+    "native_store_gate_if_native": false,
+    "financial_gate_if_monetized": false,
+    "growth_launch_gate": false,
+    "content_operations_gate": false,
+    "internationalization_gate_per_locale": false,
+    "audio_gate_if_enabled": false,
+    "store_gate": false,
+    "restore_gate_if_cloud": false,
+    "payment_gate_if_monetized": false,
+    "ai_gate_if_enabled": false
+  }
+}
