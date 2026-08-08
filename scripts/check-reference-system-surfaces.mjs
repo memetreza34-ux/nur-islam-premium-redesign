@@ -4,11 +4,13 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [navigation, systemSurfaces, modalInput, assistantBase, runtimeLock, finalLock, styleIndex] = await Promise.all([
+const [navigation, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
   read('src/styles/navigation.css'),
   read('src/styles/premium-system-surfaces-lock.css'),
   read('src/styles/premium-mobile-modal-input-lock.css'),
   read('src/styles/reference-assistant.css'),
+  read('src/styles/reference-profile.css'),
+  read('src/styles/premium-profile-brand-lock.css'),
   read('src/styles/premium-visual-runtime-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
   read('src/styles.css'),
@@ -69,6 +71,28 @@ requireTokens(assistantBase, 'Assistant base surfaces', [
   'border-radius: 18px 18px 6px 18px',
 ]);
 
+requireTokens(profileBase, 'Profile base surfaces', [
+  'border-radius: 42px',
+  'linear-gradient(145deg, rgba(13, 87, 67, .95), rgba(0, 18, 15, .98))',
+  '.reference-profile-list',
+  'border-radius: 28px',
+  '.reference-profile-row__icon',
+  'border-radius: 13px',
+  '.reference-profile-logout',
+  '.reference-choice',
+  '.reference-settings-toggles > button',
+  'border-radius: 18px',
+  'linear-gradient(145deg, #0d5743, #07372b 64%, #00120f)',
+]);
+
+requireTokens(profileBrand, 'Late profile brand layer', [
+  'linear-gradient(145deg, #0d5743 0%, #07372b 59%, #00120f 100%) !important',
+  'rgba(226, 191, 119, .13)',
+  'color: #f2d79a !important',
+  '[data-theme=\'light\'] .reference-profile-greeting',
+  'color: #fff8ea',
+]);
+
 requireTokens(runtimeLock, 'No-blur fallback', [
   'background-color: rgba(0, 27, 22, .97) !important',
 ]);
@@ -111,6 +135,12 @@ for (const selector of [
   '.reference-legacy-search',
   '.reference-fasting-reminder-settings input',
   '.reference-zakat-calculator input',
+  '.reference-profile-list',
+  '.reference-profile-logout',
+  '.reference-profile-modal__icon',
+  '.reference-choice',
+  '.reference-settings-toggles > button',
+  '.reference-profile-row__icon',
   '.reference-account-form',
   '.reference-account-cloud-grid > button',
   '.reference-account-security',
@@ -127,7 +157,7 @@ for (const selector of [
   '.reference-assistant-info-list > span',
   ".reference-assistant-input > button[type='submit']",
 ]) {
-  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility surface: ${selector}`);
+  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility/profile surface: ${selector}`);
 }
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
@@ -162,4 +192,19 @@ for (const staleAssistant of [
   }
 }
 
-console.log('Reference system surfaces verified: navigation, system banners, modals, inputs, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry.');
+for (const staleProfile of [
+  'border-radius: 19px',
+  'border-radius: 17px',
+  'border-radius: 15px',
+  'border-radius: 14px',
+  'border-radius: 23px',
+  'linear-gradient(145deg, rgba(16, 59, 46, .95), rgba(4, 25, 20, .98))',
+  'linear-gradient(145deg, #103b2e, #061d17 64%, #041510)',
+  'linear-gradient(145deg, #124c3a 0%, #062a20 59%, #02140f 100%)',
+]) {
+  if (profileBase.includes(staleProfile) || profileBrand.includes(staleProfile)) {
+    throw new Error(`Profile layer still contains a stale pre-reference value: ${staleProfile}`);
+  }
+}
+
+console.log('Reference system surfaces verified: navigation, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry.');
