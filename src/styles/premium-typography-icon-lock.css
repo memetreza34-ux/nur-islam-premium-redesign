@@ -1,0 +1,288 @@
+/* Final typography and icon hierarchy.
+   Presentation only. Keeps the visual language coherent after all legacy/reference layers. */
+
+/* ---------- Home hero hierarchy ---------- */
+.premium-home--v2 .welcome-hero__copy {
+  gap: 9px !important;
+}
+
+.premium-home--v2 .welcome-hero__copy .overline {
+  display: inline-flex !important;
+  width: fit-content;
+  color: #f0cf89 !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: .58rem !important;
+  font-weight: 800 !important;
+  line-height: 1.2 !important;
+  letter-spacing: .13em !important;
+  text-transform: uppercase !important;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, .28);
+}
+
+.premium-home--v2 .welcome-hero__copy h1 {
+  margin: 0 !important;
+  color: #fff8e9 !important;
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: clamp(2.08rem, 8.5vw, 2.72rem) !important;
+  font-weight: 600 !important;
+  line-height: .94 !important;
+  letter-spacing: -.035em !important;
+  text-wrap: balance;
+  text-shadow: 0 13px 34px rgba(0, 0, 0, .31);
+}
+
+.premium-home--v2 .welcome-hero__copy p {
+  display: block !important;
+  margin: 1px 0 0 !important;
+  color: rgba(234, 239, 231, .72) !important;
+  font-size: .59rem !important;
+  font-weight: 500;
+  line-height: 1.58 !important;
+  text-wrap: pretty;
+}
+
+/* ---------- Display headings ---------- */
+.reference-screen-header h1,
+.section-heading h2,
+.reference-account-hero h2,
+.reference-assistant-greeting h2,
+.reference-calendar-event h3,
+.reference-dua-card__content h2,
+.reference-learning-lesson-card h2,
+.reference-learning-quiz h2,
+.reference-legacy-hero h2,
+.reference-quiz-card > h2,
+.reference-zakat-calculator h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  letter-spacing: -.024em;
+  text-wrap: balance;
+}
+
+.reference-screen-header h1 {
+  line-height: 1;
+}
+
+.section-heading h2 {
+  line-height: 1.02;
+}
+
+/* ---------- Eyebrows ---------- */
+.overline,
+.hero-pill,
+.reference-dua-card__top > span,
+.reference-quiz-card > small {
+  font-variant-numeric: tabular-nums;
+}
+
+.overline {
+  font-weight: 800;
+}
+
+.hero-pill {
+  letter-spacing: .095em !important;
+}
+
+/* ---------- Arabic typography ---------- */
+.arabic-label,
+.arabic-verse,
+.reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'],
+.reference-dua-card__arabic,
+.reference-dua-modal__arabic,
+.reference-name-list__arabic,
+.reference-name-modal__arabic,
+.reference-names-hero__allah,
+.reference-ayah-hero > p[dir='rtl'],
+.reference-standby-arabic {
+  font-family: Amiri, 'Noto Naskh Arabic', serif !important;
+  font-kerning: normal;
+  font-synthesis: none;
+  letter-spacing: 0 !important;
+  text-rendering: optimizeLegibility;
+}
+
+.reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'],
+.reference-dua-card__arabic,
+.reference-dua-modal__arabic,
+.reference-ayah-hero > p[dir='rtl'] {
+  line-height: 1.95 !important;
+}
+
+.reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'] {
+  color: #f6dfad;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, .22);
+}
+
+.reference-dhikr-copy > p[dir='rtl'] {
+  margin-block: 2px !important;
+  font-size: clamp(1.62rem, 6.6vw, 2.05rem) !important;
+}
+
+.reference-dua-card__arabic,
+.reference-dua-modal__arabic {
+  color: #efd69b !important;
+}
+
+.reference-name-list__arabic,
+.reference-name-modal__arabic,
+.reference-names-hero__allah {
+  color: #f0d494 !important;
+}
+
+/* ---------- Supporting copy ---------- */
+.reference-source-card small,
+.reference-reader-source small,
+.reference-prayer-location-privacy,
+.reference-calendar-event__source,
+.reference-learning-sources__notice,
+.reference-dhikr-source p,
+.reference-dhikr-source em,
+.reference-account-security small,
+.reference-assistant-safety small,
+.reference-legacy-notice p {
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+/* ---------- Number clarity ---------- */
+.countdown,
+.hero-orb strong,
+.prayer-mini-times strong,
+.reference-next-prayer strong,
+.reference-calendar-grid .calendar-day strong,
+.reference-calendar-grid .calendar-day em,
+.reference-dhikr-ring strong,
+.reference-name-progress,
+.reference-dua-progress,
+.reference-quran-library-status,
+.reference-standby-stage > strong {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Lucide consistency ---------- */
+.icon-button > svg,
+.gold-button > svg,
+.text-button > svg,
+.bottom-nav__item svg,
+.quick-card svg,
+.recommendation-card svg,
+.reference-screen-header svg,
+.reference-profile-row svg,
+.reference-core-access-grid svg,
+.reference-services-grid svg,
+.reference-expanded-learning-grid svg,
+.reference-collection-rows svg,
+.reference-learning-course-screen svg,
+.reference-prayer-course-screen svg,
+.reference-guide-screen svg {
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.icon-button > svg,
+.bottom-nav__item svg,
+.reference-screen-header svg {
+  stroke-width: 1.8;
+}
+
+.quick-card__icon > svg,
+.reference-category-card__icon > svg,
+.reference-core-access-grid__icon > svg,
+.reference-profile-row__icon > svg,
+.reference-services-grid__icon > svg,
+.reference-expanded-learning-grid__icon > svg {
+  stroke-width: 1.7;
+}
+
+/* ---------- Section separators ---------- */
+.reference-reader-verse blockquote,
+.reference-dua-card footer,
+.reference-note-editor__heading,
+.reference-learning-lesson-card > header,
+.reference-learning-sources__notice,
+.reference-dhikr-source em {
+  border-color: rgba(232, 199, 122, .09) !important;
+}
+
+/* ---------- Disabled clarity without looking broken ---------- */
+button:disabled,
+[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+
+button:disabled:not(.gold-button),
+[aria-disabled='true']:not(.gold-button) {
+  opacity: .46;
+}
+
+/* ---------- Selection ---------- */
+::selection {
+  color: #102b22;
+  background: rgba(239, 211, 151, .88);
+}
+
+/* ---------- Light theme ---------- */
+/* The Home welcome hero intentionally remains dark emerald in both themes,
+   therefore its foreground stays light for contrast. */
+[data-theme='light'] .premium-home--v2 .welcome-hero__copy h1 {
+  color: #fff8e9 !important;
+  text-shadow: 0 13px 34px rgba(0, 0, 0, .28) !important;
+}
+
+[data-theme='light'] .premium-home--v2 .welcome-hero__copy p {
+  color: rgba(234, 239, 231, .76) !important;
+}
+
+[data-theme='light'] .premium-home--v2 .welcome-hero__copy .overline {
+  color: #f0cf89 !important;
+  text-shadow: 0 4px 14px rgba(0, 0, 0, .24) !important;
+}
+
+[data-theme='light'] .reference-reader-verse > p[dir='rtl'],
+[data-theme='light'] .reference-dua-card__arabic,
+[data-theme='light'] .reference-dua-modal__arabic,
+[data-theme='light'] .reference-name-list__arabic,
+[data-theme='light'] .reference-name-modal__arabic,
+[data-theme='light'] .reference-names-hero__allah {
+  color: #5e4b25 !important;
+  text-shadow: none;
+}
+
+/* Dhikr counter remains a dark emerald focal surface in both themes. */
+[data-theme='light'] .reference-dhikr-copy > p[dir='rtl'] {
+  color: #f6dfad !important;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, .2);
+}
+
+/* ---------- Narrow phones ---------- */
+@media (max-width: 390px) {
+  .premium-home--v2 .welcome-hero__copy h1 {
+    font-size: clamp(1.96rem, 8.8vw, 2.38rem) !important;
+  }
+
+  .premium-home--v2 .welcome-hero__copy p {
+    font-size: .56rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .premium-home--v2 .welcome-hero__copy .overline {
+    font-size: .53rem !important;
+  }
+
+  .premium-home--v2 .welcome-hero__copy h1 {
+    font-size: 1.92rem !important;
+  }
+
+  .reference-reader-verse > p[dir='rtl'],
+  .reference-dhikr-copy > p[dir='rtl'] {
+    line-height: 1.85 !important;
+  }
+
+  .reference-dhikr-copy > p[dir='rtl'] {
+    font-size: 1.55rem !important;
+  }
+}

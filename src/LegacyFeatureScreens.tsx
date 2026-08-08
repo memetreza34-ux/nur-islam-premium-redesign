@@ -30,8 +30,7 @@ import {
   TriangleAlert,
 } from 'lucide-react';
 import { motion } from 'motion/react';
-import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
-import type { PersonalCalendarEntry } from './calendarReminderService';
+import { syncRollingFastingReminders } from './fastingReminderService';
 import { formatPrayerRemaining, getNextPrayer } from './prayerSchedule';
 
 export type LegacyFeatureId =
@@ -60,8 +59,6 @@ export type LegacyFeatureItem = {
 
 const VISUAL_REVISION = '8';
 const visual = (path: string) => `${path}?v=${VISUAL_REVISION}`;
-const FASTING_REMINDER_ID_BASE = 7_100_000_000_000;
-const FASTING_REMINDER_ID_MAX = FASTING_REMINDER_ID_BASE + 1_000_000_000;
 
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Hadithe durchsuchen, lesen und lokal speichern.', icon: Library, art: '/premium-assets/high-res-objects/lantern-v2.webp' },
@@ -143,17 +140,6 @@ function formatDate(date: Date) {
   return new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: '2-digit', month: 'long' }).format(date);
 }
 
-function dateKey(date: Date) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-}
-
-function previousDay(date: Date) {
-  const value = new Date(date);
-  value.setHours(12, 0, 0, 0);
-  value.setDate(value.getDate() - 1);
-  return value;
-}
-
 function nextWeekday(target: number) {
   const date = new Date();
   const difference = (target - date.getDay() + 7) % 7 || 7;
@@ -178,33 +164,6 @@ function findNextWhiteDay() {
     if (hijriDay >= 13 && hijriDay <= 15) return { date: candidate, day: hijriDay };
   }
   return null;
-}
-
-function fastingReminderId(date: Date, index: number) {
-  return FASTING_REMINDER_ID_BASE + Number(dateKey(date).replaceAll('-', '')) * 10 + index;
-}
-
-function isFastingReminder(entry: PersonalCalendarEntry) {
-  return entry.id >= FASTING_REMINDER_ID_BASE && entry.id < FASTING_REMINDER_ID_MAX;
-}
-
-function buildFastingReminderEntries(time: string, monday: Date, thursday: Date, whiteDay: ReturnType<typeof findNextWhiteDay>) {
-  const items: Array<{ date: Date; title: string; index: number }> = [
-    { date: monday, title: 'Fasten morgen · Montag', index: 1 },
-    { date: thursday, title: 'Fasten morgen · Donnerstag', index: 2 },
-  ];
-  if (whiteDay) items.push({ date: whiteDay.date, title: `Fasten morgen · ${whiteDay.day}. berechneter Hijri-Tag`, index: 3 });
-
-  return items.map(({ date, title, index }): PersonalCalendarEntry => {
-    const reminderDate = previousDay(date);
-    return {
-      id: fastingReminderId(date, index),
-      date: dateKey(reminderDate),
-      title,
-      time,
-      reminder: true,
-    };
-  });
 }
 
 function FeatureHeader({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
@@ -309,10 +268,8 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   useEffect(() => {
     writeStored('nur_fasting_reminders', reminders);
     writeStored('nur_fasting_reminder_time', reminderTime);
-    const retained = readCalendarEntries().filter((entry) => !isFastingReminder(entry));
-    const fastingEntries = reminders ? buildFastingReminderEntries(reminderTime, nextMonday, nextThursday, whiteDay) : [];
-    writeCalendarEntries([...retained, ...fastingEntries]);
-  }, [nextMonday, nextThursday, reminderTime, reminders, whiteDay]);
+    syncRollingFastingReminders();
+  }, [reminderTime, reminders]);
 
   const toggle = async () => {
     const value = !reminders;

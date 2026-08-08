@@ -1,30 +1,52 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
   <title id="title">Nur Islam</title>
-  <desc id="desc">Goldenes Nur-Islam-Symbol auf dunklem Smaragd</desc>
+  <desc id="desc">Goldenes Nur-Emblem mit Halbmond und Stern auf tiefem Smaragd</desc>
   <defs>
-    <radialGradient id="bg" cx="35%" cy="24%" r="84%">
-      <stop offset="0" stop-color="#164b3b"/>
-      <stop offset="0.58" stop-color="#08251d"/>
+    <radialGradient id="app-bg" cx="34%" cy="22%" r="92%">
+      <stop offset="0" stop-color="#18513f"/>
+      <stop offset="0.48" stop-color="#092b21"/>
       <stop offset="1" stop-color="#020b08"/>
     </radialGradient>
-    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#fff0c8"/>
-      <stop offset="0.42" stop-color="#e8c77a"/>
-      <stop offset="1" stop-color="#a97625"/>
+    <radialGradient id="mark-green" cx="42%" cy="32%" r="78%">
+      <stop offset="0" stop-color="#1d604a"/>
+      <stop offset="0.55" stop-color="#0b3529"/>
+      <stop offset="1" stop-color="#041b15"/>
+    </radialGradient>
+    <linearGradient id="mark-gold" x1="120" y1="108" x2="397" y2="406" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#fff2c9"/>
+      <stop offset="0.42" stop-color="#e9c87f"/>
+      <stop offset="0.72" stop-color="#c59642"/>
+      <stop offset="1" stop-color="#8a6124"/>
     </linearGradient>
-    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="10" result="blur"/>
+    <radialGradient id="halo" cx="50%" cy="50%" r="50%">
+      <stop offset="0" stop-color="#f1cf82" stop-opacity=".22"/>
+      <stop offset=".5" stop-color="#d6aa53" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#d6aa53" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft-shadow" x="-45%" y="-45%" width="190%" height="190%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity=".38"/>
+    </filter>
+    <filter id="small-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
       <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
-  <rect width="512" height="512" rx="118" fill="url(#bg)"/>
-  <path d="M98 384C173 342 233 324 292 328c54 3 97 22 132 56" fill="none" stroke="#d8b564" stroke-width="5" stroke-linecap="round" opacity=".28"/>
-  <path d="M117 392h278" stroke="#e8c77a" stroke-width="4" stroke-linecap="round" opacity=".42"/>
-  <path d="M167 389v-88c0-38 28-72 67-81v169m44 0V198c0-43 32-82 76-91v282" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
-  <path d="M121 389v-52c0-42 30-78 71-86 41 8 71 44 71 86v52" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round"/>
-  <path d="M291 389v-92c0-48 34-88 81-98 47 10 81 50 81 98v92" fill="none" stroke="url(#gold)" stroke-width="15" stroke-linecap="round"/>
-  <path d="M196 250c19-8 31-26 31-47-23 7-39 29-39 54 0 2 0 5 1 7 2-5 4-10 7-14Z" fill="url(#gold)" filter="url(#glow)"/>
-  <path d="M349 130c17-7 28-24 28-43-21 7-36 26-36 49 0 2 0 4 1 6 2-4 4-8 7-12Z" fill="url(#gold)" filter="url(#glow)"/>
-  <circle cx="256" cy="256" r="210" fill="none" stroke="#e8c77a" stroke-width="3" opacity=".25"/>
-  <circle cx="256" cy="256" r="188" fill="none" stroke="#e8c77a" stroke-width="1.5" opacity=".12"/>
+
+  <!-- Full-bleed background is intentional so the same asset stays safe when
+       Android/iOS apply their own circle, squircle or rounded mask. -->
+  <rect width="512" height="512" fill="url(#app-bg)"/>
+  <circle cx="256" cy="256" r="216" fill="none" stroke="#e8c77e" stroke-width="2" opacity=".11"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#e8c77e" stroke-width="1.5" opacity=".08"/>
+  <circle cx="256" cy="256" r="178" fill="url(#halo)"/>
+
+  <g transform="translate(112 112) scale(3)" filter="url(#soft-shadow)">
+    <path d="M48 5 59 17l16-1 2 16 13 9-8 14 5 15-15 6-7 15-15-6-14 8-9-13-16-2 1-16L3 50l11-12-3-16 16-4L37 6l11 8Z"
+      fill="url(#mark-green)" stroke="url(#mark-gold)" stroke-width="5.5" stroke-linejoin="round"/>
+    <path d="M58 31a20 20 0 1 0 2 32 18 18 0 1 1-2-32Z" fill="url(#mark-gold)"/>
+    <path d="m63 34 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9Z"
+      fill="#fff5d8" filter="url(#small-glow)"/>
+  </g>
+
+  <circle cx="256" cy="256" r="145" fill="none" stroke="#fff1c2" stroke-width="1.5" opacity=".09"/>
+  <path d="M139 418c70 25 164 25 234 0" fill="none" stroke="#e4bf70" stroke-width="2" stroke-linecap="round" opacity=".12"/>
 </svg>

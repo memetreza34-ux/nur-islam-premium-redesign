@@ -40,12 +40,26 @@ for (const requirement of [
 }
 
 for (const requirement of [
+  "import { syncRollingFastingReminders } from './fastingReminderService';",
   'nur_fasting_reminders',
   'nur_fasting_reminder_time',
+  'syncRollingFastingReminders();',
   'Notification.requestPermission()',
   'Fasten-Erinnerungen',
 ]) {
-  if (!legacy.includes(requirement)) throw new Error(`Fasting assistant UI is missing: ${requirement}`);
+  if (!legacy.includes(requirement)) throw new Error(`Fasting assistant UI is missing central service integration: ${requirement}`);
+}
+
+for (const forbidden of [
+  "from './calendarReminderService'",
+  'FASTING_REMINDER_ID_BASE',
+  'FASTING_REMINDER_ID_MAX',
+  'buildFastingReminderEntries',
+  'isFastingReminder(',
+  'readCalendarEntries()',
+  'writeCalendarEntries(',
+]) {
+  if (legacy.includes(forbidden)) throw new Error(`Fasting assistant contains duplicate calendar scheduling logic: ${forbidden}`);
 }
 
 for (const requirement of [
@@ -57,4 +71,4 @@ for (const requirement of [
   if (!calendarService.includes(requirement)) throw new Error(`Shared calendar reminder engine is missing: ${requirement}`);
 }
 
-console.log('Fasting reminders verified: the user setting feeds a 45-day rolling Monday/Thursday/white-day schedule, reminders are planned for the previous evening, maintenance runs every 15 minutes with lifecycle cleanup, and delivery uses the shared calendar reminder engine.');
+console.log('Fasting reminders verified: the assistant writes only preferences and immediately delegates to the single 45-day rolling scheduler; no duplicate screen-local calendar planning remains, and delivery uses the shared calendar reminder engine.');

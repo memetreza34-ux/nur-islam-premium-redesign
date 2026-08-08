@@ -35,7 +35,7 @@ function readStringSet(key: string) {
   try {
     const raw = localStorage.getItem(key);
     const parsed = raw ? JSON.parse(raw) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.map(String) : []);
+    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is string => typeof value === 'string') : []);
   } catch {
     return new Set<string>();
   }
@@ -130,6 +130,7 @@ export function startPrayerReminderScheduler() {
 
   run();
   timer = window.setInterval(run, CHECK_INTERVAL_MS);
+  window.addEventListener('focus', run);
   document.addEventListener('visibilitychange', handleVisibility);
   window.addEventListener('focus', run);
   window.addEventListener('nur:prayer-times-updated', run);
@@ -137,6 +138,7 @@ export function startPrayerReminderScheduler() {
   return () => {
     active = false;
     if (timer) window.clearInterval(timer);
+    window.removeEventListener('focus', run);
     document.removeEventListener('visibilitychange', handleVisibility);
     window.removeEventListener('focus', run);
     window.removeEventListener('nur:prayer-times-updated', run);

@@ -72,6 +72,37 @@
 @import './styles/premium-depth-lock.css';
 @import './styles/functional-hardening.css';
 @import './styles/functional-legacy-overview.css';
+@import './styles/premium-design-parallel-pass.css';
+@import './styles/premium-core-parallel-pass.css';
+@import './styles/premium-shell-parallel-pass.css';
+@import './styles/premium-secondary-parallel-pass.css';
+@import './styles/premium-learning-reading-parallel-pass.css';
+@import './styles/premium-legacy-parallel-pass.css';
+@import './styles/premium-responsive-accessibility-pass.css';
+@import './styles/premium-state-parallel-pass.css';
+
+/* Final visual art direction: image fit, lighting, depth, effects and composition only. */
+@import './styles/premium-art-direction-lock.css';
+@import './styles/premium-visual-effects-lock.css';
+@import './styles/premium-art-composition-lock.css';
+@import './styles/premium-brand-entry-art-lock.css';
+@import './styles/premium-artwork-host-lock.css';
+@import './styles/premium-typography-icon-lock.css';
+@import './styles/premium-atmosphere-details-lock.css';
+@import './styles/premium-onboarding-art-lock.css';
+@import './styles/premium-daily-inspiration-art-lock.css';
+@import './styles/premium-quran-art-lock.css';
+@import './styles/premium-devotional-art-lock.css';
+@import './styles/premium-worship-art-lock.css';
+@import './styles/premium-discovery-collection-art-lock.css';
+@import './styles/premium-visual-runtime-lock.css';
+@import './styles/premium-profile-brand-lock.css';
+@import './styles/premium-learning-art-lock.css';
+@import './styles/premium-account-notes-assistant-lock.css';
+@import './styles/premium-mobile-modal-input-lock.css';
+@import './styles/premium-motion-performance-lock.css';
+@import './styles/premium-system-surfaces-lock.css';
+@import './styles/premium-short-viewport-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
@@ -85,6 +116,7 @@
   height: 44px;
 }
 
-.brand-lockup {
+.brand-lockup,
+.reference-choice--static {
   cursor: default;
 }

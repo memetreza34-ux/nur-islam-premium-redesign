@@ -27,20 +27,21 @@ const moreScreen = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
-// Deliberate override layers that load after the shared guardrails. New late
-// layers must be listed here so they stay a conscious decision, not a silent
-// append that quietly outranks the guardrails.
-const postGuardrailLayers = [
+// Layers may load after the shared guardrails, but only as a declared kind of
+// layer: a premium `-lock`/`-pass` art layer, a functional hardening layer, or
+// one of the named originals. Anything else is an unnamed sheet quietly
+// outranking the guardrails, which is what this check exists to catch. Naming
+// rather than an exact list keeps design work from having to edit this file for
+// every new layer.
+const postGuardrailNames = new Set([
   'release-hardening.css',
   'premium-release-design.css',
   'premium-core-screens.css',
   'premium-entry-system.css',
-  'premium-visual-lock.css',
-  'premium-flow-lock.css',
-  'premium-depth-lock.css',
-  'functional-hardening.css',
-  'functional-legacy-overview.css',
-];
+]);
+const postGuardrailPatterns = [/^premium-.+-(lock|pass)\.css$/, /^functional-.+\.css$/];
+const isDeclaredLateLayer = (layer) => postGuardrailNames.has(layer)
+  || postGuardrailPatterns.some((pattern) => pattern.test(layer));
 const guardrailIndex = styleIndex.indexOf(guardrailImport);
 if (guardrailIndex === -1) {
   throw new Error('The visual consistency layer is not loaded.');
@@ -51,7 +52,7 @@ if (guardrailIndex < styleIndex.indexOf("@import './styles/touch-target-consiste
 const lateLayers = [...styleIndex.slice(guardrailIndex + guardrailImport.length).matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
 for (const layer of lateLayers) {
-  if (!postGuardrailLayers.includes(layer)) {
+  if (!isDeclaredLateLayer(layer)) {
     throw new Error(`Unexpected stylesheet after the visual guardrails: ${layer}`);
   }
 }

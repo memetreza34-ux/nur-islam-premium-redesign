@@ -28,14 +28,19 @@ for (const required of [
   'DUA_CATEGORIES',
   'DUA_BY_ID',
   'navigator.share',
+  'return new Set(migrated);',
 ]) {
   if (!screenSource.includes(required)) {
     throw new Error(`Complete Dua screen is missing required integration: ${required}`);
   }
 }
 
+if (screenSource.includes('return new Set(migrated.length ? migrated : fallback);')) {
+  throw new Error('An intentionally empty stored Dua favorite list must not silently restore the first-run default favorite.');
+}
+
 if (!stylesSource.includes('reference-duas-complete.css')) {
   throw new Error('Complete Dua stylesheet is not loaded.');
 }
 
-console.log('Dua migration verified: 34 entries, 13 categories, persistence, sharing and styles.');
+console.log('Dua migration verified: 34 entries, 13 categories, persistence, sharing, styles, and intentionally empty favorite sets remain empty.');

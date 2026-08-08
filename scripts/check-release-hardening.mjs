@@ -71,6 +71,10 @@ requireText(backend, [
   "'nur_mosque_location_v1'",
   "'nur_prayer_times_latest'",
   "'nur_mosque_search_cache_v1'",
+  "'nur_install_prompt_dismissed'",
+  "'nur_onboarding_complete'",
+  "key.startsWith('nur_prayer_reminders_fired_')",
+  "key.startsWith('nur_calendar_reminders_fired_')",
 ], 'Cloud backend');
 forbidText(backend, ['service_role', 'SUPABASE_SERVICE_ROLE'], 'Cloud backend');
 
@@ -191,4 +195,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: privacy-scoped cloud backup, visible note failures, least-privilege RLS, background-tolerant calendar reminders with direct no-reload routing, functional themes, PWA routing and accessibility.');
+console.log('Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant calendar reminders with direct no-reload routing, functional themes, PWA routing and accessibility.');

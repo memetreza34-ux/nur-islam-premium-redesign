@@ -1,7 +1,8 @@
 export type NurTheme = 'dark' | 'light' | 'system';
 
-const THEME_KEY = 'nur_theme';
+const THEME_STORAGE_KEY = 'nur_theme';
 const LEGACY_KEY = 'premium_theme';
+const SYSTEM_QUERY = '(prefers-color-scheme: light)';
 
 function normalizeTheme(value: string | null): NurTheme | null {
   if (value === 'dark' || value === 'Dunkel') return 'dark';
@@ -12,12 +13,12 @@ function normalizeTheme(value: string | null): NurTheme | null {
 
 export function getTheme(): NurTheme {
   try {
-    const current = normalizeTheme(localStorage.getItem(THEME_KEY));
+    const current = normalizeTheme(localStorage.getItem(THEME_STORAGE_KEY));
     if (current) return current;
     const legacyRaw = localStorage.getItem(LEGACY_KEY);
     const legacy = normalizeTheme(legacyRaw ? JSON.parse(legacyRaw) as string : null);
     if (legacy) {
-      localStorage.setItem(THEME_KEY, legacy);
+      localStorage.setItem(THEME_STORAGE_KEY, legacy);
       return legacy;
     }
   } catch {
@@ -28,7 +29,7 @@ export function getTheme(): NurTheme {
 
 function resolvedTheme(theme: NurTheme) {
   if (theme !== 'system') return theme;
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  return window.matchMedia(SYSTEM_QUERY).matches ? 'light' : 'dark';
 }
 
 export function applyTheme(theme: NurTheme) {
@@ -41,18 +42,36 @@ export function applyTheme(theme: NurTheme) {
 }
 
 export function setTheme(theme: NurTheme) {
-  try { localStorage.setItem(THEME_KEY, theme); } catch { /* optional */ }
+  try { localStorage.setItem(THEME_STORAGE_KEY, theme); } catch { /* optional */ }
   applyTheme(theme);
   window.dispatchEvent(new CustomEvent<NurTheme>('nur:theme-changed', { detail: theme }));
 }
 
+function applyResolvedTheme() {
+  applyTheme(getTheme());
+}
+
 export function initializeTheme() {
-  const applyCurrent = () => applyTheme(getTheme());
-  applyCurrent();
-  const media = window.matchMedia('(prefers-color-scheme: light)');
+  applyResolvedTheme();
+  const media = window.matchMedia(SYSTEM_QUERY);
   const handleSystemChange = () => {
-    if (getTheme() === 'system') applyCurrent();
+    if (getTheme() === 'system') applyResolvedTheme();
   };
+  // A cloud restore rewrites the stored preference behind the app's back, so
+  // re-read it instead of leaving the previous theme on screen.
+  const handleCloudRestore = () => applyResolvedTheme();
+  // Another tab shares this storage; a null key means it was cleared entirely.
+  const handleStorage = (event: StorageEvent) => {
+    if (event.key === null || event.key === THEME_STORAGE_KEY) applyResolvedTheme();
+  };
+
   media.addEventListener?.('change', handleSystemChange);
-  return () => media.removeEventListener?.('change', handleSystemChange);
+  window.addEventListener('nur:cloud-restored', handleCloudRestore);
+  window.addEventListener('storage', handleStorage);
+
+  return () => {
+    media.removeEventListener?.('change', handleSystemChange);
+    window.removeEventListener('nur:cloud-restored', handleCloudRestore);
+    window.removeEventListener('storage', handleStorage);
+  };
 }

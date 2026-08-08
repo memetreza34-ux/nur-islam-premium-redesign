@@ -26,12 +26,18 @@ import {
 } from './quranService';
 import type { QuranSurahBundle } from './quranService';
 
-function readNumber(key: string, fallback: number) {
+function normalizePositiveInteger(value: unknown, fallback = 1) {
+  const number = typeof value === 'number' ? value : typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : Number.NaN;
+  return Number.isInteger(number) && number > 0 ? number : fallback;
+}
+
+function readFontSize() {
   try {
-    const value = Number(localStorage.getItem(key));
-    return Number.isFinite(value) && value > 0 ? value : fallback;
+    const value = Number(localStorage.getItem('nur_reader_font_size'));
+    if (!Number.isFinite(value)) return 34;
+    return Math.min(48, Math.max(26, Math.round(value)));
   } catch {
-    return fallback;
+    return 34;
   }
 }
 
@@ -39,7 +45,10 @@ function readBookmarks(surahNumber: number) {
   try {
     const raw = localStorage.getItem(`nur_quran_bookmarks_${surahNumber}`);
     const parsed = raw ? JSON.parse(raw) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is number => typeof value === 'number') : []);
+    if (!Array.isArray(parsed)) return new Set<number>();
+    return new Set(parsed
+      .map((value) => normalizePositiveInteger(value, 0))
+      .filter((value) => value > 0));
   } catch {
     return new Set<number>();
   }
@@ -49,7 +58,11 @@ function persistRecent(surahNumber: number) {
   try {
     const raw = localStorage.getItem('nur_quran_recent_surahs');
     const parsed = raw ? JSON.parse(raw) as unknown : [];
-    const current = Array.isArray(parsed) ? parsed.filter((value): value is number => typeof value === 'number') : [];
+    const current = Array.isArray(parsed)
+      ? parsed
+        .map((value) => normalizePositiveInteger(value, 0))
+        .filter((value) => value >= 1 && value <= 114)
+      : [];
     localStorage.setItem('nur_quran_recent_surahs', JSON.stringify([surahNumber, ...current.filter((value) => value !== surahNumber)].slice(0, 8)));
   } catch {
     // optional
@@ -76,9 +89,9 @@ export function QuranReaderScreen({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
-  const [fontSize, setFontSize] = useState(() => readNumber('nur_reader_font_size', 34));
+  const [fontSize, setFontSize] = useState(readFontSize);
   const [showMeaning, setShowMeaning] = useState(true);
-  const [activeAyah, setActiveAyah] = useState(() => Math.max(1, Math.floor(initialAyahNumber)));
+  const [activeAyah, setActiveAyah] = useState(() => normalizePositiveInteger(initialAyahNumber));
   const [bookmarks, setBookmarks] = useState(() => readBookmarks(surahNumber));
   const [toast, setToast] = useState<string | null>(null);
 
@@ -88,12 +101,13 @@ export function QuranReaderScreen({
     setError(null);
     setBundle(null);
     setBookmarks(readBookmarks(surahNumber));
-    setActiveAyah(Math.max(1, Math.floor(initialAyahNumber)));
+    setActiveAyah(normalizePositiveInteger(initialAyahNumber));
 
     fetchSurahBundle(surahNumber)
       .then((data) => {
         if (!active) return;
         setBundle(data);
+        setBookmarks((current) => new Set([...current].filter((ayahNumber) => ayahNumber <= data.meta.numberOfAyahs)));
         persistRecent(surahNumber);
       })
       .catch((reason: unknown) => {
@@ -107,7 +121,7 @@ export function QuranReaderScreen({
 
   useEffect(() => {
     if (!bundle) return undefined;
-    const targetAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, Math.floor(initialAyahNumber)));
+    const targetAyah = Math.min(bundle.meta.numberOfAyahs, normalizePositiveInteger(initialAyahNumber));
     setActiveAyah(targetAyah);
     if (targetAyah <= 1) return undefined;
 

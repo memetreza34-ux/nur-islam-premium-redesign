@@ -1,0 +1,158 @@
+/* Daily inspiration artwork integration. Presentation only. */
+
+.reference-ayah-hero,
+.reference-hadith-hero,
+.verse-card--cream,
+.hadith-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* Ayah: keep the existing architectural image as texture and add a subtle
+   Mihrab frame so the composition reads intentionally rather than as a crop. */
+.reference-ayah-hero__art {
+  z-index: 0 !important;
+  opacity: .09 !important;
+  mix-blend-mode: multiply;
+}
+
+.reference-ayah-hero__art > img {
+  object-position: center 45% !important;
+  filter: saturate(.68) contrast(1.05) !important;
+  transform: scale(1.04);
+}
+
+.reference-ayah-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 10px 12px 4px;
+  opacity: .13;
+  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260806-visual4') center bottom / contain no-repeat;
+  filter: sepia(.12) saturate(.86) contrast(1.03);
+  pointer-events: none;
+}
+
+.reference-ayah-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(255,255,255,.24), transparent 11rem),
+    linear-gradient(180deg, transparent 45%, rgba(91, 64, 27, .06));
+  pointer-events: none;
+}
+
+.reference-ayah-hero > *:not(.reference-ayah-hero__art) {
+  position: relative;
+  z-index: 2 !important;
+}
+
+.reference-ayah-hero > p[dir='rtl'] {
+  text-shadow: 0 5px 18px rgba(94, 67, 29, .08);
+}
+
+/* Hadith: bring the lantern into the same stacking context as the copy. */
+.hadith-card::after,
+.reference-hadith-hero::after {
+  z-index: 0 !important;
+  right: -16px !important;
+  bottom: -22px !important;
+  width: 148px !important;
+  height: 174px !important;
+  opacity: .22 !important;
+  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
+}
+
+.hadith-card::before,
+.reference-hadith-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -58px;
+  bottom: -62px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,199,122,.1), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.hadith-card > *,
+.reference-hadith-hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-hadith-hero__mark {
+  box-shadow:
+    0 13px 28px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 24px rgba(232,199,122,.055);
+}
+
+/* Home daily cards use the same visual grammar, but remain compact. */
+.verse-card--cream .verse-card__art {
+  opacity: .11 !important;
+  mix-blend-mode: multiply;
+}
+
+.verse-card--cream .verse-card__art > img {
+  object-position: center 46% !important;
+  transform: scale(1.04);
+}
+
+.hadith-card {
+  background:
+    radial-gradient(circle at 100% 100%, rgba(232,199,122,.055), transparent 8rem),
+    linear-gradient(145deg, rgba(11, 51, 39, .9), rgba(3, 22, 17, .98)) !important;
+}
+
+[data-theme='light'] .reference-ayah-hero__art,
+[data-theme='light'] .verse-card--cream .verse-card__art {
+  opacity: .07 !important;
+}
+
+[data-theme='light'] .hadith-card,
+[data-theme='light'] .reference-hadith-hero {
+  color: #17382c;
+  background:
+    radial-gradient(circle at 100% 100%, rgba(151,111,43,.05), transparent 8rem),
+    linear-gradient(145deg, #fffdf7, #eee5d0) !important;
+}
+
+[data-theme='light'] .hadith-card::after,
+[data-theme='light'] .reference-hadith-hero::after {
+  opacity: .17 !important;
+  filter: drop-shadow(0 14px 16px rgba(62,45,20,.17)) saturate(.86) !important;
+}
+
+@media (max-width: 390px) {
+  .reference-ayah-hero::before {
+    inset: 15px 3px 8px;
+    opacity: .11;
+  }
+
+  .reference-hadith-hero::after {
+    right: -28px !important;
+    width: 136px !important;
+    height: 164px !important;
+    opacity: .18 !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-ayah-hero::before {
+    opacity: .09;
+  }
+
+  .hadith-card::after,
+  .reference-hadith-hero::after {
+    right: -38px !important;
+    opacity: .16 !important;
+  }
+}

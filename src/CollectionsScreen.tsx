@@ -42,12 +42,26 @@ function readStringSet(key: string, fallback: string[] = []) {
   return new Set(readUnknownArray(key, fallback).filter((value): value is string => typeof value === 'string'));
 }
 
-function readNumberSet(key: string, fallback: number[] = []) {
+function readNumberSet(key: string, fallback: number[] = [], max = Number.POSITIVE_INFINITY) {
   const values = readUnknownArray(key, fallback);
   const numbers = values
     .map((value) => typeof value === 'number' ? value : typeof value === 'string' && /^\d+$/.test(value) ? Number(value) : Number.NaN)
-    .filter((value) => Number.isInteger(value) && value > 0);
+    .filter((value) => Number.isInteger(value) && value > 0 && value <= max);
   return new Set(numbers);
+}
+
+function isValidDateKey(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day, 12);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
+
+function readDateSet(key: string) {
+  return new Set(readUnknownArray(key).filter((value): value is string => typeof value === 'string' && isValidDateKey(value)));
 }
 
 function writeStringSet(key: string, value: Set<string>) {
@@ -127,10 +141,10 @@ export function CollectionsScreen({
 }: CollectionsScreenProps) {
   const [filter, setFilter] = useState('Alle');
   const quranBookmarkGroups = useMemo(readQuranBookmarkGroups, []);
-  const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites'), []);
+  const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites', [], 114), []);
   const duaFavorites = useMemo(readDuaFavoriteSet, []);
   const nameFavorites = useMemo(readNameFavoriteSet, []);
-  const calendarFavorites = useMemo(() => readStringSet('nur_calendar_favorites'), []);
+  const calendarFavorites = useMemo(() => readDateSet('nur_calendar_favorites'), []);
   const ayahSaved = useMemo(() => readBoolean('nur_daily_ayah_saved'), []);
   const hadithSaved = useMemo(() => readBoolean('nur_daily_hadith_saved'), []);
 

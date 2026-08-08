@@ -1,0 +1,240 @@
+/* Final mobile input + modal surface guardrail.
+   Presentation only. Prevents iOS focus zoom and unifies modal finish. */
+
+/* ---------- Modal materials ---------- */
+.reference-profile-modal,
+.reference-dua-modal,
+.reference-name-modal,
+.reference-dhikr-stats-modal,
+.reference-prayer-settings-modal,
+.prayer-completion-modal,
+.reference-learning-completion-modal,
+.reference-learning-plan-modal,
+.calendar-modal,
+.learn-modal,
+.reference-mosque-detail-modal,
+.reference-prayer-course-complete > section {
+  isolation: isolate;
+  border: 1px solid rgba(247, 226, 178, .27) !important;
+  background:
+    radial-gradient(circle at 84% 0%, rgba(232, 199, 122, .105), transparent 12rem),
+    radial-gradient(circle at 0% 100%, rgba(52, 139, 103, .07), transparent 10rem),
+    linear-gradient(150deg, #104334, #04231b 64%, #02130f) !important;
+  box-shadow:
+    0 36px 94px rgba(0, 0, 0, .58),
+    inset 0 1px 0 rgba(255, 255, 255, .042),
+    inset 0 -1px 0 rgba(232, 199, 122, .025) !important;
+  scrollbar-gutter: stable;
+}
+
+.reference-profile-modal::before,
+.reference-dua-modal::before,
+.reference-name-modal::before,
+.reference-dhikr-stats-modal::before,
+.reference-prayer-settings-modal::before,
+.prayer-completion-modal::before,
+.reference-learning-completion-modal::before,
+.reference-learning-plan-modal::before,
+.calendar-modal::before,
+.learn-modal::before,
+.reference-mosque-detail-modal::before {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 18%;
+  bottom: auto;
+  left: 18%;
+  width: auto;
+  height: 1px;
+  margin: 0;
+  border: 0 !important;
+  border-radius: 0;
+  opacity: 1;
+  background: linear-gradient(90deg, transparent, rgba(255, 237, 196, .34), transparent);
+  box-shadow: none !important;
+  filter: none;
+  transform: none;
+  pointer-events: none;
+}
+
+.reference-modal-close,
+.learn-modal__close,
+.reference-prayer-settings-modal__close,
+.reference-mosque-detail-modal__close,
+.reference-learning-completion-modal__close,
+.prayer-completion-modal__close {
+  border: 1px solid rgba(247, 226, 178, .16) !important;
+  color: #f4ead5 !important;
+  background: rgba(3, 27, 21, .88) !important;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, .3), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+}
+
+.reference-modal-backdrop,
+.learn-modal-backdrop,
+.reference-prayer-settings-backdrop,
+.reference-mosque-detail-backdrop,
+.reference-learning-completion-backdrop,
+.reference-prayer-course-complete,
+.prayer-completion-backdrop,
+.calendar-modal-backdrop {
+  background:
+    radial-gradient(circle at 50% 100%, rgba(27, 90, 66, .1), transparent 22rem),
+    rgba(0, 9, 7, .79) !important;
+  backdrop-filter: blur(16px) saturate(.94);
+  -webkit-backdrop-filter: blur(16px) saturate(.94);
+}
+
+/* ---------- Input materials ---------- */
+.reference-input-search,
+.reference-assistant-input,
+.reference-account-form label > div,
+.reference-account-form label > input,
+.reference-note-editor > input,
+.reference-note-editor > textarea,
+.calendar-modal input,
+.reference-legacy-search,
+.reference-fasting-reminder-settings input,
+.reference-zakat-calculator input {
+  transition: border-color .16s ease, box-shadow .16s ease, background .16s ease;
+}
+
+.reference-input-search:focus-within,
+.reference-assistant-input:focus-within,
+.reference-account-form label > div:focus-within,
+.reference-account-form label > input:focus,
+.reference-note-editor > input:focus,
+.reference-note-editor > textarea:focus,
+.calendar-modal input:focus,
+.reference-legacy-search:focus-within,
+.reference-fasting-reminder-settings input:focus,
+.reference-zakat-calculator input:focus {
+  border-color: rgba(247, 226, 178, .4) !important;
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .052), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
+}
+
+.reference-note-editor > textarea {
+  field-sizing: content;
+  min-height: 176px;
+  max-height: 48dvh;
+}
+
+/* iOS Safari zooms into focused controls below 16px. Keep zoom accessibility
+   available while preventing that automatic layout jump on touch devices. */
+@media (pointer: coarse) {
+  .reference-account-form input,
+  .reference-note-editor input,
+  .reference-note-editor textarea,
+  .calendar-modal input,
+  .reference-legacy-search input,
+  .reference-fasting-reminder-settings input,
+  .reference-zakat-calculator input,
+  .reference-input-search input,
+  .reference-assistant-input input {
+    font-size: 16px !important;
+  }
+
+  .reference-account-form input::placeholder,
+  .reference-note-editor input::placeholder,
+  .reference-note-editor textarea::placeholder,
+  .calendar-modal input::placeholder,
+  .reference-legacy-search input::placeholder,
+  .reference-fasting-reminder-settings input::placeholder,
+  .reference-zakat-calculator input::placeholder,
+  .reference-input-search input::placeholder,
+  .reference-assistant-input input::placeholder {
+    font-size: 16px !important;
+  }
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-profile-modal,
+[data-theme='light'] .reference-dua-modal,
+[data-theme='light'] .reference-name-modal,
+[data-theme='light'] .reference-dhikr-stats-modal,
+[data-theme='light'] .reference-prayer-settings-modal,
+[data-theme='light'] .prayer-completion-modal,
+[data-theme='light'] .reference-learning-completion-modal,
+[data-theme='light'] .reference-learning-plan-modal,
+[data-theme='light'] .calendar-modal,
+[data-theme='light'] .learn-modal,
+[data-theme='light'] .reference-mosque-detail-modal,
+[data-theme='light'] .reference-prayer-course-complete > section {
+  color: #17382c;
+  border-color: rgba(117, 87, 37, .2) !important;
+  background:
+    radial-gradient(circle at 84% 0%, rgba(155, 111, 39, .07), transparent 12rem),
+    linear-gradient(150deg, #fffdf7, #f3ecdc 68%, #ece2cc) !important;
+  box-shadow: 0 30px 76px rgba(61, 46, 23, .2), inset 0 1px 0 rgba(255, 255, 255, .84) !important;
+}
+
+[data-theme='light'] .reference-modal-close,
+[data-theme='light'] .learn-modal__close,
+[data-theme='light'] .reference-prayer-settings-modal__close,
+[data-theme='light'] .reference-mosque-detail-modal__close,
+[data-theme='light'] .reference-learning-completion-modal__close,
+[data-theme='light'] .prayer-completion-modal__close {
+  color: #27483c !important;
+  border-color: rgba(117, 87, 37, .15) !important;
+  background: rgba(255, 252, 244, .92) !important;
+  box-shadow: 0 9px 22px rgba(61, 46, 23, .12), inset 0 1px 0 rgba(255, 255, 255, .8) !important;
+}
+
+[data-theme='light'] .reference-modal-backdrop,
+[data-theme='light'] .learn-modal-backdrop,
+[data-theme='light'] .reference-prayer-settings-backdrop,
+[data-theme='light'] .reference-mosque-detail-backdrop,
+[data-theme='light'] .reference-learning-completion-backdrop,
+[data-theme='light'] .reference-prayer-course-complete,
+[data-theme='light'] .prayer-completion-backdrop,
+[data-theme='light'] .calendar-modal-backdrop {
+  background: rgba(22, 31, 26, .48) !important;
+}
+
+/* ---------- Short screens ---------- */
+@media (max-height: 620px) {
+  .reference-profile-modal,
+  .reference-dua-modal,
+  .reference-name-modal,
+  .reference-dhikr-stats-modal,
+  .reference-prayer-settings-modal,
+  .prayer-completion-modal,
+  .reference-learning-completion-modal,
+  .reference-learning-plan-modal,
+  .calendar-modal,
+  .learn-modal,
+  .reference-mosque-detail-modal,
+  .reference-prayer-course-complete > section {
+    border-radius: 20px !important;
+  }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .reference-modal-backdrop,
+  .learn-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-mosque-detail-backdrop,
+  .reference-learning-completion-backdrop,
+  .reference-prayer-course-complete,
+  .prayer-completion-backdrop,
+  .calendar-modal-backdrop {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: rgba(0, 9, 7, .94) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-input-search,
+  .reference-assistant-input,
+  .reference-account-form label > div,
+  .reference-account-form label > input,
+  .reference-note-editor > input,
+  .reference-note-editor > textarea,
+  .calendar-modal input,
+  .reference-legacy-search,
+  .reference-fasting-reminder-settings input,
+  .reference-zakat-calculator input {
+    transition: none !important;
+  }
+}

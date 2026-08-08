@@ -182,8 +182,12 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
     let systemNotificationAvailable = 'Notification' in window && Notification.permission === 'granted';
     if ('Notification' in window && Notification.permission === 'default') {
-      const permission = await Notification.requestPermission();
-      systemNotificationAvailable = permission === 'granted';
+      try {
+        const permission = await Notification.requestPermission();
+        systemNotificationAvailable = permission === 'granted';
+      } catch {
+        systemNotificationAvailable = false;
+      }
     }
 
     try { localStorage.setItem('nur_prayer_notifications', JSON.stringify(OBLIGATORY_PRAYER_IDS)); } catch { /* optional */ }
@@ -293,7 +297,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
               {modal === 'language' ? (
                 <>
                   <span className="reference-profile-modal__icon"><Languages size={28} /></span><span className="overline">App-Sprache</span><h2>Deutsch</h2><p>Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache. Arabisch und Englisch werden erst freigeschaltet, wenn Navigation und religiöse Inhalte vollständig übersetzt und geprüft sind.</p>
-                  <div className="reference-choice-grid"><button className="reference-choice reference-choice--active"><Languages size={20} /><span>Deutsch</span><CircleCheck size={16} /></button></div>
+                  <div className="reference-choice-grid"><div className="reference-choice reference-choice--active reference-choice--static" aria-label="Deutsch ist ausgewählt"><Languages size={20} /><span>Deutsch</span><CircleCheck size={16} /></div></div>
                 </>
               ) : null}
 

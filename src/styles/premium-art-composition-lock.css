@@ -1,0 +1,299 @@
+/* Final image/copy composition lock.
+   Presentation-only geometry so artwork and content never compete for the same space. */
+
+/* ---------- Home ---------- */
+.premium-home--v2 .welcome-hero__copy {
+  position: relative;
+  z-index: 4;
+  width: min(72%, 292px);
+}
+
+.premium-home--v2 .welcome-hero__copy p {
+  max-width: 255px;
+  text-wrap: pretty;
+}
+
+.premium-home--v2 .welcome-hero__date {
+  position: relative;
+  z-index: 5;
+}
+
+.premium-home--v2 .journey-card > span:last-child,
+.continue-card--v2 .continue-card__body {
+  position: relative;
+  z-index: 2;
+  min-width: 0;
+}
+
+/* ---------- Prayer ---------- */
+.reference-next-prayer .next-prayer-panel__topline,
+.reference-next-prayer .next-prayer-panel__main,
+.reference-next-prayer .next-prayer-panel__progress,
+.reference-next-prayer .next-prayer-panel__actions {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-next-prayer .next-prayer-panel__main > div:first-child {
+  max-width: 58%;
+}
+
+/* ---------- Quran ---------- */
+.reference-reader-hero > div:first-child {
+  max-width: 64%;
+}
+
+.reference-reader-hero > .premium-image {
+  z-index: 1;
+}
+
+.reference-reader-hero .reference-reader-progress {
+  z-index: 3;
+}
+
+/* ---------- Duas / Names ---------- */
+.reference-duas-hero {
+  padding-right: 142px !important;
+}
+
+.reference-duas-hero > h2,
+.reference-duas-hero > p,
+.reference-duas-hero > .hero-pill,
+.reference-duas-hero > .overline {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-duas-hero > p {
+  max-width: 235px;
+}
+
+.reference-names-hero > h2,
+.reference-names-hero > p,
+.reference-names-hero > .hero-pill,
+.reference-names-hero > .overline {
+  max-width: 68%;
+}
+
+.reference-names-hero__allah {
+  z-index: 1;
+  max-width: 34%;
+  overflow: visible;
+}
+
+/* ---------- Mosque ---------- */
+.reference-mosque-hero > div {
+  z-index: 3 !important;
+  width: 64% !important;
+  max-width: 270px;
+}
+
+.reference-mosque-hero > div p {
+  max-width: 230px;
+  text-wrap: pretty;
+}
+
+.reference-mosque-hero > .premium-image {
+  z-index: 1;
+}
+
+/* ---------- Learning ---------- */
+.reference-learning-hero__copy,
+.reference-prayer-learning-hub__copy,
+.reference-prayer-course-hero__copy,
+.reference-learning-course-hero__copy,
+.reference-guide-hero > div:last-child {
+  position: relative;
+  z-index: 3;
+  min-width: 0;
+}
+
+.reference-prayer-learning-hub__copy,
+.reference-prayer-course-hero__copy,
+.reference-guide-hero > div:last-child {
+  max-width: 66%;
+}
+
+.reference-learning-course-hero__copy {
+  max-width: 290px;
+}
+
+.reference-learning-hero > .premium-image,
+.reference-prayer-learning-hub > .premium-image,
+.reference-prayer-course-hero > .premium-image,
+.reference-guide-hero > .premium-image {
+  z-index: 1;
+}
+
+.reference-learning-hero__copy h2,
+.reference-prayer-learning-hub__copy h2,
+.reference-prayer-course-hero__copy h2,
+.reference-learning-course-hero__copy h2,
+.reference-guide-hero > div:last-child h2 {
+  text-wrap: balance;
+}
+
+/* ---------- Collections ---------- */
+.reference-collection-grid > button > span,
+.reference-collection-grid > button > svg {
+  z-index: 3 !important;
+}
+
+.reference-collection-grid .premium-image {
+  z-index: 1;
+}
+
+/* ---------- Legacy ---------- */
+.reference-legacy-hero__copy {
+  z-index: 3 !important;
+  min-width: 0;
+}
+
+.reference-legacy-hero__copy p {
+  max-width: 260px;
+  text-wrap: pretty;
+}
+
+.reference-legacy-hero img {
+  z-index: 2 !important;
+}
+
+/* ---------- Onboarding ---------- */
+.reference-onboarding__visual > .premium-image {
+  z-index: 1;
+}
+
+.reference-onboarding__visual-icon,
+.reference-onboarding__tasbih {
+  z-index: 3;
+}
+
+.reference-onboarding__copy h1,
+.reference-onboarding__copy p {
+  text-wrap: balance;
+}
+
+/* ---------- Long content resilience ---------- */
+.welcome-hero__copy,
+.reference-mosque-hero > div,
+.reference-prayer-learning-hub__copy,
+.reference-prayer-course-hero__copy,
+.reference-learning-course-hero__copy,
+.reference-guide-hero > div:last-child,
+.reference-legacy-hero__copy,
+.reference-account-hero,
+.reference-assistant-greeting {
+  overflow-wrap: anywhere;
+}
+
+/* ---------- Tablet / large phones ---------- */
+@media (min-width: 430px) {
+  .premium-home--v2 .welcome-hero__copy {
+    width: min(68%, 306px);
+  }
+
+  .premium-home--v2 .welcome-hero__visual {
+    right: -6px !important;
+    width: 374px !important;
+    height: 292px !important;
+  }
+
+  .reference-mosque-hero > div {
+    width: 62% !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -20px !important;
+    width: 330px !important;
+    height: 248px !important;
+  }
+}
+
+/* ---------- Standard compact phones ---------- */
+@media (max-width: 390px) {
+  .premium-home--v2 .welcome-hero__copy {
+    width: 74%;
+    max-width: 252px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy p {
+    max-width: 228px;
+  }
+
+  .reference-next-prayer .next-prayer-panel__main > div:first-child {
+    max-width: 62%;
+  }
+
+  .reference-reader-hero > div:first-child {
+    max-width: 61%;
+  }
+
+  .reference-duas-hero {
+    padding-right: 116px !important;
+  }
+
+  .reference-names-hero > h2,
+  .reference-names-hero > p,
+  .reference-names-hero > .hero-pill,
+  .reference-names-hero > .overline {
+    max-width: 64%;
+  }
+
+  .reference-mosque-hero > div {
+    width: 70% !important;
+    max-width: 245px;
+  }
+
+  .reference-prayer-learning-hub__copy,
+  .reference-prayer-course-hero__copy,
+  .reference-guide-hero > div:last-child {
+    max-width: 70%;
+  }
+}
+
+/* ---------- Very narrow devices ---------- */
+@media (max-width: 350px) {
+  .premium-home--v2 .welcome-hero__copy {
+    width: 79%;
+    max-width: 232px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy p {
+    max-width: 210px;
+  }
+
+  .reference-next-prayer .next-prayer-panel__main > div:first-child {
+    max-width: 68%;
+  }
+
+  .reference-reader-hero > div:first-child {
+    max-width: 66%;
+  }
+
+  .reference-duas-hero {
+    padding-right: 94px !important;
+  }
+
+  .reference-duas-hero > p {
+    max-width: 205px;
+  }
+
+  .reference-mosque-hero > div {
+    width: 78% !important;
+    max-width: 238px;
+  }
+
+  .reference-prayer-learning-hub__copy,
+  .reference-prayer-course-hero__copy,
+  .reference-guide-hero > div:last-child {
+    max-width: 74%;
+  }
+
+  .reference-legacy-hero {
+    grid-template-columns: minmax(0, 1fr) 82px !important;
+  }
+
+  .reference-legacy-hero img {
+    max-width: 94px;
+  }
+}

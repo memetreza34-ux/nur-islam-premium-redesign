@@ -1,0 +1,297 @@
+/* Prayer + Dhikr + Qibla final focal-art direction. Presentation only. */
+
+/* ---------- Prayer ---------- */
+.reference-next-prayer {
+  isolation: isolate;
+}
+
+.reference-next-prayer::before,
+.next-prayer-panel::before {
+  z-index: 0 !important;
+  right: -48px !important;
+  bottom: -9px !important;
+  width: 270px !important;
+  height: 212px !important;
+  opacity: .29 !important;
+  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 25px 23px rgba(0, 0, 0, .47)) saturate(.92) contrast(1.035) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
+}
+
+.reference-next-prayer::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -76px;
+  bottom: -92px;
+  width: 290px;
+  height: 290px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,199,122,.1), rgba(38,125,91,.055) 44%, transparent 70%);
+  filter: blur(9px);
+  pointer-events: none;
+}
+
+.reference-next-prayer > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-next-prayer .next-prayer-panel__time {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* ---------- Dhikr ---------- */
+.reference-dhikr-counter {
+  isolation: isolate;
+  min-height: 462px !important;
+}
+
+.reference-dhikr-counter__glow {
+  top: 17px !important;
+  width: 292px !important;
+  height: 292px !important;
+  background:
+    radial-gradient(circle, rgba(232,199,122,.135) 0%, rgba(49,139,103,.055) 39%, transparent 69%) !important;
+}
+
+/* Old reference CSS intentionally faded this to .19. The real asset now forms
+   a visible background halo behind the counter instead of disappearing. */
+.reference-dhikr-counter__tasbih {
+  top: 12px !important;
+  width: 286px !important;
+  height: 286px !important;
+  opacity: .31 !important;
+  filter: none !important;
+}
+
+.reference-dhikr-counter__tasbih > img {
+  object-fit: contain !important;
+  filter: drop-shadow(0 24px 23px rgba(0,0,0,.48)) saturate(1.035) contrast(1.03) !important;
+}
+
+.reference-dhikr-ring {
+  margin-top: 3px;
+  border: 1px solid rgba(247, 226, 178, .13) !important;
+  background:
+    radial-gradient(circle at 48% 42%, #0d3127 0 54%, #08261e 56%, transparent 57%),
+    conic-gradient(#f0d493 var(--dhikr-progress), rgba(232,199,122,.1) 0) !important;
+  box-shadow:
+    0 23px 48px rgba(0,0,0,.38),
+    inset 0 0 0 10px rgba(2,18,14,.84),
+    inset 0 0 0 11px rgba(244,218,160,.18),
+    inset 0 12px 30px rgba(255,255,255,.025),
+    0 0 30px rgba(232,199,122,.035) !important;
+}
+
+.reference-dhikr-ring strong {
+  color: #fff8ea;
+  text-shadow: 0 9px 23px rgba(0,0,0,.3);
+}
+
+.reference-dhikr-copy {
+  max-width: 330px;
+}
+
+.reference-dhikr-copy small {
+  max-width: 290px;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+/* ---------- Qibla ---------- */
+.reference-qibla-stage {
+  isolation: isolate;
+  min-height: 492px !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(232,199,122,.13), transparent 14rem),
+    radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
+    linear-gradient(160deg, #0c4233, #05271e 59%, #02130f) !important;
+}
+
+.reference-qibla-stage__halo {
+  top: 11px !important;
+  width: 342px !important;
+  height: 342px !important;
+  border: 1px solid rgba(232,199,122,.04);
+  background: radial-gradient(circle, rgba(232,199,122,.11), transparent 67%) !important;
+  box-shadow: 0 0 0 26px rgba(232,199,122,.012), 0 0 0 54px rgba(232,199,122,.007);
+}
+
+.reference-qibla-stage__compass {
+  width: 320px !important;
+  height: 320px !important;
+  overflow: visible;
+  filter: none !important;
+}
+
+.reference-qibla-stage__compass > img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 27px 28px rgba(0,0,0,.52)) saturate(1.025) contrast(1.045) !important;
+}
+
+.reference-qibla-stage::after {
+  z-index: 2 !important;
+  width: 88px !important;
+  height: 88px !important;
+  opacity: .94 !important;
+  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260806-visual4') center / contain no-repeat !important;
+  filter: drop-shadow(0 15px 20px rgba(0,0,0,.53)) saturate(1.01) contrast(1.05) !important;
+}
+
+.reference-qibla-stage__needle {
+  z-index: 4 !important;
+  color: #f0d494 !important;
+  filter: drop-shadow(0 6px 9px rgba(0,0,0,.58)) !important;
+}
+
+.reference-qibla-stage__copy {
+  z-index: 4 !important;
+  margin-top: -3px !important;
+}
+
+.reference-qibla-stage__copy h2 {
+  color: #fff8e9;
+  font-size: 1.78rem !important;
+  text-shadow: 0 9px 24px rgba(0,0,0,.28);
+}
+
+.reference-qibla-stage__copy p {
+  max-width: 300px;
+  color: rgba(181,202,191,.79) !important;
+  line-height: 1.48;
+}
+
+/* Focal worship surfaces stay deep emerald in Light Theme so their golden
+   artwork keeps contrast and the product retains visual anchors. */
+[data-theme='light'] .reference-next-prayer,
+[data-theme='light'] .reference-dhikr-counter,
+[data-theme='light'] .reference-qibla-stage {
+  color: #fff8e9;
+  border-color: rgba(181, 142, 68, .27) !important;
+  box-shadow: 0 22px 54px rgba(60,44,20,.13), inset 0 1px 0 rgba(255,255,255,.045) !important;
+}
+
+[data-theme='light'] .reference-next-prayer {
+  background:
+    radial-gradient(circle at 88% 16%, rgba(238,204,128,.15), transparent 12rem),
+    linear-gradient(150deg, #0d4b3a, #05291f 57%, #021510) !important;
+}
+
+[data-theme='light'] .reference-dhikr-counter {
+  background:
+    radial-gradient(circle at 50% 14%, rgba(232,199,122,.12), transparent 12rem),
+    linear-gradient(160deg, #0b4434, #05271f 58%, #02130f) !important;
+}
+
+[data-theme='light'] .reference-qibla-stage {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(232,199,122,.13), transparent 14rem),
+    radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
+    linear-gradient(160deg, #0c4233, #05271e 59%, #02130f) !important;
+}
+
+[data-theme='light'] .reference-next-prayer h2,
+[data-theme='light'] .reference-next-prayer .arabic-label,
+[data-theme='light'] .reference-dhikr-counter h2,
+[data-theme='light'] .reference-qibla-stage__copy h2 {
+  color: #fff8e9 !important;
+}
+
+[data-theme='light'] .reference-next-prayer p,
+[data-theme='light'] .reference-dhikr-copy small,
+[data-theme='light'] .reference-qibla-stage__copy p {
+  color: rgba(181,202,191,.8) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-next-prayer::before,
+  .next-prayer-panel::before {
+    right: -72px !important;
+    width: 248px !important;
+    height: 198px !important;
+  }
+
+  .reference-dhikr-counter {
+    min-height: 440px !important;
+  }
+
+  .reference-dhikr-counter__tasbih {
+    width: 266px !important;
+    height: 266px !important;
+    opacity: .29 !important;
+  }
+
+  .reference-dhikr-ring {
+    width: 190px !important;
+    height: 190px !important;
+  }
+
+  .reference-qibla-stage {
+    min-height: 462px !important;
+  }
+
+  .reference-qibla-stage__halo {
+    width: 315px !important;
+    height: 315px !important;
+  }
+
+  .reference-qibla-stage__compass {
+    width: 294px !important;
+    height: 294px !important;
+  }
+
+  .reference-qibla-stage::after {
+    width: 82px !important;
+    height: 82px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-dhikr-counter {
+    min-height: 418px !important;
+  }
+
+  .reference-dhikr-counter__tasbih {
+    width: 244px !important;
+    height: 244px !important;
+    opacity: .27 !important;
+  }
+
+  .reference-dhikr-ring {
+    width: 174px !important;
+    height: 174px !important;
+  }
+
+  .reference-qibla-stage {
+    min-height: 430px !important;
+  }
+
+  .reference-qibla-stage__halo {
+    width: 286px !important;
+    height: 286px !important;
+  }
+
+  .reference-qibla-stage__compass {
+    width: 270px !important;
+    height: 270px !important;
+  }
+
+  .reference-qibla-stage::after {
+    width: 74px !important;
+    height: 74px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-dhikr-ring,
+  .reference-qibla-stage__compass > img,
+  .reference-next-prayer::before {
+    transition: none !important;
+    animation: none !important;
+  }
+}
