@@ -53,7 +53,12 @@ if (guardrailIndex < styleIndex.indexOf("@import './styles/touch-target-consiste
 }
 const geometryIndex = styleIndex.indexOf(geometryImport);
 if (geometryIndex === -1 || geometryIndex < styleIndex.indexOf("@import './styles/premium-readable-type-lock.css';")) {
-  throw new Error('The final reference geometry lock must load after all other premium visual layers.');
+  throw new Error('The final reference geometry/icon lock must load after all other premium visual layers.');
+}
+const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
+  .map((match) => match[1]);
+if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
+  throw new Error(`The reference geometry/icon lock must be the final stylesheet import; found ${importedLayers.at(-1) ?? 'none'} after it.`);
 }
 const lateLayers = [...styleIndex.slice(guardrailIndex + guardrailImport.length).matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
@@ -123,9 +128,13 @@ for (const requirement of [
   'border-radius: 26px !important',
   '.bottom-nav__item > span',
   'border-radius: 13px !important',
+  ':where(svg.lucide)',
+  'stroke-width: 1.75 !important',
+  'stroke-linecap: round !important',
+  'stroke-linejoin: round !important',
 ]) {
   if (!geometryLock.includes(requirement)) {
-    throw new Error(`Final reference geometry lock is incomplete: ${requirement}`);
+    throw new Error(`Final reference geometry/icon lock is incomplete: ${requirement}`);
   }
 }
 
@@ -276,5 +285,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final 18/28/42 geometry lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last 18/28/42 geometry + 1.75 Lucide lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
