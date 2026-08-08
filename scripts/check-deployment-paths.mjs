@@ -75,7 +75,7 @@ for (const requirement of [
 for (const requirement of [
   "resolveAppPath('sw.js')",
   'scope: import.meta.env.BASE_URL',
-  "SERVICE_WORKER_VERSION = '13-20260808-release-hardening'",
+  "SERVICE_WORKER_VERSION = '14-20260808-release-hardening'",
   'updateViaCache: \'none\'',
 ]) {
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
@@ -85,10 +85,11 @@ for (const requirement of [
   "new URL(path.replace(/^\\/+/, ''), self.registration.scope)",
   "const INDEX_URL = scoped('index.html')",
   "const PREMIUM_PATHNAME = new URL('premium-assets/', self.registration.scope).pathname",
+  "scoped('premium-assets/high-res-objects/nur-logo-emblem.png')",
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
   'caches.match(INDEX_URL)',
-  'nur-islam-premium-v13',
+  'nur-islam-premium-v14',
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);
 }
@@ -116,4 +117,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log('Deployment paths verified: GitHub Pages base, current v13 service worker registration, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
+console.log('Deployment paths verified: GitHub Pages base, current v14 service worker registration, cached reference Apple touch icon, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.');
