@@ -107,7 +107,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
     try {
       const updatedAt = await backupLocalState();
       setCloudUpdatedAt(updatedAt);
-      setStatus('Dein lokaler Fortschritt wurde verschlüsselt per HTTPS in deinem geschützten Nutzerbereich gespeichert.');
+      setStatus('Fortschritt und unterstützte Einstellungen wurden über HTTPS in deinem RLS-geschützten Nutzerbereich gespeichert. Standortkoordinaten und lokale Notizen sind nicht Teil dieses Backups.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Cloud-Backup fehlgeschlagen.');
     } finally {
@@ -157,15 +157,15 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
         <>
           <section className="reference-account-hero">
             <span><CircleCheck size={28} /></span>
-            <div><small>Angemeldet</small><h2>{session.user.email}</h2><p>Favoriten, Lernfortschritt, Gebets-Tracker und Einstellungen können zwischen Geräten gesichert werden.</p></div>
+            <div><small>Angemeldet</small><h2>{session.user.email}</h2><p>Favoriten, Lernfortschritt, Gebets-Tracker und unterstützte Einstellungen können zwischen Geräten gesichert werden. Standortdaten bleiben auf dem jeweiligen Gerät.</p></div>
           </section>
 
           <section className="reference-account-cloud-grid">
-            <button onClick={() => void backup()} disabled={busy}><CloudUpload size={24} /><strong>Jetzt sichern</strong><small>Aktuellen Gerätestand in die Cloud schreiben</small></button>
-            <button onClick={() => void restore()} disabled={busy}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>Letztes Cloud-Backup auf dieses Gerät laden</small></button>
+            <button onClick={() => void backup()} disabled={busy}><CloudUpload size={24} /><strong>Jetzt sichern</strong><small>Fortschritt und unterstützte Einstellungen in die Cloud schreiben</small></button>
+            <button onClick={() => void restore()} disabled={busy}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>Letztes Fortschritts-Backup auf dieses Gerät laden</small></button>
           </section>
 
-          <section className="reference-account-security"><ShieldCheck size={18} /><span><strong>RLS-geschützter Nutzerbereich</strong><small>Die Cloud-Tabellen sind so abgesichert, dass angemeldete Nutzer nur ihre eigenen Datensätze lesen oder verändern können.</small>{cloudUpdatedAt ? <em>Letzte Aktion: {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(cloudUpdatedAt))}</em> : null}</span></section>
+          <section className="reference-account-security"><ShieldCheck size={18} /><span><strong>RLS-geschützter Nutzerbereich</strong><small>Die Cloud-Tabellen sind so abgesichert, dass angemeldete Nutzer nur ihre eigenen Datensätze lesen oder verändern können. Die Übertragung erfolgt per HTTPS; das Fortschritts-Backup ist nicht als Ende-zu-Ende-verschlüsselter Tresor beworben.</small>{cloudUpdatedAt ? <em>Letzte Aktion: {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(cloudUpdatedAt))}</em> : null}</span></section>
 
           <button className="reference-account-logout" onClick={() => void logout()} disabled={busy}><LogOut size={18} /> Abmelden</button>
         </>
