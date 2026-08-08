@@ -11,12 +11,14 @@ import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
 import { resolveAppPath, versionAppPath } from './appPaths';
-import { AppErrorBoundary, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
+import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
+import { startCalendarReminderScheduler } from './calendarReminderService';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
 import { ReferenceArtworkHost } from './ReferenceArtworkHost';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from './SplashScreen';
+import { initializeTheme } from './themeService';
 import './styles.css';
 
 const VISUAL_VERSION = '20260806-visual4';
@@ -28,20 +30,19 @@ const PREVIEW_ASSETS = [
   'qibla-compass-v2.webp',
 ];
 
-function consumeInitialNavigationIntent() {
+type InitialNavigationIntent = 'prayer' | 'calendar' | null;
+
+function consumeInitialNavigationIntent(): InitialNavigationIntent {
   const url = new URL(window.location.href);
-  if (url.searchParams.get('open') !== 'prayer') return false;
+  const requested = url.searchParams.get('open');
+  const intent: InitialNavigationIntent = requested === 'prayer' ? 'prayer' : requested === 'calendar' ? 'calendar' : null;
+  if (!intent) return null;
 
-  try {
-    localStorage.setItem('nur_onboarding_complete', 'true');
-  } catch {
-    // Direct reminder navigation still works for the current session.
-  }
-
+  try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* direct navigation still works */ }
   url.searchParams.delete('open');
   const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
   window.history.replaceState(window.history.state, '', cleanUrl);
-  return true;
+  return intent;
 }
 
 function prepareImmediatePreview() {
@@ -57,7 +58,6 @@ function prepareImmediatePreview() {
   }
 
   document.documentElement.classList.toggle('is-preview', previewMode && !forceOnboarding);
-
   PREVIEW_ASSETS.forEach((name) => {
     const href = versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION);
     if (document.head.querySelector(`link[href="${href}"]`)) return;
@@ -73,15 +73,19 @@ function prepareImmediatePreview() {
   if (manifest) manifest.href = resolveAppPath('manifest.webmanifest');
 }
 
-const openPrayerOnBoot = consumeInitialNavigationIntent();
+const initialNavigationIntent = consumeInitialNavigationIntent();
 prepareImmediatePreview();
+const stopThemeWatcher = initializeTheme();
 const sharedPrayerTimesReady = bootstrapSharedPrayerTimes();
 
-if ('scrollRestoration' in window.history) {
-  window.history.scrollRestoration = 'manual';
-}
+if ('scrollRestoration' in window.history) window.history.scrollRestoration = 'manual';
 window.scrollTo(0, 0);
 registerNurPwa();
+
+function openCalendarFromShell() {
+  const navigationItems = document.querySelectorAll<HTMLButtonElement>('.bottom-nav__item');
+  navigationItems[2]?.click();
+}
 
 function BootRoot() {
   const [ready, setReady] = useState(false);
@@ -98,26 +102,18 @@ function BootRoot() {
 
   useEffect(() => {
     let active = true;
-
-    const renderLatestPrayerTimes = () => {
-      if (active) setPrayerTimesVersion((version) => version + 1);
-    };
-
+    const renderLatestPrayerTimes = () => { if (active) setPrayerTimesVersion((version) => version + 1); };
     const refreshAfterDayChange = () => {
       const currentDateKey = getPrayerDateKey();
       if (currentDateKey === prayerDateKeyRef.current) return;
       prayerDateKeyRef.current = currentDateKey;
       void bootstrapSharedPrayerTimes();
     };
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') refreshAfterDayChange();
-    };
+    const handleVisibilityChange = () => { if (document.visibilityState === 'visible') refreshAfterDayChange(); };
 
     window.addEventListener('nur:prayer-times-updated', renderLatestPrayerTimes);
     document.addEventListener('visibilitychange', handleVisibilityChange);
     const dayChangeTimer = window.setInterval(refreshAfterDayChange, 60000);
-
     void sharedPrayerTimesReady.then(() => {
       prayerDateKeyRef.current = getPrayerDateKey();
       renderLatestPrayerTimes();
@@ -131,35 +127,42 @@ function BootRoot() {
     };
   }, []);
 
-  useEffect(() => startPrayerReminderScheduler(), []);
+  useEffect(() => {
+    const stopPrayerReminders = startPrayerReminderScheduler();
+    const stopCalendarReminders = startCalendarReminderScheduler();
+    return () => {
+      stopPrayerReminders();
+      stopCalendarReminders();
+    };
+  }, []);
 
   useEffect(() => {
-    if (!ready || !openPrayerOnBoot) return undefined;
-    const timer = window.setTimeout(() => window.dispatchEvent(new Event('nur:open-prayer')), 0);
+    if (!ready || !initialNavigationIntent) return undefined;
+    const timer = window.setTimeout(() => {
+      if (initialNavigationIntent === 'prayer') window.dispatchEvent(new Event('nur:open-prayer'));
+      else openCalendarFromShell();
+    }, 80);
     return () => window.clearTimeout(timer);
   }, [ready]);
 
   return (
     <AnimatePresence mode="wait" initial={false}>
       {ready ? (
-        <motion.div
-          key="app"
-          className="app-entry"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: .28 }}
-        >
+        <motion.div key="app" className="app-entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28 }}>
           <AppErrorBoundary>
             <App />
             <ReferenceArtworkHost />
             <NetworkStatus />
             <PrayerReminderBanner />
+            <CalendarReminderBanner />
           </AppErrorBoundary>
         </motion.div>
       ) : <SplashScreen key="splash" />}
     </AnimatePresence>
   );
 }
+
+window.addEventListener('pagehide', () => stopThemeWatcher(), { once: true });
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
