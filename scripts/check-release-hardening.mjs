@@ -130,9 +130,12 @@ requireText(migration, [
   'create table if not exists public.nur_islam_user_state',
   'create table if not exists public.nur_islam_notes',
   'enable row level security',
-  'revoke all on public.nur_islam_profiles from anon',
+  'revoke all privileges on table public.nur_islam_profiles from anon, authenticated',
+  'grant select, insert, update, delete on table public.nur_islam_profiles to authenticated',
+  'grant select, insert, update, delete on table public.nur_islam_user_state to authenticated',
+  'grant select, insert, update, delete on table public.nur_islam_notes to authenticated',
   '(select auth.uid()) = user_id',
 ], 'Supabase migration');
-forbidText(migration, ['disable row level security'], 'Supabase migration');
+forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: real account/cloud/notes, unified reminders, calendar scheduling and migration, Hijri disclosure, Dhikr midnight rollover, functional themes, PWA routing, accessibility and RLS migration.');
+console.log('Release hardening verified: real account/cloud/notes, least-privilege CRUD grants with RLS, unified reminders, calendar scheduling and migration, Hijri disclosure, Dhikr midnight rollover, functional themes, PWA routing and accessibility.');
