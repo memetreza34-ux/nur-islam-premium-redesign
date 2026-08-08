@@ -18,6 +18,8 @@ const [
   learn,
   legacy,
   iconCss,
+  finalLock,
+  styleIndex,
 ] = await Promise.all([
   read('src/App.tsx'),
   read('src/QuranScreen.tsx'),
@@ -32,6 +34,8 @@ const [
   read('src/LearnScreen.tsx'),
   read('src/LegacyFeatureScreens.tsx'),
   read('src/styles/premium-typography-icon-lock.css'),
+  read('src/styles/premium-reference-geometry-lock.css'),
+  read('src/styles.css'),
 ]);
 
 function requireFragments(source, label, fragments) {
@@ -163,5 +167,18 @@ for (const requirement of [
 ]) {
   if (!iconCss.includes(requirement)) throw new Error(`Reference icon styling is missing: ${requirement}`);
 }
+for (const requirement of [
+  ':where(svg.lucide)',
+  'stroke-width: 1.75 !important',
+  'stroke-linecap: round !important',
+  'stroke-linejoin: round !important',
+]) {
+  if (!finalLock.includes(requirement)) throw new Error(`Final reference icon lock is missing: ${requirement}`);
+}
+const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
+  .map((match) => match[1]);
+if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
+  throw new Error('The final 1.75 Lucide lock must remain the last stylesheet import.');
+}
 
-console.log('Reference icon map verified: primary navigation, Home actions and core controls are fixed, and all 13 additional features keep exact ID-to-icon pairs with uniform 1.75 rounded strokes.');
+console.log('Reference icon map verified: primary navigation, Home actions and core controls are fixed, all 13 additional features keep exact ID-to-icon pairs, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');
