@@ -108,10 +108,13 @@ const appleTouchHeight = appleTouch.readUInt32BE(20);
 if (appleTouchWidth !== 180 || appleTouchHeight !== 180) {
   throw new Error(`Apple touch icon must stay 180x180, found ${appleTouchWidth}x${appleTouchHeight}.`);
 }
-const appleTouchHash = createHash('sha256').update(appleTouch).digest('hex');
-const expectedAppleTouchHash = 'db08c43eb9d0b69a2b9324bbd32b88cc023de8afd7fb93f83f06b3b256080dd6';
-if (appleTouchHash !== expectedAppleTouchHash) {
-  throw new Error(`Apple touch icon drifted from the approved reference render: ${appleTouchHash}.`);
+const appleTouchGitBlob = createHash('sha1')
+  .update(`blob ${appleTouch.length}\0`)
+  .update(appleTouch)
+  .digest('hex');
+const expectedAppleTouchGitBlob = '2523fbadbd995e8f54b1620a1b8e6c20924bf4d8';
+if (appleTouchGitBlob !== expectedAppleTouchGitBlob) {
+  throw new Error(`Apple touch icon drifted from the approved committed Git blob: ${appleTouchGitBlob}.`);
 }
 
 const designBoardDirectory = resolve(root, 'docs/design-references/chat');
@@ -238,5 +241,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch icon hash, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v14 reference styling, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v14 reference styling, no obsolete artwork host or global image-hiding CSS.`,
 );
