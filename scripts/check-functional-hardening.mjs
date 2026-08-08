@@ -19,6 +19,7 @@ const [
   prayer,
   more,
   prayerReminder,
+  fastingReminder,
   backend,
   account,
   notes,
@@ -44,6 +45,7 @@ const [
   read('src/PrayerScreen.tsx'),
   read('src/MoreScreen.tsx'),
   read('src/prayerReminderService.ts'),
+  read('src/fastingReminderService.ts'),
   read('src/nurBackend.ts'),
   read('src/AccountScreen.tsx'),
   read('src/NotesScreen.tsx'),
@@ -255,6 +257,7 @@ requireText(backend, [
   "'nur_prayer_location'",
   "'nur_mosque_location_v1'",
   "'nur_local_notes_v1'",
+  "'nur_onboarding_complete'",
 ], 'Cloud backup privacy');
 requireText(account, [
   'Standortkoordinaten und lokale Notizen sind nicht Teil dieses Backups',
@@ -286,9 +289,9 @@ forbidText(installPrompt, [
 ], 'PWA install prompt');
 
 requireText(legacy, [
-  'readCalendarEntries',
-  'writeCalendarEntries',
-  'buildFastingReminderEntries',
+  'syncRollingFastingReminders',
+  "writeStored('nur_fasting_reminders', reminders)",
+  "writeStored('nur_fasting_reminder_time', reminderTime)",
   'Notification.requestPermission()',
   'ZakatFeature',
   'net * 0.025',
@@ -307,7 +310,20 @@ requireText(legacy, [
 forbidText(legacy, [
   'function GenericFeature(',
   'nur_feature_${feature.id}_progress',
+  'buildFastingReminderEntries',
+  'FASTING_REMINDER_ID_BASE',
 ], 'Legacy functional tools');
+
+requireText(fastingReminder, [
+  'buildRollingFastingReminders',
+  'syncRollingFastingReminders',
+  'startFastingReminderMaintenance',
+  'LOOKAHEAD_DAYS = 45',
+  'MAINTENANCE_INTERVAL_MS = 15 * 60_000',
+  'readCalendarEntries()',
+  'writeCalendarEntries(next)',
+  'isManagedFastingReminder',
+], 'Rolling fasting reminder service');
 
 requireText(calendarService, [
   'startCalendarReminderScheduler',
@@ -339,4 +355,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: fake Home/Assistant/legacy interactions are removed, exact Quran resume and saved-content routing work, Dhikr statistics are real, prayer reminders stay useful with or without system notification permission, mosque URLs are safe, cloud backup excludes device locations, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: fake Home/Assistant/legacy interactions are removed, exact Quran resume and saved-content routing work, Dhikr statistics are real, rolling fasting reminders have one scheduling source, prayer reminders stay useful with or without system notification permission, mosque URLs are safe, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
