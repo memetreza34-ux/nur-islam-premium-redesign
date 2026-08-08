@@ -39,6 +39,9 @@ requireText(app, [
   'fetchSurahs()',
   'openLastRead',
   'quranPercent',
+  'onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber)',
+  'selectedAyahNumber',
+  'initialAyahNumber={selectedAyahNumber}',
   'Lokaler Quellenmodus',
   'selectedDuaId',
   'selectedNameId',
@@ -66,6 +69,8 @@ forbidText(app, [
 requireText(collections, [
   'Array.from({ length: 114 }',
   'nur_quran_bookmarks_${surahNumber}',
+  'onOpenReader: (surahNumber: number, ayahNumber?: number) => void',
+  'onOpenReader(group.surahNumber, ayahNumber)',
   'onOpenDua: (id: string) => void',
   'onOpenName: (id: string) => void',
   'onOpenCalendarDate: (date: string) => void',
@@ -79,6 +84,22 @@ forbidText(collections, [
   'onOpenNames',
   'onOpenCalendar:',
 ], 'Collection routing');
+
+requireText(reader, [
+  'initialAyahNumber?: number',
+  'setShowMeaning',
+  'Bedeutung an',
+  'Bedeutung aus',
+  'reference-font-control',
+  'quran-ayah-${surahNumber}-${targetAyah}',
+  "scrollIntoView({ behavior: 'smooth', block: 'center' })",
+  'id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}',
+], 'Quran reader controls and deep links');
+forbidText(reader, [
+  'Audio folgt',
+  '<Headphones',
+  'geprüften Rezitationsquelle aktiviert',
+], 'Quran reader controls and deep links');
 
 requireText(duas, [
   'initialDuaId?: string | null',
@@ -111,18 +132,6 @@ forbidText(assistant, [
   'Aktuell ist noch kein KI-Anbieter verbunden',
   '<Mic',
 ], 'Nur local assistant');
-
-requireText(reader, [
-  'setShowMeaning',
-  'Bedeutung an',
-  'Bedeutung aus',
-  'reference-font-control',
-], 'Quran reader controls');
-forbidText(reader, [
-  'Audio folgt',
-  '<Headphones',
-  'geprüften Rezitationsquelle aktiviert',
-], 'Quran reader controls');
 
 requireText(readingScreens, [
   'async function copyText',
@@ -176,4 +185,4 @@ requireText(hardeningStyles, [
   '.reference-standby-stage',
 ], 'Functional design layer');
 
-console.log('Functional hardening verified: Home uses stored progress, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
+console.log('Functional hardening verified: Home resumes the exact last-read Ayah, Quran bookmarks deep-link to exact Ayat across all Surahs, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
