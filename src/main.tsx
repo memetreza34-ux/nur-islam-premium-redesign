@@ -23,7 +23,7 @@ import { SplashScreen } from './SplashScreen';
 import { initializeTheme } from './themeService';
 import './styles.css';
 
-const VISUAL_VERSION = '20260806-visual4';
+const VISUAL_VERSION = '20260808-release-hardening';
 const PREVIEW_ASSETS = [
   'nur-logo-emblem-v2.webp',
   'mosque-gold-v2.webp',
