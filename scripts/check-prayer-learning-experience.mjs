@@ -36,8 +36,12 @@ if (!learn.includes('reference-prayer-learning-hub') || !learn.includes('Die fü
 if (!learn.includes('PRAYER_LESSONS.map') || !learn.includes('Wudu lernen') || !learn.includes('Qibla finden')) {
   throw new Error('Learning screen is missing a core prayer-learning action.');
 }
-if (!app.includes("label: 'Beten lernen'") || !app.includes('onOpenPrayer={() => setActiveTab(\'prayer\')}') || !app.includes('onOpenQibla={() => setActiveTab(\'qibla\')}')) {
-  throw new Error('App navigation is not wired to the prayer learning experience.');
+for (const fragment of [
+  "label: 'Beten lernen'",
+  "onOpenPrayer={() => navigate('prayer')}",
+  "onOpenQibla={() => navigate('qibla')}",
+]) {
+  if (!app.includes(fragment)) throw new Error(`App navigation is not wired to the prayer learning experience: ${fragment}`);
 }
 
 const requiredCompletionFeatures = [
@@ -79,4 +83,4 @@ if (!styleIndex.includes('reference-prayer-learning-completion.css')) {
   throw new Error('Prayer learning stylesheet is not loaded.');
 }
 
-console.log('Prayer learning verified: five prayer lessons, real navigation, persisted midnight-safe daily progress, and respectful 5/5 completion effect.');
+console.log('Prayer learning verified: five prayer lessons, centralized real navigation, persisted midnight-safe daily progress, and respectful 5/5 completion effect.');
