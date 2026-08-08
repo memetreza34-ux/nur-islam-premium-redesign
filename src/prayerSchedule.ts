@@ -25,10 +25,10 @@ export const PRAYER_SCHEDULE_META: PrayerScheduleMeta = {
   city: 'Berlin',
   country: 'Deutschland',
   locationLabel: 'Berlin, Deutschland',
-  sourceLabel: 'Lokaler Demo-Zeitplan',
+  sourceLabel: 'Offline-Ersatzzeitplan',
   methodLabel: 'Diyanet (experimentell) · Standard-Asr',
   timezone: 'Europe/Berlin',
-  calculationNotice: 'Lokaler Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
+  calculationNotice: 'Offline-Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
 };
 
 export const PRAYER_SCHEDULE: PrayerScheduleItem[] = [
