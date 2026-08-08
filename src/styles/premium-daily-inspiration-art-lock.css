@@ -29,7 +29,7 @@
   z-index: 0;
   inset: 10px 12px 4px;
   opacity: .13;
-  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260806-visual4') center bottom / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat;
   filter: sepia(.12) saturate(.86) contrast(1.03);
   pointer-events: none;
 }
@@ -63,7 +63,7 @@
   width: 148px !important;
   height: 174px !important;
   opacity: .22 !important;
-  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
 }
 
