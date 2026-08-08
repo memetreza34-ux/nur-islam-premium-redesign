@@ -16,6 +16,15 @@
   background: linear-gradient(145deg, rgba(229, 190, 106, .1), rgba(8, 47, 36, .9)) !important;
 }
 
+.reference-reader-verse {
+  scroll-margin-top: 88px;
+}
+
+.reference-reader-verse.is-active {
+  outline: 1px solid rgba(246, 223, 172, .2);
+  outline-offset: 2px;
+}
+
 /* Local sourced assistant. */
 .reference-chat-message > div {
   display: grid;
