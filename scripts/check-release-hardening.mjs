@@ -1,0 +1,138 @@
+import { readFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const root = process.cwd();
+const read = (path) => readFile(resolve(root, path), 'utf8');
+
+const [
+  backend,
+  account,
+  notes,
+  onboarding,
+  more,
+  calendarService,
+  calendar,
+  dhikr,
+  main,
+  pwa,
+  sw,
+  theme,
+  styles,
+  releaseStyles,
+  html,
+  migration,
+] = await Promise.all([
+  read('src/nurBackend.ts'),
+  read('src/AccountScreen.tsx'),
+  read('src/NotesScreen.tsx'),
+  read('src/OnboardingScreen.tsx'),
+  read('src/MoreScreen.tsx'),
+  read('src/calendarReminderService.ts'),
+  read('src/CalendarScreen.tsx'),
+  read('src/DhikrScreen.tsx'),
+  read('src/main.tsx'),
+  read('src/pwa.ts'),
+  read('public/sw.js'),
+  read('src/themeService.ts'),
+  read('src/styles.css'),
+  read('src/styles/release-hardening.css'),
+  read('index.html'),
+  read('supabase/migrations/202608080001_create_nur_islam_backend.sql'),
+]);
+
+function requireText(source, requirements, label) {
+  for (const requirement of requirements) {
+    if (!source.includes(requirement)) throw new Error(`${label} is missing: ${requirement}`);
+  }
+}
+
+function forbidText(source, forbidden, label) {
+  for (const item of forbidden) {
+    if (source.includes(item)) throw new Error(`${label} still contains forbidden release placeholder: ${item}`);
+  }
+}
+
+requireText(backend, [
+  '/auth/v1/token?grant_type=password',
+  '/auth/v1/signup',
+  '/auth/v1/token?grant_type=refresh_token',
+  '/auth/v1/logout',
+  'nur_islam_profiles',
+  'nur_islam_user_state',
+  'nur_islam_notes',
+  'backupLocalState',
+  'restoreCloudState',
+], 'Cloud backend');
+forbidText(backend, ['service_role', 'SUPABASE_SERVICE_ROLE'], 'Cloud backend');
+
+requireText(account, ['signInWithPassword', 'signUp', 'backupLocalState', 'restoreCloudState', 'signOut'], 'Account screen');
+requireText(notes, ['createCloudNote', 'updateCloudNote', 'deleteCloudNote', 'nur_local_notes_v1'], 'Notes screen');
+
+requireText(onboarding, [
+  'savePrayerLocation',
+  'saveMosqueOrigin',
+  'bootstrapSharedPrayerTimes',
+  "localStorage.setItem('nur_prayer_notifications'",
+  'OBLIGATORY_PRAYER_IDS',
+], 'Onboarding integration');
+
+requireText(more, [
+  '<AccountScreen',
+  '<NotesScreen',
+  "localStorage.setItem('nur_prayer_notifications'",
+  'applyTheme(next)',
+  'await signOut()',
+  'Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache',
+], 'Profile/settings integration');
+forbidText(more, ['premium_prayer_notifications', 'premium_cloud_sync', 'bis Firebase verbunden wird'], 'Profile/settings integration');
+
+requireText(calendarService, [
+  'dateKey?: unknown',
+  'typeof entry.dateKey',
+  'startCalendarReminderScheduler',
+  'nur:calendar-reminder-fired',
+  'showNotification',
+  "target: 'calendar'",
+], 'Calendar reminder service');
+requireText(calendar, [
+  'readCalendarEntries',
+  'Systemerinnerung aktiv',
+  'Berechnetes Hijri-Datum',
+  'Mondsichtung',
+  'Notification.requestPermission()',
+], 'Calendar screen');
+
+requireText(dhikr, [
+  'const syncDay = () =>',
+  "window.addEventListener('focus', syncDay)",
+  "document.addEventListener('visibilitychange', handleVisibility)",
+  'current.date === currentDate',
+], 'Dhikr midnight rollover');
+
+requireText(main, [
+  'startCalendarReminderScheduler',
+  '<CalendarReminderBanner />',
+  'initializeTheme()',
+  "requested === 'calendar'",
+], 'Application bootstrap');
+requireText(pwa, ['OPEN_CALENDAR', '11-20260808-release-hardening'], 'PWA registration');
+requireText(sw, ['OPEN_CALENDAR', "event.notification.data?.target === 'calendar'", 'nur-islam-premium-v11'], 'Service worker');
+
+requireText(theme, ["export type NurTheme = 'dark' | 'light' | 'system'", 'dataset.theme', 'prefers-color-scheme: light'], 'Theme service');
+requireText(styles, ["@import './styles/release-hardening.css';"], 'Style index');
+requireText(releaseStyles, ["html[data-theme='light']", '.reference-account-screen', '.reference-notes-screen'], 'Release styles');
+
+if (html.includes('maximum-scale=1')) throw new Error('Viewport still blocks user zoom.');
+requireText(html, ['viewport-fit=cover', 'color-scheme" content="dark light'], 'HTML accessibility');
+
+requireText(migration, [
+  'create table if not exists public.nur_islam_profiles',
+  'create table if not exists public.nur_islam_user_state',
+  'create table if not exists public.nur_islam_notes',
+  'enable row level security',
+  'revoke all on public.nur_islam_profiles from anon',
+  '(select auth.uid()) = user_id',
+], 'Supabase migration');
+forbidText(migration, ['disable row level security'], 'Supabase migration');
+
+console.log('Release hardening verified: real account/cloud/notes, unified reminders, calendar scheduling and migration, Hijri disclosure, Dhikr midnight rollover, functional themes, PWA routing, accessibility and RLS migration.');
