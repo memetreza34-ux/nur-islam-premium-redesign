@@ -1,0 +1,295 @@
+/* First-impression and system-layer polish. */
+
+/* Splash */
+.reference-splash {
+  width: min(calc(100% - 22px), 430px);
+  min-height: calc(100svh - max(18px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)));
+  padding: 40px 20px;
+  border-color: rgba(232, 199, 122, .2);
+  border-radius: 31px;
+  background:
+    radial-gradient(circle at 50% 23%, rgba(49, 136, 99, .2), transparent 18rem),
+    radial-gradient(circle at 50% 64%, rgba(225, 184, 96, .09), transparent 15rem),
+    linear-gradient(165deg, #09281f 0%, #03140f 59%, #010806 100%);
+  box-shadow: 0 32px 90px rgba(0, 0, 0, .44), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-splash__halo {
+  border-color: rgba(232, 199, 122, .1);
+  background: radial-gradient(circle, rgba(232, 199, 122, .09), transparent 68%);
+}
+
+.reference-splash__mosque {
+  opacity: .18;
+  filter: saturate(.78) drop-shadow(0 24px 22px rgba(0, 0, 0, .5));
+}
+
+.reference-splash__mark {
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .42));
+}
+
+.reference-splash h1 {
+  color: #fff8e9;
+  font-weight: 600;
+  text-shadow: 0 12px 34px rgba(0, 0, 0, .3);
+}
+
+.reference-splash p {
+  color: rgba(241, 234, 218, .6);
+}
+
+.reference-splash__loader {
+  height: 2px;
+  background: rgba(255, 255, 255, .055);
+}
+
+.reference-splash__loader span {
+  background: linear-gradient(90deg, transparent, #f4dca3, transparent);
+}
+
+/* Onboarding */
+.app-shell--onboarding {
+  width: min(calc(100% - 20px), 438px);
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.reference-onboarding {
+  gap: 16px;
+}
+
+.reference-onboarding::before {
+  opacity: .8;
+  background: radial-gradient(circle at 50% 32%, rgba(42, 126, 91, .22), transparent 62%);
+}
+
+.reference-onboarding__topbar {
+  padding-inline: 4px;
+}
+
+.reference-onboarding__topbar > button {
+  border-color: rgba(232, 199, 122, .14);
+  color: rgba(169, 188, 178, .82);
+  background: rgba(4, 28, 22, .62);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .02);
+}
+
+.reference-onboarding__visual {
+  min-height: 324px;
+  border-color: rgba(232, 199, 122, .25);
+  border-radius: 29px;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(232, 199, 122, .11), transparent 12rem),
+    linear-gradient(150deg, rgba(13, 57, 43, .98), rgba(3, 20, 15, .995));
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+.reference-onboarding__visual::after {
+  background:
+    linear-gradient(0deg, rgba(1, 11, 8, .68), transparent 50%),
+    radial-gradient(circle at 50% 50%, transparent 38%, rgba(1, 9, 7, .38) 100%);
+}
+
+.reference-onboarding__halo {
+  border-color: rgba(232, 199, 122, .1);
+  box-shadow: 0 0 0 32px rgba(232, 199, 122, .018), 0 0 0 68px rgba(232, 199, 122, .012);
+}
+
+.reference-onboarding__visual-icon {
+  border-color: rgba(232, 199, 122, .2);
+  background: rgba(3, 25, 19, .72);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
+}
+
+.reference-onboarding__copy {
+  gap: 7px;
+}
+
+.reference-onboarding__copy h1 {
+  color: #fff8e9;
+  font-size: 2.22rem;
+  font-weight: 600;
+  letter-spacing: -.03em;
+  text-wrap: balance;
+}
+
+.reference-onboarding__copy p {
+  color: rgba(156, 178, 167, .9);
+  line-height: 1.62;
+}
+
+.reference-onboarding__points span {
+  color: rgba(242, 236, 222, .78);
+}
+
+.reference-onboarding__permissions > button {
+  min-height: 60px;
+  border-color: rgba(232, 199, 122, .14);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(8, 44, 34, .78), rgba(3, 23, 18, .92));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-onboarding__permissions > button.is-ready {
+  border-color: rgba(115, 192, 139, .22);
+  background: linear-gradient(145deg, rgba(13, 61, 45, .88), rgba(3, 28, 21, .96));
+}
+
+.reference-onboarding__footer {
+  padding-bottom: max(4px, env(safe-area-inset-bottom));
+}
+
+.reference-onboarding__dots button {
+  background: rgba(255, 255, 255, .09);
+}
+
+.reference-onboarding__dots button.is-active {
+  background: linear-gradient(90deg, #f1d697, #c8953f);
+  box-shadow: 0 0 14px rgba(232, 199, 122, .18);
+}
+
+.reference-onboarding__actions .gold-button {
+  min-height: 46px;
+  box-shadow: 0 10px 24px rgba(117, 77, 22, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
+}
+
+/* Assistant */
+.reference-assistant-screen {
+  gap: 14px;
+}
+
+.reference-assistant-greeting,
+.reference-assistant-safety,
+.reference-assistant-suggestions > div > button,
+.reference-chat-message--assistant,
+.reference-assistant-input {
+  border-color: rgba(232, 199, 122, .15) !important;
+  box-shadow: 0 13px 30px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
+}
+
+.reference-assistant-greeting {
+  border-radius: 23px !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(232, 199, 122, .075), transparent 9rem),
+    linear-gradient(145deg, rgba(10, 54, 41, .9), rgba(3, 23, 18, .98)) !important;
+}
+
+.reference-assistant-suggestions > div > button,
+.reference-chat-message--assistant {
+  border-radius: 18px !important;
+  background: linear-gradient(145deg, rgba(8, 45, 34, .78), rgba(3, 23, 18, .94)) !important;
+}
+
+.reference-chat-message--user {
+  border-radius: 18px !important;
+  color: #143027 !important;
+  background: linear-gradient(145deg, #f3dba3, #c99848) !important;
+  box-shadow: 0 10px 24px rgba(151, 103, 30, .18) !important;
+}
+
+.reference-assistant-safety {
+  border-radius: 17px !important;
+  background: rgba(71, 151, 96, .045) !important;
+}
+
+.reference-assistant-input {
+  border-radius: 18px !important;
+  background: rgba(3, 24, 19, .92) !important;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+/* Install prompt */
+.reference-install-prompt {
+  right: 12px;
+  left: 12px;
+  width: min(calc(100% - 24px), 410px);
+  border-color: rgba(232, 199, 122, .22);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 8% 50%, rgba(232, 199, 122, .08), transparent 7rem),
+    linear-gradient(145deg, rgba(9, 49, 37, .97), rgba(2, 18, 14, .99));
+  box-shadow: 0 24px 65px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .03);
+  backdrop-filter: blur(28px) saturate(1.06);
+  -webkit-backdrop-filter: blur(28px) saturate(1.06);
+}
+
+.reference-install-prompt__action {
+  min-height: 40px;
+  border-color: rgba(255, 244, 215, .24);
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f3dba0, #c9953e);
+}
+
+.reference-install-prompt__close {
+  border-color: rgba(232, 199, 122, .18);
+  background: #041b15;
+}
+
+/* System banners */
+.reference-network-status,
+.reference-prayer-reminder-banner,
+.reference-calendar-reminder-banner,
+.toast {
+  border-color: rgba(232, 199, 122, .22) !important;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(232, 199, 122, .06), transparent 8rem),
+    linear-gradient(145deg, rgba(8, 47, 35, .97), rgba(2, 18, 14, .99)) !important;
+  box-shadow: 0 20px 55px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+  backdrop-filter: blur(24px) saturate(1.05) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(1.05) !important;
+}
+
+.reference-network-status,
+.toast {
+  border-radius: 16px;
+}
+
+.reference-prayer-reminder-banner,
+.reference-calendar-reminder-banner {
+  border-radius: 19px;
+}
+
+.reference-system-error {
+  background:
+    radial-gradient(circle at 50% 28%, rgba(40, 126, 91, .2), transparent 18rem),
+    linear-gradient(165deg, #08271e 0%, #03140f 58%, #010806 100%);
+}
+
+.reference-system-error__icon {
+  border-color: rgba(232, 199, 122, .2);
+  background: rgba(232, 199, 122, .055);
+}
+
+@media (max-width: 370px) {
+  .app-shell--onboarding {
+    width: min(calc(100% - 14px), 430px);
+  }
+
+  .reference-onboarding__visual {
+    min-height: 294px;
+    border-radius: 25px;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 2rem;
+  }
+
+  .reference-install-prompt {
+    right: 9px;
+    left: 9px;
+    width: calc(100% - 18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-splash__loader span,
+  .reference-onboarding__visual,
+  .reference-install-prompt,
+  .reference-network-status,
+  .reference-prayer-reminder-banner,
+  .reference-calendar-reminder-banner {
+    transition: none !important;
+    animation: none !important;
+  }
+}
