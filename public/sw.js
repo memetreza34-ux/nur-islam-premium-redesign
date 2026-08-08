@@ -1,5 +1,5 @@
 const VISUAL_VERSION = '20260808-release-hardening';
-const CACHE_NAME = `nur-islam-premium-v11-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v12-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
