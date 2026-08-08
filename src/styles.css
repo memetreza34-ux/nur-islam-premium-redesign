@@ -72,6 +72,7 @@
 @import './styles/premium-depth-lock.css';
 @import './styles/functional-hardening.css';
 @import './styles/functional-legacy-overview.css';
+@import './styles/premium-design-parallel-pass.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
