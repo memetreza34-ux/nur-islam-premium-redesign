@@ -4,18 +4,51 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [app, assistant, reader, readingScreens, legacy, collections, duas, names, calendar, styles, hardeningStyles, calendarService] = await Promise.all([
+const [
+  app,
+  assistant,
+  reader,
+  quran,
+  readingScreens,
+  legacy,
+  collections,
+  duas,
+  names,
+  calendar,
+  dhikr,
+  prayer,
+  prayerReminder,
+  backend,
+  account,
+  notes,
+  mosqueService,
+  installPrompt,
+  styles,
+  hardeningStyles,
+  installStyles,
+  calendarService,
+] = await Promise.all([
   read('src/App.tsx'),
   read('src/AssistantScreen.tsx'),
   read('src/QuranReaderScreen.tsx'),
+  read('src/QuranScreen.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
   read('src/LegacyFeatureScreens.tsx'),
   read('src/CollectionsScreen.tsx'),
   read('src/DuasScreen.tsx'),
   read('src/NamesScreen.tsx'),
   read('src/CalendarScreen.tsx'),
+  read('src/DhikrScreen.tsx'),
+  read('src/PrayerScreen.tsx'),
+  read('src/prayerReminderService.ts'),
+  read('src/nurBackend.ts'),
+  read('src/AccountScreen.tsx'),
+  read('src/NotesScreen.tsx'),
+  read('src/mosqueService.ts'),
+  read('src/InstallAppPrompt.tsx'),
   read('src/styles.css'),
   read('src/styles/functional-hardening.css'),
+  read('src/styles/reference-install-prompt.css'),
   read('src/calendarReminderService.ts'),
 ]);
 
@@ -65,6 +98,13 @@ forbidText(app, [
   'onOpenNames=',
   'onOpenCalendar=',
 ], 'Home and direct navigation');
+
+requireText(quran, [
+  'reloadToken',
+  'setReloadToken((value) => value + 1)',
+  'onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)',
+  'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
+], 'Quran catalog resume and retry');
 
 requireText(collections, [
   'Array.from({ length: 114 }',
@@ -157,6 +197,68 @@ forbidText(readingScreens, [
   'Lerneinstellungen geöffnet',
 ], 'Daily content and worship guide actions');
 
+requireText(dhikr, [
+  'DHIKR_TARGET_BY_KEY',
+  'statsOpen',
+  'setStatsOpen(true)',
+  'reference-dhikr-stats-modal',
+  'allRoutineStats',
+  'completedRoutines',
+], 'Dhikr real statistics');
+forbidText(dhikr, [
+  'onClick={() => flash(`${totalToday} Wiederholungen heute`)}',
+], 'Dhikr real statistics');
+
+requireText(prayer, [
+  "readSet('nur_prayer_notifications', [])",
+  'obligatoryIds.includes',
+  'prayer.obligatory && notifications.has(prayer.id)',
+  'prayer-alert--disabled',
+  'In-App-Erinnerung aktiviert; Systembenachrichtigungen sind nicht verfügbar',
+], 'Prayer reminder controls');
+forbidText(prayer, [
+  "readSet('nur_prayer_notifications', ['fajr'",
+], 'Prayer reminder controls');
+requireText(prayerReminder, [
+  'OBLIGATORY_PRAYER_IDS',
+  'readEnabledReminderSet',
+  '!prayer.obligatory',
+], 'Prayer reminder scheduler');
+
+requireText(backend, [
+  "'nur_prayer_location'",
+  "'nur_mosque_location_v1'",
+  "'nur_local_notes_v1'",
+], 'Cloud backup privacy');
+requireText(account, [
+  'Standortkoordinaten und lokale Notizen sind nicht Teil dieses Backups',
+  'Die Übertragung erfolgt per HTTPS',
+], 'Cloud backup UI');
+forbidText(account, ['verschlüsselt per HTTPS'], 'Cloud backup UI');
+requireText(notes, [
+  'hasValidDate',
+  'Cloud-Notizen konnten nicht geladen werden',
+], 'Notes failure handling');
+
+requireText(mosqueService, [
+  'function normalizeWebsite',
+  'new URL(candidate)',
+  "parsed.protocol !== 'https:' && parsed.protocol !== 'http:'",
+], 'Mosque external links');
+
+requireText(installPrompt, [
+  'function isIosDevice',
+  "navigatorWithPlatform.platform === 'MacIntel'",
+  'installError',
+  'setInstallEvent(null)',
+  "choice.outcome === 'accepted'",
+  'setMode(null)',
+  'disabled={!installEvent}',
+], 'PWA install prompt');
+forbidText(installPrompt, [
+  'if (!installEvent) return;',
+], 'PWA install prompt');
+
 requireText(legacy, [
   'readCalendarEntries',
   'writeCalendarEntries',
@@ -182,10 +284,16 @@ requireText(hardeningStyles, [
   '.reference-reader-verse {',
   'scroll-margin-top: 88px',
   '.reference-reader-verse.is-active',
+  '.prayer-alert--disabled',
   '.reference-chat-message__source',
+  '.reference-dhikr-stats-modal',
   '.reference-fasting-reminder-settings',
   '.reference-zakat-calculator',
   '.reference-standby-stage',
 ], 'Functional design layer');
+requireText(installStyles, [
+  '.reference-install-prompt__error',
+  '.reference-install-prompt__action:disabled',
+], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home resumes the exact last-read Ayah, Quran bookmarks deep-link to exact Ayat across all Surahs with a visible target state, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
+console.log('Functional hardening verified: exact Quran resume/deep links and retry, real Dhikr statistics, obligatory-only prayer reminders, local sourced assistant, real copy/share actions, safe mosque URLs, privacy-scoped cloud backup, visible note failures, non-dead PWA install actions, fasting reminders, Zakat planning, live standby, and persisted worship-guide completion.');
