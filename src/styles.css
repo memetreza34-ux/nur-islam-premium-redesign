@@ -72,8 +72,14 @@
 @import './styles/premium-depth-lock.css';
 @import './styles/functional-hardening.css';
 
-/* Small lock correction: preserve the original card grid alignment. */
+/* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
   position: static;
   justify-self: end;
+}
+
+.reference-reading-header-spacer {
+  display: block;
+  width: 44px;
+  height: 44px;
 }
