@@ -2,6 +2,7 @@ import { FormEvent, useState } from 'react';
 import {
   ChevronLeft,
   ChevronRight,
+  CircleCheck,
   Send,
   ShieldCheck,
   Sparkles,
@@ -178,16 +179,16 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {infoOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setInfoOpen(false)}>
-            <motion.section className="reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section className="reference-profile-modal reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setInfoOpen(false)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-assistant-info-modal__icon"><ShieldCheck size={28} /></span>
+              <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span>
               <span className="overline">Quellenmodus</span>
               <h2>Was dieser Assistent wirklich kann</h2>
               <p>Er durchsucht keinen freien KI-Dienst und erzeugt keine neuen religiösen Urteile. Antworten kommen nur aus den lokal hinterlegten Themen und zeigen einen Quellen- oder Funktionshinweis.</p>
-              <div className="reference-assistant-info-list">
-                <span><CircleCheckIcon /> Quran 97 und 112</span>
-                <span><CircleCheckIcon /> Gebetszeiten, Qibla und Wudu-Funktionen</span>
-                <span><CircleCheckIcon /> Dhikr- und Dua-Navigation</span>
+              <div className="reference-category-modal__meta reference-assistant-info-list">
+                <span><CircleCheck size={15} /> Quran 97 und 112</span>
+                <span><CircleCheck size={15} /> Gebetszeiten, Qibla und Wudu-Funktionen</span>
+                <span><CircleCheck size={15} /> Dhikr- und Dua-Navigation</span>
                 <span><ShieldCheck size={15} /> Unbekannte Fragen werden ausdrücklich nicht beantwortet</span>
               </div>
               <button className="gold-button" onClick={() => setInfoOpen(false)}>Verstanden</button>
@@ -197,8 +198,4 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
       </AnimatePresence>
     </motion.main>
   );
-}
-
-function CircleCheckIcon() {
-  return <span className="reference-assistant-info-check" aria-hidden="true">✓</span>;
 }
