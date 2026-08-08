@@ -1,0 +1,95 @@
+/* Final reference geometry lock.
+   Keeps the visible mobile composition on the approved 18 / 28 / 42px system
+   even when older feature styles declare smaller local radii. */
+
+:where(
+  .welcome-hero,
+  .prayer-hero--v2,
+  .next-prayer-panel,
+  .learning-hero,
+  .reference-prayer-learning-hub,
+  .reference-reader-hero,
+  .reference-guide-hero,
+  .reference-quran-continue,
+  .reference-dhikr-counter,
+  .reference-qibla-stage,
+  .reference-duas-hero,
+  .reference-names-hero,
+  .reference-mosque-hero,
+  .reference-ayah-hero,
+  .reference-hadith-hero,
+  .reference-profile-greeting,
+  .reference-account-hero,
+  .reference-legacy-hero,
+  .reference-onboarding__visual,
+  .reference-standby-stage
+) {
+  border-radius: 42px !important;
+}
+
+:where(
+  .glass-card,
+  .journey-card,
+  .quick-card,
+  .continue-card--v2,
+  .verse-card,
+  .hadith-card,
+  .ai-preview,
+  .recommendation-card,
+  .prayer-time-row,
+  .calendar-event-card,
+  .learning-card,
+  .settings-section,
+  .profile-card,
+  .reference-quran-list,
+  .reference-reader-verse,
+  .reference-source-card,
+  .reference-reflection-card,
+  .reference-mosque-live-status,
+  .reference-calendar-month,
+  .reference-calendar-event,
+  .reference-collection-section,
+  .reference-account-entry,
+  .reference-notes-storage,
+  .reference-note-editor,
+  .reference-assistant-greeting,
+  .reference-quiz-card,
+  .reference-quiz-result,
+  .reference-zakat-calculator,
+  .reference-fasting-reminder-settings
+) {
+  border-radius: 28px !important;
+}
+
+:where(
+  .icon-button,
+  .play-button,
+  .gold-button,
+  .reference-inline-button,
+  .reference-map-button,
+  .reference-mosque-location-button,
+  .reference-detail-actions button,
+  .reference-detail-actions a,
+  .reference-guide-tabs button,
+  .reference-reader-controls > button,
+  .reference-filter-tabs button,
+  .reference-modal-close,
+  .reference-mosque-detail-modal__close
+) {
+  border-radius: 18px !important;
+}
+
+.bottom-nav {
+  border-radius: 26px !important;
+}
+
+.bottom-nav__item {
+  border-radius: 18px !important;
+}
+
+.bottom-nav__item > span {
+  border-radius: 13px !important;
+}
+
+/* Pills, circular progress controls, avatars and round ornaments deliberately
+   keep their own 999px/50% geometry and are not part of this lock. */
