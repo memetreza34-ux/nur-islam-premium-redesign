@@ -3,7 +3,6 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
-  Mic,
   Send,
   ShieldCheck,
   Sparkles,
@@ -17,7 +16,83 @@ const suggestions = [
   'Erkläre die Bedeutung von Surah Al-Ikhlas.',
 ];
 
-type ChatMessage = { id: number; role: 'user' | 'assistant'; text: string };
+type LocalAnswer = {
+  keywords: string[];
+  text: string;
+  source: string;
+};
+
+type ChatMessage = {
+  id: number;
+  role: 'user' | 'assistant';
+  text: string;
+  source?: string;
+};
+
+const LOCAL_ANSWERS: LocalAnswer[] = [
+  {
+    keywords: ['laylat', 'qadr', 'schicksalsnacht', 'nacht der bestimmung'],
+    text: 'Laylat al-Qadr wird im Quran als eine besonders ausgezeichnete Nacht beschrieben. Sure 97 nennt sie besser als tausend Monate und erwähnt, dass die Engel in dieser Nacht herabkommen. Für weitergehende Fragen zu konkreten Handlungen oder Zeitbestimmung sollte eine verlässliche gelehrte Quelle herangezogen werden.',
+    source: 'Quran 97:1–5',
+  },
+  {
+    keywords: ['ikhlas', 'al-ikhlas', '112', 'einzigkeit allahs'],
+    text: 'Sure Al-Ikhlas fasst zentral die Einzigkeit Allahs zusammen: Allah ist Einer, der Unabhängige, Er zeugt nicht und wurde nicht gezeugt, und nichts ist Ihm gleich. Im Quran-Bereich kannst du Sure 112 vollständig öffnen.',
+    source: 'Quran 112:1–4',
+  },
+  {
+    keywords: ['beziehung', 'allah stärken', 'glauben stärken', 'iman stärken', 'nähe zu allah'],
+    text: 'Als allgemeine Orientierung kannst du mit beständigen, überschaubaren Gewohnheiten arbeiten: die Pflichtgebete pflegen, regelmäßig Quran lesen, Allah gedenken und Dua machen. Der Quran verbindet das Gedenken Allahs mit innerer Ruhe. Für persönliche Rechts- oder Glaubensfragen ersetzt dieser lokale Assistent keine qualifizierte Beratung.',
+    source: 'Quran 13:28; Quran 2:152',
+  },
+  {
+    keywords: ['gebetszeit', 'gebetszeiten', 'fajr', 'dhuhr', 'asr', 'maghrib', 'isha'],
+    text: 'Die App berechnet Gebetszeiten anhand deines gespeicherten Standorts und der gewählten Berechnungsmethode. Öffne „Gebete“, um Live-Quelle, Standort, Methode und Asr-Einstellung zu sehen. Berechnete Zeiten können von deiner örtlichen Moschee abweichen.',
+    source: 'App-Funktion · Gebetszeiten / AlAdhan',
+  },
+  {
+    keywords: ['qibla', 'kaaba', 'richtung mekka', 'gebetsrichtung'],
+    text: 'Öffne den Qibla-Bereich und erlaube optional deinen Standort. Die App berechnet daraus die Richtung zur Kaaba. Auf unterstützten Mobilgeräten kannst du zusätzlich den Gerätekompass starten; ohne Sensorsignal bleibt die berechnete Gradzahl sichtbar.',
+    source: 'App-Funktion · Qibla',
+  },
+  {
+    keywords: ['wudu', 'waschung', 'gebetswaschung'],
+    text: 'Im Bereich „Lernen“ findest du den Wudu-Ablauf Schritt für Schritt. Bei Detailfragen, in denen sich Rechtsschulen unterscheiden können, sollte die Darstellung mit einer qualifizierten Quelle abgeglichen werden.',
+    source: 'App-Funktion · Lernen → Wudu',
+  },
+  {
+    keywords: ['dhikr', 'gedenken', 'tasbih'],
+    text: 'Im Dhikr-Bereich kannst du belegte Routinen auswählen, Wiederholungen zählen und deinen Tagesfortschritt lokal speichern. Der Zähler setzt sich beim lokalen Tageswechsel automatisch für den neuen Tag zurück.',
+    source: 'App-Funktion · Dhikr',
+  },
+  {
+    keywords: ['dua', 'duas', 'bittgebet'],
+    text: 'Im Dua-Bereich kannst du nach Situationen und Bedeutungen suchen, Favoriten speichern und Einträge öffnen. Quellenangaben werden direkt beim Eintrag angezeigt; Inhalte, die noch einer fachlichen Endprüfung bedürfen, sind entsprechend gekennzeichnet.',
+    source: 'App-Funktion · Duas',
+  },
+];
+
+function normalize(value: string) {
+  return value
+    .toLocaleLowerCase('de-DE')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9äöüß\s-]/gi, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function findLocalAnswer(question: string): LocalAnswer | null {
+  const normalized = normalize(question);
+  let best: { answer: LocalAnswer; score: number } | null = null;
+
+  for (const answer of LOCAL_ANSWERS) {
+    const score = answer.keywords.reduce((sum, keyword) => sum + (normalized.includes(normalize(keyword)) ? 1 : 0), 0);
+    if (score > 0 && (!best || score > best.score)) best = { answer, score };
+  }
+
+  return best?.answer ?? null;
+}
 
 export function AssistantScreen({ onBack }: { onBack: () => void }) {
   const [input, setInput] = useState('');
@@ -29,65 +104,66 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
     window.setTimeout(() => setToast(null), 2100);
   };
 
+  const answerQuestion = (question: string) => {
+    const match = findLocalAnswer(question);
+    const id = Date.now();
+    const assistant: ChatMessage = match
+      ? { id: id + 1, role: 'assistant', text: match.text, source: match.source }
+      : {
+          id: id + 1,
+          role: 'assistant',
+          text: 'Dazu habe ich in meinem lokal geprüften Wissensbestand noch keine passende Antwort. Ich erfinde deshalb keine religiöse Antwort. Nutze die Bereiche Quran, Gebete, Lernen, Duas oder Dhikr – oder prüfe die Frage bei einer qualifizierten, vertrauenswürdigen Stelle.',
+          source: 'Kein lokaler Quellen-Treffer',
+        };
+
+    setMessages((current) => [
+      ...current,
+      { id, role: 'user', text: question },
+      assistant,
+    ]);
+  };
+
   const submit = (event?: FormEvent) => {
     event?.preventDefault();
     const question = input.trim();
     if (!question) return;
-    const id = Date.now();
-    setMessages((current) => [
-      ...current,
-      { id, role: 'user', text: question },
-      {
-        id: id + 1,
-        role: 'assistant',
-        text: 'Die Oberfläche ist vorbereitet. Für eine verlässliche Antwort muss zuerst eine echte KI mit geprüften Quran- und Sunnah-Quellen verbunden werden.',
-      },
-    ]);
+    answerQuestion(question);
     setInput('');
   };
 
   const useSuggestion = (question: string) => {
-    setInput(question);
-    window.setTimeout(() => {
-      const id = Date.now();
-      setMessages((current) => [
-        ...current,
-        { id, role: 'user', text: question },
-        {
-          id: id + 1,
-          role: 'assistant',
-          text: 'Diese Frage wird später ausschließlich mit nachvollziehbaren Quellen beantwortet. Aktuell ist noch kein KI-Anbieter verbunden.',
-        },
-      ]);
-      setInput('');
-    }, 80);
+    answerQuestion(question);
+    setInput('');
   };
 
   return (
     <motion.main className="screen reference-assistant-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam</span><h1>KI-Assistent</h1></div>
-        <button className="icon-button" onClick={() => flash('Quellenmodus: Quran und authentische Sunnah')} aria-label="Informationen zum Quellenmodus"><ShieldCheck size={20} /></button>
+        <div><span className="overline">Lokaler Quellenmodus</span><h1>Nur Assistent</h1></div>
+        <button className="icon-button" onClick={() => flash('Nur Antworten mit lokal hinterlegter Quelle werden ausgegeben')} aria-label="Informationen zum Quellenmodus"><ShieldCheck size={20} /></button>
       </header>
 
       <section className="reference-assistant-greeting">
         <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} />
-        <div><span className="overline">Assalamu Alaikum</span><h2>Wie kann ich dir helfen?</h2><p>Fragen zu Glauben, Gebet, Quran und islamischem Alltag.</p></div>
+        <div><span className="overline">Assalamu Alaikum</span><h2>Wie kann ich dir helfen?</h2><p>Lokale, nachvollziehbare Antworten zu unterstützten Themen – ohne erfundene KI-Antworten.</p></div>
       </section>
 
       {messages.length ? (
-        <section className="reference-chat-thread">
+        <section className="reference-chat-thread" aria-live="polite">
           {messages.map((message) => (
             <motion.div key={message.id} className={`reference-chat-message reference-chat-message--${message.role}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
               {message.role === 'assistant' ? <span className="reference-chat-message__mark"><Sparkles size={16} /></span> : null}
-              <p>{message.text}</p>
+              <div>
+                <p>{message.text}</p>
+                {message.source ? <small className="reference-chat-message__source"><ShieldCheck size={13} /> {message.source}</small> : null}
+              </div>
             </motion.div>
           ))}
         </section>
       ) : (
         <section className="reference-assistant-suggestions">
-          <div className="section-heading"><div><span className="overline">Vorgeschlagen</span><h2>Fragen für dich</h2></div></div>
+          <div className="section-heading"><div><span className="overline">Direkt verfügbar</span><h2>Fragen mit Quellen</h2></div></div>
           <div>
             {suggestions.map((question) => <button key={question} onClick={() => useSuggestion(question)}><span><Sparkles size={16} /></span><strong>{question}</strong><ChevronRight size={17} /></button>)}
           </div>
@@ -96,13 +172,12 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-assistant-safety">
         <ShieldCheck size={19} />
-        <span><strong>Quellenbasierter Modus</strong><small>Keine Antwort wird als religiöse Gewissheit dargestellt, solange keine geprüfte Quelle vorhanden ist.</small></span>
+        <span><strong>Kein Fake-KI-Modus</strong><small>Wenn kein lokaler Quellen-Treffer vorhanden ist, sagt der Assistent das offen und erzeugt keine religiöse Antwort.</small></span>
       </section>
 
       <form className="reference-assistant-input" onSubmit={submit}>
-        <input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Frage etwas …" />
-        <button type="button" onClick={() => flash('Spracheingabe benötigt Mikrofonzugriff')} aria-label="Spracheingabe"><Mic size={18} /></button>
-        <button type="submit" aria-label="Senden"><Send size={18} /></button>
+        <input value={input} onChange={(event) => setInput(event.target.value)} placeholder="Frage zu einem unterstützten Thema …" aria-label="Frage an den Nur Assistenten" />
+        <button type="submit" aria-label="Senden" disabled={!input.trim()}><Send size={18} /></button>
       </form>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
