@@ -25,6 +25,16 @@
   outline-offset: 2px;
 }
 
+/* Prayer reminder controls represent only obligatory prayers. */
+.prayer-alert--disabled {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  opacity: .22;
+}
+
 /* Local sourced assistant. */
 .reference-chat-message > div {
   display: grid;
@@ -55,6 +65,125 @@
   opacity: .38;
   cursor: not-allowed;
   transform: none !important;
+}
+
+/* Dhikr statistics: the header chart control opens a real daily summary. */
+.reference-dhikr-stats-modal {
+  position: relative;
+  display: grid;
+  width: min(100%, 420px);
+  max-height: min(82vh, 720px);
+  gap: 14px;
+  overflow: auto;
+  padding: 25px 20px 20px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 27px;
+  background:
+    radial-gradient(circle at 88% 5%, rgba(232, 199, 122, .11), transparent 10rem),
+    linear-gradient(155deg, rgba(8, 48, 37, .99), rgba(3, 24, 18, .99));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-dhikr-stats-modal__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 16px;
+  color: var(--premium-gold-bright, #f6dfac);
+  background: rgba(232, 199, 122, .07);
+}
+
+.reference-dhikr-stats-modal h2 {
+  margin: -5px 0 0;
+  color: var(--premium-cream, #fff7e8);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+
+.reference-dhikr-stats-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-dhikr-stats-summary > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  padding: 12px 10px;
+  border: 1px solid rgba(232, 199, 122, .14);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.reference-dhikr-stats-summary strong {
+  overflow-wrap: anywhere;
+  color: var(--premium-gold-bright, #f6dfac);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.reference-dhikr-stats-summary small,
+.reference-dhikr-stats-note,
+.reference-dhikr-stats-list small {
+  color: rgba(157, 184, 171, .84);
+  font-size: .49rem;
+  line-height: 1.4;
+}
+
+.reference-dhikr-stats-list {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-dhikr-stats-list article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .018);
+}
+
+.reference-dhikr-stats-list article > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.reference-dhikr-stats-list article strong {
+  color: var(--premium-cream, #fff7e8);
+  font-size: .62rem;
+}
+
+.reference-dhikr-stats-list article > div {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .065);
+}
+
+.reference-dhikr-stats-list article > div i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #b88634, #f4dda8);
+}
+
+.reference-dhikr-stats-list em {
+  min-width: 34px;
+  color: rgba(232, 199, 122, .9);
+  font-size: .52rem;
+  font-style: normal;
+  text-align: right;
 }
 
 /* Fasting reminder now uses the calendar reminder engine. */
@@ -299,7 +428,8 @@
 /* Light mode for the newly functional controls. */
 [data-theme='light'] .reference-fasting-reminder-settings,
 [data-theme='light'] .reference-zakat-calculator,
-[data-theme='light'] .reference-standby-stage {
+[data-theme='light'] .reference-standby-stage,
+[data-theme='light'] .reference-dhikr-stats-modal {
   border-color: rgba(96, 74, 31, .16);
   background: linear-gradient(145deg, rgba(255, 251, 241, .98), rgba(239, 232, 214, .98));
   box-shadow: 0 16px 42px rgba(44, 38, 27, .1);
@@ -308,7 +438,9 @@
 [data-theme='light'] .reference-zakat-calculator h2,
 [data-theme='light'] .reference-zakat-calculator input,
 [data-theme='light'] .reference-standby-stage h2,
-[data-theme='light'] .reference-fasting-reminder-settings > label {
+[data-theme='light'] .reference-fasting-reminder-settings > label,
+[data-theme='light'] .reference-dhikr-stats-modal h2,
+[data-theme='light'] .reference-dhikr-stats-list article strong {
   color: #20372e;
 }
 
@@ -321,7 +453,10 @@
 
 [data-theme='light'] .reference-standby-countdown,
 [data-theme='light'] .reference-zakat-calculator > p,
-[data-theme='light'] .reference-fasting-reminder-status {
+[data-theme='light'] .reference-fasting-reminder-status,
+[data-theme='light'] .reference-dhikr-stats-summary small,
+[data-theme='light'] .reference-dhikr-stats-note,
+[data-theme='light'] .reference-dhikr-stats-list small {
   color: #5f7168;
 }
 
@@ -351,13 +486,22 @@
   .reference-fasting-reminder-settings input[type='time'] {
     width: 100%;
   }
+
+  .reference-dhikr-stats-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-dhikr-stats-list article {
+    grid-template-columns: minmax(0, 1fr) 72px auto;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .reference-reader-controls *,
   .reference-fasting-reminder-settings *,
   .reference-zakat-calculator *,
-  .reference-standby-stage * {
+  .reference-standby-stage *,
+  .reference-dhikr-stats-modal * {
     transition: none !important;
     animation: none !important;
   }
