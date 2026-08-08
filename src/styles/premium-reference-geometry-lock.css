@@ -62,7 +62,19 @@
   .reference-fasting-reminder-settings,
   .reference-prayer-reminder-banner,
   .reference-calendar-reminder-banner,
-  .reference-install-prompt
+  .reference-install-prompt,
+  .reference-profile-modal,
+  .reference-dua-modal,
+  .reference-name-modal,
+  .reference-dhikr-stats-modal,
+  .reference-prayer-settings-modal,
+  .prayer-completion-modal,
+  .reference-learning-completion-modal,
+  .reference-learning-plan-modal,
+  .calendar-modal,
+  .learn-modal,
+  .reference-mosque-detail-modal,
+  .reference-prayer-course-complete > section
 ) {
   border-radius: 28px !important;
 }
@@ -80,12 +92,26 @@
   .reference-reader-controls > button,
   .reference-filter-tabs button,
   .reference-modal-close,
+  .learn-modal__close,
+  .reference-prayer-settings-modal__close,
   .reference-mosque-detail-modal__close,
+  .reference-learning-completion-modal__close,
+  .prayer-completion-modal__close,
   .reference-network-status,
   .reference-prayer-reminder-banner__open,
   .reference-prayer-reminder-banner__close,
   .reference-install-prompt__close,
   .reference-install-prompt__action,
+  .reference-input-search,
+  .reference-assistant-input,
+  .reference-account-form label > div,
+  .reference-account-form label > input,
+  .reference-note-editor > input,
+  .reference-note-editor > textarea,
+  .calendar-modal input,
+  .reference-legacy-search,
+  .reference-fasting-reminder-settings input,
+  .reference-zakat-calculator input,
   .toast
 ) {
   border-radius: 18px !important;
