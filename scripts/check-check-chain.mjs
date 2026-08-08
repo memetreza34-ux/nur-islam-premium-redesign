@@ -17,6 +17,7 @@ const requiredChecks = [
   'install-prompt:check',
   'cloud-restore-sync:check',
   'static-controls:check',
+  'persistence:check',
   'release:check',
   'functional:check',
 ];
