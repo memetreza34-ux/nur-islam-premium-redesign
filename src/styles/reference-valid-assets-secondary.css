@@ -12,7 +12,7 @@
   width: 260px !important;
   height: 205px !important;
   opacity: .3 !important;
-  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 20px 20px rgba(0, 0, 0, .42)) saturate(.9) !important;
 }
 
@@ -33,7 +33,7 @@
   width: 150px;
   height: 150px;
   opacity: .11;
-  background: url('/premium-assets/high-res-objects/sun-emblem-v2.webp?v=20260806-visual4') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/sun-emblem-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
   pointer-events: none;
 }
 
@@ -56,7 +56,7 @@
   width: 108px;
   height: 82px;
   opacity: .58;
-  background: url('/premium-assets/high-res-objects/calendar-chip-v2.webp?v=20260806-visual4') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/calendar-chip-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
   filter: drop-shadow(0 12px 17px rgba(0, 0, 0, .32));
   pointer-events: none;
 }
@@ -80,7 +80,7 @@
   width: 168px;
   height: 162px;
   opacity: .76;
-  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260806-visual4') center bottom / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat;
   filter: drop-shadow(0 17px 20px rgba(0, 0, 0, .38));
   pointer-events: none;
 }
@@ -103,7 +103,7 @@
   width: 56px;
   height: 92px;
   opacity: .28;
-  background: url('/premium-assets/high-res-objects/bookmark-v2.webp?v=20260806-visual4') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/bookmark-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
   pointer-events: none;
 }
 
@@ -127,7 +127,7 @@
   }
 
   .reference-duas-hero::after {
-    width: 140px;
-    height: 138px;
+    width: 140px !important;
+    height: 138px !important;
   }
 }
