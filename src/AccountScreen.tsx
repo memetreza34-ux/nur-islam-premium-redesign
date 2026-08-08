@@ -4,17 +4,21 @@ import {
   CircleCheck,
   CloudDownload,
   CloudUpload,
+  Download,
   KeyRound,
   LoaderCircle,
   LogIn,
   LogOut,
   Mail,
   ShieldCheck,
+  Trash2,
   UserPlus,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
 import {
   backupLocalState,
+  deleteAccount,
+  exportAccountData,
   getCachedSession,
   getSession,
   loadProfile,
@@ -42,6 +46,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const [busy, setBusy] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [cloudUpdatedAt, setCloudUpdatedAt] = useState<string | null>(null);
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
   useEffect(() => subscribeAuth(setSession), []);
   useEffect(() => {
@@ -134,6 +139,40 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
     }
   };
 
+  const exportData = async () => {
+    setBusy(true);
+    setStatus(null);
+    try {
+      const data = await exportAccountData();
+      const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `nur-islam-daten-${new Date().toISOString().slice(0, 10)}.json`;
+      link.click();
+      URL.revokeObjectURL(url);
+      setStatus('Deine Kontodaten wurden als JSON-Datei heruntergeladen.');
+    } catch (reason) {
+      setStatus(reason instanceof Error ? reason.message : 'Export fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const removeAccount = async () => {
+    setBusy(true);
+    setStatus(null);
+    try {
+      await deleteAccount();
+      setSession(null);
+      setConfirmDelete(false);
+      setStatus('Dein Konto und alle Cloud-Daten wurden gelöscht. Die Daten auf diesem Gerät bleiben erhalten.');
+    } catch (reason) {
+      setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
   const logout = async () => {
     setBusy(true);
     try {
@@ -166,6 +205,21 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
           </section>
 
           <section className="reference-account-security"><ShieldCheck size={18} /><span><strong>RLS-geschützter Nutzerbereich</strong><small>Die Cloud-Tabellen sind so abgesichert, dass angemeldete Nutzer nur ihre eigenen Datensätze lesen oder verändern können. Die Übertragung erfolgt per HTTPS; das Fortschritts-Backup ist nicht als Ende-zu-Ende-verschlüsselter Tresor beworben.</small>{cloudUpdatedAt ? <em>Letzte Aktion: {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(cloudUpdatedAt))}</em> : null}</span></section>
+
+          <section className="reference-account-data">
+            <button onClick={() => void exportData()} disabled={busy}><Download size={18} /> Meine Daten exportieren</button>
+            {confirmDelete ? (
+              <div className="reference-account-data-confirm" role="alertdialog" aria-label="Konto endgültig löschen">
+                <p>Konto, Cloud-Backup und Cloud-Notizen endgültig löschen? Das lässt sich nicht rückgängig machen.</p>
+                <div>
+                  <button onClick={() => setConfirmDelete(false)} disabled={busy}>Abbrechen</button>
+                  <button className="is-destructive" onClick={() => void removeAccount()} disabled={busy}>Endgültig löschen</button>
+                </div>
+              </div>
+            ) : (
+              <button className="is-destructive" onClick={() => setConfirmDelete(true)} disabled={busy}><Trash2 size={18} /> Konto löschen</button>
+            )}
+          </section>
 
           <button className="reference-account-logout" onClick={() => void logout()} disabled={busy}><LogOut size={18} /> Abmelden</button>
         </>

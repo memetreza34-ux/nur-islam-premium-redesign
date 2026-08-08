@@ -260,6 +260,54 @@
   cursor: pointer;
 }
 
+.reference-account-data {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-account-data > button,
+.reference-account-data-confirm button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 191, 119, .2);
+  color: #e8dcbd;
+  background: rgba(226, 191, 119, .05);
+  cursor: pointer;
+}
+
+.reference-account-data > button.is-destructive,
+.reference-account-data-confirm button.is-destructive {
+  border-color: rgba(213, 119, 101, .28);
+  color: #e8b0a3;
+  background: rgba(156, 70, 55, .075);
+}
+
+.reference-account-data-confirm {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(213, 119, 101, .28);
+  background: rgba(156, 70, 55, .07);
+}
+
+.reference-account-data-confirm > p {
+  margin: 0;
+  font-size: .82rem;
+  line-height: 1.45;
+  color: #f0cbc1;
+}
+
+.reference-account-data-confirm > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
 .reference-account-status {
   padding: 10px 12px;
   border: 1px solid rgba(226, 191, 119, .2);

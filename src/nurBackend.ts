@@ -308,3 +308,43 @@ export async function updateNote(id: string, title: string, body: string) {
 export async function deleteNote(id: string) {
   await authenticatedFetch(`nur_islam_notes?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
 }
+
+export type NurAccountExport = {
+  exported_at: string;
+  account: NurUser;
+  profile: NurProfile | null;
+  cloud_state: { schema_version: number; payload: unknown; updated_at: string } | null;
+  notes: NurNote[];
+};
+
+export async function exportAccountData(): Promise<NurAccountExport> {
+  const session = await getSession();
+  if (!session) throw new Error('Bitte melde dich zuerst an.');
+  const profile = await loadProfile();
+  const stateResponse = await authenticatedFetch(`nur_islam_user_state?user_id=eq.${encodeURIComponent(session.user.id)}&select=schema_version,payload,updated_at`);
+  const stateRows = await stateResponse.json() as NurAccountExport['cloud_state'][];
+  return {
+    exported_at: new Date().toISOString(),
+    account: session.user,
+    profile,
+    cloud_state: stateRows[0] ?? null,
+    notes: await listNotes(),
+  };
+}
+
+export async function deleteAccount() {
+  const session = await getSession();
+  if (!session) throw new Error('Bitte melde dich zuerst an.');
+  const response = await fetch(`${SUPABASE_URL}/rest/v1/rpc/delete_nur_islam_account`, {
+    method: 'POST',
+    headers: {
+      apikey: PUBLISHABLE_KEY,
+      Authorization: `Bearer ${session.accessToken}`,
+      'Content-Type': 'application/json',
+    },
+    body: '{}',
+  });
+  if (!response.ok) throw new Error(await readError(response));
+  // The account is gone, so the cached session can never be refreshed again.
+  persistSession(null);
+}
