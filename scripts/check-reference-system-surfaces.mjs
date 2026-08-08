@@ -4,8 +4,9 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [navigation, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
+const [navigation, referenceShell, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
   read('src/styles/navigation.css'),
+  read('src/styles/reference-shell.css'),
   read('src/styles/premium-system-surfaces-lock.css'),
   read('src/styles/premium-mobile-modal-input-lock.css'),
   read('src/styles/reference-assistant.css'),
@@ -30,6 +31,12 @@ requireTokens(navigation, 'Bottom navigation', [
   'border-radius: 26px',
   'border-radius: 18px',
   'border-radius: 13px',
+]);
+
+requireTokens(referenceShell, 'Detail shell base', [
+  'border: 1px solid rgba(226, 191, 119, .14)',
+  'border-radius: 18px',
+  'background: rgba(0, 27, 22, .9)',
 ]);
 
 requireTokens(systemSurfaces, 'System surfaces', [
@@ -98,6 +105,7 @@ requireTokens(runtimeLock, 'No-blur fallback', [
 ]);
 
 requireTokens(finalLock, 'Account/notes/assistant final utility material', [
+  "html:not([data-theme='light']) :where(",
   '--utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99))',
   '--utility-surface-soft: rgba(7, 55, 43, .82)',
   '--utility-border: rgba(226, 191, 119, .15)',
@@ -106,6 +114,23 @@ requireTokens(finalLock, 'Account/notes/assistant final utility material', [
   '--utility-muted: rgba(145, 168, 158, .79)',
   '--utility-gold: #e2bf77',
   'linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important',
+]);
+
+requireTokens(finalLock, 'Final shell override', [
+  '.app-shell--detail .reference-screen-header',
+  'background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important',
+  '.bottom-nav {',
+  'border-radius: 26px !important',
+  'background: linear-gradient(145deg, rgba(0, 27, 22, .96), rgba(0, 18, 15, .98)) !important',
+  '.bottom-nav__item--active',
+  'color: #f2d79a !important',
+  '.reference-onboarding__visual',
+  'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
+  "[data-theme='light'] .app-shell--detail .reference-screen-header",
+  "[data-theme='light'] .bottom-nav",
+  "[data-theme='light'] .reference-onboarding__visual",
+  'background: rgba(255, 252, 243, .94) !important',
+  'linear-gradient(150deg, #fffdf7, #eee6d3) !important',
 ]);
 
 for (const selector of [
@@ -156,8 +181,13 @@ for (const selector of [
   '.reference-assistant-safety',
   '.reference-assistant-info-list > span',
   ".reference-assistant-input > button[type='submit']",
+  '.reference-onboarding__topbar > button',
+  '.reference-onboarding__permissions > button',
+  '.reference-onboarding__back',
+  '.reference-onboarding__actions .gold-button',
+  '.reference-onboarding__permissions > button > span:first-child',
 ]) {
-  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility/profile surface: ${selector}`);
+  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility/profile/shell surface: ${selector}`);
 }
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
@@ -177,6 +207,16 @@ for (const stale of [
 ]) {
   if (navigation.includes(stale) || systemSurfaces.includes(stale) || modalInput.includes(stale) || runtimeLock.includes(stale)) {
     throw new Error(`Visible system/modal surface still contains a stale pre-reference value: ${stale}`);
+  }
+}
+
+for (const staleShell of [
+  'border: 1px solid rgba(214, 175, 55, .12)',
+  'border-radius: 16px',
+  'background: rgba(3, 18, 14, .82)',
+]) {
+  if (referenceShell.includes(staleShell)) {
+    throw new Error(`Detail shell base still contains a stale pre-reference value: ${staleShell}`);
   }
 }
 
@@ -207,4 +247,4 @@ for (const staleProfile of [
   }
 }
 
-console.log('Reference system surfaces verified: navigation, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry.');
+console.log('Reference system surfaces verified: shell/navigation/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry with explicit light-theme preservation.');

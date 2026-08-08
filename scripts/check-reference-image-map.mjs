@@ -19,6 +19,7 @@ const [
   more,
   legacy,
   reading,
+  onboardingArt,
   devotionalCss,
   dailyCss,
   discoveryCss,
@@ -39,6 +40,7 @@ const [
   read('src/MoreScreen.tsx'),
   read('src/LegacyFeatureScreens.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
+  read('src/styles/premium-onboarding-art-lock.css'),
   read('src/styles/premium-devotional-art-lock.css'),
   read('src/styles/premium-daily-inspiration-art-lock.css'),
   read('src/styles/premium-discovery-collection-art-lock.css'),
@@ -173,6 +175,36 @@ requireFragments(reading, 'Daily Ayah and worship guides', [
   ": '/premium-assets/high-res-objects/qibla-compass-v2.webp';",
 ]);
 
+requireCssFit(onboardingArt, 'Onboarding mosque composition', '.reference-onboarding__visual--1 > .premium-image', [
+  'width: 330px !important',
+  'height: 258px !important',
+  'transform: translateY(14px) !important',
+]);
+requireCssFit(onboardingArt, 'Onboarding mosque crop', '.reference-onboarding__visual--1 > .premium-image > img', [
+  'object-position: center bottom !important',
+]);
+requireCssFit(onboardingArt, 'Onboarding compass composition', '.reference-onboarding__visual--2 > .premium-image', [
+  'width: 246px !important',
+  'height: 246px !important',
+  'transform: none !important',
+]);
+requireCssFit(onboardingArt, 'Onboarding compass crop', '.reference-onboarding__visual--2 > .premium-image > img', [
+  'object-position: center !important',
+]);
+requireCssFit(onboardingArt, 'Onboarding Quran composition', '.reference-onboarding__visual--3 > .premium-image', [
+  'width: 250px !important',
+  'height: 214px !important',
+  'transform: translate(-24px, 8px) !important',
+]);
+requireCssFit(onboardingArt, 'Onboarding Quran crop', '.reference-onboarding__visual--3 > .premium-image > img', [
+  'object-position: center bottom !important',
+  'transform: rotate(-2deg)',
+]);
+requireCssFit(onboardingArt, 'Onboarding Tasbih companion', '.reference-onboarding__visual--3 .reference-onboarding__tasbih img', [
+  'object-fit: contain !important',
+  'object-position: center !important',
+]);
+
 requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260808-release-hardening');
 requireCssAsset(dailyCss, 'Daily Ayah', '.reference-ayah-hero::before', 'mihrab-arch-v2.webp?v=20260808-release-hardening');
 requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v2.webp?v=20260808-release-hardening');
@@ -229,4 +261,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs, focal Home/Mosque/Quran/Dhikr/Qibla/Ayah crop rules are final-locked, and visible TSX uses final -v2 WebPs.');
+console.log('Reference image map verified: primary screens, onboarding slide compositions, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');
