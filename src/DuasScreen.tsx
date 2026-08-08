@@ -35,7 +35,7 @@ function readStringSet(key: string, fallback: string[] = []) {
     const migrated = parsed
       .map((value) => typeof value === 'number' ? legacyFavoriteMap[value] : value)
       .filter((value): value is string => typeof value === 'string' && DUA_BY_ID.has(value));
-    return new Set(migrated.length ? migrated : fallback);
+    return new Set(migrated);
   } catch {
     return new Set(fallback);
   }
