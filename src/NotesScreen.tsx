@@ -1,0 +1,192 @@
+import { useEffect, useMemo, useState } from 'react';
+import {
+  ChevronLeft,
+  CircleCheck,
+  Cloud,
+  LoaderCircle,
+  NotebookPen,
+  Plus,
+  Save,
+  Trash2,
+  X,
+} from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+  createNote as createCloudNote,
+  deleteNote as deleteCloudNote,
+  getSession,
+  listNotes as listCloudNotes,
+  updateNote as updateCloudNote,
+} from './nurBackend';
+import type { NurNote, NurSession } from './nurBackend';
+
+type LocalNote = {
+  id: string;
+  title: string;
+  body: string;
+  created_at: string;
+  updated_at: string;
+};
+
+type NoteItem = LocalNote | NurNote;
+
+const LOCAL_KEY = 'nur_local_notes_v1';
+
+function readLocalNotes() {
+  try {
+    const parsed = JSON.parse(localStorage.getItem(LOCAL_KEY) || '[]') as unknown;
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter((value): value is LocalNote => {
+      if (!value || typeof value !== 'object') return false;
+      const note = value as Partial<LocalNote>;
+      return typeof note.id === 'string' && typeof note.title === 'string' && typeof note.body === 'string' && typeof note.created_at === 'string' && typeof note.updated_at === 'string';
+    });
+  } catch {
+    return [];
+  }
+}
+
+function writeLocalNotes(notes: LocalNote[]) {
+  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(notes)); } catch { /* optional */ }
+}
+
+export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onOpenAccount: () => void }) {
+  const [session, setSession] = useState<NurSession | null>(null);
+  const [notes, setNotes] = useState<NoteItem[]>([]);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [title, setTitle] = useState('');
+  const [body, setBody] = useState('');
+  const [busy, setBusy] = useState(true);
+  const [status, setStatus] = useState<string | null>(null);
+
+  const selected = useMemo(() => notes.find((note) => note.id === selectedId) ?? null, [notes, selectedId]);
+
+  useEffect(() => {
+    let active = true;
+    void getSession().then(async (current) => {
+      if (!active) return;
+      setSession(current);
+      if (current) {
+        const cloud = await listCloudNotes().catch(() => []);
+        if (!active) return;
+        setNotes(cloud);
+      } else {
+        setNotes(readLocalNotes());
+      }
+      setBusy(false);
+    });
+    return () => { active = false; };
+  }, []);
+
+  const beginNew = () => {
+    setSelectedId(null);
+    setTitle('');
+    setBody('');
+    setStatus(null);
+  };
+
+  const openNote = (note: NoteItem) => {
+    setSelectedId(note.id);
+    setTitle(note.title);
+    setBody(note.body);
+    setStatus(null);
+  };
+
+  const save = async () => {
+    const cleanTitle = title.trim().slice(0, 160);
+    const cleanBody = body.slice(0, 20000);
+    if (!cleanTitle && !cleanBody.trim()) {
+      setStatus('Eine leere Notiz wird nicht gespeichert.');
+      return;
+    }
+    setBusy(true);
+    try {
+      if (session) {
+        const saved = selectedId
+          ? await updateCloudNote(selectedId, cleanTitle || 'Notiz', cleanBody)
+          : await createCloudNote(cleanTitle || 'Notiz', cleanBody);
+        const refreshed = await listCloudNotes();
+        setNotes(refreshed);
+        setSelectedId(saved?.id ?? null);
+        setStatus('Cloud-Notiz gespeichert.');
+      } else {
+        const now = new Date().toISOString();
+        const local = notes as LocalNote[];
+        let next: LocalNote[];
+        if (selectedId) {
+          next = local.map((note) => note.id === selectedId ? { ...note, title: cleanTitle || 'Notiz', body: cleanBody, updated_at: now } : note);
+        } else {
+          const created: LocalNote = { id: `local-${Date.now()}`, title: cleanTitle || 'Notiz', body: cleanBody, created_at: now, updated_at: now };
+          next = [created, ...local];
+          setSelectedId(created.id);
+        }
+        next.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+        setNotes(next);
+        writeLocalNotes(next);
+        setStatus('Notiz lokal auf diesem Gerät gespeichert.');
+      }
+    } catch (reason) {
+      setStatus(reason instanceof Error ? reason.message : 'Speichern fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const remove = async () => {
+    if (!selectedId) return;
+    setBusy(true);
+    try {
+      if (session) {
+        await deleteCloudNote(selectedId);
+        setNotes(await listCloudNotes());
+      } else {
+        const next = (notes as LocalNote[]).filter((note) => note.id !== selectedId);
+        setNotes(next);
+        writeLocalNotes(next);
+      }
+      beginNew();
+      setStatus('Notiz gelöscht.');
+    } catch (reason) {
+      setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <motion.main className="screen reference-notes-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <header className="reference-screen-header">
+        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+        <div><span className="overline">Deine Gedanken</span><h1>Notizen</h1></div>
+        <button className="icon-button" onClick={beginNew} aria-label="Neue Notiz"><Plus size={20} /></button>
+      </header>
+
+      <section className="reference-notes-storage">
+        {session ? <Cloud size={18} /> : <NotebookPen size={18} />}
+        <span><strong>{session ? 'Cloud-Notizen aktiv' : 'Lokale Notizen'}</strong><small>{session ? 'Diese Notizen liegen in deinem geschützten Konto.' : 'Ohne Konto bleiben Notizen nur auf diesem Gerät.'}</small></span>
+        {!session ? <button onClick={onOpenAccount}>Cloud aktivieren</button> : <CircleCheck size={18} />}
+      </section>
+
+      {busy && notes.length === 0 ? <div className="reference-notes-loading"><LoaderCircle size={24} className="is-spinning" /> Notizen werden geladen …</div> : null}
+
+      <section className="reference-notes-list">
+        {notes.map((note) => (
+          <button key={note.id} className={selectedId === note.id ? 'is-active' : ''} onClick={() => openNote(note)}>
+            <span><strong>{note.title || 'Notiz'}</strong><small>{note.body.trim().slice(0, 76) || 'Kein Text'}</small></span>
+            <em>{new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(note.updated_at))}</em>
+          </button>
+        ))}
+        {!busy && notes.length === 0 ? <div className="reference-empty-result"><NotebookPen size={25} /><strong>Noch keine Notizen</strong><small>Erstelle eine persönliche Notiz. Religiöse Rechtsfragen sollten nicht nur anhand persönlicher Notizen entschieden werden.</small></div> : null}
+      </section>
+
+      <section className="reference-note-editor">
+        <div className="reference-note-editor__heading"><span><NotebookPen size={18} /><strong>{selected ? 'Notiz bearbeiten' : 'Neue Notiz'}</strong></span>{selected ? <button onClick={() => void remove()} disabled={busy} aria-label="Notiz löschen"><Trash2 size={17} /></button> : <button onClick={beginNew} aria-label="Editor leeren"><X size={17} /></button>}</div>
+        <input value={title} onChange={(event) => setTitle(event.target.value)} maxLength={160} placeholder="Titel" />
+        <textarea value={body} onChange={(event) => setBody(event.target.value)} maxLength={20000} rows={8} placeholder="Deine Gedanken …" />
+        <button className="gold-button" onClick={() => void save()} disabled={busy}>{busy ? <LoaderCircle size={17} className="is-spinning" /> : <Save size={17} />} Speichern</button>
+      </section>
+
+      <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="status">{status}</motion.div> : null}</AnimatePresence>
+    </motion.main>
+  );
+}
