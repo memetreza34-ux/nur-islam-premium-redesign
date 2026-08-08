@@ -59,7 +59,10 @@
   .reference-quiz-card,
   .reference-quiz-result,
   .reference-zakat-calculator,
-  .reference-fasting-reminder-settings
+  .reference-fasting-reminder-settings,
+  .reference-prayer-reminder-banner,
+  .reference-calendar-reminder-banner,
+  .reference-install-prompt
 ) {
   border-radius: 28px !important;
 }
@@ -77,7 +80,13 @@
   .reference-reader-controls > button,
   .reference-filter-tabs button,
   .reference-modal-close,
-  .reference-mosque-detail-modal__close
+  .reference-mosque-detail-modal__close,
+  .reference-network-status,
+  .reference-prayer-reminder-banner__open,
+  .reference-prayer-reminder-banner__close,
+  .reference-install-prompt__close,
+  .reference-install-prompt__action,
+  .toast
 ) {
   border-radius: 18px !important;
 }
