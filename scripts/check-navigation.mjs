@@ -4,49 +4,63 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 const collections = await readFile(resolve(root, 'src/CollectionsScreen.tsx'), 'utf8');
+const duas = await readFile(resolve(root, 'src/DuasScreen.tsx'), 'utf8');
+const names = await readFile(resolve(root, 'src/NamesScreen.tsx'), 'utf8');
+const calendar = await readFile(resolve(root, 'src/CalendarScreen.tsx'), 'utf8');
 
 const requiredAppFragments = [
   "import { CollectionsScreen } from './CollectionsScreen';",
   "import { MosqueScreen } from './DiscoveryScreens';",
-  "onOpenQuran={goQuran}",
-  "onOpenReader={openReader}",
-  "onOpenDuas={() => setActiveTab('duas')}",
-  "onOpenNames={() => setActiveTab('names')}",
-  "onOpenAyah={() => setActiveTab('ayah')}",
-  "onOpenHadith={() => setActiveTab('hadith')}",
-  "onOpenCalendar={() => setActiveTab('calendar')}",
+  'onOpenQuran={goQuran}',
+  'onOpenReader={openReader}',
+  'onOpenDua={openSavedDua}',
+  'onOpenName={openSavedName}',
+  "onOpenAyah={() => navigate('ayah')}",
+  "onOpenHadith={() => navigate('hadith')}",
+  'onOpenCalendarDate={openSavedCalendarDate}',
+  'initialDuaId={selectedDuaId}',
+  'initialNameId={selectedNameId}',
+  'initialDateKey={selectedCalendarDate}',
   "onNavigate('legacy:ummah')",
 ];
 
 for (const fragment of requiredAppFragments) {
-  if (!app.includes(fragment)) {
-    throw new Error(`App navigation is missing: ${fragment}`);
-  }
+  if (!app.includes(fragment)) throw new Error(`App navigation is missing: ${fragment}`);
 }
 
-if (app.includes("legacy:ummah-map")) {
-  throw new Error('Invalid legacy route remains: legacy:ummah-map');
-}
+if (app.includes('legacy:ummah-map')) throw new Error('Invalid legacy route remains: legacy:ummah-map');
 
 const requiredCollectionHandlers = [
   'onClick={onOpenQuran}',
   'onOpenReader(group.surahNumber)',
   'onOpenReader(surahNumber)',
-  'onClick={onOpenDuas}',
-  'onClick={onOpenNames}',
+  'onOpenDua(id)',
+  'onOpenName(id)',
   'onClick={onOpenAyah}',
   'onClick={onOpenHadith}',
-  'onClick={onOpenCalendar}',
+  'onOpenCalendarDate(date)',
+  'Array.from({ length: 114 }',
 ];
 
 for (const fragment of requiredCollectionHandlers) {
-  if (!collections.includes(fragment)) {
-    throw new Error(`Collection navigation is missing: ${fragment}`);
-  }
+  if (!collections.includes(fragment)) throw new Error(`Collection navigation is missing: ${fragment}`);
 }
 
-if (collections.includes("flash(`${dua.title} geöffnet`)")) {
-  throw new Error('Dua collection rows still use the obsolete toast-only interaction.');
+if (collections.includes('onOpenDuas') || collections.includes('onOpenNames') || collections.includes('onOpenCalendar:')) {
+  throw new Error('Collection still exposes obsolete generic destination callbacks.');
+}
+if (collections.includes('OFFLINE_QURAN_SURAHS')) {
+  throw new Error('Collection still restricts Quran bookmarks to the offline Surah subset.');
 }
 
-console.log('Navigation verified: collections open real screens and all legacy route IDs are valid.');
+if (!duas.includes('initialDuaId?: string | null') || !duas.includes('DUA_BY_ID.get(initialDuaId)')) {
+  throw new Error('Dua screen cannot open a saved Dua directly.');
+}
+if (!names.includes('initialNameId?: string | null') || !names.includes('String(entry.id) === initialNameId')) {
+  throw new Error('Names screen cannot open a saved Name directly.');
+}
+if (!calendar.includes('initialDateKey?: string | null') || !calendar.includes('getInitialCalendarPosition')) {
+  throw new Error('Calendar cannot open a saved date directly.');
+}
+
+console.log('Navigation verified: collection rows open exact saved Duas, Names and calendar dates, Quran bookmarks cover all 114 Surahs, and legacy route IDs remain valid.');
