@@ -5,6 +5,8 @@ const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
 const [
+  app,
+  systemLayer,
   backend,
   account,
   notes,
@@ -22,6 +24,8 @@ const [
   html,
   migration,
 ] = await Promise.all([
+  read('src/App.tsx'),
+  read('src/AppSystemLayer.tsx'),
   read('src/nurBackend.ts'),
   read('src/AccountScreen.tsx'),
   read('src/NotesScreen.tsx'),
@@ -113,11 +117,15 @@ forbidText(more, ['premium_prayer_notifications', 'premium_cloud_sync', 'bis Fir
 requireText(calendarService, [
   'dateKey?: unknown',
   'typeof entry.dateKey',
+  'isValidDateKey',
+  'REMINDER_GRACE_MINUTES = 5',
+  'difference >= 0 && difference <= REMINDER_GRACE_MINUTES',
   'startCalendarReminderScheduler',
   'nur:calendar-reminder-fired',
-  'showNotification',
+  'showSystemNotification',
   "target: 'calendar'",
 ], 'Calendar reminder service');
+forbidText(calendarService, ["if (document.visibilityState === 'hidden') return"], 'Calendar reminder service');
 requireText(calendar, [
   'readCalendarEntries',
   'Systemerinnerung aktiv',
@@ -125,6 +133,20 @@ requireText(calendar, [
   'Mondsichtung',
   'Notification.requestPermission()',
 ], 'Calendar screen');
+
+requireText(app, [
+  "window.addEventListener('nur:open-calendar'",
+  "window.removeEventListener('nur:open-calendar'",
+  "setActiveTab('calendar')",
+], 'Calendar app navigation');
+requireText(systemLayer, [
+  'CalendarReminderBanner',
+  "window.dispatchEvent(new Event('nur:open-calendar'))",
+], 'Calendar reminder banner');
+forbidText(systemLayer, [
+  "url.searchParams.set('open', 'calendar')",
+  'window.location.assign(url.toString())',
+], 'Calendar reminder banner');
 
 requireText(dhikr, [
   'const syncDay = () =>',
@@ -138,8 +160,15 @@ requireText(main, [
   '<CalendarReminderBanner />',
   'initializeTheme()',
   "requested === 'calendar'",
+  "'nur:open-calendar'",
 ], 'Application bootstrap');
-requireText(pwa, ['OPEN_CALENDAR', '11-20260808-release-hardening'], 'PWA registration');
+forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
+requireText(pwa, [
+  'OPEN_CALENDAR',
+  '11-20260808-release-hardening',
+  "window.dispatchEvent(new Event('nur:open-calendar'))",
+], 'PWA registration');
+forbidText(pwa, ["url.searchParams.set('open', 'calendar')", 'window.location.assign(url.toString())'], 'PWA registration');
 requireText(sw, ['OPEN_CALENDAR', "event.notification.data?.target === 'calendar'", 'nur-islam-premium-v11'], 'Service worker');
 
 requireText(theme, ["export type NurTheme = 'dark' | 'light' | 'system'", 'dataset.theme', 'prefers-color-scheme: light'], 'Theme service');
@@ -162,4 +191,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: real account/cloud/notes, exact device locations excluded from generic cloud backup, truthful HTTPS/RLS wording, visible cloud-note failures, least-privilege CRUD grants with RLS, unified reminders, functional themes, PWA routing and accessibility.');
+console.log('Release hardening verified: privacy-scoped cloud backup, visible note failures, least-privilege RLS, background-tolerant calendar reminders with direct no-reload routing, functional themes, PWA routing and accessibility.');
