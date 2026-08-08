@@ -47,6 +47,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const [status, setStatus] = useState<string | null>(null);
   const [cloudUpdatedAt, setCloudUpdatedAt] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
+  const [confirmRestore, setConfirmRestore] = useState(false);
 
   useEffect(() => subscribeAuth(setSession), []);
   useEffect(() => {
@@ -123,6 +124,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const restore = async () => {
     setBusy(true);
     setStatus(null);
+    setConfirmRestore(false);
     try {
       const updatedAt = await restoreCloudState();
       if (!updatedAt) {
@@ -201,8 +203,21 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
 
           <section className="reference-account-cloud-grid">
             <button onClick={() => void backup()} disabled={busy}><CloudUpload size={24} /><strong>Jetzt sichern</strong><small>Fortschritt und unterstützte Einstellungen in die Cloud schreiben</small></button>
-            <button onClick={() => void restore()} disabled={busy}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>Letztes Fortschritts-Backup auf dieses Gerät laden</small></button>
+            <button onClick={() => setConfirmRestore(true)} disabled={busy}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>Letztes Fortschritts-Backup auf dieses Gerät laden</small></button>
           </section>
+
+          {confirmRestore ? (
+            <div className="reference-account-data-confirm" role="alertdialog" aria-label="Backup wiederherstellen">
+              <p>
+                Das Cloud-Backup ersetzt Fortschritt und Einstellungen auf diesem Gerät. Neuere lokale Daten gehen dabei verloren.
+                {cloudUpdatedAt ? ` Letzte Sicherung: ${new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(cloudUpdatedAt))}.` : ''}
+              </p>
+              <div>
+                <button onClick={() => setConfirmRestore(false)} disabled={busy}>Abbrechen</button>
+                <button className="is-destructive" onClick={() => void restore()} disabled={busy}>Wiederherstellen</button>
+              </div>
+            </div>
+          ) : null}
 
           <section className="reference-account-security"><ShieldCheck size={18} /><span><strong>RLS-geschützter Nutzerbereich</strong><small>Die Cloud-Tabellen sind so abgesichert, dass angemeldete Nutzer nur ihre eigenen Datensätze lesen oder verändern können. Die Übertragung erfolgt per HTTPS; das Fortschritts-Backup ist nicht als Ende-zu-Ende-verschlüsselter Tresor beworben.</small>{cloudUpdatedAt ? <em>Letzte Aktion: {new Intl.DateTimeFormat('de-DE', { dateStyle: 'medium', timeStyle: 'short' }).format(new Date(cloudUpdatedAt))}</em> : null}</span></section>
 

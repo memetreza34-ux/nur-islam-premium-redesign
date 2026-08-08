@@ -8,6 +8,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "tsc --noEmit",
+    "rls:verify": "node scripts/verify-rls.mjs",
     "assets:check": "node scripts/check-reference-assets.mjs",
     "deployment:check": "node scripts/check-deployment-paths.mjs",
     "visual:check": "node scripts/check-visual-consistency.mjs",
