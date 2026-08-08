@@ -135,7 +135,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const currentDateKey = useMemo(() => getDateKey(now), [now]);
   const [completedDateKey, setCompletedDateKey] = useState(initialDateKey);
   const [completed, setCompleted] = useState(() => readSet(`nur_prayers_${initialDateKey}`, []));
-  const [notifications, setNotifications] = useState(() => readSet('nur_prayer_notifications', ['fajr', 'dhuhr', 'maghrib', 'isha']));
+  const [notifications, setNotifications] = useState(() => readSet('nur_prayer_notifications', []));
   const [tonePlaying, setTonePlaying] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const [celebrationOpen, setCelebrationOpen] = useState(false);
@@ -218,13 +218,16 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   };
 
   const toggleNotification = async (id: string) => {
+    if (!obligatoryIds.includes(id as typeof obligatoryIds[number])) {
+      flash('Erinnerungen sind nur für die fünf Pflichtgebete verfügbar');
+      return;
+    }
+
     const enabling = !notifications.has(id);
+    let systemNotificationAvailable = 'Notification' in window && Notification.permission === 'granted';
     if (enabling && 'Notification' in window && Notification.permission === 'default') {
       const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        flash('Benachrichtigungen wurden nicht freigegeben');
-        return;
-      }
+      systemNotificationAvailable = permission === 'granted';
     }
 
     setNotifications((current) => {
@@ -232,7 +235,14 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       if (next.has(id)) next.delete(id); else next.add(id);
       return next;
     });
-    flash(enabling ? 'Erinnerung lokal vorgemerkt' : 'Erinnerung ausgeschaltet');
+
+    if (!enabling) {
+      flash('Erinnerung ausgeschaltet');
+    } else if (systemNotificationAvailable) {
+      flash('Erinnerung mit Systembenachrichtigung aktiviert');
+    } else {
+      flash('In-App-Erinnerung aktiviert; Systembenachrichtigungen sind nicht verfügbar');
+    }
   };
 
   const handleRefresh = async () => {
@@ -334,11 +344,11 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
           {prayerTimes.map((prayer, index) => {
             const isNext = prayer.id === nextPrayer.prayer.id;
             const done = completed.has(prayer.id);
-            const notificationOn = notifications.has(prayer.id);
+            const notificationOn = prayer.obligatory && notifications.has(prayer.id);
             return (
               <motion.article key={prayer.id} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.035 }}>
                 <span className="prayer-time-row__icon"><PrayerIcon prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
-                <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button>
+                {prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}
                 {prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}
               </motion.article>
             );
