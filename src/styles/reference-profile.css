@@ -10,11 +10,11 @@
   gap: 12px;
   overflow: hidden;
   padding: 15px;
-  border: 1px solid rgba(218, 178, 93, .28);
-  border-radius: 19px;
+  border: 1px solid rgba(226, 191, 119, .28);
+  border-radius: 42px;
   background:
-    radial-gradient(circle at 16% 50%, rgba(214, 175, 55, .12), transparent 8rem),
-    linear-gradient(145deg, rgba(16, 59, 46, .95), rgba(4, 25, 20, .98));
+    radial-gradient(circle at 16% 50%, rgba(226, 191, 119, .12), transparent 8rem),
+    linear-gradient(145deg, rgba(13, 87, 67, .95), rgba(0, 18, 15, .98));
   box-shadow: 0 15px 32px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .035);
 }
 
@@ -23,7 +23,7 @@
   position: absolute;
   right: 22px;
   bottom: -42px;
-  color: rgba(232, 199, 122, .045);
+  color: rgba(226, 191, 119, .045);
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 9rem;
   pointer-events: none;
@@ -74,13 +74,13 @@
   width: 42px;
   height: 42px;
   place-items: center;
-  border: 1px solid rgba(230, 196, 126, .34);
+  border: 1px solid rgba(242, 215, 154, .34);
   border-radius: 50%;
   color: var(--gold-bright);
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1rem;
   font-weight: 700;
-  background: rgba(214, 175, 55, .09);
+  background: rgba(226, 191, 119, .09);
 }
 
 .reference-profile-section {
@@ -90,7 +90,7 @@
 
 .reference-profile-section__label {
   padding-left: 4px;
-  color: var(--gold-soft);
+  color: var(--gold);
   font-size: .55rem;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -98,9 +98,9 @@
 
 .reference-profile-list {
   overflow: hidden;
-  border: 1px solid rgba(214, 175, 55, .2);
-  border-radius: 17px;
-  background: linear-gradient(145deg, rgba(15, 53, 42, .88), rgba(4, 24, 19, .96));
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(7, 55, 43, .88), rgba(0, 18, 15, .96));
   box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024);
 }
 
@@ -113,7 +113,7 @@
   min-height: 62px;
   padding: 10px 13px;
   border: 0;
-  border-bottom: 1px solid rgba(214, 175, 55, .1);
+  border-bottom: 1px solid rgba(226, 191, 119, .1);
   color: var(--cream-strong);
   background: transparent;
   cursor: pointer;
@@ -130,9 +130,9 @@
   height: 36px;
   place-items: center;
   border: 1px solid rgba(226, 191, 119, .25);
-  border-radius: 12px;
+  border-radius: 13px;
   color: var(--gold-bright);
-  background: rgba(214, 175, 55, .07);
+  background: rgba(226, 191, 119, .07);
 }
 
 .reference-profile-row__copy {
@@ -164,10 +164,10 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  border: 1px solid rgba(212, 175, 55, .22);
-  border-radius: 15px;
-  color: var(--gold-soft);
-  background: rgba(8, 36, 28, .78);
+  border: 1px solid rgba(226, 191, 119, .22);
+  border-radius: 18px;
+  color: var(--gold);
+  background: rgba(0, 27, 22, .78);
   cursor: pointer;
 }
 
@@ -179,11 +179,11 @@
   margin: 0 auto max(74px, env(safe-area-inset-bottom));
   padding: 22px;
   border: 1px solid rgba(226, 191, 119, .34);
-  border-radius: 23px;
+  border-radius: 28px;
   color: var(--cream-strong);
   background:
-    radial-gradient(circle at 82% 3%, rgba(214, 175, 55, .1), transparent 12rem),
-    linear-gradient(145deg, #103b2e, #061d17 64%, #041510);
+    radial-gradient(circle at 82% 3%, rgba(226, 191, 119, .1), transparent 12rem),
+    linear-gradient(145deg, #0d5743, #07372b 64%, #00120f);
   box-shadow: 0 28px 70px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .04);
 }
 
@@ -194,9 +194,9 @@
   place-items: center;
   margin-bottom: 3px;
   border: 1px solid rgba(226, 191, 119, .3);
-  border-radius: 17px;
+  border-radius: 18px;
   color: var(--gold-bright);
-  background: rgba(214, 175, 55, .08);
+  background: rgba(226, 191, 119, .08);
 }
 
 .reference-profile-modal h2,
@@ -230,8 +230,8 @@
   gap: 9px;
   min-height: 49px;
   padding: 8px 11px;
-  border: 1px solid rgba(214, 175, 55, .17);
-  border-radius: 14px;
+  border: 1px solid rgba(226, 191, 119, .17);
+  border-radius: 18px;
   color: var(--cream);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
@@ -247,8 +247,8 @@
 }
 
 .reference-choice--active {
-  border-color: rgba(232, 199, 122, .47);
-  background: rgba(214, 175, 55, .08);
+  border-color: rgba(242, 215, 154, .47);
+  background: rgba(226, 191, 119, .08);
 }
 
 .reference-settings-toggles > button {
@@ -258,8 +258,8 @@
   justify-content: space-between;
   gap: 10px;
   padding: 9px 11px;
-  border: 1px solid rgba(214, 175, 55, .17);
-  border-radius: 14px;
+  border: 1px solid rgba(226, 191, 119, .17);
+  border-radius: 18px;
   color: var(--cream);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
@@ -297,7 +297,7 @@
   flex: 0 0 auto;
   width: 38px;
   height: 22px;
-  border: 1px solid rgba(214, 175, 55, .2);
+  border: 1px solid rgba(226, 191, 119, .2);
   border-radius: 999px;
   background: rgba(255, 255, 255, .06);
 }
@@ -309,12 +309,12 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: rgba(245, 239, 227, .7);
+  background: rgba(246, 235, 214, .7);
   transition: transform .2s ease, background .2s ease;
 }
 
 .reference-settings-toggles em.is-on {
-  background: rgba(214, 175, 55, .18);
+  background: rgba(226, 191, 119, .18);
 }
 
 .reference-settings-toggles em.is-on i {
