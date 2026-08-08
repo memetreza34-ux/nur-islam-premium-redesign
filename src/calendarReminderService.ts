@@ -24,9 +24,25 @@ type LegacyCalendarEntry = {
 const STORAGE_KEY = 'nur_calendar_entries';
 const FIRED_PREFIX = 'nur_calendar_reminders_fired_';
 const CHECK_INTERVAL_MS = 20_000;
+const REMINDER_GRACE_MINUTES = 5;
 
 function dateKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function timeToMinutes(time: string) {
+  const [hours, minutes] = time.split(':').map(Number);
+  return hours * 60 + minutes;
+}
+
+function isValidDateKey(value: string) {
+  const match = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const candidate = new Date(year, month - 1, day, 12, 0, 0, 0);
+  return candidate.getFullYear() === year && candidate.getMonth() === month - 1 && candidate.getDate() === day;
 }
 
 function normalizeEntry(value: unknown): PersonalCalendarEntry | null {
@@ -37,7 +53,7 @@ function normalizeEntry(value: unknown): PersonalCalendarEntry | null {
   const title = typeof entry.title === 'string' ? entry.title.trim().slice(0, 120) : '';
   const time = typeof entry.time === 'string' ? entry.time : '';
   const reminder = typeof entry.reminder === 'boolean' ? entry.reminder : false;
-  if (!Number.isSafeInteger(id) || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !title || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return null;
+  if (!Number.isSafeInteger(id) || !isValidDateKey(date) || !title || !/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) return null;
   return { id, date, title, time, reminder };
 }
 
@@ -98,10 +114,13 @@ async function showSystemNotification(entry: PersonalCalendarEntry) {
 }
 
 async function checkCalendarReminders(now = new Date()) {
-  if (document.visibilityState === 'hidden') return;
   const today = dateKey(now);
-  const currentTime = `${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
-  const entries = readCalendarEntries().filter((entry) => entry.reminder && entry.date === today && entry.time === currentTime);
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const entries = readCalendarEntries().filter((entry) => {
+    if (!entry.reminder || entry.date !== today) return false;
+    const difference = currentMinutes - timeToMinutes(entry.time);
+    return difference >= 0 && difference <= REMINDER_GRACE_MINUTES;
+  });
   if (!entries.length) return;
 
   const firedKey = `${FIRED_PREFIX}${today}`;
