@@ -10,6 +10,7 @@ import {
   TriangleAlert,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { bootstrapSharedPrayerTimes, loadPrayerLocation, savePrayerLocation } from './prayerTimesService';
 import { PremiumImage, QiblaObject } from './PremiumVisuals';
 
 type Coordinates = {
@@ -29,7 +30,6 @@ type DeviceOrientationEventConstructorWithPermission = typeof DeviceOrientationE
 };
 
 const KAABA: Coordinates = { latitude: 21.4225, longitude: 39.8262 };
-const BERLIN: Coordinates = { latitude: 52.52, longitude: 13.405 };
 
 function toRadians(value: number) {
   return value * Math.PI / 180;
@@ -75,8 +75,10 @@ function getScreenOrientationAngle() {
 }
 
 export function QiblaScreen({ onBack }: { onBack: () => void }) {
-  const [coordinates, setCoordinates] = useState<Coordinates>(BERLIN);
-  const [usingLiveLocation, setUsingLiveLocation] = useState(false);
+  const initialLocation = useMemo(loadPrayerLocation, []);
+  const [coordinates, setCoordinates] = useState<Coordinates>({ latitude: initialLocation.latitude, longitude: initialLocation.longitude });
+  const [usingLiveLocation, setUsingLiveLocation] = useState(initialLocation.source === 'device');
+  const [locationLabel, setLocationLabel] = useState(initialLocation.label);
   const [locating, setLocating] = useState(false);
   const [heading, setHeading] = useState<number | null>(null);
   const [sensorStatus, setSensorStatus] = useState<SensorStatus>('idle');
@@ -176,17 +178,33 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     setLocating(true);
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        setCoordinates({ latitude: position.coords.latitude, longitude: position.coords.longitude });
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        const label = 'Aktueller Gerätestandort';
+        setCoordinates({ latitude, longitude });
         setUsingLiveLocation(true);
+        setLocationLabel(label);
         setLocating(false);
-        flash('Qibla-Richtung wurde für deinen Standort neu berechnet');
+        savePrayerLocation({ latitude, longitude, label, source: 'device' });
+        void bootstrapSharedPrayerTimes();
+        flash('Qibla-Richtung und gemeinsamer Gebetsstandort wurden aktualisiert');
       },
       () => {
         setLocating(false);
-        flash('Standort nicht freigegeben – Berlin bleibt als Standard');
+        flash('Standort nicht freigegeben – der gespeicherte Standort bleibt aktiv');
       },
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 },
     );
+  };
+
+  const openCompassControls = () => {
+    const controls = document.querySelector<HTMLElement>('.reference-qibla-calibration');
+    if (!controls) {
+      flash('Kompass-Einstellungen konnten nicht geöffnet werden');
+      return;
+    }
+    controls.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    window.setTimeout(() => controls.querySelector<HTMLButtonElement>('.reference-calibration-button')?.focus({ preventScroll: true }), 280);
   };
 
   const sensorLabel = sensorStatus === 'active'
@@ -204,7 +222,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>Qibla</h1></div>
-        <button className="icon-button" onClick={() => flash('Standort und Sensor werden ausschließlich auf diesem Gerät verarbeitet')} aria-label="Qibla-Hinweis"><Settings size={20} /></button>
+        <button className="icon-button" onClick={openCompassControls} aria-label="Kompass-Einstellungen öffnen"><Settings size={20} /></button>
       </header>
 
       <section className="reference-qibla-stage">
@@ -220,11 +238,11 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-qibla-location">
         <span className="reference-qibla-location__icon"><MapPin size={20} /></span>
-        <span><small>{usingLiveLocation ? 'Aktueller Standort' : 'Standardstandort'}</small><strong>{usingLiveLocation ? 'Gerätestandort' : 'Berlin, Deutschland'}</strong><em>{usingLiveLocation ? 'Koordinaten nur lokal verarbeitet' : 'Standort noch nicht freigegeben'}</em></span>
+        <span><small>{usingLiveLocation ? 'Gespeicherter Gerätestandort' : 'Standardstandort'}</small><strong>{locationLabel}</strong><em>{usingLiveLocation ? 'Wird auch für gemeinsame Gebetszeiten verwendet' : 'Standort noch nicht freigegeben'}</em></span>
         <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label="Standort aktualisieren" disabled={locating}><LocateFixed size={18} /></button>
       </section>
 
-      <section className="reference-qibla-calibration">
+      <section className="reference-qibla-calibration" tabIndex={-1}>
         <div>
           <span className="overline">Gerätekompass</span>
           <h3>{sensorLabel}</h3>
@@ -242,7 +260,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-qibla-tip">
         <Compass size={20} />
-        <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Standort und Sensordaten verlassen den Browser nicht.</small></span>
+        <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Die Qibla-Berechnung selbst bleibt lokal; der gespeicherte Standort wird nur von den ausdrücklich ausgewiesenen Live-Diensten verwendet.</small></span>
       </section>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
