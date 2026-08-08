@@ -54,12 +54,17 @@ async function copyText(text: string) {
   await navigator.clipboard.writeText(text);
 }
 
-export function DuasScreen({ onBack }: { onBack: () => void }) {
+export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void; initialDuaId?: string | null }) {
+  const initialDua = initialDuaId ? DUA_BY_ID.get(initialDuaId) ?? null : null;
   const [filter, setFilter] = useState<DuaFilter>('all');
   const [query, setQuery] = useState('');
   const [favorites, setFavorites] = useState(() => readStringSet('nur_dua_favorites', ['dua_guidance_1']));
-  const [viewed, setViewed] = useState(() => readStringSet('nur_dua_viewed'));
-  const [selected, setSelected] = useState<DuaEntry | null>(null);
+  const [viewed, setViewed] = useState(() => {
+    const current = readStringSet('nur_dua_viewed');
+    if (initialDua) current.add(initialDua.id);
+    return current;
+  });
+  const [selected, setSelected] = useState<DuaEntry | null>(initialDua);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => writeStringSet('nur_dua_favorites', favorites), [favorites]);
