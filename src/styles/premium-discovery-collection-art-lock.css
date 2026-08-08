@@ -1,0 +1,510 @@
+/* Calendar + Mosque + Collections final art direction. Presentation only. */
+
+/* ---------- Calendar ---------- */
+.reference-calendar-month {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+/* The sun emblem stays decorative and never competes with dates. */
+.reference-calendar-month::after,
+.calendar-month-card::after {
+  z-index: 0 !important;
+  top: -34px !important;
+  right: -30px !important;
+  width: 166px !important;
+  height: 166px !important;
+  opacity: .07 !important;
+  background: url('/premium-assets/high-res-objects/sun-emblem-v2.webp?v=20260806-visual4') center / contain no-repeat !important;
+  filter: saturate(.88) contrast(1.02) !important;
+  pointer-events: none;
+}
+
+.reference-calendar-month > *,
+.calendar-month-card > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-calendar-month .calendar-month-nav {
+  position: relative;
+}
+
+.reference-calendar-month .calendar-month-nav::after {
+  content: '';
+  position: absolute;
+  right: 48px;
+  bottom: -5px;
+  left: 48px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232,199,122,.12), transparent);
+  pointer-events: none;
+}
+
+.reference-calendar-grid {
+  position: relative;
+  z-index: 3;
+}
+
+.reference-calendar-grid .calendar-day {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reference-calendar-grid .calendar-day--selected {
+  text-shadow: 0 1px 0 rgba(255,255,255,.14);
+}
+
+.reference-calendar-event {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-right: 124px !important;
+}
+
+.reference-calendar-event::after,
+.calendar-event-card::after {
+  z-index: 0 !important;
+  right: 10px !important;
+  bottom: 4px !important;
+  width: 112px !important;
+  height: 88px !important;
+  opacity: .54 !important;
+  background: url('/premium-assets/high-res-objects/calendar-chip-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 15px 18px rgba(0,0,0,.34)) saturate(.98) contrast(1.02) !important;
+  pointer-events: none;
+}
+
+.reference-calendar-event::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -38px;
+  bottom: -55px;
+  width: 170px;
+  height: 170px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,199,122,.08), transparent 70%);
+  pointer-events: none;
+}
+
+.reference-calendar-event > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-selected-date {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-selected-date::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -36px;
+  top: -48px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(232,199,122,.035);
+  border-radius: 50%;
+  box-shadow: 0 0 0 18px rgba(232,199,122,.01);
+  pointer-events: none;
+}
+
+.reference-selected-date > * {
+  position: relative;
+  z-index: 2;
+}
+
+.calendar-entry-row {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.calendar-entry-row::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(232,199,122,.36), transparent);
+  opacity: .6;
+  pointer-events: none;
+}
+
+.calendar-entry-row > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Mosque hero ---------- */
+.reference-mosque-hero {
+  isolation: isolate;
+  min-height: 260px !important;
+  background:
+    radial-gradient(circle at 86% 27%, rgba(232,199,122,.13), transparent 13rem),
+    linear-gradient(145deg, #104534 0%, #06281f 59%, #02140f 100%) !important;
+}
+
+.reference-mosque-hero > div {
+  z-index: 4 !important;
+  width: 64% !important;
+  max-width: 272px !important;
+  min-height: 260px !important;
+  padding: 22px !important;
+  background:
+    linear-gradient(90deg, rgba(2,18,14,.98) 0%, rgba(3,25,19,.89) 53%, rgba(3,25,19,.44) 78%, transparent 100%) !important;
+}
+
+.reference-mosque-hero > div h2 {
+  max-width: 220px;
+  text-wrap: balance;
+}
+
+.reference-mosque-hero > div p {
+  max-width: 222px;
+  color: rgba(183,203,193,.78) !important;
+  text-wrap: pretty;
+}
+
+.reference-mosque-hero > .premium-image {
+  z-index: 2 !important;
+  right: -32px !important;
+  bottom: -8px !important;
+  width: 324px !important;
+  height: 246px !important;
+  opacity: .98 !important;
+}
+
+.reference-mosque-hero > .premium-image > img {
+  object-fit: contain !important;
+  object-position: right bottom !important;
+  filter: drop-shadow(0 28px 25px rgba(0,0,0,.49)) saturate(.96) contrast(1.045) !important;
+}
+
+.reference-mosque-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  right: -70px;
+  bottom: -95px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232,199,122,.12), rgba(49,139,103,.05) 45%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+/* ---------- Mosque results ---------- */
+.reference-mosque-live-status,
+.reference-mosque-list--live > button,
+.reference-mosque-detail-modal {
+  position: relative;
+  isolation: isolate;
+}
+
+.reference-mosque-list--live {
+  display: grid;
+  gap: 7px;
+  overflow: visible !important;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.reference-mosque-list--live > button {
+  overflow: hidden;
+  border: 1px solid rgba(232,199,122,.115) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232,199,122,.04), transparent 8rem),
+    linear-gradient(145deg, rgba(9,45,35,.82), rgba(3,22,17,.96)) !important;
+  box-shadow: 0 12px 28px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.018) !important;
+}
+
+.reference-mosque-list--live > button::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -34px;
+  bottom: -43px;
+  width: 105px;
+  height: 105px;
+  border: 1px solid rgba(232,199,122,.025);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.reference-mosque-list--live > button > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-mosque-list__pin {
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.04), 0 8px 16px rgba(0,0,0,.13);
+}
+
+.reference-mosque-distance {
+  color: #efd493 !important;
+  font-variant-numeric: tabular-nums;
+}
+
+.reference-mosque-detail-modal {
+  overflow-x: hidden;
+}
+
+.reference-mosque-detail-modal::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -72px;
+  right: -65px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(232,199,122,.055);
+  border-radius: 50%;
+  box-shadow: 0 0 0 28px rgba(232,199,122,.013), 0 0 0 55px rgba(232,199,122,.007);
+  pointer-events: none;
+}
+
+.reference-mosque-detail-modal > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-mosque-detail-modal__pin {
+  box-shadow: 0 12px 25px rgba(0,0,0,.18), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.reference-mosque-detail-facts span {
+  background: rgba(255,255,255,.021) !important;
+}
+
+/* ---------- Collections ---------- */
+.reference-collection-section {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-collection-section::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -56px;
+  right: -46px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(232,199,122,.028);
+  border-radius: 50%;
+  box-shadow: 0 0 0 23px rgba(232,199,122,.009);
+  pointer-events: none;
+}
+
+.reference-collection-section > * {
+  position: relative;
+  z-index: 2;
+}
+
+/* The first Quran collection gets one real book object; all other collection
+   sections deliberately stay icon-led to avoid decorative repetition. */
+.reference-collection-section:first-of-type::after {
+  top: 3px !important;
+  right: 10px !important;
+  width: 48px !important;
+  height: 78px !important;
+  opacity: .19 !important;
+  background: url('/premium-assets/high-res-objects/bookmark-v2.webp?v=20260806-visual4') center / contain no-repeat !important;
+  filter: drop-shadow(0 10px 13px rgba(0,0,0,.25));
+}
+
+.reference-collection-grid > button {
+  min-height: 108px !important;
+  overflow: hidden;
+  padding-right: 122px !important;
+}
+
+.reference-collection-grid .premium-image {
+  z-index: 1 !important;
+  top: -5px !important;
+  right: -16px !important;
+  width: 145px !important;
+  height: 126px !important;
+  opacity: .83 !important;
+}
+
+.reference-collection-grid .premium-image > img {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 17px 18px rgba(0,0,0,.4)) saturate(1.015) contrast(1.02) !important;
+  transform: rotate(-3deg);
+}
+
+.reference-collection-grid > button > span,
+.reference-collection-grid > button > svg {
+  position: relative;
+  z-index: 3 !important;
+}
+
+.reference-collection-grid > button > span {
+  min-width: 0;
+  max-width: 210px;
+}
+
+.reference-collection-rows > button {
+  position: relative;
+  overflow: hidden;
+}
+
+.reference-collection-rows > button::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(232,199,122,.2), transparent);
+  opacity: .48;
+  pointer-events: none;
+}
+
+.reference-collection-rows > button > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-calendar-month,
+[data-theme='light'] .reference-calendar-event,
+[data-theme='light'] .reference-selected-date,
+[data-theme='light'] .calendar-entry-row,
+[data-theme='light'] .reference-mosque-list--live > button,
+[data-theme='light'] .reference-mosque-detail-modal,
+[data-theme='light'] .reference-collection-section,
+[data-theme='light'] .reference-collection-grid > button,
+[data-theme='light'] .reference-collection-rows > button {
+  color: #17382c;
+}
+
+/* Mosque hero intentionally remains a dark feature surface in Light Theme. */
+[data-theme='light'] .reference-mosque-hero {
+  color: #fff8e9;
+  background:
+    radial-gradient(circle at 86% 27%, rgba(232,199,122,.13), transparent 13rem),
+    linear-gradient(145deg, #104534 0%, #06281f 59%, #02140f 100%) !important;
+}
+
+[data-theme='light'] .reference-mosque-hero h2 {
+  color: #fff8e9 !important;
+}
+
+[data-theme='light'] .reference-mosque-hero p {
+  color: rgba(226,237,230,.76) !important;
+}
+
+[data-theme='light'] .reference-mosque-hero > .premium-image > img {
+  filter: drop-shadow(0 22px 22px rgba(0,0,0,.39)) saturate(.95) contrast(1.035) !important;
+}
+
+[data-theme='light'] .reference-mosque-list--live > button,
+[data-theme='light'] .reference-mosque-detail-modal,
+[data-theme='light'] .reference-collection-section,
+[data-theme='light'] .reference-collection-grid > button,
+[data-theme='light'] .reference-collection-rows > button {
+  background: linear-gradient(145deg, rgba(255,254,249,.99), rgba(244,238,223,.98)) !important;
+  box-shadow: 0 14px 32px rgba(61,46,23,.08), inset 0 1px 0 rgba(255,255,255,.78) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-calendar-event {
+    padding-right: 102px !important;
+  }
+
+  .reference-calendar-event::after,
+  .calendar-event-card::after {
+    right: 5px !important;
+    width: 92px !important;
+    height: 74px !important;
+    opacity: .46 !important;
+  }
+
+  .reference-mosque-hero {
+    min-height: 248px !important;
+  }
+
+  .reference-mosque-hero > div {
+    width: 71% !important;
+    min-height: 248px !important;
+    padding: 19px !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -59px !important;
+    width: 294px !important;
+    height: 225px !important;
+  }
+
+  .reference-collection-grid > button {
+    padding-right: 106px !important;
+  }
+
+  .reference-collection-grid .premium-image {
+    right: -28px !important;
+    width: 130px !important;
+    height: 116px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-calendar-event {
+    padding-right: 84px !important;
+  }
+
+  .reference-calendar-event::after,
+  .calendar-event-card::after {
+    right: -2px !important;
+    width: 80px !important;
+    height: 66px !important;
+    opacity: .4 !important;
+  }
+
+  .reference-mosque-hero > div {
+    width: 79% !important;
+    max-width: 235px !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -86px !important;
+    width: 274px !important;
+    opacity: .89 !important;
+  }
+
+  .reference-collection-grid > button {
+    min-height: 102px !important;
+    padding-right: 92px !important;
+  }
+
+  .reference-collection-grid .premium-image {
+    right: -35px !important;
+    width: 116px !important;
+    height: 106px !important;
+    opacity: .74 !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-mosque-list--live > button,
+  .reference-collection-grid .premium-image > img,
+  .calendar-entry-row,
+  .reference-collection-rows > button {
+    transition: none !important;
+  }
+}
