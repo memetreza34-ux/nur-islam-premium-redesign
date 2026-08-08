@@ -128,9 +128,16 @@ function getElementCoordinates(element: OverpassElement) {
 }
 
 function normalizeWebsite(value: string | undefined) {
-  if (!value) return undefined;
-  if (/^https?:\/\//i.test(value)) return value;
-  return `https://${value}`;
+  const trimmed = value?.trim();
+  if (!trimmed) return undefined;
+  const candidate = /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+  try {
+    const parsed = new URL(candidate);
+    if (parsed.protocol !== 'https:' && parsed.protocol !== 'http:') return undefined;
+    return parsed.toString();
+  } catch {
+    return undefined;
+  }
 }
 
 function normalizeElement(element: OverpassElement, origin: MosqueSearchOrigin): MosqueResult | null {
