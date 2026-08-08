@@ -179,10 +179,13 @@ requireText(calendarService, [
 
 requireText(styles, ["@import './styles/functional-hardening.css';"], 'Style index');
 requireText(hardeningStyles, [
+  '.reference-reader-verse {',
+  'scroll-margin-top: 88px',
+  '.reference-reader-verse.is-active',
   '.reference-chat-message__source',
   '.reference-fasting-reminder-settings',
   '.reference-zakat-calculator',
   '.reference-standby-stage',
 ], 'Functional design layer');
 
-console.log('Functional hardening verified: Home resumes the exact last-read Ayah, Quran bookmarks deep-link to exact Ayat across all Surahs, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
+console.log('Functional hardening verified: Home resumes the exact last-read Ayah, Quran bookmarks deep-link to exact Ayat across all Surahs with a visible target state, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
