@@ -86,6 +86,7 @@
 @import './styles/premium-visual-effects-lock.css';
 @import './styles/premium-art-composition-lock.css';
 @import './styles/premium-brand-entry-art-lock.css';
+@import './styles/premium-artwork-host-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
