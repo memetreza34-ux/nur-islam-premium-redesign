@@ -3,9 +3,10 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
-const [duas, quran, collections, notes, backend] = await Promise.all([
+const [duas, quran, reader, collections, notes, backend] = await Promise.all([
   read('src/DuasScreen.tsx'),
   read('src/QuranScreen.tsx'),
+  read('src/QuranReaderScreen.tsx'),
   read('src/CollectionsScreen.tsx'),
   read('src/NotesScreen.tsx'),
   read('src/nurBackend.ts'),
@@ -27,6 +28,18 @@ for (const requirement of [
   "readNumberSet('nur_quran_surah_favorites')",
 ]) {
   if (!quran.includes(requirement)) throw new Error(`Quran persisted-ID validation is missing: ${requirement}`);
+}
+
+for (const requirement of [
+  'function normalizePositiveInteger(value: unknown, fallback = 1)',
+  "localStorage.getItem('nur_reader_font_size')",
+  'Math.min(48, Math.max(26, Math.round(value)))',
+  'normalizePositiveInteger(value, 0)',
+  'value >= 1 && value <= 114',
+  'ayahNumber <= data.meta.numberOfAyahs',
+  'Math.min(bundle.meta.numberOfAyahs, normalizePositiveInteger(initialAyahNumber))',
+]) {
+  if (!reader.includes(requirement)) throw new Error(`Quran reader persistence validation is missing: ${requirement}`);
 }
 
 for (const requirement of [
@@ -60,4 +73,4 @@ for (const requirement of [
   if (!backend.includes(requirement)) throw new Error(`Cloud backup exclusion is missing: ${requirement}`);
 }
 
-console.log('Persistence integrity verified: empty favorites stay empty, Quran IDs and saved calendar dates are validated, malformed note dates are filtered, and device/ephemeral state is excluded from cloud backups.');
+console.log('Persistence integrity verified: empty favorites stay empty, Quran IDs/reader values and saved calendar dates are validated, malformed note dates are filtered, and device/ephemeral state is excluded from cloud backups.');
