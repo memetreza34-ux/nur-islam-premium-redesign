@@ -90,6 +90,7 @@
 @import './styles/premium-typography-icon-lock.css';
 @import './styles/premium-atmosphere-details-lock.css';
 @import './styles/premium-onboarding-art-lock.css';
+@import './styles/premium-daily-inspiration-art-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
