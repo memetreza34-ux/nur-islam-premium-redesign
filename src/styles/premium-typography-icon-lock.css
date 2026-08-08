@@ -87,6 +87,7 @@
 .arabic-label,
 .arabic-verse,
 .reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'],
 .reference-dua-card__arabic,
 .reference-dua-modal__arabic,
 .reference-name-list__arabic,
@@ -102,15 +103,22 @@
 }
 
 .reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'],
 .reference-dua-card__arabic,
 .reference-dua-modal__arabic,
 .reference-ayah-hero > p[dir='rtl'] {
   line-height: 1.95 !important;
 }
 
-.reference-reader-verse > p[dir='rtl'] {
+.reference-reader-verse > p[dir='rtl'],
+.reference-dhikr-copy > p[dir='rtl'] {
   color: #f6dfad;
   text-shadow: 0 8px 22px rgba(0, 0, 0, .22);
+}
+
+.reference-dhikr-copy > p[dir='rtl'] {
+  margin-block: 2px !important;
+  font-size: clamp(1.62rem, 6.6vw, 2.05rem) !important;
 }
 
 .reference-dua-card__arabic,
@@ -243,6 +251,12 @@ button:disabled:not(.gold-button),
   text-shadow: none;
 }
 
+/* Dhikr counter remains a dark emerald focal surface in both themes. */
+[data-theme='light'] .reference-dhikr-copy > p[dir='rtl'] {
+  color: #f6dfad !important;
+  text-shadow: 0 8px 22px rgba(0, 0, 0, .2);
+}
+
 /* ---------- Narrow phones ---------- */
 @media (max-width: 390px) {
   .premium-home--v2 .welcome-hero__copy h1 {
@@ -263,7 +277,12 @@ button:disabled:not(.gold-button),
     font-size: 1.92rem !important;
   }
 
-  .reference-reader-verse > p[dir='rtl'] {
+  .reference-reader-verse > p[dir='rtl'],
+  .reference-dhikr-copy > p[dir='rtl'] {
     line-height: 1.85 !important;
+  }
+
+  .reference-dhikr-copy > p[dir='rtl'] {
+    font-size: 1.55rem !important;
   }
 }
