@@ -1,0 +1,29 @@
+/* Mobile keyboard focus guardrail. Presentation only. */
+
+.bottom-nav {
+  transition: opacity .18s ease, visibility .18s ease, border-color .18s ease, background .18s ease;
+}
+
+@supports selector(body:has(input:focus)) {
+  @media (pointer: coarse) {
+    body:has(input:focus, textarea:focus) .bottom-nav {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    body:has(.reference-assistant-input input:focus) .reference-assistant-input {
+      bottom: max(10px, env(safe-area-inset-bottom)) !important;
+    }
+
+    body:has(input:focus, textarea:focus) .toast {
+      bottom: max(12px, env(safe-area-inset-bottom)) !important;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav {
+    transition: none !important;
+  }
+}

@@ -103,6 +103,8 @@
 @import './styles/premium-motion-performance-lock.css';
 @import './styles/premium-system-surfaces-lock.css';
 @import './styles/premium-short-viewport-lock.css';
+@import './styles/premium-keyboard-focus-lock.css';
+@import './styles/premium-readable-type-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
@@ -119,4 +121,11 @@
 .brand-lockup,
 .reference-choice--static {
   cursor: default;
+}
+
+/* Lucide React exposes semantic icon classes reliably; keep destructive note actions distinct. */
+.reference-note-editor__heading > button:has(.lucide-trash-2) {
+  border-color: rgba(215, 133, 106, .13) !important;
+  color: #e6ad96 !important;
+  background: rgba(130, 55, 36, .045) !important;
 }
