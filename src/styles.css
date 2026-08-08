@@ -71,6 +71,7 @@
 @import './styles/premium-flow-lock.css';
 @import './styles/premium-depth-lock.css';
 @import './styles/functional-hardening.css';
+@import './styles/functional-legacy-overview.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
