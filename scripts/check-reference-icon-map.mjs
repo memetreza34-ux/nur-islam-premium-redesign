@@ -40,6 +40,12 @@ function requireFragments(source, label, fragments) {
   }
 }
 
+function featureObject(source, id) {
+  const match = source.match(new RegExp(`\\{\\s*id:\\s*'${id}'[\\s\\S]*?\\}`));
+  if (!match) throw new Error(`Legacy feature definition is missing: ${id}`);
+  return match[0];
+}
+
 requireFragments(app, 'Primary navigation', [
   "{ id: 'home', label: 'Start', icon: Home }",
   "{ id: 'prayer', label: 'Gebete', icon: SunMedium }",
@@ -128,34 +134,27 @@ requireFragments(learn, 'Learning controls', [
   '<Compass size={22} />',
 ]);
 
-requireFragments(legacy, 'Legacy feature semantic icons', [
-  "id: 'hadith-library'",
-  'icon: Library',
-  "id: 'knowledge'",
-  'icon: BookOpenCheck',
-  "id: 'prophets'",
-  'icon: Milestone',
-  "id: 'quiz'",
-  'icon: BrainCircuit',
-  "id: 'hajj'",
-  'icon: Mountain',
-  "id: 'sunnah'",
-  'icon: Sparkles',
-  "id: 'sins'",
-  'icon: ShieldCheck',
-  "id: 'fasting'",
-  'icon: MoonStar',
-  "id: 'ummah'",
-  'icon: Globe2',
-  "id: 'places'",
-  'icon: MapPinned',
-  "id: 'jumuah'",
-  'icon: CalendarHeart',
-  "id: 'zakat'",
-  'icon: BadgeDollarSign',
-  "id: 'standby'",
-  'icon: Radio',
-]);
+const legacyIconMap = {
+  'hadith-library': 'Library',
+  knowledge: 'BookOpenCheck',
+  prophets: 'Milestone',
+  quiz: 'BrainCircuit',
+  hajj: 'Mountain',
+  sunnah: 'Sparkles',
+  sins: 'ShieldCheck',
+  fasting: 'MoonStar',
+  ummah: 'Globe2',
+  places: 'MapPinned',
+  jumuah: 'CalendarHeart',
+  zakat: 'BadgeDollarSign',
+  standby: 'Radio',
+};
+for (const [id, icon] of Object.entries(legacyIconMap)) {
+  const definition = featureObject(legacy, id);
+  if (!definition.includes(`icon: ${icon}`)) {
+    throw new Error(`Legacy feature ${id} must keep semantic icon ${icon}.`);
+  }
+}
 
 for (const requirement of [
   'stroke-width: 1.75',
@@ -165,4 +164,4 @@ for (const requirement of [
   if (!iconCss.includes(requirement)) throw new Error(`Reference icon styling is missing: ${requirement}`);
 }
 
-console.log('Reference icon map verified: primary navigation, Home actions, core screen controls and all 13 legacy/additional features use functional semantic icons with uniform 1.75 rounded strokes.');
+console.log('Reference icon map verified: primary navigation, Home actions and core controls are fixed, and all 13 additional features keep exact ID-to-icon pairs with uniform 1.75 rounded strokes.');
