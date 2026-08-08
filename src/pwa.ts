@@ -21,9 +21,7 @@ export function registerNurPwa() {
       }
       if (event.data?.type === 'OPEN_CALENDAR') {
         try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
-        const url = new URL(window.location.href);
-        url.searchParams.set('open', 'calendar');
-        window.location.assign(url.toString());
+        window.dispatchEvent(new Event('nur:open-calendar'));
       }
     });
   }
