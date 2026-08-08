@@ -5,6 +5,7 @@ const root = process.cwd();
 const dataSource = await readFile(resolve(root, 'src/dhikrData.ts'), 'utf8');
 const screenSource = await readFile(resolve(root, 'src/DhikrScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+const hardeningStyles = await readFile(resolve(root, 'src/styles/functional-hardening.css'), 'utf8');
 
 const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|before-sleep|free-counter)'/g)].map((match) => match[1]);
 const uniqueRoutineIds = new Set(routineIds);
@@ -27,13 +28,28 @@ for (const required of [
   'nur_dhikr_active_routine',
   'todayKey()',
   'DHIKR_ROUTINES',
+  'DHIKR_TARGET_BY_KEY',
+  'DHIKR_TARGET_BY_KEY.has(key)',
+  'Math.min(DHIKR_TARGET_BY_KEY.get(key)',
+  'statsOpen',
+  'setStatsOpen(true)',
+  'reference-dhikr-stats-modal',
+  'allRoutineStats',
+  'completedRoutines',
   'reference-dhikr-source',
 ]) {
   if (!screenSource.includes(required)) throw new Error(`Dhikr screen integration is missing: ${required}`);
 }
 
-if (!stylesSource.includes('reference-dhikr-complete.css')) {
-  throw new Error('Complete Dhikr stylesheet is not loaded.');
+if (screenSource.includes("onClick={() => flash(`${totalToday} Wiederholungen heute`)}")) {
+  throw new Error('Dhikr statistics control regressed to a toast-only action.');
 }
 
-console.log(`Dhikr migration verified: ${uniqueRoutineIds.size} routines, ${targetValues.length} sourced or neutral counter steps, daily persistence and styles.`);
+if (!stylesSource.includes('reference-dhikr-complete.css') || !stylesSource.includes('functional-hardening.css')) {
+  throw new Error('Complete Dhikr or functional hardening stylesheet is not loaded.');
+}
+for (const required of ['.reference-dhikr-stats-modal', '.reference-dhikr-stats-summary', '.reference-dhikr-stats-list']) {
+  if (!hardeningStyles.includes(required)) throw new Error(`Dhikr statistics styling is missing: ${required}`);
+}
+
+console.log(`Dhikr verified: ${uniqueRoutineIds.size} routines, ${targetValues.length} sourced or neutral counter steps, valid capped persisted counts, midnight rollover, and a real daily statistics modal.`);
