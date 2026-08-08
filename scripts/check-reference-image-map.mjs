@@ -52,6 +52,12 @@ function requireFragments(source, label, fragments) {
   }
 }
 
+function featureObject(source, id) {
+  const match = source.match(new RegExp(`\\{\\s*id:\\s*'${id}'[\\s\\S]*?\\}`));
+  if (!match) throw new Error(`Legacy feature definition is missing: ${id}`);
+  return match[0];
+}
+
 requireFragments(app, 'Home', [
   'mosque-gold-v2.webp" className="welcome-hero__visual"',
   'quran-closed-v2.webp" fallback={<QuranObject />}',
@@ -111,33 +117,28 @@ requireFragments(more, 'Profile / More', [
   'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
 ]);
 
-requireFragments(legacy, 'Legacy feature artwork', [
-  "id: 'hadith-library'",
-  "art: '/premium-assets/high-res-objects/lantern-v2.webp'",
-  "id: 'knowledge'",
-  "art: '/premium-assets/high-res-objects/quran-open-v2.webp'",
-  "id: 'prophets'",
-  "art: '/premium-assets/high-res-objects/mihrab-v2.webp'",
-  "id: 'quiz'",
-  "art: '/premium-assets/high-res-objects/quran-closed-v2.webp'",
-  "id: 'hajj'",
-  "art: '/premium-assets/high-res-objects/kaaba-v2.webp'",
-  "id: 'sunnah'",
-  "art: '/premium-assets/high-res-objects/sun-emblem-v2.webp'",
-  "id: 'sins'",
-  "art: '/premium-assets/high-res-objects/dome-v2.webp'",
-  "id: 'fasting'",
-  "art: '/premium-assets/high-res-objects/calendar-chip-v2.webp'",
-  "id: 'ummah'",
-  "id: 'places'",
-  "art: '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
-  "id: 'jumuah'",
-  "art: '/premium-assets/high-res-objects/mihrab-arch-v2.webp'",
-  "id: 'zakat'",
-  "art: '/premium-assets/high-res-objects/bookmark-v2.webp'",
-  "id: 'standby'",
-  "art: '/premium-assets/high-res-objects/qibla-compass-v2.webp'",
-]);
+const legacyArtMap = {
+  'hadith-library': 'lantern-v2.webp',
+  knowledge: 'quran-open-v2.webp',
+  prophets: 'mihrab-v2.webp',
+  quiz: 'quran-closed-v2.webp',
+  hajj: 'kaaba-v2.webp',
+  sunnah: 'sun-emblem-v2.webp',
+  sins: 'dome-v2.webp',
+  fasting: 'calendar-chip-v2.webp',
+  ummah: 'dome-v2.webp',
+  places: 'mosque-gold-v2.webp',
+  jumuah: 'mihrab-arch-v2.webp',
+  zakat: 'bookmark-v2.webp',
+  standby: 'qibla-compass-v2.webp',
+};
+for (const [id, filename] of Object.entries(legacyArtMap)) {
+  const definition = featureObject(legacy, id);
+  const expected = `art: '/premium-assets/high-res-objects/${filename}'`;
+  if (!definition.includes(expected)) {
+    throw new Error(`Legacy feature ${id} must keep artwork ${filename}.`);
+  }
+}
 
 requireFragments(reading, 'Daily Ayah and worship guides', [
   'mihrab-arch-v2.webp" className="reference-ayah-hero__art"',
@@ -174,4 +175,12 @@ for (const [source, forbidden, message] of forbiddenPairs) {
   if (source.includes(forbidden)) throw new Error(message);
 }
 
-console.log('Reference image map verified: all primary screens plus the 13 legacy/additional feature areas use their intended premium artwork.');
+const visibleTsx = [app, onboarding, splash, quran, reader, dhikr, qibla, mosque, learn, collections, assistant, more, legacy, reading].join('\n');
+for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'`?\s)]+\.webp)/g)) {
+  const filename = match[1];
+  if (!filename.endsWith('-v2.webp')) {
+    throw new Error(`Visible screen still references a legacy non-v2 WebP asset: ${filename}`);
+  }
+}
+
+console.log('Reference image map verified: primary screens and all 13 additional features keep exact ID-to-artwork pairs, visible TSX uses final -v2 WebPs, and focal artwork cannot silently swap between domains.');
