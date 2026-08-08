@@ -58,6 +58,22 @@ function featureObject(source, id) {
   return match[0];
 }
 
+function cssRule(source, selector) {
+  const selectorIndex = source.indexOf(selector);
+  if (selectorIndex === -1) throw new Error(`Reference CSS selector is missing: ${selector}`);
+  const open = source.indexOf('{', selectorIndex);
+  const close = source.indexOf('}', open);
+  if (open === -1 || close === -1) throw new Error(`Reference CSS rule is malformed: ${selector}`);
+  return source.slice(selectorIndex, close + 1);
+}
+
+function requireCssAsset(source, label, selector, filename) {
+  const rule = cssRule(source, selector);
+  if (!rule.includes(filename)) {
+    throw new Error(`${label} must keep ${filename} on ${selector}.`);
+  }
+}
+
 requireFragments(app, 'Home', [
   'mosque-gold-v2.webp" className="welcome-hero__visual"',
   'quran-closed-v2.webp" fallback={<QuranObject />}',
@@ -146,24 +162,14 @@ requireFragments(reading, 'Daily Ayah and worship guides', [
   ": '/premium-assets/high-res-objects/qibla-compass-v2.webp';",
 ]);
 
-requireFragments(devotionalCss, 'Dua hero', [
-  'dua-hands-v2.webp?v=20260808-release-hardening',
-]);
-
-requireFragments(dailyCss, 'Daily Ayah / Hadith artwork', [
-  'mihrab-arch-v2.webp?v=20260808-release-hardening',
-  'lantern-v2.webp?v=20260808-release-hardening',
-]);
-
-requireFragments(discoveryCss, 'Calendar artwork', [
-  'sun-emblem-v2.webp?v=20260808-release-hardening',
-  'calendar-chip-v2.webp?v=20260808-release-hardening',
-]);
-
-requireFragments(worshipCss, 'Worship artwork', [
-  'dome-v2.webp?v=20260808-release-hardening',
-  'kaaba-v2.webp?v=20260808-release-hardening',
-]);
+requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260808-release-hardening');
+requireCssAsset(dailyCss, 'Daily Ayah', '.reference-ayah-hero::before', 'mihrab-arch-v2.webp?v=20260808-release-hardening');
+requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v2.webp?v=20260808-release-hardening');
+requireCssAsset(discoveryCss, 'Calendar month', '.reference-calendar-month::after', 'sun-emblem-v2.webp?v=20260808-release-hardening');
+requireCssAsset(discoveryCss, 'Calendar event', '.reference-calendar-event::after', 'calendar-chip-v2.webp?v=20260808-release-hardening');
+requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-section:first-of-type::after', 'bookmark-v2.webp?v=20260808-release-hardening');
+requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260808-release-hardening');
+requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260808-release-hardening');
 
 const forbiddenPairs = [
   [dhikr, 'quran-closed-v2.webp', 'Dhikr must not use a Quran cover as its focal image.'],
@@ -183,4 +189,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens and all 13 additional features keep exact ID-to-artwork pairs, visible TSX uses final -v2 WebPs, and focal artwork cannot silently swap between domains.');
+console.log('Reference image map verified: primary screens, all 13 additional features and CSS-driven Prayer/Qibla/Ayah/Hadith/Dua/Calendar artwork keep exact selector-or-ID to asset pairs; visible TSX uses final -v2 WebPs.');
