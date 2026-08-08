@@ -12,11 +12,11 @@ import {
   CircleHelp,
   Cloud,
   Compass,
-  Globe2,
   HandHeart,
   Info,
   Languages,
   Library,
+  LogIn,
   LogOut,
   MapPin,
   MoonStar,
@@ -25,19 +25,28 @@ import {
   RotateCcw,
   Route,
   Settings2,
+  ShieldCheck,
   Smartphone,
   Sparkles,
   SunMedium,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { AccountScreen } from './AccountScreen';
 import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
+import { NotesScreen } from './NotesScreen';
+import { getCachedSession, signOut, subscribeAuth } from './nurBackend';
+import type { NurSession } from './nurBackend';
+import { OBLIGATORY_PRAYER_IDS } from './prayerSchedule';
 import { NurMark, PremiumImage } from './PremiumVisuals';
+import { getTheme, setTheme as applyTheme } from './themeService';
+import type { NurTheme } from './themeService';
 
 export type MoreDestination = 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections';
 
-type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding';
+type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding' | 'support' | 'about';
+type Subscreen = 'account' | 'notes' | null;
 
 type ProfileRow = {
   id: string;
@@ -46,6 +55,7 @@ type ProfileRow = {
   icon: LucideIcon;
   action?: ProfileAction;
   destination?: MoreDestination;
+  subscreen?: Exclude<Subscreen, null>;
 };
 
 type CoreShortcut = {
@@ -54,8 +64,6 @@ type CoreShortcut = {
   description: string;
   icon: LucideIcon;
 };
-
-type ModalMode = ProfileAction | null;
 
 const coreShortcuts: CoreShortcut[] = [
   { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', icon: SunMedium },
@@ -71,31 +79,46 @@ const coreShortcuts: CoreShortcut[] = [
 ];
 
 const journeyRows: ProfileRow[] = [
-  { id: 'journey', title: 'Meine Reise', description: 'Deinen spirituellen Fortschritt ansehen', icon: Route, destination: 'learn' },
+  { id: 'journey', title: 'Meine Reise', description: 'Deinen Lernfortschritt ansehen', icon: Route, destination: 'learn' },
   { id: 'bookmarks', title: 'Lesezeichen', description: 'Gespeicherte Verse und Inhalte', icon: Bookmark, destination: 'collections' },
-  { id: 'notes', title: 'Notizen', description: 'Deine persönlichen Gedanken', icon: NotebookPen },
-  { id: 'reminders', title: 'Erinnerungen', description: 'Gebete und Lernziele verwalten', icon: BellRing, destination: 'prayer' },
+  { id: 'notes', title: 'Notizen', description: 'Lokal oder geschützt in der Cloud', icon: NotebookPen, subscreen: 'notes' },
+  { id: 'reminders', title: 'Erinnerungen', description: 'Gebete direkt verwalten', icon: BellRing, destination: 'prayer' },
 ];
 
 const preferenceRows: ProfileRow[] = [
-  { id: 'appearance', title: 'Erscheinungsbild', description: 'Darstellung der App auswählen', icon: Palette, action: 'appearance' },
-  { id: 'language', title: 'Sprache', description: 'Bevorzugte Sprache festlegen', icon: Languages, action: 'language' },
-  { id: 'settings', title: 'Einstellungen', description: 'App-Einstellungen verwalten', icon: Settings2, action: 'settings' },
+  { id: 'appearance', title: 'Erscheinungsbild', description: 'Dunkel, hell oder System', icon: Palette, action: 'appearance' },
+  { id: 'language', title: 'Sprache', description: 'Aktuell vollständig: Deutsch', icon: Languages, action: 'language' },
+  { id: 'settings', title: 'Einstellungen', description: 'Reminder, Konto und Cloud', icon: Settings2, action: 'settings' },
 ];
 
 const supportRows: ProfileRow[] = [
   { id: 'onboarding', title: 'Einführung wiederholen', description: 'Premium-Einstieg erneut ansehen', icon: RotateCcw, action: 'onboarding' },
-  { id: 'help', title: 'Hilfe & Support', description: 'Hilfe erhalten und Kontakt aufnehmen', icon: CircleHelp },
-  { id: 'about', title: 'Über Nur', description: 'Mehr über die App erfahren', icon: Info },
+  { id: 'help', title: 'Hilfe & Datenschutz', description: 'Datenquellen und lokale Speicherung', icon: CircleHelp, action: 'support' },
+  { id: 'about', title: 'Über Nur', description: 'Version und Produktprinzipien', icon: Info, action: 'about' },
 ];
 
-function readStored<T>(key: string, fallback: T): T {
+function readReminderEnabled() {
   try {
-    const value = localStorage.getItem(key);
-    return value ? JSON.parse(value) as T : fallback;
+    const parsed = JSON.parse(localStorage.getItem('nur_prayer_notifications') || '[]') as unknown;
+    return Array.isArray(parsed) && parsed.length > 0;
   } catch {
-    return fallback;
+    return false;
   }
+}
+
+function readUserName(session: NurSession | null) {
+  try {
+    const current = localStorage.getItem('nur_display_name')?.trim();
+    if (current) return current;
+    const legacy = localStorage.getItem('premium_user_name');
+    if (legacy) {
+      const parsed = JSON.parse(legacy) as unknown;
+      if (typeof parsed === 'string' && parsed.trim()) return parsed.trim();
+    }
+  } catch {
+    // Use account email or neutral fallback.
+  }
+  return session?.user.email.split('@')[0] || 'Nur Nutzer';
 }
 
 function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: ProfileRow) => void }) {
@@ -115,72 +138,82 @@ function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: P
   );
 }
 
-export function MoreScreen({
-  onBack,
-  onNavigate,
-}: {
-  onBack: () => void;
-  onNavigate: (destination: MoreDestination) => void;
-}) {
-  const [modal, setModal] = useState<ModalMode>(null);
+export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavigate: (destination: MoreDestination) => void }) {
+  const [modal, setModal] = useState<ProfileAction | null>(null);
+  const [subscreen, setSubscreen] = useState<Subscreen>(null);
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
-  const [theme, setTheme] = useState(() => readStored('premium_theme', 'Dunkel'));
-  const [language, setLanguage] = useState(() => readStored('premium_language', 'Deutsch'));
-  const [notifications, setNotifications] = useState(() => readStored('premium_prayer_notifications', true));
-  const [cloudSync, setCloudSync] = useState(() => readStored('premium_cloud_sync', false));
+  const [theme, setThemeState] = useState<NurTheme>(() => getTheme());
+  const [notifications, setNotifications] = useState(readReminderEnabled);
+  const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [toast, setToast] = useState<string | null>(null);
-  const userName = readStored('premium_user_name', 'Nur Nutzer');
+  const userName = readUserName(session);
+
+  useEffect(() => subscribeAuth(setSession), []);
 
   const initials = useMemo(() => {
     const clean = userName.trim();
     return clean ? clean.slice(0, 2).toUpperCase() : 'NI';
   }, [userName]);
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('premium_theme', JSON.stringify(theme));
-      localStorage.setItem('premium_language', JSON.stringify(language));
-      localStorage.setItem('premium_prayer_notifications', JSON.stringify(notifications));
-      localStorage.setItem('premium_cloud_sync', JSON.stringify(cloudSync));
-    } catch {
-      // Local persistence remains optional in restricted browser modes.
-    }
-  }, [theme, language, notifications, cloudSync]);
-
   const flash = (message: string) => {
     setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+    window.setTimeout(() => setToast(null), 2400);
   };
 
   const selectRow = (row: ProfileRow) => {
-    if (row.destination) {
-      onNavigate(row.destination);
-      return;
-    }
+    if (row.destination) return onNavigate(row.destination);
+    if (row.subscreen) return setSubscreen(row.subscreen);
     if (row.action) setModal(row.action);
-    else flash(`${row.title} ist noch nicht als eigener Bereich verbunden`);
   };
 
-  const closeOrApplyModal = () => {
-    if (modal === 'onboarding') {
-      try {
-        localStorage.removeItem('nur_onboarding_complete');
-      } finally {
-        window.location.reload();
-      }
+  const chooseTheme = (next: NurTheme) => {
+    setThemeState(next);
+    applyTheme(next);
+    flash('Erscheinungsbild gespeichert');
+  };
+
+  const toggleNotifications = async () => {
+    if (notifications) {
+      try { localStorage.setItem('nur_prayer_notifications', '[]'); } catch { /* optional */ }
+      setNotifications(false);
+      flash('Gebetserinnerungen ausgeschaltet');
       return;
     }
 
-    setModal(null);
-    flash('Einstellung gespeichert');
+    if (!('Notification' in window)) {
+      flash('Systembenachrichtigungen werden auf diesem Gerät nicht unterstützt');
+      return;
+    }
+    const permission = Notification.permission === 'granted' ? 'granted' : await Notification.requestPermission();
+    if (permission !== 'granted') {
+      flash('Benachrichtigungen wurden nicht freigegeben');
+      return;
+    }
+    try { localStorage.setItem('nur_prayer_notifications', JSON.stringify(OBLIGATORY_PRAYER_IDS)); } catch { /* optional */ }
+    setNotifications(true);
+    flash('Alle fünf Pflichtgebete sind für Erinnerungen aktiviert');
   };
 
-  if (legacyFeature) {
-    return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
-  }
+  const repeatOnboarding = () => {
+    try { localStorage.removeItem('nur_onboarding_complete'); } finally { window.location.reload(); }
+  };
+
+  const logout = async () => {
+    if (!session) {
+      setSubscreen('account');
+      return;
+    }
+    await signOut();
+    setSession(null);
+    flash('Abgemeldet. Lokale Daten bleiben auf diesem Gerät erhalten.');
+  };
+
+  if (subscreen === 'account') return <AccountScreen onBack={() => setSubscreen(null)} />;
+  if (subscreen === 'notes') return <NotesScreen onBack={() => setSubscreen(null)} onOpenAccount={() => setSubscreen('account')} />;
+  if (legacyFeature) return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
 
   return (
-    <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .42, ease: [0.22, 1, .36, 1] }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">Profil & Einstellungen</span><h1>Mehr</h1></div>
@@ -189,9 +222,15 @@ export function MoreScreen({
 
       <section className="reference-profile-greeting">
         <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" fallback={<NurMark />} /></span>
-        <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>Möge Allah deine Bemühungen annehmen und dich stets im Guten leiten.</p></div>
+        <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Nur Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
         <span className="reference-profile-avatar">{initials}</span>
       </section>
+
+      <button className="reference-account-entry" onClick={() => setSubscreen('account')}>
+        <span>{session ? <Cloud size={20} /> : <LogIn size={20} />}</span>
+        <span><strong>{session ? 'Nur Cloud verbunden' : 'Konto & Cloud'}</strong><small>{session ? session.user.email : 'Anmelden, registrieren und Fortschritt sichern'}</small></span>
+        <ChevronRight size={18} />
+      </button>
 
       <section className="reference-profile-section reference-core-access">
         <div className="reference-core-access__heading"><span className="reference-profile-section__label">Direktzugriff</span><small>Alle zentralen Bereiche ohne Umwege</small></div>
@@ -199,14 +238,7 @@ export function MoreScreen({
           {coreShortcuts.map((shortcut, index) => {
             const Icon = shortcut.icon;
             return (
-              <motion.button
-                key={shortcut.destination}
-                onClick={() => onNavigate(shortcut.destination)}
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: Math.min(index * .025, .18) }}
-                whileTap={{ scale: .98 }}
-              >
+              <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .025, .18) }} whileTap={{ scale: .98 }}>
                 <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
                 <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
                 <ChevronRight size={16} />
@@ -220,19 +252,12 @@ export function MoreScreen({
 
       <section className="reference-profile-section reference-services-section">
         <span className="reference-profile-section__label">Islamische Dienste</span>
-        <p className="reference-services-section__intro">Die wichtigen Zusatzfunktionen der alten App bleiben erhalten und folgen jetzt dem neuen Premium-Aufbau.</p>
+        <p className="reference-services-section__intro">Zusatzfunktionen aus dem bisherigen Funktionsumfang im gemeinsamen Premium-Aufbau.</p>
         <div className="reference-services-grid">
           {serviceLegacyFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <motion.button
-                key={feature.id}
-                onClick={() => setLegacyFeature(feature.id)}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * .035 }}
-                whileTap={{ scale: .98 }}
-              >
+              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .035 }} whileTap={{ scale: .98 }}>
                 <span className="reference-services-grid__icon"><Icon size={21} /></span>
                 <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
                 <ChevronRight size={17} />
@@ -245,7 +270,7 @@ export function MoreScreen({
       <section className="reference-profile-section"><span className="reference-profile-section__label">Personalisierung</span><ProfileList rows={preferenceRows} onSelect={selectRow} /></section>
       <section className="reference-profile-section"><span className="reference-profile-section__label">Informationen</span><ProfileList rows={supportRows} onSelect={selectRow} /></section>
 
-      <button className="reference-profile-logout" onClick={() => flash('Du bleibst lokal angemeldet, bis Firebase verbunden wird')}><LogOut size={18} /> Abmelden</button>
+      <button className="reference-profile-logout" onClick={() => void logout()}>{session ? <><LogOut size={18} /> Abmelden</> : <><LogIn size={18} /> Konto öffnen</>}</button>
 
       <AnimatePresence>
         {modal ? (
@@ -255,45 +280,57 @@ export function MoreScreen({
 
               {modal === 'appearance' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><Palette size={28} /></span><span className="overline">Personalisierung</span><h2>Erscheinungsbild</h2><p>Das dunkle Smaragd-Design bleibt die Hauptdarstellung der Premium-App.</p>
+                  <span className="reference-profile-modal__icon"><Palette size={28} /></span><span className="overline">Personalisierung</span><h2>Erscheinungsbild</h2><p>Die Auswahl wird sofort auf die App angewendet und auf diesem Gerät gespeichert.</p>
                   <div className="reference-choice-grid">
-                    {[
-                      ['Dunkel', MoonStar],
-                      ['System', Smartphone],
-                      ['Hell', SunMedium],
-                    ].map(([label, Icon]) => {
-                      const ChoiceIcon = Icon as LucideIcon;
-                      return <button key={label as string} className={theme === label ? 'reference-choice reference-choice--active' : 'reference-choice'} onClick={() => setTheme(label as string)}><ChoiceIcon size={20} /><span>{label as string}</span>{theme === label ? <CircleCheck size={16} /> : null}</button>;
-                    })}
+                    {([
+                      ['dark', 'Dunkel', MoonStar],
+                      ['system', 'System', Smartphone],
+                      ['light', 'Hell', SunMedium],
+                    ] as const).map(([value, label, Icon]) => <button key={value} className={theme === value ? 'reference-choice reference-choice--active' : 'reference-choice'} onClick={() => chooseTheme(value)}><Icon size={20} /><span>{label}</span>{theme === value ? <CircleCheck size={16} /> : null}</button>)}
                   </div>
                 </>
               ) : null}
 
               {modal === 'language' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><Languages size={28} /></span><span className="overline">App-Sprache</span><h2>Sprache</h2><p>Wähle die Sprache für Navigation und Inhalte.</p>
-                  <div className="reference-choice-grid">{['Deutsch', 'Arabisch', 'Englisch'].map((item) => <button key={item} className={language === item ? 'reference-choice reference-choice--active' : 'reference-choice'} onClick={() => setLanguage(item)}><Globe2 size={20} /><span>{item}</span>{language === item ? <CircleCheck size={16} /> : null}</button>)}</div>
+                  <span className="reference-profile-modal__icon"><Languages size={28} /></span><span className="overline">App-Sprache</span><h2>Deutsch</h2><p>Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache. Arabisch und Englisch werden erst freigeschaltet, wenn Navigation und religiöse Inhalte vollständig übersetzt und geprüft sind.</p>
+                  <div className="reference-choice-grid"><button className="reference-choice reference-choice--active"><Languages size={20} /><span>Deutsch</span><CircleCheck size={16} /></button></div>
                 </>
               ) : null}
 
               {modal === 'settings' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><Settings2 size={28} /></span><span className="overline">App-Einstellungen</span><h2>Einstellungen</h2><p>Die wichtigsten Funktionen bleiben direkt erreichbar.</p>
+                  <span className="reference-profile-modal__icon"><Settings2 size={28} /></span><span className="overline">App-Einstellungen</span><h2>Einstellungen</h2><p>Diese Schalter sind direkt mit den aktiven Funktionen verbunden.</p>
                   <div className="reference-settings-toggles">
-                    <button onClick={() => setNotifications((value) => !value)}><span><BellRing size={19} /><span><strong>Gebetserinnerungen</strong><small>Benachrichtigungen zu Gebetszeiten</small></span></span><em className={notifications ? 'is-on' : ''}><i /></em></button>
-                    <button onClick={() => setCloudSync((value) => !value)}><span><Cloud size={19} /><span><strong>Cloud-Synchronisierung</strong><small>Fortschritt und Favoriten sichern</small></span></span><em className={cloudSync ? 'is-on' : ''}><i /></em></button>
+                    <button onClick={() => void toggleNotifications()}><span><BellRing size={19} /><span><strong>Gebetserinnerungen</strong><small>{notifications ? 'Mindestens ein Gebet ist aktiv' : 'Keine Gebetserinnerungen aktiv'}</small></span></span><em className={notifications ? 'is-on' : ''}><i /></em></button>
+                    <button onClick={() => { setModal(null); setSubscreen('account'); }}><span><Cloud size={19} /><span><strong>Cloud-Synchronisierung</strong><small>{session ? 'Konto verbunden · Backup verwalten' : 'Konto erforderlich'}</small></span></span><ChevronRight size={18} /></button>
                   </div>
                 </>
               ) : null}
 
               {modal === 'onboarding' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><RotateCcw size={28} /></span><span className="overline">App-Einführung</span><h2>Einführung wiederholen</h2><p>Die App startet neu und zeigt anschließend wieder alle drei Premium-Einstiegsseiten inklusive Standort- und Erinnerungsoptionen.</p>
-                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Deine Termine bleiben gespeichert</span><span><CircleCheck size={16} /> Gebets-Tracker bleibt erhalten</span><span><CircleCheck size={16} /> Nur die Einführung wird zurückgesetzt</span></div>
+                  <span className="reference-profile-modal__icon"><RotateCcw size={28} /></span><span className="overline">App-Einführung</span><h2>Einführung wiederholen</h2><p>Nur der Onboarding-Status wird zurückgesetzt. Tracker, Favoriten, Termine und Notizen bleiben erhalten.</p>
+                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Termine bleiben erhalten</span><span><CircleCheck size={16} /> Gebets-Tracker bleibt erhalten</span><span><CircleCheck size={16} /> Nur die Einführung startet neu</span></div>
+                  <button className="gold-button" onClick={repeatOnboarding}>Einführung starten <RotateCcw size={17} /></button>
                 </>
               ) : null}
 
-              <button className="gold-button" onClick={closeOrApplyModal}>{modal === 'onboarding' ? 'Einführung starten' : 'Fertig'} {modal === 'onboarding' ? <RotateCcw size={17} /> : <CircleCheck size={17} />}</button>
+              {modal === 'support' ? (
+                <>
+                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung werden Koordinaten für Gebetszeiten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen. Quran-Suren außerhalb des festen Offline-Bestands werden bei Bedarf von Al Quran Cloud geladen.</p>
+                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Cloud nur nach Anmeldung und bewusster Sicherung</span><span><CircleCheck size={16} /> Keine Werbe-Tracker im App-Code</span><span><CircleCheck size={16} /> Religiöse Hinweise ersetzen keine Fatwa</span></div>
+                </>
+              ) : null}
+
+              {modal === 'about' ? (
+                <>
+                  <span className="reference-profile-modal__icon"><Info size={28} /></span><span className="overline">Nur Islam</span><h2>Premium-App</h2><p>Nur bündelt Gebetszeiten, Quran, Dhikr, Qibla, Duas, Lernen, Moschee-Suche und persönliche Fortschritte in einer ruhigen Oberfläche. Quellen und Unsicherheiten werden sichtbar gekennzeichnet.</p>
+                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> React + TypeScript + PWA</span><span><CircleCheck size={16} /> Supabase Auth und RLS-geschützte Cloud</span><span><CircleCheck size={16} /> Lokaler Offline-First-Ansatz</span></div>
+                </>
+              ) : null}
+
+              {modal !== 'onboarding' ? <button className="gold-button" onClick={() => setModal(null)}>Fertig <CircleCheck size={17} /></button> : null}
             </motion.section>
           </motion.div>
         ) : null}
