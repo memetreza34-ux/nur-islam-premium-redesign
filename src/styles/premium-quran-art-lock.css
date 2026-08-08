@@ -1,0 +1,222 @@
+/* Quran-specific final art direction. Presentation only. */
+
+/* ---------- Continue hero ---------- */
+.reference-quran-continue {
+  isolation: isolate;
+  min-height: 224px !important;
+}
+
+.reference-quran-continue::after {
+  z-index: 1;
+  background:
+    linear-gradient(90deg, rgba(249, 242, 228, .99) 0%, rgba(245, 232, 206, .94) 48%, rgba(235, 211, 169, .28) 74%, rgba(226, 199, 147, .08) 100%) !important;
+}
+
+.reference-quran-continue__copy {
+  z-index: 3 !important;
+  width: 61% !important;
+  padding: 21px 18px 21px 20px !important;
+}
+
+.reference-quran-continue__copy h2 {
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.reference-quran-continue__book {
+  z-index: 2 !important;
+  right: -20px !important;
+  bottom: -14px !important;
+  width: 216px !important;
+  height: 202px !important;
+  overflow: visible;
+  transform: rotate(-4deg) !important;
+}
+
+.reference-quran-continue__book::before {
+  inset: 14% 8% 9% !important;
+  background: radial-gradient(circle, rgba(175, 121, 42, .13), transparent 72%) !important;
+}
+
+.reference-quran-continue__book > img {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 20px 18px rgba(68, 40, 8, .29)) saturate(1.015) contrast(1.02) !important;
+}
+
+/* ---------- Surah catalog Arabic ---------- */
+.reference-quran-list__arabic,
+.reference-quran-verse > p[dir='rtl'] {
+  font-family: Amiri, 'Noto Naskh Arabic', serif !important;
+  font-synthesis: none;
+  letter-spacing: 0 !important;
+  text-rendering: optimizeLegibility;
+}
+
+.reference-quran-list__arabic {
+  color: #f0d494 !important;
+  line-height: 1.35;
+}
+
+.reference-quran-list--catalog > article {
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.reference-quran-list--catalog > article:has(.reference-quran-favorite.is-active) {
+  background: linear-gradient(90deg, rgba(232, 199, 122, .028), transparent 48%);
+}
+
+/* ---------- Daily Ayah card ---------- */
+.reference-quran-verse {
+  isolation: isolate;
+  min-height: 236px !important;
+  border-color: rgba(167, 119, 43, .24) !important;
+  background:
+    radial-gradient(circle at 73% 27%, rgba(255,255,255,.36), transparent 10rem),
+    linear-gradient(135deg, #f5ecdc 0%, #e9d2a5 100%) !important;
+}
+
+/* Override the legacy mosque-gold.png decoration with the current Mihrab art. */
+.reference-quran-verse::after {
+  z-index: 0 !important;
+  right: -22px !important;
+  bottom: -35px !important;
+  width: 205px !important;
+  height: 222px !important;
+  opacity: .14 !important;
+  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260806-visual4') center bottom / contain no-repeat !important;
+  filter: sepia(.12) saturate(.82) contrast(1.04) !important;
+  pointer-events: none;
+}
+
+.reference-quran-verse::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -60px;
+  bottom: -75px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(166, 118, 42, .09), transparent 70%);
+  pointer-events: none;
+}
+
+.reference-quran-verse > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-quran-verse__shade {
+  z-index: 1 !important;
+  background:
+    linear-gradient(90deg, rgba(248, 240, 224, .72) 0%, rgba(245, 232, 206, .43) 55%, transparent 100%) !important;
+}
+
+.reference-quran-verse > p[dir='rtl'] {
+  margin-block: 3px !important;
+  color: #183a2f !important;
+  font-size: clamp(1.72rem, 7.4vw, 2.2rem) !important;
+  line-height: 1.8 !important;
+  text-shadow: 0 5px 16px rgba(104, 71, 27, .07);
+}
+
+.reference-quran-verse blockquote {
+  max-width: 280px;
+  color: rgba(29, 52, 43, .77) !important;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.reference-quran-verse__action {
+  border-color: rgba(105, 78, 32, .13) !important;
+  background: rgba(255, 255, 255, .25) !important;
+  backdrop-filter: blur(7px);
+}
+
+/* ---------- Reader hero ---------- */
+.reference-reader-hero {
+  isolation: isolate;
+}
+
+.reference-reader-hero > .premium-image {
+  right: -2px !important;
+  bottom: 10px !important;
+  width: 158px !important;
+  height: 148px !important;
+}
+
+.reference-reader-hero > .premium-image > img {
+  transform: rotate(-2deg) scale(.98) !important;
+  filter: drop-shadow(0 22px 20px rgba(0, 0, 0, .44)) saturate(1.01) contrast(1.03) !important;
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-quran-list__arabic {
+  color: #6c5224 !important;
+}
+
+/* Continue and daily-Ayah heroes intentionally retain warm cream surfaces. */
+[data-theme='light'] .reference-quran-continue__book > img {
+  filter: drop-shadow(0 17px 16px rgba(82, 57, 20, .18)) saturate(.97) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-quran-continue {
+    min-height: 214px !important;
+  }
+
+  .reference-quran-continue__copy {
+    width: 64% !important;
+    padding-left: 17px !important;
+  }
+
+  .reference-quran-continue__book {
+    right: -33px !important;
+    bottom: -16px !important;
+    width: 198px !important;
+    height: 190px !important;
+  }
+
+  .reference-quran-verse::after {
+    right: -42px !important;
+    width: 188px !important;
+    height: 204px !important;
+    opacity: .12 !important;
+  }
+
+  .reference-reader-hero > .premium-image {
+    right: -16px !important;
+    width: 146px !important;
+    height: 140px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-quran-continue__copy {
+    width: 69% !important;
+  }
+
+  .reference-quran-continue__book {
+    right: -48px !important;
+    width: 184px !important;
+    height: 178px !important;
+  }
+
+  .reference-quran-list__arabic {
+    font-size: .75rem !important;
+  }
+
+  .reference-quran-verse > p[dir='rtl'] {
+    font-size: 1.58rem !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-quran-continue__book > img,
+  .reference-reader-hero > .premium-image > img,
+  .reference-quran-list--catalog > article {
+    transition: none !important;
+  }
+}
