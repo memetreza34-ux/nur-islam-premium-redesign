@@ -102,6 +102,7 @@
 @import './styles/premium-mobile-modal-input-lock.css';
 @import './styles/premium-motion-performance-lock.css';
 @import './styles/premium-system-surfaces-lock.css';
+@import './styles/premium-short-viewport-lock.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
