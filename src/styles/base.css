@@ -1,26 +1,26 @@
 :root {
   color-scheme: dark;
   font-family: Inter, system-ui, sans-serif;
-  background: #031c16;
-  color: #f7ecd8;
+  background: #001b16;
+  color: #f6ebd6;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --bg-deep: #021510;
-  --bg: #031c16;
-  --surface: rgba(7, 53, 41, 0.76);
+  --bg-deep: #00120f;
+  --bg: #001b16;
+  --surface: rgba(7, 55, 43, 0.82);
   --gold: #e2bf77;
-  --gold-bright: #f4daa0;
+  --gold-bright: #f2d79a;
   --gold-dark: #8d6d39;
-  --cream: #f7ecd8;
-  --cream-strong: #fff7e8;
+  --cream: #f6ebd6;
+  --cream-strong: #fff8ea;
   --muted: #b9b09f;
   --muted-green: #91a89e;
   --line: rgba(226, 191, 119, 0.22);
   --line-strong: rgba(226, 191, 119, 0.42);
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
   --shadow-soft: 0 16px 38px rgba(0, 0, 0, 0.24);
-  --radius-xl: 34px;
-  --radius-lg: 26px;
+  --radius-xl: 42px;
+  --radius-lg: 28px;
 }
 
 * { box-sizing: border-box; }
@@ -35,9 +35,9 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   min-height: 100vh;
   overflow: hidden;
   background:
-    radial-gradient(circle at 18% 2%, rgba(41, 139, 99, 0.28), transparent 25rem),
+    radial-gradient(circle at 18% 2%, rgba(13, 87, 67, 0.34), transparent 25rem),
     radial-gradient(circle at 88% 18%, rgba(226, 191, 119, 0.12), transparent 22rem),
-    linear-gradient(180deg, #06251c 0%, #031c16 48%, #01100d 100%);
+    linear-gradient(180deg, #042a21 0%, #001b16 48%, #00120f 100%);
 }
 
 .app-background::before {
@@ -73,7 +73,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 .screen { display: grid; gap: 22px; }
 .glass-card {
   border: 1px solid var(--line);
-  background: linear-gradient(145deg, rgba(15, 73, 56, 0.75), rgba(3, 29, 23, 0.82));
+  background: linear-gradient(145deg, rgba(13, 87, 67, 0.68), rgba(7, 55, 43, 0.76));
   box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.045);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
@@ -96,7 +96,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   justify-content: space-between;
   gap: 14px;
   padding: 18px;
-  border-radius: 24px;
+  border-radius: 28px;
 }
 
 .topbar h1,
@@ -117,7 +117,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   padding: 7px 10px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 999px;
-  color: rgba(247, 236, 216, 0.78);
+  color: rgba(246, 235, 214, 0.78);
   background: rgba(255, 255, 255, 0.045);
   font-size: 0.68rem;
   font-weight: 600;
@@ -135,7 +135,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   cursor: pointer;
   transition: 180ms ease;
 }
-.icon-button { width: 42px; height: 42px; border-radius: 15px; }
+.icon-button { width: 42px; height: 42px; border-radius: 18px; }
 .icon-button:hover,
 .play-button:hover,
 .card-title-row button:hover {
@@ -190,7 +190,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   place-items: center;
   margin-bottom: 8px;
   border: 1px solid var(--line-strong);
-  border-radius: 30px;
+  border-radius: 28px;
   color: var(--gold-bright);
   background: rgba(226, 191, 119, 0.08);
 }

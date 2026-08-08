@@ -1,5 +1,5 @@
 const VISUAL_VERSION = '20260808-release-hardening';
-const CACHE_NAME = `nur-islam-premium-v12-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v13-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
@@ -41,7 +41,7 @@ const APP_SHELL = [
 
 function offlineDocument() {
   return new Response(
-    '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#071b15"><title>Nur Islam · Offline</title><style>html,body{margin:0;min-height:100%;background:#020b08;color:#fff7e8;font-family:system-ui,sans-serif}body{display:grid;min-height:100vh;place-items:center;padding:24px;box-sizing:border-box}.card{max-width:360px;padding:28px;border:1px solid rgba(232,199,122,.3);border-radius:24px;background:linear-gradient(145deg,#103b2e,#051813);text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.45)}h1{font-family:Georgia,serif;font-size:2rem;margin:0 0 10px}p{color:#9aae9f;font-size:.9rem;line-height:1.6;margin:0 0 18px}button{min-height:44px;padding:0 18px;border:0;border-radius:13px;background:linear-gradient(135deg,#efd394,#c9953a);color:#10251e;font-weight:700}</style></head><body><main class="card"><h1>Nur Islam ist offline</h1><p>Gespeicherte Inhalte stehen nach dem ersten vollständigen Laden weiterhin zur Verfügung. Prüfe deine Verbindung und versuche es erneut.</p><button onclick="location.reload()">Erneut versuchen</button></main></body></html>',
+    '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#001b16"><title>Nur Islam · Offline</title><style>html,body{margin:0;min-height:100%;background:#00120f;color:#fff8ea;font-family:system-ui,sans-serif}body{display:grid;min-height:100vh;place-items:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 0%,rgba(226,191,119,.08),transparent 18rem),linear-gradient(180deg,#042a21 0%,#001b16 48%,#00120f 100%)}.card{max-width:360px;padding:28px;border:1px solid rgba(226,191,119,.3);border-radius:28px;background:linear-gradient(145deg,rgba(13,87,67,.92),rgba(0,27,22,.98));text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.42)}h1{font-family:Georgia,serif;font-size:2rem;margin:0 0 10px;color:#fff8ea}p{color:#91a89e;font-size:.9rem;line-height:1.6;margin:0 0 18px}button{min-height:44px;padding:0 18px;border:1px solid rgba(226,191,119,.35);border-radius:18px;background:linear-gradient(135deg,#f2d79a,#e2bf77);color:#10251e;font-weight:700}</style></head><body><main class="card"><h1>Nur Islam ist offline</h1><p>Gespeicherte Inhalte stehen nach dem ersten vollständigen Laden weiterhin zur Verfügung. Prüfe deine Verbindung und versuche es erneut.</p><button onclick="location.reload()">Erneut versuchen</button></main></body></html>',
     { headers: { 'Content-Type': 'text/html; charset=utf-8' }, status: 503 },
   );
 }

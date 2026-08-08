@@ -7,6 +7,8 @@ const chain = String(scripts.check ?? '');
 
 const requiredChecks = [
   'assets:check',
+  'image-map:check',
+  'icon-map:check',
   'deployment:check',
   'visual:check',
   'navigation:check',
@@ -49,4 +51,4 @@ if (lintIndex < 0 || buildIndex < 0 || lintIndex > buildIndex) {
   throw new Error('npm run check must finish with TypeScript lint before the production build.');
 }
 
-console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired, critical gates are present, and lint/build remain final.`);
+console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired, reference image/icon gates are critical, and lint/build remain final.`);

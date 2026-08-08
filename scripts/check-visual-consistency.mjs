@@ -16,6 +16,7 @@ async function collectFiles(directory, extensions) {
 
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const guardrails = await readFile(resolve(root, 'src/styles/visual-consistency.css'), 'utf8');
+const geometryLock = await readFile(resolve(root, 'src/styles/premium-reference-geometry-lock.css'), 'utf8');
 const moreHubStyles = await readFile(resolve(root, 'src/styles/reference-more-hub.css'), 'utf8');
 const base = await readFile(resolve(root, 'src/styles/base.css'), 'utf8');
 const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'utf8');
@@ -27,6 +28,7 @@ const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
 const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
+const geometryImport = "@import './styles/premium-reference-geometry-lock.css';";
 // Layers may load after the shared guardrails, but only as a declared kind of
 // layer: a premium `-lock`/`-pass` art layer, a functional hardening layer, or
 // one of the named originals. Anything else is an unnamed sheet quietly
@@ -49,6 +51,10 @@ if (guardrailIndex === -1) {
 if (guardrailIndex < styleIndex.indexOf("@import './styles/touch-target-consistency.css';")) {
   throw new Error('The visual consistency layer must load after the shared polish layers.');
 }
+const geometryIndex = styleIndex.indexOf(geometryImport);
+if (geometryIndex === -1 || geometryIndex < styleIndex.indexOf("@import './styles/premium-readable-type-lock.css';")) {
+  throw new Error('The final reference geometry lock must load after all other premium visual layers.');
+}
 const lateLayers = [...styleIndex.slice(guardrailIndex + guardrailImport.length).matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
 for (const layer of lateLayers) {
@@ -66,15 +72,31 @@ if (styleIndex.includes('premium-artwork-host-lock.css') || main.includes('Refer
   throw new Error('The obsolete fixed artwork host must remain removed; artwork is integrated per screen.');
 }
 
+const requiredPalette = [
+  'background: #001b16',
+  '--bg-deep: #00120f',
+  '--bg: #001b16',
+  '--gold: #e2bf77',
+  '--gold-bright: #f2d79a',
+  '--cream: #f6ebd6',
+  '--cream-strong: #fff8ea',
+  'linear-gradient(180deg, #042a21 0%, #001b16 48%, #00120f 100%)',
+];
+for (const token of requiredPalette) {
+  if (!base.includes(token)) throw new Error(`Reference dark palette token is missing: ${token}`);
+}
+
 const requiredGuardrails = [
   '--app-content-width: 430px',
   '--tap-target: 44px',
-  '--radius-card: 18px',
-  '--radius-hero: 24px',
+  '--radius-control: 18px',
+  '--radius-card: 28px',
+  '--radius-hero: 42px',
   '--icon-stroke: 1.75',
   'grid-template-columns: var(--tap-target) minmax(0, 1fr) var(--tap-target)',
   'width: var(--tap-target) !important',
   'min-height: 72px',
+  'border-radius: 26px',
   '.app-shell',
   'z-index: 3',
   'stroke-width: var(--icon-stroke)',
@@ -90,6 +112,20 @@ const requiredGuardrails = [
 for (const requirement of requiredGuardrails) {
   if (!guardrails.includes(requirement)) {
     throw new Error(`Visual guardrail is missing: ${requirement}`);
+  }
+}
+
+for (const requirement of [
+  'border-radius: 42px !important',
+  'border-radius: 28px !important',
+  'border-radius: 18px !important',
+  '.bottom-nav',
+  'border-radius: 26px !important',
+  '.bottom-nav__item > span',
+  'border-radius: 13px !important',
+]) {
+  if (!geometryLock.includes(requirement)) {
+    throw new Error(`Final reference geometry lock is incomplete: ${requirement}`);
   }
 }
 
@@ -111,6 +147,14 @@ if (!base.includes('button:focus-visible') || !guardrails.includes('a:focus-visi
 if (!navigation.includes('.bottom-nav') || !viewport.includes('env(safe-area-inset-bottom)')) {
   throw new Error('Bottom navigation or safe-area handling is missing.');
 }
+for (const requirement of [
+  'color: rgba(246, 235, 214, 0.64)',
+  'color: #f2d79a',
+  'vector-effect: non-scaling-stroke',
+  'box-shadow: 0 0 20px rgba(226, 191, 119, 0.17)',
+]) {
+  if (!navigation.includes(requirement)) throw new Error(`Reference navigation icon state is missing: ${requirement}`);
+}
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');
 }
@@ -131,14 +175,23 @@ for (const requirement of requiredImageBehavior) {
 }
 
 const navigationItems = [
-  "{ id: 'home', label: 'Home'",
+  "{ id: 'home', label: 'Start'",
   "{ id: 'prayer', label: 'Gebete'",
   "{ id: 'calendar', label: 'Kalender'",
-  "{ id: 'learn', label: 'Lernen'",
+  "{ id: 'learn', label: 'Islam verstehen'",
   "{ id: 'profile', label: 'Mehr'",
 ];
 for (const item of navigationItems) {
   if (!app.includes(item)) throw new Error(`Bottom navigation item is missing: ${item}`);
+}
+if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
+  throw new Error('Bottom navigation must expose the active page semantically.');
+}
+if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {
+  throw new Error('Home daily Ayah card must use the Mihrab artwork from the reference composition.');
+}
+if (!app.includes("onNavigate('prayer')") || !app.includes('<BellRing size={20} />')) {
+  throw new Error('Home header must keep the reference notification icon connected to the real prayer/reminder screen.');
 }
 
 const moreDestinations = ['prayer', 'learn', 'quran', 'dhikr', 'qibla', 'duas', 'names', 'mosques', 'calendar', 'collections'];
@@ -185,6 +238,7 @@ const allSource = sourceContents.join('\n');
 const forbiddenImageRules = [
   /\.premium-image\s*>\s*img\s*\{[^}]*display\s*:\s*none\s*!important/si,
   /\.premium-image\s*>\s*img\s*\{[^}]*opacity\s*:\s*0\s*!important/si,
+  /\.premium-image[^{}]*>\s*img\s*\{[^}]*content\s*:\s*url\s*\(/si,
   /(?:\.welcome-hero__visual|\.reference-mosque-hero\s*>\s*\.premium-image|\.reference-dhikr-counter__tasbih|\.reference-qibla-stage__compass)[^{]*>\s*img[^{]*\{[^}]*opacity\s*:\s*0(?:\s*!important)?\s*;/si,
 ];
 for (const pattern of forbiddenImageRules) {
@@ -222,5 +276,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final 18/28/42 geometry lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );

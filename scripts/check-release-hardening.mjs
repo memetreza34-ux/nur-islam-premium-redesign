@@ -169,18 +169,31 @@ requireText(main, [
 forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
 requireText(pwa, [
   'OPEN_CALENDAR',
-  '12-20260808-release-hardening',
+  '13-20260808-release-hardening',
   "window.dispatchEvent(new Event('nur:open-calendar'))",
 ], 'PWA registration');
 forbidText(pwa, ["url.searchParams.set('open', 'calendar')", 'window.location.assign(url.toString())'], 'PWA registration');
-requireText(sw, ['OPEN_CALENDAR', "event.notification.data?.target === 'calendar'", 'nur-islam-premium-v12'], 'Service worker');
+requireText(sw, [
+  'OPEN_CALENDAR',
+  "event.notification.data?.target === 'calendar'",
+  'nur-islam-premium-v13',
+  'meta name="theme-color" content="#001b16"',
+  'background:#00120f',
+  'border-radius:28px',
+  'border-radius:18px',
+], 'Service worker');
 
-requireText(theme, ["export type NurTheme = 'dark' | 'light' | 'system'", 'dataset.theme', 'prefers-color-scheme: light'], 'Theme service');
-requireText(styles, ["@import './styles/release-hardening.css';"], 'Style index');
+requireText(theme, [
+  "export type NurTheme = 'dark' | 'light' | 'system'",
+  'dataset.theme',
+  'prefers-color-scheme: light',
+  "resolved === 'light' ? '#f2eadc' : '#001b16'",
+], 'Theme service');
+requireText(styles, ["@import './styles/release-hardening.css';", "@import './styles/premium-reference-geometry-lock.css';"], 'Style index');
 requireText(releaseStyles, ["html[data-theme='light']", '.reference-account-screen', '.reference-notes-screen'], 'Release styles');
 
 if (html.includes('maximum-scale=1')) throw new Error('Viewport still blocks user zoom.');
-requireText(html, ['viewport-fit=cover', 'color-scheme" content="dark light'], 'HTML accessibility');
+requireText(html, ['viewport-fit=cover', 'color-scheme" content="dark light', 'meta name="theme-color" content="#001b16"'], 'HTML accessibility/reference shell');
 
 requireText(migration, [
   'create table if not exists public.nur_islam_profiles',
@@ -195,4 +208,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log('Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant calendar reminders with direct no-reload routing, functional themes, PWA routing and accessibility.');
+console.log('Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v13 shell/colors, direct routing and accessibility.');

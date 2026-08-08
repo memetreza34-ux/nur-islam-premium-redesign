@@ -38,7 +38,7 @@ export function applyTheme(theme: NurTheme) {
   document.documentElement.dataset.themePreference = theme;
   document.documentElement.style.colorScheme = resolved;
   const themeMeta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
-  if (themeMeta) themeMeta.content = resolved === 'light' ? '#f2eadc' : '#071b15';
+  if (themeMeta) themeMeta.content = resolved === 'light' ? '#f2eadc' : '#001b16';
 }
 
 export function setTheme(theme: NurTheme) {

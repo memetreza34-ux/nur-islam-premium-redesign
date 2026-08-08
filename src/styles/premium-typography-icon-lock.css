@@ -177,24 +177,15 @@
 .reference-collection-rows svg,
 .reference-learning-course-screen svg,
 .reference-prayer-course-screen svg,
-.reference-guide-screen svg {
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-.icon-button > svg,
-.bottom-nav__item svg,
-.reference-screen-header svg {
-  stroke-width: 1.8;
-}
-
-.quick-card__icon > svg,
+.reference-guide-screen svg,
 .reference-category-card__icon > svg,
 .reference-core-access-grid__icon > svg,
 .reference-profile-row__icon > svg,
 .reference-services-grid__icon > svg,
 .reference-expanded-learning-grid__icon > svg {
-  stroke-width: 1.7;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 /* ---------- Section separators ---------- */

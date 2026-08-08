@@ -224,7 +224,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       </header>
 
       <section className="reference-profile-greeting">
-        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem.webp" fallback={<NurMark />} /></span>
+        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} /></span>
         <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Nur Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
         <span className="reference-profile-avatar">{initials}</span>
       </section>

@@ -3,9 +3,9 @@
   --layout-inline: 14px;
   --layout-gap: 16px;
   --tap-target: 44px;
-  --radius-control: 13px;
-  --radius-card: 18px;
-  --radius-hero: 24px;
+  --radius-control: 18px;
+  --radius-card: 28px;
+  --radius-hero: 42px;
   --icon-stroke: 1.75;
   --focus-ring: rgba(244, 218, 160, .9);
 }
@@ -145,19 +145,19 @@ textarea:focus-visible {
 .bottom-nav {
   min-height: 72px;
   padding: 7px 8px;
-  border-radius: 22px;
+  border-radius: 26px;
 }
 
 .bottom-nav__item {
   min-height: 56px;
   gap: 4px;
-  border-radius: 14px;
+  border-radius: 18px;
 }
 
 .bottom-nav__item > span {
-  width: 32px;
-  height: 32px;
-  border-radius: 10px;
+  width: 37px;
+  height: 37px;
+  border-radius: 13px;
 }
 
 .bottom-nav__item small {

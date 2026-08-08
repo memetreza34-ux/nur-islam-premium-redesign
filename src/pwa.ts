@@ -1,7 +1,7 @@
 import { resolveAppPath } from './appPaths';
 import { queuePendingNavigation } from './pendingNavigation';
 
-const SERVICE_WORKER_VERSION = '12-20260808-release-hardening';
+const SERVICE_WORKER_VERSION = '13-20260808-release-hardening';
 
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches

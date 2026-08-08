@@ -3,25 +3,25 @@
   <desc id="desc">Goldenes Nur-Emblem mit Halbmond und Stern auf tiefem Smaragd</desc>
   <defs>
     <radialGradient id="app-bg" cx="34%" cy="22%" r="92%">
-      <stop offset="0" stop-color="#18513f"/>
-      <stop offset="0.48" stop-color="#092b21"/>
-      <stop offset="1" stop-color="#020b08"/>
+      <stop offset="0" stop-color="#042a21"/>
+      <stop offset="0.48" stop-color="#001b16"/>
+      <stop offset="1" stop-color="#00120f"/>
     </radialGradient>
     <radialGradient id="mark-green" cx="42%" cy="32%" r="78%">
-      <stop offset="0" stop-color="#1d604a"/>
-      <stop offset="0.55" stop-color="#0b3529"/>
-      <stop offset="1" stop-color="#041b15"/>
+      <stop offset="0" stop-color="#0d5743"/>
+      <stop offset="0.55" stop-color="#0a4637"/>
+      <stop offset="1" stop-color="#07372b"/>
     </radialGradient>
     <linearGradient id="mark-gold" x1="120" y1="108" x2="397" y2="406" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#fff2c9"/>
-      <stop offset="0.42" stop-color="#e9c87f"/>
-      <stop offset="0.72" stop-color="#c59642"/>
-      <stop offset="1" stop-color="#8a6124"/>
+      <stop offset="0" stop-color="#fff8ea"/>
+      <stop offset="0.42" stop-color="#f2d79a"/>
+      <stop offset="0.72" stop-color="#e2bf77"/>
+      <stop offset="1" stop-color="#8d6d39"/>
     </linearGradient>
     <radialGradient id="halo" cx="50%" cy="50%" r="50%">
-      <stop offset="0" stop-color="#f1cf82" stop-opacity=".22"/>
-      <stop offset=".5" stop-color="#d6aa53" stop-opacity=".08"/>
-      <stop offset="1" stop-color="#d6aa53" stop-opacity="0"/>
+      <stop offset="0" stop-color="#f2d79a" stop-opacity=".22"/>
+      <stop offset=".5" stop-color="#e2bf77" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#e2bf77" stop-opacity="0"/>
     </radialGradient>
     <filter id="soft-shadow" x="-45%" y="-45%" width="190%" height="190%">
       <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#000000" flood-opacity=".38"/>
@@ -35,8 +35,8 @@
   <!-- Full-bleed background is intentional so the same asset stays safe when
        Android/iOS apply their own circle, squircle or rounded mask. -->
   <rect width="512" height="512" fill="url(#app-bg)"/>
-  <circle cx="256" cy="256" r="216" fill="none" stroke="#e8c77e" stroke-width="2" opacity=".11"/>
-  <circle cx="256" cy="256" r="188" fill="none" stroke="#e8c77e" stroke-width="1.5" opacity=".08"/>
+  <circle cx="256" cy="256" r="216" fill="none" stroke="#e2bf77" stroke-width="2" opacity=".11"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="#e2bf77" stroke-width="1.5" opacity=".08"/>
   <circle cx="256" cy="256" r="178" fill="url(#halo)"/>
 
   <g transform="translate(112 112) scale(3)" filter="url(#soft-shadow)">
@@ -44,9 +44,9 @@
       fill="url(#mark-green)" stroke="url(#mark-gold)" stroke-width="5.5" stroke-linejoin="round"/>
     <path d="M58 31a20 20 0 1 0 2 32 18 18 0 1 1-2-32Z" fill="url(#mark-gold)"/>
     <path d="m63 34 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9Z"
-      fill="#fff5d8" filter="url(#small-glow)"/>
+      fill="#fff8ea" filter="url(#small-glow)"/>
   </g>
 
-  <circle cx="256" cy="256" r="145" fill="none" stroke="#fff1c2" stroke-width="1.5" opacity=".09"/>
-  <path d="M139 418c70 25 164 25 234 0" fill="none" stroke="#e4bf70" stroke-width="2" stroke-linecap="round" opacity=".12"/>
+  <circle cx="256" cy="256" r="145" fill="none" stroke="#f2d79a" stroke-width="1.5" opacity=".09"/>
+  <path d="M139 418c70 25 164 25 234 0" fill="none" stroke="#e2bf77" stroke-width="2" stroke-linecap="round" opacity=".12"/>
 </svg>
