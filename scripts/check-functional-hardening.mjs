@@ -4,10 +4,11 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [app, assistant, reader, legacy, collections, duas, names, calendar, styles, hardeningStyles, calendarService] = await Promise.all([
+const [app, assistant, reader, readingScreens, legacy, collections, duas, names, calendar, styles, hardeningStyles, calendarService] = await Promise.all([
   read('src/App.tsx'),
   read('src/AssistantScreen.tsx'),
   read('src/QuranReaderScreen.tsx'),
+  read('src/ReferenceReadingScreens.tsx'),
   read('src/LegacyFeatureScreens.tsx'),
   read('src/CollectionsScreen.tsx'),
   read('src/DuasScreen.tsx'),
@@ -123,6 +124,30 @@ forbidText(reader, [
   'geprüften Rezitationsquelle aktiviert',
 ], 'Quran reader controls');
 
+requireText(readingScreens, [
+  'async function copyText',
+  'async function shareOrCopy',
+  "navigator.share({ title, text })",
+  "localStorage.setItem('nur_daily_ayah_saved'",
+  "localStorage.setItem('nur_daily_hadith_saved'",
+  'copyAyah',
+  'shareAyah',
+  'shareHadith',
+  'completeGuide',
+  'nur_guide_${mode}_complete',
+], 'Daily content and worship guide actions');
+forbidText(readingScreens, [
+  'setPlaying',
+  '<Headphones',
+  "flash('Ayah kopiert')}",
+  "flash('Teilen geöffnet')}",
+  "flash('Hadith teilen geöffnet')}",
+  'export function QuranReaderScreen',
+  'Leseeinstellungen geöffnet',
+  'Hadith-Einstellungen geöffnet',
+  'Lerneinstellungen geöffnet',
+], 'Daily content and worship guide actions');
+
 requireText(legacy, [
   'readCalendarEntries',
   'writeCalendarEntries',
@@ -151,4 +176,4 @@ requireText(hardeningStyles, [
   '.reference-standby-stage',
 ], 'Functional design layer');
 
-console.log('Functional hardening verified: Home uses stored progress, collection items route to exact saved content, assistant answers only from local sourced topics, dead Quran audio UI is removed, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, and standby uses live prayer data with fullscreen support.');
+console.log('Functional hardening verified: Home uses stored progress, collection items route to exact saved content, assistant answers only from local sourced topics, Quran controls are real, daily Ayah/Hadith copy/share actions use browser APIs, fasting reminders use the shared scheduler, Zakat has a transparent planning calculator, standby uses live prayer data with fullscreen support, and worship-guide completion is persisted.');
