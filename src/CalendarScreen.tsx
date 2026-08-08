@@ -17,6 +17,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
+import { getHijriDay, getHijriLabel } from './hijriCalendar';
 
 type CalendarEvent = {
   title: string;
@@ -66,23 +67,6 @@ function getMonthData(offset: number) {
   for (let day = 1; day <= daysInMonth; day += 1) cells.push(day);
   while (cells.length < 42) cells.push(null);
   return { first, year, month, daysInMonth, cells };
-}
-
-function getHijriLabel(date: Date) {
-  try {
-    return new Intl.DateTimeFormat('de-DE-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
-  } catch {
-    return 'Islamisches Datum';
-  }
-}
-
-function getHijriDay(date: Date) {
-  try {
-    const parts = new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric' }).formatToParts(date);
-    return Number(parts.find((part) => part.type === 'day')?.value ?? 0);
-  } catch {
-    return 0;
-  }
 }
 
 function getCalendarEvent(date: Date): CalendarEvent | null {

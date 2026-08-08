@@ -35,6 +35,7 @@ import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { MoreScreen } from './MoreScreen';
 import { NamesScreen } from './NamesScreen';
 import { OnboardingScreen } from './OnboardingScreen';
+import { getHijriLabel } from './hijriCalendar';
 import { consumePendingNavigation } from './pendingNavigation';
 import type { PendingNavigationIntent } from './pendingNavigation';
 import { PrayerScreen } from './PrayerScreen';
@@ -118,15 +119,7 @@ function getLegacyFeatureId(tab: LegacyTab) {
 }
 
 function getIslamicDate(date = new Date()) {
-  try {
-    return new Intl.DateTimeFormat('de-DE-u-ca-islamic', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric',
-    }).format(date);
-  } catch {
-    return 'Islamischer Kalender';
-  }
+  return getHijriLabel(date, 'Islamischer Kalender');
 }
 
 function getHomeGreeting(date: Date) {

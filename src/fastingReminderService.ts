@@ -1,5 +1,6 @@
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
+import { getHijriDay } from './hijriCalendar';
 
 const FASTING_ENABLED_KEY = 'nur_fasting_reminders';
 const FASTING_TIME_KEY = 'nur_fasting_reminder_time';
@@ -36,15 +37,6 @@ function readJsonValue<T>(key: string, fallback: T): T {
 function readReminderTime() {
   const value = readJsonValue(FASTING_TIME_KEY, '20:00');
   return typeof value === 'string' && /^([01]\d|2[0-3]):[0-5]\d$/.test(value) ? value : '20:00';
-}
-
-function getHijriDay(date: Date) {
-  try {
-    const parts = new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric' }).formatToParts(date);
-    return Number(parts.find((part) => part.type === 'day')?.value ?? 0);
-  } catch {
-    return 0;
-  }
 }
 
 function managedIdFor(fastingDate: Date) {
