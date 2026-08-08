@@ -1,0 +1,125 @@
+/* Real-device typography floor. Presentation only.
+   Prevents legacy 7–8px metadata from looking like mockup text on phones. */
+
+:root {
+  --nur-caption-size: .625rem; /* 10px at the default browser root */
+  --nur-support-size: .6875rem; /* 11px */
+  --nur-body-small-size: .72rem;
+}
+
+/* Compact labels stay compact, but no longer microscopic. */
+.reference-screen-header .overline,
+.section-heading .overline,
+.hero-pill,
+.reference-quran-availability,
+.reference-dua-card__top > span,
+.reference-quiz-card > small,
+.reference-account-hero small,
+.reference-quran-results small,
+.reference-dhikr-copy .overline {
+  font-size: var(--nur-caption-size) !important;
+  line-height: 1.3;
+}
+
+/* Repeated list/card metadata. */
+.reference-core-access-grid small,
+.reference-services-grid small,
+.reference-profile-row__copy small,
+.reference-account-entry small,
+.reference-collection-rows small,
+.reference-quran-list__copy small,
+.reference-quran-library-status small,
+.reference-quran-library-status em,
+.reference-dua-progress small,
+.reference-dua-progress em,
+.reference-dua-card footer small,
+.reference-dua-viewed,
+.reference-name-progress small,
+.reference-name-progress em,
+.reference-name-list__copy small,
+.reference-mosque-live-status small,
+.reference-mosque-list small,
+.reference-qibla-location small,
+.reference-qibla-location em,
+.reference-dhikr-goal p,
+.reference-dhikr-copy small,
+.reference-calendar-event__source,
+.reference-notes-storage small,
+.reference-notes-list > button small,
+.reference-chat-message__source,
+.reference-account-security small,
+.reference-account-security em,
+.reference-reader-source small,
+.reference-source-card small,
+.reference-learning-sources__notice,
+.reference-legacy-notice p {
+  font-size: var(--nur-support-size) !important;
+  line-height: 1.45 !important;
+}
+
+/* General explanatory text inside prominent functional surfaces. */
+.reference-prayer-location-privacy,
+.reference-qibla-stage__copy p,
+.reference-assistant-safety small,
+.reference-account-hero p,
+.reference-assistant-greeting p,
+.reference-mosque-hero p,
+.reference-duas-hero p,
+.reference-names-hero p,
+.reference-onboarding__copy p,
+.reference-system-error p {
+  font-size: var(--nur-body-small-size) !important;
+  line-height: 1.55 !important;
+}
+
+/* Tiny counters should remain visually secondary but legible. */
+.prayer-mini-times small,
+.reference-quran-results span,
+.reference-name-list__number,
+.reference-quran-list__number,
+.reference-calendar-grid .calendar-day em,
+.reference-dhikr-ring small {
+  font-size: var(--nur-caption-size) !important;
+}
+
+/* Give text room rather than clipping it after increasing readability. */
+.reference-core-access-grid small,
+.reference-services-grid small,
+.reference-account-entry small,
+.reference-quran-library-status em,
+.reference-mosque-live-status small,
+.reference-notes-storage small {
+  white-space: normal;
+  overflow: visible;
+  text-overflow: clip;
+}
+
+/* Dense Quran/Name lists keep one-line titles, while metadata may wrap once. */
+.reference-quran-list__copy small,
+.reference-name-list__copy small {
+  white-space: normal !important;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden !important;
+}
+
+@media (max-width: 350px) {
+  :root {
+    --nur-caption-size: .6rem;
+    --nur-support-size: .65rem;
+    --nur-body-small-size: .69rem;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .reference-core-access-grid small,
+  .reference-services-grid small,
+  .reference-profile-row__copy small,
+  .reference-collection-rows small,
+  .reference-quran-list__copy small,
+  .reference-name-list__copy small,
+  .reference-notes-list > button small {
+    opacity: 1 !important;
+  }
+}
