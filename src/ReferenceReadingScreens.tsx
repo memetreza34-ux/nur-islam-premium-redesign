@@ -117,7 +117,7 @@ export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
       <ScreenHeader title="Ayah des Tages" eyebrow="Tägliche Inspiration" onBack={onBack} />
 
       <section className="reference-ayah-hero">
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold.webp" className="reference-ayah-hero__art" fallback={<Sparkles size={72} />} />
+        <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="reference-ayah-hero__art" fallback={<Sparkles size={72} />} />
         <span className="hero-pill">Sure Al-Ikhlas · 112:1</span>
         <p dir="rtl">{DAILY_AYAH_ARABIC}</p>
         <blockquote>{DAILY_AYAH_MEANING}</blockquote>
@@ -206,8 +206,8 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
   };
 
   const heroAsset = mode === 'wudu'
-    ? '/premium-assets/high-res-objects/mosque-gold.webp'
-    : '/premium-assets/high-res-objects/qibla-compass.webp';
+    ? '/premium-assets/high-res-objects/mosque-gold-v2.webp'
+    : '/premium-assets/high-res-objects/qibla-compass-v2.webp';
 
   return (
     <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
