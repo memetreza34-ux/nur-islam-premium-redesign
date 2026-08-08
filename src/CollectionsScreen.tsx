@@ -13,9 +13,8 @@ import { AnimatePresence, motion } from 'motion/react';
 import { DUA_BY_ID } from './duaData';
 import { NAMES_OF_ALLAH } from './namesOfAllahData';
 import { PremiumImage, QuranObject } from './PremiumVisuals';
-import { OFFLINE_QURAN_SURAHS } from './quranService';
 
-const offlineSurahLabels: Record<number, string> = {
+const knownSurahLabels: Record<number, string> = {
   1: 'Al-Faatiha',
   112: 'Al-Ikhlaas',
   113: 'Al-Falaq',
@@ -97,10 +96,10 @@ function readBoolean(key: string) {
 }
 
 function readQuranBookmarkGroups() {
-  return OFFLINE_QURAN_SURAHS
+  return Array.from({ length: 114 }, (_, index) => index + 1)
     .map((surahNumber) => ({
       surahNumber,
-      label: offlineSurahLabels[surahNumber] ?? `Sure ${surahNumber}`,
+      label: knownSurahLabels[surahNumber] ?? `Sure ${surahNumber}`,
       bookmarks: readNumberSet(`nur_quran_bookmarks_${surahNumber}`),
     }))
     .filter((group) => group.bookmarks.size > 0);
@@ -110,22 +109,22 @@ type CollectionsScreenProps = {
   onBack: () => void;
   onOpenQuran: () => void;
   onOpenReader: (surahNumber: number) => void;
-  onOpenDuas: () => void;
-  onOpenNames: () => void;
+  onOpenDua: (id: string) => void;
+  onOpenName: (id: string) => void;
   onOpenAyah: () => void;
   onOpenHadith: () => void;
-  onOpenCalendar: () => void;
+  onOpenCalendarDate: (date: string) => void;
 };
 
 export function CollectionsScreen({
   onBack,
   onOpenQuran,
   onOpenReader,
-  onOpenDuas,
-  onOpenNames,
+  onOpenDua,
+  onOpenName,
   onOpenAyah,
   onOpenHadith,
-  onOpenCalendar,
+  onOpenCalendarDate,
 }: CollectionsScreenProps) {
   const [filter, setFilter] = useState('Alle');
   const [toast, setToast] = useState<string | null>(null);
@@ -192,7 +191,7 @@ export function CollectionsScreen({
             {[...quranSurahFavorites].map((surahNumber) => (
               <button key={`favorite-${surahNumber}`} onClick={() => onOpenReader(surahNumber)}>
                 <span><Sparkles size={18} /></span>
-                <span><strong>{offlineSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span>
+                <span><strong>{knownSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span>
                 <ChevronRight size={17} />
               </button>
             ))}
@@ -208,7 +207,7 @@ export function CollectionsScreen({
               const dua = DUA_BY_ID.get(id);
               if (!dua) return null;
               return (
-                <button key={id} onClick={onOpenDuas} aria-label={`${dua.title} in Duas öffnen`}>
+                <button key={id} onClick={() => onOpenDua(id)} aria-label={`${dua.title} direkt öffnen`}>
                   <span><Sparkles size={18} /></span><span><strong>{dua.title}</strong><small>{dua.source}</small></span><ChevronRight size={17} />
                 </button>
               );
@@ -225,7 +224,7 @@ export function CollectionsScreen({
               const name = NAMES_OF_ALLAH.find((entry) => String(entry.id) === id);
               if (!name) return null;
               return (
-                <button key={id} onClick={onOpenNames} aria-label={`${name.latin} in den 99 Namen öffnen`}>
+                <button key={id} onClick={() => onOpenName(id)} aria-label={`${name.latin} direkt öffnen`}>
                   <span><Sparkles size={18} /></span><span><strong>{name.latin}</strong><small>{name.meaning}</small></span><ChevronRight size={17} />
                 </button>
               );
@@ -249,7 +248,7 @@ export function CollectionsScreen({
           <div className="section-heading"><div><span className="overline">Kalender</span><h2>Gespeicherte Tage</h2></div></div>
           <div className="reference-collection-rows">
             {[...calendarFavorites].map((date) => (
-              <button key={date} onClick={onOpenCalendar}>
+              <button key={date} onClick={() => onOpenCalendarDate(date)}>
                 <span><CalendarDays size={18} /></span>
                 <span><strong>{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${date}T12:00:00`))}</strong><small>Islamischer Kalenderhinweis</small></span>
                 <ChevronRight size={17} />
