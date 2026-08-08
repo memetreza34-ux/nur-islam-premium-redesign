@@ -1,0 +1,615 @@
+/* Final visual asset art direction.
+   Presentation only: no behavior, navigation, persistence, data or event logic.
+   This file intentionally sits at the end of the cascade so every real image
+   has one consistent fit, crop, shadow and visual role across the product. */
+
+:root {
+  --art-gold-glow: rgba(239, 205, 132, .2);
+  --art-emerald-glow: rgba(49, 139, 103, .16);
+  --art-object-shadow: drop-shadow(0 18px 22px rgba(0, 0, 0, .4));
+  --art-object-shadow-soft: drop-shadow(0 12px 16px rgba(0, 0, 0, .3));
+  --art-object-shadow-strong: drop-shadow(0 25px 28px rgba(0, 0, 0, .5));
+}
+
+/* ---------- Universal image renderer ---------- */
+.premium-image {
+  position: relative;
+  isolation: isolate;
+  min-width: 0;
+  min-height: 0;
+  transform: translateZ(0);
+}
+
+.premium-image > img,
+.premium-image > .premium-image__fallback,
+.premium-image > .premium-image__fallback > svg {
+  width: 100%;
+  height: 100%;
+}
+
+.premium-image > img {
+  display: block !important;
+  max-width: none;
+  object-fit: contain;
+  object-position: center;
+  image-rendering: auto;
+  backface-visibility: hidden;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+
+.premium-image > img:not([hidden]) {
+  opacity: 1 !important;
+}
+
+.premium-image > .premium-image__fallback > svg {
+  overflow: visible;
+  filter: var(--art-object-shadow-soft);
+}
+
+/* ---------- Brand artwork ---------- */
+.brand-lockup__mark,
+.ai-preview__mark,
+.reference-profile-greeting__logo,
+.reference-install-prompt__logo {
+  isolation: isolate;
+}
+
+.brand-lockup__mark::before,
+.ai-preview__mark::before,
+.reference-profile-greeting__logo::before,
+.reference-install-prompt__logo::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 218, 160, .19), transparent 70%);
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.brand-lockup__mark > img,
+.ai-preview__mark > img,
+.reference-profile-greeting__logo > img,
+.reference-install-prompt__logo > img {
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 8px 13px rgba(0, 0, 0, .32)) saturate(1.03) contrast(1.03) !important;
+}
+
+/* ---------- Home hero ---------- */
+.premium-home--v2 .welcome-hero {
+  isolation: isolate;
+}
+
+.premium-home--v2 .welcome-hero__visual {
+  right: -20px !important;
+  bottom: -2px !important;
+  width: min(88%, 370px) !important;
+  height: 285px !important;
+  opacity: .97 !important;
+  overflow: visible;
+}
+
+.premium-home--v2 .welcome-hero__visual::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 8%;
+  bottom: 8%;
+  width: 78%;
+  height: 58%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(239, 205, 132, .2), rgba(56, 144, 107, .08) 44%, transparent 72%);
+  filter: blur(12px);
+  pointer-events: none;
+}
+
+.premium-home--v2 .welcome-hero__visual > img {
+  object-fit: contain !important;
+  object-position: right bottom !important;
+  filter: drop-shadow(0 28px 25px rgba(0, 0, 0, .48)) saturate(.98) contrast(1.045) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 14%, #000 32%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.62) 14%, #000 32%, #000 100%);
+}
+
+/* ---------- Home journey / quick imagery ---------- */
+.premium-home--v2 .journey-card {
+  isolation: isolate;
+}
+
+.premium-home--v2 .journey-card .premium-image {
+  z-index: 0;
+  overflow: visible;
+}
+
+.premium-home--v2 .journey-card .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 16% 8% 5%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .105), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.premium-home--v2 .journey-card .premium-image > img {
+  object-position: center bottom;
+  filter: drop-shadow(0 17px 18px rgba(0, 0, 0, .42)) saturate(1.02) contrast(1.025) !important;
+}
+
+.premium-home--v2 .journey-card--quran .premium-image > img {
+  transform: scale(.98) rotate(-1.5deg);
+  transform-origin: 50% 72%;
+}
+
+.premium-home--v2 .journey-card:nth-child(2) .premium-image > img {
+  transform: scale(.94);
+}
+
+.premium-home--v2 .journey-card:nth-child(3) .premium-image > img {
+  transform: scale(.92);
+}
+
+.continue-card--v2 .continue-card__cover {
+  isolation: isolate;
+  overflow: visible;
+}
+
+.continue-card--v2 .continue-card__cover::before {
+  content: '';
+  position: absolute;
+  inset: 18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .13), transparent 72%);
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.continue-card--v2 .continue-card__cover .premium-image > img {
+  object-position: center;
+  filter: drop-shadow(0 17px 17px rgba(0, 0, 0, .42)) saturate(1.02) !important;
+  transform: rotate(-2deg) scale(.97);
+}
+
+/* ---------- Daily inspiration ---------- */
+.verse-card--cream,
+.reference-ayah-hero,
+.hadith-card,
+.reference-hadith-hero {
+  isolation: isolate;
+}
+
+.verse-card__art,
+.reference-ayah-hero__art {
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: .18 !important;
+  overflow: hidden;
+}
+
+.verse-card__art > img,
+.reference-ayah-hero__art > img {
+  object-fit: cover !important;
+  object-position: center 42% !important;
+  filter: saturate(.78) contrast(1.08) !important;
+  transform: scale(1.05);
+}
+
+.hadith-card::after,
+.reference-hadith-hero::after {
+  right: -18px !important;
+  bottom: -28px !important;
+  width: 150px !important;
+  height: 180px !important;
+  opacity: .25 !important;
+  filter: drop-shadow(0 20px 19px rgba(0, 0, 0, .37)) saturate(.97) !important;
+}
+
+/* ---------- Prayer artwork ---------- */
+.reference-next-prayer,
+.next-prayer-panel {
+  isolation: isolate;
+}
+
+.reference-next-prayer::before,
+.next-prayer-panel::before {
+  right: -54px !important;
+  bottom: -18px !important;
+  width: 270px !important;
+  height: 210px !important;
+  opacity: .27 !important;
+  background-position: center bottom !important;
+  background-size: contain !important;
+  filter: drop-shadow(0 23px 22px rgba(0, 0, 0, .46)) saturate(.88) contrast(1.04) !important;
+}
+
+.reference-next-prayer__icon,
+.hero-orb {
+  position: relative;
+  isolation: isolate;
+}
+
+.reference-next-prayer__icon::before,
+.hero-orb::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(244, 218, 160, .13), transparent 68%);
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+/* ---------- Quran library / reader ---------- */
+.reference-quran-continue__book,
+.reference-reader-hero > .premium-image {
+  overflow: visible;
+}
+
+.reference-quran-continue__book::before,
+.reference-reader-hero > .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 12% 7%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .12), transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.reference-quran-continue__book > img,
+.reference-reader-hero > .premium-image > img {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 20px 21px rgba(0, 0, 0, .44)) saturate(1.01) contrast(1.03) !important;
+}
+
+.reference-reader-hero > .premium-image > img {
+  transform: rotate(-1.5deg) scale(.98);
+  transform-origin: 50% 72%;
+}
+
+/* ---------- Dhikr ---------- */
+.reference-dhikr-counter {
+  isolation: isolate;
+}
+
+.reference-dhikr-counter__tasbih {
+  overflow: visible !important;
+}
+
+.reference-dhikr-counter__tasbih::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 15%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .12), rgba(47, 137, 100, .06) 48%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.reference-dhikr-counter__tasbih > img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 22px 22px rgba(0, 0, 0, .47)) saturate(1.035) contrast(1.025) !important;
+}
+
+/* ---------- Qibla ---------- */
+.reference-qibla-stage {
+  isolation: isolate;
+}
+
+.reference-qibla-stage__compass {
+  overflow: visible !important;
+}
+
+.reference-qibla-stage__compass > img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 24px 26px rgba(0, 0, 0, .5)) saturate(1.03) contrast(1.04) !important;
+}
+
+.reference-qibla-stage::after {
+  width: 90px !important;
+  height: 90px !important;
+  opacity: .9 !important;
+  filter: drop-shadow(0 14px 19px rgba(0, 0, 0, .5)) saturate(.98) contrast(1.05) !important;
+}
+
+/* ---------- Duas / Names ---------- */
+.reference-duas-hero,
+.reference-names-hero {
+  isolation: isolate;
+}
+
+.reference-duas-hero::after {
+  right: -4px !important;
+  bottom: -12px !important;
+  width: 170px !important;
+  height: 166px !important;
+  opacity: .72 !important;
+  filter: drop-shadow(0 19px 21px rgba(0, 0, 0, .4)) saturate(.97) contrast(1.025) !important;
+}
+
+.reference-duas-hero::before,
+.reference-names-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -36px;
+  top: -46px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .1), transparent 70%);
+  filter: blur(6px);
+  pointer-events: none;
+}
+
+.reference-names-hero__allah {
+  text-shadow: 0 13px 27px rgba(0, 0, 0, .42), 0 0 26px rgba(232, 199, 122, .08) !important;
+}
+
+/* ---------- Mosque discovery ---------- */
+.reference-mosque-hero {
+  isolation: isolate;
+}
+
+.reference-mosque-hero > .premium-image {
+  right: -42px !important;
+  bottom: -12px !important;
+  width: 322px !important;
+  height: 242px !important;
+  opacity: .97 !important;
+  overflow: visible;
+}
+
+.reference-mosque-hero > .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 8%;
+  bottom: 10%;
+  width: 78%;
+  height: 60%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .14), rgba(49, 139, 103, .06) 48%, transparent 74%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.reference-mosque-hero > .premium-image > img {
+  object-fit: contain !important;
+  object-position: right bottom !important;
+  filter: drop-shadow(0 26px 24px rgba(0, 0, 0, .48)) saturate(.96) contrast(1.045) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 17%, #000 33%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 17%, #000 33%, #000 100%);
+}
+
+/* ---------- Collections ---------- */
+.reference-collection-grid > button {
+  isolation: isolate;
+}
+
+.reference-collection-grid .premium-image {
+  top: -8px !important;
+  right: -19px !important;
+  width: 148px !important;
+  height: 124px !important;
+  opacity: .78 !important;
+  overflow: visible;
+}
+
+.reference-collection-grid .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .09), transparent 72%);
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.reference-collection-grid .premium-image > img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 15px 17px rgba(0, 0, 0, .38)) saturate(1.01) !important;
+}
+
+/* ---------- Learning heroes ---------- */
+.reference-learning-hero,
+.reference-prayer-learning-hub,
+.reference-prayer-course-hero,
+.reference-guide-hero,
+.reference-learning-course-hero {
+  isolation: isolate;
+}
+
+.reference-learning-hero .premium-image,
+.reference-prayer-learning-hub > .premium-image,
+.reference-prayer-course-hero > .premium-image,
+.reference-guide-hero > .premium-image {
+  overflow: visible;
+}
+
+.reference-learning-hero .premium-image::before,
+.reference-prayer-learning-hub > .premium-image::before,
+.reference-prayer-course-hero > .premium-image::before,
+.reference-guide-hero > .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 12%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .12), transparent 72%);
+  filter: blur(9px);
+  pointer-events: none;
+}
+
+.reference-learning-hero .premium-image > img,
+.reference-prayer-learning-hub > .premium-image > img,
+.reference-prayer-course-hero > .premium-image > img,
+.reference-guide-hero > .premium-image > img {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 24px 24px rgba(0, 0, 0, .46)) saturate(.98) contrast(1.03) !important;
+}
+
+/* ---------- Legacy feature artwork ---------- */
+.reference-legacy-hero {
+  isolation: isolate;
+}
+
+.reference-legacy-hero img {
+  max-width: 100%;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 22px 22px rgba(0, 0, 0, .48)) saturate(1.01) contrast(1.03) !important;
+  transform-origin: 50% 72%;
+}
+
+.reference-legacy-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -14px;
+  bottom: -40px;
+  width: 190px;
+  height: 190px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .11), rgba(45, 132, 97, .055) 45%, transparent 72%);
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+/* ---------- Onboarding ---------- */
+.reference-onboarding__visual {
+  isolation: isolate;
+}
+
+.reference-onboarding__visual > .premium-image {
+  overflow: visible;
+}
+
+.reference-onboarding__visual > .premium-image::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 10%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(232, 199, 122, .17), rgba(45, 132, 97, .08) 42%, transparent 72%);
+  filter: blur(13px);
+  pointer-events: none;
+}
+
+.reference-onboarding__visual > .premium-image > img {
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  filter: drop-shadow(0 26px 25px rgba(0, 0, 0, .48)) saturate(.99) contrast(1.035) !important;
+}
+
+.reference-onboarding__tasbih {
+  filter: drop-shadow(0 19px 18px rgba(0, 0, 0, .44)) !important;
+}
+
+/* ---------- Calendar art ---------- */
+.calendar-month-card::after {
+  opacity: .085 !important;
+  filter: saturate(.85) blur(.1px);
+}
+
+.calendar-event-card::after {
+  right: 9px !important;
+  bottom: 6px !important;
+  opacity: .55 !important;
+  filter: drop-shadow(0 14px 17px rgba(0, 0, 0, .34)) saturate(.98) !important;
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .premium-image > img {
+  filter: drop-shadow(0 13px 18px rgba(57, 43, 20, .18)) saturate(.96) contrast(1.015);
+}
+
+[data-theme='light'] .premium-home--v2 .welcome-hero__visual > img,
+[data-theme='light'] .reference-mosque-hero > .premium-image > img,
+[data-theme='light'] .reference-learning-hero .premium-image > img,
+[data-theme='light'] .reference-prayer-learning-hub > .premium-image > img,
+[data-theme='light'] .reference-prayer-course-hero > .premium-image > img,
+[data-theme='light'] .reference-guide-hero > .premium-image > img,
+[data-theme='light'] .reference-onboarding__visual > .premium-image > img {
+  filter: drop-shadow(0 19px 21px rgba(57, 43, 20, .2)) saturate(.94) contrast(1.02) !important;
+}
+
+/* ---------- Narrow phones ---------- */
+@media (max-width: 390px) {
+  .premium-home--v2 .welcome-hero__visual {
+    right: -44px !important;
+    width: 350px !important;
+    height: 270px !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -62px !important;
+    width: 294px !important;
+    height: 224px !important;
+  }
+
+  .reference-duas-hero::after {
+    right: -14px !important;
+    width: 150px !important;
+    height: 148px !important;
+  }
+
+  .reference-next-prayer::before,
+  .next-prayer-panel::before {
+    right: -76px !important;
+    width: 250px !important;
+  }
+
+  .reference-legacy-hero img {
+    transform: scale(.94);
+  }
+}
+
+@media (max-width: 350px) {
+  .premium-home--v2 .welcome-hero__visual {
+    right: -66px !important;
+    width: 326px !important;
+    height: 250px !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -88px !important;
+    width: 274px !important;
+    opacity: .88 !important;
+  }
+
+  .reference-collection-grid .premium-image {
+    right: -31px !important;
+    width: 132px !important;
+    height: 112px !important;
+  }
+
+  .reference-qibla-stage::after {
+    width: 76px !important;
+    height: 76px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-image,
+  .premium-image > img,
+  .reference-legacy-hero img {
+    transition: none !important;
+    animation: none !important;
+  }
+}
