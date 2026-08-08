@@ -69,12 +69,14 @@ if (styleIndex.includes('premium-artwork-host-lock.css') || main.includes('Refer
 const requiredGuardrails = [
   '--app-content-width: 430px',
   '--tap-target: 44px',
-  '--radius-card: 18px',
-  '--radius-hero: 24px',
+  '--radius-control: 18px',
+  '--radius-card: 28px',
+  '--radius-hero: 42px',
   '--icon-stroke: 1.75',
   'grid-template-columns: var(--tap-target) minmax(0, 1fr) var(--tap-target)',
   'width: var(--tap-target) !important',
   'min-height: 72px',
+  'border-radius: 26px',
   '.app-shell',
   'z-index: 3',
   'stroke-width: var(--icon-stroke)',
@@ -240,5 +242,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, reference navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, reference radii 18/28/42, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, unified headers/cards/icons, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
