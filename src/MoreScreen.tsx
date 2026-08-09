@@ -23,6 +23,7 @@ import {
   NotebookPen,
   Palette,
   RotateCcw,
+  ScrollText,
   Route,
   Settings2,
   ShieldCheck,
@@ -43,7 +44,7 @@ import { NurMark, PremiumImage } from './PremiumVisuals';
 import { getTheme, setTheme as applyTheme } from './themeService';
 import type { NurTheme } from './themeService';
 
-export type MoreDestination = 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections';
+export type MoreDestination = 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections' | 'legal';
 
 type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding' | 'support' | 'about';
 type Subscreen = 'account' | 'notes' | null;
@@ -94,6 +95,7 @@ const preferenceRows: ProfileRow[] = [
 const supportRows: ProfileRow[] = [
   { id: 'onboarding', title: 'Einführung wiederholen', description: 'Premium-Einstieg erneut ansehen', icon: RotateCcw, action: 'onboarding' },
   { id: 'help', title: 'Hilfe & Datenschutz', description: 'Datenquellen und lokale Speicherung', icon: CircleHelp, action: 'support' },
+  { id: 'legal', title: 'Impressum & Datenschutz', description: 'Anbieter, Datenverarbeitung und Lizenzen', icon: ScrollText, destination: 'legal' },
   { id: 'about', title: 'Über Nur', description: 'Version und Produktprinzipien', icon: Info, action: 'about' },
 ];
 

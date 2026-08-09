@@ -29,6 +29,7 @@ import { MosqueScreen } from './DiscoveryScreens';
 import { DuasScreen } from './DuasScreen';
 import { InstallAppPrompt } from './InstallAppPrompt';
 import { LearnScreen } from './LearnScreen';
+import { LegalScreen } from './LegalScreen';
 import { LegacyFeatureScreen } from './LegacyFeatureScreens';
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
 import { MoreScreen } from './MoreScreen';
@@ -66,7 +67,7 @@ import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from './quranService';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
-type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | LegacyTab;
+type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | LegacyTab;
 
 type QuickAction = {
   label: string;
@@ -548,7 +549,9 @@ export default function App() {
                 ? <WorshipGuideScreen initialMode="wudu" onBack={goLearn} />
                 : activeTab === 'salah'
                   ? <WorshipGuideScreen initialMode="salah" onBack={goLearn} />
-                  : activeTab === 'dhikr'
+                  : activeTab === 'legal'
+                    ? <LegalScreen onBack={() => navigate('profile')} />
+                    : activeTab === 'dhikr'
                     ? <DhikrScreen onBack={goHome} />
                     : activeTab === 'qibla'
                       ? <QiblaScreen onBack={goHome} />

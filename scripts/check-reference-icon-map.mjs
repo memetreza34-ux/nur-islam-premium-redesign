@@ -62,13 +62,25 @@ requireFragments(app, 'Primary navigation', [
   "onNavigate('profile')",
 ]);
 
+// This file pins which icon belongs to which action. The eyebrow next to a
+// label is supporting copy that design rewrites freely, so it is deliberately
+// not part of the assertion: pinning it here broke the build on a wording
+// change while the icon mapping was never in question.
+for (const [label, icon] of [
+  ['Quran lesen', 'BookOpen'],
+  ['Beten lernen', 'HandHeart'],
+  ['99 Namen Allahs', 'Sparkles'],
+  ['Islam Quiz', 'BrainCircuit'],
+  ['Duas', 'BookHeart'],
+  ['Nur Assistent', 'MessageCircleQuestion'],
+]) {
+  const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
+  if (!pairing.test(app)) {
+    throw new Error(`Home semantic cards icon mapping is missing: ${label} -> ${icon}`);
+  }
+}
+
 requireFragments(app, 'Home semantic cards', [
-  "label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen",
-  "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart",
-  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles",
-  "label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit",
-  "label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart",
-  "label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: MessageCircleQuestion",
   '<MapPin size={22} />',
   '<Globe2 size={22} />',
 ]);
