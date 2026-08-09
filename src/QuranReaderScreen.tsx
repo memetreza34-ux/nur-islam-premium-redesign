@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bookmark,
   BookmarkCheck,
@@ -94,6 +94,7 @@ export function QuranReaderScreen({
   const [activeAyah, setActiveAyah] = useState(() => normalizePositiveInteger(initialAyahNumber));
   const [bookmarks, setBookmarks] = useState(() => readBookmarks(surahNumber));
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -140,20 +141,30 @@ export function QuranReaderScreen({
   }, [bookmarks, surahNumber]);
 
   useEffect(() => {
+    if (!bundle) return;
+    const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah));
     try {
       localStorage.setItem('nur_quran_last_read', JSON.stringify({
-        surahNumber,
-        ayahNumber: activeAyah,
+        surahNumber: bundle.meta.number,
+        ayahNumber: validatedAyah,
         updatedAt: new Date().toISOString(),
       }));
     } catch {
       // optional
     }
-  }, [activeAyah, surahNumber]);
+  }, [activeAyah, bundle]);
+
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2200);
   };
 
   const openReaderControls = () => {
