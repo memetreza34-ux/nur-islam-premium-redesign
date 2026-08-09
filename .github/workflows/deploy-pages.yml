@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [premium-design-finish]
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -23,13 +23,15 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
-      - run: npm run build
+      - name: Validate release and build production app
+        run: npm run check
         env:
+          # Pages is a real release surface: the full check chain runs in
+          # strict release mode so legal placeholders or any other guarded
+          # regression stop the deployment before an artifact is uploaded.
+          NUR_RELEASE: 'true'
           # Public client config, not a secret: the anon/publishable key is
-          # meant to be readable in a browser bundle and is scoped by RLS.
-          # A real value can be set as repo Actions variables later without
-          # changing this workflow; until then the code's own public default
-          # is used, matching what the unconfigured local build already does.
+          # meant to be readable in a browser bundle and remains scoped by RLS.
           VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
       - uses: actions/upload-pages-artifact@v3
