@@ -164,6 +164,22 @@
   }
 }
 
+/* The final onboarding slide is taller because it contains permission cards.
+   Let the onboarding shell scroll naturally instead of forcing its footer into
+   the slide content when the 390x844 viewport runs out of room. */
+.reference-onboarding:has(.reference-onboarding__permissions) {
+  align-content: start !important;
+}
+
+.reference-onboarding__slide:has(.reference-onboarding__permissions) {
+  padding-bottom: 12px;
+}
+
+.reference-onboarding__slide:has(.reference-onboarding__permissions) + .reference-onboarding__footer {
+  flex: 0 0 auto;
+  margin-top: 2px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .reference-onboarding__visual > .premium-image > img,
   .reference-onboarding__tasbih img {
