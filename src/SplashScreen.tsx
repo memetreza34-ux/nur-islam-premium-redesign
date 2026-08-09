@@ -16,6 +16,7 @@ export function SplashScreen() {
         src="/premium-assets/high-res-objects/mosque-gold-v2.webp"
         className="reference-splash__mosque"
         fallback={<MosqueScene />}
+        priority
       />
       <motion.div
         className="reference-splash__brand"
@@ -27,6 +28,7 @@ export function SplashScreen() {
           src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp"
           className="reference-splash__mark"
           fallback={<NurMark />}
+          priority
         />
         <span className="overline">Dein spiritueller Begleiter</span>
         <h1>Nur</h1>
