@@ -139,8 +139,8 @@
   min-height: 286px;
   overflow: hidden;
   padding: 132px 24px 28px;
-  border-style: solid;
-  border-color: rgba(226, 191, 119, .13);
+  border: 1px solid rgba(226, 191, 119, .16) !important;
+  border-style: solid !important;
   border-radius: 28px;
   background:
     radial-gradient(circle at 50% 30%, rgba(226, 191, 119, .1), transparent 9rem),
@@ -202,7 +202,7 @@
 }
 
 [data-theme='light'] .reference-collections-screen .reference-empty-result {
-  border-color: rgba(117, 87, 37, .14);
+  border-color: rgba(117, 87, 37, .14) !important;
   background:
     radial-gradient(circle at 50% 30%, rgba(167, 123, 45, .08), transparent 9rem),
     linear-gradient(145deg, rgba(255, 253, 247, .99), rgba(241, 233, 215, .98));
@@ -234,4 +234,32 @@
     brightness(1.12)
     saturate(1.08)
     contrast(1.055) !important;
+}
+
+/* The final onboarding slide can exceed a phone viewport once permission
+   choices are shown. Keep footer actions in normal document flow so they never
+   cover a permission card; the onboarding shell already owns vertical scroll. */
+.app-shell--onboarding {
+  overflow-y: auto !important;
+}
+
+.reference-onboarding:has(.reference-onboarding__permissions) {
+  min-height: auto !important;
+  align-content: start !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.reference-onboarding__slide:has(.reference-onboarding__permissions) {
+  padding-bottom: 8px !important;
+}
+
+.reference-onboarding__footer {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  flex: none !important;
+  width: 100% !important;
+  margin-top: 4px !important;
+  background: transparent !important;
+  box-shadow: none !important;
 }
