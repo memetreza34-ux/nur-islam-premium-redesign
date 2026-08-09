@@ -12,6 +12,7 @@ const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const appIcon = await readFile(resolve(root, 'public/nur-app-icon.svg'), 'utf8');
 const manifest = JSON.parse(await readFile(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
+const pagesWorkflow = await readFile(resolve(root, '.github/workflows/deploy-pages.yml'), 'utf8');
 
 const viteRequirements = [
   "command === 'build' ? '/nur-islam-premium-redesign/' : '/'",
@@ -19,6 +20,22 @@ const viteRequirements = [
 ];
 for (const requirement of viteRequirements) {
   if (!vite.includes(requirement)) throw new Error(`Vite base path is missing: ${requirement}`);
+}
+
+// GitHub Pages is a real release surface, not a feature-branch preview. Keep
+// both the trigger and the strict release gate source-controlled so a later
+// workflow edit cannot silently publish a draft or bypass legal/release checks.
+for (const requirement of [
+  'branches: [main]',
+  "NUR_RELEASE: 'true'",
+  'run: npm run check',
+  'actions/upload-pages-artifact@v3',
+  'actions/deploy-pages@v4',
+]) {
+  if (!pagesWorkflow.includes(requirement)) throw new Error(`Pages workflow is missing release safety: ${requirement}`);
+}
+if (pagesWorkflow.includes('branches: [premium-design-finish]')) {
+  throw new Error('Pages workflow must not automatically deploy the draft premium-design-finish branch.');
 }
 
 for (const requirement of [
@@ -138,4 +155,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
