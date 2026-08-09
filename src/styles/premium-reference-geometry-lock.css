@@ -51,6 +51,7 @@ html:not([data-theme='light']) :where(
 }
 
 :where(
+  .reference-splash,
   .welcome-hero,
   .prayer-hero--v2,
   .next-prayer-panel,
@@ -192,6 +193,7 @@ html:not([data-theme='light']) :where(
   .reference-assistant-suggestions button > span,
   .reference-chat-message__mark,
   .reference-chat-message__source,
+  .reference-onboarding__visual-icon,
   .reference-onboarding__permissions > button > span:first-child
 ) {
   border-radius: 13px !important;
@@ -284,6 +286,7 @@ html:not([data-theme='light']) :where(
 /* Focal artwork fit/anchor. Correct artwork with the wrong crop is still a
    visual mismatch, so the primary image roles are protected here as well. */
 :where(
+  .reference-splash__mosque > img,
   .premium-home--v2 .welcome-hero__visual > img,
   .reference-mosque-hero > .premium-image > img
 ) {
@@ -300,6 +303,8 @@ html:not([data-theme='light']) :where(
 }
 
 :where(
+  .reference-splash__mark > img,
+  .reference-system-error__logo > img,
   .reference-dhikr-counter__tasbih > img,
   .reference-qibla-stage__compass > img,
   .brand-lockup__mark > img,

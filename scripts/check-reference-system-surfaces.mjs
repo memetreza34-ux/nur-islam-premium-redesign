@@ -4,9 +4,11 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [navigation, referenceShell, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
+const [navigation, referenceShell, entrySystem, brandEntryArt, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
   read('src/styles/navigation.css'),
   read('src/styles/reference-shell.css'),
+  read('src/styles/premium-entry-system.css'),
+  read('src/styles/premium-brand-entry-art-lock.css'),
   read('src/styles/premium-system-surfaces-lock.css'),
   read('src/styles/premium-mobile-modal-input-lock.css'),
   read('src/styles/reference-assistant.css'),
@@ -37,6 +39,43 @@ requireTokens(referenceShell, 'Detail shell base', [
   'border: 1px solid rgba(226, 191, 119, .14)',
   'border-radius: 18px',
   'background: rgba(0, 27, 22, .9)',
+]);
+
+requireTokens(entrySystem, 'Entry/system integration layer', [
+  '.reference-splash {',
+  'border-radius: 42px',
+  'linear-gradient(165deg, #042a21 0%, #001b16 59%, #00120f 100%)',
+  'color: #fff8ea',
+  'background: linear-gradient(90deg, transparent, #f2d79a, transparent)',
+  '.reference-onboarding__visual {',
+  'linear-gradient(150deg, rgba(13, 87, 67, .98), rgba(0, 18, 15, .995))',
+  '.reference-onboarding__visual-icon',
+  'border-radius: 13px',
+  '.reference-onboarding__permissions > button',
+  'border-radius: 18px',
+  '.reference-assistant-greeting',
+  'border-radius: 28px !important',
+  '.reference-assistant-input',
+  'background: rgba(0, 27, 22, .92) !important',
+  '.reference-install-prompt',
+  'border-radius: 28px',
+  '.reference-network-status,',
+  '.toast {',
+  'linear-gradient(145deg, rgba(7, 55, 43, .97), rgba(0, 18, 15, .99)) !important',
+  '.reference-system-error {',
+  'linear-gradient(165deg, #042a21 0%, #001b16 58%, #00120f 100%)',
+]);
+
+requireTokens(brandEntryArt, 'Splash/brand art layer', [
+  '.reference-splash__mosque > img',
+  'object-fit: contain !important',
+  'object-position: right bottom !important',
+  'background: radial-gradient(circle, rgba(226, 191, 119, .18), rgba(13, 87, 67, .07) 48%, transparent 73%)',
+  '.reference-splash__mark > img',
+  'background: radial-gradient(circle, rgba(242, 215, 154, .22), rgba(226, 191, 119, .06) 48%, transparent 72%)',
+  'box-shadow: 0 0 10px rgba(242, 215, 154, .3)',
+  '.reference-system-error__logo > img',
+  'background: radial-gradient(circle, rgba(226, 191, 119, .17), transparent 70%)',
 ]);
 
 requireTokens(systemSurfaces, 'System surfaces', [
@@ -116,7 +155,8 @@ requireTokens(finalLock, 'Account/notes/assistant final utility material', [
   'linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important',
 ]);
 
-requireTokens(finalLock, 'Final shell override', [
+requireTokens(finalLock, 'Final shell/brand override', [
+  '.reference-splash,',
   '.app-shell--detail .reference-screen-header',
   'background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important',
   '.bottom-nav {',
@@ -126,6 +166,10 @@ requireTokens(finalLock, 'Final shell override', [
   'color: #f2d79a !important',
   '.reference-onboarding__visual',
   'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
+  '.reference-onboarding__visual-icon,',
+  '.reference-splash__mosque > img,',
+  '.reference-splash__mark > img,',
+  '.reference-system-error__logo > img,',
   "[data-theme='light'] .app-shell--detail .reference-screen-header",
   "[data-theme='light'] .bottom-nav",
   "[data-theme='light'] .reference-onboarding__visual",
@@ -134,6 +178,7 @@ requireTokens(finalLock, 'Final shell override', [
 ]);
 
 for (const selector of [
+  '.reference-splash',
   '.reference-prayer-reminder-banner',
   '.reference-calendar-reminder-banner',
   '.reference-install-prompt',
@@ -185,9 +230,13 @@ for (const selector of [
   '.reference-onboarding__permissions > button',
   '.reference-onboarding__back',
   '.reference-onboarding__actions .gold-button',
+  '.reference-onboarding__visual-icon',
   '.reference-onboarding__permissions > button > span:first-child',
+  '.reference-splash__mosque > img',
+  '.reference-splash__mark > img',
+  '.reference-system-error__logo > img',
 ]) {
-  if (!finalLock.includes(selector)) throw new Error(`Final reference geometry does not protect system/utility/profile/shell surface: ${selector}`);
+  if (!finalLock.includes(selector)) throw new Error(`Final reference lock does not protect system/utility/profile/shell/brand surface: ${selector}`);
 }
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
@@ -207,6 +256,32 @@ for (const stale of [
 ]) {
   if (navigation.includes(stale) || systemSurfaces.includes(stale) || modalInput.includes(stale) || runtimeLock.includes(stale)) {
     throw new Error(`Visible system/modal surface still contains a stale pre-reference value: ${stale}`);
+  }
+}
+
+for (const staleEntry of [
+  'linear-gradient(165deg, #09271f',
+  'linear-gradient(150deg, rgba(16, 62, 48',
+  'background: rgba(5, 29, 23',
+  'linear-gradient(145deg, #efd394, #c9953a)',
+  'border-radius: 27px',
+  'border-radius: 15px',
+  'border-radius: 12px',
+  'border-radius: 14px',
+  'background: rgba(3, 27, 21',
+]) {
+  if (entrySystem.includes(staleEntry)) {
+    throw new Error(`Entry/system layer still contains a stale pre-reference value: ${staleEntry}`);
+  }
+}
+
+for (const staleBrand of [
+  'rgba(232, 199, 122',
+  'rgba(38, 123, 90',
+  'rgba(238, 208, 139',
+]) {
+  if (brandEntryArt.includes(staleBrand)) {
+    throw new Error(`Splash/brand art layer still contains a stale pre-reference color: ${staleBrand}`);
   }
 }
 
@@ -247,4 +322,4 @@ for (const staleProfile of [
   }
 }
 
-console.log('Reference system surfaces verified: shell/navigation/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry with explicit light-theme preservation.');
+console.log('Reference system surfaces verified: Splash/entry brand, shell/navigation/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry with explicit light-theme preservation.');

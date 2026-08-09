@@ -20,6 +20,7 @@ const [
   legacy,
   reading,
   onboardingArt,
+  brandEntryArt,
   devotionalCss,
   dailyCss,
   discoveryCss,
@@ -41,6 +42,7 @@ const [
   read('src/LegacyFeatureScreens.tsx'),
   read('src/ReferenceReadingScreens.tsx'),
   read('src/styles/premium-onboarding-art-lock.css'),
+  read('src/styles/premium-brand-entry-art-lock.css'),
   read('src/styles/premium-devotional-art-lock.css'),
   read('src/styles/premium-daily-inspiration-art-lock.css'),
   read('src/styles/premium-discovery-collection-art-lock.css'),
@@ -205,6 +207,23 @@ requireCssFit(onboardingArt, 'Onboarding Tasbih companion', '.reference-onboardi
   'object-position: center !important',
 ]);
 
+requireCssFit(brandEntryArt, 'Splash mosque composition', '.reference-splash__mosque', [
+  'right: -46px',
+  'bottom: -8px',
+  'width: 390px !important',
+  'height: 292px !important',
+]);
+requireCssFit(brandEntryArt, 'Splash mosque crop', '.reference-splash__mosque > img', [
+  'object-fit: contain !important',
+  'object-position: right bottom !important',
+]);
+requireCssFit(brandEntryArt, 'Splash Nur mark', '.reference-splash__mark > img', [
+  'object-fit: contain !important',
+]);
+requireCssFit(brandEntryArt, 'System error Nur mark', '.reference-system-error__logo > img', [
+  'object-fit: contain !important',
+]);
+
 requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260808-release-hardening');
 requireCssAsset(dailyCss, 'Daily Ayah', '.reference-ayah-hero::before', 'mihrab-arch-v2.webp?v=20260808-release-hardening');
 requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v2.webp?v=20260808-release-hardening');
@@ -214,6 +233,18 @@ requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-sec
 requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260808-release-hardening');
 requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260808-release-hardening');
 
+requireCssFit(finalLock, 'Splash mosque final lock', '.reference-splash__mosque > img', [
+  'object-fit: contain !important',
+  'object-position: right bottom !important',
+]);
+requireCssFit(finalLock, 'Splash mark final lock', '.reference-splash__mark > img', [
+  'object-fit: contain !important',
+  'object-position: center !important',
+]);
+requireCssFit(finalLock, 'System error mark final lock', '.reference-system-error__logo > img', [
+  'object-fit: contain !important',
+  'object-position: center !important',
+]);
 requireCssFit(finalLock, 'Home hero', '.premium-home--v2 .welcome-hero__visual > img', [
   'object-fit: contain !important',
   'object-position: right bottom !important',
@@ -261,4 +292,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens, onboarding slide compositions, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');
+console.log('Reference image map verified: Splash/brand crops, primary screens, onboarding slide compositions, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');

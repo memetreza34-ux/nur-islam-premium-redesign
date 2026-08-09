@@ -36,9 +36,9 @@
   height: 39px;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(232, 199, 122, .25);
+  border: 1px solid rgba(226, 191, 119, .25);
   border-radius: 13px;
-  background: rgba(5, 32, 25, .7);
+  background: rgba(0, 27, 22, .72);
   backdrop-filter: blur(15px);
 }
 
@@ -47,8 +47,8 @@
 }
 
 .premium-home--v2 .brand-bar__actions .icon-button {
-  border-color: rgba(232, 199, 122, .25);
-  background: rgba(5, 32, 25, .7);
+  border-color: rgba(226, 191, 119, .25);
+  background: rgba(0, 27, 22, .72);
   backdrop-filter: blur(15px);
 }
 

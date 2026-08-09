@@ -1,0 +1,45 @@
+name: Home reference audit
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - premium-home-redesign
+    paths:
+      - 'src/App.tsx'
+      - 'src/styles/base.css'
+      - 'src/styles/reference-home-exact.css'
+      - 'src/styles/premium-art-direction-lock.css'
+      - 'src/styles/premium-art-composition-lock.css'
+      - 'src/styles/premium-atmosphere-details-lock.css'
+      - 'src/styles/premium-reference-geometry-lock.css'
+      - 'src/styles.css'
+      - 'scripts/check-reference-home-art.mjs'
+      - '.github/workflows/home-reference-audit.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: home-reference-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  home-reference:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify Home reference source
+        run: node scripts/check-reference-home-art.mjs
