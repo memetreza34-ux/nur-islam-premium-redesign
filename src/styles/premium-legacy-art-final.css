@@ -1,87 +1,57 @@
-/* Final per-asset corrections for legacy premium heroes.
-   These selectors only change artwork presentation; feature logic and layout
-   remain owned by the existing legacy screen system. */
+/* Final focal corrections for the two legacy hero assets that need a crop
+   different from the shared legacy artwork rule. No feature layout changes. */
 
-/* The mosque source contains generous transparent margins. On the Islamische
-   Orte hero the generic grid slot can crop the visible architecture away.
-   Take this one artwork out of grid flow and compose it deliberately on the
-   right side of the hero, behind the copy. */
 .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
   position: absolute !important;
-  z-index: 1 !important;
-  right: -34px !important;
-  bottom: -14px !important;
+  z-index: 1;
+  right: -34px;
+  bottom: -14px;
   width: 258px !important;
-  height: auto !important;
-  max-width: none !important;
-  max-height: none !important;
-  justify-self: auto !important;
-  align-self: auto !important;
-  object-fit: contain !important;
-  object-position: center bottom !important;
+  height: auto;
+  max-width: none;
+  max-height: none;
   opacity: .78 !important;
-  visibility: visible !important;
-  display: block !important;
   transform: scale(1.22) !important;
-  transform-origin: right bottom !important;
-  mix-blend-mode: normal !important;
+  transform-origin: right bottom;
   -webkit-mask-image: none !important;
   mask-image: none !important;
-  filter:
-    drop-shadow(0 26px 24px rgba(0, 0, 0, .5))
-    brightness(1.22)
-    saturate(1.14)
-    contrast(1.08) !important;
-  pointer-events: none !important;
+  filter: drop-shadow(0 26px 24px rgba(0,0,0,.5)) brightness(1.22) saturate(1.14) contrast(1.08) !important;
+  pointer-events: none;
 }
 
 .reference-legacy-hero:has(img[src*="mosque-gold-v2.webp"]) .reference-legacy-hero__copy {
-  position: relative !important;
-  z-index: 3 !important;
-  max-width: 62% !important;
+  z-index: 3;
+  max-width: 62%;
 }
 
-/* Calendar-chip is intentionally an ornament, but it still needs enough visual
-   weight to read as deliberate premium art rather than an accidental badge. */
 .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
   width: 154px !important;
-  max-width: none !important;
-  max-height: 92px !important;
-  object-fit: contain !important;
-  opacity: 1 !important;
-  transform: translate(12px, -1px) scale(1.12) !important;
-  transform-origin: center !important;
-  filter:
-    drop-shadow(0 16px 18px rgba(0, 0, 0, .4))
-    brightness(1.08)
-    saturate(1.05)
-    contrast(1.04) !important;
+  max-width: none;
+  max-height: 92px;
+  opacity: 1;
+  transform: translate(12px,-1px) scale(1.12) !important;
+  filter: drop-shadow(0 16px 18px rgba(0,0,0,.4)) brightness(1.08) saturate(1.05) contrast(1.04) !important;
 }
 
 [data-theme='light'] .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
   opacity: .66 !important;
-  filter: drop-shadow(0 16px 18px rgba(61, 46, 23, .18)) saturate(.97) contrast(1.02) !important;
 }
 
-[data-theme='light'] .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
-  filter: drop-shadow(0 16px 18px rgba(61, 46, 23, .18)) saturate(.97) contrast(1.02) !important;
-}
-
-@media (max-width: 350px) {
+@media (max-width:350px) {
   .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
-    right: -42px !important;
-    bottom: -10px !important;
+    right: -42px;
+    bottom: -10px;
     width: 228px !important;
     opacity: .7 !important;
     transform: scale(1.18) !important;
   }
 
   .reference-legacy-hero:has(img[src*="mosque-gold-v2.webp"]) .reference-legacy-hero__copy {
-    max-width: 66% !important;
+    max-width: 66%;
   }
 
   .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
     width: 128px !important;
-    transform: translate(12px, 0) scale(1.08) !important;
+    transform: translate(12px,0) scale(1.08) !important;
   }
 }
