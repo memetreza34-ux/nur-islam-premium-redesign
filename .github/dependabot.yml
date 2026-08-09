@@ -9,9 +9,6 @@ updates:
       time: "06:00"
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
-    labels:
-      - dependencies
-      - ci
 
   - package-ecosystem: npm
     directory: /
@@ -22,5 +19,3 @@ updates:
       timezone: Europe/Berlin
     open-pull-requests-limit: 5
     versioning-strategy: increase-if-necessary
-    labels:
-      - dependencies
