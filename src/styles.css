@@ -216,3 +216,22 @@
 [data-theme='light'] .reference-collections-screen .reference-empty-result small {
   color: rgba(58, 80, 67, .7);
 }
+
+/* The Home hero uses the correct mosque-gold artwork already; keep its premium
+   gold character visible in the real dark render instead of letting it sink
+   into the emerald background. */
+.premium-home--v2 .welcome-hero__visual {
+  opacity: 1 !important;
+}
+
+.premium-home--v2 .welcome-hero__visual::before {
+  background: radial-gradient(circle, rgba(242, 215, 154, .25), rgba(65, 155, 117, .09) 44%, transparent 72%) !important;
+}
+
+.premium-home--v2 .welcome-hero__visual > img {
+  filter:
+    drop-shadow(0 28px 25px rgba(0, 0, 0, .48))
+    brightness(1.12)
+    saturate(1.08)
+    contrast(1.055) !important;
+}
