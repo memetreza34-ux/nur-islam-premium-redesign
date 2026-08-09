@@ -85,7 +85,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const toastTimerRef = useRef<number | null>(null);
 
   const closeDialog = useCallback(() => { setSelected(null); }, []);
-  const screenDialog = useDialog(Boolean(selected), closeDialog, selected?.name);
+  const mosqueDialog = useDialog(Boolean(selected), closeDialog, selected?.name);
 
   const flash = (message: string) => {
     if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
@@ -222,11 +222,11 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.section {...screenDialog.dialogProps} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 26, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 18, scale: .98 }}>
+            <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 26, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 18, scale: .98 }}>
               <header>
                 <span className="reference-mosque-detail-modal__pin"><MapPin size={22} /></span>
                 <div><span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
-                <button {...screenDialog.closeButtonProps} className="reference-mosque-detail-modal__close"><X size={20} /></button>
+                <button className="reference-mosque-detail-modal__close" onClick={closeDialog} aria-label="Schließen"><X size={20} /></button>
               </header>
 
               <div className="reference-mosque-detail-facts">
