@@ -26,18 +26,16 @@ for (let index = 0; index < surahs.length; index += 1) {
 }
 
 const serviceSource = await readFile(resolve(root, 'src/services/quranService.ts'), 'utf8');
-const offlineMatch = serviceSource.match(/OFFLINE_QURAN_SURAHS = \[([^\]]+)\]/);
-if (!offlineMatch) throw new Error('Could not read OFFLINE_QURAN_SURAHS from quranService.ts.');
-
-const offlineNumbers = offlineMatch[1]
-  .split(',')
-  .map((value) => Number(value.trim()))
-  .filter(Number.isFinite);
-
-if (!offlineNumbers.length || new Set(offlineNumbers).size !== offlineNumbers.length) {
-  throw new Error('Offline Quran surah list is empty or contains duplicates.');
+// The offline bundle is the whole Quran, not a subset, so the declaration is
+// pinned to full coverage rather than parsed as a list. Every one of the 228
+// files below is then validated on every run.
+if (!serviceSource.includes('export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);')) {
+  throw new Error('OFFLINE_QURAN_SURAHS must declare all 114 surahs as bundled offline.');
 }
 
+const offlineNumbers = surahs.map((surah) => surah.number);
+
+let totalAyahs = 0;
 for (const number of offlineNumbers) {
   const meta = surahs.find((surah) => surah.number === number);
   if (!meta) throw new Error(`Offline surah ${number} is missing from metadata.`);
@@ -60,6 +58,13 @@ for (const number of offlineNumbers) {
       }
     });
   }
+  totalAyahs += arabic.ayahs.length;
+}
+
+// The Kufan count the metadata is built on. A silently truncated or duplicated
+// surah would still pass every per-file check above but change this total.
+if (totalAyahs !== 6236) {
+  throw new Error(`Bundled Arabic text holds ${totalAyahs} ayahs; the 114-surah catalog describes 6236.`);
 }
 
 const onlineServiceFeatures = [
@@ -155,4 +160,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs (${totalAyahs} ayahs), validated Al Quran Cloud fallback, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);

@@ -97,3 +97,22 @@ test('reports no console errors while navigating', async ({ page }) => {
   const realErrors = errors.filter((text) => !/Failed to fetch|NetworkError|net::/i.test(text));
   expect(realErrors).toEqual([]);
 });
+
+test('reads a long surah from the local bundle instead of the network', async ({ page }) => {
+  // Only four surahs used to ship locally; everything else came from
+  // api.alquran.cloud. Al-Baqara is the longest surah and was the clearest
+  // case of that gap, so it stands in for the other 109 that moved offline.
+  const onlineCalls: string[] = [];
+  await page.route('**://api.alquran.cloud/**', async (route) => {
+    onlineCalls.push(route.request().url());
+    await route.abort();
+  });
+
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByText('Quran', { exact: true }).first().click();
+  await page.getByPlaceholder(/Sure/i).fill('Baqara');
+  await page.getByRole('button').filter({ hasText: /Al-Baqara/ }).first().click();
+
+  await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
+  expect(onlineCalls, 'Al-Baqara must come from the bundled files').toEqual([]);
+});

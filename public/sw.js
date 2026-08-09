@@ -40,6 +40,26 @@ const APP_SHELL = [
   scoped('data/quran/de/114.json'),
 ];
 
+// The remaining 110 surahs are ~3 MB. Downloading them inside install would
+// hold up activation on a slow connection for a benefit nobody asked for yet,
+// so the shell above stays small and the rest is warmed afterwards, one file
+// at a time, skipping whatever is already cached. A failed file is simply
+// retried on the next activation, or fetched on demand by the read handler.
+const QURAN_WARM_URLS = Array.from({ length: 114 }, (_, index) => index + 1)
+  .flatMap((number) => [scoped(`data/quran/ar/${number}.json`), scoped(`data/quran/de/${number}.json`)]);
+
+async function warmQuranCache() {
+  const cache = await caches.open(CACHE_NAME);
+  for (const url of QURAN_WARM_URLS) {
+    if (await cache.match(url)) continue;
+    try {
+      await cache.add(url);
+    } catch {
+      // Offline or a transient failure: the next activation picks it up again.
+    }
+  }
+}
+
 function offlineDocument() {
   return new Response(
     '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#001b16"><title>Nur Islam · Offline</title><style>html,body{margin:0;min-height:100%;background:#00120f;color:#fff8ea;font-family:system-ui,sans-serif}body{display:grid;min-height:100vh;place-items:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 0%,rgba(226,191,119,.08),transparent 18rem),linear-gradient(180deg,#042a21 0%,#001b16 48%,#00120f 100%)}.card{max-width:360px;padding:28px;border:1px solid rgba(226,191,119,.3);border-radius:28px;background:linear-gradient(145deg,rgba(13,87,67,.92),rgba(0,27,22,.98));text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.42)}h1{font-family:Georgia,serif;font-size:2rem;margin:0 0 10px;color:#fff8ea}p{color:#91a89e;font-size:.9rem;line-height:1.6;margin:0 0 18px}button{min-height:44px;padding:0 18px;border:1px solid rgba(226,191,119,.35);border-radius:18px;background:linear-gradient(135deg,#f2d79a,#e2bf77);color:#10251e;font-weight:700}</style></head><body><main class="card"><h1>Nur Islam ist offline</h1><p>Gespeicherte Inhalte stehen nach dem ersten vollständigen Laden weiterhin zur Verfügung. Prüfe deine Verbindung und versuche es erneut.</p><button onclick="location.reload()">Erneut versuchen</button></main></body></html>',
@@ -63,7 +83,8 @@ self.addEventListener('activate', (event) => {
           .filter((key) => key !== CACHE_NAME && !key.startsWith(QURAN_CACHE_PREFIX))
           .map((key) => caches.delete(key)),
       ))
-      .then(() => self.clients.claim()),
+      .then(() => self.clients.claim())
+      .then(() => warmQuranCache()),
   );
 });
 

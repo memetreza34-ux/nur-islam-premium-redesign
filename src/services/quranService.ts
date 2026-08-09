@@ -37,11 +37,11 @@ const ONLINE_TIMEOUT_MS = 12000;
 const memoryCache = new Map<string, unknown>();
 
 /**
- * Suren, deren arabischer Text und deutscher Altbestand im Premium-Repository
- * bereits vollständig offline vorhanden sind. Diese Dateien bleiben der
- * bevorzugte und netzunabhängige Bestand.
+ * Alle 114 Suren liegen paarweise offline vor: arabischer Text und der
+ * übernommene deutsche Altbestand. Der Online-Weg bleibt nur als Notfallpfad,
+ * falls eine lokale Datei einmal fehlt oder beschädigt ist.
  */
-export const OFFLINE_QURAN_SURAHS = [1, 112, 113, 114] as const;
+export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);
 export const OFFLINE_QURAN_SURAH_SET = new Set<number>(OFFLINE_QURAN_SURAHS);
 
 interface QuranApiEdition {
@@ -208,13 +208,24 @@ export async function fetchSurahBundle(number: number): Promise<QuranSurahBundle
     return fetchOnlineSurahBundle(meta);
   }
 
-  const [arabic, german] = await Promise.all([
-    fetchOfflineSurahDetail(number, 'ar'),
-    fetchOfflineSurahDetail(number, 'de'),
-  ]);
-  if (arabic.ayahs.length !== meta.numberOfAyahs || german.ayahs.length !== meta.numberOfAyahs) {
-    throw new Error('Die lokalen Quran-Dateien dieser Sure sind unvollständig.');
+  // Every surah is bundled, so the online edition is no longer a routine path.
+  // It stays reachable for the one case the local copy cannot serve: a missing
+  // or truncated file. Reading on is better than a dead screen, and the bundle
+  // still reports which source the text came from.
+  let arabic: SurahDetail;
+  let german: SurahDetail;
+  try {
+    [arabic, german] = await Promise.all([
+      fetchOfflineSurahDetail(number, 'ar'),
+      fetchOfflineSurahDetail(number, 'de'),
+    ]);
+    if (arabic.ayahs.length !== meta.numberOfAyahs || german.ayahs.length !== meta.numberOfAyahs) {
+      throw new Error('Die lokalen Quran-Dateien dieser Sure sind unvollständig.');
+    }
+  } catch {
+    return fetchOnlineSurahBundle(meta);
   }
+
   return {
     meta,
     arabic,

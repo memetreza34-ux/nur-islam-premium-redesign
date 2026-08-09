@@ -16,7 +16,7 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Startseite | Vorhanden | Gemeinsamer dynamischer Demo-Zeitplan mit Gebetsseite eingebunden; echte Quelle bleibt offen |
 | Gebetszeiten | Teilweise | Echte standort- und methodenabhängige Quelle anbinden |
 | Islamischer Kalender | Vorhanden | Regionale Hijri-Abweichungen und Ereignisquelle ergänzen |
-| Quran | Teilweise | 114-Suren-Katalog, Suche, Filter, Favoriten und dynamischer Offline-Reader vorhanden; aktuell Al-Fatiha, Al-Ikhlas, Al-Falaq und An-Nas vollständig lokal, restliche arabische und deutsche Dateien werden weiter aus dem Altbestand übertragen |
+| Quran | Migriert | 114-Suren-Katalog, Suche, Filter, Favoriten und Offline-Reader; alle 114 Suren liegen paarweise lokal vor (Arabisch und deutscher Altbestand, 6236 Ayat). Fachliche Endprüfung der deutschen Bedeutungen bleibt offen |
 | Dhikr | Migriert | Belegte Routinen nach dem Gebet, morgens und vor dem Schlafen sowie neutraler freier Zähler; tägliche Einzelstände, automatische Tagesgrenze, Fortschritt und sichtbare Quellen |
 | Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
 | Duas | Migriert | 34 Einträge in 13 Kategorien, Suche, Favoriten, Lesefortschritt, Detailansicht, Kopieren und Teilen; fachliche Einzelprüfung ausstehend |
@@ -34,8 +34,8 @@ Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnv
 | Filter | Migriert | Alle, offline verfügbar, Favoriten, mekkanisch und medinensisch |
 | Reader | Migriert | Dynamische Sure, arabischer Text, sinngemäße deutsche Bedeutung, Schriftgröße, Bedeutungsanzeige, Kopieren, Teilen und lokale Lesezeichen |
 | Lesefortschritt | Migriert | Letzte Sure und aktive Ayah werden lokal gespeichert und auf Home/Quran weitergeführt |
-| Offline-PWA | Migriert | Katalog und aktuell verfügbare Suren werden durch Service Worker v5 vorab gespeichert |
-| Vollständiger Textbestand | Teilweise | 4 von 114 Suren paarweise in Arabisch und Deutsch übertragen; restliche Dateien offen |
+| Offline-PWA | Migriert | Katalog und vier Kernsuren liegen im App-Shell-Cache; die übrigen 110 werden nach der Aktivierung im Hintergrund nachgeladen |
+| Vollständiger Textbestand | Migriert | Alle 114 Suren paarweise in Arabisch und Deutsch aus dem Altbestand übernommen; 6236 Ayat, Zählung gegen `surahs.json` geprüft |
 | Audio | Offen | Erst mit geprüfter Rezitationsquelle aktivieren; aktuelle Oberfläche täuscht keine Wiedergabe vor |
 | Deutsche Bedeutungen | Teilweise | Altbestand übernommen und ausdrücklich als sinngemäße Bedeutung markiert; fachliche Endprüfung ausstehend |
 
