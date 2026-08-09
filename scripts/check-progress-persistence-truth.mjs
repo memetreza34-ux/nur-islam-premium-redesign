@@ -4,7 +4,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [app, quran, reader, duas, names, dhikr, collections, backend] = await Promise.all([
+const [app, quran, reader, duas, names, dhikr, collections, calendar, notes, account, backend] = await Promise.all([
   read('src/App.tsx'),
   read('src/QuranScreen.tsx'),
   read('src/QuranReaderScreen.tsx'),
@@ -12,6 +12,9 @@ const [app, quran, reader, duas, names, dhikr, collections, backend] = await Pro
   read('src/NamesScreen.tsx'),
   read('src/DhikrScreen.tsx'),
   read('src/CollectionsScreen.tsx'),
+  read('src/CalendarScreen.tsx'),
+  read('src/NotesScreen.tsx'),
+  read('src/AccountScreen.tsx'),
   read('src/nurBackend.ts'),
 ]);
 
@@ -110,6 +113,36 @@ forbidTokens(collections, 'Collection persistence routing', [
   "['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine']",
 ]);
 
+requireTokens(calendar, 'Calendar local identity', [
+  'const entryIdRef = useRef(Date.now() * 1000)',
+  'const nextEntryId = () => {',
+  'Math.max(entryIdRef.current + 1, Date.now() * 1000)',
+  'id: nextEntryId()',
+  'toastTimerRef',
+]);
+forbidTokens(calendar, 'Calendar local identity', [
+  'id: Date.now()',
+]);
+
+requireTokens(notes, 'Local note identity', [
+  'const localNoteIdRef = useRef(Date.now() * 1000)',
+  'const nextLocalNoteId = () => {',
+  'Math.max(localNoteIdRef.current + 1, Date.now() * 1000)',
+  'id: nextLocalNoteId()',
+]);
+forbidTokens(notes, 'Local note identity', [
+  'id: `local-${Date.now()}`',
+]);
+
+requireTokens(account, 'Cloud deletion wording', [
+  'Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet.',
+  'Die Daten auf diesem Gerät werden nicht angetastet.',
+  'Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet.',
+]);
+forbidTokens(account, 'Cloud deletion wording', [
+  'Deine Anmeldung bleibt bestehen',
+]);
+
 requireTokens(backend, 'Cloud backup privacy', [
   "'nur_prayer_location'",
   "'nur_mosque_location_v1'",
@@ -118,4 +151,4 @@ requireTokens(backend, 'Cloud backup privacy', [
   'await signOut();',
 ]);
 
-console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing, and device-local/private state stays outside generic cloud backup.');
+console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing, local Calendar/Notes IDs are collision-resistant, cloud deletion wording matches the actual sign-out behavior, and device-local/private state stays outside generic cloud backup.');
