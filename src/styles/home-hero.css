@@ -3,11 +3,11 @@
   min-height: 400px;
   overflow: hidden;
   padding: 26px;
-  border: 1px solid rgba(244, 218, 160, 0.34);
+  border: 1px solid rgba(242, 215, 154, 0.34);
   border-radius: var(--radius-xl);
   background:
-    radial-gradient(circle at 73% 24%, rgba(250, 224, 153, 0.2), transparent 10rem),
-    linear-gradient(145deg, #0a513c 0%, #073b2d 46%, #031f18 100%);
+    radial-gradient(circle at 73% 24%, rgba(242, 215, 154, 0.2), transparent 10rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 46%, #00120f 100%);
   box-shadow: 0 28px 65px rgba(0, 0, 0, 0.4), 0 0 32px rgba(226, 191, 119, 0.08);
 }
 
@@ -26,21 +26,21 @@
   height: 170px;
   top: 70px;
   right: 24px;
-  border: 1px solid rgba(244, 218, 160, 0.2);
+  border: 1px solid rgba(242, 215, 154, 0.2);
   border-radius: 50%;
-  box-shadow: 0 0 55px rgba(244, 218, 160, 0.12), inset 0 0 36px rgba(244, 218, 160, 0.08);
+  box-shadow: 0 0 55px rgba(242, 215, 154, 0.12), inset 0 0 36px rgba(242, 215, 154, 0.08);
 }
 .prayer-hero__halo::before,
 .prayer-hero__halo::after {
   content: '';
   position: absolute;
   inset: 22px;
-  border: 1px solid rgba(244, 218, 160, 0.13);
+  border: 1px solid rgba(242, 215, 154, 0.13);
   border-radius: 50%;
 }
 .prayer-hero__halo::after {
   inset: 50px;
-  background: radial-gradient(circle, rgba(244, 218, 160, 0.18), transparent 68%);
+  background: radial-gradient(circle, rgba(242, 215, 154, 0.18), transparent 68%);
 }
 
 .mosque-silhouette {
@@ -68,7 +68,7 @@
   display: inline-flex;
   align-items: center;
   gap: 5px;
-  color: rgba(247, 236, 216, 0.72);
+  color: rgba(246, 235, 214, 0.72);
   font-size: 0.75rem;
   font-weight: 600;
 }
@@ -86,7 +86,7 @@
   align-items: center;
   gap: 7px;
   margin-top: 15px;
-  color: rgba(247, 236, 216, 0.76);
+  color: rgba(246, 235, 214, 0.76);
   font-size: 0.78rem;
   font-weight: 600;
 }
@@ -117,8 +117,8 @@
   display: block;
   height: 100%;
   border-radius: inherit;
-  background: linear-gradient(90deg, #b78946, var(--gold-bright));
-  box-shadow: 0 0 14px rgba(244, 218, 160, 0.55);
+  background: linear-gradient(90deg, #8d6d39, var(--gold-bright));
+  box-shadow: 0 0 14px rgba(242, 215, 154, 0.55);
 }
 .hero-progress span { width: 58%; }
 
@@ -130,10 +130,10 @@
   width: fit-content;
   margin-top: 26px;
   padding: 12px 17px;
-  border: 1px solid rgba(255, 248, 232, 0.45);
+  border: 1px solid rgba(255, 248, 234, 0.45);
   border-radius: 999px;
-  color: #09231b;
-  background: linear-gradient(135deg, var(--gold-bright), #d4aa5c);
+  color: #00120f;
+  background: linear-gradient(135deg, var(--gold-bright), #e2bf77);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.22), 0 0 18px rgba(226, 191, 119, 0.18);
   font-size: 0.77rem;
   font-weight: 800;
@@ -165,7 +165,7 @@
 .progress-ring__value {
   stroke: var(--gold-bright);
   stroke-linecap: round;
-  filter: drop-shadow(0 0 4px rgba(244, 218, 160, 0.45));
+  filter: drop-shadow(0 0 4px rgba(242, 215, 154, 0.45));
   transition: stroke-dashoffset 300ms ease;
 }
 .progress-ring strong {
@@ -184,7 +184,7 @@
   min-width: 0;
   padding: 9px 4px;
   border: 1px solid rgba(255, 255, 255, 0.055);
-  border-radius: 14px;
+  border-radius: 18px;
   color: var(--muted-green);
   background: rgba(255, 255, 255, 0.025);
   font-size: 0.61rem;
