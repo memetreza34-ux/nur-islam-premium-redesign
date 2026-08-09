@@ -11,6 +11,7 @@
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
+    "e2e": "playwright test",
     "rls:verify": "node scripts/verify-rls.mjs",
     "assets:check": "node scripts/check-reference-assets.mjs",
     "image-map:check": "node scripts/check-reference-image-map.mjs",
@@ -68,6 +69,7 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.62.1",
     "@types/node": "^22.14.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
