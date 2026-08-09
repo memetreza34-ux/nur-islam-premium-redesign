@@ -8,6 +8,8 @@ on:
     paths:
       - 'src/App.tsx'
       - 'src/styles/base.css'
+      - 'src/styles/home-hero.css'
+      - 'src/styles/home-content.css'
       - 'src/styles/reference-home-exact.css'
       - 'src/styles/premium-art-direction-lock.css'
       - 'src/styles/premium-art-composition-lock.css'
