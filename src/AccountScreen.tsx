@@ -226,7 +226,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
             <button onClick={() => void exportData()} disabled={busy}><Download size={18} /> Meine Daten exportieren</button>
             {confirmDelete ? (
               <div className="reference-account-data-confirm" role="alertdialog" aria-label="Cloud-Daten endgültig löschen">
-                <p>Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Deine Anmeldung bleibt bestehen, und die Daten auf diesem Gerät werden nicht angetastet.</p>
+                <p>Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet. Die Daten auf diesem Gerät werden nicht angetastet.</p>
                 <div>
                   <button onClick={() => setConfirmDelete(false)} disabled={busy}>Abbrechen</button>
                   <button className="is-destructive" onClick={() => void removeCloudData()} disabled={busy}>Endgültig löschen</button>
