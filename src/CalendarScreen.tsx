@@ -33,10 +33,20 @@ function getDateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+function isValidDateKey(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day, 12);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
+
 function getInitialCalendarPosition(initialDateKey?: string | null) {
   const today = new Date();
   let target = today;
-  if (initialDateKey && /^\d{4}-\d{2}-\d{2}$/.test(initialDateKey)) {
+  if (initialDateKey && isValidDateKey(initialDateKey)) {
     const parsed = new Date(`${initialDateKey}T12:00:00`);
     if (!Number.isNaN(parsed.getTime())) target = parsed;
   }
@@ -50,7 +60,12 @@ function readFavorites() {
   try {
     const stored = localStorage.getItem('nur_calendar_favorites');
     const parsed = stored ? JSON.parse(stored) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is string => typeof value === 'string') : []);
+    const valid = Array.isArray(parsed)
+      ? parsed.filter((value): value is string => typeof value === 'string' && isValidDateKey(value))
+      : [];
+    const normalized = [...new Set(valid)];
+    if (JSON.stringify(normalized) !== JSON.stringify(parsed)) localStorage.setItem('nur_calendar_favorites', JSON.stringify(normalized));
+    return new Set(normalized);
   } catch {
     return new Set<string>();
   }
