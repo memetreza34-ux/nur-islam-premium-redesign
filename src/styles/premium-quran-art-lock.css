@@ -1,4 +1,5 @@
 /* Quran-specific final art direction. Presentation only. */
+/* React keeps quran-closed-v2.webp as the continue-card source; this layer controls presentation only. */
 
 /* ---------- Continue hero ---------- */
 .reference-quran-continue {
