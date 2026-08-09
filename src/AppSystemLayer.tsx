@@ -41,16 +41,29 @@ export function NetworkStatus() {
 
   useEffect(() => {
     let restoredTimer: number | undefined;
-    const handleOffline = () => { setOnline(false); setRestored(false); };
+    const clearRestoredTimer = () => {
+      if (!restoredTimer) return;
+      window.clearTimeout(restoredTimer);
+      restoredTimer = undefined;
+    };
+    const handleOffline = () => {
+      clearRestoredTimer();
+      setOnline(false);
+      setRestored(false);
+    };
     const handleOnline = () => {
+      clearRestoredTimer();
       setOnline(true);
       setRestored(true);
-      restoredTimer = window.setTimeout(() => setRestored(false), 2400);
+      restoredTimer = window.setTimeout(() => {
+        setRestored(false);
+        restoredTimer = undefined;
+      }, 2400);
     };
     window.addEventListener('offline', handleOffline);
     window.addEventListener('online', handleOnline);
     return () => {
-      if (restoredTimer) window.clearTimeout(restoredTimer);
+      clearRestoredTimer();
       window.removeEventListener('offline', handleOffline);
       window.removeEventListener('online', handleOnline);
     };
