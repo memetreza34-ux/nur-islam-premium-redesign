@@ -55,6 +55,16 @@ git config core.hooksPath .githooks
 
 GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. Therefore the complete `npm run check`, TypeScript build validation and real browser/device QA have **not** yet been certified for this branch. The source-level regression suite has been updated to represent the intended behavior, but it still needs an executable runner before release.
 
+## Deployment
+
+`.github/workflows/deploy-pages.yml` builds the app and publishes `dist/` to GitHub Pages on every push to `premium-design-finish`. The build already targets `/nur-islam-premium-redesign/` as its base path, which matches the default GitHub Pages project URL, so no further routing changes are needed.
+
+One manual, one-time step, in the repository's **Settings → Pages**: set **Source** to **GitHub Actions**. Until that is done, the workflow runs but has nowhere to publish to.
+
+This also needs the same GitHub Actions billing fix as the check workflow above — neither can run while that is blocked.
+
+Optional: set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as repository Actions **variables** (Settings → Secrets and variables → Actions → Variables) to build against a specific Supabase project. Both are the public client key and project URL — not secrets, since the publishable key is meant to be readable in a browser bundle and is scoped by row-level security. Leaving them unset builds against the same public default the code already falls back to locally.
+
 ## Backend
 
 Supabase resources are intentionally namespaced with `nur_islam_*` so this app does not overwrite tables belonging to other projects in the shared Supabase project.
