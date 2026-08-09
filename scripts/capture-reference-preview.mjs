@@ -47,6 +47,15 @@ async function capture(page, name, { fullPage = false } = {}) {
   });
 }
 
+async function captureAt(page, selector, name) {
+  const target = page.locator(selector).first();
+  await target.waitFor({ state: 'visible', timeout: 10_000 });
+  await target.scrollIntoViewIfNeeded();
+  // Give lazy premium images a deterministic frame to decode after the scroll.
+  await page.waitForTimeout(450);
+  await capture(page, name);
+}
+
 async function clickNav(page, label) {
   const item = page.locator('.bottom-nav__item').filter({ hasText: label }).first();
   await item.waitFor({ state: 'visible' });
@@ -96,6 +105,14 @@ try {
   await waitForStableUi(page);
   await capture(page, '01-home');
   await capture(page, '01-home-full', { fullPage: true });
+
+  // The app shell scrolls independently on mobile, so fullPage alone does not
+  // expose the lower Home art. Capture the actual premium object groups too.
+  await captureAt(page, '.journey-grid', '01a-home-journey');
+  await captureAt(page, '.quick-grid--v2', '01b-home-quick-actions');
+  await captureAt(page, '.continue-card--v2', '01c-home-quran-continue');
+  await captureAt(page, '.inspiration-grid--v2', '01d-home-inspiration');
+  await captureAt(page, '.welcome-hero', '01e-home-return-top');
 
   const destinations = [
     ['Gebete', '02-prayer'],
