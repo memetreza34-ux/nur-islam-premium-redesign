@@ -1,0 +1,54 @@
+/* Final per-asset corrections for legacy premium heroes.
+   These selectors only change artwork presentation; feature logic and layout
+   remain owned by the existing legacy screen system. */
+
+/* The mosque source contains generous transparent margins. On the Islamische
+   Orte hero the generic 126px image box made the actual mosque disappear.
+   Scale the artwork inside the existing right-side composition instead. */
+.reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
+  width: 176px !important;
+  max-width: none !important;
+  max-height: 188px !important;
+  object-fit: contain !important;
+  object-position: center bottom !important;
+  transform: translate(22px, -2px) scale(1.5) !important;
+  transform-origin: center bottom !important;
+  filter:
+    drop-shadow(0 24px 22px rgba(0, 0, 0, .48))
+    brightness(1.16)
+    saturate(1.1)
+    contrast(1.055) !important;
+}
+
+/* Calendar-chip is intentionally an ornament, but it still needs enough visual
+   weight to read as deliberate premium art rather than an accidental badge. */
+.reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
+  width: 154px !important;
+  max-width: none !important;
+  max-height: 92px !important;
+  object-fit: contain !important;
+  transform: translate(12px, -1px) scale(1.12) !important;
+  transform-origin: center !important;
+  filter:
+    drop-shadow(0 16px 18px rgba(0, 0, 0, .4))
+    brightness(1.08)
+    saturate(1.05)
+    contrast(1.04) !important;
+}
+
+[data-theme='light'] .reference-legacy-hero img[src*="mosque-gold-v2.webp"],
+[data-theme='light'] .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
+  filter: drop-shadow(0 16px 18px rgba(61, 46, 23, .18)) saturate(.97) contrast(1.02) !important;
+}
+
+@media (max-width: 350px) {
+  .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
+    width: 150px !important;
+    transform: translate(20px, 0) scale(1.38) !important;
+  }
+
+  .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
+    width: 128px !important;
+    transform: translate(12px, 0) scale(1.08) !important;
+  }
+}
