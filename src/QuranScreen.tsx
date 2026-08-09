@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bookmark,
   BookmarkCheck,
@@ -48,25 +48,27 @@ function readNumberSet(key: string) {
   }
 }
 
-function readLastRead(): LastRead {
-  const fallback = { surahNumber: 112, ayahNumber: 1, updatedAt: new Date().toISOString() };
+function readLastRead(): LastRead | null {
   try {
     const raw = localStorage.getItem('nur_quran_last_read');
-    if (!raw) return fallback;
+    if (!raw) return null;
     const parsed = JSON.parse(raw) as Partial<LastRead>;
-    const surahNumber = typeof parsed.surahNumber === 'number' && Number.isInteger(parsed.surahNumber) && parsed.surahNumber >= 1 && parsed.surahNumber <= 114
-      ? parsed.surahNumber
-      : fallback.surahNumber;
-    const ayahNumber = typeof parsed.ayahNumber === 'number' && Number.isInteger(parsed.ayahNumber) && parsed.ayahNumber >= 1
-      ? parsed.ayahNumber
-      : fallback.ayahNumber;
+    if (
+      typeof parsed.surahNumber !== 'number'
+      || !Number.isInteger(parsed.surahNumber)
+      || parsed.surahNumber < 1
+      || parsed.surahNumber > 114
+      || typeof parsed.ayahNumber !== 'number'
+      || !Number.isInteger(parsed.ayahNumber)
+      || parsed.ayahNumber < 1
+    ) return null;
     return {
-      surahNumber,
-      ayahNumber,
-      updatedAt: typeof parsed.updatedAt === 'string' ? parsed.updatedAt : fallback.updatedAt,
+      surahNumber: parsed.surahNumber,
+      ayahNumber: parsed.ayahNumber,
+      updatedAt: typeof parsed.updatedAt === 'string' ? parsed.updatedAt : new Date(0).toISOString(),
     };
   } catch {
-    return fallback;
+    return null;
   }
 }
 
@@ -92,6 +94,7 @@ export function QuranScreen({
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -112,10 +115,17 @@ export function QuranScreen({
   }, [reloadToken]);
 
   useEffect(() => persistSet('nur_quran_surah_favorites', favorites), [favorites]);
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2200);
   };
 
   const visible = useMemo(() => {
@@ -131,9 +141,11 @@ export function QuranScreen({
     });
   }, [favorites, filter, query, surahs]);
 
-  const lastSurah = surahs.find((surah) => surah.number === lastRead.surahNumber)
-    ?? surahs.find((surah) => surah.number === 112);
-  const lastAyah = lastSurah ? Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs) : lastRead.ayahNumber;
+  const lastSurah = lastRead
+    ? surahs.find((surah) => surah.number === lastRead.surahNumber)
+    : surahs.find((surah) => surah.number === 1);
+  const lastAyah = lastRead && lastSurah ? Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs) : 1;
+  const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1;
 
   const toggleFavorite = (number: number) => {
     setFavorites((current) => {
@@ -159,11 +171,11 @@ export function QuranScreen({
 
       <section className="reference-quran-continue">
         <div className="reference-quran-continue__copy">
-          <span className="hero-pill">Weiterlesen</span>
-          <h2>{lastSurah?.englishName ?? `Sure ${lastRead.surahNumber}`}</h2>
-          <p>Sure {lastRead.surahNumber} · Ayah {lastAyah}</p>
-          <span className="reference-quran-progress"><i style={{ width: `${lastSurah ? Math.min(100, Math.max(4, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 4}%` }} /></span>
-          <button className="reference-inline-button" onClick={() => onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)}>Weiterlesen <ChevronRight size={16} /></button>
+          <span className="hero-pill">{lastRead ? 'Weiterlesen' : 'Quran beginnen'}</span>
+          <h2>{lastSurah?.englishName ?? (lastRead ? `Sure ${lastRead.surahNumber}` : 'Al-Faatiha')}</h2>
+          <p>{lastRead ? `Sure ${readerSurahNumber} · Ayah ${lastAyah}` : 'Noch kein gespeicherter Lesestand · Start bei Sure 1'}</p>
+          <span className="reference-quran-progress"><i style={{ width: `${lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0}%` }} /></span>
+          <button className="reference-inline-button" onClick={() => onOpenReader(readerSurahNumber, lastAyah)}>{lastRead ? 'Weiterlesen' : 'Lesen beginnen'} <ChevronRight size={16} /></button>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="reference-quran-continue__book" fallback={<QuranObject />} />
       </section>
