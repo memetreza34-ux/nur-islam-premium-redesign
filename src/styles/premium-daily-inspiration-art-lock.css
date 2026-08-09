@@ -121,6 +121,13 @@
   text-shadow: 0 3px 18px rgba(0, 0, 0, .34);
 }
 
+/* Eyebrow/meta copy keeps the approved muted-green secondary tone so the
+   quote remains the visual focal point without flattening the palette. */
+.hadith-card .overline,
+.reference-hadith-hero .overline {
+  color: rgba(145, 168, 158, .8) !important;
+}
+
 .hadith-card footer,
 .reference-hadith-hero footer {
   color: rgba(226, 191, 119, .8) !important;
@@ -143,6 +150,11 @@
 [data-theme='light'] .reference-hadith-hero blockquote {
   color: rgba(23, 56, 44, .86) !important;
   text-shadow: none;
+}
+
+[data-theme='light'] .hadith-card .overline,
+[data-theme='light'] .reference-hadith-hero .overline {
+  color: rgba(58, 80, 67, .72) !important;
 }
 
 [data-theme='light'] .hadith-card footer,
