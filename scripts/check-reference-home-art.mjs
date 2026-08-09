@@ -88,18 +88,34 @@ requireTokens(app, 'Home artwork map', [
   'mihrab-arch-v2.webp" className="verse-card__art"',
 ]);
 
-requireTokens(app, 'Home semantic actions', [
+requireTokens(app, 'Home semantic actions and honest progress', [
   '<BellRing size={20} />',
   "onNavigate('prayer')",
   '<Menu size={20} />',
   "onNavigate('profile')",
-  "label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen",
+  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: BookOpen",
   "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart",
   "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles",
   "label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit",
   "label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart",
   "label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: MessageCircleQuestion",
+  'hasProgress: boolean',
+  'surahNumber: 1',
+  "englishName: 'Al-Faatiha'",
+  'hasProgress: false',
+  'quranProgress.hasProgress && quranProgress.numberOfAyahs',
+  ": 0;",
+  "'Quran beginnen'",
+  "'Noch kein Lesestand'",
+  "'Noch kein gespeicherter Lesestand'",
 ]);
+
+for (const forbidden of [
+  'surahNumber: 112,\n    ayahNumber: 1,\n    englishName: \'Al-Ikhlaas\'',
+  "label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen",
+]) {
+  if (app.includes(forbidden)) throw new Error(`Home still contains synthetic Quran resume state: ${forbidden}`);
+}
 
 requireTokens(finalLock, 'Final Home reference lock', [
   '.welcome-hero,',
@@ -154,4 +170,4 @@ if (homeLayers.includes('content: url(') || homeLayers.includes('content:url('))
   throw new Error('Home visual CSS must not swap React image sources via content:url(...).');
 }
 
-console.log('Home reference audit verified: Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the final geometry lock remains the last stylesheet import.');
+console.log('Home reference audit verified: Home uses honest Quran progress with an explicit zero-progress start state, Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the final geometry lock remains the last stylesheet import.');
