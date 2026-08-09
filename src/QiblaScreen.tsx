@@ -85,14 +85,19 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const [sensorAccuracy, setSensorAccuracy] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
   const sensorTimeoutRef = useRef<number | null>(null);
+  const toastTimeoutRef = useRef<number | null>(null);
   const direction = useMemo(() => calculateBearing(coordinates, KAABA), [coordinates]);
   const distance = useMemo(() => calculateDistance(coordinates, KAABA), [coordinates]);
   const roundedDirection = Math.round(direction);
   const needleRotation = heading === null ? direction : normalizeDegrees(direction - heading);
 
   const flash = (message: string) => {
+    if (toastTimeoutRef.current !== null) window.clearTimeout(toastTimeoutRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2100);
+    toastTimeoutRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimeoutRef.current = null;
+    }, 2100);
   };
 
   const clearSensorTimeout = useCallback(() => {
@@ -134,6 +139,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     clearSensorTimeout();
     window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
     window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
+    if (toastTimeoutRef.current !== null) window.clearTimeout(toastTimeoutRef.current);
   }, [clearSensorTimeout, handleOrientation]);
 
   const startCompass = async () => {
