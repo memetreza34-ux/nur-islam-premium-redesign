@@ -113,15 +113,21 @@ forbidTokens(collections, 'Collection persistence routing', [
   "['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine']",
 ]);
 
-requireTokens(calendar, 'Calendar local identity', [
+requireTokens(calendar, 'Calendar persistence', [
+  'function isValidDateKey(value: string)',
+  "const match = /^(\\d{4})-(\\d{2})-(\\d{2})$/.exec(value)",
+  "typeof value === 'string' && isValidDateKey(value)",
+  'const normalized = [...new Set(valid)]',
+  "localStorage.setItem('nur_calendar_favorites', JSON.stringify(normalized))",
   'const entryIdRef = useRef(Date.now() * 1000)',
   'const nextEntryId = () => {',
   'Math.max(entryIdRef.current + 1, Date.now() * 1000)',
   'id: nextEntryId()',
   'toastTimerRef',
 ]);
-forbidTokens(calendar, 'Calendar local identity', [
+forbidTokens(calendar, 'Calendar persistence', [
   'id: Date.now()',
+  "parsed.filter((value): value is string => typeof value === 'string')",
 ]);
 
 requireTokens(notes, 'Local note identity', [
@@ -151,4 +157,4 @@ requireTokens(backend, 'Cloud backup privacy', [
   'await signOut();',
 ]);
 
-console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing, local Calendar/Notes IDs are collision-resistant, cloud deletion wording matches the actual sign-out behavior, and device-local/private state stays outside generic cloud backup.');
+console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing, Calendar favorite dates are validated/deduplicated, local Calendar/Notes IDs are collision-resistant, cloud deletion wording matches the actual sign-out behavior, and device-local/private state stays outside generic cloud backup.');
