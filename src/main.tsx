@@ -15,6 +15,7 @@ import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminder
 import { startCalendarReminderScheduler } from './calendarReminderService';
 import { startFastingReminderMaintenance } from './fastingReminderService';
 import { startInstallPromptCapture } from './installPromptService';
+import { queuePendingNavigation } from './pendingNavigation';
 import { startPrayerReminderScheduler } from './prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';
 import { registerNurPwa } from './pwa';
@@ -31,19 +32,17 @@ const PREVIEW_ASSETS = [
   'qibla-compass-v2.webp',
 ];
 
-type InitialNavigationIntent = 'prayer' | 'calendar' | null;
-
-function consumeInitialNavigationIntent(): InitialNavigationIntent {
+function consumeInitialNavigationIntent() {
   const url = new URL(window.location.href);
   const requested = url.searchParams.get('open');
-  const intent: InitialNavigationIntent = requested === 'prayer' ? 'prayer' : requested === 'calendar' ? 'calendar' : null;
-  if (!intent) return null;
+  const intent = requested === 'prayer' ? 'prayer' : requested === 'calendar' ? 'calendar' : null;
+  if (!intent) return;
 
   try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* direct navigation still works */ }
+  queuePendingNavigation(intent);
   url.searchParams.delete('open');
   const cleanUrl = `${url.pathname}${url.search}${url.hash}`;
   window.history.replaceState(window.history.state, '', cleanUrl);
-  return intent;
 }
 
 function prepareImmediatePreview() {
@@ -75,7 +74,7 @@ function prepareImmediatePreview() {
 }
 
 const stopInstallPromptCapture = startInstallPromptCapture();
-const initialNavigationIntent = consumeInitialNavigationIntent();
+consumeInitialNavigationIntent();
 prepareImmediatePreview();
 const stopThemeWatcher = initializeTheme();
 const sharedPrayerTimesReady = bootstrapSharedPrayerTimes();
@@ -141,14 +140,6 @@ function BootRoot() {
       stopFastingReminderMaintenance();
     };
   }, []);
-
-  useEffect(() => {
-    if (!ready || !initialNavigationIntent) return undefined;
-    const timer = window.setTimeout(() => {
-      window.dispatchEvent(new Event(initialNavigationIntent === 'prayer' ? 'nur:open-prayer' : 'nur:open-calendar'));
-    }, 80);
-    return () => window.clearTimeout(timer);
-  }, [ready]);
 
   return (
     <AnimatePresence mode="wait" initial={false}>
