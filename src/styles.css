@@ -265,7 +265,7 @@
 }
 
 /* Final focal mosque treatment. The source asset intentionally contains a lot
-   of transparent breathing room; these two compositions scale the actual
+   of transparent breathing room; these compositions scale the actual
    architecture, not the card geometry, so the approved artwork reads clearly
    in the real 390x844 render. */
 .reference-splash__mosque {
@@ -309,6 +309,38 @@
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.42) 25%, #000 54%, #000 100%);
 }
 
+/* Home uses the same approved mosque source but a calmer, larger atmospheric
+   composition. It sits on the free right side of the 42px hero, behind the
+   copy/date hierarchy, and fades before it can reduce text contrast. */
+.premium-home--v2 .welcome-hero__visual {
+  position: absolute !important;
+  z-index: 1 !important;
+  right: -8px !important;
+  bottom: 74px !important;
+  width: 242px !important;
+  height: 286px !important;
+  opacity: .5 !important;
+  overflow: visible !important;
+}
+
+.premium-home--v2 .welcome-hero__visual > img {
+  transform: translate(30px, 4px) scale(1.72) !important;
+  transform-origin: right bottom !important;
+  filter:
+    drop-shadow(0 34px 30px rgba(0, 0, 0, .5))
+    brightness(1.14)
+    saturate(1.1)
+    contrast(1.06) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
+}
+
+.premium-home--v2 .welcome-hero__copy,
+.premium-home--v2 .welcome-hero__date {
+  position: relative;
+  z-index: 3 !important;
+}
+
 @media (max-width: 350px) {
   .reference-splash__mosque {
     right: -36px !important;
@@ -326,5 +358,17 @@
 
   .reference-mosque-hero > .premium-image > img {
     transform: translate(22px, -8px) scale(1.7) !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual {
+    right: -20px !important;
+    bottom: 70px !important;
+    width: 214px !important;
+    height: 264px !important;
+    opacity: .43 !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual > img {
+    transform: translate(28px, 4px) scale(1.62) !important;
   }
 }
