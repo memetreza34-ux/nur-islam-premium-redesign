@@ -22,16 +22,28 @@
   filter: drop-shadow(0 8px 13px rgba(0, 0, 0, .3)) saturate(1.02) !important;
 }
 
-/* Slide 1: mosque should feel grounded and architectural. */
+/* Slide 1: mosque should feel grounded and architectural. The source image
+   contains generous transparent breathing room, so scale the actual artwork
+   inside its safe hero container rather than leaving only the halo visible. */
 .reference-onboarding__visual--1 > .premium-image {
   width: 330px !important;
   height: 258px !important;
+  overflow: visible !important;
+  opacity: 1 !important;
   transform: translateY(14px) !important;
 }
 
 .reference-onboarding__visual--1 > .premium-image > img {
+  opacity: 1 !important;
+  object-fit: contain !important;
   object-position: center bottom !important;
-  filter: drop-shadow(0 28px 25px rgba(0, 0, 0, .5)) saturate(.96) contrast(1.04) !important;
+  transform: translate(20px, -10px) scale(1.62) !important;
+  transform-origin: center bottom !important;
+  filter:
+    drop-shadow(0 28px 25px rgba(0, 0, 0, .5))
+    brightness(1.18)
+    saturate(1.08)
+    contrast(1.055) !important;
 }
 
 /* Slide 2: compass is a circular hero, not a bottom-anchored object. */
@@ -99,7 +111,10 @@
 }
 
 @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .reference-onboarding__visual--1:hover > .premium-image > img,
+  .reference-onboarding__visual--1:hover > .premium-image > img {
+    transform: translate(20px, -10px) scale(1.64) !important;
+  }
+
   .reference-onboarding__visual--3:hover > .premium-image > img {
     scale: 1.012;
   }
@@ -109,7 +124,14 @@
   }
 }
 
-[data-theme='light'] .reference-onboarding__visual--1 > .premium-image > img,
+[data-theme='light'] .reference-onboarding__visual--1 > .premium-image > img {
+  filter:
+    drop-shadow(0 20px 21px rgba(59, 43, 20, .2))
+    brightness(1.04)
+    saturate(.98)
+    contrast(1.02) !important;
+}
+
 [data-theme='light'] .reference-onboarding__visual--2 > .premium-image > img,
 [data-theme='light'] .reference-onboarding__visual--3 > .premium-image > img,
 [data-theme='light'] .reference-onboarding__visual--3 .reference-onboarding__tasbih img {
@@ -120,6 +142,10 @@
   .reference-onboarding__visual--1 > .premium-image {
     width: 302px !important;
     height: 238px !important;
+  }
+
+  .reference-onboarding__visual--1 > .premium-image > img {
+    transform: translate(18px, -8px) scale(1.58) !important;
   }
 
   .reference-onboarding__visual--2 > .premium-image {
@@ -144,6 +170,10 @@
   .reference-onboarding__visual--1 > .premium-image {
     width: 278px !important;
     height: 220px !important;
+  }
+
+  .reference-onboarding__visual--1 > .premium-image > img {
+    transform: translate(16px, -6px) scale(1.52) !important;
   }
 
   .reference-onboarding__visual--2 > .premium-image {
