@@ -41,20 +41,6 @@
   opacity: .48 !important;
 }
 
-/* Legacy copy was authored against dark emerald surfaces. On the warm light
-   theme those muted values become too pale, so keep secondary copy in the
-   same readable green-ink family used by the rest of the light UI. */
-[data-theme='light'] .reference-legacy-hero p,
-[data-theme='light'] .reference-legacy-notice {
-  color: rgba(45,70,59,.78);
-}
-
-[data-theme='light'] .reference-fasting-grid small,
-[data-theme='light'] .reference-hadith-library small,
-[data-theme='light'] .reference-legacy-search input::placeholder {
-  color: rgba(57,78,67,.7);
-}
-
 @media (max-width:350px) {
   .reference-legacy-hero img[src*="mosque-gold-v2"] {
     right: -34px;
