@@ -5,12 +5,23 @@ import { chromium } from 'playwright';
 const outputDir = resolve(process.cwd(), 'artifacts/reference-preview');
 const baseUrl = process.env.PREVIEW_URL || 'http://127.0.0.1:4173/nur-islam-premium-redesign/';
 
+function withPreviewMode(mode) {
+  const url = new URL(baseUrl);
+  url.searchParams.delete('preview');
+  url.searchParams.delete('onboarding');
+  url.searchParams.set(mode === 'app' ? 'preview' : 'onboarding', '1');
+  return url.toString();
+}
+
+const appUrl = withPreviewMode('app');
+const onboardingUrl = withPreviewMode('onboarding');
+
 await mkdir(outputDir, { recursive: true });
 
 const browser = await chromium.launch({ headless: true });
 
-async function createContext({ completedOnboarding }) {
-  const context = await browser.newContext({
+async function createContext() {
+  return browser.newContext({
     viewport: { width: 390, height: 844 },
     deviceScaleFactor: 1,
     colorScheme: 'dark',
@@ -20,15 +31,6 @@ async function createContext({ completedOnboarding }) {
     permissions: ['geolocation'],
     reducedMotion: 'reduce',
   });
-
-  await context.addInitScript(({ completed }) => {
-    localStorage.setItem('nur_theme', 'dark');
-    localStorage.setItem('nur_install_prompt_dismissed', 'true');
-    if (completed) localStorage.setItem('nur_onboarding_complete', 'true');
-    else localStorage.removeItem('nur_onboarding_complete');
-  }, { completed: completedOnboarding });
-
-  return context;
 }
 
 async function waitForStableUi(page) {
@@ -76,10 +78,19 @@ async function returnHome(page) {
   await waitForStableUi(page);
 }
 
+async function attachDiagnostics(page, label) {
+  page.on('pageerror', (error) => console.error(`[${label}] page error:`, error));
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.error(`[${label}] console error:`, message.text());
+  });
+  page.on('requestfailed', (request) => console.error(`[${label}] request failed:`, request.url(), request.failure()?.errorText ?? 'unknown'));
+}
+
 try {
-  const appContext = await createContext({ completedOnboarding: true });
+  const appContext = await createContext();
   const page = await appContext.newPage();
-  await page.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+  await attachDiagnostics(page, 'app');
+  await page.goto(appUrl, { waitUntil: 'domcontentloaded' });
 
   await page.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(page);
@@ -139,9 +150,10 @@ try {
 
   await appContext.close();
 
-  const onboardingContext = await createContext({ completedOnboarding: false });
+  const onboardingContext = await createContext();
   const onboardingPage = await onboardingContext.newPage();
-  await onboardingPage.goto(baseUrl, { waitUntil: 'domcontentloaded' });
+  await attachDiagnostics(onboardingPage, 'onboarding');
+  await onboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
   await onboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(onboardingPage);
   await capture(onboardingPage, '16-onboarding');
