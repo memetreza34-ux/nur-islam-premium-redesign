@@ -1,6 +1,3 @@
-/* Learning / prayer-course / guide final art direction. Presentation only. */
-
-/* ---------- Main prayer-learning hub ---------- */
 .reference-prayer-learning-hub {
   position: relative;
   isolation: isolate;
@@ -11,28 +8,19 @@
     linear-gradient(145deg, #0d5743 0%, #07372b 61%, #00120f 100%) !important;
 }
 
-.reference-prayer-learning-hub__glow {
-  opacity: .8;
-}
-
-.reference-prayer-learning-hub__copy {
-  z-index: 4 !important;
-  max-width: 66% !important;
-}
-
+.reference-prayer-learning-hub__glow { opacity: .8; }
+.reference-prayer-learning-hub__copy { z-index: 4 !important; max-width: 66% !important; }
 .reference-prayer-learning-hub__copy h2 {
   max-width: 245px;
   color: #fff8ea !important;
   text-wrap: balance;
   text-shadow: 0 11px 28px rgba(0,0,0,.28);
 }
-
 .reference-prayer-learning-hub__copy p {
   max-width: 240px;
   color: rgba(145,168,158,.8) !important;
   text-wrap: pretty;
 }
-
 .reference-prayer-learning-hub > .premium-image {
   position: absolute !important;
   z-index: 2 !important;
@@ -42,14 +30,12 @@
   height: 246px !important;
   overflow: visible;
 }
-
 .reference-prayer-learning-hub > .premium-image > img {
   object-fit: contain !important;
   object-position: center bottom !important;
   filter: drop-shadow(0 28px 24px rgba(0,0,0,.49)) saturate(.94) contrast(1.04) !important;
   transform: translateY(5px) scale(.98);
 }
-
 .reference-prayer-learning-hub::after {
   content: '';
   position: absolute;
@@ -64,7 +50,6 @@
   pointer-events: none;
 }
 
-/* ---------- Prayer course hero ---------- */
 .reference-prayer-course-hero {
   position: relative;
   isolation: isolate;
@@ -74,22 +59,9 @@
     radial-gradient(circle at 83% 24%, rgba(226,191,119,.13), transparent 12rem),
     linear-gradient(145deg, #0d5743, #07372b 61%, #00120f) !important;
 }
-
-.reference-prayer-course-hero__copy {
-  z-index: 4 !important;
-  max-width: 67% !important;
-}
-
-.reference-prayer-course-hero__copy h2 {
-  color: #fff8ea !important;
-  text-wrap: balance;
-}
-
-.reference-prayer-course-hero__copy p {
-  color: rgba(145,168,158,.8) !important;
-  text-wrap: pretty;
-}
-
+.reference-prayer-course-hero__copy { z-index: 4 !important; max-width: 67% !important; }
+.reference-prayer-course-hero__copy h2 { color: #fff8ea !important; text-wrap: balance; }
+.reference-prayer-course-hero__copy p { color: rgba(145,168,158,.8) !important; text-wrap: pretty; }
 .reference-prayer-course-hero > .premium-image {
   position: absolute !important;
   z-index: 2 !important;
@@ -99,14 +71,12 @@
   height: 226px !important;
   overflow: visible;
 }
-
 .reference-prayer-course-hero > .premium-image > img {
   object-fit: contain !important;
   object-position: center bottom !important;
   filter: drop-shadow(0 27px 23px rgba(0,0,0,.48)) saturate(.94) contrast(1.04) !important;
 }
 
-/* ---------- Wudu / Salah guide ---------- */
 .reference-guide-hero {
   position: relative;
   isolation: isolate;
@@ -116,22 +86,13 @@
     radial-gradient(circle at 79% 25%, rgba(226,191,119,.13), transparent 12rem),
     linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
-
-.reference-guide-hero > div:last-child {
-  z-index: 4 !important;
-  max-width: 67% !important;
-}
-
+.reference-guide-hero > div:last-child { z-index: 4 !important; max-width: 67% !important; }
 .reference-guide-hero > div:last-child h2 {
   max-width: 245px;
   color: #fff8ea !important;
   text-wrap: balance;
 }
-
-.reference-guide-hero > div:last-child p {
-  color: rgba(145,168,158,.79) !important;
-}
-
+.reference-guide-hero > div:last-child p { color: rgba(145,168,158,.79) !important; }
 .reference-guide-hero > .premium-image {
   position: absolute !important;
   z-index: 2 !important;
@@ -141,15 +102,11 @@
   height: 190px !important;
   overflow: visible;
 }
-
-/* The component already renders this exact asset via its src; swapping it again
-   with content: url() only hides load failures from the image fallback. */
 .reference-guide-hero--wudu > .premium-image > img {
   object-fit: contain !important;
   object-position: center bottom !important;
   filter: drop-shadow(0 24px 22px rgba(0,0,0,.46)) saturate(.95) contrast(1.035) !important;
 }
-
 .reference-guide-hero--salah > .premium-image > img {
   object-fit: contain !important;
   object-position: center !important;
@@ -157,36 +114,20 @@
   filter: drop-shadow(0 24px 24px rgba(0,0,0,.49)) saturate(1.02) contrast(1.04) !important;
 }
 
-/* ---------- Knowledge course ---------- */
 .reference-learning-course-hero {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   min-height: 198px !important;
 }
-
 .reference-learning-course-hero__icon {
   z-index: 3 !important;
-  box-shadow:
-    0 16px 32px rgba(0,0,0,.23),
-    inset 0 1px 0 rgba(255,255,255,.055),
-    0 0 28px rgba(226,191,119,.045) !important;
+  box-shadow: 0 16px 32px rgba(0,0,0,.23), inset 0 1px 0 rgba(255,255,255,.055), 0 0 28px rgba(226,191,119,.045) !important;
 }
+.reference-learning-course-hero__glow { opacity: .76; }
+.reference-learning-course-hero__copy h2 { color: #fff8ea !important; text-wrap: balance; }
+.reference-learning-course-hero__progress > span { border: 1px solid rgba(255,255,255,.025); }
 
-.reference-learning-course-hero__glow {
-  opacity: .76;
-}
-
-.reference-learning-course-hero__copy h2 {
-  color: #fff8ea !important;
-  text-wrap: balance;
-}
-
-.reference-learning-course-hero__progress > span {
-  border: 1px solid rgba(255,255,255,.025);
-}
-
-/* ---------- Learning steps ---------- */
 .reference-prayer-learning-actions > button,
 .reference-five-prayer-lessons button,
 .reference-prayer-course-selector button,
@@ -201,7 +142,6 @@
   isolation: isolate;
   overflow: hidden;
 }
-
 .reference-five-prayer-lessons button::after,
 .reference-prayer-lesson-steps button::after,
 .reference-guide-steps > button::after,
@@ -219,110 +159,53 @@
   transition: opacity .18s ease;
   pointer-events: none;
 }
-
 .reference-five-prayer-lessons button > *,
 .reference-prayer-lesson-steps button > *,
 .reference-guide-steps > button > *,
 .reference-learning-key-points button > *,
-.reference-learning-quiz__options button > * {
-  position: relative;
-  z-index: 1;
-}
-
+.reference-learning-quiz__options button > * { position: relative; z-index: 1; }
 .reference-five-prayer-lessons button.is-complete::after,
 .reference-prayer-lesson-steps button.is-active::after,
 .reference-guide-steps > button.is-active::after,
 .reference-learning-key-points button.is-checked::after,
-.reference-learning-quiz__options button.is-correct::after {
-  opacity: 1;
-}
+.reference-learning-quiz__options button.is-correct::after { opacity: 1; }
 
-/* Learning focal heroes remain emerald under Light Theme. */
 [data-theme='light'] .reference-prayer-learning-hub,
 [data-theme='light'] .reference-prayer-course-hero,
 [data-theme='light'] .reference-guide-hero,
-[data-theme='light'] .reference-learning-course-hero {
-  color: #fff8ea;
-}
-
+[data-theme='light'] .reference-learning-course-hero { color: #fff8ea; }
 [data-theme='light'] .reference-prayer-learning-hub__copy h2,
 [data-theme='light'] .reference-prayer-course-hero__copy h2,
 [data-theme='light'] .reference-guide-hero h2,
-[data-theme='light'] .reference-learning-course-hero h2 {
-  color: #fff8ea !important;
-}
-
+[data-theme='light'] .reference-learning-course-hero h2 { color: #fff8ea !important; }
 [data-theme='light'] .reference-prayer-learning-hub__copy p,
 [data-theme='light'] .reference-prayer-course-hero__copy p,
-[data-theme='light'] .reference-guide-hero p {
-  color: rgba(246,235,214,.76) !important;
-}
-
+[data-theme='light'] .reference-guide-hero p { color: rgba(246,235,214,.76) !important; }
 [data-theme='light'] .reference-learn-screen .learning-hero {
   background: radial-gradient(circle at 92% 12%,rgba(242,215,154,.16),transparent 15rem),linear-gradient(145deg,#0d5743,#00120f) !important;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 390px) {
-  .reference-prayer-learning-hub {
-    min-height: 255px !important;
-  }
-
+@media (max-width:390px) {
+  .reference-prayer-learning-hub { min-height: 255px !important; }
   .reference-prayer-learning-hub__copy,
   .reference-prayer-course-hero__copy,
-  .reference-guide-hero > div:last-child {
-    max-width: 70% !important;
-  }
-
-  .reference-prayer-learning-hub > .premium-image {
-    right: -22px !important;
-    width: 184px !important;
-    height: 224px !important;
-  }
-
-  .reference-prayer-course-hero > .premium-image {
-    right: -20px !important;
-    width: 171px !important;
-    height: 207px !important;
-  }
-
-  .reference-guide-hero > .premium-image {
-    right: -18px !important;
-    width: 162px !important;
-    height: 176px !important;
-  }
+  .reference-guide-hero > div:last-child { max-width: 70% !important; }
+  .reference-prayer-learning-hub > .premium-image { right: -22px !important; width: 184px !important; height: 224px !important; }
+  .reference-prayer-course-hero > .premium-image { right: -20px !important; width: 171px !important; height: 207px !important; }
+  .reference-guide-hero > .premium-image { right: -18px !important; width: 162px !important; height: 176px !important; }
 }
-
-@media (max-width: 350px) {
+@media (max-width:350px) {
   .reference-prayer-learning-hub__copy,
   .reference-prayer-course-hero__copy,
-  .reference-guide-hero > div:last-child {
-    max-width: 74% !important;
-  }
-
-  .reference-prayer-learning-hub > .premium-image {
-    right: -36px !important;
-    width: 169px !important;
-    height: 210px !important;
-  }
-
-  .reference-prayer-course-hero > .premium-image {
-    right: -34px !important;
-    width: 156px !important;
-    height: 194px !important;
-  }
-
-  .reference-guide-hero > .premium-image {
-    right: -31px !important;
-    width: 148px !important;
-    height: 164px !important;
-  }}
-
-@media (prefers-reduced-motion: reduce) {
+  .reference-guide-hero > div:last-child { max-width: 74% !important; }
+  .reference-prayer-learning-hub > .premium-image { right: -36px !important; width: 169px !important; height: 210px !important; }
+  .reference-prayer-course-hero > .premium-image { right: -34px !important; width: 156px !important; height: 194px !important; }
+  .reference-guide-hero > .premium-image { right: -31px !important; width: 148px !important; height: 164px !important; }
+}
+@media (prefers-reduced-motion:reduce) {
   .reference-five-prayer-lessons button::after,
   .reference-prayer-lesson-steps button::after,
   .reference-guide-steps > button::after,
   .reference-learning-key-points button::after,
-  .reference-learning-quiz__options button::after {
-    transition: none !important;
-  }}
+  .reference-learning-quiz__options button::after { transition: none !important; }
+}
