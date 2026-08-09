@@ -79,6 +79,34 @@ async function screenshot(name) {
   });
 }
 
+async function inspectHeroArtwork(legacy, id) {
+  const image = legacy.locator('.reference-legacy-hero img').first();
+  const diagnostics = await image.evaluate((node) => {
+    const style = getComputedStyle(node);
+    const rect = node.getBoundingClientRect();
+    return {
+      currentSrc: node.currentSrc,
+      complete: node.complete,
+      naturalWidth: node.naturalWidth,
+      naturalHeight: node.naturalHeight,
+      hidden: node.hidden,
+      display: style.display,
+      visibility: style.visibility,
+      opacity: style.opacity,
+      position: style.position,
+      zIndex: style.zIndex,
+      width: rect.width,
+      height: rect.height,
+      left: rect.left,
+      top: rect.top,
+    };
+  });
+  console.log(`[legacy-art:${id}] ${JSON.stringify(diagnostics)}`);
+  if (!diagnostics.complete || diagnostics.naturalWidth <= 0 || diagnostics.naturalHeight <= 0) {
+    throw new Error(`Legacy hero artwork failed to load for ${id}: ${diagnostics.currentSrc}`);
+  }
+}
+
 try {
   await page.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
   await page.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
@@ -103,6 +131,7 @@ try {
       await hero.waitFor({ state: 'visible', timeout: 10_000 });
       await hero.scrollIntoViewIfNeeded();
       await settle();
+      await inspectHeroArtwork(legacy, id);
       await screenshot(`${String(group.startIndex + index).padStart(2, '0')}-legacy-${id}`);
 
       const back = legacy.locator('.reference-screen-header .icon-button').first();
