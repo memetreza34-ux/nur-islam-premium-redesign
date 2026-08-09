@@ -6,6 +6,8 @@ const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'mosque-gold.webp': 'mosque-gold-v2.webp',
   'mosque-gold.png': 'mosque-gold-v2.webp',
   'mosque.webp': 'mosque-gold-v2.webp',
+  // The archived mosque raster decodes as 0x0 in Chromium. Keep the historic
+  // v2 source contract, but terminate its alias chain at the valid vector art.
   'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
@@ -27,9 +29,13 @@ function normalizeBundledPath(path: string) {
   const normalized = path.replace(/^\.\//, '').replace(/^\/+/, '');
   if (!normalized.startsWith(PREMIUM_ASSET_PREFIX)) return normalized;
 
-  const fileName = normalized.slice(PREMIUM_ASSET_PREFIX.length);
-  const replacement = PREMIUM_ASSET_ALIASES[fileName];
-  return replacement ? `${PREMIUM_ASSET_PREFIX}${replacement}` : normalized;
+  let fileName = normalized.slice(PREMIUM_ASSET_PREFIX.length);
+  const visited = new Set<string>();
+  while (PREMIUM_ASSET_ALIASES[fileName] && !visited.has(fileName)) {
+    visited.add(fileName);
+    fileName = PREMIUM_ASSET_ALIASES[fileName];
+  }
+  return `${PREMIUM_ASSET_PREFIX}${fileName}`;
 }
 
 export function resolveAppPath(path: string) {
