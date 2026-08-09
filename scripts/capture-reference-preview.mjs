@@ -156,7 +156,19 @@ try {
   await onboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
   await onboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(onboardingPage);
-  await capture(onboardingPage, '16-onboarding');
+
+  // Capture every onboarding composition. Each slide owns a different primary
+  // premium artwork, so a single first-slide screenshot cannot protect the
+  // image mapping/crop quality the product promises.
+  await capture(onboardingPage, '16-onboarding-1');
+  const onboardingDots = onboardingPage.locator('.reference-onboarding__dots button');
+  for (let slideIndex = 1; slideIndex < 3; slideIndex += 1) {
+    await onboardingDots.nth(slideIndex).click();
+    await onboardingPage.locator(`.reference-onboarding__visual--${slideIndex + 1}`).waitFor({ state: 'visible', timeout: 10_000 });
+    await waitForStableUi(onboardingPage);
+    await capture(onboardingPage, `${16 + slideIndex}-onboarding-${slideIndex + 1}`);
+  }
+
   await onboardingContext.close();
 } finally {
   await browser.close();
