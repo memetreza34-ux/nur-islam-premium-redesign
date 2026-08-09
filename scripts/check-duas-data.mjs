@@ -29,18 +29,24 @@ for (const required of [
   'DUA_BY_ID',
   'navigator.share',
   'return new Set(migrated);',
+  "useState(() => readStringSet('nur_dua_favorites'))",
 ]) {
   if (!screenSource.includes(required)) {
     throw new Error(`Complete Dua screen is missing required integration: ${required}`);
   }
 }
 
-if (screenSource.includes('return new Set(migrated.length ? migrated : fallback);')) {
-  throw new Error('An intentionally empty stored Dua favorite list must not silently restore the first-run default favorite.');
+for (const forbidden of [
+  'return new Set(migrated.length ? migrated : fallback);',
+  "readStringSet('nur_dua_favorites', ['dua_guidance_1'])",
+]) {
+  if (screenSource.includes(forbidden)) {
+    throw new Error(`An intentionally empty stored Dua favorite list must remain empty: ${forbidden}`);
+  }
 }
 
 if (!stylesSource.includes('reference-duas-complete.css')) {
   throw new Error('Complete Dua stylesheet is not loaded.');
 }
 
-console.log('Dua migration verified: 34 entries, 13 categories, persistence, sharing, styles, and intentionally empty favorite sets remain empty.');
+console.log('Dua migration verified: 34 entries, 13 categories, persistence, sharing, styles, and intentionally empty favorite sets remain empty without a seeded first-run favorite.');
