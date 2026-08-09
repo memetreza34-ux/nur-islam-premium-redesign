@@ -184,7 +184,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       <section className="reference-mosque-hero">
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" fallback={<MosqueScene />} />
+        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" fallback={<MosqueScene />} priority />
         <div><span className="hero-pill">{origin.label}</span><h2>Finde einen Ort<br />für dein Gebet.</h2><p>Echte Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern.</p><button className="reference-mosque-location-button" onClick={() => void useDeviceLocation()} disabled={status === 'loading'}><LocateFixed size={16} /> Eigenen Standort verwenden</button></div>
       </section>
 
@@ -219,37 +219,35 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
         <div className="reference-empty-result"><Search size={24} /><strong>Keine Moschee gefunden</strong><small>{query ? 'Ändere den Suchbegriff.' : 'In diesem Radius ist kein passender OpenStreetMap-Eintrag vorhanden.'}</small></div>
       )}
 
-      <button className="reference-map-button" onClick={() => openExternal(getOriginMapUrl(origin))}><Map size={18} /> Suchgebiet in OpenStreetMap öffnen</button>
-
       <AnimatePresence>
         {selected ? (
-          <motion.div className="reference-mosque-detail-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section {...screenDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-mosque-detail-modal__close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-mosque-detail-modal__pin"><MapPin size={26} /></span>
-              <span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p>
+          <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.section {...screenDialog.dialogProps} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 26, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 18, scale: .98 }}>
+              <header>
+                <span className="reference-mosque-detail-modal__pin"><MapPin size={22} /></span>
+                <div><span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
+                <button {...screenDialog.closeButtonProps} className="reference-mosque-detail-modal__close"><X size={20} /></button>
+              </header>
 
               <div className="reference-mosque-detail-facts">
-                <span><Clock3 size={16} /><strong>{selected.openingHours || 'Öffnungszeiten nicht hinterlegt'}</strong></span>
-                <span><Navigation size={16} /><strong>{selected.serviceTimes || 'Gebetszeiten nicht hinterlegt'}</strong></span>
-                <span><Accessibility size={16} /><strong>{formatWheelchair(selected.wheelchair)}</strong></span>
-                <span><ShieldCheck size={16} /><strong>{formatDenomination(selected.denomination)}</strong></span>
+                <span><Globe2 size={17} /><strong>{formatDenomination(selected.denomination)}</strong></span>
+                <span><Accessibility size={17} /><strong>{formatWheelchair(selected.wheelchair)}</strong></span>
+                {selected.openingHours ? <span><Clock3 size={17} /><strong>{selected.openingHours}</strong></span> : null}
+                {selected.serviceTimes ? <span><Clock3 size={17} /><strong>Gebetszeiten: {selected.serviceTimes}</strong></span> : null}
               </div>
 
               <div className="reference-mosque-detail-actions">
-                <button className="gold-button" onClick={() => openExternal(getOpenStreetMapDirectionsUrl(origin, selected))}><Route size={17} /> Fußweg</button>
-                <button onClick={() => openExternal(getOpenStreetMapUrl(selected))}><Map size={17} /> OSM</button>
-                {selected.website ? <button onClick={() => openExternal(selected.website!)}><Globe2 size={17} /> Website</button> : null}
-                {selected.phone ? <a href={`tel:${selected.phone}`}><Phone size={17} /> Anrufen</a> : null}
+                <button onClick={() => openExternal(getOpenStreetMapDirectionsUrl(origin, selected))}><Route size={18} /> Route öffnen</button>
+                <button onClick={() => openExternal(getOpenStreetMapUrl(selected))}><Map size={18} /> In OSM öffnen</button>
+                {selected.phone ? <a href={`tel:${selected.phone}`}><Phone size={18} /> Anrufen</a> : null}
+                {selected.website ? <button onClick={() => openExternal(selected.website as string)}><ExternalLink size={18} /> Website</button> : null}
               </div>
-
-              <small className="reference-mosque-detail-attribution">OpenStreetMap-Objekt {selected.osmType}/{selected.osmId} <ExternalLink size={12} /></small>
             </motion.section>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }}>{toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
