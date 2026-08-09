@@ -1,25 +1,25 @@
 /* Final focal corrections for the two legacy hero assets that need a crop
    different from the shared legacy artwork rule. No feature layout changes. */
 
-.reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
+.reference-legacy-hero img[src*="mosque-gold-v2"] {
   position: absolute !important;
   z-index: 1;
-  right: -82px;
-  bottom: -22px;
-  width: 360px !important;
+  right: -24px;
+  bottom: 0;
+  width: 268px !important;
   height: auto;
   max-width: none;
   max-height: none;
-  opacity: .34 !important;
+  opacity: .68 !important;
   transform: none !important;
   transform-origin: right bottom;
   -webkit-mask-image: none !important;
   mask-image: none !important;
-  filter: drop-shadow(0 26px 24px rgba(0,0,0,.5)) brightness(1.2) saturate(1.08) contrast(1.06) !important;
+  filter: drop-shadow(0 24px 22px rgba(0,0,0,.46)) brightness(1.13) saturate(1.06) contrast(1.05) !important;
   pointer-events: none;
 }
 
-.reference-legacy-hero:has(img[src*="mosque-gold-v2.webp"]) .reference-legacy-hero__copy {
+.reference-legacy-hero:has(img[src*="mosque-gold-v2"]) .reference-legacy-hero__copy {
   z-index: 3;
   max-width: 62%;
 }
@@ -33,20 +33,20 @@
   filter: drop-shadow(0 16px 18px rgba(0,0,0,.4)) brightness(1.08) saturate(1.05) contrast(1.04) !important;
 }
 
-[data-theme='light'] .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
-  opacity: .25 !important;
+[data-theme='light'] .reference-legacy-hero img[src*="mosque-gold-v2"] {
+  opacity: .48 !important;
 }
 
 @media (max-width:350px) {
-  .reference-legacy-hero img[src*="mosque-gold-v2.webp"] {
-    right: -96px;
-    bottom: -18px;
-    width: 330px !important;
-    opacity: .28 !important;
+  .reference-legacy-hero img[src*="mosque-gold-v2"] {
+    right: -34px;
+    bottom: 2px;
+    width: 232px !important;
+    opacity: .6 !important;
     transform: none !important;
   }
 
-  .reference-legacy-hero:has(img[src*="mosque-gold-v2.webp"]) .reference-legacy-hero__copy {
+  .reference-legacy-hero:has(img[src*="mosque-gold-v2"]) .reference-legacy-hero__copy {
     max-width: 66%;
   }
 
