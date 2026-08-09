@@ -181,8 +181,9 @@ try {
   const splashPage = await splashContext.newPage();
   await attachDiagnostics(splashPage, 'splash');
   await splashPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
-  await splashPage.locator('.reference-splash__brand').waitFor({ state: 'attached', timeout: 5_000 });
-  await splashPage.waitForTimeout(300);
+  await splashPage.locator('.reference-splash').waitFor({ state: 'visible', timeout: 5_000 });
+  await splashPage.locator('.reference-splash__brand').waitFor({ state: 'visible', timeout: 5_000 });
+  await splashPage.waitForTimeout(80);
   await capture(splashPage, '00-splash', { animations: 'allow' });
   await splashContext.close();
 
