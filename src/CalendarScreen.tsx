@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bell,
   CalendarDays,
@@ -103,6 +103,8 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const [newTime, setNewTime] = useState('19:30');
   const [newReminder, setNewReminder] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
+  const entryIdRef = useRef(Date.now() * 1000);
   const monthData = useMemo(() => getMonthData(monthOffset), [monthOffset]);
   const monthTitle = new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric' }).format(monthData.first);
   const selectedDate = new Date(monthData.year, monthData.month, Math.min(selectedDay, monthData.daysInMonth));
@@ -115,10 +117,22 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   useEffect(() => {
     try { localStorage.setItem('nur_calendar_favorites', JSON.stringify([...favorites])); } catch { /* optional */ }
   }, [favorites]);
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2400);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2400);
+  };
+
+  const nextEntryId = () => {
+    entryIdRef.current = Math.max(entryIdRef.current + 1, Date.now() * 1000);
+    return entryIdRef.current;
   };
 
   const moveMonth = (direction: number) => {
@@ -147,7 +161,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
     }
 
     const entry: PersonalCalendarEntry = {
-      id: Date.now(),
+      id: nextEntryId(),
       date: selectedDateKey,
       title: newTitle.trim().slice(0, 120),
       time: newTime,
