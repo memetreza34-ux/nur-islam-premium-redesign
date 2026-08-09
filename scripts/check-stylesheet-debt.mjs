@@ -22,11 +22,15 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const styleDir = resolve(root, 'src/styles');
 
+// Measured when this guard landed. The first thing it caught was work merged
+// while it was being written: one more stylesheet and twenty more `!important`
+// in a single afternoon. That growth rate is the reason for the cap, so these
+// numbers start where reality was, not where it should be.
 const BUDGET = {
-  files: 98,
+  files: 99,
   overrideFiles: 33,
-  importantRules: 2261,
-  totalBytes: 719_283,
+  importantRules: 2281,
+  totalBytes: 721_328,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

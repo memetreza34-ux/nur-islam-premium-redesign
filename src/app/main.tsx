@@ -22,6 +22,7 @@ import { registerNurPwa } from './pwa';
 import { SplashScreen } from '../screens/SplashScreen';
 import { initializeTheme } from '../services/themeService';
 import '../styles.css';
+import '../styles/premium-legacy-art-final.css';
 
 const VISUAL_VERSION = '20260808-release-hardening';
 const PREVIEW_ASSETS = [
