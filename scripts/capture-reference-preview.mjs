@@ -165,12 +165,45 @@ try {
   await returnHome(page);
   await capture(page, '15-home-after-secondary');
 
+  // Secondary premium destinations have their own visual contracts too. They
+  // used to be absent from the screenshot artifact, which meant a broken
+  // mosque/account/notes surface could regress while the main tabs stayed green.
+  await clickNav(page, 'Mehr');
+  await waitForStableUi(page);
+  await captureSecondary(page, { trigger: 'Moscheen', screen: '.reference-mosque-screen', name: '19-mosques' });
+
+  await clickNav(page, 'Mehr');
+  await waitForStableUi(page);
+  const accountEntry = page.locator('button.reference-account-entry').first();
+  await accountEntry.waitFor({ state: 'visible', timeout: 10_000 });
+  await accountEntry.click();
+  await page.locator('.reference-account-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForStableUi(page);
+  await capture(page, '20-account');
+
+  await page.locator('.reference-account-screen .reference-screen-header .icon-button').first().click();
+  await page.locator('.reference-profile-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const notesButton = page.locator('.reference-profile-row').filter({ hasText: 'Notizen' }).first();
+  await notesButton.scrollIntoViewIfNeeded();
+  await notesButton.click();
+  await page.locator('.reference-notes-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForStableUi(page);
+  await capture(page, '21-notes');
+
   await appContext.close();
 
   const onboardingContext = await createContext();
   const onboardingPage = await onboardingContext.newPage();
   await attachDiagnostics(onboardingPage, 'onboarding');
   await onboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
+
+  // Splash owns the Nur mark + gold mosque composition and needs its own real
+  // render, otherwise the entry image can disappear before the first captured frame.
+  await onboardingPage.locator('.reference-splash').waitFor({ state: 'visible', timeout: 5_000 });
+  await onboardingPage.evaluate(() => document.fonts?.ready);
+  await onboardingPage.waitForTimeout(120);
+  await capture(onboardingPage, '00-splash');
+
   await onboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(onboardingPage);
 
