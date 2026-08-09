@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import {
   ChevronLeft,
@@ -100,14 +100,21 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [infoOpen, setInfoOpen] = useState(false);
+  const messageIdRef = useRef(Date.now());
+
+  const nextMessageId = () => {
+    messageIdRef.current += 1;
+    return messageIdRef.current;
+  };
 
   const answerQuestion = (question: string) => {
     const match = findLocalAnswer(question);
-    const id = Date.now();
+    const userId = nextMessageId();
+    const assistantId = nextMessageId();
     const assistant: ChatMessage = match
-      ? { id: id + 1, role: 'assistant', text: match.text, source: match.source }
+      ? { id: assistantId, role: 'assistant', text: match.text, source: match.source }
       : {
-          id: id + 1,
+          id: assistantId,
           role: 'assistant',
           text: 'Dazu habe ich in meinem lokal geprüften Wissensbestand noch keine passende Antwort. Ich erfinde deshalb keine religiöse Antwort. Nutze die Bereiche Quran, Gebete, Lernen, Duas oder Dhikr – oder prüfe die Frage bei einer qualifizierten, vertrauenswürdigen Stelle.',
           source: 'Kein lokaler Quellen-Treffer',
@@ -115,7 +122,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
 
     setMessages((current) => [
       ...current,
-      { id, role: 'user', text: question },
+      { id: userId, role: 'user', text: question },
       assistant,
     ]);
   };
