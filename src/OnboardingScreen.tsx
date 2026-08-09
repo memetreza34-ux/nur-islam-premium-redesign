@@ -131,7 +131,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
       transition={{ duration: .45 }}
     >
       <header className="reference-onboarding__topbar">
-        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} /><strong>Nur</strong></span>
+        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} priority /><strong>Nur</strong></span>
         <button onClick={finish}>Überspringen</button>
       </header>
 
@@ -146,8 +146,8 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
         >
           <div className={`reference-onboarding__visual reference-onboarding__visual--${index + 1}`}>
             <span className="reference-onboarding__halo" />
-            <PremiumImage src={slide.image} fallback={slide.fallback} />
-            {index === 2 ? <span className="reference-onboarding__tasbih"><PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} /></span> : null}
+            <PremiumImage src={slide.image} fallback={slide.fallback} priority />
+            {index === 2 ? <span className="reference-onboarding__tasbih"><PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} priority /></span> : null}
             <span className="reference-onboarding__visual-icon"><SlideIcon size={20} /></span>
           </div>
 
