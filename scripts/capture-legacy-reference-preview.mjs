@@ -39,47 +39,48 @@ const groups = [
   },
 ];
 
+const viewports = [
+  { width: 390, height: 844, suffix: '390x844' },
+  { width: 340, height: 740, suffix: '340x740' },
+];
+
 await mkdir(outputDir, { recursive: true });
-
 const browser = await chromium.launch({ headless: true });
-const context = await browser.newContext({
-  viewport: { width: 390, height: 844 },
-  deviceScaleFactor: 1,
-  colorScheme: 'dark',
-  locale: 'de-DE',
-  timezoneId: 'Europe/Berlin',
-  geolocation: { latitude: 52.52, longitude: 13.405 },
-  permissions: ['geolocation'],
-  reducedMotion: 'reduce',
-});
-const page = await context.newPage();
 
-page.on('pageerror', (error) => console.error('[legacy-preview] page error:', error));
-page.on('console', (message) => {
-  if (message.type() === 'error') console.error('[legacy-preview] console error:', message.text());
-});
-
-async function settle() {
-  await page.waitForLoadState('networkidle');
-  await page.evaluate(() => document.fonts?.ready);
-  await page.waitForTimeout(420);
+async function createContext(width, height) {
+  return browser.newContext({
+    viewport: { width, height },
+    deviceScaleFactor: 1,
+    colorScheme: 'dark',
+    locale: 'de-DE',
+    timezoneId: 'Europe/Berlin',
+    geolocation: { latitude: 52.52, longitude: 13.405 },
+    permissions: ['geolocation'],
+    reducedMotion: 'reduce',
+  });
 }
 
-async function nav(label) {
+async function settle(page) {
+  await page.waitForLoadState('networkidle');
+  await page.evaluate(() => document.fonts?.ready);
+  await page.waitForTimeout(360);
+}
+
+async function nav(page, label) {
   const button = page.locator('.bottom-nav__item').filter({ hasText: label }).first();
   await button.waitFor({ state: 'visible', timeout: 10_000 });
   await button.click();
-  await page.waitForTimeout(280);
+  await page.waitForTimeout(260);
 }
 
-async function screenshot(name) {
+async function screenshot(page, name, suffix) {
   await page.screenshot({
-    path: resolve(outputDir, `${name}-390x844.png`),
+    path: resolve(outputDir, `${name}-${suffix}.png`),
     animations: 'disabled',
   });
 }
 
-async function inspectHeroArtwork(legacy, id) {
+async function inspectHeroArtwork(legacy, id, suffix) {
   const image = legacy.locator('.reference-legacy-hero img').first();
   const diagnostics = await image.evaluate((node) => {
     const style = getComputedStyle(node);
@@ -101,49 +102,78 @@ async function inspectHeroArtwork(legacy, id) {
       top: rect.top,
     };
   });
-  console.log(`[legacy-art:${id}] ${JSON.stringify(diagnostics)}`);
+  console.log(`[legacy-art:${suffix}:${id}] ${JSON.stringify(diagnostics)}`);
   if (!diagnostics.complete || diagnostics.naturalWidth <= 0 || diagnostics.naturalHeight <= 0) {
-    throw new Error(`Legacy hero artwork failed to decode for ${id}: ${diagnostics.currentSrc}`);
+    throw new Error(`Legacy hero artwork failed to decode for ${id} at ${suffix}: ${diagnostics.currentSrc}`);
+  }
+}
+
+async function assertViewportLayout(page, id, suffix) {
+  const layout = await page.evaluate(() => ({
+    viewportWidth: window.innerWidth,
+    documentWidth: document.documentElement.scrollWidth,
+    bodyWidth: document.body.scrollWidth,
+  }));
+  console.log(`[legacy-layout:${suffix}:${id}] ${JSON.stringify(layout)}`);
+  const overflow = Math.max(layout.documentWidth, layout.bodyWidth) - layout.viewportWidth;
+  if (overflow > 2) {
+    throw new Error(`Horizontal viewport overflow for ${id} at ${suffix}: ${overflow}px`);
+  }
+}
+
+async function captureViewport({ width, height, suffix }) {
+  const context = await createContext(width, height);
+  const page = await context.newPage();
+
+  page.on('pageerror', (error) => console.error(`[legacy-preview:${suffix}] page error:`, error));
+  page.on('console', (message) => {
+    if (message.type() === 'error') console.error(`[legacy-preview:${suffix}] console error:`, message.text());
+  });
+
+  try {
+    await page.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
+    await page.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
+    await settle(page);
+
+    for (const group of groups) {
+      await nav(page, group.nav);
+      await page.locator(group.parent).waitFor({ state: 'visible', timeout: 15_000 });
+      await settle(page);
+
+      for (let index = 0; index < group.features.length; index += 1) {
+        const [id, title] = group.features[index];
+        const button = page.locator(group.scope).filter({ hasText: title }).first();
+        await button.waitFor({ state: 'visible', timeout: 10_000 });
+        await button.scrollIntoViewIfNeeded();
+        await page.waitForTimeout(140);
+        await button.click();
+
+        const legacy = page.locator('.reference-legacy-screen');
+        await legacy.waitFor({ state: 'visible', timeout: 15_000 });
+        const hero = legacy.locator('.reference-legacy-hero').first();
+        await hero.waitFor({ state: 'visible', timeout: 10_000 });
+        await hero.scrollIntoViewIfNeeded();
+        await settle(page);
+        await inspectHeroArtwork(legacy, id, suffix);
+        await assertViewportLayout(page, id, suffix);
+        await screenshot(page, `${String(group.startIndex + index).padStart(2, '0')}-legacy-${id}`, suffix);
+
+        const back = legacy.locator('.reference-screen-header .icon-button').first();
+        await back.waitFor({ state: 'visible', timeout: 10_000 });
+        await back.click();
+        await page.locator(group.parent).waitFor({ state: 'visible', timeout: 15_000 });
+        await page.waitForTimeout(220);
+      }
+    }
+  } finally {
+    await context.close();
   }
 }
 
 try {
-  await page.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
-  await page.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
-  await settle();
-
-  for (const group of groups) {
-    await nav(group.nav);
-    await page.locator(group.parent).waitFor({ state: 'visible', timeout: 15_000 });
-    await settle();
-
-    for (let index = 0; index < group.features.length; index += 1) {
-      const [id, title] = group.features[index];
-      const button = page.locator(group.scope).filter({ hasText: title }).first();
-      await button.waitFor({ state: 'visible', timeout: 10_000 });
-      await button.scrollIntoViewIfNeeded();
-      await page.waitForTimeout(160);
-      await button.click();
-
-      const legacy = page.locator('.reference-legacy-screen');
-      await legacy.waitFor({ state: 'visible', timeout: 15_000 });
-      const hero = legacy.locator('.reference-legacy-hero').first();
-      await hero.waitFor({ state: 'visible', timeout: 10_000 });
-      await hero.scrollIntoViewIfNeeded();
-      await settle();
-      await inspectHeroArtwork(legacy, id);
-      await screenshot(`${String(group.startIndex + index).padStart(2, '0')}-legacy-${id}`);
-
-      const back = legacy.locator('.reference-screen-header .icon-button').first();
-      await back.waitFor({ state: 'visible', timeout: 10_000 });
-      await back.click();
-      await page.locator(group.parent).waitFor({ state: 'visible', timeout: 15_000 });
-      await page.waitForTimeout(240);
-    }
-  }
+  for (const viewport of viewports) await captureViewport(viewport);
 } finally {
-  await context.close();
   await browser.close();
 }
 
-console.log('Legacy premium reference screenshots captured.');
+console.log('Legacy premium reference screenshots captured at 390x844 and 340x740.');
