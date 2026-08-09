@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   ChevronLeft,
   CircleCheck,
@@ -72,6 +72,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
   const [body, setBody] = useState('');
   const [busy, setBusy] = useState(true);
   const [status, setStatus] = useState<string | null>(null);
+  const localNoteIdRef = useRef(Date.now() * 1000);
 
   const selected = useMemo(() => notes.find((note) => note.id === selectedId) ?? null, [notes, selectedId]);
 
@@ -99,6 +100,11 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
     });
     return () => { active = false; };
   }, []);
+
+  const nextLocalNoteId = () => {
+    localNoteIdRef.current = Math.max(localNoteIdRef.current + 1, Date.now() * 1000);
+    return `local-${localNoteIdRef.current}`;
+  };
 
   const beginNew = () => {
     setSelectedId(null);
@@ -138,7 +144,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         if (selectedId) {
           next = local.map((note) => note.id === selectedId ? { ...note, title: cleanTitle || 'Notiz', body: cleanBody, updated_at: now } : note);
         } else {
-          const created: LocalNote = { id: `local-${Date.now()}`, title: cleanTitle || 'Notiz', body: cleanBody, created_at: now, updated_at: now };
+          const created: LocalNote = { id: nextLocalNoteId(), title: cleanTitle || 'Notiz', body: cleanBody, created_at: now, updated_at: now };
           next = [created, ...local];
           setSelectedId(created.id);
         }
