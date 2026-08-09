@@ -71,30 +71,6 @@ async function captureSecondary(page, { trigger, screen, name, suffix = '390x844
   await capture(page, name, { suffix });
 }
 
-async function captureLegacyGroup(page, { parentNav, parentScreen, features, startIndex }) {
-  await clickNav(page, parentNav);
-  await page.locator(parentScreen).waitFor({ state: 'visible', timeout: 15_000 });
-  await waitForStableUi(page);
-
-  for (let index = 0; index < features.length; index += 1) {
-    const feature = features[index];
-    const button = page.locator('button').filter({ hasText: feature.title }).first();
-    await button.waitFor({ state: 'visible', timeout: 10_000 });
-    await button.scrollIntoViewIfNeeded();
-    await page.waitForTimeout(180);
-    await button.click();
-    await page.locator('.reference-legacy-screen').waitFor({ state: 'visible', timeout: 15_000 });
-    await waitForStableUi(page);
-    await capture(page, `${String(startIndex + index).padStart(2, '0')}-legacy-${feature.id}`);
-
-    const back = page.locator('.reference-legacy-screen .reference-screen-header .icon-button').first();
-    await back.waitFor({ state: 'visible', timeout: 10_000 });
-    await back.click();
-    await page.locator(parentScreen).waitFor({ state: 'visible', timeout: 15_000 });
-    await page.waitForTimeout(260);
-  }
-}
-
 async function returnHome(page) {
   const start = page.locator('.bottom-nav__item').filter({ hasText: 'Start' }).first();
   if (await start.isVisible().catch(() => false)) {
@@ -179,37 +155,6 @@ try {
   await captureSecondary(page, { trigger: 'Meine Sammlung', screen: '.reference-collections-screen', name: '14-collections' });
   await returnHome(page);
   await capture(page, '15-home-after-secondary');
-
-  const learningLegacy = [
-    { id: 'hadith-library', title: 'Hadith-Sammlung' },
-    { id: 'knowledge', title: 'Wissensbibliothek' },
-    { id: 'prophets', title: 'Propheten' },
-    { id: 'quiz', title: 'Islam-Quiz' },
-    { id: 'hajj', title: 'Hajj & Umrah' },
-    { id: 'sunnah', title: 'Sunnah im Alltag' },
-    { id: 'sins', title: 'Fehler & Reue' },
-  ];
-  await captureLegacyGroup(page, {
-    parentNav: 'Islam verstehen',
-    parentScreen: '.reference-learn-screen',
-    features: learningLegacy,
-    startIndex: 27,
-  });
-
-  const serviceLegacy = [
-    { id: 'fasting', title: 'Fasten-Assistent' },
-    { id: 'ummah', title: 'Ummah-Übersicht' },
-    { id: 'places', title: 'Islamische Orte' },
-    { id: 'jumuah', title: 'Jumuah' },
-    { id: 'zakat', title: 'Zakat-Rechner' },
-    { id: 'standby', title: 'Gebetsanzeige' },
-  ];
-  await captureLegacyGroup(page, {
-    parentNav: 'Mehr',
-    parentScreen: '.reference-profile-screen',
-    features: serviceLegacy,
-    startIndex: 34,
-  });
 
   await captureSecondary(page, { trigger: 'Moscheen', screen: '.reference-mosque-screen', name: '19-mosques' });
 
