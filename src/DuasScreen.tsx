@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpenCheck,
   ChevronLeft,
@@ -58,7 +58,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   const initialDua = initialDuaId ? DUA_BY_ID.get(initialDuaId) ?? null : null;
   const [filter, setFilter] = useState<DuaFilter>('all');
   const [query, setQuery] = useState('');
-  const [favorites, setFavorites] = useState(() => readStringSet('nur_dua_favorites', ['dua_guidance_1']));
+  const [favorites, setFavorites] = useState(() => readStringSet('nur_dua_favorites'));
   const [viewed, setViewed] = useState(() => {
     const current = readStringSet('nur_dua_viewed');
     if (initialDua) current.add(initialDua.id);
@@ -66,9 +66,13 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   });
   const [selected, setSelected] = useState<DuaEntry | null>(initialDua);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => writeStringSet('nur_dua_favorites', favorites), [favorites]);
   useEffect(() => writeStringSet('nur_dua_viewed', viewed), [viewed]);
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const visible = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('de-DE');
@@ -84,8 +88,12 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   }, [favorites, filter, query]);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2200);
   };
 
   const toggleFavorite = (id: string) => {
