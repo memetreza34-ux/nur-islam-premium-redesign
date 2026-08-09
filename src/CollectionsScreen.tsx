@@ -151,7 +151,7 @@ export function CollectionsScreen({
   const showQuran = filter === 'Alle' || filter === 'Quran';
   const showDuas = filter === 'Alle' || filter === 'Duas';
   const showNames = filter === 'Alle' || filter === 'Namen';
-  const showHadith = filter === 'Alle' || filter === 'Hadith';
+  const showDaily = filter === 'Alle' || filter === 'Tagesinhalte';
   const showDates = filter === 'Alle' || filter === 'Termine';
   const hasQuran = quranBookmarkGroups.length > 0 || quranSurahFavorites.size > 0;
   const hasAny = hasQuran || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithSaved || calendarFavorites.size > 0;
@@ -160,7 +160,7 @@ export function CollectionsScreen({
     || (filter === 'Quran' && !hasQuran)
     || (filter === 'Duas' && duaFavorites.size === 0)
     || (filter === 'Namen' && nameFavorites.size === 0)
-    || (filter === 'Hadith' && !ayahSaved && !hadithSaved)
+    || (filter === 'Tagesinhalte' && !ayahSaved && !hadithSaved)
     || (filter === 'Termine' && calendarFavorites.size === 0);
 
   return (
@@ -180,7 +180,7 @@ export function CollectionsScreen({
       </header>
 
       <div className="reference-filter-tabs reference-filter-tabs--wide">
-        {['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine'].map((item) => (
+        {['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine'].map((item) => (
           <button key={item} className={filter === item ? 'is-active' : ''} onClick={() => setFilter(item)}>{item}</button>
         ))}
       </div>
@@ -250,7 +250,7 @@ export function CollectionsScreen({
         </section>
       ) : null}
 
-      {showHadith && (ayahSaved || hadithSaved) ? (
+      {showDaily && (ayahSaved || hadithSaved) ? (
         <section className="reference-collection-section">
           <div className="section-heading"><div><span className="overline">Tagesinhalte</span><h2>Ayah & Hadith</h2></div></div>
           <div className="reference-collection-rows">
@@ -275,7 +275,7 @@ export function CollectionsScreen({
         </section>
       ) : null}
 
-      {emptyForFilter ? <div className="reference-empty-result"><Bookmark size={25} /><strong>Noch nichts gespeichert</strong><small>Favorisiere Inhalte in Quran, Duas, Namen, Hadith oder Kalender.</small></div> : null}
+      {emptyForFilter ? <div className="reference-empty-result"><Bookmark size={25} /><strong>Noch nichts gespeichert</strong><small>Favorisiere Inhalte in Quran, Duas, Namen, Tagesinhalten oder Kalender.</small></div> : null}
     </motion.main>
   );
 }
