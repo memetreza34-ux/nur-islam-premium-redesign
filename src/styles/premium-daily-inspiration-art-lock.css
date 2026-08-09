@@ -62,7 +62,7 @@
   bottom: -22px !important;
   width: 148px !important;
   height: 174px !important;
-  opacity: .22 !important;
+  opacity: .19 !important;
   background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
 }
@@ -113,9 +113,17 @@
     linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
+/* The quote is the focal content. Keep it bright enough to read over the dark
+   emerald material while the lantern remains a secondary atmospheric object. */
 .hadith-card blockquote,
 .reference-hadith-hero blockquote {
-  color: rgba(145, 168, 158, .8) !important;
+  color: rgba(255, 248, 234, .91) !important;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, .34);
+}
+
+.hadith-card footer,
+.reference-hadith-hero footer {
+  color: rgba(226, 191, 119, .8) !important;
 }
 
 [data-theme='light'] .reference-ayah-hero__art,
@@ -129,6 +137,17 @@
   background:
     radial-gradient(circle at 100% 100%, rgba(151,111,43,.05), transparent 8rem),
     linear-gradient(145deg, #fffdf7, #eee5d0) !important;
+}
+
+[data-theme='light'] .hadith-card blockquote,
+[data-theme='light'] .reference-hadith-hero blockquote {
+  color: rgba(23, 56, 44, .86) !important;
+  text-shadow: none;
+}
+
+[data-theme='light'] .hadith-card footer,
+[data-theme='light'] .reference-hadith-hero footer {
+  color: #8d6d39 !important;
 }
 
 [data-theme='light'] .hadith-card::after,
