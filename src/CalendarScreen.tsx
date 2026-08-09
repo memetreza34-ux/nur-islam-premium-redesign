@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Bell,
   CalendarDays,
@@ -15,6 +15,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
 import { getHijriDay, getHijriLabel } from './hijriCalendar';
@@ -103,6 +104,9 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const [newTime, setNewTime] = useState('19:30');
   const [newReminder, setNewReminder] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const closeDialog = useCallback(() => { setShowAdd(false); }, []);
+  const screenDialog = useDialog(showAdd, closeDialog, 'Termin hinzufügen');
+
   const monthData = useMemo(() => getMonthData(monthOffset), [monthOffset]);
   const monthTitle = new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric' }).format(monthData.first);
   const selectedDate = new Date(monthData.year, monthData.month, Math.min(selectedDay, monthData.daysInMonth));
@@ -239,7 +243,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
       <AnimatePresence>
         {showAdd ? (
           <motion.div className="calendar-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowAdd(false)}>
-            <motion.section className="calendar-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="calendar-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} onClick={(event) => event.stopPropagation()}>
               <div className="calendar-modal__header"><div><span className="overline">{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(selectedDate)}</span><h2>Termin hinzufügen</h2></div><button className="icon-button" onClick={() => setShowAdd(false)} aria-label="Schließen"><X size={19} /></button></div>
               <label>Titel<input value={newTitle} onChange={(event) => setNewTitle(event.target.value)} maxLength={120} placeholder="z. B. Surah Al-Kahf lesen" autoFocus /></label>
               <label>Uhrzeit<input type="time" value={newTime} onChange={(event) => setNewTime(event.target.value)} /></label>

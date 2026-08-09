@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -33,6 +33,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { AccountScreen } from './AccountScreen';
 import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
 import type { LegacyFeatureId } from './LegacyFeatureScreens';
@@ -148,6 +149,9 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   const [notifications, setNotifications] = useState(readReminderEnabled);
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [toast, setToast] = useState<string | null>(null);
+  const closeDialog = useCallback(() => { setModal(null); }, []);
+  const screenDialog = useDialog(Boolean(modal), closeDialog, 'Einstellungen');
+
   const userName = readUserName(session);
 
   useEffect(() => subscribeAuth(setSession), []);
@@ -280,7 +284,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       <AnimatePresence>
         {modal ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setModal(null)}>
-            <motion.section className="reference-profile-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-profile-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setModal(null)} aria-label="Schließen"><X size={18} /></button>
 
               {modal === 'appearance' ? (

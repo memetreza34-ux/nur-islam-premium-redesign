@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   Accessibility,
   ChevronLeft,
@@ -22,6 +22,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import {
   DEFAULT_MOSQUE_ORIGIN,
   fetchNearbyMosques,
@@ -81,6 +82,9 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<MosqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+
+  const closeDialog = useCallback(() => { setSelected(null); }, []);
+  const screenDialog = useDialog(Boolean(selected), closeDialog, selected?.name);
 
   const flash = (message: string) => {
     setToast(message);
@@ -211,7 +215,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-mosque-detail-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-mosque-detail-modal__close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-mosque-detail-modal__pin"><MapPin size={26} /></span>
               <span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p>

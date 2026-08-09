@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   Bell,
@@ -21,6 +21,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import {
   formatPrayerRemaining,
   getNextPrayer,
@@ -154,6 +155,11 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   } = usePrayerTimes();
   const [draftMethod, setDraftMethod] = useState<PrayerCalculationMethod>(preferences.method);
   const [draftSchool, setDraftSchool] = useState<AsrSchool>(preferences.school);
+  const closeSettings = useCallback(() => { setSettingsOpen(false); }, []);
+  const settingsDialog = useDialog(settingsOpen, closeSettings, 'Gebetszeiten-Einstellungen');
+  const closeCelebration = useCallback(() => { setCelebrationOpen(false); }, []);
+  const celebrationDialog = useDialog(celebrationOpen, closeCelebration, 'Alle Pflichtgebete abgeschlossen');
+
   const dateLabel = useMemo(() => getGregorianDate(now), [now]);
   const hijriLabel = useMemo(() => getHijriDate(now), [now]);
   const nextPrayer = useMemo(() => getNextPrayer(now, prayerTimes), [now, prayerTimes]);
@@ -365,7 +371,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {settingsOpen ? (
           <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSettingsOpen(false)}>
-            <motion.section className="reference-prayer-settings-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...settingsDialog.props} className="reference-prayer-settings-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-prayer-settings-modal__close" onClick={() => setSettingsOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-prayer-settings-modal__icon"><Settings2 size={25} /></span>
               <span className="overline">Gebetszeiten</span><h2>Berechnung anpassen</h2><p>Die Auswahl beeinflusst insbesondere Fajr, Isha und Asr. Vergleiche die Zeiten bei Unsicherheit mit deiner örtlichen Moschee.</p>
@@ -381,7 +387,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {celebrationOpen ? (
           <motion.div className="prayer-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCelebrationOpen(false)}>
-            <motion.section className="prayer-completion-modal" initial={{ opacity: 0, y: 26, scale: .92 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} transition={{ type: 'spring', stiffness: 240, damping: 22 }} onClick={(event) => event.stopPropagation()} aria-live="polite">
+            <motion.section {...celebrationDialog.props} className="prayer-completion-modal" initial={{ opacity: 0, y: 26, scale: .92 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} transition={{ type: 'spring', stiffness: 240, damping: 22 }} onClick={(event) => event.stopPropagation()} aria-live="polite">
               <button className="prayer-completion-modal__close" onClick={() => setCelebrationOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <div className="prayer-completion-burst" aria-hidden="true">
                 {celebrationParticles.map((particle) => <motion.i key={particle.id} style={{ '--angle': `${particle.angle}deg`, '--distance': `${particle.distance}px`, width: particle.size, height: particle.size } as CSSProperties} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.35, delay: particle.delay, ease: 'easeOut' }} />)}

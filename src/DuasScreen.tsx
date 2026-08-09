@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpenCheck,
   ChevronLeft,
@@ -13,6 +13,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { DUA_BY_ID, DUA_CATEGORIES, DUA_CATEGORY_BY_ID, DUAS } from './duaData';
 import type { DuaCategoryId, DuaEntry } from './duaData';
 
@@ -66,6 +67,9 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   });
   const [selected, setSelected] = useState<DuaEntry | null>(initialDua);
   const [toast, setToast] = useState<string | null>(null);
+  const closeDialog = useCallback(() => { setSelected(null); }, []);
+  const screenDialog = useDialog(Boolean(selected), closeDialog, selected?.title);
+
   const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => writeStringSet('nur_dua_favorites', favorites), [favorites]);
@@ -209,7 +213,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section className="reference-dua-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-dua-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
               <span className="overline">{DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title}</span>
               <h2>{selected.title}</h2>

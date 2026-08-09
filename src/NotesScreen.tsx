@@ -238,7 +238,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
 
       <section className="reference-note-editor">
         <div className="reference-note-editor__heading"><span><NotebookPen size={18} /><strong>{selected ? 'Notiz bearbeiten' : 'Neue Notiz'}</strong></span>{selected ? <button onClick={() => void remove()} disabled={busy} aria-label="Notiz löschen"><Trash2 size={17} /></button> : <button onClick={beginNew} aria-label="Editor leeren"><X size={17} /></button>}</div>
-        <input value={title} onChange={(event) => setTitle(event.target.value)} maxLength={160} placeholder="Titel" />
+        <input value={title} onChange={(event) => setTitle(event.target.value)} maxLength={160} placeholder="Titel" aria-label="Titel der Notiz" />
         <textarea value={body} onChange={(event) => setBody(event.target.value)} maxLength={20000} rows={8} placeholder="Deine Gedanken …" />
         <button className="gold-button" onClick={() => void save()} disabled={busy}>{busy ? <LoaderCircle size={17} className="is-spinning" /> : <Save size={17} />} Speichern</button>
       </section>

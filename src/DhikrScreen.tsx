@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   BarChart3,
@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { DHIKR_ROUTINES, DHIKR_ROUTINE_BY_ID } from './dhikrData';
 import { PremiumImage, RosetteObject } from './PremiumVisuals';
 
@@ -69,6 +70,9 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [statsOpen, setStatsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const closeDialog = useCallback(() => { setStatsOpen(false); }, []);
+  const screenDialog = useDialog(statsOpen, closeDialog, 'Dhikr-Statistik');
+
   const toastTimerRef = useRef<number | null>(null);
 
   const routine = DHIKR_ROUTINE_BY_ID.get(activeRoutineId) ?? DHIKR_ROUTINES[0];
@@ -250,7 +254,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {statsOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setStatsOpen(false)}>
-            <motion.section className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setStatsOpen(false)} aria-label="Statistik schließen"><X size={18} /></button>
               <span className="reference-dhikr-stats-modal__icon"><BarChart3 size={26} /></span>
               <span className="overline">Heute</span>

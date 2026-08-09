@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookHeart,
@@ -21,6 +21,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import {
   getCategoryLessons,
   getLearningCategory,
@@ -88,6 +89,9 @@ export function LearningCourseScreen({
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [completionOpen, setCompletionOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+
+  const closeDialog = useCallback(() => { setCompletionOpen(false); }, []);
+  const screenDialog = useDialog(completionOpen, closeDialog, 'Kurs abgeschlossen');
 
   const selectedLesson = lessons.find((lesson) => lesson.id === selectedLessonId) ?? lessons[0];
   const CategoryIcon = categoryIcons[categoryId];
@@ -279,7 +283,7 @@ export function LearningCourseScreen({
       <AnimatePresence>
         {completionOpen ? (
           <motion.div className="reference-learning-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCompletionOpen(false)}>
-            <motion.section className="reference-learning-completion-modal" initial={{ opacity: 0, y: 24, scale: .94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-learning-completion-modal" initial={{ opacity: 0, y: 24, scale: .94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-learning-completion-modal__close" onClick={() => setCompletionOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <div className="reference-learning-completion-burst" aria-hidden="true">
                 {completionParticles.map((particle) => <motion.i key={particle.id} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.2, delay: particle.delay }} />)}

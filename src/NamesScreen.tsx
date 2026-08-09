@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   BookmarkCheck,
   Check,
@@ -14,6 +14,7 @@ import {
 import { AnimatePresence, motion } from 'motion/react';
 import { NAMES_OF_ALLAH } from './namesOfAllahData';
 import type { NameOfAllah } from './namesOfAllahData';
+import { useDialog } from './useDialog';
 
 type NameFilter = 'all' | 'favorites' | 'learned';
 
@@ -60,6 +61,8 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
   const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites', ['1']));
   const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
   const [selected, setSelected] = useState<NameOfAllah | null>(initialName);
+  const closeName = useCallback(() => setSelected(null), []);
+  const nameDialog = useDialog(Boolean(selected), closeName, selected?.latin);
   const [toast, setToast] = useState<string | null>(null);
 
   useEffect(() => writeSet('nur_name_favorites', favorites), [favorites]);
@@ -174,7 +177,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section className="reference-name-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
               <span className="overline">Name {selected.id} von 99</span>
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>

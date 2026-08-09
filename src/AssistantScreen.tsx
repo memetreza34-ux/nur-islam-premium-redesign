@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import type { FormEvent } from 'react';
 import {
   ChevronLeft,
@@ -10,6 +10,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { NurMark, PremiumImage } from './PremiumVisuals';
 
 const suggestions = [
@@ -100,6 +101,9 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [infoOpen, setInfoOpen] = useState(false);
+  const closeDialog = useCallback(() => { setInfoOpen(false); }, []);
+  const screenDialog = useDialog(infoOpen, closeDialog, 'Über den Nur Assistenten');
+
   const messageIdRef = useRef(Date.now());
 
   const nextMessageId = () => {
@@ -187,7 +191,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {infoOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setInfoOpen(false)}>
-            <motion.section className="reference-profile-modal reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-profile-modal reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setInfoOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span>
               <span className="overline">Quellenmodus</span>

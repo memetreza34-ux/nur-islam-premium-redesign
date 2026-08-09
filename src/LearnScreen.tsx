@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookHeart,
@@ -19,6 +19,7 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { useDialog } from './useDialog';
 import { LearningCourseScreen } from './LearningCourseScreen';
 import {
   getCategoryLessons,
@@ -75,6 +76,9 @@ export function LearnScreen({
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [learningPlanOpen, setLearningPlanOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+
+  const closeDialog = useCallback(() => { setLearningPlanOpen(false); }, []);
+  const screenDialog = useDialog(learningPlanOpen, closeDialog, 'Lernplan');
 
   const completedPrayerLessons = readStringSet('nur_prayer_learning_complete');
   const completedKnowledgeLessons = readStringSet('nur_learning_completed');
@@ -208,7 +212,7 @@ export function LearnScreen({
       <AnimatePresence>
         {learningPlanOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLearningPlanOpen(false)}>
-            <motion.section className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setLearningPlanOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Erst das Gebet festigen</h2><p>Die Reihenfolge ist bewusst praktisch aufgebaut. Dein Fortschritt wird nur lokal gespeichert.</p>
               <div className="reference-learning-plan-list">
