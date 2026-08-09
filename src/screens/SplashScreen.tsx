@@ -5,10 +5,10 @@ export function SplashScreen() {
   return (
     <motion.main
       className="reference-splash"
-      initial={{ opacity: 0 }}
+      initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0, scale: 1.015 }}
-      transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: .32, ease: [0.22, 1, 0.36, 1] }}
       aria-label="Nur Islam wird geladen"
     >
       <div className="reference-splash__halo" />
@@ -20,9 +20,9 @@ export function SplashScreen() {
       />
       <motion.div
         className="reference-splash__brand"
-        initial={{ opacity: 0, y: 12, scale: .96 }}
+        initial={{ opacity: 1, y: 8, scale: .98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ delay: .08, duration: .55, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ delay: .02, duration: .46, ease: [0.22, 1, 0.36, 1] }}
       >
         <PremiumImage
           src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp"
