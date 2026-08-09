@@ -59,23 +59,27 @@ if (!main.includes('consumeInitialNavigationIntent')
   || !main.includes("url.searchParams.delete('open')")) {
   throw new Error('Closed PWA reminder launch URLs are not consumed and cleaned.');
 }
-// main runs before React mounts, so the launch intent is queued instead of
-// dispatched; App drains the queue once its listeners exist.
-if (!main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
+// Closed-PWA launch navigation is queued before React mounts so a slow splash
+// cannot lose the reminder intent. The App consumes the queue after its live
+// prayer/calendar listeners are registered.
+if (!main.includes("import { queuePendingNavigation } from './pendingNavigation';")
+  || !main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
   || !main.includes('queuePendingNavigation(intent)')) {
   throw new Error('Reminder launch does not persist onboarding and queue the prayer tracker intent.');
-}
-if (!app.includes('consumePendingNavigation()')) {
-  throw new Error('App no longer drains the queued launch intent.');
 }
 if (!systemLayer.includes('PrayerReminderBanner') || !systemLayer.includes("new Event('nur:open-prayer')")) {
   throw new Error('In-app prayer reminder does not provide direct tracker navigation.');
 }
-if (!app.includes("window.addEventListener('nur:open-prayer'") || !app.includes("setActiveTab('prayer')")) {
-  throw new Error('App does not handle direct prayer navigation from reminders.');
+if (!app.includes("window.addEventListener('nur:open-prayer'")
+  || !app.includes('const pending = consumePendingNavigation()')
+  || !app.includes("setActiveTab('prayer')")) {
+  throw new Error('App does not handle live or queued prayer navigation from reminders.');
 }
-if (!pwa.includes("event.data?.type === 'OPEN_PRAYER'") || !pwa.includes("new Event('nur:open-prayer')") || !pwa.includes('nur_onboarding_complete')) {
-  throw new Error('PWA bridge does not persist and forward notification clicks.');
+if (!pwa.includes("event.data?.type === 'OPEN_PRAYER'")
+  || !pwa.includes("queuePendingNavigation('prayer')")
+  || !pwa.includes("new Event('nur:open-prayer')")
+  || !pwa.includes('nur_onboarding_complete')) {
+  throw new Error('PWA bridge does not persist, queue and forward notification clicks.');
 }
 if (!serviceWorker.includes("self.addEventListener('notificationclick'") || !serviceWorker.includes('postMessage({ type: messageType })') || !serviceWorker.includes('?open=${target}')) {
   throw new Error('Service worker notification click handling is missing or cannot route a closed PWA.');
@@ -87,4 +91,4 @@ if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 
-console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, invalid stored IDs are cleaned, live/fallback bootstrap precedes the scheduler, and PWA/in-app navigation remains wired.');
+console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, live/fallback bootstrap precedes the scheduler, and closed/live PWA reminder navigation is safely queued and forwarded to the prayer tracker.');

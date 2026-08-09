@@ -166,6 +166,7 @@ requireText(main, [
   "requested === 'calendar'",
   // The launch intent is queued rather than dispatched: main runs before React
   // mounts, so a live event would fire into nothing on a cold start.
+  "import { queuePendingNavigation } from './pendingNavigation';",
   'queuePendingNavigation(intent)',
 ], 'Application bootstrap');
 forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
@@ -224,4 +225,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors/icons, direct routing and accessibility.`);
+console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors/icons, queued closed-PWA routing, direct in-app routing and accessibility.`);

@@ -38,7 +38,7 @@
   bottom: -5px;
   left: 48px;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(232,199,122,.12), transparent);
+  background: linear-gradient(90deg, transparent, rgba(226,191,119,.12), transparent);
   pointer-events: none;
 }
 
@@ -84,7 +84,7 @@
   width: 170px;
   height: 170px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.08), transparent 70%);
+  background: radial-gradient(circle, rgba(226,191,119,.08), transparent 70%);
   pointer-events: none;
 }
 
@@ -107,9 +107,9 @@
   top: -48px;
   width: 120px;
   height: 120px;
-  border: 1px solid rgba(232,199,122,.035);
+  border: 1px solid rgba(226,191,119,.035);
   border-radius: 50%;
-  box-shadow: 0 0 0 18px rgba(232,199,122,.01);
+  box-shadow: 0 0 0 18px rgba(226,191,119,.01);
   pointer-events: none;
 }
 
@@ -132,7 +132,7 @@
   bottom: 0;
   left: 0;
   width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(232,199,122,.36), transparent);
+  background: linear-gradient(180deg, transparent, rgba(226,191,119,.36), transparent);
   opacity: .6;
   pointer-events: none;
 }
@@ -147,8 +147,8 @@
   isolation: isolate;
   min-height: 260px !important;
   background:
-    radial-gradient(circle at 86% 27%, rgba(232,199,122,.13), transparent 13rem),
-    linear-gradient(145deg, #104534 0%, #06281f 59%, #02140f 100%) !important;
+    radial-gradient(circle at 86% 27%, rgba(226,191,119,.13), transparent 13rem),
+    linear-gradient(145deg, #0d5743, #07372b 61%, #00120f) !important;
 }
 
 .reference-mosque-hero > div {
@@ -168,7 +168,7 @@
 
 .reference-mosque-hero > div p {
   max-width: 222px;
-  color: rgba(183,203,193,.78) !important;
+  color: rgba(145, 168, 158, .8) !important;
   text-wrap: pretty;
 }
 
@@ -196,7 +196,7 @@
   width: 280px;
   height: 280px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.12), rgba(49,139,103,.05) 45%, transparent 72%);
+  background: radial-gradient(circle, rgba(226,191,119,.12), rgba(13,87,67,.05) 45%, transparent 72%);
   filter: blur(10px);
   pointer-events: none;
 }
@@ -220,10 +220,10 @@
 
 .reference-mosque-list--live > button {
   overflow: hidden;
-  border: 1px solid rgba(232,199,122,.115) !important;
+  border: 1px solid rgba(226,191,119,.115) !important;
   border-radius: 18px !important;
   background:
-    radial-gradient(circle at 100% 0%, rgba(232,199,122,.04), transparent 8rem),
+    radial-gradient(circle at 100% 0%, rgba(226,191,119,.04), transparent 8rem),
     linear-gradient(145deg, rgba(9,45,35,.82), rgba(3,22,17,.96)) !important;
   box-shadow: 0 12px 28px rgba(0,0,0,.16), inset 0 1px 0 rgba(255,255,255,.018) !important;
 }
@@ -236,7 +236,7 @@
   bottom: -43px;
   width: 105px;
   height: 105px;
-  border: 1px solid rgba(232,199,122,.025);
+  border: 1px solid rgba(226,191,119,.025);
   border-radius: 50%;
   pointer-events: none;
 }
@@ -251,7 +251,7 @@
 }
 
 .reference-mosque-distance {
-  color: #efd493 !important;
+  color: #f2d79a !important;
   font-variant-numeric: tabular-nums;
 }
 
@@ -267,9 +267,9 @@
   right: -65px;
   width: 210px;
   height: 210px;
-  border: 1px solid rgba(232,199,122,.055);
+  border: 1px solid rgba(226,191,119,.055);
   border-radius: 50%;
-  box-shadow: 0 0 0 28px rgba(232,199,122,.013), 0 0 0 55px rgba(232,199,122,.007);
+  box-shadow: 0 0 0 28px rgba(226,191,119,.013), 0 0 0 55px rgba(226,191,119,.007);
   pointer-events: none;
 }
 
@@ -301,9 +301,9 @@
   right: -46px;
   width: 150px;
   height: 150px;
-  border: 1px solid rgba(232,199,122,.028);
+  border: 1px solid rgba(226,191,119,.028);
   border-radius: 50%;
-  box-shadow: 0 0 0 23px rgba(232,199,122,.009);
+  box-shadow: 0 0 0 23px rgba(226,191,119,.009);
   pointer-events: none;
 }
 
@@ -370,7 +370,7 @@
   bottom: 0;
   left: 0;
   width: 2px;
-  background: linear-gradient(180deg, transparent, rgba(232,199,122,.2), transparent);
+  background: linear-gradient(180deg, transparent, rgba(226,191,119,.2), transparent);
   opacity: .48;
   pointer-events: none;
 }
@@ -397,8 +397,8 @@
 [data-theme='light'] .reference-mosque-hero {
   color: #fff8e9;
   background:
-    radial-gradient(circle at 86% 27%, rgba(232,199,122,.13), transparent 13rem),
-    linear-gradient(145deg, #104534 0%, #06281f 59%, #02140f 100%) !important;
+    radial-gradient(circle at 86% 27%, rgba(226,191,119,.13), transparent 13rem),
+    linear-gradient(145deg, #0d5743, #07372b 61%, #00120f) !important;
 }
 
 [data-theme='light'] .reference-mosque-hero h2 {

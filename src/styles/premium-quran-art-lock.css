@@ -1,4 +1,5 @@
 /* Quran-specific final art direction. Presentation only. */
+/* React keeps quran-closed-v2.webp as the continue-card source; this layer controls presentation only. */
 
 /* ---------- Continue hero ---------- */
 .reference-quran-continue {
@@ -35,7 +36,7 @@
 
 .reference-quran-continue__book::before {
   inset: 14% 8% 9% !important;
-  background: radial-gradient(circle, rgba(175, 121, 42, .13), transparent 72%) !important;
+  background: radial-gradient(circle, rgba(226, 191, 119, .055), rgba(13, 87, 67, .045) 48%, transparent 72%) !important;
 }
 
 .reference-quran-continue__book > img {
@@ -54,7 +55,7 @@
 }
 
 .reference-quran-list__arabic {
-  color: #f0d494 !important;
+  color: #e2bf77 !important;
   line-height: 1.35;
 }
 
@@ -63,7 +64,7 @@
 }
 
 .reference-quran-list--catalog > article:has(.reference-quran-favorite.is-active) {
-  background: linear-gradient(90deg, rgba(232, 199, 122, .028), transparent 48%);
+  background: linear-gradient(90deg, rgba(226, 191, 119, .055), transparent 48%);
 }
 
 /* ---------- Daily Ayah card ---------- */
@@ -153,7 +154,7 @@
 
 /* ---------- Light theme ---------- */
 [data-theme='light'] .reference-quran-list__arabic {
-  color: #6c5224 !important;
+  color: #8d6d39 !important;
 }
 
 /* Continue and daily-Ayah heroes intentionally retain warm cream surfaces. */

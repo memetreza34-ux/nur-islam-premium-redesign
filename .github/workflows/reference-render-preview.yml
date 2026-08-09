@@ -44,7 +44,9 @@ jobs:
           npm install --no-save --package-lock=false playwright@1.55.0
           npx playwright install --with-deps chromium
 
-      - name: Build production app
+      - name: Build production app for local render QA
+        env:
+          VITE_BASE_PATH: /
         run: npm run build
 
       - name: Start production preview
@@ -54,7 +56,7 @@ jobs:
 
       - name: Wait for preview
         run: |
-          URL='http://127.0.0.1:4173/nur-islam-premium-redesign/'
+          URL='http://127.0.0.1:4173/'
           for attempt in {1..40}; do
             if curl --fail --silent --show-error "$URL" > /dev/null; then
               exit 0
@@ -66,7 +68,7 @@ jobs:
 
       - name: Capture 390x844 reference screens
         env:
-          PREVIEW_URL: http://127.0.0.1:4173/nur-islam-premium-redesign/
+          PREVIEW_URL: http://127.0.0.1:4173/
         run: node scripts/capture-reference-preview.mjs
 
       - name: Upload reference screenshots

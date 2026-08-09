@@ -77,7 +77,7 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.1), transparent 70%);
+  background: radial-gradient(circle, rgba(226, 191, 119, .13), transparent 70%);
   filter: blur(8px);
   pointer-events: none;
 }
@@ -92,7 +92,7 @@
   box-shadow:
     0 13px 28px rgba(0,0,0,.2),
     inset 0 1px 0 rgba(255,255,255,.04),
-    0 0 24px rgba(232,199,122,.055);
+    0 0 24px rgba(226, 191, 119, .055);
 }
 
 /* Home daily cards use the same visual grammar, but remain compact. */
@@ -106,10 +106,16 @@
   transform: scale(1.04);
 }
 
-.hadith-card {
+.hadith-card,
+.reference-hadith-hero {
   background:
-    radial-gradient(circle at 100% 100%, rgba(232,199,122,.055), transparent 8rem),
-    linear-gradient(145deg, rgba(11, 51, 39, .9), rgba(3, 22, 17, .98)) !important;
+    radial-gradient(circle at 100% 100%, rgba(226, 191, 119, .13), transparent 8rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
+}
+
+.hadith-card blockquote,
+.reference-hadith-hero blockquote {
+  color: rgba(145, 168, 158, .8) !important;
 }
 
 [data-theme='light'] .reference-ayah-hero__art,
