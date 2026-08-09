@@ -12,7 +12,19 @@ const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const appIcon = await readFile(resolve(root, 'public/nur-app-icon.svg'), 'utf8');
 const manifest = JSON.parse(await readFile(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
 const html = await readFile(resolve(root, 'index.html'), 'utf8');
-const pagesWorkflow = await readFile(resolve(root, '.github/workflows/deploy-pages.yml'), 'utf8');
+const workflowNames = [
+  'deploy-pages.yml',
+  'e2e.yml',
+  'home-reference-audit.yml',
+  'redesign-check.yml',
+  'reference-render-preview.yml',
+];
+const workflowEntries = await Promise.all(workflowNames.map(async (name) => [
+  name,
+  await readFile(resolve(root, `.github/workflows/${name}`), 'utf8'),
+]));
+const workflows = Object.fromEntries(workflowEntries);
+const pagesWorkflow = workflows['deploy-pages.yml'];
 
 const viteRequirements = [
   "command === 'build' ? '/nur-islam-premium-redesign/' : '/'",
@@ -22,6 +34,24 @@ for (const requirement of viteRequirements) {
   if (!vite.includes(requirement)) throw new Error(`Vite base path is missing: ${requirement}`);
 }
 
+// CI actions are part of the release surface too. checkout/setup-node v7 use
+// the supported Node 24 action runtime; older majors had begun emitting runtime
+// deprecation warnings on GitHub-hosted runners. Keep all project workflows on
+// the same maintained major instead of allowing individual files to drift.
+for (const [name, workflow] of Object.entries(workflows)) {
+  for (const requirement of ['actions/checkout@v7', 'actions/setup-node@v7']) {
+    if (!workflow.includes(requirement)) throw new Error(`${name} is missing current CI runtime action: ${requirement}`);
+  }
+  if (workflow.includes('actions/checkout@v4') || workflow.includes('actions/setup-node@v4')) {
+    throw new Error(`${name} still references deprecated v4 checkout/setup-node actions.`);
+  }
+}
+for (const name of ['e2e.yml', 'reference-render-preview.yml']) {
+  if (!workflows[name].includes('actions/upload-artifact@v7')) {
+    throw new Error(`${name} must use the current upload-artifact v7 runtime.`);
+  }
+}
+
 // GitHub Pages is a real release surface, not a feature-branch preview. Keep
 // both the trigger and the strict release gate source-controlled so a later
 // workflow edit cannot silently publish a draft or bypass legal/release checks.
@@ -29,8 +59,8 @@ for (const requirement of [
   'branches: [main]',
   "NUR_RELEASE: 'true'",
   'run: npm run check',
-  'actions/upload-pages-artifact@v3',
-  'actions/deploy-pages@v4',
+  'actions/upload-pages-artifact@v5',
+  'actions/deploy-pages@v5',
 ]) {
   if (!pagesWorkflow.includes(requirement)) throw new Error(`Pages workflow is missing release safety: ${requirement}`);
 }
@@ -155,4 +185,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
