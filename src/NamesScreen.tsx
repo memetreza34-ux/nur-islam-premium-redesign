@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookmarkCheck,
   Check,
@@ -57,13 +57,17 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
   const initialName = initialNameId ? NAMES_OF_ALLAH.find((entry) => String(entry.id) === initialNameId) ?? null : null;
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<NameFilter>('all');
-  const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites', ['1']));
+  const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites'));
   const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
   const [selected, setSelected] = useState<NameOfAllah | null>(initialName);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   useEffect(() => writeSet('nur_name_favorites', favorites), [favorites]);
   useEffect(() => writeSet('nur_name_learned', learned), [learned]);
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const visible = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('de-DE');
@@ -81,8 +85,12 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
   const progress = Math.round((learned.size / NAMES_OF_ALLAH.length) * 100);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2100);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2100);
   };
 
   const toggleFavorite = (name: NameOfAllah) => {
