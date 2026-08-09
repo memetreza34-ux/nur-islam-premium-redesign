@@ -99,6 +99,9 @@ try {
 
       const legacy = page.locator('.reference-legacy-screen');
       await legacy.waitFor({ state: 'visible', timeout: 15_000 });
+      const hero = legacy.locator('.reference-legacy-hero').first();
+      await hero.waitFor({ state: 'visible', timeout: 10_000 });
+      await hero.scrollIntoViewIfNeeded();
       await settle();
       await screenshot(`${String(group.startIndex + index).padStart(2, '0')}-legacy-${id}`);
 
