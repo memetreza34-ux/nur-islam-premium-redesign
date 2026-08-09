@@ -79,36 +79,6 @@ async function screenshot(name) {
   });
 }
 
-async function recoverMosquePng() {
-  const result = await page.evaluate(async () => {
-    const existing = document.getElementById('nur-mosque-recovery');
-    existing?.remove();
-    const image = new Image();
-    image.id = 'nur-mosque-recovery';
-    image.alt = '';
-    image.src = '/premium-assets/high-res-objects/mosque-gold.png?recovery=1';
-    image.style.cssText = 'position:fixed;left:0;top:0;z-index:2147483647;display:block;max-width:none;max-height:none;opacity:1;visibility:visible;background:transparent;';
-    document.body.appendChild(image);
-    await new Promise((resolveLoad) => {
-      image.addEventListener('load', resolveLoad, { once: true });
-      image.addEventListener('error', resolveLoad, { once: true });
-    });
-    image.style.width = `${image.naturalWidth}px`;
-    image.style.height = `${image.naturalHeight}px`;
-    return { complete: image.complete, naturalWidth: image.naturalWidth, naturalHeight: image.naturalHeight, currentSrc: image.currentSrc };
-  });
-  console.log(`[legacy-art:mosque-png-recovery] ${JSON.stringify(result)}`);
-  if (result.naturalWidth > 0 && result.naturalHeight > 0) {
-    await page.locator('#nur-mosque-recovery').screenshot({
-      path: resolve(outputDir, 'mosque-gold-source-recovered.png'),
-      animations: 'disabled',
-      omitBackground: true,
-    });
-    await page.locator('#nur-mosque-recovery').evaluate((node) => node.remove());
-  }
-  return result;
-}
-
 async function inspectHeroArtwork(legacy, id) {
   const image = legacy.locator('.reference-legacy-hero img').first();
   const diagnostics = await image.evaluate((node) => {
@@ -133,8 +103,7 @@ async function inspectHeroArtwork(legacy, id) {
   });
   console.log(`[legacy-art:${id}] ${JSON.stringify(diagnostics)}`);
   if (!diagnostics.complete || diagnostics.naturalWidth <= 0 || diagnostics.naturalHeight <= 0) {
-    if (id === 'places') await recoverMosquePng();
-    throw new Error(`Legacy hero artwork failed to load for ${id}: ${diagnostics.currentSrc}`);
+    throw new Error(`Legacy hero artwork failed to decode for ${id}: ${diagnostics.currentSrc}`);
   }
 }
 
