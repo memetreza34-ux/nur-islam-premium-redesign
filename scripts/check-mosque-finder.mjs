@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const service = await readFile(resolve(root, 'src/mosqueService.ts'), 'utf8');
-const screen = await readFile(resolve(root, 'src/MosqueScreen.tsx'), 'utf8');
-const bridge = await readFile(resolve(root, 'src/DiscoveryScreens.tsx'), 'utf8');
+const service = await readFile(resolve(root, 'src/services/mosqueService.ts'), 'utf8');
+const screen = await readFile(resolve(root, 'src/screens/MosqueScreen.tsx'), 'utf8');
+const bridge = await readFile(resolve(root, 'src/screens/DiscoveryScreens.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-mosque-live.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 
 const serviceFeatures = [
   'https://overpass-api.de/api/interpreter',
@@ -57,7 +57,7 @@ if (service.includes('return `https://${value}`')) {
 if (bridge.trim() !== "export { MosqueScreen } from './MosqueScreen';") {
   throw new Error('DiscoveryScreens must route the existing app import to the live MosqueScreen.');
 }
-if (!app.includes("import { MosqueScreen } from './DiscoveryScreens';") || !app.includes("activeTab === 'mosques'")) {
+if (!app.includes("import { MosqueScreen } from '../screens/DiscoveryScreens';") || !app.includes("activeTab === 'mosques'")) {
   throw new Error('App no longer routes to the mosque finder.');
 }
 if (!styles.includes('.reference-mosque-live-status') || !styles.includes('.reference-mosque-detail-modal')) {

@@ -38,7 +38,7 @@ if (width !== 512 || height !== 256) {
   throw new Error(`Unexpected reference sprite dimensions: ${width}x${height}.`);
 }
 
-const spriteComponent = await readFile(resolve(root, 'src/ReferenceSprite.tsx'), 'utf8');
+const spriteComponent = await readFile(resolve(root, 'src/shared/ReferenceSprite.tsx'), 'utf8');
 const requiredSpriteAssets = [
   'dome',
   'kaaba',
@@ -188,15 +188,14 @@ if (!recoveryCss.includes('.premium-image > img[hidden]') || !recoveryCss.includ
   throw new Error('Premium image fallback CSS does not preserve visible real images and error-only fallbacks.');
 }
 
-const premiumVisuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
+const premiumVisuals = await readFile(resolve(root, 'src/shared/PremiumVisuals.tsx'), 'utf8');
 if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVisuals.includes('next.hidden = false')) {
   throw new Error('PremiumImage must switch to its SVG fallback only after an actual image error.');
 }
 
-const mainSource = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
+const mainSource = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const stylesEntry = await readFile(resolve(root, 'src/styles.css'), 'utf8');
-const sourceRootEntries = await readdir(resolve(root, 'src'));
 const styleEntries = await readdir(resolve(root, 'src/styles'));
 
 const versionAssertions = [
@@ -233,7 +232,7 @@ if (!serviceWorker.includes('meta name="theme-color" content="#001b16"')
 if (mainSource.includes('ReferenceArtworkHost')) {
   throw new Error('The obsolete fixed ReferenceArtworkHost must not be mounted; artwork is integrated per screen.');
 }
-if (sourceRootEntries.includes('ReferenceArtworkHost.tsx')) {
+if (sourceFiles.some((path) => path.endsWith('/ReferenceArtworkHost.tsx'))) {
   throw new Error('Obsolete ReferenceArtworkHost.tsx should remain removed from the source tree.');
 }
 if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includes('premium-artwork-host-lock.css')) {

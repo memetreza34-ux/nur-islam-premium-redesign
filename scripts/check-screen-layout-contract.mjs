@@ -19,7 +19,7 @@ const primaryScreens = [
 ];
 
 for (const fileName of primaryScreens) {
-  const source = await readFile(resolve(root, 'src', fileName), 'utf8');
+  const source = await readFile(resolve(root, 'src/screens', fileName), 'utf8');
   if (!source.includes('className="screen')) {
     throw new Error(`${fileName} does not use the shared screen layout class.`);
   }
@@ -31,7 +31,7 @@ for (const fileName of primaryScreens) {
   }
 }
 
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 const guardrails = await readFile(resolve(root, 'src/styles/visual-consistency.css'), 'utf8');
 
 for (const destination of [

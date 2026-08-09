@@ -20,9 +20,9 @@ const root = process.cwd();
 const read = (file) => readFile(resolve(root, file), 'utf8');
 const count = (source, pattern) => [...source.matchAll(pattern)].length;
 
-const duas = await read('src/duaData.ts');
-const dhikr = await read('src/dhikrData.ts');
-const learning = await read('src/islamicLearningContent.ts');
+const duas = await read('src/data/duaData.ts');
+const dhikr = await read('src/data/dhikrData.ts');
+const learning = await read('src/data/islamicLearningContent.ts');
 
 const duaEntries = count(duas, /^\s+id:\s*'/gm);
 const duaSources = count(duas, /^\s+source:\s*'/gm);

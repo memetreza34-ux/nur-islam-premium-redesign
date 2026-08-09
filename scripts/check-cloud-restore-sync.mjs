@@ -2,8 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const backend = await readFile(resolve(root, 'src/nurBackend.ts'), 'utf8');
-const theme = await readFile(resolve(root, 'src/themeService.ts'), 'utf8');
+const backend = await readFile(resolve(root, 'src/services/nurBackend.ts'), 'utf8');
+const theme = await readFile(resolve(root, 'src/services/themeService.ts'), 'utf8');
 
 for (const requirement of [
   "CLOUD_RESTORED_EVENT = 'nur:cloud-restored'",

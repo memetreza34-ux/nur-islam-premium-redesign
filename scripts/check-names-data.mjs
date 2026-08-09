@@ -2,9 +2,9 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const dataSource = await readFile(resolve(root, 'src/namesOfAllahData.ts'), 'utf8');
-const screenSource = await readFile(resolve(root, 'src/NamesScreen.tsx'), 'utf8');
-const appSource = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
+const dataSource = await readFile(resolve(root, 'src/data/namesOfAllahData.ts'), 'utf8');
+const screenSource = await readFile(resolve(root, 'src/screens/NamesScreen.tsx'), 'utf8');
+const appSource = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 
 const ids = [...dataSource.matchAll(/\{ id: (\d+), latin: '([^']+)'|\{ id: (\d+), latin: "([^"]+)"/g)]
@@ -44,7 +44,7 @@ if (screenSource.includes("migrateNameSet('nur_name_favorites', ['1'])")) {
   throw new Error('An empty Name favorite set must not be seeded with Name 1.');
 }
 
-if (!appSource.includes("import { NamesScreen } from './NamesScreen';")) {
+if (!appSource.includes("import { NamesScreen } from '../screens/NamesScreen';")) {
   throw new Error('App does not route to the complete Names screen.');
 }
 

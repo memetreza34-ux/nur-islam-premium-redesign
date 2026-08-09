@@ -22,10 +22,10 @@ const base = await readFile(resolve(root, 'src/styles/base.css'), 'utf8');
 const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'utf8');
 const viewport = await readFile(resolve(root, 'src/styles/reference-mobile-viewport.css'), 'utf8');
 const sprite = await readFile(resolve(root, 'src/styles/reference-sprite.css'), 'utf8');
-const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
-const moreScreen = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
+const visuals = await readFile(resolve(root, 'src/shared/PremiumVisuals.tsx'), 'utf8');
+const moreScreen = await readFile(resolve(root, 'src/screens/MoreScreen.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
 const geometryImport = "@import './styles/premium-reference-geometry-lock.css';";
@@ -169,7 +169,7 @@ if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-ev
 }
 
 const requiredImageBehavior = [
-  "import { versionAppPath } from './appPaths';",
+  "import { versionAppPath } from '../app/appPaths';",
   "const PREMIUM_ASSET_VERSION = '20260808-release-hardening';",
   'onLoad={(event) =>',
   'event.currentTarget.hidden = false',

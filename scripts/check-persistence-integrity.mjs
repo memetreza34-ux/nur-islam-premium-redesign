@@ -4,14 +4,14 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const [duas, names, quran, reader, collections, calendar, notes, backend] = await Promise.all([
-  read('src/DuasScreen.tsx'),
-  read('src/NamesScreen.tsx'),
-  read('src/QuranScreen.tsx'),
-  read('src/QuranReaderScreen.tsx'),
-  read('src/CollectionsScreen.tsx'),
-  read('src/CalendarScreen.tsx'),
-  read('src/NotesScreen.tsx'),
-  read('src/nurBackend.ts'),
+  read('src/screens/DuasScreen.tsx'),
+  read('src/screens/NamesScreen.tsx'),
+  read('src/screens/QuranScreen.tsx'),
+  read('src/screens/QuranReaderScreen.tsx'),
+  read('src/screens/CollectionsScreen.tsx'),
+  read('src/screens/CalendarScreen.tsx'),
+  read('src/screens/NotesScreen.tsx'),
+  read('src/services/nurBackend.ts'),
 ]);
 
 for (const requirement of [

@@ -16,7 +16,7 @@ const [
   finalLock,
   styleIndex,
 ] = await Promise.all([
-  read('src/App.tsx'),
+  read('src/app/App.tsx'),
   read('src/styles/base.css'),
   read('src/styles/home-hero.css'),
   read('src/styles/home-content.css'),

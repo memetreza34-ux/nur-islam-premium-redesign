@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const learn = await readFile(resolve(root, 'src/LearnScreen.tsx'), 'utf8');
-const course = await readFile(resolve(root, 'src/PrayerLearningScreen.tsx'), 'utf8');
-const prayer = await readFile(resolve(root, 'src/PrayerScreen.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const learn = await readFile(resolve(root, 'src/screens/LearnScreen.tsx'), 'utf8');
+const course = await readFile(resolve(root, 'src/screens/PrayerLearningScreen.tsx'), 'utf8');
+const prayer = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-prayer-learning-completion.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 

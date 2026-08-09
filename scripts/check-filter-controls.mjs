@@ -5,11 +5,11 @@ const root = process.cwd();
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const filters = await readFile(resolve(root, 'src/styles/filter-control-consistency.css'), 'utf8');
 const discovery = await readFile(resolve(root, 'src/styles/reference-discovery.css'), 'utf8');
-const quran = await readFile(resolve(root, 'src/QuranScreen.tsx'), 'utf8');
-const duas = await readFile(resolve(root, 'src/DuasScreen.tsx'), 'utf8');
-const names = await readFile(resolve(root, 'src/NamesScreen.tsx'), 'utf8');
-const collections = await readFile(resolve(root, 'src/CollectionsScreen.tsx'), 'utf8');
-const mosque = await readFile(resolve(root, 'src/MosqueScreen.tsx'), 'utf8');
+const quran = await readFile(resolve(root, 'src/screens/QuranScreen.tsx'), 'utf8');
+const duas = await readFile(resolve(root, 'src/screens/DuasScreen.tsx'), 'utf8');
+const names = await readFile(resolve(root, 'src/screens/NamesScreen.tsx'), 'utf8');
+const collections = await readFile(resolve(root, 'src/screens/CollectionsScreen.tsx'), 'utf8');
+const mosque = await readFile(resolve(root, 'src/screens/MosqueScreen.tsx'), 'utf8');
 
 const filterImport = "@import './styles/filter-control-consistency.css';";
 const finalImport = "@import './styles/visual-consistency.css';";

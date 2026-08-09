@@ -143,7 +143,7 @@ Erwarteter Dev-Port laut `package.json`: `3000`.
 
 ### Gebet und Kalender
 
-- gemeinsame Prayer-Schedule-Hilfe in `src/prayerSchedule.ts`
+- gemeinsame Prayer-Schedule-Hilfe in `src/services/prayerSchedule.ts`
 - dynamische Demo-Gebetszeiten
 - nächstes Gebet und Restzeit
 - Gebetsseite
@@ -198,7 +198,7 @@ Religiöse Formulierungen und Varianten vor Veröffentlichung noch einmal fachli
 
 ### Duas
 
-- `src/duaData.ts`
+- `src/data/duaData.ts`
 - 34 Duas
 - 13 Kategorien
 - Suche
@@ -214,7 +214,7 @@ Religiöse Formulierungen und Varianten vor Veröffentlichung noch einmal fachli
 
 ### 99 Namen Allahs
 
-- `src/namesOfAllahData.ts`
+- `src/data/namesOfAllahData.ts`
 - alle 99 Einträge
 - Suche
 - Favoriten
@@ -227,7 +227,7 @@ Religiöse Formulierungen und Varianten vor Veröffentlichung noch einmal fachli
 
 ### Lern- und Legacy-Funktionen
 
-In `src/LegacyFeatureScreens.tsx` und weiteren Screens sind unter anderem erreichbar:
+In `src/screens/LegacyFeatureScreens.tsx` und weiteren Screens sind unter anderem erreichbar:
 
 - Hadith-Sammlung
 - Wissensbibliothek
@@ -285,15 +285,15 @@ Bereits geändert:
 
 Wichtige Dateien:
 
-- `src/PremiumVisuals.tsx`
+- `src/shared/PremiumVisuals.tsx`
 - `src/ReferenceArtworkHost.tsx`
 - `src/styles/reference-asset-recovery.css`
 - `src/styles/reference-valid-assets-v2.css`
 - `src/styles/reference-valid-assets-secondary.css`
 - `src/styles/reference-sprite.css`
-- `src/pwa.ts`
+- `src/app/pwa.ts`
 - `public/sw.js`
-- `src/main.tsx`
+- `src/app/main.tsx`
 
 **Trotzdem noch zwingend:** echte laufende Vorschau laden und visuell prüfen. Nicht allein vom Code ableiten, dass jedes Bild korrekt positioniert ist.
 
@@ -321,7 +321,7 @@ Bei altem PWA-Cache:
 
 ### Phase B – Bekannte Codefehler prüfen
 
-1. Quiz-Bestwert in `src/LegacyFeatureScreens.tsx` prüfen.
+1. Quiz-Bestwert in `src/screens/LegacyFeatureScreens.tsx` prüfen.
    - Verdacht: Antwort wird bereits zu `score` addiert und am Ende nochmals als `finalScore` gezählt.
    - Mögliches Resultat: 6/5.
    - Nicht blind ändern; aktuelle Implementierung zuerst lesen.

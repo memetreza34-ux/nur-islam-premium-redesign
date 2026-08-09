@@ -15,11 +15,11 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const legal = await read('src/legalContent.ts');
-const prayer = await read('src/prayerTimesService.ts');
-const quran = await read('src/quranService.ts');
-const mosque = await read('src/mosqueService.ts');
-const backend = await read('src/nurBackend.ts');
+const legal = await read('src/data/legalContent.ts');
+const prayer = await read('src/services/prayerTimesService.ts');
+const quran = await read('src/services/quranService.ts');
+const mosque = await read('src/services/mosqueService.ts');
+const backend = await read('src/services/nurBackend.ts');
 
 const RELEASE = process.env.NUR_RELEASE === 'true';
 
@@ -91,12 +91,12 @@ const placeholderCount = [...legal.matchAll(/OPERATOR_PLACEHOLDER/g)].length;
 const unfilled = placeholderCount > 2;
 
 if (unfilled && RELEASE) {
-  throw new Error('Imprint still contains placeholders. Fill in src/legalContent.ts before a release build.');
+  throw new Error('Imprint still contains placeholders. Fill in src/data/legalContent.ts before a release build.');
 }
 
 if (unfilled) {
   console.log('Legal content verified: privacy text matches the services in code, and the promised data rights exist.');
-  console.log('  PENDING: the imprint still has placeholders. Fill them in src/legalContent.ts.');
+  console.log('  PENDING: the imprint still has placeholders. Fill them in src/data/legalContent.ts.');
   console.log('  A release build (NUR_RELEASE=true npm run check) will refuse to pass until then.');
 } else {
   console.log('Legal content verified: imprint filled in, privacy text matches the services in code, and the promised data rights exist.');

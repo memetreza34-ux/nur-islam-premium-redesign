@@ -2,8 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const dataSource = await readFile(resolve(root, 'src/duaData.ts'), 'utf8');
-const screenSource = await readFile(resolve(root, 'src/DuasScreen.tsx'), 'utf8');
+const dataSource = await readFile(resolve(root, 'src/data/duaData.ts'), 'utf8');
+const screenSource = await readFile(resolve(root, 'src/screens/DuasScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 
 const entries = [...dataSource.matchAll(/id: '([^']+)', categoryId: '([^']+)'/g)]

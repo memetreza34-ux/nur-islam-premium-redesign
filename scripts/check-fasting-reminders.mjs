@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const service = await readFile(resolve(root, 'src/fastingReminderService.ts'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
-const legacy = await readFile(resolve(root, 'src/LegacyFeatureScreens.tsx'), 'utf8');
-const calendarService = await readFile(resolve(root, 'src/calendarReminderService.ts'), 'utf8');
+const service = await readFile(resolve(root, 'src/services/fastingReminderService.ts'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const legacy = await readFile(resolve(root, 'src/screens/LegacyFeatureScreens.tsx'), 'utf8');
+const calendarService = await readFile(resolve(root, 'src/services/calendarReminderService.ts'), 'utf8');
 
 for (const requirement of [
   "FASTING_ENABLED_KEY = 'nur_fasting_reminders'",
@@ -32,7 +32,7 @@ if (service.includes('MAINTENANCE_INTERVAL_MS = 15_000')) {
 }
 
 for (const requirement of [
-  "import { startFastingReminderMaintenance } from './fastingReminderService';",
+  "import { startFastingReminderMaintenance } from '../services/fastingReminderService';",
   'const stopFastingReminderMaintenance = startFastingReminderMaintenance()',
   'stopFastingReminderMaintenance()',
 ]) {
@@ -40,7 +40,7 @@ for (const requirement of [
 }
 
 for (const requirement of [
-  "import { syncRollingFastingReminders } from './fastingReminderService';",
+  "import { syncRollingFastingReminders } from '../services/fastingReminderService';",
   'nur_fasting_reminders',
   'nur_fasting_reminder_time',
   'syncRollingFastingReminders();',
@@ -51,7 +51,7 @@ for (const requirement of [
 }
 
 for (const forbidden of [
-  "from './calendarReminderService'",
+  "from '../services/calendarReminderService'",
   'FASTING_REMINDER_ID_BASE',
   'FASTING_REMINDER_ID_MAX',
   'buildFastingReminderEntries',

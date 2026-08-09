@@ -3,11 +3,11 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const vite = await readFile(resolve(root, 'vite.config.ts'), 'utf8');
-const paths = await readFile(resolve(root, 'src/appPaths.ts'), 'utf8');
-const visuals = await readFile(resolve(root, 'src/PremiumVisuals.tsx'), 'utf8');
-const legacyFeatures = await readFile(resolve(root, 'src/LegacyFeatureScreens.tsx'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
-const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
+const paths = await readFile(resolve(root, 'src/app/appPaths.ts'), 'utf8');
+const visuals = await readFile(resolve(root, 'src/shared/PremiumVisuals.tsx'), 'utf8');
+const legacyFeatures = await readFile(resolve(root, 'src/screens/LegacyFeatureScreens.tsx'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const pwa = await readFile(resolve(root, 'src/app/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const appIcon = await readFile(resolve(root, 'public/nur-app-icon.svg'), 'utf8');
 const manifest = JSON.parse(await readFile(resolve(root, 'public/manifest.webmanifest'), 'utf8'));
@@ -43,7 +43,7 @@ for (const alias of requiredAssetAliases) {
   if (!paths.includes(alias)) throw new Error(`Premium asset alias is missing: ${alias}`);
 }
 
-if (!visuals.includes("import { versionAppPath } from './appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
+if (!visuals.includes("import { versionAppPath } from '../app/appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
   throw new Error('PremiumImage does not resolve assets through the deployment base path.');
 }
 if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260808-release-hardening';")) {
@@ -51,7 +51,7 @@ if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260808-release-hardening
 }
 
 for (const requirement of [
-  "import { versionAppPath } from './appPaths';",
+  "import { versionAppPath } from '../app/appPaths';",
   "const VISUAL_VERSION = '20260808-release-hardening';",
   'const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);',
 ]) {

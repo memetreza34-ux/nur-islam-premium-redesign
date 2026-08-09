@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
-const source = await readFile(resolve(process.cwd(), 'src/QiblaScreen.tsx'), 'utf8');
+const source = await readFile(resolve(process.cwd(), 'src/screens/QiblaScreen.tsx'), 'utf8');
 
 const requiredFragments = [
   'requestPermission',

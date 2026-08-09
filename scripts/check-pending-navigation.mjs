@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const queue = await readFile(resolve(root, 'src/pendingNavigation.ts'), 'utf8');
-const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
+const queue = await readFile(resolve(root, 'src/services/pendingNavigation.ts'), 'utf8');
+const pwa = await readFile(resolve(root, 'src/app/pwa.ts'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 
 for (const requirement of [
   "export type PendingNavigationIntent = 'prayer' | 'calendar'",
@@ -20,7 +20,7 @@ for (const requirement of [
 }
 
 for (const requirement of [
-  "import { queuePendingNavigation } from './pendingNavigation';",
+  "import { queuePendingNavigation } from '../services/pendingNavigation';",
   "queuePendingNavigation('prayer')",
   "queuePendingNavigation('calendar')",
   "window.dispatchEvent(new Event('nur:open-prayer'))",
@@ -30,7 +30,7 @@ for (const requirement of [
 }
 
 for (const requirement of [
-  "import { queuePendingNavigation } from './pendingNavigation';",
+  "import { queuePendingNavigation } from '../services/pendingNavigation';",
   "const requested = url.searchParams.get('open')",
   "requested === 'prayer' ? 'prayer' : requested === 'calendar' ? 'calendar' : null",
   "localStorage.setItem('nur_onboarding_complete', 'true')",
@@ -49,7 +49,7 @@ for (const forbidden of [
 }
 
 for (const requirement of [
-  "import { consumePendingNavigation } from './pendingNavigation';",
+  "import { consumePendingNavigation } from '../services/pendingNavigation';",
   "window.addEventListener('nur:open-prayer', openPrayerTracker)",
   "window.addEventListener('nur:open-calendar', openCalendar)",
   'const pending = consumePendingNavigation()',

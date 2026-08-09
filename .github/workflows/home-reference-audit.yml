@@ -6,7 +6,7 @@ on:
     branches:
       - premium-home-redesign
     paths:
-      - 'src/App.tsx'
+      - 'src/app/App.tsx'
       - 'src/styles/base.css'
       - 'src/styles/home-hero.css'
       - 'src/styles/home-content.css'

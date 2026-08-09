@@ -2,8 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const dataSource = await readFile(resolve(root, 'src/dhikrData.ts'), 'utf8');
-const screenSource = await readFile(resolve(root, 'src/DhikrScreen.tsx'), 'utf8');
+const dataSource = await readFile(resolve(root, 'src/data/dhikrData.ts'), 'utf8');
+const screenSource = await readFile(resolve(root, 'src/screens/DhikrScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const hardeningStyles = await readFile(resolve(root, 'src/styles/functional-hardening.css'), 'utf8');
 

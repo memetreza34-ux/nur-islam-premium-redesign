@@ -2,8 +2,8 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const prayer = await readFile(resolve(root, 'src/prayerReminderService.ts'), 'utf8');
-const calendar = await readFile(resolve(root, 'src/calendarReminderService.ts'), 'utf8');
+const prayer = await readFile(resolve(root, 'src/services/prayerReminderService.ts'), 'utf8');
+const calendar = await readFile(resolve(root, 'src/services/calendarReminderService.ts'), 'utf8');
 
 for (const [label, source] of [['Prayer', prayer], ['Calendar', calendar]]) {
   if (!source.includes('REMINDER_WINDOW_MINUTES = 5') && !source.includes('REMINDER_GRACE_MINUTES = 5')) {

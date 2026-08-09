@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const scheduler = await readFile(resolve(root, 'src/prayerReminderService.ts'), 'utf8');
-const prayerScreen = await readFile(resolve(root, 'src/PrayerScreen.tsx'), 'utf8');
-const systemLayer = await readFile(resolve(root, 'src/AppSystemLayer.tsx'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const pwa = await readFile(resolve(root, 'src/pwa.ts'), 'utf8');
+const scheduler = await readFile(resolve(root, 'src/services/prayerReminderService.ts'), 'utf8');
+const prayerScreen = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
+const systemLayer = await readFile(resolve(root, 'src/app/AppSystemLayer.tsx'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const pwa = await readFile(resolve(root, 'src/app/pwa.ts'), 'utf8');
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-prayer-reminders.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
@@ -62,7 +62,7 @@ if (!main.includes('consumeInitialNavigationIntent')
 // Closed-PWA launch navigation is queued before React mounts so a slow splash
 // cannot lose the reminder intent. The App consumes the queue after its live
 // prayer/calendar listeners are registered.
-if (!main.includes("import { queuePendingNavigation } from './pendingNavigation';")
+if (!main.includes("import { queuePendingNavigation } from '../services/pendingNavigation';")
   || !main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
   || !main.includes('queuePendingNavigation(intent)')) {
   throw new Error('Reminder launch does not persist onboarding and queue the prayer tracker intent.');

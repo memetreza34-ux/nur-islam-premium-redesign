@@ -2,16 +2,16 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const collections = await readFile(resolve(root, 'src/CollectionsScreen.tsx'), 'utf8');
-const reader = await readFile(resolve(root, 'src/QuranReaderScreen.tsx'), 'utf8');
-const duas = await readFile(resolve(root, 'src/DuasScreen.tsx'), 'utf8');
-const names = await readFile(resolve(root, 'src/NamesScreen.tsx'), 'utf8');
-const calendar = await readFile(resolve(root, 'src/CalendarScreen.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const collections = await readFile(resolve(root, 'src/screens/CollectionsScreen.tsx'), 'utf8');
+const reader = await readFile(resolve(root, 'src/screens/QuranReaderScreen.tsx'), 'utf8');
+const duas = await readFile(resolve(root, 'src/screens/DuasScreen.tsx'), 'utf8');
+const names = await readFile(resolve(root, 'src/screens/NamesScreen.tsx'), 'utf8');
+const calendar = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'), 'utf8');
 
 const requiredAppFragments = [
-  "import { CollectionsScreen } from './CollectionsScreen';",
-  "import { MosqueScreen } from './DiscoveryScreens';",
+  "import { CollectionsScreen } from '../screens/CollectionsScreen';",
+  "import { MosqueScreen } from '../screens/DiscoveryScreens';",
   'onOpenQuran={goQuran}',
   'onOpenReader={openReader}',
   'onOpenDua={openSavedDua}',

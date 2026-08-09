@@ -25,7 +25,7 @@ for (let index = 0; index < surahs.length; index += 1) {
   }
 }
 
-const serviceSource = await readFile(resolve(root, 'src/quranService.ts'), 'utf8');
+const serviceSource = await readFile(resolve(root, 'src/services/quranService.ts'), 'utf8');
 const offlineMatch = serviceSource.match(/OFFLINE_QURAN_SURAHS = \[([^\]]+)\]/);
 if (!offlineMatch) throw new Error('Could not read OFFLINE_QURAN_SURAHS from quranService.ts.');
 
@@ -79,15 +79,15 @@ for (const required of onlineServiceFeatures) {
   if (!serviceSource.includes(required)) throw new Error(`Online Quran service is missing: ${required}`);
 }
 
-const appSource = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const catalogSource = await readFile(resolve(root, 'src/QuranScreen.tsx'), 'utf8');
-const readerSource = await readFile(resolve(root, 'src/QuranReaderScreen.tsx'), 'utf8');
+const appSource = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const catalogSource = await readFile(resolve(root, 'src/screens/QuranScreen.tsx'), 'utf8');
+const readerSource = await readFile(resolve(root, 'src/screens/QuranReaderScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const onlineStyles = await readFile(resolve(root, 'src/styles/reference-quran-online.css'), 'utf8');
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 
 for (const required of [
-  "import { QuranReaderScreen } from './QuranReaderScreen';",
+  "import { QuranReaderScreen } from '../screens/QuranReaderScreen';",
   'selectedSurahNumber',
   'selectedAyahNumber',
   'onOpenReader={openReader}',

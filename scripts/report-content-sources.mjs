@@ -22,10 +22,10 @@ function countMatches(source, pattern) {
   return [...source.matchAll(pattern)].length;
 }
 
-const duas = await read('src/duaData.ts');
-const dhikr = await read('src/dhikrData.ts');
-const names = await read('src/namesOfAllahData.ts');
-const learning = await read('src/islamicLearningContent.ts');
+const duas = await read('src/data/duaData.ts');
+const dhikr = await read('src/data/dhikrData.ts');
+const names = await read('src/data/namesOfAllahData.ts');
+const learning = await read('src/data/islamicLearningContent.ts');
 
 // Entries are counted from their id lines so the numbers follow the data rather
 // than a hand-maintained constant.

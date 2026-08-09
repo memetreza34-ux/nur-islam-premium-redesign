@@ -9,11 +9,24 @@
  * dialog does not trip it while removing its behaviour still does.
  */
 import { readFile, readdir } from 'node:fs/promises';
-import { resolve } from 'node:path';
+import { relative, resolve } from 'node:path';
 
 const root = process.cwd();
 const dir = resolve(root, 'src');
-const files = (await readdir(dir)).filter((name) => name.endsWith('.tsx'));
+// The source tree is grouped into app/, screens/ and shared/, so the scan
+// recurses instead of reading a single flat directory.
+async function collectScreens(directory) {
+  const entries = await readdir(directory, { withFileTypes: true });
+  const files = [];
+  for (const entry of entries) {
+    const path = resolve(directory, entry.name);
+    if (entry.isDirectory()) files.push(...(await collectScreens(path)));
+    else if (entry.name.endsWith('.tsx')) files.push(path);
+  }
+  return files;
+}
+
+const files = await collectScreens(dir);
 
 // A container is a dialog if its class ends in -modal. Inner parts use the
 // block__element form and are not dialogs themselves.
@@ -23,7 +36,7 @@ const offenders = [];
 let dialogCount = 0;
 
 for (const name of files) {
-  const source = await readFile(resolve(dir, name), 'utf8');
+  const source = await readFile(name, 'utf8');
   for (const match of source.matchAll(dialogClass)) {
     const classes = match[1];
     if (classes.includes('__') || classes.includes('backdrop')) continue;
@@ -33,7 +46,7 @@ for (const name of files) {
     const tagStart = source.lastIndexOf('<', match.index);
     const tag = source.slice(tagStart, match.index + match[0].length);
     if (!/\{\.\.\.\w*[Dd]ialog\.props\}/.test(tag)) {
-      offenders.push(`${name}: ${classes}`);
+      offenders.push(`${relative(root, name)}: ${classes}`);
     }
   }
 }

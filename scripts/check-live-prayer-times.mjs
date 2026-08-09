@@ -2,11 +2,11 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const service = await readFile(resolve(root, 'src/prayerTimesService.ts'), 'utf8');
-const hook = await readFile(resolve(root, 'src/usePrayerTimes.ts'), 'utf8');
-const schedule = await readFile(resolve(root, 'src/prayerSchedule.ts'), 'utf8');
-const screen = await readFile(resolve(root, 'src/PrayerScreen.tsx'), 'utf8');
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
+const service = await readFile(resolve(root, 'src/services/prayerTimesService.ts'), 'utf8');
+const hook = await readFile(resolve(root, 'src/shared/usePrayerTimes.ts'), 'utf8');
+const schedule = await readFile(resolve(root, 'src/services/prayerSchedule.ts'), 'utf8');
+const screen = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-live-prayer-times.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 

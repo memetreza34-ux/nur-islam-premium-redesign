@@ -2,10 +2,10 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const more = await readFile(resolve(root, 'src/MoreScreen.tsx'), 'utf8');
-const assistant = await readFile(resolve(root, 'src/AssistantScreen.tsx'), 'utf8');
-const collections = await readFile(resolve(root, 'src/CollectionsScreen.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const more = await readFile(resolve(root, 'src/screens/MoreScreen.tsx'), 'utf8');
+const assistant = await readFile(resolve(root, 'src/screens/AssistantScreen.tsx'), 'utf8');
+const collections = await readFile(resolve(root, 'src/screens/CollectionsScreen.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 
 for (const requirement of [

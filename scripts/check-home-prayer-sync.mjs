@@ -2,12 +2,12 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const main = await readFile(resolve(root, 'src/main.tsx'), 'utf8');
-const app = await readFile(resolve(root, 'src/App.tsx'), 'utf8');
-const service = await readFile(resolve(root, 'src/prayerTimesService.ts'), 'utf8');
+const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const service = await readFile(resolve(root, 'src/services/prayerTimesService.ts'), 'utf8');
 
 const mainRequirements = [
-  "import { bootstrapSharedPrayerTimes, getPrayerDateKey } from './prayerTimesService';",
+  "import { bootstrapSharedPrayerTimes, getPrayerDateKey } from '../services/prayerTimesService';",
   "window.addEventListener('nur:prayer-times-updated', renderLatestPrayerTimes)",
   "window.removeEventListener('nur:prayer-times-updated', renderLatestPrayerTimes)",
   "document.addEventListener('visibilitychange', handleVisibilityChange)",

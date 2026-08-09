@@ -5,17 +5,17 @@ const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
 const [app, quran, reader, duas, names, dhikr, collections, calendar, notes, account, backend] = await Promise.all([
-  read('src/App.tsx'),
-  read('src/QuranScreen.tsx'),
-  read('src/QuranReaderScreen.tsx'),
-  read('src/DuasScreen.tsx'),
-  read('src/NamesScreen.tsx'),
-  read('src/DhikrScreen.tsx'),
-  read('src/CollectionsScreen.tsx'),
-  read('src/CalendarScreen.tsx'),
-  read('src/NotesScreen.tsx'),
-  read('src/AccountScreen.tsx'),
-  read('src/nurBackend.ts'),
+  read('src/app/App.tsx'),
+  read('src/screens/QuranScreen.tsx'),
+  read('src/screens/QuranReaderScreen.tsx'),
+  read('src/screens/DuasScreen.tsx'),
+  read('src/screens/NamesScreen.tsx'),
+  read('src/screens/DhikrScreen.tsx'),
+  read('src/screens/CollectionsScreen.tsx'),
+  read('src/screens/CalendarScreen.tsx'),
+  read('src/screens/NotesScreen.tsx'),
+  read('src/screens/AccountScreen.tsx'),
+  read('src/services/nurBackend.ts'),
 ]);
 
 function requireTokens(source, label, tokens) {

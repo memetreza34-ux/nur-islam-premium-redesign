@@ -1,8 +1,8 @@
 import fs from 'node:fs';
 
-const service = fs.readFileSync(new URL('../src/installPromptService.ts', import.meta.url), 'utf8');
-const prompt = fs.readFileSync(new URL('../src/InstallAppPrompt.tsx', import.meta.url), 'utf8');
-const main = fs.readFileSync(new URL('../src/main.tsx', import.meta.url), 'utf8');
+const service = fs.readFileSync(new URL('../src/services/installPromptService.ts', import.meta.url), 'utf8');
+const prompt = fs.readFileSync(new URL('../src/shared/InstallAppPrompt.tsx', import.meta.url), 'utf8');
+const main = fs.readFileSync(new URL('../src/app/main.tsx', import.meta.url), 'utf8');
 
 const checks = [
   [service.includes("window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)"), 'global capture listens for beforeinstallprompt'],
@@ -12,7 +12,7 @@ const checks = [
   [prompt.includes('subscribeInstallPrompt((event) =>'), 'InstallAppPrompt consumes the captured prompt'],
   [prompt.includes('clearPendingInstallPrompt();'), 'InstallAppPrompt clears consumed/dismissed prompt state'],
   [!prompt.includes("window.addEventListener('beforeinstallprompt'"), 'InstallAppPrompt no longer relies on a late component listener'],
-  [main.includes("import { startInstallPromptCapture } from './installPromptService';"), 'main imports early prompt capture'],
+  [main.includes("import { startInstallPromptCapture } from '../services/installPromptService';"), 'main imports early prompt capture'],
   [main.indexOf('const stopInstallPromptCapture = startInstallPromptCapture();') < main.indexOf('ReactDOM.createRoot'), 'prompt capture starts before React render'],
   [main.includes('stopInstallPromptCapture();'), 'prompt capture is cleaned up on pagehide'],
 ];

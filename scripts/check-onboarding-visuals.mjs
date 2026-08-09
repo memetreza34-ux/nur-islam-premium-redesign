@@ -2,7 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const screen = await readFile(resolve(root, 'src/OnboardingScreen.tsx'), 'utf8');
+const screen = await readFile(resolve(root, 'src/screens/OnboardingScreen.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-onboarding.css'), 'utf8');
 const art = await readFile(resolve(root, 'src/styles/premium-onboarding-art-lock.css'), 'utf8');
 const finalLock = await readFile(resolve(root, 'src/styles/premium-reference-geometry-lock.css'), 'utf8');
