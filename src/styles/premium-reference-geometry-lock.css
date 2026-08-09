@@ -324,5 +324,104 @@ html:not([data-theme='light']) :where(
   object-position: center 42% !important;
 }
 
+/* ---------- Quran premium surface correction ----------
+   The catalog continue hero is intentionally a warm paper surface. Its text
+   must therefore use the dark emerald / antique-gold ink system rather than
+   inheriting cream text from surrounding dark screens. The rendered reference
+   preview exposed the previous low-contrast state. */
+.reference-quran-continue {
+  height: clamp(304px, 86vw, 344px) !important;
+  min-height: 304px !important;
+  aspect-ratio: auto !important;
+}
+
+.reference-quran-continue__copy h2 {
+  color: #183a2f !important;
+  text-shadow: 0 2px 12px rgba(255, 255, 255, .24) !important;
+}
+
+.reference-quran-continue__copy p {
+  color: rgba(34, 67, 55, .72) !important;
+}
+
+.reference-quran-continue .hero-pill {
+  border-color: rgba(114, 82, 32, .2) !important;
+  color: #75541f !important;
+  background: rgba(255, 252, 243, .48) !important;
+}
+
+.reference-quran-progress {
+  background: rgba(50, 76, 64, .13) !important;
+}
+
+.reference-quran-progress > i {
+  background: linear-gradient(90deg, #bd8735, #e2bf77) !important;
+}
+
+/* ---------- Quran reader paper system ----------
+   The approved reader contract keeps the actual reading cards warm and
+   paper-like even in dark mode. The surrounding shell, controls and source
+   notices remain emerald so the content gets a clear visual reading layer. */
+html:not([data-theme='light']) .reference-reader-verse {
+  border-color: rgba(141, 109, 57, .3) !important;
+  color: #17382e !important;
+  background:
+    radial-gradient(circle at 88% 4%, rgba(255, 255, 255, .5), transparent 10rem),
+    linear-gradient(145deg, #fff8ea 0%, #f3e6cf 58%, #ead4ad 100%) !important;
+  box-shadow:
+    0 16px 34px rgba(0, 0, 0, .24),
+    inset 0 1px 0 rgba(255, 255, 255, .72) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-screen--dynamic .reference-reader-verse.is-active {
+  border-color: rgba(141, 109, 57, .58) !important;
+  background:
+    radial-gradient(circle at 88% 4%, rgba(255, 255, 255, .7), transparent 10rem),
+    linear-gradient(145deg, #fffaf0 0%, #f6ead5 62%, #edd9b5 100%) !important;
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, .27),
+    0 0 0 1px rgba(226, 191, 119, .1),
+    inset 0 1px 0 rgba(255, 255, 255, .78) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse header > span {
+  border-color: rgba(107, 78, 31, .22) !important;
+  color: #8d6d39 !important;
+  background: rgba(141, 109, 57, .075) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse header button {
+  color: rgba(39, 67, 56, .68) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse header button.is-saved {
+  color: #8d6d39 !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse > p {
+  color: #102d24 !important;
+  text-shadow: 0 5px 15px rgba(121, 87, 35, .065) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse blockquote {
+  padding: 12px 13px !important;
+  border: 1px solid rgba(93, 72, 39, .1) !important;
+  border-radius: 18px !important;
+  color: rgba(33, 58, 49, .82) !important;
+  background: rgba(255, 255, 255, .28) !important;
+}
+
+html:not([data-theme='light']) .reference-reader-screen--dynamic .reference-reader-verse blockquote small {
+  color: #8d6d39 !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse footer {
+  color: #7d5c29 !important;
+}
+
+html:not([data-theme='light']) .reference-reader-verse footer button {
+  color: #75541f !important;
+}
+
 /* Pills, circular progress controls, avatars and round ornaments deliberately
    keep their own 999px/50% geometry and are not part of this lock. */
