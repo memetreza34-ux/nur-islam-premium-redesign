@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { openApp } from './appReady';
 
 /**
  * Smoke tests for the flows a user actually performs.
@@ -11,10 +12,7 @@ import { expect, test } from '@playwright/test';
  */
 
 test.beforeEach(async ({ page }) => {
-  await page.goto('/?preview=1');
-  // The splash hands over to the app shell; waiting for the navigation avoids
-  // asserting against the launch screen.
-  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 15_000 });
+  await openApp(page);
 });
 
 test('opens on the home screen with a prayer schedule', async ({ page }) => {

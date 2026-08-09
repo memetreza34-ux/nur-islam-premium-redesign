@@ -131,3 +131,26 @@ describe('bootstrapSharedPrayerTimes', () => {
     await expect(bootstrapSharedPrayerTimes()).resolves.toBeTruthy();
   });
 });
+
+describe('cached prayer times', () => {
+  beforeEach(() => localStorage.clear());
+
+  // The mosque cache already marks itself as cached. Prayer times returned the
+  // stored snapshot untouched, so a reader could not tell a fresh request from
+  // a stored one — the times are right either way, but the label claimed a
+  // request that had not happened.
+  it('marks a stored snapshot as cached rather than live', async () => {
+    stubFetch(async () => apiResponse(validPayload()));
+    const fresh = await fetchPrayerTimes();
+    expect(fresh.source).toBe('live');
+    expect(fresh.meta.sourceLabel).toBe('Live via AlAdhan');
+
+    const restored = loadCachedPrayerTimes();
+
+    expect(restored?.source).toBe('cache');
+    expect(restored?.meta.sourceLabel).not.toBe('Live via AlAdhan');
+    // The times themselves are unchanged; only the provenance differs.
+    expect(restored?.schedule.map((prayer) => prayer.time))
+      .toEqual(fresh.schedule.map((prayer) => prayer.time));
+  });
+});

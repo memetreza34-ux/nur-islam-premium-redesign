@@ -176,7 +176,14 @@ export function savePrayerPreferences(preferences: PrayerTimesPreferences) {
 export function loadCachedPrayerTimes(date = new Date()) {
   const cached = readJson<PrayerTimesSnapshot>(SNAPSHOT_STORAGE_KEY);
   if (!cached || cached.dateKey !== getPrayerDateKey(date) || !Array.isArray(cached.schedule) || cached.schedule.length !== FALLBACK_PRAYER_SCHEDULE.length) return null;
-  return cached;
+  // The times are today's and came from AlAdhan, but nothing was requested just
+  // now. Returning them still labelled "live" told an offline user the app had
+  // just reached the server. The mosque cache already marks itself this way.
+  return {
+    ...cached,
+    source: 'cache' as const,
+    meta: { ...cached.meta, sourceLabel: 'AlAdhan · gespeicherter Tagesstand' },
+  };
 }
 
 function createFallbackSnapshot(location = loadPrayerLocation(), preferences = loadPrayerPreferences(), date = new Date()): PrayerTimesSnapshot {
