@@ -82,10 +82,11 @@ type HomeQuranProgress = {
   englishName: string;
   numberOfAyahs: number | null;
   offline: boolean;
+  hasProgress: boolean;
 };
 
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen, accent: 'gold', target: 'reader' },
+  { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: BookOpen, accent: 'gold', target: 'reader' },
   { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart, accent: 'cream', target: 'learn' },
   { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
   { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
@@ -133,32 +134,38 @@ function getLocalDateKey(date = new Date()) {
 }
 
 function readHomeQuranProgress(): HomeQuranProgress {
-  const fallback: HomeQuranProgress = {
-    surahNumber: 112,
+  const emptyProgress: HomeQuranProgress = {
+    surahNumber: 1,
     ayahNumber: 1,
-    englishName: 'Al-Ikhlaas',
-    numberOfAyahs: 4,
-    offline: true,
+    englishName: 'Al-Faatiha',
+    numberOfAyahs: 7,
+    offline: OFFLINE_QURAN_SURAH_SET.has(1),
+    hasProgress: false,
   };
   try {
     const raw = localStorage.getItem('nur_quran_last_read');
-    if (!raw) return fallback;
+    if (!raw) return emptyProgress;
     const parsed = JSON.parse(raw) as { surahNumber?: unknown; ayahNumber?: unknown };
-    const surahNumber = typeof parsed.surahNumber === 'number' && Number.isInteger(parsed.surahNumber) && parsed.surahNumber >= 1 && parsed.surahNumber <= 114
-      ? parsed.surahNumber
-      : fallback.surahNumber;
-    const ayahNumber = typeof parsed.ayahNumber === 'number' && Number.isInteger(parsed.ayahNumber) && parsed.ayahNumber >= 1
-      ? parsed.ayahNumber
-      : 1;
+    if (
+      typeof parsed.surahNumber !== 'number'
+      || !Number.isInteger(parsed.surahNumber)
+      || parsed.surahNumber < 1
+      || parsed.surahNumber > 114
+      || typeof parsed.ayahNumber !== 'number'
+      || !Number.isInteger(parsed.ayahNumber)
+      || parsed.ayahNumber < 1
+    ) return emptyProgress;
+    const surahNumber = parsed.surahNumber;
     return {
       surahNumber,
-      ayahNumber,
-      englishName: surahNumber === 112 ? 'Al-Ikhlaas' : `Sure ${surahNumber}`,
-      numberOfAyahs: surahNumber === 112 ? 4 : null,
+      ayahNumber: parsed.ayahNumber,
+      englishName: surahNumber === 1 ? 'Al-Faatiha' : surahNumber === 112 ? 'Al-Ikhlaas' : `Sure ${surahNumber}`,
+      numberOfAyahs: surahNumber === 1 ? 7 : surahNumber === 112 ? 4 : null,
       offline: OFFLINE_QURAN_SURAH_SET.has(surahNumber),
+      hasProgress: true,
     };
   } catch {
-    return fallback;
+    return emptyProgress;
   }
 }
 
@@ -203,9 +210,9 @@ function PremiumHome({
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
   const greeting = getHomeGreeting(now);
-  const quranPercent = quranProgress.numberOfAyahs
+  const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
-    : 1;
+    : 0;
 
   useEffect(() => {
     const syncLocalProgress = () => {
@@ -239,14 +246,15 @@ function PremiumHome({
         if (!surah) return;
         setQuranProgress({
           surahNumber: surah.number,
-          ayahNumber: Math.min(stored.ayahNumber, surah.numberOfAyahs),
+          ayahNumber: stored.hasProgress ? Math.min(stored.ayahNumber, surah.numberOfAyahs) : 1,
           englishName: surah.englishName,
           numberOfAyahs: surah.numberOfAyahs,
           offline: OFFLINE_QURAN_SURAH_SET.has(surah.number),
+          hasProgress: stored.hasProgress,
         });
       })
       .catch(() => {
-        // The localStorage fallback remains useful even if metadata cannot load.
+        // The validated local state remains useful even if metadata cannot load.
       });
     return () => { active = false; };
   }, []);
@@ -324,7 +332,7 @@ function PremiumHome({
         <div className="journey-grid">
           <button className="journey-card journey-card--quran" onClick={openLastRead}>
             <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
-            <span><small>{quranProgress.offline ? 'Offline weiterlesen' : 'Zuletzt gelesen'}</small><strong>{quranProgress.englishName}</strong><em>Ayah {quranProgress.ayahNumber}{quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''}</em></span>
+            <span><small>{quranProgress.hasProgress ? (quranProgress.offline ? 'Offline weiterlesen' : 'Zuletzt gelesen') : 'Quran beginnen'}</small><strong>{quranProgress.englishName}</strong><em>{quranProgress.hasProgress ? `Ayah ${quranProgress.ayahNumber}${quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''}` : 'Noch kein Lesestand'}</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('dhikr')}>
             <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} />
@@ -358,8 +366,8 @@ function PremiumHome({
 
       <section className="continue-card continue-card--v2 glass-card">
         <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /></div>
-        <div className="continue-card__body"><span className="overline">{quranProgress.offline ? 'Offline verfügbar' : 'Zuletzt gelesen'}</span><h3>{quranProgress.englishName}</h3><p>Ayah {quranProgress.ayahNumber}{quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''} · {quranPercent}%</p><div className="reading-progress"><span style={{ width: `${quranPercent}%` }} /></div></div>
-        <button className="play-button" aria-label="Weiterlesen" onClick={openLastRead}><Play size={20} fill="currentColor" /></button>
+        <div className="continue-card__body"><span className="overline">{quranProgress.hasProgress ? (quranProgress.offline ? 'Offline verfügbar' : 'Zuletzt gelesen') : 'Quran beginnen'}</span><h3>{quranProgress.englishName}</h3><p>{quranProgress.hasProgress ? `Ayah ${quranProgress.ayahNumber}${quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''} · ${quranPercent}%` : 'Noch kein gespeicherter Lesestand'}</p><div className="reading-progress"><span style={{ width: `${quranPercent}%` }} /></div></div>
+        <button className="play-button" aria-label={quranProgress.hasProgress ? 'Weiterlesen' : 'Quran lesen'} onClick={openLastRead}><Play size={20} fill="currentColor" /></button>
       </section>
 
       <section className="inspiration-grid inspiration-grid--v2">
