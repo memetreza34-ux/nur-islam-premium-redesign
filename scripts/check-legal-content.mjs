@@ -38,6 +38,36 @@ for (const [host, source] of contacted) {
   }
 }
 
+// The Content Security Policy is the enforced version of the privacy notice.
+// Code, policy and text have to name the same hosts, or one of the three is
+// lying: a host missing from connect-src breaks at runtime, and a host missing
+// from the notice is undisclosed processing.
+const html = await read('index.html');
+const csp = html.match(/http-equiv="Content-Security-Policy" content="([^"]+)"/)?.[1];
+if (!csp) throw new Error('The Content Security Policy meta tag is missing from index.html.');
+
+const connectSrc = csp.match(/connect-src ([^;]+)/)?.[1] ?? '';
+const codeHosts = new Set(
+  [prayer, quran, mosque, backend]
+    .flatMap((source) => [...source.matchAll(/https:\/\/([a-z0-9.-]+)/g)].map((match) => match[1]))
+    // Link targets are navigations, not fetches, so they need no connect-src.
+    .filter((host) => host !== 'www.openstreetmap.org'),
+);
+for (const host of codeHosts) {
+  if (!connectSrc.includes(host)) {
+    throw new Error(`connect-src does not allow a host the code fetches from: ${host}`);
+  }
+  if (!legal.includes(host.replace(/^www\./, ''))) {
+    throw new Error(`Privacy text does not disclose a host the code fetches from: ${host}`);
+  }
+}
+for (const allowed of connectSrc.split(/\s+/).filter((value) => value.startsWith('https://'))) {
+  const host = allowed.replace('https://', '');
+  if (!codeHosts.has(host)) {
+    throw new Error(`connect-src allows a host nothing in the code contacts: ${host}`);
+  }
+}
+
 // Claims the text makes about itself, which code changes could quietly falsify.
 if (!legal.includes('keine Analyse-, Tracking- oder Werbedienste')) {
   throw new Error('The privacy text no longer states that no tracking is used.');

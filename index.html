@@ -3,6 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <!--
+      Content Security Policy. connect-src is the important line: it is the same
+      list of services the privacy notice names, enforced by the browser. If the
+      app ever tried to talk to a host that is not documented there, the request
+      would be blocked rather than quietly succeed.
+
+      'unsafe-inline' is required for styles because the animation library sets
+      element styles directly; scripts stay restricted to the bundle.
+      frame-ancestors is intentionally absent: it is ignored in a meta tag and
+      needs a real header, which GitHub Pages cannot set.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://overpass-api.de https://overpass.kumi.systems https://jmswsgwnvmvsfayeodcd.supabase.co; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
     <meta name="theme-color" content="#001b16" />
     <meta name="color-scheme" content="dark light" />
     <meta name="description" content="Nur Islam – Gebetszeiten, Quran, Dhikr, Qibla und islamisches Wissen in einer ruhigen Premium-App." />
