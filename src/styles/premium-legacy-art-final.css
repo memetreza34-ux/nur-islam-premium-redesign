@@ -25,11 +25,15 @@
 }
 
 .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
-  width: 154px !important;
+  position: absolute !important;
+  z-index: 2;
+  right: 12px;
+  bottom: 70px;
+  width: 176px !important;
   max-width: none;
   max-height: 92px;
   opacity: 1;
-  transform: translate(12px,-1px) scale(1.12) !important;
+  transform: none !important;
   filter: drop-shadow(0 16px 18px rgba(0,0,0,.4)) brightness(1.08) saturate(1.05) contrast(1.04) !important;
 }
 
@@ -51,7 +55,9 @@
   }
 
   .reference-legacy-hero img[src*="calendar-chip-v2.webp"] {
-    width: 128px !important;
-    transform: translate(12px,0) scale(1.08) !important;
+    right: 8px;
+    bottom: 62px;
+    width: 148px !important;
+    transform: none !important;
   }
 }
