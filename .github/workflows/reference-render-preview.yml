@@ -85,7 +85,7 @@ jobs:
 
       - name: Upload reference screenshots
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: nur-islam-reference-preview-390x844
           path: artifacts/reference-preview/*.png
