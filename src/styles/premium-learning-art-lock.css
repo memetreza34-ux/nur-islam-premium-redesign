@@ -258,16 +258,8 @@
   color: rgba(246,235,214,.76) !important;
 }
 
-/* The main learning landing hero intentionally becomes a warm paper surface in
-   light mode. Give its copy dark emerald ink instead of inheriting the cream
-   text used by the dark hero. */
-[data-theme='light'] .reference-learn-screen .learning-hero h2 {
-  color: #17382c !important;
-  text-shadow: none !important;
-}
-
-[data-theme='light'] .reference-learn-screen .learning-hero p {
-  color: rgba(46,72,61,.78) !important;
+[data-theme='light'] .reference-learn-screen .learning-hero {
+  background: radial-gradient(circle at 92% 12%,rgba(242,215,154,.16),transparent 15rem),linear-gradient(145deg,#0d5743,#00120f) !important;
 }
 
 /* ---------- Responsive ---------- */
