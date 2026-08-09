@@ -13,6 +13,7 @@ on:
       - 'package-lock.json'
       - 'vite.config.ts'
       - 'scripts/capture-reference-preview.mjs'
+      - 'scripts/capture-legacy-reference-preview.mjs'
       - '.github/workflows/reference-render-preview.yml'
 
 permissions:
@@ -25,7 +26,7 @@ concurrency:
 jobs:
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 12
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -66,10 +67,15 @@ jobs:
           cat /tmp/nur-preview.log
           exit 1
 
-      - name: Capture 390x844 reference screens
+      - name: Capture core reference screens
         env:
           PREVIEW_URL: http://127.0.0.1:4173/
         run: node scripts/capture-reference-preview.mjs
+
+      - name: Capture legacy premium screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-legacy-reference-preview.mjs
 
       - name: Upload reference screenshots
         if: always()
