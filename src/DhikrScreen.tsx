@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   BarChart3,
@@ -69,6 +69,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [statsOpen, setStatsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   const routine = DHIKR_ROUTINE_BY_ID.get(activeRoutineId) ?? DHIKR_ROUTINES[0];
   const item = routine.items[Math.min(activeItemIndex, routine.items.length - 1)];
@@ -127,15 +128,25 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
     };
   }, []);
 
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
+
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2200);
   };
 
   const increment = () => {
     const currentDate = todayKey();
     if (dailyState.date !== currentDate) {
-      setDailyState({ date: currentDate, counts: { [itemKey]: 1 } });
+      const firstItem = routine.items[0];
+      const firstItemKey = `${routine.id}:${firstItem.id}`;
+      setDailyState({ date: currentDate, counts: { [firstItemKey]: 1 } });
       setActiveItemIndex(0);
       return;
     }
