@@ -6,6 +6,7 @@ const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'mosque-gold.webp': 'mosque-gold-v2.webp',
   'mosque-gold.png': 'mosque-gold-v2.webp',
   'mosque.webp': 'mosque-gold-v2.webp',
+  'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
   'quran-open.webp': 'quran-open-v2.webp',
