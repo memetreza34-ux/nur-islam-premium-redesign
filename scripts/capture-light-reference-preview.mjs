@@ -79,6 +79,25 @@ async function assertLightTheme() {
   if (theme !== 'light') throw new Error(`Expected light theme, received ${theme ?? 'unset'}.`);
 }
 
+async function assertBrightHeroTitle(selector, label) {
+  const title = page.locator(selector).first();
+  await title.waitFor({ state: 'visible', timeout: 10_000 });
+  const result = await title.evaluate((node) => {
+    const color = getComputedStyle(node).color;
+    const match = color.match(/rgba?\(([^)]+)\)/i);
+    if (!match) return { color, luminance: -1 };
+    const [r, g, b] = match[1].split(',').slice(0, 3).map((value) => Number.parseFloat(value.trim()) / 255);
+    const linear = [r, g, b].map((channel) => channel <= .04045 ? channel / 12.92 : ((channel + .055) / 1.055) ** 2.4);
+    return {
+      color,
+      luminance: .2126 * linear[0] + .7152 * linear[1] + .0722 * linear[2],
+    };
+  });
+  if (result.luminance < .68) {
+    throw new Error(`${label} hero title lost its cream-on-emerald contrast: ${result.color} (luminance ${result.luminance.toFixed(3)}).`);
+  }
+}
+
 try {
   await page.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
   await page.locator('.premium-home--v2').waitFor({ state: 'visible', timeout: 15_000 });
@@ -95,6 +114,9 @@ try {
     await nav(label);
     await settle();
     await assertLightTheme();
+    if (label === 'Islam verstehen') {
+      await assertBrightHeroTitle('.reference-prayer-learning-hub h2', 'Learning');
+    }
     await shot(name);
   }
 
@@ -105,6 +127,7 @@ try {
   await quranJourney.click();
   await page.locator('.reference-reader-screen').waitFor({ state: 'visible', timeout: 15_000 });
   await settle();
+  await assertBrightHeroTitle('.reference-reader-hero h2', 'Quran reader');
   await shot('06-quran-reader');
   await page.getByRole('button', { name: 'Zurück zum Quran' }).click();
   await page.locator('.reference-quran-screen').waitFor({ state: 'visible', timeout: 15_000 });
@@ -151,4 +174,4 @@ try {
   await browser.close();
 }
 
-console.log('Light-theme premium reference screenshots captured at 390x844.');
+console.log('Light-theme premium reference screenshots captured at 390x844 with focal-title contrast assertions.');
