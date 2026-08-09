@@ -16,6 +16,7 @@ const [
   names,
   calendar,
   dhikr,
+  qibla,
   prayer,
   more,
   prayerReminder,
@@ -42,6 +43,7 @@ const [
   read('src/NamesScreen.tsx'),
   read('src/CalendarScreen.tsx'),
   read('src/DhikrScreen.tsx'),
+  read('src/QiblaScreen.tsx'),
   read('src/PrayerScreen.tsx'),
   read('src/MoreScreen.tsx'),
   read('src/prayerReminderService.ts'),
@@ -111,9 +113,19 @@ forbidText(app, [
 requireText(quran, [
   'reloadToken',
   'setReloadToken((value) => value + 1)',
-  'onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)',
+  'function readLastRead(): LastRead | null',
+  'if (!raw) return null;',
+  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
+  "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
+  'const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1',
+  'onOpenReader(readerSurahNumber, lastAyah)',
   'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
-], 'Quran catalog resume and retry');
+], 'Quran catalog real resume and retry');
+forbidText(quran, [
+  'const fallback = { surahNumber: 112, ayahNumber: 1',
+  'Math.max(4, (lastAyah / lastSurah.numberOfAyahs)',
+  'onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)',
+], 'Quran catalog real resume and retry');
 
 requireText(collections, [
   'Array.from({ length: 114 }',
@@ -126,12 +138,16 @@ requireText(collections, [
   'onOpenDua(id)',
   'onOpenName(id)',
   'onOpenCalendarDate(date)',
+  "filter === 'Tagesinhalte'",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
 ], 'Collection routing');
 forbidText(collections, [
   'OFFLINE_QURAN_SURAHS',
   'onOpenDuas',
   'onOpenNames',
   'onOpenCalendar:',
+  "filter === 'Hadith' && !ayahSaved && !hadithSaved",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine']",
 ], 'Collection routing');
 
 requireText(reader, [
@@ -143,18 +159,29 @@ requireText(reader, [
   'quran-ayah-${surahNumber}-${targetAyah}',
   "scrollIntoView({ behavior: 'smooth', block: 'center' })",
   'id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}',
-], 'Quran reader controls and deep links');
+  'if (!bundle) return;',
+  'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
+  'surahNumber: bundle.meta.number',
+  'ayahNumber: validatedAyah',
+  'toastTimerRef',
+], 'Quran reader controls, validated progress and deep links');
 forbidText(reader, [
   'Audio folgt',
   '<Headphones',
   'geprüften Rezitationsquelle aktiviert',
-], 'Quran reader controls and deep links');
+  'surahNumber,\n        ayahNumber: activeAyah',
+], 'Quran reader controls, validated progress and deep links');
 
 requireText(duas, [
   'initialDuaId?: string | null',
   'DUA_BY_ID.get(initialDuaId)',
   'setSelected(dua)',
-], 'Dua direct open');
+  "useState(() => readStringSet('nur_dua_favorites'))",
+  'toastTimerRef',
+], 'Dua direct open and empty-favorite persistence');
+forbidText(duas, [
+  "readStringSet('nur_dua_favorites', ['dua_guidance_1'])",
+], 'Dua direct open and empty-favorite persistence');
 requireText(names, [
   'initialNameId?: string | null',
   'String(entry.id) === initialNameId',
@@ -180,6 +207,9 @@ requireText(assistant, [
   'reference-profile-modal reference-assistant-info-modal',
   'Was dieser Assistent wirklich kann',
   'Unbekannte Fragen werden ausdrücklich nicht beantwortet',
+  'messageIdRef',
+  'const userId = nextMessageId()',
+  'const assistantId = nextMessageId()',
 ], 'Nur local assistant');
 forbidText(assistant, [
   'Die Oberfläche ist vorbereitet',
@@ -187,6 +217,7 @@ forbidText(assistant, [
   '<Mic',
   'CircleCheckIcon',
   "flash('Nur Antworten",
+  'const id = Date.now();',
 ], 'Nur local assistant');
 
 requireText(readingScreens, [
@@ -220,10 +251,24 @@ requireText(dhikr, [
   'reference-dhikr-stats-modal',
   'allRoutineStats',
   'completedRoutines',
-], 'Dhikr real statistics');
+  'toastTimerRef',
+  'const firstItem = routine.items[0]',
+  'const firstItemKey = `${routine.id}:${firstItem.id}`',
+  'counts: { [firstItemKey]: 1 }',
+], 'Dhikr real statistics and day rollover');
 forbidText(dhikr, [
   'onClick={() => flash(`${totalToday} Wiederholungen heute`)}',
-], 'Dhikr real statistics');
+  'counts: { [itemKey]: 1 }',
+], 'Dhikr real statistics and day rollover');
+
+requireText(qibla, [
+  'sensorTimeoutRef',
+  'toastTimeoutRef',
+  "window.removeEventListener('deviceorientationabsolute'",
+  "window.removeEventListener('deviceorientation'",
+  'savePrayerLocation({ latitude, longitude, label, source: \'device\' })',
+  'void bootstrapSharedPrayerTimes()',
+], 'Qibla sensor and location cleanup');
 
 requireText(prayer, [
   "readSet('nur_prayer_notifications', [])",
@@ -258,7 +303,8 @@ requireText(backend, [
   "'nur_mosque_location_v1'",
   "'nur_local_notes_v1'",
   "'nur_onboarding_complete'",
-], 'Cloud backup privacy');
+  'await signOut();',
+], 'Cloud backup privacy and deletion session cleanup');
 requireText(account, [
   'Standortkoordinaten und lokale Notizen sind nicht Teil dieses Backups',
   'Die Übertragung erfolgt per HTTPS',
@@ -355,4 +401,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: fake Home/Assistant/legacy interactions are removed, exact Quran resume and saved-content routing work, Dhikr statistics are real, rolling fasting reminders have one scheduling source, prayer reminders stay useful with or without system notification permission, mosque URLs are safe, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
