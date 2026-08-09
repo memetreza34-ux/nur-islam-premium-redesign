@@ -419,8 +419,6 @@
 .reference-mosque-list > button > svg {
   color: var(--gold);
 }
-
-.reference-map-button,
 .reference-profile-logout {
   display: flex;
   min-height: 47px;

@@ -183,8 +183,7 @@
 
   .reference-assistant-input {
     bottom: calc(70px + env(safe-area-inset-bottom)) !important;
-  }
-}
+  }}
 
 @media (max-height: 520px) {
   .reference-splash__mosque {
@@ -232,8 +231,7 @@
 
   .reference-standby-stage {
     min-height: 310px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-splash,
@@ -242,5 +240,4 @@
   .reference-dhikr-counter,
   .reference-standby-stage {
     transition: none !important;
-  }
-}
+  }}

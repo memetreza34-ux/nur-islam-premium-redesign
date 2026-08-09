@@ -478,8 +478,7 @@
 
   .reference-learning-reading {
     padding: 16px !important;
-  }
-}
+  }}
 
 @media (max-width:350px) {
   .reference-detail-actions,
@@ -495,8 +494,7 @@
 
   .reference-learning-course-hero__icon {
     display: none !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion:reduce) {
   .reference-detail-screen button,
@@ -506,5 +504,4 @@
   .reference-prayer-course-screen button {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

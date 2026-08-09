@@ -289,15 +289,6 @@
   background: linear-gradient(135deg, #efd394, #c9953a);
 }
 
-.reference-mosque-detail-attribution {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  color: var(--muted-green);
-  font-size: .44rem;
-}
-
 @media (max-width: 370px) {
   .reference-mosque-hero > div {
     width: 72%;
@@ -305,5 +296,4 @@
 
   .reference-mosque-detail-actions {
     grid-template-columns: 1fr;
-  }
-}
+  }}

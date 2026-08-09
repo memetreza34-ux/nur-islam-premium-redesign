@@ -93,22 +93,15 @@
   filter: drop-shadow(0 19px 17px rgba(45, 26, 7, .34));
   transform: rotate(-6deg);
 }
-
-.reference-quran-tools,
-.reference-quran-recent,
 .reference-dhikr-categories {
   display: grid;
   gap: 10px;
 }
-
-.reference-quran-tool-grid,
 .reference-dhikr-category-grid {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 7px;
 }
-
-.reference-quran-tool-grid button,
 .reference-dhikr-category-grid button {
   display: grid;
   min-height: 99px;
@@ -123,8 +116,6 @@
   box-shadow: 0 12px 24px rgba(0, 0, 0, .17), inset 0 1px 0 rgba(255, 255, 255, .025);
   cursor: pointer;
 }
-
-.reference-quran-tool-grid button > span,
 .reference-dhikr-category-grid button > span {
   display: grid;
   width: 40px;
@@ -135,34 +126,12 @@
   color: var(--gold-bright);
   background: rgba(214, 175, 55, .07);
 }
-
-.reference-quran-tool-grid strong,
 .reference-dhikr-category-grid strong {
   font-size: .58rem;
 }
-
-.reference-quran-tool-grid small,
 .reference-dhikr-category-grid small {
   color: var(--muted-green);
   font-size: .45rem;
-}
-
-.reference-search-bar {
-  display: flex;
-  min-height: 46px;
-  align-items: center;
-  gap: 10px;
-  padding: 0 14px;
-  border: 1px solid rgba(216, 177, 87, .19);
-  border-radius: 14px;
-  color: var(--muted-green);
-  background: rgba(9, 39, 30, .79);
-  cursor: pointer;
-  text-align: left;
-}
-
-.reference-search-bar svg {
-  color: var(--gold);
 }
 
 .reference-quran-list {
@@ -692,12 +661,9 @@
 }
 
 @media (max-width: 370px) {
-  .reference-quran-tool-grid,
   .reference-dhikr-category-grid {
     gap: 5px;
   }
-
-  .reference-quran-tool-grid button,
   .reference-dhikr-category-grid button {
     min-height: 91px;
   }
@@ -713,5 +679,4 @@
   .reference-qibla-stage__compass {
     width: 285px;
     height: 285px;
-  }
-}
+  }}

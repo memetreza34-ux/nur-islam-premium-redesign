@@ -222,13 +222,11 @@
 
   .reference-quran-verse > p[dir='rtl'] {
     font-size: 1.58rem !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-quran-continue__book > img,
   .reference-reader-hero > .premium-image > img,
   .reference-quran-list--catalog > article {
     transition: none !important;
-  }
-}
+  }}

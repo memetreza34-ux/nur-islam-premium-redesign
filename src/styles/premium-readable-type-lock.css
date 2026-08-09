@@ -109,8 +109,7 @@
     --nur-caption-size: .6rem;
     --nur-support-size: .65rem;
     --nur-body-small-size: .69rem;
-  }
-}
+  }}
 
 @media (prefers-contrast: more) {
   .reference-core-access-grid small,
@@ -121,5 +120,4 @@
   .reference-name-list__copy small,
   .reference-notes-list > button small {
     opacity: 1 !important;
-  }
-}
+  }}

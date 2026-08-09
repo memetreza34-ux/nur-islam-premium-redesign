@@ -677,8 +677,7 @@
 
   .reference-onboarding__copy h1 {
     font-size: 2rem;
-  }
-}
+  }}
 
 /* ---------- Light theme ---------- */
 [data-theme='light'] .reference-learn-screen,
@@ -721,5 +720,4 @@
   .reference-onboarding__permissions > button:hover {
     border-color: rgba(232, 199, 122, .29) !important;
     transform: translateY(-1px);
-  }
-}
+  }}

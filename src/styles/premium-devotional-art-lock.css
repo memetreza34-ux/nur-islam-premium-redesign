@@ -304,12 +304,10 @@
     right: 3px;
     width: 90px;
     height: 90px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-dua-card--complete,
   .reference-name-list--complete > article {
     transition: none !important;
-  }
-}
+  }}

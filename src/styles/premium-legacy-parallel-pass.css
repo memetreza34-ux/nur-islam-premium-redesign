@@ -355,8 +355,7 @@
   .reference-standby-stage {
     min-height: 430px !important;
     border-radius: 27px !important;
-  }
-}
+  }}
 
 @media (max-width:350px) {
   .reference-legacy-hero {
@@ -369,8 +368,7 @@
 
   .reference-zakat-result {
     grid-template-columns: 1fr !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion:reduce) {
   .reference-legacy-screen button,
@@ -378,5 +376,4 @@
   .reference-standby-screen button {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

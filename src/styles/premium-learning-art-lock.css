@@ -312,8 +312,7 @@
     right: -31px !important;
     width: 148px !important;
     height: 164px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-five-prayer-lessons button::after,
@@ -322,5 +321,4 @@
   .reference-learning-key-points button::after,
   .reference-learning-quiz__options button::after {
     transition: none !important;
-  }
-}
+  }}

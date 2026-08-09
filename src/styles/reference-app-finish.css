@@ -200,12 +200,10 @@ body {
   .reference-splash__mark svg {
     width: 94px;
     height: 94px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-splash__loader span {
     animation: none;
     width: 100%;
-  }
-}
+  }}

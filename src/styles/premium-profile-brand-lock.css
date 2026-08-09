@@ -124,8 +124,7 @@
 @media (hover: hover) and (pointer: fine) {
   .reference-profile-row:hover::before {
     opacity: 1;
-  }
-}
+  }}
 
 .reference-profile-row > * {
   position: relative;
@@ -266,12 +265,10 @@
 
   .reference-profile-greeting p {
     max-width: 220px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-profile-row::before,
   .reference-choice {
     transition: none !important;
-  }
-}
+  }}

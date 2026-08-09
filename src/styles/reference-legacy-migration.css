@@ -458,5 +458,4 @@
 @media (max-width: 370px) {
   .reference-legacy-hero { grid-template-columns: minmax(0, 1fr) 92px; padding-inline: 15px; }
   .reference-legacy-hero img { width: 102px; }
-  .reference-expanded-learning-grid em { display: none; }
-}
+  .reference-expanded-learning-grid em { display: none; }}

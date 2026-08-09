@@ -179,8 +179,7 @@
     width: 136px !important;
     height: 164px !important;
     opacity: .18 !important;
-  }
-}
+  }}
 
 @media (max-width: 350px) {
   .reference-ayah-hero::before {
@@ -191,5 +190,4 @@
   .reference-hadith-hero::after {
     right: -38px !important;
     opacity: .16 !important;
-  }
-}
+  }}

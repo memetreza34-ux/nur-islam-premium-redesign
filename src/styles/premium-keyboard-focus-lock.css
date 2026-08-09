@@ -18,12 +18,9 @@
 
     body:has(input:focus, textarea:focus) .toast {
       bottom: max(12px, env(safe-area-inset-bottom)) !important;
-    }
-  }
-}
+    }}}
 
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav {
     transition: none !important;
-  }
-}
+  }}

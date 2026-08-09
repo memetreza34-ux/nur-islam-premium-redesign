@@ -96,9 +96,6 @@
 .reference-mosque-hero > .premium-image {
   z-index: 1;
 }
-
-/* ---------- Learning ---------- */
-.reference-learning-hero__copy,
 .reference-prayer-learning-hub__copy,
 .reference-prayer-course-hero__copy,
 .reference-learning-course-hero__copy,
@@ -124,8 +121,6 @@
 .reference-guide-hero > .premium-image {
   z-index: 1;
 }
-
-.reference-learning-hero__copy h2,
 .reference-prayer-learning-hub__copy h2,
 .reference-prayer-course-hero__copy h2,
 .reference-learning-course-hero__copy h2,

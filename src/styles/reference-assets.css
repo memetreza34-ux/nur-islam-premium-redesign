@@ -54,31 +54,7 @@
   pointer-events: none;
 }
 
-.learning-hero__copy,
-.learning-progress {
-  position: relative;
-  z-index: 1;
-}
-
-.featured-learning {
-  position: relative;
-  overflow: hidden;
-}
-
-.featured-learning::after {
-  content: '';
-  position: absolute;
-  right: -23px;
-  bottom: -27px;
-  width: 120px;
-  height: 112px;
-  opacity: .24;
-  background: url('/premium-assets/high-res-objects/quran-closed-v2.webp?v=20260808-release-hardening') center / contain no-repeat;
-  transform: rotate(-8deg);
-  pointer-events: none;
-}
-
-.featured-learning > * {
+.learning-hero__copy{
   position: relative;
   z-index: 1;
 }
@@ -121,5 +97,4 @@
   .learning-hero::before {
     right: -72px;
     width: 220px;
-  }
-}
+  }}

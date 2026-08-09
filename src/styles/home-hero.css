@@ -42,14 +42,6 @@
   inset: 50px;
   background: radial-gradient(circle, rgba(242, 215, 154, 0.18), transparent 68%);
 }
-
-.mosque-silhouette {
-  position: absolute;
-  right: -34px;
-  bottom: -2px;
-  width: 112%;
-  opacity: 0.72;
-}
 .prayer-hero__content { position: relative; z-index: 2; display: grid; height: 100%; }
 .hero-meta { gap: 12px; }
 .hero-pill {
@@ -90,29 +82,11 @@
   font-size: 0.78rem;
   font-weight: 600;
 }
-.hero-time { display: grid; justify-items: end; padding-bottom: 4px; }
-.hero-time strong {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: clamp(2.25rem, 10vw, 3.1rem);
-  line-height: 1;
-}
-.hero-time span {
-  margin-top: 4px;
-  color: var(--gold-bright);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-}
-
-.hero-progress,
 .reading-progress {
   overflow: hidden;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.09);
 }
-.hero-progress { height: 5px; margin-top: 34px; }
-.hero-progress span,
 .reading-progress span {
   display: block;
   height: 100%;
@@ -120,7 +94,6 @@
   background: linear-gradient(90deg, #8d6d39, var(--gold-bright));
   box-shadow: 0 0 14px rgba(242, 215, 154, 0.55);
 }
-.hero-progress span { width: 58%; }
 
 .gold-button {
   display: inline-flex;
@@ -158,25 +131,6 @@
   font-size: 0.74rem;
   line-height: 1.5;
 }
-.progress-ring { position: relative; flex: 0 0 76px; width: 76px; height: 76px; }
-.progress-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-.progress-ring circle { fill: none; stroke-width: 6; }
-.progress-ring__track { stroke: rgba(255, 255, 255, 0.08); }
-.progress-ring__value {
-  stroke: var(--gold-bright);
-  stroke-linecap: round;
-  filter: drop-shadow(0 0 4px rgba(242, 215, 154, 0.45));
-  transition: stroke-dashoffset 300ms ease;
-}
-.progress-ring strong {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.18rem;
-}
-.prayer-checks { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 18px; }
 .prayer-check {
   display: grid;
   justify-items: center;
@@ -211,5 +165,4 @@
   .hero-main { margin-top: 35px; }
   .tracker { padding: 16px; }
   .tracker__summary { gap: 12px; }
-  .prayer-check { font-size: 0.56rem; }
-}
+  .prayer-check { font-size: 0.56rem; }}

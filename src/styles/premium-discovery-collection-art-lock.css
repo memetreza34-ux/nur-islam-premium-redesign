@@ -497,8 +497,7 @@
     width: 116px !important;
     height: 106px !important;
     opacity: .74 !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-mosque-list--live > button,
@@ -506,5 +505,4 @@
   .calendar-entry-row,
   .reference-collection-rows > button {
     transition: none !important;
-  }
-}
+  }}

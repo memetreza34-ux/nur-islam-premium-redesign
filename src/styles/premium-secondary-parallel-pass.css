@@ -184,11 +184,6 @@
   box-shadow: var(--secondary-shadow-strong) !important;
 }
 
-.reference-qibla-compass,
-.reference-qibla-dial {
-  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, .25));
-}
-
 .reference-qibla-location,
 .reference-qibla-calibration,
 .reference-qibla-tip {
@@ -213,8 +208,7 @@
   filter: drop-shadow(0 21px 27px rgba(0, 0, 0, .35));
 }
 
-.reference-mosque-screen--live .reference-input-search,
-.reference-mosque-search {
+.reference-mosque-screen--live .reference-input-search{
   min-height: 52px;
   border-color: rgba(232, 199, 122, .14) !important;
   border-radius: 17px !important;
@@ -226,8 +220,7 @@
   gap: 8px;
 }
 
-.reference-mosque-list--live > button,
-.reference-mosque-card {
+.reference-mosque-list--live > button{
   min-height: 82px;
   border-color: rgba(232, 199, 122, .13) !important;
   border-radius: 19px !important;
@@ -358,7 +351,6 @@
 [data-theme='light'] .reference-qibla-calibration,
 [data-theme='light'] .reference-qibla-tip,
 [data-theme='light'] .reference-mosque-list--live > button,
-[data-theme='light'] .reference-mosque-card,
 [data-theme='light'] .reference-assistant-suggestions > div:last-child > button,
 [data-theme='light'] .reference-chat-message--assistant {
   color: #17382c;
@@ -421,8 +413,7 @@
 
   .reference-chat-message {
     max-width: 94%;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-dhikr-step-tabs > button,
@@ -433,5 +424,4 @@
   .reference-assistant-suggestions > div:last-child > button {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

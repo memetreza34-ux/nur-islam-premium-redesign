@@ -284,8 +284,7 @@
   .reference-qibla-stage::after {
     width: 74px !important;
     height: 74px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-dhikr-ring,
@@ -293,5 +292,4 @@
   .reference-next-prayer::before {
     transition: none !important;
     animation: none !important;
-  }
-}
+  }}

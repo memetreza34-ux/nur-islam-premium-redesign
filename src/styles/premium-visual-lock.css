@@ -867,8 +867,7 @@
 
   .reference-quran-list__arabic {
     display: none;
-  }
-}
+  }}
 
 /* ---------- Light appearance: intentional, not accidental inversion ---------- */
 [data-theme='light'] .premium-home--v2,
@@ -929,8 +928,7 @@
   .reference-reader-verse:hover {
     border-color: rgba(232, 199, 122, .29);
     transform: translateY(-1px);
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .premium-home--v2 *,
@@ -938,5 +936,4 @@
   .reference-quran-screen--complete *,
   .reference-reader-screen--dynamic * {
     scroll-behavior: auto !important;
-  }
-}
+  }}

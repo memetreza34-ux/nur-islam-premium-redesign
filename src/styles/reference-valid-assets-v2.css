@@ -37,8 +37,7 @@
   filter: drop-shadow(0 24px 22px rgba(0, 0, 0, .46)) saturate(.94) contrast(1.04) !important;
 }
 
-.next-prayer-panel::before,
-.reference-learning-hero::before {
+.next-prayer-panel::before{
   background-image: url('/premium-assets/high-res-objects/mosque-gold-v2.webp?v=20260808-release-hardening') !important;
 }
 
@@ -126,5 +125,4 @@
   .reference-qibla-stage::after {
     width: 78px;
     height: 78px;
-  }
-}
+  }}

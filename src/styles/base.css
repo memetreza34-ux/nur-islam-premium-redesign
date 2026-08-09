@@ -100,28 +100,13 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 }
 
 .topbar h1,
-.section-heading h2,
-.placeholder-card h1 {
+.section-heading h2{
   margin: 4px 0 0;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 700;
   letter-spacing: -0.025em;
 }
 .topbar h1 { font-size: clamp(1.45rem, 5.7vw, 1.78rem); line-height: 1; }
-
-.date-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 12px;
-  padding: 7px 10px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 999px;
-  color: rgba(246, 235, 214, 0.78);
-  background: rgba(255, 255, 255, 0.045);
-  font-size: 0.68rem;
-  font-weight: 600;
-}
 .topbar__actions { display: flex; gap: 8px; }
 
 .icon-button,
@@ -157,8 +142,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 .section-heading { align-items: flex-end; gap: 14px; padding: 0 2px; }
 .section-heading h2 { font-size: 1.72rem; line-height: 1; }
 
-.text-button,
-.back-button {
+.text-button{
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -171,45 +155,11 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   cursor: pointer;
 }
 
-.placeholder-screen { padding-top: 10px; }
-.back-button { width: fit-content; padding: 8px 0; }
-.placeholder-card {
-  display: grid;
-  min-height: 460px;
-  place-items: center;
-  align-content: center;
-  gap: 14px;
-  padding: 38px;
-  border-radius: var(--radius-xl);
-  text-align: center;
-}
-.placeholder-card__icon {
-  display: grid;
-  width: 86px;
-  height: 86px;
-  place-items: center;
-  margin-bottom: 8px;
-  border: 1px solid var(--line-strong);
-  border-radius: 28px;
-  color: var(--gold-bright);
-  background: rgba(226, 191, 119, 0.08);
-}
-.placeholder-card h1 { font-size: 2.2rem; }
-.placeholder-card p {
-  max-width: 290px;
-  margin: 0;
-  color: var(--muted-green);
-  font-size: 0.82rem;
-  line-height: 1.7;
-}
-
 @media (max-width: 380px) {
-  .app-shell { padding-inline: 13px; }
-}
+  .app-shell { padding-inline: 13px; }}
 
 @media (min-width: 760px) {
-  .app-shell { width: min(100%, 520px); padding-inline: 24px; }
-}
+  .app-shell { width: min(100%, 520px); padding-inline: 24px; }}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -217,5 +167,4 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-  }
-}
+  }}

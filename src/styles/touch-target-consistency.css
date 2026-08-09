@@ -127,8 +127,7 @@
   ):hover {
     border-color: rgba(232, 199, 122, .4);
     background: rgba(214, 175, 55, .08);
-  }
-}
+  }}
 
 @media (hover: none) {
   :where(
@@ -150,8 +149,7 @@
     .reference-nearby-label button
   ):active {
     transform: scale(.97);
-  }
-}
+  }}
 
 @media (max-width: 370px) {
   .reference-quran-list--catalog > article,
@@ -167,8 +165,7 @@
 
   .reference-prayer-reminder-banner {
     gap: 7px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   :where(
@@ -190,5 +187,4 @@
     .reference-nearby-label button
   ) {
     transition: none !important;
-  }
-}
+  }}

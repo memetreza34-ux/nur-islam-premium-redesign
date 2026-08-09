@@ -493,8 +493,7 @@
 
   .reference-dhikr-stats-list article {
     grid-template-columns: minmax(0, 1fr) 72px auto;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-reader-controls *,
@@ -504,5 +503,4 @@
   .reference-dhikr-stats-modal * {
     transition: none !important;
     animation: none !important;
-  }
-}
+  }}

@@ -177,5 +177,4 @@
 
 @media (max-width: 380px) {
   .quick-grid { gap: 8px; }
-  .quick-card { min-height: 148px; padding: 14px; }
-}
+  .quick-card { min-height: 148px; padding: 14px; }}

@@ -168,16 +168,14 @@
   .reference-learning-completion-stats,
   .prayer-completion-stats {
     gap: 6px;
-  }
-}
+  }}
 
 @media (max-width: 350px) {
   .reference-learning-completion-actions,
   .prayer-completion-actions,
   .reference-mosque-detail-actions {
     grid-template-columns: 1fr !important;
-  }
-}
+  }}
 
 @media (max-height: 680px) {
   .reference-modal-backdrop,
@@ -231,8 +229,7 @@
   .reference-mosque-detail-modal__pin {
     width: 46px;
     height: 46px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-profile-modal,
@@ -243,5 +240,4 @@
   .reference-prayer-course-complete > section,
   .prayer-completion-modal {
     scroll-behavior: auto;
-  }
-}
+  }}

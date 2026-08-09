@@ -121,8 +121,7 @@
 
   .reference-onboarding__visual--2:hover > .premium-image > img {
     scale: 1.018;
-  }
-}
+  }}
 
 [data-theme='light'] .reference-onboarding__visual--1 > .premium-image > img {
   filter:
@@ -163,8 +162,7 @@
     right: -7px !important;
     width: 128px !important;
     height: 128px !important;
-  }
-}
+  }}
 
 @media (max-width: 350px) {
   .reference-onboarding__visual--1 > .premium-image {
@@ -191,8 +189,7 @@
     right: -13px !important;
     width: 116px !important;
     height: 116px !important;
-  }
-}
+  }}
 
 /* The final onboarding slide is taller because it contains permission cards.
    Let the onboarding shell scroll naturally instead of forcing its footer into
@@ -215,5 +212,4 @@
   .reference-onboarding__tasbih img {
     transition: none !important;
     scale: 1 !important;
-  }
-}
+  }}

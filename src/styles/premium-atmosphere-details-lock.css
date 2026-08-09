@@ -81,8 +81,7 @@
   .bottom-nav__item:hover span {
     translate: 0 -1px;
     background: rgba(226, 191, 119, .045);
-  }
-}
+  }}
 
 /* ---------- Assistant brand object ---------- */
 .reference-assistant-greeting > .premium-image {
@@ -235,13 +234,11 @@ button:active:not(:disabled) {
   .bottom-nav__item span {
     width: 34px;
     height: 34px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav__item,
   .bottom-nav__item span {
     transition: none !important;
     translate: none !important;
-  }
-}
+  }}

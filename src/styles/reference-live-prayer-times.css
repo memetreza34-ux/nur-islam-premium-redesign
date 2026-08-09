@@ -243,11 +243,9 @@
 
   .reference-prayer-settings-group > div {
     grid-template-columns: 1fr;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-prayer-live-status.is-loading .reference-prayer-live-status__dot {
     animation: none;
-  }
-}
+  }}

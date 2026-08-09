@@ -11,9 +11,7 @@
 .reference-calendar-event,
 .reference-calendar-month,
 .reference-dhikr-goal,
-.reference-dhikr-source,
-.reference-learning-hero,
-.reference-continue-card {
+.reference-dhikr-source{
   border-color: rgba(232, 199, 122, .16) !important;
   box-shadow: 0 14px 34px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
 }
@@ -229,32 +227,6 @@
     linear-gradient(155deg, #0b3d2f, #031b15 66%, #020e0b);
 }
 
-/* Learning */
-.reference-learning-hero {
-  min-height: 252px;
-  border-radius: 25px;
-  background:
-    radial-gradient(circle at 72% 26%, rgba(240, 197, 110, .15), transparent 13rem),
-    #08261e;
-}
-
-.reference-learning-hero__shade {
-  background:
-    linear-gradient(90deg, rgba(2, 16, 12, .97) 0%, rgba(3, 24, 18, .82) 52%, rgba(2, 18, 14, .12) 100%),
-    linear-gradient(0deg, rgba(2, 14, 11, .76), transparent 58%);
-}
-
-.reference-learning-hero__copy h2 {
-  font-size: 2.12rem;
-  font-weight: 600;
-}
-
-.reference-learning-hero__badge {
-  border-color: rgba(232, 199, 122, .18);
-  border-radius: 16px;
-  background: rgba(4, 33, 25, .9);
-}
-
 .reference-category-grid {
   gap: 9px;
 }
@@ -274,18 +246,9 @@
   background: rgba(232, 199, 122, .055);
 }
 
-.reference-continue-card {
-  border-radius: 19px;
-  background:
-    radial-gradient(circle at 88% 0%, rgba(232, 199, 122, .055), transparent 8rem),
-    linear-gradient(145deg, rgba(9, 48, 37, .88), rgba(3, 23, 18, .98));
-}
-
 /* Qibla and discovery surfaces */
 .reference-qibla-stage,
 .reference-qibla-location,
-.reference-mosque-search,
-.reference-mosque-card,
 .reference-mosque-detail-modal {
   border-color: rgba(232, 199, 122, .16) !important;
   box-shadow: 0 15px 34px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
@@ -298,9 +261,7 @@
     linear-gradient(160deg, #0a4233, #04251d 58%, #02130f) !important;
 }
 
-.reference-qibla-location,
-.reference-mosque-search,
-.reference-mosque-card {
+.reference-qibla-location{
   border-radius: 19px !important;
   background: linear-gradient(145deg, rgba(8, 45, 34, .84), rgba(3, 22, 17, .97)) !important;
 }
@@ -311,12 +272,10 @@
   .reference-dua-card--complete:hover,
   .reference-category-card:hover,
   .reference-dhikr-step-tabs button:hover,
-  .reference-dhikr-category-grid button:hover,
-  .reference-mosque-card:hover {
+  .reference-dhikr-category-grid button:hover{
     border-color: rgba(232, 199, 122, .25) !important;
     background-color: rgba(232, 199, 122, .025) !important;
-  }
-}
+  }}
 
 @media (max-width: 370px) {
   .reference-next-prayer {
@@ -324,11 +283,6 @@
     border-radius: 24px;
   }
 
-  .reference-learning-hero {
-    min-height: 236px;
-  }
-
   .reference-category-card {
     min-height: 112px;
-  }
-}
+  }}

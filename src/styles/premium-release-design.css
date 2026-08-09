@@ -545,8 +545,7 @@ body {
 .learn-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .reference-mosque-detail-backdrop,
-.calendar-modal-backdrop,
-.settings-modal-backdrop {
+.calendar-modal-backdrop{
   background: rgba(0, 8, 6, .72) !important;
   backdrop-filter: blur(16px) saturate(.9) !important;
   -webkit-backdrop-filter: blur(16px) saturate(.9) !important;
@@ -639,8 +638,7 @@ body {
   .bottom-nav {
     right: 9px !important;
     left: 9px !important;
-  }
-}
+  }}
 
 @media (max-width: 350px) {
   .premium-home--v2 .welcome-hero__copy h1::after {
@@ -661,8 +659,7 @@ body {
 
   .bottom-nav__item small {
     font-size: .47rem;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .quick-card,
@@ -675,5 +672,4 @@ body {
   .reference-notes-list > button,
   .bottom-nav__item {
     transition: none !important;
-  }
-}
+  }}

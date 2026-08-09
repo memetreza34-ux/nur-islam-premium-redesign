@@ -400,8 +400,7 @@
 
   .reference-onboarding__copy h1 {
     font-size: 1.9rem;
-  }
-}
+  }}
 
 @media (max-height: 740px) {
   .reference-onboarding {
@@ -462,11 +461,9 @@
   .reference-onboarding__permissions > button {
     min-height: 52px;
     padding-block: 7px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-onboarding__dots button::after {
     transition: none;
-  }
-}
+  }}

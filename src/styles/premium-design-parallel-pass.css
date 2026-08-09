@@ -658,8 +658,7 @@
 
   .reference-account-cloud-grid > button {
     min-height: 112px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-account-entry,
@@ -674,5 +673,4 @@
   .calendar-entry-row {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

@@ -131,8 +131,7 @@
   .reference-splash__mark {
     width: 84px !important;
     height: 84px !important;
-  }
-}
+  }}
 
 @media (max-width: 350px) {
   .reference-splash__mosque {
@@ -145,14 +144,12 @@
   .reference-splash__mark {
     width: 78px !important;
     height: 78px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: no-preference) {
   .reference-splash__mark::before {
     animation: nurSplashGlow 4.8s ease-in-out infinite alternate;
-  }
-}
+  }}
 
 @keyframes nurSplashGlow {
   from { opacity: .62; scale: .96; }
@@ -162,5 +159,4 @@
 @media (prefers-reduced-motion: reduce) {
   .reference-splash__mark::before {
     animation: none !important;
-  }
-}
+  }}

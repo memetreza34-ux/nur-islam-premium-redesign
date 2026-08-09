@@ -93,7 +93,6 @@ body {
 
 .gold-button,
 .reference-inline-button,
-.reference-map-button,
 .reference-mosque-location-button,
 .reference-detail-actions button,
 .reference-detail-actions a,
@@ -133,7 +132,6 @@ textarea:focus-visible {
 .journey-card svg,
 .recommendation-card svg,
 .reference-screen-header svg,
-.reference-quran-tool-grid svg,
 .reference-dhikr-category-grid svg,
 .reference-detail-actions svg,
 .reference-reader-controls svg,
@@ -203,8 +201,7 @@ textarea:focus-visible {
 
 .premium-image,
 .premium-image > img,
-.premium-image > .premium-image__fallback,
-.reference-artwork-image {
+.premium-image > .premium-image__fallback{
   max-width: 100%;
   max-height: 100%;
 }
@@ -229,13 +226,6 @@ textarea:focus-visible {
 
 .premium-image > .premium-image__fallback[hidden] {
   display: none !important;
-}
-
-.reference-artwork-image {
-  max-width: 42vw;
-  max-height: 42vh;
-  pointer-events: none;
-  user-select: none;
 }
 
 .welcome-hero__visual,
@@ -275,14 +265,10 @@ textarea:focus-visible {
 .prayer-mini-times strong {
   font-size: .61rem;
 }
-
-.reference-quran-tool-grid strong,
 .reference-dhikr-category-grid strong {
   font-size: .63rem;
   line-height: 1.15;
 }
-
-.reference-quran-tool-grid small,
 .reference-dhikr-category-grid small,
 .reference-quran-list small,
 .reference-quran-list em,
@@ -331,8 +317,7 @@ textarea:focus-visible {
   .reference-quran-list button:hover,
   .reference-reader-next:hover {
     border-color: rgba(232, 199, 122, .42);
-  }
-}
+  }}
 
 @media (max-width: 370px) {
   :root {
@@ -347,8 +332,6 @@ textarea:focus-visible {
   .reference-screen-header h1 {
     font-size: 1.4rem;
   }
-
-  .reference-quran-tool-grid,
   .reference-dhikr-category-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -368,23 +351,19 @@ textarea:focus-visible {
 
   .bottom-nav__item small {
     font-size: .55rem;
-  }
-}
+  }}
 
 @media (min-width: 760px) {
   :root {
     --app-content-width: 460px;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .icon-button,
   .bottom-nav__item,
   .quick-card,
   .journey-card,
-  .recommendation-card,
-  .reference-artwork-image {
+  .recommendation-card{
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
-  }
-}
+  }}

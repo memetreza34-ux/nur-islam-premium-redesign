@@ -832,8 +832,7 @@
 
   .reference-prayer-learning-actions {
     grid-template-columns: 1fr;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .premium-home--v2 .journey-card,
@@ -849,5 +848,4 @@
   .reference-expanded-learning-grid > button {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

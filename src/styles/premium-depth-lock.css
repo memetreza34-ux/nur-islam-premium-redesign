@@ -816,8 +816,7 @@
   padding-inline: 3px;
 }
 
-.reference-nearby-label > button,
-.reference-map-button {
+.reference-nearby-label > button{
   border-radius: 13px;
 }
 
@@ -860,12 +859,6 @@
   border-radius: 999px;
   color: var(--depth-gold-bright);
   background: rgba(232, 199, 122, .035);
-}
-
-.reference-map-button {
-  min-height: 48px;
-  border: 1px solid rgba(232, 199, 122, .14);
-  background: rgba(255, 255, 255, .018);
 }
 
 .reference-mosque-detail-modal {
@@ -1273,8 +1266,7 @@
 
   .reference-chat-message {
     max-width: 94%;
-  }
-}
+  }}
 
 /* ---------- Light theme safeguards ---------- */
 [data-theme='light'] .reference-calendar-screen,
@@ -1345,8 +1337,7 @@
   .reference-notes-list > button:hover {
     border-color: rgba(232, 199, 122, .27) !important;
     transform: translateY(-1px);
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-calendar-screen *,
@@ -1359,5 +1350,4 @@
   .reference-account-screen *,
   .reference-notes-screen * {
     scroll-behavior: auto !important;
-  }
-}
+  }}

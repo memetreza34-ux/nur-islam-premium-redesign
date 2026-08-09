@@ -732,8 +732,7 @@
 
   .reference-notes-list > button em {
     justify-self: start;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-account-cloud-grid > button,
@@ -741,5 +740,4 @@
   .reference-notes-storage > button,
   .reference-assistant-suggestions button {
     transition: none !important;
-  }
-}
+  }}

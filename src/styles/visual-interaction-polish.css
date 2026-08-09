@@ -4,11 +4,6 @@
   scroll-padding-bottom: calc(108px + env(safe-area-inset-bottom));
 }
 
-.reference-artwork-host {
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 43%, rgba(0, 0, 0, .55) 58%, transparent 78%);
-  mask-image: linear-gradient(to bottom, #000 0%, #000 43%, rgba(0, 0, 0, .55) 58%, transparent 78%);
-}
-
 .bottom-nav__item {
   position: relative;
   isolation: isolate;
@@ -79,8 +74,7 @@
     opacity 140ms ease;
 }
 
-.premium-image > img,
-.reference-artwork-image {
+.premium-image > img{
   transform: translateZ(0);
   will-change: auto;
 }
@@ -100,8 +94,7 @@
   ):hover {
     transform: translateY(-1px);
     box-shadow: 0 16px 32px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .035);
-  }
-}
+  }}
 
 @media (hover: none) {
   :where(
@@ -120,8 +113,7 @@
     .gold-button
   ):active {
     transform: scale(.985);
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav__item,
@@ -144,10 +136,4 @@
   .prayer-complete,
   .gold-button {
     transition: none !important;
-  }
-
-  .reference-artwork-host {
-    -webkit-mask-image: none;
-    mask-image: none;
-  }
-}
+  }}

@@ -424,9 +424,6 @@
   object-position: center !important;
   filter: drop-shadow(0 15px 17px rgba(0, 0, 0, .38)) saturate(1.01) !important;
 }
-
-/* ---------- Learning heroes ---------- */
-.reference-learning-hero,
 .reference-prayer-learning-hub,
 .reference-prayer-course-hero,
 .reference-guide-hero,
@@ -602,8 +599,7 @@
   .reference-qibla-stage::after {
     width: 76px !important;
     height: 76px !important;
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .premium-image,
@@ -611,5 +607,4 @@
   .reference-legacy-hero img {
     transition: none !important;
     animation: none !important;
-  }
-}
+  }}

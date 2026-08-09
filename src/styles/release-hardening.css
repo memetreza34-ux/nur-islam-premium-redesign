@@ -499,5 +499,4 @@ html[data-theme='light'] .reference-prayer-reminder-banner {
   .reference-account-cloud-grid button { min-height: 96px; }
   .reference-notes-storage { grid-template-columns: 30px minmax(0, 1fr); }
   .reference-notes-storage > button,
-  .reference-notes-storage > svg:last-child { grid-column: 1 / -1; justify-self: stretch; }
-}
+  .reference-notes-storage > svg:last-child { grid-column: 1 / -1; justify-self: stretch; }}

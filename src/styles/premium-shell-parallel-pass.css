@@ -425,8 +425,7 @@
 
   .reference-onboarding__copy h1 {
     font-size: 1.86rem;
-  }
-}
+  }}
 
 @media (hover: hover) and (pointer: fine) {
   .bottom-nav__item:hover {
@@ -438,8 +437,7 @@
   .reference-onboarding__topbar > button:hover,
   .reference-install-prompt__action:hover {
     transform: translateY(-1px);
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav__item,
@@ -448,5 +446,4 @@
   .reference-install-prompt__action {
     transition: none !important;
     transform: none !important;
-  }
-}
+  }}

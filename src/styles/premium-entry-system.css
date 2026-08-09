@@ -281,8 +281,7 @@
     right: 9px;
     left: 9px;
     width: calc(100% - 18px);
-  }
-}
+  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-splash__loader span,
@@ -293,5 +292,4 @@
   .reference-calendar-reminder-banner {
     transition: none !important;
     animation: none !important;
-  }
-}
+  }}
