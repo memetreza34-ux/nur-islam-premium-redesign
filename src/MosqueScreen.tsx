@@ -209,7 +209,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
           {visible.map((mosque, index) => (
             <motion.button key={mosque.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .025, .22) }} onClick={() => setSelected(mosque)}>
               <span className="reference-mosque-list__pin"><MapPin size={20} /></span>
-              <span><strong>{mosque.name}</strong><small>{mosque.address}</small><em>{mosque.serviceTimes ? `Gebetszeiten: ${mosque.serviceTimes}` : formatDenomination(mosque.denomination)}</em></span>
+              <span><strong>{mosque.name}</strong><small>{mosque.address}</small><em>{formatDenomination(mosque.denomination)} · {mosque.serviceTimes ? `Gebetszeiten: ${mosque.serviceTimes}` : 'Gebetszeiten nicht hinterlegt'}</em></span>
               <span className="reference-mosque-distance">{formatDistance(mosque.distanceKm)}</span>
               <ChevronRight size={18} />
             </motion.button>
@@ -233,7 +233,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
                 <span><Globe2 size={17} /><strong>{formatDenomination(selected.denomination)}</strong></span>
                 <span><Accessibility size={17} /><strong>{formatWheelchair(selected.wheelchair)}</strong></span>
                 {selected.openingHours ? <span><Clock3 size={17} /><strong>{selected.openingHours}</strong></span> : null}
-                {selected.serviceTimes ? <span><Clock3 size={17} /><strong>Gebetszeiten: {selected.serviceTimes}</strong></span> : null}
+                {selected.serviceTimes ? <span><Clock3 size={17} /><strong>Gebetszeiten: {selected.serviceTimes}</strong></span> : <span><Clock3 size={17} /><strong>Gebetszeiten nicht hinterlegt</strong></span>}
               </div>
 
               <div className="reference-mosque-detail-actions">
