@@ -2,13 +2,15 @@
  * Performance budget for what actually crosses the network.
  *
  * The release gate asks for budgets, and the app is aimed at phones that are
- * often on mobile data. Sizes are measured gzipped, because that is what a user
- * downloads; the raw figures are shown for context only.
+ * often on mobile data. Aggregate sizes are measured gzipped, because that is
+ * what a user downloads; raw per-chunk size is also guarded so the production
+ * entry cannot silently collapse back into one oversized JavaScript file.
  *
  * The budgets sit slightly above today's numbers. They are a ratchet against
- * drift, not a claim that the current size is good: 96 stylesheet layers is a
- * lot, and the CSS is the part most likely to keep climbing. Lowering a budget
- * after a cleanup is the intended direction; raising one should need a reason.
+ * drift, not a claim that the current size is good: 98 stylesheet layers is
+ * still a lot, and CSS remains the part most likely to keep climbing. Lowering
+ * a budget after a cleanup is the intended direction; raising one should need
+ * a reason.
  *
  * Run after a build. `npm run check` builds last, so use `npm run budget:check`
  * on an existing dist, or build first.
@@ -25,6 +27,7 @@ const BUDGETS_KB = {
   css: 105,
   total: 320,
 };
+const MAX_RAW_JS_CHUNK_KB = 500;
 
 let entries;
 try {
@@ -64,4 +67,18 @@ for (const [label, bytes] of [['js', measured.js], ['css', measured.css], ['tota
   }
 }
 
-console.log(`Bundle budget verified: ${kb(measured.js)} KB JS + ${kb(measured.css)} KB CSS = ${kb(total)} KB gzipped, within ${BUDGETS_KB.total} KB.`);
+const jsChunks = detail.filter(({ name }) => name.endsWith('.js'));
+const oversizedJs = jsChunks.filter(({ raw }) => raw > MAX_RAW_JS_CHUNK_KB * 1024);
+if (oversizedJs.length) {
+  const lines = oversizedJs
+    .map(({ name, raw, gzipped }) => `    ${name}: ${kb(raw)} KB raw (${kb(gzipped)} KB gzipped)`)
+    .join('\n');
+  throw new Error(
+    `Raw JavaScript chunk budget exceeded: no production JS chunk may exceed ${MAX_RAW_JS_CHUNK_KB} KB.\n${lines}\n`
+    + '  Split stable vendors or lazy-load secondary code instead of hiding the warning with a larger threshold.',
+  );
+}
+
+const largestJs = jsChunks.reduce((largest, entry) => !largest || entry.raw > largest.raw ? entry : largest, null);
+const largestLabel = largestJs ? ` Largest JS chunk: ${largestJs.name} at ${kb(largestJs.raw)} KB raw.` : '';
+console.log(`Bundle budget verified: ${kb(measured.js)} KB JS + ${kb(measured.css)} KB CSS = ${kb(total)} KB gzipped, within ${BUDGETS_KB.total} KB.${largestLabel}`);
