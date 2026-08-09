@@ -51,7 +51,6 @@ async function captureAt(page, selector, name, options = {}) {
   const target = page.locator(selector).first();
   await target.waitFor({ state: 'visible', timeout: 10_000 });
   await target.scrollIntoViewIfNeeded();
-  // Give lazy premium images a deterministic frame to decode after the scroll.
   await page.waitForTimeout(450);
   await capture(page, name, options);
 }
@@ -106,8 +105,6 @@ try {
   await capture(page, '01-home');
   await capture(page, '01-home-full', { fullPage: true });
 
-  // The app shell scrolls independently on mobile, so fullPage alone does not
-  // expose the lower Home art. Capture the actual premium object groups too.
   await captureAt(page, '.journey-grid', '01a-home-journey');
   await captureAt(page, '.quick-grid--v2', '01b-home-quick-actions');
   await captureAt(page, '.continue-card--v2', '01c-home-quran-continue');
@@ -131,7 +128,6 @@ try {
   await waitForStableUi(page);
   await capture(page, '06-home-return');
 
-  // First-use Quran must open the real zero-progress start at Al-Faatiha, not a synthetic resume state.
   const quranJourney = page.locator('.journey-card--quran').first();
   await quranJourney.waitFor({ state: 'visible' });
   await quranJourney.click();
@@ -148,26 +144,18 @@ try {
 
   await captureSecondary(page, { trigger: 'Dhikr', screen: '.reference-dhikr-screen', name: '09-dhikr' });
   await returnHome(page);
-
   await captureSecondary(page, { trigger: 'Qibla', screen: '.reference-qibla-screen', name: '10-qibla' });
   await returnHome(page);
-
   await captureSecondary(page, { trigger: 'Duas', screen: '.reference-duas-screen', name: '11-duas' });
   await returnHome(page);
-
   await captureSecondary(page, { trigger: '99 Namen Allahs', screen: '.reference-names-screen', name: '12-names' });
   await returnHome(page);
-
   await captureSecondary(page, { trigger: 'Nur Assistent', screen: '.reference-assistant-screen', name: '13-assistant' });
   await returnHome(page);
-
   await captureSecondary(page, { trigger: 'Meine Sammlung', screen: '.reference-collections-screen', name: '14-collections' });
   await returnHome(page);
   await capture(page, '15-home-after-secondary');
 
-  // Secondary premium destinations have their own visual contracts too. They
-  // used to be absent from the screenshot artifact, which meant a broken
-  // mosque/account/notes surface could regress while the main tabs stayed green.
   await clickNav(page, 'Mehr');
   await waitForStableUi(page);
   await captureSecondary(page, { trigger: 'Moscheen', screen: '.reference-mosque-screen', name: '19-mosques' });
@@ -189,20 +177,17 @@ try {
   await page.locator('.reference-notes-screen').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(page);
   await capture(page, '21-notes');
-
   await appContext.close();
 
-  // Splash gets a dedicated normal-motion context. Reduced-motion mode leaves
-  // only 160ms before BootRoot enters onboarding, which is too short to judge
-  // the real 800ms brand/mosque entry composition and previously produced a
-  // misleading black screenshot.
   const splashContext = await createContext({ reducedMotion: 'no-preference' });
   const splashPage = await splashContext.newPage();
   await attachDiagnostics(splashPage, 'splash');
   await splashPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
-  await splashPage.locator('.reference-splash__brand').waitFor({ state: 'visible', timeout: 5_000 });
-  await splashPage.evaluate(() => document.fonts?.ready);
-  await splashPage.waitForTimeout(420);
+  await splashPage.locator('.reference-splash__brand').waitFor({ state: 'attached', timeout: 5_000 });
+  // Stay well inside BootRoot's 800ms normal-motion splash window. Waiting on
+  // document.fonts.ready can cross that boundary on CI and destroy the current
+  // React execution context while the screenshot is being prepared.
+  await splashPage.waitForTimeout(300);
   await capture(splashPage, '00-splash', { animations: 'allow' });
   await splashContext.close();
 
@@ -212,10 +197,6 @@ try {
   await onboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
   await onboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(onboardingPage);
-
-  // Capture every onboarding composition. Each slide owns a different primary
-  // premium artwork, so a single first-slide screenshot cannot protect the
-  // image mapping/crop quality the product promises.
   await capture(onboardingPage, '16-onboarding-1');
   const onboardingDots = onboardingPage.locator('.reference-onboarding__dots button');
   for (let slideIndex = 1; slideIndex < 3; slideIndex += 1) {
@@ -226,9 +207,6 @@ try {
   }
   await onboardingContext.close();
 
-  // The visual contract also requires a real narrow-device pass around
-  // 320-350px. Exercise the highest-risk compositions at 340x740 so the
-  // max-width:350px overrides cannot silently regress while 390px stays green.
   const narrowContext = await createContext({ width: 340, height: 740 });
   const narrowPage = await narrowContext.newPage();
   await attachDiagnostics(narrowPage, 'narrow-app');
