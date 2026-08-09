@@ -31,7 +31,7 @@
   width: 202px !important;
   height: 188px !important;
   overflow: visible;
-  transform: rotate(-4deg) !important;
+  transform: none !important;
 }
 
 .reference-quran-continue__book::before {
@@ -42,6 +42,8 @@
 .reference-quran-continue__book > img {
   object-fit: contain !important;
   object-position: center bottom !important;
+  transform: translate(25px, -42px) rotate(-5deg) scale(1.72) !important;
+  transform-origin: center bottom !important;
   filter: drop-shadow(0 20px 18px rgba(68, 40, 8, .29)) saturate(1.015) contrast(1.02) !important;
 }
 
@@ -180,6 +182,10 @@
     height: 176px !important;
   }
 
+  .reference-quran-continue__book > img {
+    transform: translate(23px, -39px) rotate(-5deg) scale(1.66) !important;
+  }
+
   .reference-quran-verse::after {
     right: -42px !important;
     width: 188px !important;
@@ -204,6 +210,10 @@
     bottom: 8px !important;
     width: 170px !important;
     height: 162px !important;
+  }
+
+  .reference-quran-continue__book > img {
+    transform: translate(22px, -34px) rotate(-5deg) scale(1.58) !important;
   }
 
   .reference-quran-list__arabic {
