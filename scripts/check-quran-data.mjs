@@ -92,8 +92,14 @@ for (const required of [
   'selectedAyahNumber',
   'onOpenReader={openReader}',
   'initialAyahNumber={selectedAyahNumber}',
+  'hasProgress: boolean',
+  'hasProgress: false',
+  "englishName: 'Al-Faatiha'",
 ]) {
-  if (!appSource.includes(required)) throw new Error(`Quran app routing is missing: ${required}`);
+  if (!appSource.includes(required)) throw new Error(`Quran app routing/progress is missing: ${required}`);
+}
+if (appSource.includes("surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 'Al-Ikhlaas'")) {
+  throw new Error('Home must not synthesize Al-Ikhlaas 112:1 as first-use reading history.');
 }
 
 for (const required of [
@@ -104,11 +110,22 @@ for (const required of [
   'CloudDownload',
   'reloadToken',
   'setReloadToken((value) => value + 1)',
-  'onOpenReader(lastSurah?.number ?? lastRead.surahNumber, lastAyah)',
+  'function readLastRead(): LastRead | null',
+  'if (!raw) return null;',
+  'const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1',
+  'onOpenReader(readerSurahNumber, lastAyah)',
   'onOpenReader(surah.number, 1)',
   'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
+  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
+  "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
 ]) {
   if (!catalogSource.includes(required)) throw new Error(`Quran catalog integration is missing: ${required}`);
+}
+for (const forbidden of [
+  'const fallback = { surahNumber: 112, ayahNumber: 1',
+  'Math.max(4, (lastAyah / lastSurah.numberOfAyahs)',
+]) {
+  if (catalogSource.includes(forbidden)) throw new Error(`Quran catalog still contains synthetic resume logic: ${forbidden}`);
 }
 
 for (const required of [
@@ -121,6 +138,9 @@ for (const required of [
   'initialAyahNumber?: number',
   'scrollIntoView',
   'Al Quran Cloud',
+  'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
+  'surahNumber: bundle.meta.number',
+  'ayahNumber: validatedAyah',
 ]) {
   if (!readerSource.includes(required)) throw new Error(`Quran reader integration is missing: ${required}`);
 }
@@ -135,4 +155,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, catalog retry, and exact last-read Ayah resume.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs, validated Al Quran Cloud fallback, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);

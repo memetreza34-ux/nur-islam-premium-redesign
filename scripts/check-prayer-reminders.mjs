@@ -59,11 +59,14 @@ if (!main.includes('consumeInitialNavigationIntent')
   || !main.includes("url.searchParams.delete('open')")) {
   throw new Error('Closed PWA reminder launch URLs are not consumed and cleaned.');
 }
-// The launch intent may resolve to more than one destination, so match the
-// dispatched event rather than one hard-coded call shape.
+// main runs before React mounts, so the launch intent is queued instead of
+// dispatched; App drains the queue once its listeners exist.
 if (!main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
-  || !/new Event\([^)]*'nur:open-prayer'/.test(main)) {
-  throw new Error('Reminder launch does not persist onboarding and open the prayer tracker.');
+  || !main.includes('queuePendingNavigation(intent)')) {
+  throw new Error('Reminder launch does not persist onboarding and queue the prayer tracker intent.');
+}
+if (!app.includes('consumePendingNavigation()')) {
+  throw new Error('App no longer drains the queued launch intent.');
 }
 if (!systemLayer.includes('PrayerReminderBanner') || !systemLayer.includes("new Event('nur:open-prayer')")) {
   throw new Error('In-app prayer reminder does not provide direct tracker navigation.');

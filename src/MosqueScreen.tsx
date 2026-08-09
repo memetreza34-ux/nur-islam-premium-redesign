@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Accessibility,
   ChevronLeft,
@@ -82,13 +82,18 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<MosqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
 
   const closeDialog = useCallback(() => { setSelected(null); }, []);
   const screenDialog = useDialog(Boolean(selected), closeDialog, selected?.name);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2400);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2400);
   };
 
   const loadMosques = async (targetOrigin: MosqueSearchOrigin, forceRefresh = false) => {
@@ -123,6 +128,10 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       });
     return () => { active = false; };
   }, [initialOrigin]);
+
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const useDeviceLocation = async () => {
     setStatus('loading');

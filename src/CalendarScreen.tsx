@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bell,
   CalendarDays,
@@ -34,10 +34,20 @@ function getDateKey(date: Date) {
   return `${year}-${month}-${day}`;
 }
 
+function isValidDateKey(value: string) {
+  const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  if (!match) return false;
+  const year = Number(match[1]);
+  const month = Number(match[2]);
+  const day = Number(match[3]);
+  const date = new Date(year, month - 1, day, 12);
+  return date.getFullYear() === year && date.getMonth() === month - 1 && date.getDate() === day;
+}
+
 function getInitialCalendarPosition(initialDateKey?: string | null) {
   const today = new Date();
   let target = today;
-  if (initialDateKey && /^\d{4}-\d{2}-\d{2}$/.test(initialDateKey)) {
+  if (initialDateKey && isValidDateKey(initialDateKey)) {
     const parsed = new Date(`${initialDateKey}T12:00:00`);
     if (!Number.isNaN(parsed.getTime())) target = parsed;
   }
@@ -51,7 +61,12 @@ function readFavorites() {
   try {
     const stored = localStorage.getItem('nur_calendar_favorites');
     const parsed = stored ? JSON.parse(stored) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.filter((value): value is string => typeof value === 'string') : []);
+    const valid = Array.isArray(parsed)
+      ? parsed.filter((value): value is string => typeof value === 'string' && isValidDateKey(value))
+      : [];
+    const normalized = [...new Set(valid)];
+    if (JSON.stringify(normalized) !== JSON.stringify(parsed)) localStorage.setItem('nur_calendar_favorites', JSON.stringify(normalized));
+    return new Set(normalized);
   } catch {
     return new Set<string>();
   }
@@ -104,9 +119,10 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const [newTime, setNewTime] = useState('19:30');
   const [newReminder, setNewReminder] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
+  const entryIdRef = useRef(Date.now() * 1000);
   const closeDialog = useCallback(() => { setShowAdd(false); }, []);
   const screenDialog = useDialog(showAdd, closeDialog, 'Termin hinzufügen');
-
   const monthData = useMemo(() => getMonthData(monthOffset), [monthOffset]);
   const monthTitle = new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric' }).format(monthData.first);
   const selectedDate = new Date(monthData.year, monthData.month, Math.min(selectedDay, monthData.daysInMonth));
@@ -119,10 +135,22 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   useEffect(() => {
     try { localStorage.setItem('nur_calendar_favorites', JSON.stringify([...favorites])); } catch { /* optional */ }
   }, [favorites]);
+  useEffect(() => () => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+  }, []);
 
   const flash = (message: string) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
     setToast(message);
-    window.setTimeout(() => setToast(null), 2400);
+    toastTimerRef.current = window.setTimeout(() => {
+      setToast(null);
+      toastTimerRef.current = null;
+    }, 2400);
+  };
+
+  const nextEntryId = () => {
+    entryIdRef.current = Math.max(entryIdRef.current + 1, Date.now() * 1000);
+    return entryIdRef.current;
   };
 
   const moveMonth = (direction: number) => {
@@ -151,7 +179,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
     }
 
     const entry: PersonalCalendarEntry = {
-      id: Date.now(),
+      id: nextEntryId(),
       date: selectedDateKey,
       title: newTitle.trim().slice(0, 120),
       time: newTime,

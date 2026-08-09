@@ -193,4 +193,4 @@ if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
   throw new Error('The final 1.75 Lucide lock must remain the last stylesheet import.');
 }
 
-console.log('Reference icon map verified: primary navigation, Home actions and core controls are fixed, all 13 additional features keep exact ID-to-icon pairs, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');
+console.log('Reference icon map verified: primary navigation, honest Home actions and core controls are fixed, all 13 additional features keep exact ID-to-icon pairs, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');

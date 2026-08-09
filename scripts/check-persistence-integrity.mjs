@@ -3,29 +3,47 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
-const [duas, quran, reader, collections, notes, backend] = await Promise.all([
+const [duas, names, quran, reader, collections, calendar, notes, backend] = await Promise.all([
   read('src/DuasScreen.tsx'),
+  read('src/NamesScreen.tsx'),
   read('src/QuranScreen.tsx'),
   read('src/QuranReaderScreen.tsx'),
   read('src/CollectionsScreen.tsx'),
+  read('src/CalendarScreen.tsx'),
   read('src/NotesScreen.tsx'),
   read('src/nurBackend.ts'),
 ]);
 
 for (const requirement of [
   'return new Set(migrated);',
-  "readStringSet('nur_dua_favorites', ['dua_guidance_1'])",
+  "useState(() => readStringSet('nur_dua_favorites'))",
 ]) {
   if (!duas.includes(requirement)) throw new Error(`Dua persistence integrity is missing: ${requirement}`);
 }
-if (duas.includes('return new Set(migrated.length ? migrated : fallback);')) {
-  throw new Error('An intentionally empty stored Dua favorite set must remain empty.');
+for (const forbidden of [
+  'return new Set(migrated.length ? migrated : fallback);',
+  "readStringSet('nur_dua_favorites', ['dua_guidance_1'])",
+]) {
+  if (duas.includes(forbidden)) throw new Error(`An intentionally empty stored Dua favorite set must remain empty: ${forbidden}`);
+}
+
+for (const requirement of [
+  "useState(() => migrateNameSet('nur_name_favorites'))",
+  "useState(() => migrateNameSet('nur_name_learned'))",
+  'localStorage.setItem(key, JSON.stringify([...migrated]))',
+]) {
+  if (!names.includes(requirement)) throw new Error(`Name persistence integrity is missing: ${requirement}`);
+}
+if (names.includes("migrateNameSet('nur_name_favorites', ['1'])")) {
+  throw new Error('An empty Name favorite set must not be seeded with Name 1.');
 }
 
 for (const requirement of [
   "typeof value === 'string' && /^\\d+$/.test(value)",
   'Number.isInteger(value) && value >= 1 && value <= 114',
   "readNumberSet('nur_quran_surah_favorites')",
+  'function readLastRead(): LastRead | null',
+  'if (!raw) return null;',
 ]) {
   if (!quran.includes(requirement)) throw new Error(`Quran persisted-ID validation is missing: ${requirement}`);
 }
@@ -38,6 +56,7 @@ for (const requirement of [
   'value >= 1 && value <= 114',
   'ayahNumber <= data.meta.numberOfAyahs',
   'Math.min(bundle.meta.numberOfAyahs, normalizePositiveInteger(initialAyahNumber))',
+  'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
 ]) {
   if (!reader.includes(requirement)) throw new Error(`Quran reader persistence validation is missing: ${requirement}`);
 }
@@ -53,8 +72,19 @@ for (const requirement of [
 }
 
 for (const requirement of [
+  'const entryIdRef = useRef(Date.now() * 1000)',
+  'Math.max(entryIdRef.current + 1, Date.now() * 1000)',
+  'id: nextEntryId()',
+]) {
+  if (!calendar.includes(requirement)) throw new Error(`Calendar persistence identity is missing: ${requirement}`);
+}
+
+for (const requirement of [
   'hasValidDate',
   'Number.isFinite(Date.parse(value))',
+  'const localNoteIdRef = useRef(Date.now() * 1000)',
+  'Math.max(localNoteIdRef.current + 1, Date.now() * 1000)',
+  'id: nextLocalNoteId()',
 ]) {
   if (!notes.includes(requirement)) throw new Error(`Note persistence validation is missing: ${requirement}`);
 }
@@ -73,4 +103,4 @@ for (const requirement of [
   if (!backend.includes(requirement)) throw new Error(`Cloud backup exclusion is missing: ${requirement}`);
 }
 
-console.log('Persistence integrity verified: empty favorites stay empty, Quran IDs/reader values and saved calendar dates are validated, malformed note dates are filtered, and device/ephemeral state is excluded from cloud backups.');
+console.log('Persistence integrity verified: empty Dua/Name favorites stay empty, Quran IDs/reader values and saved calendar dates are validated, local Calendar/Note IDs are collision-resistant, malformed note dates are filtered, and device/ephemeral state is excluded from cloud backups.');

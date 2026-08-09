@@ -164,7 +164,9 @@ requireText(main, [
   '<CalendarReminderBanner />',
   'initializeTheme()',
   "requested === 'calendar'",
-  "'nur:open-calendar'",
+  // The launch intent is queued rather than dispatched: main runs before React
+  // mounts, so a live event would fire into nothing on a cold start.
+  'queuePendingNavigation(intent)',
 ], 'Application bootstrap');
 forbidText(main, ['openCalendarFromShell', "querySelectorAll<HTMLButtonElement>('.bottom-nav__item')"], 'Application bootstrap');
 // Derived from the worker so a version bump cannot leave the registration and
