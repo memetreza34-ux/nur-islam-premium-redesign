@@ -28,7 +28,7 @@
   width: 290px;
   height: 290px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(232,199,122,.1), rgba(38,125,91,.055) 44%, transparent 70%);
+  background: radial-gradient(circle, rgba(226,191,119,.1), rgba(38,125,91,.055) 44%, transparent 70%);
   filter: blur(9px);
   pointer-events: none;
 }
@@ -54,7 +54,7 @@
   width: 292px !important;
   height: 292px !important;
   background:
-    radial-gradient(circle, rgba(232,199,122,.135) 0%, rgba(49,139,103,.055) 39%, transparent 69%) !important;
+    radial-gradient(circle, rgba(226,191,119,.135) 0%, rgba(49,139,103,.055) 39%, transparent 69%) !important;
 }
 
 /* Old reference CSS intentionally faded this to .19. The real asset now forms
@@ -77,13 +77,13 @@
   border: 1px solid rgba(247, 226, 178, .13) !important;
   background:
     radial-gradient(circle at 48% 42%, #0d3127 0 54%, #08261e 56%, transparent 57%),
-    conic-gradient(#f0d493 var(--dhikr-progress), rgba(232,199,122,.1) 0) !important;
+    conic-gradient(#f0d493 var(--dhikr-progress), rgba(226,191,119,.1) 0) !important;
   box-shadow:
     0 23px 48px rgba(0,0,0,.38),
     inset 0 0 0 10px rgba(2,18,14,.84),
     inset 0 0 0 11px rgba(244,218,160,.18),
     inset 0 12px 30px rgba(255,255,255,.025),
-    0 0 30px rgba(232,199,122,.035) !important;
+    0 0 30px rgba(226,191,119,.035) !important;
 }
 
 .reference-dhikr-ring strong {
@@ -106,18 +106,18 @@
   isolation: isolate;
   min-height: 492px !important;
   background:
-    radial-gradient(circle at 50% 28%, rgba(232,199,122,.13), transparent 14rem),
+    radial-gradient(circle at 50% 28%, rgba(226,191,119,.13), transparent 14rem),
     radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
-    linear-gradient(160deg, #0c4233, #05271e 59%, #02130f) !important;
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
 .reference-qibla-stage__halo {
   top: 11px !important;
   width: 342px !important;
   height: 342px !important;
-  border: 1px solid rgba(232,199,122,.04);
-  background: radial-gradient(circle, rgba(232,199,122,.11), transparent 67%) !important;
-  box-shadow: 0 0 0 26px rgba(232,199,122,.012), 0 0 0 54px rgba(232,199,122,.007);
+  border: 1px solid rgba(226,191,119,.04);
+  background: radial-gradient(circle, rgba(226,191,119,.11), transparent 67%) !important;
+  box-shadow: 0 0 0 26px rgba(226,191,119,.012), 0 0 0 54px rgba(226,191,119,.007);
 }
 
 .reference-qibla-stage__compass {
@@ -144,7 +144,7 @@
 
 .reference-qibla-stage__needle {
   z-index: 4 !important;
-  color: #f0d494 !important;
+  color: #f2d79a !important;
   filter: drop-shadow(0 6px 9px rgba(0,0,0,.58)) !important;
 }
 
@@ -161,7 +161,7 @@
 
 .reference-qibla-stage__copy p {
   max-width: 300px;
-  color: rgba(181,202,191,.79) !important;
+  color: rgba(145, 168, 158, .81) !important;
   line-height: 1.48;
 }
 
@@ -183,15 +183,15 @@
 
 [data-theme='light'] .reference-dhikr-counter {
   background:
-    radial-gradient(circle at 50% 14%, rgba(232,199,122,.12), transparent 12rem),
+    radial-gradient(circle at 50% 14%, rgba(226,191,119,.12), transparent 12rem),
     linear-gradient(160deg, #0b4434, #05271f 58%, #02130f) !important;
 }
 
 [data-theme='light'] .reference-qibla-stage {
   background:
-    radial-gradient(circle at 50% 28%, rgba(232,199,122,.13), transparent 14rem),
+    radial-gradient(circle at 50% 28%, rgba(226,191,119,.13), transparent 14rem),
     radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
-    linear-gradient(160deg, #0c4233, #05271e 59%, #02130f) !important;
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
 [data-theme='light'] .reference-next-prayer h2,
