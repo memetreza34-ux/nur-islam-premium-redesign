@@ -28,6 +28,7 @@
   transform: none !important;
   filter: drop-shadow(0 16px 18px rgba(0,0,0,.4)) brightness(1.08) saturate(1.05) contrast(1.04) !important;
 }
+[data-theme='light'] .reference-prayer-learning-hub { background:linear-gradient(145deg,#0d5743,#00120f)!important; }
 [data-theme='light'] .reference-legacy-hero img[src*="mosque-gold-v2"] { opacity: .48 !important; }
 [data-theme='light'] .reference-legacy-hero p,
 [data-theme='light'] .reference-legacy-notice,
