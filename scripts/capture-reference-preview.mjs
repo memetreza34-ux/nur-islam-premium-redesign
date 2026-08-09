@@ -20,16 +20,16 @@ await mkdir(outputDir, { recursive: true });
 
 const browser = await chromium.launch({ headless: true });
 
-async function createContext() {
+async function createContext({ width = 390, height = 844, reducedMotion = 'reduce' } = {}) {
   return browser.newContext({
-    viewport: { width: 390, height: 844 },
+    viewport: { width, height },
     deviceScaleFactor: 1,
     colorScheme: 'dark',
     locale: 'de-DE',
     timezoneId: 'Europe/Berlin',
     geolocation: { latitude: 52.52, longitude: 13.405 },
     permissions: ['geolocation'],
-    reducedMotion: 'reduce',
+    reducedMotion,
   });
 }
 
@@ -39,21 +39,21 @@ async function waitForStableUi(page) {
   await page.waitForTimeout(550);
 }
 
-async function capture(page, name, { fullPage = false } = {}) {
+async function capture(page, name, { fullPage = false, suffix = '390x844', animations = 'disabled' } = {}) {
   await page.screenshot({
-    path: resolve(outputDir, `${name}-390x844.png`),
+    path: resolve(outputDir, `${name}-${suffix}.png`),
     fullPage,
-    animations: 'disabled',
+    animations,
   });
 }
 
-async function captureAt(page, selector, name) {
+async function captureAt(page, selector, name, options = {}) {
   const target = page.locator(selector).first();
   await target.waitFor({ state: 'visible', timeout: 10_000 });
   await target.scrollIntoViewIfNeeded();
   // Give lazy premium images a deterministic frame to decode after the scroll.
   await page.waitForTimeout(450);
-  await capture(page, name);
+  await capture(page, name, options);
 }
 
 async function clickNav(page, label) {
@@ -63,13 +63,13 @@ async function clickNav(page, label) {
   await page.waitForTimeout(350);
 }
 
-async function captureSecondary(page, { trigger, screen, name }) {
+async function captureSecondary(page, { trigger, screen, name, suffix = '390x844' }) {
   const button = page.locator('button').filter({ hasText: trigger }).first();
   await button.waitFor({ state: 'visible', timeout: 10_000 });
   await button.click();
   await page.locator(screen).waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(page);
-  await capture(page, name);
+  await capture(page, name, { suffix });
 }
 
 async function returnHome(page) {
@@ -192,18 +192,24 @@ try {
 
   await appContext.close();
 
+  // Splash gets a dedicated normal-motion context. Reduced-motion mode leaves
+  // only 160ms before BootRoot enters onboarding, which is too short to judge
+  // the real 800ms brand/mosque entry composition and previously produced a
+  // misleading black screenshot.
+  const splashContext = await createContext({ reducedMotion: 'no-preference' });
+  const splashPage = await splashContext.newPage();
+  await attachDiagnostics(splashPage, 'splash');
+  await splashPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
+  await splashPage.locator('.reference-splash__brand').waitFor({ state: 'visible', timeout: 5_000 });
+  await splashPage.evaluate(() => document.fonts?.ready);
+  await splashPage.waitForTimeout(420);
+  await capture(splashPage, '00-splash', { animations: 'allow' });
+  await splashContext.close();
+
   const onboardingContext = await createContext();
   const onboardingPage = await onboardingContext.newPage();
   await attachDiagnostics(onboardingPage, 'onboarding');
   await onboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
-
-  // Splash owns the Nur mark + gold mosque composition and needs its own real
-  // render, otherwise the entry image can disappear before the first captured frame.
-  await onboardingPage.locator('.reference-splash').waitFor({ state: 'visible', timeout: 5_000 });
-  await onboardingPage.evaluate(() => document.fonts?.ready);
-  await onboardingPage.waitForTimeout(120);
-  await capture(onboardingPage, '00-splash');
-
   await onboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(onboardingPage);
 
@@ -218,8 +224,50 @@ try {
     await waitForStableUi(onboardingPage);
     await capture(onboardingPage, `${16 + slideIndex}-onboarding-${slideIndex + 1}`);
   }
-
   await onboardingContext.close();
+
+  // The visual contract also requires a real narrow-device pass around
+  // 320-350px. Exercise the highest-risk compositions at 340x740 so the
+  // max-width:350px overrides cannot silently regress while 390px stays green.
+  const narrowContext = await createContext({ width: 340, height: 740 });
+  const narrowPage = await narrowContext.newPage();
+  await attachDiagnostics(narrowPage, 'narrow-app');
+  await narrowPage.goto(appUrl, { waitUntil: 'domcontentloaded' });
+  await narrowPage.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForStableUi(narrowPage);
+  await capture(narrowPage, '22-narrow-home', { suffix: '340x740' });
+
+  await clickNav(narrowPage, 'Mehr');
+  await waitForStableUi(narrowPage);
+  await capture(narrowPage, '23-narrow-more', { suffix: '340x740' });
+  await clickNav(narrowPage, 'Start');
+  await waitForStableUi(narrowPage);
+
+  await captureSecondary(narrowPage, { trigger: 'Qibla', screen: '.reference-qibla-screen', name: '24-narrow-qibla', suffix: '340x740' });
+  await returnHome(narrowPage);
+
+  const narrowQuranJourney = narrowPage.locator('.journey-card--quran').first();
+  await narrowQuranJourney.waitFor({ state: 'visible' });
+  await narrowQuranJourney.click();
+  await narrowPage.locator('.reference-reader-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await narrowPage.getByRole('button', { name: 'Zurück zum Quran' }).click();
+  await narrowPage.locator('.reference-quran-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForStableUi(narrowPage);
+  await capture(narrowPage, '25-narrow-quran-catalog', { suffix: '340x740' });
+  await narrowContext.close();
+
+  const narrowOnboardingContext = await createContext({ width: 340, height: 740 });
+  const narrowOnboardingPage = await narrowOnboardingContext.newPage();
+  await attachDiagnostics(narrowOnboardingPage, 'narrow-onboarding');
+  await narrowOnboardingPage.goto(onboardingUrl, { waitUntil: 'domcontentloaded' });
+  await narrowOnboardingPage.locator('.reference-onboarding').waitFor({ state: 'visible', timeout: 15_000 });
+  const narrowDots = narrowOnboardingPage.locator('.reference-onboarding__dots button');
+  await narrowDots.nth(2).click();
+  await narrowOnboardingPage.locator('.reference-onboarding__permissions').waitFor({ state: 'visible', timeout: 10_000 });
+  await narrowOnboardingPage.locator('.reference-onboarding__permissions').scrollIntoViewIfNeeded();
+  await waitForStableUi(narrowOnboardingPage);
+  await capture(narrowOnboardingPage, '26-narrow-onboarding-final', { suffix: '340x740' });
+  await narrowOnboardingContext.close();
 } finally {
   await browser.close();
 }
