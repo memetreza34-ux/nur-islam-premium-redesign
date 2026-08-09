@@ -6,8 +6,8 @@
   min-height: 228px !important;
   padding: 24px 146px 24px 21px !important;
   background:
-    radial-gradient(circle at 82% 24%, rgba(232, 199, 122, .12), transparent 11rem),
-    linear-gradient(145deg, #104534 0%, #06291f 58%, #02140f 100%) !important;
+    radial-gradient(circle at 82% 24%, rgba(226, 191, 119, .12), transparent 11rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
 .reference-duas-hero::after {
@@ -43,7 +43,7 @@
 
 .reference-duas-hero p {
   max-width: 220px !important;
-  color: rgba(180, 202, 191, .78) !important;
+  color: rgba(145, 168, 158, .8) !important;
   text-wrap: pretty;
 }
 
@@ -61,9 +61,9 @@
   right: -34px;
   width: 126px;
   height: 126px;
-  border: 1px solid rgba(232, 199, 122, .035);
+  border: 1px solid rgba(226, 191, 119, .035);
   border-radius: 50%;
-  box-shadow: 0 0 0 22px rgba(232, 199, 122, .012);
+  box-shadow: 0 0 0 22px rgba(226, 191, 119, .012);
   pointer-events: none;
 }
 
@@ -73,16 +73,16 @@
 }
 
 .reference-dua-card__arabic {
-  border-color: rgba(232, 199, 122, .12) !important;
+  border-color: rgba(226, 191, 119, .12) !important;
   background:
-    radial-gradient(circle at 90% 8%, rgba(232, 199, 122, .045), transparent 8rem),
+    radial-gradient(circle at 90% 8%, rgba(226, 191, 119, .045), transparent 8rem),
     rgba(0, 0, 0, .105) !important;
   text-shadow: 0 7px 20px rgba(0, 0, 0, .19);
 }
 
 .reference-dua-card--complete:has(.is-favorite) {
   border-color: rgba(247, 226, 178, .26) !important;
-  box-shadow: 0 16px 36px rgba(0, 0, 0, .19), inset 3px 0 0 rgba(232, 199, 122, .35) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .19), inset 3px 0 0 rgba(226, 191, 119, .35) !important;
 }
 
 /* ---------- Dua modal ---------- */
@@ -98,9 +98,9 @@
   right: -66px;
   width: 210px;
   height: 210px;
-  border: 1px solid rgba(232, 199, 122, .055);
+  border: 1px solid rgba(226, 191, 119, .055);
   border-radius: 50%;
-  box-shadow: 0 0 0 30px rgba(232, 199, 122, .014), 0 0 0 60px rgba(232, 199, 122, .008);
+  box-shadow: 0 0 0 30px rgba(226, 191, 119, .014), 0 0 0 60px rgba(226, 191, 119, .008);
   pointer-events: none;
 }
 
@@ -114,7 +114,7 @@
   border-color: rgba(247, 226, 178, .17) !important;
   border-radius: 18px !important;
   background:
-    radial-gradient(circle at 50% 0%, rgba(232, 199, 122, .055), transparent 9rem),
+    radial-gradient(circle at 50% 0%, rgba(226, 191, 119, .055), transparent 9rem),
     rgba(0, 0, 0, .13) !important;
   font-size: clamp(1.45rem, 6.2vw, 1.8rem) !important;
   text-shadow: 0 10px 24px rgba(0, 0, 0, .26);
@@ -126,8 +126,8 @@
   min-height: 228px !important;
   padding: 24px 136px 24px 21px !important;
   background:
-    radial-gradient(circle at 82% 45%, rgba(232, 199, 122, .14), transparent 10rem),
-    linear-gradient(145deg, #104534 0%, #06291f 60%, #02140f 100%) !important;
+    radial-gradient(circle at 82% 45%, rgba(226, 191, 119, .14), transparent 10rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
 .reference-names-hero::after {
@@ -141,9 +141,9 @@
   border: 1px solid rgba(244, 218, 160, .1);
   border-radius: 50%;
   box-shadow:
-    0 0 0 17px rgba(232, 199, 122, .026),
-    0 0 0 35px rgba(232, 199, 122, .014),
-    0 0 42px rgba(232, 199, 122, .06);
+    0 0 0 17px rgba(226, 191, 119, .026),
+    0 0 0 35px rgba(226, 191, 119, .014),
+    0 0 42px rgba(226, 191, 119, .06);
   transform: translateY(-50%);
   pointer-events: none;
 }
@@ -153,11 +153,11 @@
   top: 50% !important;
   right: 26px !important;
   max-width: none !important;
-  color: #f1d798 !important;
+  color: #f2d79a !important;
   font-size: 4.55rem !important;
   line-height: 1 !important;
   transform: translateY(-51%);
-  text-shadow: 0 17px 30px rgba(0, 0, 0, .42), 0 0 25px rgba(232, 199, 122, .08) !important;
+  text-shadow: 0 17px 30px rgba(0, 0, 0, .42), 0 0 25px rgba(226, 191, 119, .08) !important;
 }
 
 .reference-names-hero > h2,
@@ -170,7 +170,7 @@
 }
 
 .reference-names-hero p {
-  color: rgba(180, 202, 191, .78) !important;
+  color: rgba(145, 168, 158, .8) !important;
   text-wrap: pretty;
 }
 
@@ -180,14 +180,14 @@
 }
 
 .reference-name-list__arabic {
-  color: #efd495 !important;
+  color: #f2d79a !important;
   line-height: 1.35;
   text-align: right;
   text-shadow: 0 6px 18px rgba(0,0,0,.16);
 }
 
 .reference-name-list--complete > article:has(.reference-name-heart.is-active) {
-  background: linear-gradient(90deg, rgba(232, 199, 122, .026), transparent 54%);
+  background: linear-gradient(90deg, rgba(226, 191, 119, .026), transparent 54%);
 }
 
 /* ---------- Name modal ---------- */
@@ -204,9 +204,9 @@
   left: 50%;
   width: 148px;
   height: 148px;
-  border: 1px solid rgba(232, 199, 122, .07);
+  border: 1px solid rgba(226, 191, 119, .07);
   border-radius: 50%;
-  box-shadow: 0 0 0 24px rgba(232, 199, 122, .018), 0 0 0 48px rgba(232, 199, 122, .009);
+  box-shadow: 0 0 0 24px rgba(226, 191, 119, .018), 0 0 0 48px rgba(226, 191, 119, .009);
   transform: translateX(-50%);
   pointer-events: none;
 }
@@ -218,9 +218,9 @@
 
 .reference-name-modal__arabic {
   margin-top: 18px !important;
-  color: #f2d89a !important;
+  color: #f2d79a !important;
   font-size: clamp(3rem, 13vw, 3.65rem) !important;
-  text-shadow: 0 16px 29px rgba(0, 0, 0, .4), 0 0 24px rgba(232, 199, 122, .055) !important;
+  text-shadow: 0 16px 29px rgba(0, 0, 0, .4), 0 0 24px rgba(226, 191, 119, .055) !important;
 }
 
 /* ---------- Light theme ---------- */
@@ -241,7 +241,7 @@
 }
 
 [data-theme='light'] .reference-names-hero__allah {
-  color: #f1d798 !important;
+  color: #f2d79a !important;
 }
 
 [data-theme='light'] .reference-dua-card__arabic,
