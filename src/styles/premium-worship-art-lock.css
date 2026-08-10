@@ -15,15 +15,15 @@
 .reference-dhikr-copy{max-width:330px}
 .reference-dhikr-copy small{max-width:290px;line-height:1.5;text-wrap:pretty}
 
-.reference-qibla-stage{isolation:isolate;min-height:492px!important;background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg,#0d5743,#07372b 62%,#00120f)!important}
+.reference-qibla-stage{isolation:isolate;min-height:492px!important;background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important}
 .reference-qibla-stage__halo{top:18px!important;width:316px!important;height:316px!important;border:1px solid rgba(226,191,119,.04);background:radial-gradient(circle,rgba(226,191,119,.11),transparent 67%)!important;box-shadow:0 0 0 24px rgba(226,191,119,.012),0 0 0 48px rgba(226,191,119,.007)}
 .reference-qibla-stage__compass{width:286px!important;height:286px!important;overflow:visible;filter:none!important}
 .reference-qibla-stage__compass>img{object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 24px 24px rgba(0,0,0,.48)) saturate(1.02) contrast(1.04)!important}
 .reference-qibla-stage::after{z-index:2!important;width:82px!important;height:82px!important;opacity:.94!important;background:url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center/contain no-repeat!important;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5)) saturate(1.01) contrast(1.05)!important}
-.reference-qibla-stage__needle{z-index:4!important;color:#f2d79a!important;filter:drop-shadow(0 6px 9px rgba(0,0,0,.58))!important}
+.reference-qibla-stage__needle{z-index:4!important;color: #f2d79a !important;filter:drop-shadow(0 6px 9px rgba(0,0,0,.58))!important}
 .reference-qibla-stage__copy{z-index:4!important;margin-top:-3px!important}
 .reference-qibla-stage__copy h2{color:#fff8e9;font-size:1.78rem!important;text-shadow:0 9px 24px rgba(0,0,0,.28)}
-.reference-qibla-stage__copy p{max-width:300px;color:rgba(145,168,158,.81)!important;line-height:1.48}
+.reference-qibla-stage__copy p{max-width:300px;color: rgba(145, 168, 158, .81) !important;line-height:1.48}
 
 [data-theme='light'] .reference-next-prayer,[data-theme='light'] .reference-dhikr-counter,[data-theme='light'] .reference-qibla-stage{color:#fff8e9;border-color:rgba(181,142,68,.27)!important;box-shadow:0 22px 54px rgba(60,44,20,.13),inset 0 1px 0 rgba(255,255,255,.045)!important}
 [data-theme='light'] .reference-next-prayer{background:radial-gradient(circle at 88% 16%,rgba(238,204,128,.15),transparent 12rem),linear-gradient(150deg,#0d4b3a,#05291f 57%,#021510)!important}
