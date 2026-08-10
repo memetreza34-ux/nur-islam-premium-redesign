@@ -82,11 +82,16 @@ export function getHadithById(id: string | null | undefined) {
 
 function addValidSavedValues(saved: Set<string>, raw: string | null, validIds: Set<string>) {
   if (!raw) return;
-  const parsed = JSON.parse(raw) as unknown;
-  if (!Array.isArray(parsed)) return;
-  parsed.forEach((value) => {
-    if (typeof value === 'string' && validIds.has(value)) saved.add(value);
-  });
+  try {
+    const parsed = JSON.parse(raw) as unknown;
+    if (!Array.isArray(parsed)) return;
+    parsed.forEach((value) => {
+      if (typeof value === 'string' && validIds.has(value)) saved.add(value);
+    });
+  } catch {
+    // A damaged legacy key must not prevent valid favorites in another key
+    // from being recovered and mirrored back into a clean payload.
+  }
 }
 
 export function readSavedHadithIds() {
