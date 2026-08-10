@@ -20,7 +20,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import {
   getCategoryLessons,
@@ -40,11 +40,11 @@ const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
   akhlaq: HeartHandshake,
 };
 
-const completionParticles = Array.from({ length: 14 }, (_, index) => ({
+const completionParticles = Array.from({ length: 10 }, (_, index) => ({
   id: index,
-  angle: (index / 14) * 360,
-  distance: 68 + (index % 3) * 17,
-  delay: (index % 5) * .05,
+  angle: (index / 10) * 360,
+  distance: 54 + (index % 3) * 14,
+  delay: (index % 5) * .04,
 }));
 
 function readStringSet(key: string) {
@@ -89,6 +89,7 @@ export function LearningCourseScreen({
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [completionOpen, setCompletionOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const closeDialog = useCallback(() => { setCompletionOpen(false); }, []);
   const screenDialog = useDialog(completionOpen, closeDialog, 'Kurs abgeschlossen');
@@ -116,7 +117,7 @@ export function LearningCourseScreen({
     setSelectedLessonId(lesson.id);
     setCheckedPoints(readStringSet(`nur_learning_points_${lesson.id}`));
     setSelectedAnswer(null);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
   };
 
   const togglePoint = (index: number) => {
@@ -184,8 +185,11 @@ export function LearningCourseScreen({
     );
   }
 
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
-    <motion.main className="screen reference-learning-course-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-learning-course-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zu Lernen"><ChevronLeft size={20} /></button>
         <div><span className="overline">Islam lernen</span><h1>{category.title}</h1></div>
@@ -266,7 +270,7 @@ export function LearningCourseScreen({
         </div>
         <AnimatePresence>
           {selectedAnswer !== null ? (
-            <motion.div className={answerCorrect ? 'reference-learning-quiz__feedback is-correct' : 'reference-learning-quiz__feedback is-wrong'} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+            <motion.div className={answerCorrect ? 'reference-learning-quiz__feedback is-correct' : 'reference-learning-quiz__feedback is-wrong'} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={microTransition}>
               {answerCorrect ? <CircleCheck size={18} /> : <Lightbulb size={18} />}<span><strong>{answerCorrect ? 'Richtig' : 'Noch einmal prüfen'}</strong><small>{selectedLesson.question.explanation}</small></span>
             </motion.div>
           ) : null}
@@ -282,12 +286,12 @@ export function LearningCourseScreen({
 
       <AnimatePresence>
         {completionOpen ? (
-          <motion.div className="reference-learning-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCompletionOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-learning-completion-modal" initial={{ opacity: 0, y: 24, scale: .94 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-learning-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setCompletionOpen(false)}>
+            <motion.section {...screenDialog.props} className="reference-learning-completion-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-learning-completion-modal__close" onClick={() => setCompletionOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <div className="reference-learning-completion-burst" aria-hidden="true">
-                {completionParticles.map((particle) => <motion.i key={particle.id} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.2, delay: particle.delay }} />)}
-                <motion.span initial={{ scale: .6 }} animate={{ scale: [1, 1.08, 1] }}><CircleCheck size={43} /></motion.span>
+                {!reduceMotion ? completionParticles.map((particle) => <motion.i key={particle.id} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, .9, 0], scale: [0, .9, .45], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: .82, delay: particle.delay, ease: [0.22, 1, 0.36, 1] }} />) : null}
+                <motion.span initial={{ scale: reduceMotion ? 1 : .82 }} animate={{ scale: reduceMotion ? 1 : [1, 1.045, 1] }} transition={{ duration: reduceMotion ? 0 : .42 }}><CircleCheck size={43} /></motion.span>
               </div>
               <span className="hero-pill">Lektion abgeschlossen</span><h2>{selectedLesson.title}</h2><p>Du hast die Verständnisfrage richtig beantwortet. Der Fortschritt wurde lokal gespeichert.</p>
               <div className="reference-learning-completion-stats"><span><strong>{categoryCompleted}</strong><small>von {lessons.length} in {category.title}</small></span><span><strong>{categoryProgress}%</strong><small>Kategoriefortschritt</small></span></div>
@@ -297,7 +301,7 @@ export function LearningCourseScreen({
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
