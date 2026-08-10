@@ -6,6 +6,7 @@ on:
       - premium-design-finish
     paths:
       - 'scripts/apply-browser-navigation-patch.mjs'
+      - 'scripts/apply-browser-navigation-guard-fix.mjs'
       - '.github/workflows/apply-browser-navigation-patch.yml'
 
 permissions:
@@ -34,7 +35,9 @@ jobs:
           cache: npm
 
       - name: Apply exact guarded patch
-        run: node scripts/apply-browser-navigation-patch.mjs
+        run: |
+          node scripts/apply-browser-navigation-patch.mjs
+          node scripts/apply-browser-navigation-guard-fix.mjs
 
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
@@ -52,13 +55,13 @@ jobs:
         run: |
           git diff --check
           git status --short
-          git diff -- src/app/App.tsx scripts/check-navigation.mjs e2e/core-flows.spec.ts
+          git diff -- src/app/App.tsx scripts/check-navigation.mjs scripts/check-prayer-reminders.mjs e2e/core-flows.spec.ts
 
       - name: Commit verified patch and remove one-shot helpers
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git rm scripts/apply-browser-navigation-patch.mjs .github/workflows/apply-browser-navigation-patch.yml
-          git add src/app/App.tsx scripts/check-navigation.mjs e2e/core-flows.spec.ts
+          git rm scripts/apply-browser-navigation-patch.mjs scripts/apply-browser-navigation-guard-fix.mjs .github/workflows/apply-browser-navigation-patch.yml
+          git add src/app/App.tsx scripts/check-navigation.mjs scripts/check-prayer-reminders.mjs e2e/core-flows.spec.ts
           git commit -m "Integrate browser and system Back navigation"
           git push --no-verify origin HEAD:premium-design-finish
