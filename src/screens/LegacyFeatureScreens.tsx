@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BadgeDollarSign,
@@ -29,7 +29,7 @@ import {
   Star,
   TriangleAlert,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { versionAppPath } from '../app/appPaths';
 import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data/hadithData';
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
@@ -174,6 +174,20 @@ function FeatureHeader({ feature, onBack }: { feature: LegacyFeatureItem; onBack
   );
 }
 
+function LegacyMotionMain({ children, className = '' }: { children: ReactNode; className?: string }) {
+  const reduceMotion = useReducedMotion();
+  return (
+    <motion.main
+      className={`screen reference-legacy-screen${className ? ` ${className}` : ''}`}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}
+    >
+      {children}
+    </motion.main>
+  );
+}
+
 function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
@@ -210,7 +224,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
   };
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       {complete ? (
         <section className="reference-quiz-result">
@@ -244,7 +258,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
           <button className="gold-button" disabled={selected === null} onClick={next}>{index === quizQuestions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
         </section>
       )}
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -285,7 +299,7 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   };
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Nächste Möglichkeiten</span><h2>Freiwillige Fastentage</h2></div></div>
@@ -304,7 +318,7 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
         </button>
         {status ? <small className="reference-fasting-reminder-status">{status}</small> : null}
       </section>
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -322,7 +336,7 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
   };
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <section className="reference-hadith-library">
@@ -338,7 +352,7 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
       </section>
       {!filtered.length ? <div className="reference-empty-result"><Search size={24} /><strong>Kein Hadith gefunden</strong><small>Ändere den Suchbegriff.</small></div> : null}
       <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die deutsche Formulierung ist als sinngemäße Inhaltsangabe gekennzeichnet. Wortlaut, Übersetzung und Einordnung benötigen vor Veröffentlichung eine fachliche Endprüfung.</p></section>
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -358,7 +372,7 @@ function ZakatFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
   const money = (value: number) => value.toLocaleString('de-DE', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-zakat-calculator">
         <span className="overline">Planungsrechnung</span>
@@ -369,7 +383,7 @@ function ZakatFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
         <div className="reference-zakat-result"><span><small>Rechenbasis</small><strong>{money(net)} €</strong></span><span><small>2,5 % davon</small><strong>{money(estimate)} €</strong></span></div>
       </section>
       <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Diese Rechnung entscheidet nicht, ob Zakat fällig ist. Nisab, Besitzdauer, Vermögensart, Schulden und weitere Regeln müssen fachlich geprüft werden.</p></section>
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -400,7 +414,7 @@ function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
   };
 
   return (
-    <motion.main className="screen reference-legacy-screen reference-standby-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain className="reference-standby-screen">
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-standby-stage">
         <span className="overline">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
@@ -411,7 +425,7 @@ function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
         <button className="gold-button" onClick={() => void toggleFullscreen()}>{fullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}{fullscreen ? 'Vollbild beenden' : 'Vollbild starten'}</button>
       </section>
       {status ? <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>{status}</p></section> : null}
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -428,7 +442,7 @@ function JumuahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack
   };
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Lokal gespeichert</span><h2>Freitags-Checkliste</h2></div><span className="reference-legacy-count">{completed.length}/{jumuahChecklist.length}</span></div>
@@ -441,7 +455,7 @@ function JumuahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack
         </div>
       </section>
       <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die Checkliste ist eine persönliche Merkhilfe. Einzelheiten zur Freitagsvorbereitung sollten vor Veröffentlichung fachlich geprüft werden.</p></section>
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
@@ -449,7 +463,7 @@ function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureIte
   const entries = featureContent[feature.id as GenericFeatureId] ?? [];
 
   return (
-    <motion.main className="screen reference-legacy-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
@@ -460,7 +474,7 @@ function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureIte
         </div>
       </section>
       <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Dieser Bereich ist aktuell eine Übersicht ohne vorgetäuschte Detail-Navigation. Vertiefende religiöse Inhalte werden erst als anklickbare Lektionen freigeschaltet, wenn Inhalt und Quellen fachlich geprüft sind.</p></section>
-    </motion.main>
+    </LegacyMotionMain>
   );
 }
 
