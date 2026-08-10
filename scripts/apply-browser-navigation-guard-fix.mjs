@@ -28,4 +28,18 @@ releaseSource = replaceOnce(
 );
 await writeFile(releasePath, releaseSource);
 
-console.log('Prayer and calendar release guards updated for browser-aware root navigation.');
+const functionalPath = resolve(process.cwd(), 'scripts/check-functional-hardening.mjs');
+let functionalSource = await readFile(functionalPath, 'utf8');
+functionalSource = replaceOnce(
+  functionalSource,
+  `  'onOpenHadith={openSavedHadith}',\n  "const readerParent: Tab = activeTab === 'home' ? 'quran' : activeTab",`,
+  `  'onOpenHadith={openSavedHadith}',\n  "activeTab: 'quran'",\n  "activeTab: 'reader' as const",\n  'pushBrowserNavigation(quranSnapshot)',\n  'pushBrowserNavigation(readerSnapshot)',\n  "window.addEventListener('popstate'",\n  'window.history.back()',`,
+  'Functional browser navigation guard',
+);
+functionalSource = functionalSource.replace(
+  "Functional hardening verified: Home and Quran use real persisted progress only, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.",
+  "Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader preserves its Quran parent in browser/system history, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.",
+);
+await writeFile(functionalPath, functionalSource);
+
+console.log('Prayer, calendar release and functional guards updated for browser-aware navigation.');
