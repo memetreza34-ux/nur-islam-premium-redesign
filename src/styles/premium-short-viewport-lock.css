@@ -4,10 +4,6 @@
   bottom: auto;
 }
 
-.reference-prayer-screen .reference-next-prayer {
-  padding: 22px !important;
-}
-
 @media (max-height: 680px) {
   .reference-splash {
     min-height: calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom))) !important;
