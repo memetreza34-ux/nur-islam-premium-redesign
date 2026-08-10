@@ -105,6 +105,24 @@ try {
   await assertLightTheme();
   await shot('01-home');
 
+  const ayahCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Ayah im Fokus' }).first();
+  await ayahCard.waitFor({ state: 'visible', timeout: 10_000 });
+  await ayahCard.click();
+  await page.locator('.reference-ayah-hero').waitFor({ state: 'visible', timeout: 10_000 });
+  await settle();
+  await assertLightTheme();
+  await shot('01a-ayah-detail');
+  await returnHome();
+
+  const hadithCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Hadith des Tages' }).first();
+  await hadithCard.waitFor({ state: 'visible', timeout: 10_000 });
+  await hadithCard.click();
+  await page.locator('.reference-hadith-hero').waitFor({ state: 'visible', timeout: 10_000 });
+  await settle();
+  await assertLightTheme();
+  await shot('01b-hadith-detail');
+  await returnHome();
+
   for (const [label, name] of [
     ['Gebete', '02-prayer'],
     ['Kalender', '03-calendar'],
@@ -174,4 +192,4 @@ try {
   await browser.close();
 }
 
-console.log('Light-theme premium reference screenshots captured at 390x844 with focal-title contrast assertions.');
+console.log('Light-theme premium reference screenshots captured at 390x844 with daily-detail and focal-title contrast assertions.');
