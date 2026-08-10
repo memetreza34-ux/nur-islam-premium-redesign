@@ -1,5 +1,3 @@
-/* Presentation-only system states: loading, empty, offline, error and disabled. */
-
 .reference-empty-result,
 .reference-quran-loading,
 .reference-reader-loading,
@@ -86,9 +84,6 @@
   line-height: 1.5;
 }
 
-/* The collection shell adds a large bookmark via styles.css after the imported
-   layers. Use higher specificity, not another !important, so its real content
-   starts below that artwork instead of centering through it. */
 .reference-collections-screen.reference-collections-screen .reference-empty-result {
   display: grid;
   align-content: start;
@@ -109,7 +104,6 @@
   background: var(--empty-action-background, rgba(232,199,122,.055)) !important;
 }
 
-/* Live/cache/offline status pills feel like one system. */
 .reference-prayer-live-status {
   min-height: 50px;
   padding: 9px 12px !important;
@@ -131,7 +125,6 @@
   box-shadow: 0 0 0 4px rgba(232,199,122,.06), 0 0 13px rgba(232,199,122,.12);
 }
 
-/* Status and inline notices */
 .reference-account-status,
 .reference-fasting-reminder-status,
 .reference-prayer-location-privacy,
@@ -155,7 +148,6 @@
   background: rgba(160,70,48,.075);
 }
 
-/* Disabled state remains visible but clearly inactive. */
 button:disabled,
 .reference-install-prompt__action:disabled,
 .reference-account-cloud-grid > button:disabled,
@@ -168,13 +160,11 @@ button:disabled,
   transform: none !important;
 }
 
-/* Small loading spinner polish. */
 .is-spinning,
 .spin {
   transform-origin: center;
 }
 
-/* Light theme states */
 [data-theme='light'] .reference-empty-result,
 [data-theme='light'] .reference-quran-loading,
 [data-theme='light'] .reference-reader-loading,
