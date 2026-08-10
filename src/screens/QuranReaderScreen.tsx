@@ -128,7 +128,10 @@ export function QuranReaderScreen({
     if (targetAyah <= 1) return undefined;
 
     const timer = window.setTimeout(() => {
-      document.getElementById(`quran-ayah-${surahNumber}-${targetAyah}`)?.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
+      const target = document.getElementById(`quran-ayah-${surahNumber}-${targetAyah}`);
+      if (!target) return;
+      if (reduceMotion) target.scrollIntoView({ behavior: 'auto', block: 'center' });
+      else target.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }, reduceMotion ? 0 : 120);
     return () => window.clearTimeout(timer);
   }, [bundle, initialAyahNumber, reduceMotion, surahNumber]);
