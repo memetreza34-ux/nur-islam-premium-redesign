@@ -30,11 +30,10 @@ const BUDGET = {
   files: 98,
   overrideFiles: 33,
   importantRules: 2281,
-  // Raised for two additions, both new surface rather than another override
-  // layer: `.frame-guard` (the notice shown when a foreign site embeds the app)
-  // and the artwork sizing for the Home and More shortcut tiles plus the
-  // install-prompt scroll clearance.
-  totalBytes: 723_388,
+  // Covers `.frame-guard` (the notice shown when a foreign site embeds the app)
+  // and the install-prompt scroll clearance. The tile artwork sizing that
+  // briefly lived here is gone again with the WebP tile icons.
+  totalBytes: 722_584,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

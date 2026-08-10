@@ -67,12 +67,14 @@ requireFragments(app, 'Primary navigation', [
 // not part of the assertion: pinning it here broke the build on a wording
 // change while the icon mapping was never in question.
 for (const [label, icon] of [
-  ['Quran lesen', 'BookOpen'],
-  ['Beten lernen', 'HandHeart'],
-  ['99 Namen Allahs', 'Sparkles'],
-  ['Islam Quiz', 'BrainCircuit'],
-  ['Duas', 'BookHeart'],
-  ['Nur Assistent', 'MessageCircleQuestion'],
+  // The Home tiles moved off Lucide onto the app's own set: at 25px the generic
+  // glyphs read as placeholder next to the rendered artwork on the same screen.
+  ['Quran lesen', 'NurQuranIcon'],
+  ['Beten lernen', 'NurMihrabIcon'],
+  ['99 Namen Allahs', 'NurRosetteIcon'],
+  ['Islam Quiz', 'NurQuizIcon'],
+  ['Duas', 'NurDuaIcon'],
+  ['Nur Assistent', 'NurAssistantIcon'],
 ]) {
   const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
   if (!pairing.test(app)) {

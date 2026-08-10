@@ -2,23 +2,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
-  BookHeart,
-  BookOpen,
   Bookmark,
-  CalendarDays,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleHelp,
   Cloud,
-  Compass,
-  HandHeart,
   Info,
   Languages,
-  Library,
   LogIn,
   LogOut,
-  MapPin,
   MoonStar,
   NotebookPen,
   Palette,
@@ -28,7 +21,6 @@ import {
   Settings2,
   ShieldCheck,
   Smartphone,
-  Sparkles,
   SunMedium,
   X,
 } from 'lucide-react';
@@ -41,6 +33,19 @@ import { NotesScreen } from './NotesScreen';
 import { getCachedSession, signOut, subscribeAuth } from '../services/nurBackend';
 import type { NurSession } from '../services/nurBackend';
 import { OBLIGATORY_PRAYER_IDS } from '../services/prayerSchedule';
+import type { NurIcon } from '../shared/NurIcons';
+import {
+  NurBookmarkIcon,
+  NurCalendarIcon,
+  NurDuaIcon,
+  NurMihrabIcon,
+  NurMosqueIcon,
+  NurPrayerTimesIcon,
+  NurQiblaIcon,
+  NurQuranIcon,
+  NurRosetteIcon,
+  NurTasbihIcon,
+} from '../shared/NurIcons';
 import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
 import { getTheme, setTheme as applyTheme } from '../services/themeService';
 import type { NurTheme } from '../services/themeService';
@@ -64,24 +69,20 @@ type CoreShortcut = {
   destination: MoreDestination;
   title: string;
   description: string;
-  /** Premium artwork. The Lucide glyph stays as the fallback if it fails to load. */
-  art: string;
-  icon: LucideIcon;
+  icon: NurIcon;
 };
 
-const shortcutArt = (name: string) => `/premium-assets/high-res-objects/${name}`;
-
 const coreShortcuts: CoreShortcut[] = [
-  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', art: shortcutArt('sun-emblem-v2.webp'), icon: SunMedium },
-  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', art: shortcutArt('mihrab-arch-v2.webp'), icon: HandHeart },
-  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', art: shortcutArt('quran-closed-v2.webp'), icon: BookOpen },
-  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', art: shortcutArt('tasbih-v2.webp'), icon: Sparkles },
-  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', art: shortcutArt('qibla-compass-v2.webp'), icon: Compass },
-  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', art: shortcutArt('dua-hands-v2.webp'), icon: BookHeart },
-  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', art: shortcutArt('lantern-v2.webp'), icon: Library },
-  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', art: shortcutArt('mosque-gold-v2.webp'), icon: MapPin },
-  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', art: shortcutArt('calendar-chip-v2.webp'), icon: CalendarDays },
-  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', art: shortcutArt('bookmark-v2.webp'), icon: Bookmark },
+  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', icon: NurPrayerTimesIcon },
+  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', icon: NurMihrabIcon },
+  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', icon: NurQuranIcon },
+  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: NurTasbihIcon },
+  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: NurQiblaIcon },
+  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: NurDuaIcon },
+  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', icon: NurRosetteIcon },
+  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: NurMosqueIcon },
+  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: NurCalendarIcon },
+  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: NurBookmarkIcon },
 ];
 
 const journeyRows: ProfileRow[] = [
@@ -256,7 +257,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
             const Icon = shortcut.icon;
             return (
               <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-core-access-grid__icon"><PremiumImage src={shortcut.art} fallback={<Icon size={20} />} /></span>
+                <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
                 <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
                 <ChevronRight size={16} />
               </motion.button>

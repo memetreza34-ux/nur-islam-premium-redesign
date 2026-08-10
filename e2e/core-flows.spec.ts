@@ -15,7 +15,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('opens on the home screen with a prayer schedule', async ({ page }) => {
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  // Scoped to the Home screen rather than to any level-1 heading: the splash
+  // crossfade leaves its own <h1>Nur</h1> mounted for the length of the fade,
+  // so a bare heading query matched two elements and failed on timing alone.
+  await expect(page.locator('.premium-home').getByRole('heading', { level: 1 })).toBeVisible();
 
   // Six entries, whatever their source: live, cached or the offline fallback.
   // A user must never face an empty prayer card.

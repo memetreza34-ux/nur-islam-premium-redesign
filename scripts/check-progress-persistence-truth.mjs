@@ -40,7 +40,7 @@ requireTokens(app, 'Home Quran progress', [
   "'Quran beginnen'",
   "'Noch kein Lesestand'",
   "'Noch kein gespeicherter Lesestand'",
-  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: BookOpen",
+  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon",
 ]);
 forbidTokens(app, 'Home Quran progress', [
   "surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 'Al-Ikhlaas'",

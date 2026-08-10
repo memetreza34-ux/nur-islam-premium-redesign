@@ -36,18 +36,6 @@
   border-radius: 18px;
   color: var(--gold-bright);
   background: rgba(226, 191, 119, 0.075);
-  overflow: hidden;
-}
-
-/* Rendered artwork rather than a glyph, so it takes the tile at its own size
-   while the Lucide fallback keeps the size it was given. */
-.quick-card__icon .premium-image,
-.quick-card__icon .premium-image > img {
-  display: block;
-  width: 34px;
-  height: 34px;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, .38));
 }
 .quick-card__eyebrow {
   color: var(--muted-green);
