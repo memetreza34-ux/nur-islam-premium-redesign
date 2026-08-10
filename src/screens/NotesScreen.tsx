@@ -68,6 +68,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
   const [notes, setNotes] = useState<NoteItem[]>([]);
   const [localNotesPending, setLocalNotesPending] = useState<LocalNote[]>(readLocalNotes);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [editorOpen, setEditorOpen] = useState(false);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [busy, setBusy] = useState(true);
@@ -106,18 +107,23 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
     return `local-${localNoteIdRef.current}`;
   };
 
-  const beginNew = () => {
+  const resetEditor = (open: boolean) => {
     setSelectedId(null);
     setTitle('');
     setBody('');
     setStatus(null);
+    setEditorOpen(open);
   };
+
+  const beginNew = () => resetEditor(true);
+  const closeEditor = () => resetEditor(false);
 
   const openNote = (note: NoteItem) => {
     setSelectedId(note.id);
     setTitle(note.title);
     setBody(note.body);
     setStatus(null);
+    setEditorOpen(true);
   };
 
   const save = async () => {
@@ -203,7 +209,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         setLocalNotesPending(next);
         writeLocalNotes(next);
       }
-      beginNew();
+      closeEditor();
       setStatus('Notiz gelöscht.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
@@ -239,15 +245,24 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
             <em>{new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(note.updated_at))}</em>
           </button>
         ))}
-        {!busy && notes.length === 0 ? <div className="reference-empty-result"><NotebookPen size={25} /><strong>Noch keine Notizen geladen</strong><small>{status?.startsWith('Cloud-Notizen konnten') ? 'Prüfe deine Verbindung oder Sitzung und öffne den Bereich erneut.' : 'Erstelle eine persönliche Notiz. Religiöse Rechtsfragen sollten nicht nur anhand persönlicher Notizen entschieden werden.'}</small></div> : null}
+        {!busy && notes.length === 0 ? (
+          <div className="reference-empty-result">
+            <NotebookPen size={25} />
+            <strong>Noch keine Notizen</strong>
+            <small>{status?.startsWith('Cloud-Notizen konnten') ? 'Prüfe deine Verbindung oder Sitzung und öffne den Bereich erneut.' : 'Halte Gedanken, Lernpunkte oder persönliche Erinnerungen fest. Religiöse Entscheidungen sollten nicht allein auf privaten Notizen beruhen.'}</small>
+            {!status?.startsWith('Cloud-Notizen konnten') ? <button className="reference-inline-button" onClick={beginNew}><Plus size={16} /> Neue Notiz schreiben</button> : null}
+          </div>
+        ) : null}
       </section>
 
-      <section className="reference-note-editor">
-        <div className="reference-note-editor__heading"><span><NotebookPen size={18} /><strong>{selected ? 'Notiz bearbeiten' : 'Neue Notiz'}</strong></span>{selected ? <button onClick={() => void remove()} disabled={busy} aria-label="Notiz löschen"><Trash2 size={17} /></button> : <button onClick={beginNew} aria-label="Editor leeren"><X size={17} /></button>}</div>
-        <input value={title} onChange={(event) => setTitle(event.target.value)} maxLength={160} placeholder="Titel" aria-label="Titel der Notiz" />
-        <textarea value={body} onChange={(event) => setBody(event.target.value)} maxLength={20000} rows={8} placeholder="Deine Gedanken …" />
-        <button className="gold-button" onClick={() => void save()} disabled={busy}>{busy ? <LoaderCircle size={17} className="is-spinning" /> : <Save size={17} />} Speichern</button>
-      </section>
+      {editorOpen ? (
+        <section className="reference-note-editor">
+          <div className="reference-note-editor__heading"><span><NotebookPen size={18} /><strong>{selected ? 'Notiz bearbeiten' : 'Neue Notiz'}</strong></span>{selected ? <button onClick={() => void remove()} disabled={busy} aria-label="Notiz löschen"><Trash2 size={17} /></button> : <button onClick={closeEditor} aria-label="Editor schließen"><X size={17} /></button>}</div>
+          <input value={title} onChange={(event) => setTitle(event.target.value)} maxLength={160} placeholder="Titel" aria-label="Titel der Notiz" />
+          <textarea value={body} onChange={(event) => setBody(event.target.value)} maxLength={20000} rows={8} placeholder="Deine Gedanken …" />
+          <button className="gold-button" onClick={() => void save()} disabled={busy}>{busy ? <LoaderCircle size={17} className="is-spinning" /> : <Save size={17} />} Speichern</button>
+        </section>
+      ) : null}
 
       <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="status">{status}</motion.div> : null}</AnimatePresence>
     </motion.main>
