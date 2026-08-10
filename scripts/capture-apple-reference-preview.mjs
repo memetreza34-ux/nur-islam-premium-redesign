@@ -41,6 +41,19 @@ async function settle(page, delay = 500) {
   await page.waitForTimeout(delay);
 }
 
+async function waitForHomePaint(page) {
+  await page.locator('.premium-home--v2').waitFor({ state: 'visible', timeout: 15_000 });
+  await page.waitForFunction(() => {
+    const entry = document.querySelector('.app-entry');
+    const home = document.querySelector('.premium-home--v2');
+    if (!entry || !home) return false;
+    return Number.parseFloat(getComputedStyle(entry).opacity) > .98
+      && Number.parseFloat(getComputedStyle(home).opacity) > .98;
+  }, null, { timeout: 10_000 });
+  await page.evaluate(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
+  await page.waitForTimeout(120);
+}
+
 async function shot(page, name) {
   await page.screenshot({
     path: resolve(outputDir, `${name}-iphone14pro-webkit.png`),
@@ -63,8 +76,8 @@ async function openHome(page) {
     const back = page.locator('.reference-screen-header .icon-button').first();
     if (await back.isVisible().catch(() => false)) await back.click();
   }
-  await page.locator('.premium-home--v2').waitFor({ state: 'visible', timeout: 15_000 });
-  await settle(page);
+  await waitForHomePaint(page);
+  await settle(page, 180);
 }
 
 try {
@@ -73,7 +86,8 @@ try {
   attachDiagnostics(darkPage, 'apple-dark');
   await darkPage.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
   await darkPage.locator('.bottom-nav').waitFor({ state: 'visible', timeout: 15_000 });
-  await settle(darkPage);
+  await settle(darkPage, 180);
+  await waitForHomePaint(darkPage);
   await shot(darkPage, 'apple-01-home');
 
   const ayahCard = darkPage.locator('button.reference-daily-card-button').filter({ hasText: 'Ayah im Fokus' }).first();
@@ -87,12 +101,30 @@ try {
   const assistantButton = darkPage.locator('button').filter({ hasText: 'Nur Assistent' }).first();
   await assistantButton.waitFor({ state: 'visible', timeout: 10_000 });
   await assistantButton.click();
-  await darkPage.locator('.reference-assistant-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const assistantScreen = darkPage.locator('.reference-assistant-screen');
+  await assistantScreen.waitFor({ state: 'visible', timeout: 10_000 });
+  await darkPage.waitForTimeout(180);
+  const routeScrollY = await darkPage.evaluate(() => window.scrollY);
+  if (routeScrollY > 8) throw new Error(`iPhone WebKit kept ${routeScrollY}px of scroll after opening Assistant.`);
+
   const assistantInput = darkPage.locator('.reference-assistant-input input').first();
+  await assistantInput.scrollIntoViewIfNeeded();
   await assistantInput.focus();
   await darkPage.waitForTimeout(350);
-  const inputFontSize = await assistantInput.evaluate((node) => Number.parseFloat(getComputedStyle(node).fontSize));
-  if (inputFontSize < 16) throw new Error(`iOS input font size regressed below 16px: ${inputFontSize}px.`);
+  const inputState = await assistantInput.evaluate((node) => {
+    const rect = node.getBoundingClientRect();
+    return {
+      fontSize: Number.parseFloat(getComputedStyle(node).fontSize),
+      top: rect.top,
+      bottom: rect.bottom,
+      viewportHeight: window.visualViewport?.height ?? window.innerHeight,
+      scrollY: window.scrollY,
+    };
+  });
+  if (inputState.fontSize < 16) throw new Error(`iOS input font size regressed below 16px: ${inputState.fontSize}px.`);
+  if (inputState.top < 0 || inputState.bottom > inputState.viewportHeight + 1) {
+    throw new Error(`Focused Assistant input left the iPhone viewport: ${JSON.stringify(inputState)}.`);
+  }
   const bottomNav = darkPage.locator('.bottom-nav').first();
   const navVisibility = await bottomNav.evaluate((node) => ({ opacity: getComputedStyle(node).opacity, visibility: getComputedStyle(node).visibility }));
   if (navVisibility.visibility !== 'hidden' && Number.parseFloat(navVisibility.opacity) > .01) {
@@ -105,6 +137,7 @@ try {
   const installPage = await installContext.newPage();
   attachDiagnostics(installPage, 'apple-install');
   await installPage.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await waitForHomePaint(installPage);
   const installPrompt = installPage.locator('.reference-install-prompt');
   await installPrompt.waitFor({ state: 'visible', timeout: 8_000 });
   await shot(installPage, 'apple-04-install-prompt');
@@ -117,7 +150,7 @@ try {
   const standalonePage = await standaloneContext.newPage();
   attachDiagnostics(standalonePage, 'apple-standalone');
   await standalonePage.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
-  await standalonePage.locator('.premium-home--v2').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForHomePaint(standalonePage);
   await settle(standalonePage, 1800);
   if (await standalonePage.locator('.reference-install-prompt').isVisible().catch(() => false)) {
     throw new Error('Install prompt must stay hidden in iOS standalone mode.');
@@ -131,8 +164,8 @@ try {
   const lightPage = await lightContext.newPage();
   attachDiagnostics(lightPage, 'apple-light');
   await lightPage.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
-  await lightPage.locator('.premium-home--v2').waitFor({ state: 'visible', timeout: 15_000 });
-  await settle(lightPage);
+  await waitForHomePaint(lightPage);
+  await settle(lightPage, 180);
   const resolvedTheme = await lightPage.locator('html').getAttribute('data-theme');
   if (resolvedTheme !== 'light') throw new Error(`iPhone WebKit light theme resolved as ${resolvedTheme ?? 'unset'}.`);
   await shot(lightPage, 'apple-07-light-home');
@@ -141,4 +174,4 @@ try {
   await browser.close();
 }
 
-console.log('Apple WebKit QA captured: iPhone Home, Ayah, focused Assistant, install flow, standalone mode and Light Theme.');
+console.log('Apple WebKit QA captured: painted iPhone Home, Ayah, focused Assistant, install flow, standalone mode and Light Theme with route-scroll assertions.');
