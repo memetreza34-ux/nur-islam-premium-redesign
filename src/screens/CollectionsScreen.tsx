@@ -280,7 +280,18 @@ export function CollectionsScreen({
         </section>
       ) : null}
 
-      {emptyForFilter ? <div className="reference-empty-result"><Bookmark size={25} /><strong>Noch nichts gespeichert</strong><small>Favorisiere Inhalte in Quran, Duas, Namen, Tagesinhalten oder Kalender.</small></div> : null}
+      {emptyForFilter ? (
+        <div className="reference-empty-result">
+          <Bookmark size={25} />
+          <strong>{filter === 'Alle' ? 'Deine Sammlung wartet.' : `Noch keine ${filter}-Favoriten`}</strong>
+          <small>{filter === 'Alle' ? 'Speichere Ayahs, Duas, Allahs Namen, Hadithe oder besondere Tage. Alles erscheint hier automatisch.' : 'Markiere Inhalte im jeweiligen Bereich mit Herz oder Lesezeichen. Sie erscheinen anschließend genau hier.'}</small>
+          {(filter === 'Alle' || filter === 'Quran') ? (
+            <button className="reference-inline-button" onClick={onOpenQuran}>
+              <BookOpen size={16} /> Im Quran entdecken
+            </button>
+          ) : null}
+        </div>
+      ) : null}
     </motion.main>
   );
 }
