@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { ChevronLeft, FileText, ScrollText, ShieldCheck } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import {
   hasUnfilledOperatorDetails,
   imprintSections,
@@ -19,10 +19,11 @@ const TABS: Array<{ id: LegalTab; label: string; sections: LegalSection[] }> = [
 
 export function LegalScreen({ onBack }: { onBack: () => void }) {
   const [tab, setTab] = useState<LegalTab>('privacy');
+  const reduceMotion = useReducedMotion();
   const active = TABS.find((entry) => entry.id === tab) ?? TABS[0];
 
   return (
-    <motion.main className="screen reference-legal-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-legal-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Rechtliches</span><h1>{active.label}</h1></div>
