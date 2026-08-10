@@ -1,0 +1,104 @@
+import { useMemo, useState } from 'react';
+import {
+  Bookmark,
+  BookmarkCheck,
+  ChevronLeft,
+  CircleCheck,
+  Share2,
+  ShieldCheck,
+  Sparkles,
+} from 'lucide-react';
+import { AnimatePresence, motion } from 'motion/react';
+import {
+  getDailyHadith,
+  getHadithById,
+  readSavedHadithIds,
+  writeSavedHadithIds,
+} from '../data/hadithData';
+
+async function shareOrCopy(title: string, text: string) {
+  if (navigator.share) {
+    await navigator.share({ title, text });
+    return 'shared' as const;
+  }
+  if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
+  await navigator.clipboard.writeText(text);
+  return 'copied' as const;
+}
+
+export function DailyHadithScreen({
+  onBack,
+  hadithId,
+}: {
+  onBack: () => void;
+  hadithId?: string | null;
+}) {
+  const entry = useMemo(() => getHadithById(hadithId) ?? getDailyHadith(), [hadithId]);
+  const [savedIds, setSavedIds] = useState(readSavedHadithIds);
+  const [toast, setToast] = useState<string | null>(null);
+  const saved = savedIds.has(entry.id);
+  const isDaily = !hadithId;
+
+  const flash = (message: string) => {
+    setToast(message);
+    window.setTimeout(() => setToast(null), 2100);
+  };
+
+  const toggleSaved = () => {
+    const next = new Set(savedIds);
+    if (next.has(entry.id)) next.delete(entry.id);
+    else next.add(entry.id);
+    setSavedIds(next);
+    writeSavedHadithIds(next);
+    flash(next.has(entry.id) ? 'Hadith gespeichert' : 'Aus Sammlung entfernt');
+  };
+
+  const share = async () => {
+    try {
+      const result = await shareOrCopy(
+        `Nur Islam · ${entry.title}`,
+        `${entry.summary}\n\nQuelle: ${entry.source}`,
+      );
+      flash(result === 'shared' ? 'Hadith geteilt' : 'Hadith kopiert');
+    } catch (error) {
+      if ((error as DOMException)?.name !== 'AbortError') flash('Teilen war nicht möglich');
+    }
+  };
+
+  return (
+    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+      <header className="reference-screen-header">
+        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+        <div><span className="overline">{isDaily ? 'Tägliche Auswahl' : 'Deine Sammlung'}</span><h1>{isDaily ? 'Hadith des Tages' : 'Gespeicherter Hadith'}</h1></div>
+        <span className="reference-reading-header-spacer" aria-hidden="true" />
+      </header>
+
+      <section className="reference-hadith-hero">
+        <span className="reference-hadith-hero__mark">ﷺ</span>
+        <span className="hero-pill">{entry.title}</span>
+        <blockquote>{entry.summary}</blockquote>
+        <footer>{entry.source}</footer>
+      </section>
+
+      <section className="reference-source-card reference-source-card--strong">
+        <ShieldCheck size={19} />
+        <span>
+          <strong>{entry.source}</strong>
+          <small>Nur Islam zeigt hier bewusst eine sinngemäße Inhaltsangabe. Wortlaut, Übersetzung und fachliche Einordnung bleiben vor Veröffentlichung Teil der religiösen Endprüfung.</small>
+        </span>
+      </section>
+
+      <section className="reference-reflection-card">
+        <span className="reference-reflection-card__icon"><Sparkles size={20} /></span>
+        <span><small>Quellenmodus</small><h2>{entry.title}</h2><p>Die Tagesauswahl wechselt automatisch. Für den vollständigen Wortlaut und den Kontext ist die angegebene Primärquelle maßgeblich.</p></span>
+      </section>
+
+      <div className="reference-detail-actions">
+        <button className={saved ? 'is-saved' : ''} onClick={toggleSaved}>{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}{saved ? 'Gespeichert' : 'Speichern'}</button>
+        <button onClick={() => void share()}><Share2 size={18} /> Teilen</button>
+      </div>
+
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+    </motion.main>
+  );
+}
