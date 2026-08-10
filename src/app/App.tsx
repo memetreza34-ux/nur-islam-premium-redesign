@@ -20,7 +20,7 @@ import {
   Sunrise,
   SunMedium,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
 import { AssistantScreen } from '../screens/AssistantScreen';
 import { CalendarScreen } from '../screens/CalendarScreen';
@@ -249,6 +249,7 @@ function PremiumHome({
   const [now, setNow] = useState(() => new Date());
   const [quranProgress, setQuranProgress] = useState(readHomeQuranProgress);
   const [dhikrTotal, setDhikrTotal] = useState(readDhikrTotalToday);
+  const reduceMotion = useReducedMotion();
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
   const greeting = getHomeGreeting(now);
@@ -256,6 +257,8 @@ function PremiumHome({
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
     : 0;
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .18, delay: reduceMotion ? 0 : Math.min(index * .025, .1), ease: [0.22, 1, 0.36, 1] as const });
 
   useEffect(() => {
     const syncLocalProgress = () => {
@@ -307,10 +310,10 @@ function PremiumHome({
   return (
     <motion.main
       className="screen premium-home premium-home--v2"
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -8 }}
-      transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}
+      exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
+      transition={screenTransition}
     >
       <header className="brand-bar">
         <div className="brand-lockup" aria-label="Nur Islam">
@@ -396,10 +399,10 @@ function PremiumHome({
               key={label}
               className={`quick-card quick-card--${accent}`}
               onClick={() => target === 'reader' ? openLastRead() : target ? onNavigate(target) : undefined}
-              whileTap={{ scale: 0.97 }}
-              initial={{ opacity: 0, y: 12 }}
+              whileTap={{ scale: reduceMotion ? 1 : .985 }}
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.045 }}
+              transition={itemTransition(index)}
             >
               <span className="quick-card__icon">{art ? <PremiumImage src={art} fallback={<Icon size={25} />} /> : <Icon size={25} />}</span><span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><ChevronRight className="quick-card__arrow" size={18} />
             </motion.button>
@@ -457,8 +460,8 @@ function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: 
   return (
     <nav className="bottom-nav" aria-label="Hauptnavigation">
       {items.map(({ id, label, icon: Icon }) => (
-        <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
-          <span><Icon size={20} /></span><small>{label}</small>
+        <button key={id} className={`${active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'}${id === 'learn' ? ' bottom-nav__item--learn' : ''}`} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
+          <span><Icon size={20} /></span><small>{id === 'learn' ? <><span>Islam</span>{' '}<span>verstehen</span></> : label}</small>
         </button>
       ))}
     </nav>
@@ -475,6 +478,7 @@ export default function App() {
   const [selectedNameId, setSelectedNameId] = useState<string | null>(null);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<string | null>(null);
   const [selectedHadithId, setSelectedHadithId] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const currentNavigationSnapshot: NavigationSnapshot = {
     activeTab,
     navigationHistory,
@@ -499,8 +503,8 @@ export default function App() {
           : 'home';
 
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, onboardingComplete, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate, selectedHadithId]);
+    window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+  }, [activeTab, onboardingComplete, reduceMotion, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate, selectedHadithId]);
 
   const buildNavigationSnapshot = (overrides: Partial<NavigationSnapshot> = {}): NavigationSnapshot => ({
     ...latestNavigationSnapshotRef.current,
@@ -798,7 +802,7 @@ export default function App() {
       <div className="background-orbit background-orbit--two" />
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
         <AnimatePresence mode="wait">
-          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
+          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .12, ease: [0.22, 1, 0.36, 1] }}>
             {screen}
           </motion.div>
         </AnimatePresence>
