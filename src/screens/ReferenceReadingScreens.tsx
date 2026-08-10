@@ -18,7 +18,7 @@ import {
   Sparkles,
   Volume2,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage } from '../shared/PremiumVisuals';
 
 type ToastState = string | null;
@@ -80,12 +80,14 @@ function ScreenHeader({ title, eyebrow, onBack }: { title: string; eyebrow: stri
 }
 
 function Toast({ message }: { message: string | null }) {
-  return <AnimatePresence>{message ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {message}</motion.div> : null}</AnimatePresence>;
+  const reduceMotion = useReducedMotion();
+  return <AnimatePresence>{message ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={{ duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] }}><CircleCheck size={18} /> {message}</motion.div> : null}</AnimatePresence>;
 }
 
 export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
   const [saved, setSaved] = useState(() => readStoredNumber('nur_daily_ayah_saved', 0) === 1);
   const { toast, flash } = useToast();
+  const reduceMotion = useReducedMotion();
   const shareText = `${FOCUSED_AYAH_ARABIC}\n\n${FOCUSED_AYAH_MEANING}\n\n${FOCUSED_AYAH_SOURCE}`;
 
   useEffect(() => {
@@ -113,7 +115,7 @@ export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
       <ScreenHeader title="Ayah im Fokus" eyebrow="Quran entdecken" onBack={onBack} />
 
       <section className="reference-ayah-hero">
@@ -160,6 +162,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
   const [mode, setMode] = useState<GuideMode>(initialMode);
   const [activeStep, setActiveStep] = useState(() => Math.max(0, Math.min(5, readStoredNumber(`nur_guide_${initialMode}_step`, 0))));
   const { toast, flash } = useToast();
+  const reduceMotion = useReducedMotion();
   const steps = mode === 'wudu' ? wuduSteps : salahSteps;
 
   useEffect(() => {
@@ -181,7 +184,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
     : '/premium-assets/high-res-objects/qibla-compass-v2.webp';
 
   return (
-    <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
       <ScreenHeader title={mode === 'wudu' ? 'Wudu lernen' : 'Salah lernen'} eyebrow="Schritt für Schritt" onBack={onBack} />
 
       <div className="reference-guide-tabs"><button className={mode === 'wudu' ? 'is-active' : ''} onClick={() => changeMode('wudu')}><Droplets size={18} /> Wudu</button><button className={mode === 'salah' ? 'is-active' : ''} onClick={() => changeMode('salah')}><Sparkles size={18} /> Salah</button></div>
