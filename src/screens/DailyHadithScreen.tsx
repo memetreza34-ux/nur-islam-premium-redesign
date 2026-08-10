@@ -8,7 +8,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   getDailyHadith,
   getHadithById,
@@ -36,8 +36,11 @@ export function DailyHadithScreen({
   const entry = useMemo(() => getHadithById(hadithId) ?? getDailyHadith(), [hadithId]);
   const [savedIds, setSavedIds] = useState(readSavedHadithIds);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const saved = savedIds.has(entry.id);
   const isDaily = !hadithId;
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   const flash = (message: string) => {
     setToast(message);
@@ -66,7 +69,7 @@ export function DailyHadithScreen({
   };
 
   return (
-    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">{isDaily ? 'Tägliche Auswahl' : 'Deine Sammlung'}</span><h1>{isDaily ? 'Hadith des Tages' : 'Gespeicherter Hadith'}</h1></div>
@@ -98,7 +101,7 @@ export function DailyHadithScreen({
         <button onClick={() => void share()}><Share2 size={18} /> Teilen</button>
       </div>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
