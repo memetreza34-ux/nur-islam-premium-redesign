@@ -46,11 +46,13 @@ for (const fragment of [
 }
 
 const requiredCollectionHandlers = [
-  'onOpenQuranAyah',
+  'onOpenReader',
   'onOpenDua',
   'onOpenName',
   'onOpenHadith',
   'onOpenCalendarDate',
+  'onOpenReader(group.surahNumber, ayahNumber)',
+  'onOpenReader(surahNumber, 1)',
   '.sort((a, b) => a - b)',
   'readSavedHadithIds',
   'getHadithById(id)',
