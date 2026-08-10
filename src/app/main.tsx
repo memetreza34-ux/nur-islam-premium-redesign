@@ -164,7 +164,7 @@ function BootRoot() {
   }, []);
 
   return (
-    <AnimatePresence mode="wait" initial={false}>
+    <AnimatePresence mode="sync" initial={false}>
       {ready ? (
         <motion.div key="app" className="app-entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28 }}>
           <AppErrorBoundary>
