@@ -11,10 +11,10 @@
   width: fit-content;
   color: #f0cf89 !important;
   font-family: Inter, system-ui, sans-serif !important;
-  font-size: .58rem !important;
+  font-size: .66rem !important;
   font-weight: 800 !important;
   line-height: 1.2 !important;
-  letter-spacing: .13em !important;
+  letter-spacing: .12em !important;
   text-transform: uppercase !important;
   text-shadow: 0 4px 14px rgba(0, 0, 0, .28);
 }
@@ -34,8 +34,8 @@
 .premium-home--v2 .welcome-hero__copy p {
   display: block !important;
   margin: 1px 0 0 !important;
-  color: rgba(234, 239, 231, .72) !important;
-  font-size: .59rem !important;
+  color: rgba(234, 239, 231, .78) !important;
+  font-size: .76rem !important;
   font-weight: 500;
   line-height: 1.58 !important;
   text-wrap: pretty;
@@ -224,7 +224,7 @@ button:disabled:not(.gold-button),
 }
 
 [data-theme='light'] .premium-home--v2 .welcome-hero__copy p {
-  color: rgba(234, 239, 231, .76) !important;
+  color: rgba(234, 239, 231, .78) !important;
 }
 
 [data-theme='light'] .premium-home--v2 .welcome-hero__copy .overline {
@@ -255,13 +255,13 @@ button:disabled:not(.gold-button),
   }
 
   .premium-home--v2 .welcome-hero__copy p {
-    font-size: .56rem !important;
+    font-size: .72rem !important;
   }
 }
 
 @media (max-width: 350px) {
   .premium-home--v2 .welcome-hero__copy .overline {
-    font-size: .53rem !important;
+    font-size: .61rem !important;
   }
 
   .premium-home--v2 .welcome-hero__copy h1 {
@@ -275,4 +275,5 @@ button:disabled:not(.gold-button),
 
   .reference-dhikr-copy > p[dir='rtl'] {
     font-size: 1.55rem !important;
-  }}
+  }
+}
