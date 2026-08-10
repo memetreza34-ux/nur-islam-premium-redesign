@@ -4,7 +4,12 @@ import { resolve } from 'node:path';
 const source = await readFile(resolve(process.cwd(), 'src/screens/QiblaScreen.tsx'), 'utf8');
 
 const requiredFragments = [
-  'requestPermission',
+  'DeviceOrientationEventConstructorWithPermission',
+  "typeof OrientationEvent.requestPermission === 'function'",
+  'await OrientationEvent.requestPermission()',
+  "permission !== 'granted'",
+  'webkitCompassHeading',
+  'webkitCompassAccuracy',
   "addEventListener('deviceorientationabsolute'",
   "addEventListener('deviceorientation'",
   "removeEventListener('deviceorientationabsolute'",
@@ -54,4 +59,4 @@ for (const fragment of privacyFragments) {
   if (!source.includes(fragment)) throw new Error(`Qibla privacy/location disclosure is missing: ${fragment}`);
 }
 
-console.log('Qibla verified: saved location is reused, live orientation is cleaned up on stop, timeout and unmount, late sensor events cannot keep stale listeners alive, settings reach real controls, and privacy wording remains explicit.');
+console.log('Qibla verified: saved location is reused, iOS/Safari motion permission and WebKit compass headings are handled from the user-started control, live orientation is cleaned up on stop, timeout and unmount, late sensor events cannot keep stale listeners alive, settings reach real controls, and privacy wording remains explicit.');
