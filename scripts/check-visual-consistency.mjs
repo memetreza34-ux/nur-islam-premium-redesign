@@ -213,9 +213,14 @@ const moreScreenUsage = app.match(/<MoreScreen[\s\S]*?\/>/);
 if (!moreScreenUsage) {
   throw new Error('The More hub screen is not rendered.');
 }
-if (!moreScreenUsage[0].includes('onBack={goHome}')
+if (!moreScreenUsage[0].includes('onBack={goBack}')
   || !/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
-  throw new Error('More hub shortcuts are not connected to the central app navigation.');
+  throw new Error('More hub shortcuts are not connected to history-aware central app navigation.');
+}
+if (!app.includes('const [navigationHistory, setNavigationHistory] = useState<Tab[]>([])')
+  || !app.includes("const goBack = (fallback: Tab = 'home')")
+  || !app.includes('onChange={navigatePrimary}')) {
+  throw new Error('History-aware screen navigation contract is incomplete.');
 }
 
 const sourceFiles = await collectFiles(resolve(root, 'src'), new Set(['.tsx']));
@@ -285,5 +290,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last 18/28/42 geometry + 1.75 Lucide lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last 18/28/42 geometry + 1.75 Lucide lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
