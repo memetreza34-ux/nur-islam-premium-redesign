@@ -10,6 +10,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { DUA_BY_ID } from '../data/duaData';
+import { getHadithById, readSavedHadithIds } from '../data/hadithData';
 import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 
@@ -36,10 +37,6 @@ function readUnknownArray(key: string, fallback: unknown[] = []) {
   } catch {
     return fallback;
   }
-}
-
-function readStringSet(key: string, fallback: string[] = []) {
-  return new Set(readUnknownArray(key, fallback).filter((value): value is string => typeof value === 'string'));
 }
 
 function readNumberSet(key: string, fallback: number[] = [], max = Number.POSITIVE_INFINITY) {
@@ -125,7 +122,7 @@ type CollectionsScreenProps = {
   onOpenDua: (id: string) => void;
   onOpenName: (id: string) => void;
   onOpenAyah: () => void;
-  onOpenHadith: () => void;
+  onOpenHadith: (id: string) => void;
   onOpenCalendarDate: (date: string) => void;
 };
 
@@ -146,7 +143,7 @@ export function CollectionsScreen({
   const nameFavorites = useMemo(readNameFavoriteSet, []);
   const calendarFavorites = useMemo(() => readDateSet('nur_calendar_favorites'), []);
   const ayahSaved = useMemo(() => readBoolean('nur_daily_ayah_saved'), []);
-  const hadithSaved = useMemo(() => readBoolean('nur_daily_hadith_saved'), []);
+  const hadithFavorites = useMemo(readSavedHadithIds, []);
 
   const showQuran = filter === 'Alle' || filter === 'Quran';
   const showDuas = filter === 'Alle' || filter === 'Duas';
@@ -154,13 +151,13 @@ export function CollectionsScreen({
   const showDaily = filter === 'Alle' || filter === 'Tagesinhalte';
   const showDates = filter === 'Alle' || filter === 'Termine';
   const hasQuran = quranBookmarkGroups.length > 0 || quranSurahFavorites.size > 0;
-  const hasAny = hasQuran || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithSaved || calendarFavorites.size > 0;
+  const hasAny = hasQuran || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithFavorites.size > 0 || calendarFavorites.size > 0;
 
   const emptyForFilter = !hasAny
     || (filter === 'Quran' && !hasQuran)
     || (filter === 'Duas' && duaFavorites.size === 0)
     || (filter === 'Namen' && nameFavorites.size === 0)
-    || (filter === 'Tagesinhalte' && !ayahSaved && !hadithSaved)
+    || (filter === 'Tagesinhalte' && !ayahSaved && hadithFavorites.size === 0)
     || (filter === 'Termine' && calendarFavorites.size === 0);
 
   return (
@@ -250,12 +247,20 @@ export function CollectionsScreen({
         </section>
       ) : null}
 
-      {showDaily && (ayahSaved || hadithSaved) ? (
+      {showDaily && (ayahSaved || hadithFavorites.size > 0) ? (
         <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Tagesinhalte</span><h2>Ayah & Hadith</h2></div></div>
+          <div className="section-heading"><div><span className="overline">Tagesinhalte</span><h2>Ayah & Hadithe</h2></div></div>
           <div className="reference-collection-rows">
-            {ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Ayah des Tages</small></span><ChevronRight size={17} /></button> : null}
-            {hadithSaved ? <button onClick={onOpenHadith}><span><BookOpen size={18} /></span><span><strong>Taten nach den Absichten</strong><small>Sahih al-Bukhari 1</small></span><ChevronRight size={17} /></button> : null}
+            {ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Gespeicherte Ayah</small></span><ChevronRight size={17} /></button> : null}
+            {[...hadithFavorites].map((id) => {
+              const hadith = getHadithById(id);
+              if (!hadith) return null;
+              return (
+                <button key={`hadith-${id}`} onClick={() => onOpenHadith(id)} aria-label={`${hadith.title} direkt öffnen`}>
+                  <span><BookOpen size={18} /></span><span><strong>{hadith.title}</strong><small>{hadith.source}</small></span><ChevronRight size={17} />
+                </button>
+              );
+            })}
           </div>
         </section>
       ) : null}
