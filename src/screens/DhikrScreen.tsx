@@ -13,7 +13,7 @@ import {
   SunMedium,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { DHIKR_ROUTINES, DHIKR_ROUTINE_BY_ID } from '../data/dhikrData';
 import { PremiumImage, RosetteObject } from '../shared/PremiumVisuals';
@@ -70,6 +70,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const [activeItemIndex, setActiveItemIndex] = useState(0);
   const [statsOpen, setStatsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const closeDialog = useCallback(() => { setStatsOpen(false); }, []);
   const screenDialog = useDialog(statsOpen, closeDialog, 'Dhikr-Statistik');
 
@@ -169,7 +170,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       const nextIndex = activeItemIndex + 1;
       if (nextIndex < routine.items.length) {
         flash(`${item.latin} abgeschlossen`);
-        window.setTimeout(() => setActiveItemIndex(nextIndex), 260);
+        window.setTimeout(() => setActiveItemIndex(nextIndex), reduceMotion ? 0 : 220);
       } else {
         flash('Routine abgeschlossen');
       }
@@ -191,8 +192,11 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
     flash('Routine zurückgesetzt');
   };
 
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const overlayTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
-    <motion.main className="screen reference-dhikr-screen reference-dhikr-screen--complete" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.main className="screen reference-dhikr-screen reference-dhikr-screen--complete" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Tägliche Erinnerung</span><h1>Dhikr</h1></div>
@@ -253,8 +257,8 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <AnimatePresence>
         {statsOpen ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setStatsOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setStatsOpen(false)}>
+            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setStatsOpen(false)} aria-label="Statistik schließen"><X size={18} /></button>
               <span className="reference-dhikr-stats-modal__icon"><BarChart3 size={26} /></span>
               <span className="overline">Heute</span>
@@ -277,7 +281,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
             </motion.section>
           </motion.div>
         ) : null}
-        {toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}
+        {toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={overlayTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}
       </AnimatePresence>
     </motion.main>
   );
