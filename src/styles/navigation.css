@@ -50,7 +50,6 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Every label reserves two lines so all five icon baselines stay aligned. */
 .bottom-nav__item small {
   display: grid;
   max-width: 68px;
