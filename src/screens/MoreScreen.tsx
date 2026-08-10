@@ -64,20 +64,24 @@ type CoreShortcut = {
   destination: MoreDestination;
   title: string;
   description: string;
+  /** Premium artwork. The Lucide glyph stays as the fallback if it fails to load. */
+  art: string;
   icon: LucideIcon;
 };
 
+const shortcutArt = (name: string) => `/premium-assets/high-res-objects/${name}`;
+
 const coreShortcuts: CoreShortcut[] = [
-  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', icon: SunMedium },
-  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', icon: HandHeart },
-  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', icon: BookOpen },
-  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: Sparkles },
-  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: Compass },
-  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: BookHeart },
-  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', icon: Library },
-  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: MapPin },
-  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: CalendarDays },
-  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: Bookmark },
+  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', art: shortcutArt('sun-emblem-v2.webp'), icon: SunMedium },
+  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', art: shortcutArt('mihrab-arch-v2.webp'), icon: HandHeart },
+  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', art: shortcutArt('quran-closed-v2.webp'), icon: BookOpen },
+  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', art: shortcutArt('tasbih-v2.webp'), icon: Sparkles },
+  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', art: shortcutArt('qibla-compass-v2.webp'), icon: Compass },
+  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', art: shortcutArt('dua-hands-v2.webp'), icon: BookHeart },
+  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', art: shortcutArt('lantern-v2.webp'), icon: Library },
+  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', art: shortcutArt('mosque-gold-v2.webp'), icon: MapPin },
+  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', art: shortcutArt('calendar-chip-v2.webp'), icon: CalendarDays },
+  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', art: shortcutArt('bookmark-v2.webp'), icon: Bookmark },
 ];
 
 const journeyRows: ProfileRow[] = [
@@ -252,7 +256,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
             const Icon = shortcut.icon;
             return (
               <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
+                <span className="reference-core-access-grid__icon"><PremiumImage src={shortcut.art} fallback={<Icon size={20} />} /></span>
                 <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
                 <ChevronRight size={16} />
               </motion.button>

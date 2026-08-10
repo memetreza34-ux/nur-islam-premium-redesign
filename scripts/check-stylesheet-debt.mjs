@@ -27,12 +27,14 @@ const styleDir = resolve(root, 'src/styles');
 // in a single afternoon. That growth rate is the reason for the cap, so these
 // numbers start where reality was, not where it should be.
 const BUDGET = {
-  files: 99,
+  files: 98,
   overrideFiles: 33,
   importantRules: 2281,
-  // Raised by 673 bytes for `.frame-guard`, the notice shown when the app is
-  // embedded by a foreign site. New surface, not another override layer.
-  totalBytes: 722_001,
+  // Raised for two additions, both new surface rather than another override
+  // layer: `.frame-guard` (the notice shown when a foreign site embeds the app)
+  // and the artwork sizing for the Home and More shortcut tiles plus the
+  // install-prompt scroll clearance.
+  totalBytes: 723_388,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

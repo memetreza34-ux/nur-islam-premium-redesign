@@ -40,6 +40,13 @@ body,
   display: none;
 }
 
+/* The install prompt is a fixed bar above the navigation, so the padding that
+   clears the navigation is not enough while it is on screen: scrolled all the
+   way down, the last card still sat underneath it and could not be reached. */
+body:has(.reference-install-prompt) .app-shell:not(.app-shell--onboarding) .screen-transition-frame {
+  padding-bottom: calc(212px + env(safe-area-inset-bottom));
+}
+
 .app-shell--detail .screen-transition-frame {
   padding-bottom: max(30px, env(safe-area-inset-bottom));
 }

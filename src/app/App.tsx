@@ -91,6 +91,8 @@ type QuickAction = {
   label: string;
   eyebrow: string;
   icon: LucideIcon;
+  /** Premium artwork. `icon` stays the declared fallback if it fails to load. */
+  art?: string;
   accent: 'gold' | 'cream' | 'emerald';
   target?: Tab;
 };
@@ -104,13 +106,15 @@ type HomeQuranProgress = {
   hasProgress: boolean;
 };
 
+const quickArt = (name: string) => `/premium-assets/high-res-objects/${name}`;
+
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: BookOpen, accent: 'gold', target: 'reader' },
-  { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart, accent: 'cream', target: 'learn' },
-  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, accent: 'emerald', target: 'names' },
-  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, accent: 'gold', target: 'legacy:quiz' },
-  { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, accent: 'cream', target: 'duas' },
-  { label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: MessageCircleQuestion, accent: 'emerald', target: 'assistant' },
+  { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: BookOpen, art: quickArt('quran-closed-v2.webp'), accent: 'gold', target: 'reader' },
+  { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: HandHeart, art: quickArt('mihrab-arch-v2.webp'), accent: 'cream', target: 'learn' },
+  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: Sparkles, art: quickArt('lantern-v2.webp'), accent: 'emerald', target: 'names' },
+  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: BrainCircuit, art: quickArt('dome-v2.webp'), accent: 'gold', target: 'legacy:quiz' },
+  { label: 'Duas', eyebrow: 'Für jeden Moment', icon: BookHeart, art: quickArt('dua-hands-v2.webp'), accent: 'cream', target: 'duas' },
+  { label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: MessageCircleQuestion, art: quickArt('nur-logo-emblem-v2.webp'), accent: 'emerald', target: 'assistant' },
 ];
 
 const screensWithBottomNavigation = new Set<Tab>([
@@ -387,7 +391,7 @@ function PremiumHome({
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Dein täglicher Begleiter</h2></div></div>
         <div className="quick-grid quick-grid--v2">
-          {quickActions.map(({ label, eyebrow, icon: Icon, accent, target }, index) => (
+          {quickActions.map(({ label, eyebrow, art, icon: Icon, accent, target }, index) => (
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
@@ -397,7 +401,7 @@ function PremiumHome({
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.045 }}
             >
-              <span className="quick-card__icon"><Icon size={25} /></span><span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><ChevronRight className="quick-card__arrow" size={18} />
+              <span className="quick-card__icon">{art ? <PremiumImage src={art} fallback={<Icon size={25} />} /> : <Icon size={25} />}</span><span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><ChevronRight className="quick-card__arrow" size={18} />
             </motion.button>
           ))}
         </div>

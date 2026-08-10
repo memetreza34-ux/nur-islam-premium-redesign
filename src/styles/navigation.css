@@ -50,10 +50,14 @@
   vector-effect: non-scaling-stroke;
 }
 
+/* Every label reserves two lines, whether it needs them or not. "Islam
+   verstehen" is the only one that wraps, and when it alone grew taller it
+   pushed its icon up and left the row visibly out of line. */
 .bottom-nav__item small {
-  display: block;
+  display: grid;
   max-width: 68px;
-  min-height: 1.08em;
+  min-height: 2.16em;
+  align-content: center;
   overflow: hidden;
   font-size: 0.54rem;
   font-weight: 700;
