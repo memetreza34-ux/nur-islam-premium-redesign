@@ -93,10 +93,10 @@
 .reference-reader-unavailable__actions > button,
 .reference-empty-result .reference-inline-button {
   min-height: 44px;
-  border: 1px solid rgba(232,199,122,.15) !important;
+  border: 1px solid var(--empty-action-border, rgba(232,199,122,.15)) !important;
   border-radius: 13px !important;
-  color: #f7e2b2 !important;
-  background: rgba(232,199,122,.055) !important;
+  color: var(--empty-action-color, #f7e2b2) !important;
+  background: var(--empty-action-background, rgba(232,199,122,.055)) !important;
 }
 
 /* Live/cache/offline status pills feel like one system. */
@@ -172,6 +172,9 @@ button:disabled,
 [data-theme='light'] .reference-mosque-loading,
 [data-theme='light'] .reference-mosque-error,
 [data-theme='light'] .reference-notes-loading {
+  --empty-action-border: rgba(139,100,34,.3);
+  --empty-action-color: #704b14;
+  --empty-action-background: rgba(161,116,40,.1);
   color: rgba(57,78,67,.72) !important;
   border-color: rgba(117,87,37,.18) !important;
   background:
