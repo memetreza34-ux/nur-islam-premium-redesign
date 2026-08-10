@@ -32,7 +32,7 @@ import {
   SunMedium,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { AccountScreen } from './AccountScreen';
 import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
@@ -149,8 +149,12 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   const [notifications, setNotifications] = useState(readReminderEnabled);
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const closeDialog = useCallback(() => { setModal(null); }, []);
   const screenDialog = useDialog(Boolean(modal), closeDialog, 'Einstellungen');
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
+  const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .02, .1), ease: [0.22, 1, .36, 1] as const });
 
   const userName = readUserName(session);
 
@@ -222,7 +226,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   if (legacyFeature) return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
 
   return (
-    <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .42, ease: [0.22, 1, .36, 1] }}>
+    <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">Profil & Einstellungen</span><h1>Mehr</h1></div>
@@ -247,7 +251,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
           {coreShortcuts.map((shortcut, index) => {
             const Icon = shortcut.icon;
             return (
-              <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .025, .18) }} whileTap={{ scale: .98 }}>
+              <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
                 <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
                 <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
                 <ChevronRight size={16} />
@@ -266,7 +270,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
           {serviceLegacyFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .035 }} whileTap={{ scale: .98 }}>
+              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
                 <span className="reference-services-grid__icon"><Icon size={21} /></span>
                 <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
                 <ChevronRight size={17} />
@@ -283,8 +287,8 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
       <AnimatePresence>
         {modal ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setModal(null)}>
-            <motion.section {...screenDialog.props} className="reference-profile-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setModal(null)}>
+            <motion.section {...screenDialog.props} className="reference-profile-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setModal(null)} aria-label="Schließen"><X size={18} /></button>
 
               {modal === 'appearance' ? (
@@ -345,7 +349,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
