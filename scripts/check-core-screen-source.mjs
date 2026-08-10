@@ -104,7 +104,9 @@ requireTokens('navigation', [
   'border-radius: 26px',
   '.bottom-nav__item {',
   'border-radius: 18px',
-  '.bottom-nav__item span {',
+  // Child, not descendant: the learn label is two words in their own spans, and
+  // the loose selector sized each of them like an icon box.
+  '.bottom-nav__item > span {',
   'border-radius: 13px',
   'stroke-width: 1.75',
   'color: #f2d79a',

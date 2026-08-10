@@ -33,7 +33,10 @@ const BUDGET = {
   // Covers `.frame-guard` (the notice shown when a foreign site embeds the app)
   // and the install-prompt scroll clearance. The tile artwork sizing that
   // briefly lived here is gone again with the WebP tile icons.
-  totalBytes: 722_584,
+  // Nine `.bottom-nav__item span` selectors became `> span` so the learn
+  // label's two words stop being sized like icon boxes; the child combinator
+  // costs a byte each and the note above them explains why.
+  totalBytes: 722_847,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

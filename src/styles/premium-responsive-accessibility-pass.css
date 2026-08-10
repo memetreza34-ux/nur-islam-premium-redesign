@@ -278,7 +278,7 @@ textarea:focus-visible,
     min-height: 50px;
   }
 
-  .bottom-nav__item span {
+  .bottom-nav__item > span {
     width: 35px !important;
     height: 35px !important;
   }

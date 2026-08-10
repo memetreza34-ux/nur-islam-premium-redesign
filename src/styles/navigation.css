@@ -31,7 +31,7 @@
   transition: color 180ms ease, background 180ms ease;
 }
 
-.bottom-nav__item span {
+.bottom-nav__item > span {
   display: grid;
   width: 37px;
   height: 37px;
@@ -50,11 +50,16 @@
   vector-effect: non-scaling-stroke;
 }
 
+/* Block, not grid or flex: as a grid item this label resolved to min-content,
+   the width of "verstehen" alone, so the rest wrapped one character per line,
+   seven lines tall, and pushed the whole bar up over the install prompt.
+   The two reserved lines are what keeps the row aligned — "Islam verstehen"
+   is the only label that needs both, and when it alone grew the other four
+   icons sat visibly higher than it. */
 .bottom-nav__item small {
-  display: grid;
+  display: block;
   max-width: 68px;
   min-height: 2.16em;
-  align-content: center;
   overflow: hidden;
   font-size: 0.54rem;
   font-weight: 700;
@@ -64,7 +69,6 @@
   white-space: normal;
 }
 
-.bottom-nav__item small span{display:inline;width:auto;height:auto;border:0;border-radius:0;transition:none}
 
 .bottom-nav__item--active {
   color: #f2d79a;
