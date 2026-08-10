@@ -148,7 +148,7 @@ export function CollectionsScreen({
   const showQuran = filter === 'Alle' || filter === 'Quran';
   const showDuas = filter === 'Alle' || filter === 'Duas';
   const showNames = filter === 'Alle' || filter === 'Namen';
-  const showDaily = filter === 'Alle' || filter === 'Tagesinhalte';
+  const showHighlights = filter === 'Alle' || filter === 'Impulse';
   const showDates = filter === 'Alle' || filter === 'Termine';
   const hasQuran = quranBookmarkGroups.length > 0 || quranSurahFavorites.size > 0;
   const hasAny = hasQuran || duaFavorites.size > 0 || nameFavorites.size > 0 || ayahSaved || hadithFavorites.size > 0 || calendarFavorites.size > 0;
@@ -157,7 +157,7 @@ export function CollectionsScreen({
     || (filter === 'Quran' && !hasQuran)
     || (filter === 'Duas' && duaFavorites.size === 0)
     || (filter === 'Namen' && nameFavorites.size === 0)
-    || (filter === 'Tagesinhalte' && !ayahSaved && hadithFavorites.size === 0)
+    || (filter === 'Impulse' && !ayahSaved && hadithFavorites.size === 0)
     || (filter === 'Termine' && calendarFavorites.size === 0);
 
   return (
@@ -177,7 +177,7 @@ export function CollectionsScreen({
       </header>
 
       <div className="reference-filter-tabs reference-filter-tabs--wide">
-        {['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine'].map((item) => (
+        {['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine'].map((item) => (
           <button key={item} className={filter === item ? 'is-active' : ''} onClick={() => setFilter(item)}>{item}</button>
         ))}
       </div>
@@ -247,11 +247,11 @@ export function CollectionsScreen({
         </section>
       ) : null}
 
-      {showDaily && (ayahSaved || hadithFavorites.size > 0) ? (
+      {showHighlights && (ayahSaved || hadithFavorites.size > 0) ? (
         <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Tagesinhalte</span><h2>Ayah & Hadithe</h2></div></div>
+          <div className="section-heading"><div><span className="overline">Gespeicherte Impulse</span><h2>Ayah & Hadithe</h2></div></div>
           <div className="reference-collection-rows">
-            {ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Gespeicherte Ayah</small></span><ChevronRight size={17} /></button> : null}
+            {ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Ayah im Fokus · gespeichert</small></span><ChevronRight size={17} /></button> : null}
             {[...hadithFavorites].map((id) => {
               const hadith = getHadithById(id);
               if (!hadith) return null;
