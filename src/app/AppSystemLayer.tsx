@@ -1,6 +1,6 @@
 import { Component, type ErrorInfo, type ReactNode, useEffect, useState } from 'react';
 import { BellRing, CalendarDays, CircleCheck, Clock3, CloudOff, RefreshCw, ShieldAlert, X } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { CalendarReminderDetail } from '../services/calendarReminderService';
 import type { PrayerReminderDetail } from '../services/prayerReminderService';
 import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
@@ -38,6 +38,8 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
 export function NetworkStatus() {
   const [online, setOnline] = useState(() => navigator.onLine);
   const [restored, setRestored] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const transition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   useEffect(() => {
     let restoredTimer: number | undefined;
@@ -72,7 +74,7 @@ export function NetworkStatus() {
   return (
     <AnimatePresence>
       {!online || restored ? (
-        <motion.div className={online ? 'reference-network-status is-online' : 'reference-network-status is-offline'} initial={{ opacity: 0, y: -16, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -12, scale: .97 }} role="status">
+        <motion.div className={online ? 'reference-network-status is-online' : 'reference-network-status is-offline'} initial={{ opacity: 0, y: reduceMotion ? 0 : -8, scale: reduceMotion ? 1 : .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -6, scale: reduceMotion ? 1 : .99 }} transition={transition} role="status">
           {online ? <CircleCheck size={17} /> : <CloudOff size={17} />}
           <span><strong>{online ? 'Wieder verbunden' : 'Offline-Modus'}</strong><small>{online ? 'Aktuelle Inhalte können wieder geladen werden.' : 'Gespeicherte Bereiche bleiben verfügbar.'}</small></span>
         </motion.div>
@@ -83,6 +85,8 @@ export function NetworkStatus() {
 
 export function PrayerReminderBanner() {
   const [reminder, setReminder] = useState<PrayerReminderDetail | null>(null);
+  const reduceMotion = useReducedMotion();
+  const transition = { duration: reduceMotion ? 0 : .22, ease: [0.22, 1, 0.36, 1] as const };
 
   useEffect(() => {
     let hideTimer: number | undefined;
@@ -108,7 +112,7 @@ export function PrayerReminderBanner() {
   return (
     <AnimatePresence>
       {reminder ? (
-        <motion.aside className="reference-prayer-reminder-banner" initial={{ opacity: 0, y: -22, scale: .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -14, scale: .97 }} role="alert" aria-live="assertive">
+        <motion.aside className="reference-prayer-reminder-banner" initial={{ opacity: 0, y: reduceMotion ? 0 : -10, scale: reduceMotion ? 1 : .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8, scale: reduceMotion ? 1 : .99 }} transition={transition} role="alert" aria-live="assertive">
           <span className="reference-prayer-reminder-banner__icon"><BellRing size={22} /></span>
           <span className="reference-prayer-reminder-banner__copy"><small>{reminder.arabic} · {reminder.time}</small><strong>{reminder.label} · Gebetszeit</strong><em><Clock3 size={13} /> {reminder.description}</em></span>
           <button className="reference-prayer-reminder-banner__open" onClick={openPrayerTracker}>Öffnen</button>
@@ -121,6 +125,8 @@ export function PrayerReminderBanner() {
 
 export function CalendarReminderBanner() {
   const [reminder, setReminder] = useState<CalendarReminderDetail | null>(null);
+  const reduceMotion = useReducedMotion();
+  const transition = { duration: reduceMotion ? 0 : .22, ease: [0.22, 1, 0.36, 1] as const };
 
   useEffect(() => {
     let hideTimer: number | undefined;
@@ -146,7 +152,7 @@ export function CalendarReminderBanner() {
   return (
     <AnimatePresence>
       {reminder ? (
-        <motion.aside className="reference-prayer-reminder-banner reference-calendar-reminder-banner" initial={{ opacity: 0, y: -22, scale: .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: -14, scale: .97 }} role="alert" aria-live="assertive">
+        <motion.aside className="reference-prayer-reminder-banner reference-calendar-reminder-banner" initial={{ opacity: 0, y: reduceMotion ? 0 : -10, scale: reduceMotion ? 1 : .985 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : -8, scale: reduceMotion ? 1 : .99 }} transition={transition} role="alert" aria-live="assertive">
           <span className="reference-prayer-reminder-banner__icon"><CalendarDays size={22} /></span>
           <span className="reference-prayer-reminder-banner__copy"><small>{reminder.time} Uhr · Persönlicher Termin</small><strong>{reminder.title}</strong><em><Clock3 size={13} /> Jetzt im Kalender geplant</em></span>
           <button className="reference-prayer-reminder-banner__open" onClick={openCalendar}>Kalender</button>
