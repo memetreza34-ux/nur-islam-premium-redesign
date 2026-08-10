@@ -139,6 +139,9 @@
   filter: drop-shadow(0 20px 20px rgba(0, 0, 0, .5));
 }
 
+.reference-legacy-hero:has(>img[src*='bookmark-v2.webp'])>img{display:none}
+.reference-legacy-hero:has(>img[src*='bookmark-v2.webp'])::before{content:'2,5%';position:absolute;z-index:2;top:50%;right:22px;transform:translateY(-50%);color:#e9c878;font:600 1.7rem var(--font-display,Georgia,serif);text-shadow:0 12px 24px rgba(0,0,0,.48)}
+
 .reference-legacy-section,
 .reference-quiz-card,
 .reference-quiz-result,
