@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 const collections = await readFile(resolve(root, 'src/screens/CollectionsScreen.tsx'), 'utf8');
+const dailyHadith = await readFile(resolve(root, 'src/screens/DailyHadithScreen.tsx'), 'utf8');
 const reader = await readFile(resolve(root, 'src/screens/QuranReaderScreen.tsx'), 'utf8');
 const duas = await readFile(resolve(root, 'src/screens/DuasScreen.tsx'), 'utf8');
 const names = await readFile(resolve(root, 'src/screens/NamesScreen.tsx'), 'utf8');
@@ -11,18 +12,20 @@ const calendar = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'),
 
 const requiredAppFragments = [
   "import { CollectionsScreen } from '../screens/CollectionsScreen';",
+  "import { DailyHadithScreen } from '../screens/DailyHadithScreen';",
   "import { MosqueScreen } from '../screens/DiscoveryScreens';",
-  'onOpenQuran={goQuran}',
+  'onOpenQuran={openQuran}',
   'onOpenReader={openReader}',
   'onOpenDua={openSavedDua}',
   'onOpenName={openSavedName}',
   "onOpenAyah={() => navigate('ayah')}",
-  "onOpenHadith={() => navigate('hadith')}",
+  'onOpenHadith={openSavedHadith}',
   'onOpenCalendarDate={openSavedCalendarDate}',
   'initialDuaId={selectedDuaId}',
   'initialNameId={selectedNameId}',
   'initialDateKey={selectedCalendarDate}',
   'initialAyahNumber={selectedAyahNumber}',
+  'hadithId={selectedHadithId}',
   'setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)))',
   "onNavigate('legacy:ummah')",
 ];
@@ -40,11 +43,13 @@ const requiredCollectionHandlers = [
   'onOpenDua(id)',
   'onOpenName(id)',
   'onClick={onOpenAyah}',
-  'onClick={onOpenHadith}',
+  'onOpenHadith(id)',
   'onOpenCalendarDate(date)',
   'Array.from({ length: 114 }',
   '[...group.bookmarks]',
   '.sort((a, b) => a - b)',
+  'readSavedHadithIds',
+  'getHadithById(id)',
 ];
 
 for (const fragment of requiredCollectionHandlers) {
@@ -56,6 +61,15 @@ if (collections.includes('onOpenDuas') || collections.includes('onOpenNames') ||
 }
 if (collections.includes('OFFLINE_QURAN_SURAHS')) {
   throw new Error('Collection still restricts Quran bookmarks to the offline Surah subset.');
+}
+
+for (const fragment of [
+  'hadithId?: string | null',
+  'getHadithById(hadithId) ?? getDailyHadith()',
+  'readSavedHadithIds',
+  'writeSavedHadithIds(next)',
+]) {
+  if (!dailyHadith.includes(fragment)) throw new Error(`Saved Hadith routing is incomplete: ${fragment}`);
 }
 
 for (const fragment of [
@@ -77,4 +91,4 @@ if (!calendar.includes('initialDateKey?: string | null') || !calendar.includes('
   throw new Error('Calendar cannot open a saved date directly.');
 }
 
-console.log('Navigation verified: Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names and calendar dates, and legacy route IDs remain valid.');
+console.log('Navigation verified: history-aware screen return paths, Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names, Hadiths and calendar dates, and legacy route IDs remain valid.');
