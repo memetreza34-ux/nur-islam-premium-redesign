@@ -20,7 +20,7 @@ import {
   Volume2,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import {
   formatPrayerRemaining,
@@ -142,6 +142,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const [celebrationOpen, setCelebrationOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [completionStreak, setCompletionStreak] = useState(() => calculatePrayerStreak());
+  const reduceMotion = useReducedMotion();
   const {
     schedule: prayerTimes,
     meta,
@@ -204,10 +205,10 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       const streak = calculatePrayerStreak();
       setCompletionStreak(streak);
       setCelebrationOpen(true);
-      navigator.vibrate?.([55, 35, 90]);
+      if (!reduceMotion) navigator.vibrate?.([55, 35, 90]);
     }
     previousCompletedCount.current = completedCount;
-  }, [completedCount]);
+  }, [completedCount, reduceMotion]);
 
   const flash = (message: string) => {
     setToast(message);
@@ -301,8 +302,11 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
           ? 'Standort nicht freigegeben'
           : 'Offline-Fallback';
 
+  const screenTransition = { duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] as const };
+  const toastTransition = { duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
-    <motion.main className="screen prayer-screen reference-prayer-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.main className="screen prayer-screen reference-prayer-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">{hijriLabel}</span><h1>Gebetszeiten</h1></div>
@@ -352,7 +356,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
             const done = completed.has(prayer.id);
             const notificationOn = prayer.obligatory && notifications.has(prayer.id);
             return (
-              <motion.article key={prayer.id} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}`} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.035 }}>
+              <motion.article key={prayer.id} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : index * 0.025, ease: [0.22, 1, 0.36, 1] }}>
                 <span className="prayer-time-row__icon"><PrayerIcon prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
                 {prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}
                 {prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}
@@ -370,8 +374,8 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
 
       <AnimatePresence>
         {settingsOpen ? (
-          <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSettingsOpen(false)}>
-            <motion.section {...settingsDialog.props} className="reference-prayer-settings-modal" initial={{ opacity: 0, y: 28, scale: .96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.18 }} onClick={() => setSettingsOpen(false)}>
+            <motion.section {...settingsDialog.props} className="reference-prayer-settings-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 20, scale: reduceMotion ? 1 : .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-prayer-settings-modal__close" onClick={() => setSettingsOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-prayer-settings-modal__icon"><Settings2 size={25} /></span>
               <span className="overline">Gebetszeiten</span><h2>Berechnung anpassen</h2><p>Die Auswahl beeinflusst insbesondere Fajr, Isha und Asr. Vergleiche die Zeiten bei Unsicherheit mit deiner örtlichen Moschee.</p>
@@ -386,12 +390,12 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
 
       <AnimatePresence>
         {celebrationOpen ? (
-          <motion.div className="prayer-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCelebrationOpen(false)}>
-            <motion.section {...celebrationDialog.props} className="prayer-completion-modal" initial={{ opacity: 0, y: 26, scale: .92 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .97 }} transition={{ type: 'spring', stiffness: 240, damping: 22 }} onClick={(event) => event.stopPropagation()} aria-live="polite">
+          <motion.div className="prayer-completion-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.18 }} onClick={() => setCelebrationOpen(false)}>
+            <motion.section {...celebrationDialog.props} className="prayer-completion-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 20, scale: reduceMotion ? 1 : .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: reduceMotion ? 1 : .985 }} transition={reduceMotion ? { duration: 0 } : { type: 'spring', stiffness: 280, damping: 26 }} onClick={(event) => event.stopPropagation()} aria-live="polite">
               <button className="prayer-completion-modal__close" onClick={() => setCelebrationOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <div className="prayer-completion-burst" aria-hidden="true">
-                {celebrationParticles.map((particle) => <motion.i key={particle.id} style={{ '--angle': `${particle.angle}deg`, '--distance': `${particle.distance}px`, width: particle.size, height: particle.size } as CSSProperties} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.35, delay: particle.delay, ease: 'easeOut' }} />)}
-                <motion.span initial={{ scale: .55, rotate: -12 }} animate={{ scale: [1, 1.08, 1], rotate: 0 }} transition={{ duration: .7 }}><CircleCheck size={46} /></motion.span>
+                {!reduceMotion ? celebrationParticles.map((particle) => <motion.i key={particle.id} style={{ '--angle': `${particle.angle}deg`, '--distance': `${particle.distance}px`, width: particle.size, height: particle.size } as CSSProperties} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.05, delay: particle.delay, ease: 'easeOut' }} />) : null}
+                <motion.span initial={reduceMotion ? false : { scale: .72, rotate: -7 }} animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], rotate: 0 }} transition={{ duration: .55 }}><CircleCheck size={46} /></motion.span>
               </div>
               <span className="hero-pill">5 von 5</span><h2>Alle Pflichtgebete abgeschlossen</h2><p>Möge Allah deine Gebete annehmen und dir Beständigkeit schenken.</p>
               <div className="prayer-completion-stats"><span><strong>5</strong><small>Gebete heute</small></span><span><strong>{Math.max(1, completionStreak)}</strong><small>{completionStreak === 1 ? 'vollständiger Tag' : 'Tage Serie'}</small></span></div>
@@ -401,7 +405,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={toastTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
