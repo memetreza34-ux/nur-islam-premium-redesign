@@ -172,8 +172,28 @@ if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== '.
 if (manifest.background_color !== '#00120f' || manifest.theme_color !== '#001b16') {
   throw new Error('PWA manifest colors must match the dark reference palette.');
 }
-if (!Array.isArray(manifest.icons) || manifest.icons.some((icon) => icon.src !== './nur-app-icon.svg')) {
-  throw new Error('PWA manifest icons are not relative to the deployment scope.');
+if (!Array.isArray(manifest.icons) || manifest.icons.length === 0) {
+  throw new Error('PWA manifest must expose install icons.');
+}
+for (const icon of manifest.icons) {
+  if (typeof icon.src !== 'string' || !icon.src.startsWith('./') || icon.src.startsWith('./http') || icon.src.includes('://')) {
+    throw new Error(`PWA manifest icon must stay relative to the deployment scope: ${icon.src ?? 'missing src'}`);
+  }
+}
+const hasIcon = (src, sizes, type, purpose) => manifest.icons.some((icon) => (
+  icon.src === src && icon.sizes === sizes && icon.type === type && icon.purpose === purpose
+));
+if (!hasIcon('./nur-app-icon.svg', 'any', 'image/svg+xml', 'any')) {
+  throw new Error('PWA manifest must keep the scalable Nur app icon.');
+}
+if (!hasIcon('./nur-app-icon-192.png', '192x192', 'image/png', 'any')) {
+  throw new Error('PWA manifest must keep the scoped 192x192 PNG install icon.');
+}
+if (!hasIcon('./nur-app-icon-512.png', '512x512', 'image/png', 'any')) {
+  throw new Error('PWA manifest must keep the scoped 512x512 PNG install icon.');
+}
+if (!hasIcon('./nur-app-icon-512.png', '512x512', 'image/png', 'maskable')) {
+  throw new Error('PWA manifest must keep the scoped 512x512 maskable PNG icon.');
 }
 
 for (const requirement of [
@@ -185,4 +205,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
