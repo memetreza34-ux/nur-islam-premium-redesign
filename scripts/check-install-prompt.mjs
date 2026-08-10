@@ -19,7 +19,7 @@ const checks = [
   [main.includes('stopInstallPromptCapture();'), 'prompt capture is cleaned up on pagehide'],
   [prompt.includes('function isIosDevice()'), 'InstallAppPrompt keeps explicit iPhone/iPad detection'],
   [prompt.includes("navigatorWithPlatform.platform === 'MacIntel'"), 'InstallAppPrompt recognizes modern iPadOS desktop-style user agents'],
-  [prompt.includes('navigator.standalone'), 'InstallAppPrompt recognizes iOS standalone mode'],
+  [prompt.includes('standalone?: boolean') && prompt.includes('.standalone === true'), 'InstallAppPrompt recognizes iOS standalone mode'],
   [prompt.includes("revealWhenReady('ios')"), 'InstallAppPrompt exposes the iOS-specific install route'],
   [prompt.includes('Teilen antippen'), 'iOS install help explains the Share action'],
   [prompt.includes('„Zum Home-Bildschirm“ wählen'), 'iOS install help explains Add to Home Screen'],
