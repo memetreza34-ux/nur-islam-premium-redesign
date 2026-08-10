@@ -191,6 +191,10 @@ try {
   await page.locator('.reference-notes-screen').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(page);
   await capture(page, '21-notes');
+  await page.getByRole('button', { name: 'Neue Notiz' }).first().click();
+  await page.locator('.reference-note-editor').waitFor({ state: 'visible', timeout: 10_000 });
+  await page.waitForTimeout(220);
+  await capture(page, '21a-notes-editor');
   await appContext.close();
 
   const splashContext = await createContext({ reducedMotion: 'no-preference' });
