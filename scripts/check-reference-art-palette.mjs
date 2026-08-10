@@ -56,9 +56,8 @@ requireTokens(domains.get('discovery'), 'Mosque / Calendar / Collections', [
 
 requireTokens(domains.get('daily'), 'Daily Ayah / Hadith', [
   'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
-  'rgba(226, 191, 119, .13)',
-  'rgba(145, 168, 158, .8)',
-  'mihrab-arch-v2.webp?v=20260808-release-hardening',
+  'rgba(226,191,119,.13)',
+  'rgba(145,168,158,.8)',
   'lantern-v2.webp?v=20260808-release-hardening',
 ]);
 
