@@ -150,8 +150,9 @@ requireText(collections, [
   'onOpenName(id)',
   'onOpenCalendarDate(date)',
   'onOpenHadith(id)',
-  "filter === 'Tagesinhalte'",
-  "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
+  "filter === 'Impulse'",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine']",
+  'const showHighlights =',
   'readSavedHadithIds',
 ], 'Collection routing');
 forbidText(collections, [
@@ -159,6 +160,8 @@ forbidText(collections, [
   'onOpenDuas',
   'onOpenNames',
   'onOpenCalendar:',
+  "filter === 'Tagesinhalte'",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
   "filter === 'Hadith' && !ayahSaved && !hadithSaved",
   "['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine']",
 ], 'Collection routing');
@@ -285,6 +288,7 @@ requireText(hadithData, [
   "saved.add('intentions')",
   'localDayNumber(date)',
   'HADITH_LIBRARY[index]',
+  'A damaged legacy key must not prevent valid favorites',
 ], 'Hadith rotation and bookmark migration');
 
 requireText(dhikr, [
@@ -395,12 +399,20 @@ requireText(legacy, [
   "featureId === 'jumuah'",
   "featureId === 'zakat'",
   "featureId === 'standby'",
+  'HADITH_LIBRARY',
+  'readSavedHadithIds',
+  'writeSavedHadithIds',
+  'const [favorites, setFavorites] = useState(() => readSavedHadithIds())',
+  'const filtered = HADITH_LIBRARY.filter',
+  'writeSavedHadithIds(value)',
 ], 'Legacy functional tools');
 forbidText(legacy, [
   'function GenericFeature(',
   'nur_feature_${feature.id}_progress',
   'buildFastingReminderEntries',
   'FASTING_REMINDER_ID_BASE',
+  'const hadithItems =',
+  "writeStored('nur_hadith_library_favorites'",
 ], 'Legacy functional tools');
 
 requireText(fastingReminder, [
@@ -444,4 +456,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home and Quran use real persisted progress only, the focused Ayah is honestly labelled, daily Hadith content rotates from the source-labelled library with bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
