@@ -18,7 +18,7 @@ import {
   TimerReset,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { LearningCourseScreen } from './LearningCourseScreen';
 import {
@@ -76,6 +76,7 @@ export function LearnScreen({
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [learningPlanOpen, setLearningPlanOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const closeDialog = useCallback(() => { setLearningPlanOpen(false); }, []);
   const screenDialog = useDialog(learningPlanOpen, closeDialog, 'Lernplan');
@@ -88,6 +89,9 @@ export function LearnScreen({
   const totalKnowledgeLessons = LEARNING_CATEGORIES.reduce((sum, category) => sum + category.lessonCount, 0);
   const knowledgeProgress = Math.round((completedKnowledgeLessons.size / totalKnowledgeLessons) * 100);
   const nextPrayer = PRAYER_LESSONS.find((prayer) => !completedPrayerLessons.has(prayer.id)) ?? PRAYER_LESSONS[0];
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .025, .12), ease: [0.22, 1, 0.36, 1] as const });
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   const flash = (message: string) => {
     setToast(message);
@@ -118,7 +122,7 @@ export function LearnScreen({
   }
 
   return (
-    <motion.main className="screen reference-learn-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.42, ease: [0.22, 1, 0.36, 1] }}>
+    <motion.main className="screen reference-learn-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>Islam lernen</h1></div>
@@ -154,7 +158,7 @@ export function LearnScreen({
           {PRAYER_LESSONS.map((prayer, index) => {
             const complete = completedPrayerLessons.has(prayer.id);
             return (
-              <motion.button key={prayer.id} className={complete ? 'is-complete' : ''} onClick={() => setPrayerLesson(prayer.id)} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * .04 }}>
+              <motion.button key={prayer.id} className={complete ? 'is-complete' : ''} onClick={() => setPrayerLesson(prayer.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)}>
                 <span>{complete ? <CircleCheck size={19} /> : prayer.rakahs}</span>
                 <span><small>{prayer.arabic} · {prayer.timeLabel}</small><strong>{prayer.label}</strong><em>{prayer.note}</em></span>
                 <ChevronRight size={17} />
@@ -179,7 +183,7 @@ export function LearnScreen({
             const lessons = getCategoryLessons(category.id);
             const completedInCategory = lessons.filter((lesson) => completedKnowledgeLessons.has(lesson.id)).length;
             return (
-              <motion.button key={category.id} className={completedInCategory === lessons.length ? 'reference-category-card is-complete' : 'reference-category-card'} onClick={() => setLearningCategory(category.id)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.045 }} whileTap={{ scale: 0.97 }}>
+              <motion.button key={category.id} className={completedInCategory === lessons.length ? 'reference-category-card is-complete' : 'reference-category-card'} onClick={() => setLearningCategory(category.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .98 }}>
                 <span className="reference-category-card__ornament" aria-hidden="true">۞</span>
                 <span className="reference-category-card__icon">{completedInCategory === lessons.length ? <CircleCheck size={24} /> : <Icon size={24} />}</span>
                 <strong>{category.title}</strong><small>{category.subtitle}</small><em>{completedInCategory}/{lessons.length} Lektionen</em>
@@ -195,7 +199,7 @@ export function LearnScreen({
           {learningLegacyFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.035 }} whileTap={{ scale: .98 }}>
+              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
                 <span className="reference-expanded-learning-grid__icon"><Icon size={22} /></span>
                 <span><small>{feature.subtitle}</small><strong>{feature.title}</strong><em>{feature.description}</em></span><ChevronRight size={18} />
               </motion.button>
@@ -211,8 +215,8 @@ export function LearnScreen({
 
       <AnimatePresence>
         {learningPlanOpen ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setLearningPlanOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setLearningPlanOpen(false)}>
+            <motion.section {...screenDialog.props} className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setLearningPlanOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Erst das Gebet festigen</h2><p>Die Reihenfolge ist bewusst praktisch aufgebaut. Dein Fortschritt wird nur lokal gespeichert.</p>
               <div className="reference-learning-plan-list">
@@ -227,7 +231,7 @@ export function LearnScreen({
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
