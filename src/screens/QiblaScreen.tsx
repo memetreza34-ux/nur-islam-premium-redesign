@@ -9,7 +9,7 @@ import {
   Settings,
   TriangleAlert,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { bootstrapSharedPrayerTimes, loadPrayerLocation, savePrayerLocation } from '../services/prayerTimesService';
 import { PremiumImage, QiblaObject } from '../shared/PremiumVisuals';
 
@@ -41,6 +41,10 @@ function toDegrees(value: number) {
 
 function normalizeDegrees(value: number) {
   return (value % 360 + 360) % 360;
+}
+
+function shortestAngleDelta(from: number, to: number) {
+  return ((to - from + 540) % 360) - 180;
 }
 
 export function calculateBearing(from: Coordinates, to: Coordinates) {
@@ -86,10 +90,22 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const [toast, setToast] = useState<string | null>(null);
   const sensorTimeoutRef = useRef<number | null>(null);
   const toastTimeoutRef = useRef<number | null>(null);
+  const previousNeedleRotationRef = useRef<number | null>(null);
+  const unwrappedNeedleRotationRef = useRef(0);
+  const reduceMotion = useReducedMotion();
   const direction = useMemo(() => calculateBearing(coordinates, KAABA), [coordinates]);
   const distance = useMemo(() => calculateDistance(coordinates, KAABA), [coordinates]);
   const roundedDirection = Math.round(direction);
   const needleRotation = heading === null ? direction : normalizeDegrees(direction - heading);
+
+  if (previousNeedleRotationRef.current === null) {
+    previousNeedleRotationRef.current = needleRotation;
+    unwrappedNeedleRotationRef.current = needleRotation;
+  } else {
+    unwrappedNeedleRotationRef.current += shortestAngleDelta(previousNeedleRotationRef.current, needleRotation);
+    previousNeedleRotationRef.current = needleRotation;
+  }
+  const displayedNeedleRotation = unwrappedNeedleRotationRef.current;
 
   const flash = (message: string) => {
     if (toastTimeoutRef.current !== null) window.clearTimeout(toastTimeoutRef.current);
@@ -243,7 +259,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
           : 'Kompass noch nicht gestartet';
 
   return (
-    <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>Qibla</h1></div>
@@ -253,7 +269,13 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       <section className="reference-qibla-stage">
         <div className="reference-qibla-stage__halo" />
         <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" className="reference-qibla-stage__compass" fallback={<QiblaObject />} />
-        <span className="reference-qibla-stage__needle" style={{ transform: `translateX(-50%) rotate(${needleRotation}deg)` }}><Navigation size={29} fill="currentColor" /></span>
+        <span
+          className="reference-qibla-stage__needle"
+          style={{
+            transform: `translateX(-50%) rotate(${displayedNeedleRotation}deg)`,
+            transition: reduceMotion ? 'none' : 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
+          }}
+        ><Navigation size={29} fill="currentColor" /></span>
         <div className="reference-qibla-stage__copy">
           <span className="overline">Richtung zur Kaaba</span>
           <h2>{roundedDirection}° {getDirectionLabel(direction)}</h2>
@@ -288,7 +310,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Die Qibla-Berechnung selbst bleibt lokal; der gespeicherte Standort wird nur von den ausdrücklich ausgewiesenen Live-Diensten verwendet.</small></span>
       </section>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.985 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
