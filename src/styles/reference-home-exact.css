@@ -122,6 +122,8 @@
   margin-top: 2px;
 }
 
+[data-theme='light'] .premium-home--v2 :is(.welcome-hero__date strong,.prayer-hero--v2 .hero-pill,.prayer-hero--v2 .hero-orb strong){color:#fff8ea}
+
 @media (max-width: 370px) {
   .premium-home--v2 .welcome-hero {
     min-height: 390px;
