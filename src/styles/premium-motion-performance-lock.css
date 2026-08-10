@@ -1,244 +1,37 @@
-/* Final motion/performance direction. Presentation only. */
+/* Motion, image-composition and icon-quality lock. */
+@media(pointer:coarse){
+.gold-button:not(:disabled):active,.icon-button:not(:disabled):active,.bottom-nav__item:not(:disabled):active,.reference-filter-tabs button:not(:disabled):active,.reference-account-tabs button:not(:disabled):active,.reference-assistant-input button:not(:disabled):active,.reference-notes-storage>button:not(:disabled):active{filter:brightness(.94) saturate(.96)}
+.journey-card:active,.quick-card:active,.recommendation-card:active,.reference-core-access-grid button:active,.reference-services-grid>button:active,.reference-collection-rows>button:active,.reference-quran-list--catalog>article:active,.reference-dua-card__content:active,.reference-name-list__main:active,.reference-mosque-list--live>button:active,.reference-assistant-suggestions button:active{filter:brightness(.965)}}
 
-/* Touch feedback without fighting Motion's transform animations. */
-@media (pointer: coarse) {
-  .gold-button:not(:disabled):active,
-  .icon-button:not(:disabled):active,
-  .bottom-nav__item:not(:disabled):active,
-  .reference-filter-tabs button:not(:disabled):active,
-  .reference-account-tabs button:not(:disabled):active,
-  .reference-assistant-input button:not(:disabled):active,
-  .reference-notes-storage > button:not(:disabled):active {
-    filter: brightness(.94) saturate(.96);
-  }
+.reading-progress>span,.reference-reader-progress>i,.reference-name-progress__bar>span,.reference-dua-progress__bar>span,.reference-dhikr-goal>span>i,.reference-prayer-lesson-progress>span,.next-prayer-panel__progress>span,.reference-learning-course-hero__progress i,.reference-prayer-course-hero__progress i,.reference-guide-progress i{transition:width .32s cubic-bezier(.22,1,.36,1),transform .32s cubic-bezier(.22,1,.36,1)}
 
-  .journey-card:active,
-  .quick-card:active,
-  .recommendation-card:active,
-  .reference-core-access-grid button:active,
-  .reference-services-grid > button:active,
-  .reference-collection-rows > button:active,
-  .reference-quran-list--catalog > article:active,
-  .reference-dua-card__content:active,
-  .reference-name-list__main:active,
-  .reference-mosque-list--live > button:active,
-  .reference-assistant-suggestions button:active {
-    filter: brightness(.965);
-  }
-}
+.premium-image>img,.reference-legacy-hero img{image-rendering:auto;transform-style:preserve-3d;backface-visibility:hidden}
+.premium-image,.premium-image>img,.premium-image__fallback{pointer-events:none}
+.premium-image>img{object-position:50% 50%}
+.journey-card .premium-image>img,.continue-card__cover .premium-image>img,.reference-quran-continue__book>img,.reference-quran-hero .premium-image>img,.reference-reader-hero .premium-image>img{object-position:50% 72%}
+.reference-dhikr-screen .premium-image>img,.reference-qibla-screen .premium-image>img,.reference-duas-screen .premium-image>img,.reference-hadith-screen .premium-image>img{object-position:50% 62%}
 
-/* Dynamic progress remains smooth but never theatrical. */
-.reading-progress > span,
-.reference-reader-progress > i,
-.reference-name-progress__bar > span,
-.reference-dua-progress__bar > span,
-.reference-dhikr-goal > span > i,
-.reference-prayer-lesson-progress > span,
-.next-prayer-panel__progress > span,
-.reference-learning-course-hero__progress i,
-.reference-prayer-course-hero__progress i,
-.reference-guide-progress i {
-  transition: width .32s cubic-bezier(.22, 1, .36, 1), transform .32s cubic-bezier(.22, 1, .36, 1);
-}
+:where(button,a,[role='button'])>svg.lucide,.bottom-nav__item svg,.icon-button svg{flex:0 0 auto;vector-effect:non-scaling-stroke;stroke-linecap:round;stroke-linejoin:round}
+:where(button,a,[role='button']){-webkit-tap-highlight-color:transparent}
+:where(button,[role='button']):not(:disabled){transition:background-color .18s cubic-bezier(.22,1,.36,1),border-color .18s cubic-bezier(.22,1,.36,1),color .18s cubic-bezier(.22,1,.36,1),opacity .18s cubic-bezier(.22,1,.36,1),filter .18s cubic-bezier(.22,1,.36,1)}
+.bottom-nav__item[aria-current='page'] svg,.bottom-nav__item.is-active svg,.bottom-nav__item--active svg{filter:drop-shadow(0 3px 8px rgba(226,191,119,.2))}
 
-/* Image compositing stays crisp when premium artwork is scaled or translated. */
-.premium-image > img,
-.reference-legacy-hero img {
-  image-rendering: auto;
-  transform-style: preserve-3d;
-  backface-visibility: hidden;
-}
+@keyframes premiumHeroDrift{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@media(prefers-reduced-motion:no-preference) and (update:fast){.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:premiumHeroDrift 8s ease-in-out infinite}}
 
-.premium-image,
-.premium-image > img,
-.premium-image__fallback {
-  pointer-events: none;
-}
+@media(update:slow){
+.premium-home--v2 .welcome-hero__visual::before,.reference-mosque-hero>.premium-image::before,.reference-onboarding__visual>.premium-image::before,.hero-orb__ring,.background-orbit,.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}
+.bottom-nav,.app-shell--detail .reference-screen-header,.reference-assistant-input,.reference-modal-backdrop,.learn-modal-backdrop,.reference-prayer-settings-backdrop,.reference-mosque-detail-backdrop,.calendar-modal-backdrop{-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}
+.premium-image>img,.reference-legacy-hero img{filter:drop-shadow(0 14px 18px rgba(0,0,0,.34))!important}}
 
-.premium-image > img {
-  object-position: 50% 50%;
-}
+@media(max-width:350px){
+.glass-card,.reference-account-form,.reference-note-editor,.reference-learning-lesson-card,.reference-learning-key-points,.reference-learning-sources,.reference-learning-quiz{-webkit-backdrop-filter:blur(10px) saturate(1.01)!important;backdrop-filter:blur(10px) saturate(1.01)!important}
+.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}}
 
-/* Book artwork is optically bottom-heavy; anchor the subject rather than transparent canvas. */
-.journey-card .premium-image > img,
-.continue-card__cover .premium-image > img,
-.reference-quran-continue__book > img,
-.reference-quran-hero .premium-image > img,
-.reference-reader-hero .premium-image > img {
-  object-position: 50% 72%;
-}
+@media(max-width:380px){.premium-home--v2 .welcome-hero__visual{opacity:.44!important}.reference-mosque-hero>.premium-image{opacity:.66!important}.journey-card .premium-image,.continue-card__cover .premium-image,.reference-quran-continue__book{max-width:44vw}}
 
-/* Tall devotional objects read better from a slightly lower optical center. */
-.reference-dhikr-screen .premium-image > img,
-.reference-qibla-screen .premium-image > img,
-.reference-duas-screen .premium-image > img,
-.reference-hadith-screen .premium-image > img {
-  object-position: 50% 62%;
-}
+[data-theme='light'] .brand-lockup__mark>img,[data-theme='light'] .ai-preview__mark>img,[data-theme='light'] .reference-profile-greeting__logo>img{filter:drop-shadow(0 7px 12px rgba(61,46,23,.14))}
 
-/* Consistent icon geometry and visual weight across buttons/navigation. */
-:where(button, a, [role='button']) > svg.lucide,
-.bottom-nav__item svg,
-.icon-button svg {
-  flex: 0 0 auto;
-  vector-effect: non-scaling-stroke;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
-:where(.bottom-nav__item, .icon-button, .reference-filter-tabs button, .reference-account-tabs button) svg {
-  transition: opacity .18s ease, filter .18s ease;
-}
-
-:where(button, a, [role='button']) {
-  -webkit-tap-highlight-color: transparent;
-}
-
-:where(button, [role='button']):not(:disabled) {
-  transition-property: background-color, border-color, color, opacity, box-shadow, filter;
-  transition-duration: .18s;
-  transition-timing-function: cubic-bezier(.22, 1, .36, 1);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  :where(.quick-card, .journey-card, .recommendation-card, .reference-core-access-grid button, .reference-services-grid > button, .reference-collection-rows > button):hover {
-    filter: brightness(1.025);
-  }
-
-  :where(.icon-button, .bottom-nav__item, .reference-filter-tabs button, .reference-account-tabs button):hover svg {
-    opacity: .96;
-    filter: drop-shadow(0 2px 5px rgba(226, 191, 119, .12));
-  }
-}
-
-.bottom-nav__item[aria-current='page'] svg,
-.bottom-nav__item.is-active svg,
-.bottom-nav__item--active svg {
-  filter: drop-shadow(0 3px 8px rgba(226, 191, 119, .2));
-}
-
-/* Decode/reveal feels intentional instead of popping into the composition. */
-@keyframes premiumAssetReveal {
-  from { opacity: 0; filter: blur(2px) saturate(.9); }
-  to { opacity: 1; filter: blur(0) saturate(1); }
-}
-
-.premium-image > img:not([hidden]) {
-  animation: premiumAssetReveal .28s cubic-bezier(.22, 1, .36, 1) both;
-}
-
-/* Decorative hero art gets restrained ambient motion; content art stays static. */
-@keyframes premiumHeroDrift {
-  0%, 100% { translate: 0 0; }
-  50% { translate: 0 -3px; }
-}
-
-@media (prefers-reduced-motion: no-preference) and (update: fast) {
-  .premium-home--v2 .welcome-hero__visual,
-  .reference-splash__mosque {
-    animation: premiumHeroDrift 8s ease-in-out infinite;
-  }
-}
-
-/* Browsers that report a slow visual update rate get the premium hierarchy
-   without expensive continuous animation or heavy glass composition. */
-@media (update: slow) {
-  .premium-home--v2 .welcome-hero__visual::before,
-  .reference-mosque-hero > .premium-image::before,
-  .reference-onboarding__visual > .premium-image::before,
-  .hero-orb__ring,
-  .background-orbit {
-    animation: none !important;
-  }
-
-  .premium-home--v2 .welcome-hero__visual,
-  .reference-splash__mosque {
-    animation: none !important;
-  }
-
-  .bottom-nav,
-  .app-shell--detail .reference-screen-header,
-  .reference-assistant-input,
-  .reference-modal-backdrop,
-  .learn-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-mosque-detail-backdrop,
-  .calendar-modal-backdrop {
-    -webkit-backdrop-filter: blur(10px) !important;
-    backdrop-filter: blur(10px) !important;
-  }
-
-  .premium-image > img,
-  .reference-legacy-hero img {
-    filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .34)) !important;
-  }
-}
-
-/* Battery-friendly restraint on compact devices. */
-@media (max-height: 700px), (max-width: 350px) {
-  .premium-home--v2 .welcome-hero__visual,
-  .reference-splash__mosque {
-    animation: none !important;
-  }
-}
-
-@media (max-width: 350px) {
-  .glass-card,
-  .reference-account-form,
-  .reference-note-editor,
-  .reference-learning-lesson-card,
-  .reference-learning-key-points,
-  .reference-learning-sources,
-  .reference-learning-quiz {
-    -webkit-backdrop-filter: blur(10px) saturate(1.01) !important;
-    backdrop-filter: blur(10px) saturate(1.01) !important;
-  }
-}
-
-/* Optical corrections for narrow phones keep art clear of headings and chrome. */
-@media (max-width: 380px) {
-  .premium-home--v2 .welcome-hero__visual {
-    opacity: .44 !important;
-  }
-
-  .reference-mosque-hero > .premium-image {
-    opacity: .66 !important;
-  }
-
-  .journey-card .premium-image,
-  .continue-card__cover .premium-image,
-  .reference-quran-continue__book {
-    max-width: 44vw;
-  }
-}
-
-/* Cream/light surfaces need softer object shadows than emerald surfaces. */
-[data-theme='light'] .brand-lockup__mark > img,
-[data-theme='light'] .ai-preview__mark > img,
-[data-theme='light'] .reference-profile-greeting__logo > img {
-  filter: drop-shadow(0 7px 12px rgba(61, 46, 23, .14));
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reading-progress > span,
-  .reference-reader-progress > i,
-  .reference-name-progress__bar > span,
-  .reference-dua-progress__bar > span,
-  .reference-dhikr-goal > span > i,
-  .reference-prayer-lesson-progress > span,
-  .next-prayer-panel__progress > span,
-  .reference-learning-course-hero__progress i,
-  .reference-prayer-course-hero__progress i,
-  .reference-guide-progress i,
-  .premium-image > img:not([hidden]),
-  .premium-home--v2 .welcome-hero__visual,
-  .reference-splash__mosque {
-    animation: none !important;
-    transition: none !important;
-  }
-
-  :where(button, [role='button']):not(:disabled),
-  :where(.bottom-nav__item, .icon-button, .reference-filter-tabs button, .reference-account-tabs button) svg {
-    transition-duration: 0s !important;
-  }
-}
+@media(prefers-reduced-motion:reduce){
+.reading-progress>span,.reference-reader-progress>i,.reference-name-progress__bar>span,.reference-dua-progress__bar>span,.reference-dhikr-goal>span>i,.reference-prayer-lesson-progress>span,.next-prayer-panel__progress>span,.reference-learning-course-hero__progress i,.reference-prayer-course-hero__progress i,.reference-guide-progress i,.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important;transition:none!important}
+:where(button,[role='button']):not(:disabled){transition-duration:0s!important}}
