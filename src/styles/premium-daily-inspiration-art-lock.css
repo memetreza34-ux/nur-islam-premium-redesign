@@ -9,29 +9,27 @@
   overflow: hidden;
 }
 
-/* Ayah: keep the existing architectural image as texture and add a subtle
-   Mihrab frame so the composition reads intentionally rather than as a crop. */
+/* Ayah detail uses one Mihrab source only. Keep the real image atmospheric so
+   the Arabic, meaning and actions stay the visible reading hierarchy. */
+.reference-ayah-hero {
+  height: 410px;
+  min-height: 0;
+  aspect-ratio: auto;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 22px 22px;
+}
+
 .reference-ayah-hero__art {
   z-index: 0 !important;
-  opacity: .09 !important;
+  opacity: .07 !important;
   mix-blend-mode: multiply;
 }
 
 .reference-ayah-hero__art > img {
   object-position: center 45% !important;
-  filter: saturate(.68) contrast(1.05) !important;
-  transform: scale(1.04);
-}
-
-.reference-ayah-hero::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset: 10px 12px 4px;
-  opacity: .13;
-  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat;
-  filter: sepia(.12) saturate(.86) contrast(1.03);
-  pointer-events: none;
+  filter: saturate(.62) contrast(1.04) !important;
+  transform: scale(.96);
 }
 
 .reference-ayah-hero::after {
@@ -40,8 +38,8 @@
   z-index: 0;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 28%, rgba(255,255,255,.24), transparent 11rem),
-    linear-gradient(180deg, transparent 45%, rgba(91, 64, 27, .06));
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.32), transparent 10rem),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 44%, rgba(91,64,27,.08));
   pointer-events: none;
 }
 
@@ -51,7 +49,20 @@
 }
 
 .reference-ayah-hero > p[dir='rtl'] {
-  text-shadow: 0 5px 18px rgba(94, 67, 29, .08);
+  margin: 18px 0 4px;
+  font-size: 2.22rem;
+  line-height: 1.55;
+  text-shadow: 0 5px 18px rgba(94,67,29,.08);
+}
+
+.reference-ayah-hero blockquote {
+  max-width: 304px;
+  font-size: 1.04rem;
+  line-height: 1.42;
+}
+
+.reference-ayah-hero > div {
+  margin-top: 10px;
 }
 
 /* Hadith: bring the lantern into the same stacking context as the copy. */
@@ -77,7 +88,7 @@
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(226, 191, 119, .13), transparent 70%);
+  background: radial-gradient(circle, rgba(226,191,119,.13), transparent 70%);
   filter: blur(8px);
   pointer-events: none;
 }
@@ -92,7 +103,7 @@
   box-shadow:
     0 13px 28px rgba(0,0,0,.2),
     inset 0 1px 0 rgba(255,255,255,.04),
-    0 0 24px rgba(226, 191, 119, .055);
+    0 0 24px rgba(226,191,119,.055);
 }
 
 /* Home daily cards use the same visual grammar, but remain compact. */
@@ -109,33 +120,29 @@
 .hadith-card,
 .reference-hadith-hero {
   background:
-    radial-gradient(circle at 100% 100%, rgba(226, 191, 119, .13), transparent 8rem),
+    radial-gradient(circle at 100% 100%, rgba(226,191,119,.13), transparent 8rem),
     linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
-/* The quote is the focal content. Keep it bright enough to read over the dark
-   emerald material while the lantern remains a secondary atmospheric object. */
 .hadith-card blockquote,
 .reference-hadith-hero blockquote {
-  color: rgba(255, 248, 234, .91) !important;
-  text-shadow: 0 3px 18px rgba(0, 0, 0, .34);
+  color: rgba(255,248,234,.91) !important;
+  text-shadow: 0 3px 18px rgba(0,0,0,.34);
 }
 
-/* Eyebrow/meta copy keeps the approved muted-green secondary tone so the
-   quote remains the visual focal point without flattening the palette. */
 .hadith-card .overline,
 .reference-hadith-hero .overline {
-  color: rgba(145, 168, 158, .8) !important;
+  color: rgba(145,168,158,.8) !important;
 }
 
 .hadith-card footer,
 .reference-hadith-hero footer {
-  color: rgba(226, 191, 119, .8) !important;
+  color: rgba(226,191,119,.8) !important;
 }
 
 [data-theme='light'] .reference-ayah-hero__art,
 [data-theme='light'] .verse-card--cream .verse-card__art {
-  opacity: .07 !important;
+  opacity: .055 !important;
 }
 
 [data-theme='light'] .hadith-card,
@@ -148,13 +155,13 @@
 
 [data-theme='light'] .hadith-card blockquote,
 [data-theme='light'] .reference-hadith-hero blockquote {
-  color: rgba(23, 56, 44, .86) !important;
+  color: rgba(23,56,44,.86) !important;
   text-shadow: none;
 }
 
 [data-theme='light'] .hadith-card .overline,
 [data-theme='light'] .reference-hadith-hero .overline {
-  color: rgba(58, 80, 67, .72) !important;
+  color: rgba(58,80,67,.72) !important;
 }
 
 [data-theme='light'] .hadith-card footer,
@@ -169,9 +176,14 @@
 }
 
 @media (max-width: 390px) {
-  .reference-ayah-hero::before {
-    inset: 15px 3px 8px;
-    opacity: .11;
+  .reference-ayah-hero {
+    height: 392px;
+    padding: 22px 18px 20px;
+  }
+
+  .reference-ayah-hero > p[dir='rtl'] {
+    margin-top: 14px;
+    font-size: 2.05rem;
   }
 
   .reference-hadith-hero::after {
@@ -179,15 +191,26 @@
     width: 136px !important;
     height: 164px !important;
     opacity: .18 !important;
-  }}
+  }
+}
 
 @media (max-width: 350px) {
-  .reference-ayah-hero::before {
-    opacity: .09;
+  .reference-ayah-hero {
+    height: 376px;
+    gap: 8px;
+  }
+
+  .reference-ayah-hero > p[dir='rtl'] {
+    font-size: 1.92rem;
+  }
+
+  .reference-ayah-hero blockquote {
+    font-size: .98rem;
   }
 
   .hadith-card::after,
   .reference-hadith-hero::after {
     right: -38px !important;
     opacity: .16 !important;
-  }}
+  }
+}
