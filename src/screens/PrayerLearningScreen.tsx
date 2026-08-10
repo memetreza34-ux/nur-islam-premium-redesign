@@ -17,7 +17,7 @@ import {
   TimerReset,
   Volume2,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage, QiblaObject } from '../shared/PremiumVisuals';
 
 export type PrayerLessonId = 'fajr' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
@@ -75,9 +75,6 @@ function readStringSet(key: string) {
 export function readNumber(key: string, fallback: number) {
   try {
     const raw = localStorage.getItem(key);
-    // Number(null) and Number('') are 0, which is finite, so an absent value
-    // used to return 0 instead of the fallback. Every current caller clamps
-    // that back to the same result, but the next one might not.
     if (raw === null || raw.trim() === '') return fallback;
     const value = Number(raw);
     return Number.isFinite(value) ? value : fallback;
@@ -108,6 +105,7 @@ export function PrayerLearningScreen({
   const [completedLessons, setCompletedLessons] = useState(() => readStringSet('nur_prayer_learning_complete'));
   const [completionOpen, setCompletionOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
 
   const selectedPrayer = useMemo(
     () => PRAYER_LESSONS.find((prayer) => prayer.id === selectedPrayerId) ?? PRAYER_LESSONS[0],
@@ -115,6 +113,8 @@ export function PrayerLearningScreen({
   );
   const lessonComplete = completedLessons.has(selectedPrayerId);
   const courseProgress = Math.round((completedLessons.size / PRAYER_LESSONS.length) * 100);
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   useEffect(() => {
     try {
@@ -166,7 +166,7 @@ export function PrayerLearningScreen({
   };
 
   return (
-    <motion.main className="screen reference-prayer-course-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-prayer-course-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zu Lernen"><ChevronLeft size={20} /></button>
         <div><span className="overline">Beten lernen</span><h1>Gebetskurs</h1></div>
@@ -252,15 +252,15 @@ export function PrayerLearningScreen({
 
       <AnimatePresence>
         {completionOpen ? (
-          <motion.div className="reference-prayer-course-complete" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setCompletionOpen(false)}>
-            <motion.section initial={{ opacity: 0, y: 24, scale: .95 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-prayer-course-complete" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setCompletionOpen(false)}>
+            <motion.section initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <span><CircleCheck size={32} /></span><small>Lektion abgeschlossen</small><h2>{selectedPrayer.label} gelernt</h2><p>Du hast den Grundlagenablauf vollständig durchgearbeitet. Wiederhole ihn regelmäßig und lass deine praktische Ausführung von einer vertrauenswürdigen Lehrperson prüfen.</p><button className="gold-button" onClick={() => setCompletionOpen(false)}>Weiterlernen <ChevronRight size={17} /></button>
             </motion.section>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
