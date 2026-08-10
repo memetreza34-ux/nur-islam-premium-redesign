@@ -1,8 +1,11 @@
 /**
  * Keeps the source attribution that already exists from sliding back.
  *
- * Duas, dhikr routines and learning lessons currently cite a source on every
- * entry. This asserts that a new entry cannot be added without one.
+ * Duas, dhikr routines, learning lessons and the central Hadith summaries
+ * currently cite a source on every entry. This asserts that a new entry cannot
+ * be added without one. Hadith summaries must additionally keep the explicit
+ * "Sinngemäßer Inhalt" label so a short German summary cannot be mistaken for
+ * original wording or a verified translation.
  *
  * The counter steps and the 99 Names carry no per-item source yet. That gap is
  * real and reported by `npm run content:report`, but it is not asserted here:
@@ -23,6 +26,7 @@ const count = (source, pattern) => [...source.matchAll(pattern)].length;
 const duas = await read('src/data/duaData.ts');
 const dhikr = await read('src/data/dhikrData.ts');
 const learning = await read('src/data/islamicLearningContent.ts');
+const hadith = await read('src/data/hadithData.ts');
 
 const duaEntries = count(duas, /^\s+id:\s*'/gm);
 const duaSources = count(duas, /^\s+source:\s*'/gm);
@@ -49,4 +53,15 @@ if (/sources:\s*\[\s*\]/.test(learning)) {
   throw new Error('A lesson carries an empty sources list.');
 }
 
-console.log(`Content sources verified: ${duaEntries} duas, ${dhikrRoutines} dhikr routines and ${lessons} lessons each cite a source. Citation presence is not a review; counter steps and the 99 Names remain uncited, see npm run content:report.`);
+const hadithEntries = count(hadith, /^\s+id:\s*'/gm);
+const hadithSources = count(hadith, /^\s+source:\s*'/gm);
+const labelledHadithSummaries = count(hadith, /^\s+summary:\s*'Sinngemäßer Inhalt:/gm);
+if (hadithEntries === 0) throw new Error('No Hadith entries found; the parser no longer matches the data.');
+if (hadithSources < hadithEntries) {
+  throw new Error(`Every Hadith summary must cite a source: ${hadithEntries} entries but ${hadithSources} sources.`);
+}
+if (labelledHadithSummaries < hadithEntries) {
+  throw new Error(`Every Hadith summary must remain explicitly labelled as sinngemäß: ${hadithEntries} entries but ${labelledHadithSummaries} labelled summaries.`);
+}
+
+console.log(`Content sources verified: ${duaEntries} duas, ${dhikrRoutines} dhikr routines, ${lessons} lessons and ${hadithEntries} Hadith summaries each carry source attribution; every Hadith summary is explicitly labelled sinngemäß. Citation presence is not a review; counter steps and the 99 Names remain uncited, see npm run content:report.`);
