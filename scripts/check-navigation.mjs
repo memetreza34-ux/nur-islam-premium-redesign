@@ -28,20 +28,21 @@ const requiredAppFragments = [
   'initialAyahNumber={selectedAyahNumber}',
   'hadithId={selectedHadithId}',
   'const safeAyahNumber = Math.max(1, Math.floor(ayahNumber))',
+  "window.addEventListener('popstate', handlePopState)",
+  "window.removeEventListener('popstate', handlePopState)",
+  'readBrowserNavigation<NavigationSnapshot>(event.state)',
 ];
 
 for (const fragment of requiredAppFragments) {
   if (!app.includes(fragment)) throw new Error(`App navigation is missing: ${fragment}`);
 }
 
-const requiredBrowserNavigationFragments = [
-  "window.addEventListener('popstate'",
-  "window.history.pushState",
-  "window.history.replaceState",
-];
-
-for (const fragment of requiredBrowserNavigationFragments) {
-  if (!browserNavigation.includes(fragment)) throw new Error(`Browser navigation is missing: ${fragment}`);
+for (const fragment of [
+  'window.history.pushState',
+  'window.history.replaceState',
+  'readBrowserNavigation<T>()?.depth',
+]) {
+  if (!browserNavigation.includes(fragment)) throw new Error(`Browser navigation service is missing: ${fragment}`);
 }
 
 const requiredCollectionHandlers = [
