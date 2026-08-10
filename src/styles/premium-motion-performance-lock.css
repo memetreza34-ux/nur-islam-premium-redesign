@@ -21,14 +21,11 @@
 
 @media(update:slow){
 .premium-home--v2 .welcome-hero__visual::before,.reference-mosque-hero>.premium-image::before,.reference-onboarding__visual>.premium-image::before,.hero-orb__ring,.background-orbit,.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}
-.bottom-nav,.app-shell--detail .reference-screen-header,.reference-assistant-input,.reference-modal-backdrop,.learn-modal-backdrop,.reference-prayer-settings-backdrop,.reference-mosque-detail-backdrop,.calendar-modal-backdrop{-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}
-.premium-image>img,.reference-legacy-hero img{filter:drop-shadow(0 14px 18px rgba(0,0,0,.34))!important}}
+.bottom-nav,.app-shell--detail .reference-screen-header,.reference-assistant-input,.reference-modal-backdrop,.learn-modal-backdrop,.reference-prayer-settings-backdrop,.reference-mosque-detail-backdrop,.calendar-modal-backdrop{-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}}
 
-@media(max-width:350px){
-.glass-card,.reference-account-form,.reference-note-editor,.reference-learning-lesson-card,.reference-learning-key-points,.reference-learning-sources,.reference-learning-quiz{-webkit-backdrop-filter:blur(10px) saturate(1.01)!important;backdrop-filter:blur(10px) saturate(1.01)!important}
-.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}}
+@media(max-width:350px){.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}}
 
-@media(max-width:380px){.premium-home--v2 .welcome-hero__visual{opacity:.44!important}.reference-mosque-hero>.premium-image{opacity:.66!important}.journey-card .premium-image,.continue-card__cover .premium-image,.reference-quran-continue__book{max-width:44vw}}
+@media(max-width:380px){.reference-mosque-hero>.premium-image{opacity:.66!important}.journey-card .premium-image,.continue-card__cover .premium-image,.reference-quran-continue__book{max-width:44vw}}
 
 [data-theme='light'] .brand-lockup__mark>img,[data-theme='light'] .ai-preview__mark>img,[data-theme='light'] .reference-profile-greeting__logo>img{filter:drop-shadow(0 7px 12px rgba(61,46,23,.14))}
 
