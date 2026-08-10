@@ -11,7 +11,7 @@ import {
   ShieldCheck,
   Sparkles,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { saveMosqueOrigin } from '../services/mosqueService';
 import { OBLIGATORY_PRAYER_IDS } from '../services/prayerSchedule';
 import { bootstrapSharedPrayerTimes, savePrayerLocation } from '../services/prayerTimesService';
@@ -69,9 +69,12 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   const [locationReady, setLocationReady] = useState(false);
   const [notificationsReady, setNotificationsReady] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const slide = slides[index];
   const SlideIcon = slide.icon;
   const isLast = index === slides.length - 1;
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   const requestLocation = () => {
     if (!navigator.geolocation) {
@@ -127,8 +130,8 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
       className="reference-onboarding"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: .985 }}
-      transition={{ duration: .45 }}
+      exit={{ opacity: 0, scale: reduceMotion ? 1 : .99 }}
+      transition={screenTransition}
     >
       <header className="reference-onboarding__topbar">
         <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} priority /><strong>Nur</strong></span>
@@ -139,10 +142,10 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
         <motion.section
           key={index}
           className="reference-onboarding__slide"
-          initial={{ opacity: 0, x: 25 }}
+          initial={{ opacity: 0, x: reduceMotion ? 0 : 18 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -22 }}
-          transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0, x: reduceMotion ? 0 : -14 }}
+          transition={screenTransition}
         >
           <div className={`reference-onboarding__visual reference-onboarding__visual--${index + 1}`}>
             <span className="reference-onboarding__halo" />
@@ -188,7 +191,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
           <button className="gold-button" onClick={() => isLast ? finish() : setIndex((value) => Math.min(slides.length - 1, value + 1))}>{isLast ? 'Nur öffnen' : 'Weiter'} <ChevronRight size={18} /></button>
         </div>
 
-        <AnimatePresence>{status ? <motion.p className="reference-onboarding__status" initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}>{status}</motion.p> : null}</AnimatePresence>
+        <AnimatePresence>{status ? <motion.p className="reference-onboarding__status" initial={{ opacity: 0, y: reduceMotion ? 0 : 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={microTransition}>{status}</motion.p> : null}</AnimatePresence>
       </footer>
     </motion.main>
   );
