@@ -104,6 +104,12 @@
   overflow: hidden !important;
 }
 
+/* Cream surfaces need stronger ink than the dark-theme muted palette. */
+[data-theme='light'] .calendar-weekdays { color: #a8752f; }
+[data-theme='light'] .calendar-day { color: #365448; }
+[data-theme='light'] .calendar-day em { color: #6f8d80; }
+[data-theme='light'] .calendar-month-nav p { color: #647d70; }
+
 @media (max-width: 350px) {
   :root {
     --nur-caption-size: .65rem;
