@@ -40,9 +40,13 @@
   pointer-events: none;
 }
 
-.reference-next-prayer > * {
+.reference-next-prayer > *:not(.next-prayer-panel__glow) {
   position: relative;
   z-index: 2;
+}
+
+.reference-next-prayer > .next-prayer-panel__glow {
+  position: absolute;
 }
 
 .reference-next-prayer .next-prayer-panel__time {
