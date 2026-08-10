@@ -93,8 +93,11 @@
   }
 
   .bottom-nav__item small {
-    max-width: 58px;
+    max-width: 60px;
+    min-height: 2.16em;
+    overflow: visible;
     font-size: 0.5rem;
+    text-overflow: clip;
   }}
 
 .toast {
