@@ -31,11 +31,9 @@ type GuideStep = {
   icon: LucideIcon;
 };
 
-const DAILY_AYAH_ARABIC = 'قُلْ هُوَ ٱللَّهُ أَحَدٌ';
-const DAILY_AYAH_MEANING = 'Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“';
-const DAILY_AYAH_SOURCE = 'Quran 112:1';
-const DAILY_HADITH_TEXT = 'Sinngemäß: Taten werden entsprechend den Absichten bewertet, und jeder Mensch erhält entsprechend seiner Absicht.';
-const DAILY_HADITH_SOURCE = 'Sahih al-Bukhari 1 · Sahih Muslim 1907';
+const FOCUSED_AYAH_ARABIC = 'قُلْ هُوَ ٱللَّهُ أَحَدٌ';
+const FOCUSED_AYAH_MEANING = 'Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“';
+const FOCUSED_AYAH_SOURCE = 'Quran 112:1';
 
 function readStoredNumber(key: string, fallback: number) {
   try {
@@ -88,9 +86,11 @@ function Toast({ message }: { message: string | null }) {
 export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
   const [saved, setSaved] = useState(() => readStoredNumber('nur_daily_ayah_saved', 0) === 1);
   const { toast, flash } = useToast();
-  const shareText = `${DAILY_AYAH_ARABIC}\n\n${DAILY_AYAH_MEANING}\n\n${DAILY_AYAH_SOURCE}`;
+  const shareText = `${FOCUSED_AYAH_ARABIC}\n\n${FOCUSED_AYAH_MEANING}\n\n${FOCUSED_AYAH_SOURCE}`;
 
   useEffect(() => {
+    // Keep the legacy key for existing users; only the visible product wording
+    // changes from a fake daily promise to an honest fixed Quran focus.
     try { localStorage.setItem('nur_daily_ayah_saved', saved ? '1' : '0'); } catch { /* optional */ }
   }, [saved]);
 
@@ -114,54 +114,25 @@ export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
 
   return (
     <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-      <ScreenHeader title="Ayah des Tages" eyebrow="Tägliche Inspiration" onBack={onBack} />
+      <ScreenHeader title="Ayah im Fokus" eyebrow="Quran entdecken" onBack={onBack} />
 
       <section className="reference-ayah-hero">
         <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="reference-ayah-hero__art" fallback={<Sparkles size={72} />} />
         <span className="hero-pill">Sure Al-Ikhlas · 112:1</span>
-        <p dir="rtl">{DAILY_AYAH_ARABIC}</p>
-        <blockquote>{DAILY_AYAH_MEANING}</blockquote>
+        <p dir="rtl">{FOCUSED_AYAH_ARABIC}</p>
+        <blockquote>{FOCUSED_AYAH_MEANING}</blockquote>
         <div>
           <button onClick={() => void copyAyah()}><Copy size={18} /> Kopieren</button>
           <button className={saved ? 'is-saved' : ''} onClick={() => setSaved((value) => !value)}>{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}{saved ? 'Gespeichert' : 'Speichern'}</button>
         </div>
       </section>
 
-      <section className="reference-reflection-card"><span className="reference-reflection-card__icon"><Sparkles size={20} /></span><span><small>Reflexion</small><h2>Die vollkommene Einheit Allahs</h2><p>Die Sure richtet den Glauben ausschließlich auf Allah. Sie beschreibt Seine Einzigkeit und dass nichts mit Ihm vergleichbar ist.</p></span></section>
+      <section className="reference-reflection-card">
+        <span className="reference-reflection-card__icon"><BookOpen size={20} /></span>
+        <span><small>Im Zusammenhang lesen</small><h2>Sure Al-Ikhlas vollständig öffnen</h2><p>Für Wortlaut und Zusammenhang ist der Quran-Reader maßgeblich. Diese Karte hebt bewusst nur Ayah 112:1 hervor und ersetzt nicht das Lesen der vollständigen Sure.</p></span>
+      </section>
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Klare Quellenkennzeichnung</strong><small>Quran 112:1. Die deutsche Formulierung ist eine sinngemäße Bedeutung und keine vorgetäuschte Originalübersetzung.</small></span></section>
       <div className="reference-detail-actions"><button onClick={() => void copyAyah()}><Copy size={18} /> Kopieren</button><button onClick={() => void shareAyah()}><Share2 size={18} /> Teilen</button></div>
-      <Toast message={toast} />
-    </motion.main>
-  );
-}
-
-export function HadithDetailScreen({ onBack }: { onBack: () => void }) {
-  const [saved, setSaved] = useState(() => readStoredNumber('nur_daily_hadith_saved', 0) === 1);
-  const { toast, flash } = useToast();
-  const shareText = `${DAILY_HADITH_TEXT}\n\n${DAILY_HADITH_SOURCE}`;
-
-  useEffect(() => {
-    try { localStorage.setItem('nur_daily_hadith_saved', saved ? '1' : '0'); } catch { /* optional */ }
-  }, [saved]);
-
-  const shareHadith = async () => {
-    try {
-      const result = await shareOrCopy('Hadith über die Absicht', shareText);
-      flash(result === 'shared' ? 'Hadith geteilt' : 'Hadith kopiert');
-    } catch (error) {
-      if ((error as DOMException)?.name !== 'AbortError') flash('Teilen war nicht möglich');
-    }
-  };
-
-  return (
-    <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
-      <ScreenHeader title="Hadith des Tages" eyebrow="Authentische Überlieferung" onBack={onBack} />
-
-      <section className="reference-hadith-hero"><span className="reference-hadith-hero__mark">ﷺ</span><span className="hero-pill">Absicht · Niyyah</span><blockquote>{DAILY_HADITH_TEXT}</blockquote><footer>Überliefert von ʿUmar ibn al-Khattab</footer></section>
-      <section className="reference-source-card reference-source-card--strong"><ShieldCheck size={19} /><span><strong>{DAILY_HADITH_SOURCE}</strong><small>Der Text wird bewusst sinngemäß wiedergegeben. Vor Veröffentlichung sollten Wortlaut und Lokalisierung nochmals mit einer geprüften Hadith-Datenquelle abgeglichen werden.</small></span></section>
-      <section className="reference-reflection-card"><span className="reference-reflection-card__icon"><Sparkles size={20} /></span><span><small>Was du mitnehmen kannst</small><h2>Die Absicht gibt der Tat ihre Richtung</h2><p>Eine alltägliche Handlung kann durch eine aufrichtige Absicht zu einer guten Tat werden. Prüfe vor wichtigen Handlungen, warum du sie ausführst.</p></span></section>
-      <section className="reference-hadith-points">{['Absicht vor der Handlung bewusst machen', 'Aufrichtigkeit regelmäßig prüfen', 'Gute Gewohnheiten mit einem klaren Ziel verbinden'].map((point) => <span key={point}><Check size={16} /> {point}</span>)}</section>
-      <div className="reference-detail-actions"><button className={saved ? 'is-saved' : ''} onClick={() => setSaved((value) => !value)}>{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}{saved ? 'Gespeichert' : 'Speichern'}</button><button onClick={() => void shareHadith()}><Share2 size={18} /> Teilen</button></div>
       <Toast message={toast} />
     </motion.main>
   );
