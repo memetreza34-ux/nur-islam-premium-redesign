@@ -8,7 +8,7 @@
 
 .reference-next-prayer::before,
 .next-prayer-panel::before {
-  z-index: 0 !important;
+  z-index: 0;
   right: -48px !important;
   bottom: -9px !important;
   width: 270px !important;
@@ -210,10 +210,6 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 390px) {
-  .reference-next-prayer {
-    min-height: 288px !important;
-  }
-
   .reference-next-prayer::before,
   .next-prayer-panel::before {
     right: -72px !important;
@@ -230,12 +226,6 @@
     width: 254px !important;
     height: 254px !important;
     opacity: .32 !important;
-  }
-
-  .reference-dhikr-counter__glow {
-    top: 10px !important;
-    width: 260px !important;
-    height: 260px !important;
   }
 
   .reference-dhikr-ring {
@@ -264,10 +254,6 @@
 }
 
 @media (max-width: 350px) {
-  .reference-next-prayer {
-    min-height: 278px !important;
-  }
-
   .reference-dhikr-counter {
     min-height: 390px !important;
   }
