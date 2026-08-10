@@ -9,7 +9,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
 
@@ -101,8 +101,11 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [infoOpen, setInfoOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
   const closeDialog = useCallback(() => { setInfoOpen(false); }, []);
   const screenDialog = useDialog(infoOpen, closeDialog, 'Über den Nur Assistenten');
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   const messageIdRef = useRef(Date.now());
 
@@ -145,7 +148,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <motion.main className="screen reference-assistant-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-assistant-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Lokaler Quellenmodus</span><h1>Nur Assistent</h1></div>
@@ -159,8 +162,8 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
 
       {messages.length ? (
         <section className="reference-chat-thread" aria-live="polite">
-          {messages.map((message) => (
-            <motion.div key={message.id} className={`reference-chat-message reference-chat-message--${message.role}`} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }}>
+          {messages.map((message, index) => (
+            <motion.div key={message.id} className={`reference-chat-message reference-chat-message--${message.role}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={{ ...microTransition, delay: reduceMotion ? 0 : Math.min(index * .025, .08) }}>
               {message.role === 'assistant' ? <span className="reference-chat-message__mark"><Sparkles size={16} /></span> : null}
               <div>
                 <p>{message.text}</p>
@@ -190,8 +193,8 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
 
       <AnimatePresence>
         {infoOpen ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setInfoOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-profile-modal reference-assistant-info-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setInfoOpen(false)}>
+            <motion.section {...screenDialog.props} className="reference-profile-modal reference-assistant-info-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setInfoOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span>
               <span className="overline">Quellenmodus</span>
