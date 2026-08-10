@@ -119,6 +119,39 @@
   line-height: 1.05 !important;
 }
 
+/* Home hierarchy: one primary Quran card, two supporting devotional tools.
+   Three equal narrow tiles looked busy and weakened the main action. */
+.premium-home--v2 .journey-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 12px !important;
+}
+
+.premium-home--v2 .journey-card {
+  min-height: 154px !important;
+}
+
+.premium-home--v2 .journey-card--quran {
+  grid-column: 1 / -1 !important;
+  min-height: 190px !important;
+}
+
+.premium-home--v2 .journey-card--quran .premium-image {
+  top: -4px !important;
+  right: 0 !important;
+  left: auto !important;
+  width: 56% !important;
+  height: 166px !important;
+  transform: none !important;
+}
+
+.premium-home--v2 .journey-card--quran > span:last-child {
+  max-width: 54% !important;
+}
+
+.premium-home--v2 .journey-card:not(.journey-card--quran) .premium-image {
+  height: 102px !important;
+}
+
 /* Arabic list labels deserve slightly more presence than utility metadata. */
 .reference-quran-list__arabic,
 .reference-name-list__arabic {
@@ -258,6 +291,19 @@
   .premium-home--v2 .quick-card__eyebrow,
   .premium-home--v2 .prayer-source-note {
     font-size: .64rem !important;
+  }
+
+  .premium-home--v2 .journey-card--quran {
+    min-height: 178px !important;
+  }
+
+  .premium-home--v2 .journey-card--quran .premium-image {
+    width: 59% !important;
+    height: 154px !important;
+  }
+
+  .premium-home--v2 .journey-card--quran > span:last-child {
+    max-width: 56% !important;
   }
 
   .bottom-nav__item small {
