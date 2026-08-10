@@ -225,7 +225,6 @@ requireCssFit(brandEntryArt, 'System error Nur mark', '.reference-system-error__
 ]);
 
 requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260808-release-hardening');
-requireCssAsset(dailyCss, 'Daily Ayah', '.reference-ayah-hero::before', 'mihrab-arch-v2.webp?v=20260808-release-hardening');
 requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v2.webp?v=20260808-release-hardening');
 requireCssAsset(discoveryCss, 'Calendar month', '.reference-calendar-month::after', 'sun-emblem-v2.webp?v=20260808-release-hardening');
 requireCssAsset(discoveryCss, 'Calendar event', '.reference-calendar-event::after', 'calendar-chip-v2.webp?v=20260808-release-hardening');
@@ -292,4 +291,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: Splash/brand crops, primary screens, onboarding slide compositions, all 13 additional features and CSS-driven artwork keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');
+console.log('Reference image map verified: primary screens, single-source Ayah artwork, onboarding compositions, all 13 additional features and CSS-driven ornaments keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');
