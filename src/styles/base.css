@@ -25,7 +25,7 @@
 
 * { box-sizing: border-box; }
 html { min-width: 320px; min-height: 100%; background: var(--bg-deep); }
-body { margin: 0; min-width: 320px; min-height: 100vh; overflow-x: hidden; background: var(--bg-deep); }
+body { margin: 0; min-width: 320px; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; background: var(--bg-deep); }
 button, input, select, textarea { font: inherit; }
 button { color: inherit; }
 button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
@@ -33,6 +33,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 .app-background {
   position: relative;
   min-height: 100vh;
+  min-height: 100dvh;
   overflow: hidden;
   background:
     radial-gradient(circle at 18% 2%, rgba(13, 87, 67, 0.34), transparent 25rem),
@@ -66,6 +67,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   position: relative;
   width: min(100%, 470px);
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0 auto;
   padding: max(18px, env(safe-area-inset-top)) 18px calc(110px + env(safe-area-inset-bottom));
 }
