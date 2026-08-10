@@ -8,7 +8,7 @@ import {
   RotateCcw,
   Sparkles,
 } from 'lucide-react';
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { DUA_BY_ID } from '../data/duaData';
 import { getHadithById, readSavedHadithIds } from '../data/hadithData';
 import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
@@ -137,6 +137,7 @@ export function CollectionsScreen({
   onOpenCalendarDate,
 }: CollectionsScreenProps) {
   const [filter, setFilter] = useState('Alle');
+  const reduceMotion = useReducedMotion();
   const quranBookmarkGroups = useMemo(readQuranBookmarkGroups, []);
   const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites', [], 114), []);
   const duaFavorites = useMemo(readDuaFavoriteSet, []);
@@ -161,7 +162,7 @@ export function CollectionsScreen({
     || (filter === 'Termine' && calendarFavorites.size === 0);
 
   return (
-    <motion.main className="screen reference-collections-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-collections-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Gespeichert</span><h1>Meine Sammlung</h1></div>
