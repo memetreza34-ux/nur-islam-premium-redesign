@@ -152,7 +152,7 @@ export function InstallAppPrompt() {
           <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="reference-install-prompt__logo" fallback={<NurMark />} />
           <div className="reference-install-prompt__copy">
             <span className="overline">Nur Islam als App</span>
-            <strong>{installed ? 'App wurde installiert' : mode === 'ios' ? 'Vom Home-Bildschirm öffnen' : 'Direkt als App öffnen'}</strong>
+            <strong>{installed ? 'App wurde installiert' : mode === 'ios' ? 'Als App öffnen' : 'Direkt als App öffnen'}</strong>
             <small>{mode === 'ios' ? 'Ohne Browserleiste und mit eigenem App-Symbol.' : 'Schneller Start, Vollbildansicht und Offline-Grundlage.'}</small>
             {installError ? <em className="reference-install-prompt__error">{installError}</em> : null}
           </div>
