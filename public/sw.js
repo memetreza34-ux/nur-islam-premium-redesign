@@ -11,6 +11,8 @@ const APP_SHELL = [
   INDEX_URL,
   scoped('manifest.webmanifest'),
   scoped('nur-app-icon.svg'),
+  scoped('nur-app-icon-192.png'),
+  scoped('nur-app-icon-512.png'),
   scoped('premium-assets/high-res-objects/nur-logo-emblem.png'),
   premiumAsset('nur-logo-emblem-v2.webp'),
   premiumAsset('mosque-gold-v2.svg'),
