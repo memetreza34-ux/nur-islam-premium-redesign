@@ -99,6 +99,7 @@
 [data-theme='light'] .calendar-day{color:#365448}
 [data-theme='light'] .calendar-day em{color:#6f8d80}
 [data-theme='light'] .calendar-month-nav p{color:#647d70}
+[data-theme='light'] .reference-prayer-learning-hub .hero-pill,[data-theme='light'] .reference-prayer-learning-hub__progress strong{color:#f2d79a}
 
 @media(max-width:350px){
   :root {
