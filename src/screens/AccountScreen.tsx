@@ -14,7 +14,7 @@ import {
   Trash2,
   UserPlus,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   backupLocalState,
   deleteCloudData,
@@ -48,6 +48,9 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const [cloudUpdatedAt, setCloudUpdatedAt] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmRestore, setConfirmRestore] = useState(false);
+  const reduceMotion = useReducedMotion();
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
 
   useEffect(() => subscribeAuth(setSession), []);
   useEffect(() => {
@@ -188,7 +191,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   };
 
   return (
-    <motion.main className="screen reference-account-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-account-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Konto & Sicherung</span><h1>Nur Cloud</h1></div>
@@ -262,7 +265,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
         </>
       )}
 
-      <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="status">{status}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={microTransition} role="status">{status}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
