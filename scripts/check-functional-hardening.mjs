@@ -10,6 +10,8 @@ const [
   reader,
   quran,
   readingScreens,
+  dailyHadith,
+  hadithData,
   legacy,
   collections,
   duas,
@@ -37,6 +39,8 @@ const [
   read('src/screens/QuranReaderScreen.tsx'),
   read('src/screens/QuranScreen.tsx'),
   read('src/screens/ReferenceReadingScreens.tsx'),
+  read('src/screens/DailyHadithScreen.tsx'),
+  read('src/data/hadithData.ts'),
   read('src/screens/LegacyFeatureScreens.tsx'),
   read('src/screens/CollectionsScreen.tsx'),
   read('src/screens/DuasScreen.tsx'),
@@ -97,6 +101,11 @@ requireText(app, [
   'onOpenDua={openSavedDua}',
   'onOpenName={openSavedName}',
   'onOpenCalendarDate={openSavedCalendarDate}',
+  'Ayah im Fokus',
+  'getDailyHadith(now)',
+  'selectedHadithId',
+  'onOpenHadith={openSavedHadith}',
+  "const readerParent: Tab = activeTab === 'home' ? 'quran' : activeTab",
 ], 'Home and direct navigation');
 forbidText(app, [
   '33 von 100',
@@ -108,6 +117,7 @@ forbidText(app, [
   'onOpenDuas=',
   'onOpenNames=',
   'onOpenCalendar=',
+  'Ayah des Tages',
 ], 'Home and direct navigation');
 
 requireText(quran, [
@@ -135,11 +145,14 @@ requireText(collections, [
   'onOpenDua: (id: string) => void',
   'onOpenName: (id: string) => void',
   'onOpenCalendarDate: (date: string) => void',
+  'onOpenHadith: (id: string) => void',
   'onOpenDua(id)',
   'onOpenName(id)',
   'onOpenCalendarDate(date)',
+  'onOpenHadith(id)',
   "filter === 'Tagesinhalte'",
   "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
+  'readSavedHadithIds',
 ], 'Collection routing');
 forbidText(collections, [
   'OFFLINE_QURAN_SURAHS',
@@ -225,24 +238,54 @@ requireText(readingScreens, [
   'async function shareOrCopy',
   "navigator.share({ title, text })",
   "localStorage.setItem('nur_daily_ayah_saved'",
-  "localStorage.setItem('nur_daily_hadith_saved'",
+  'Ayah im Fokus',
+  'Quran entdecken',
   'copyAyah',
   'shareAyah',
-  'shareHadith',
   'completeGuide',
   'nur_guide_${mode}_complete',
-], 'Daily content and worship guide actions');
+], 'Focused Ayah and worship guide actions');
 forbidText(readingScreens, [
   'setPlaying',
   '<Headphones',
   "flash('Ayah kopiert')}",
   "flash('Teilen geöffnet')}",
-  "flash('Hadith teilen geöffnet')}",
+  'export function HadithDetailScreen',
+  'DAILY_HADITH_TEXT',
+  'DAILY_HADITH_SOURCE',
+  'Ayah des Tages',
+  'Tägliche Inspiration',
   'export function QuranReaderScreen',
   'Leseeinstellungen geöffnet',
-  'Hadith-Einstellungen geöffnet',
   'Lerneinstellungen geöffnet',
-], 'Daily content and worship guide actions');
+], 'Focused Ayah and worship guide actions');
+
+requireText(dailyHadith, [
+  'hadithId?: string | null',
+  'getHadithById(hadithId) ?? getDailyHadith()',
+  'readSavedHadithIds',
+  'writeSavedHadithIds(next)',
+  'toggleSaved',
+  'shareOrCopy',
+  'Hadith des Tages',
+  'Gespeicherter Hadith',
+  'Primärquelle',
+], 'Rotating daily Hadith actions');
+forbidText(dailyHadith, [
+  "localStorage.setItem('nur_daily_hadith_saved'",
+  'DAILY_HADITH_TEXT',
+], 'Rotating daily Hadith actions');
+
+requireText(hadithData, [
+  'export const HADITH_LIBRARY',
+  'getDailyHadith',
+  'getHadithById',
+  "const SAVED_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved_ids'",
+  "const LEGACY_DAILY_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved'",
+  "saved.add('intentions')",
+  'localDayNumber(date)',
+  'HADITH_LIBRARY[index]',
+], 'Hadith rotation and bookmark migration');
 
 requireText(dhikr, [
   'DHIKR_TARGET_BY_KEY',
@@ -401,4 +444,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home and Quran use real persisted progress only, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, the focused Ayah is honestly labelled, daily Hadith content rotates from the source-labelled library with bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
