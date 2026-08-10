@@ -101,14 +101,18 @@ forbidTokens(dhikr, 'Dhikr daily persistence', [
 ]);
 
 requireTokens(collections, 'Collection persistence routing', [
-  "filter === 'Tagesinhalte'",
-  "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
+  "filter === 'Impulse'",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine']",
+  'const showHighlights =',
   'readDuaFavoriteSet()',
   'readNameFavoriteSet()',
+  'readSavedHadithIds',
   'readDateSet',
   'onOpenReader(group.surahNumber, ayahNumber)',
 ]);
 forbidTokens(collections, 'Collection persistence routing', [
+  "filter === 'Tagesinhalte'",
+  "['Alle', 'Quran', 'Duas', 'Namen', 'Tagesinhalte', 'Termine']",
   "filter === 'Hadith' && !ayahSaved && !hadithSaved",
   "['Alle', 'Quran', 'Duas', 'Namen', 'Hadith', 'Termine']",
 ]);
@@ -157,4 +161,4 @@ requireTokens(backend, 'Cloud backup privacy', [
   'await signOut();',
 ]);
 
-console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing, Calendar favorite dates are validated/deduplicated, local Calendar/Notes IDs are collision-resistant, cloud deletion wording matches the actual sign-out behavior, and device-local/private state stays outside generic cloud backup.');
+console.log('Progress/persistence truth verified: Home and Quran never synthesize reading history, reader progress is range-validated, empty Dua/Name favorites stay empty, Dhikr rolls over coherently, collections preserve exact saved-content routing with durable Quran/Hadith impulses, Calendar favorite dates are validated/deduplicated, local Calendar/Notes IDs are collision-resistant, cloud deletion wording matches the actual sign-out behavior, and device-local/private state stays outside generic cloud backup.');
