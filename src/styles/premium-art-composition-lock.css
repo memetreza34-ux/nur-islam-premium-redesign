@@ -31,7 +31,7 @@
 .reference-legacy-hero__copy{z-index:3!important;min-width:0}
 .reference-legacy-hero__copy p{max-width:260px;text-wrap:pretty}
 .reference-legacy-hero img{z-index:2!important}
-.reference-legacy-hero>img[src*='bookmark-v2.webp']{display:block;content:url('/premium-assets/high-res-objects/zakat-mark.svg');width:118px;max-height:118px}
+.reference-legacy-hero:has(>img[src*='bookmark-v2.webp']) .reference-legacy-hero__copy::after{content:'2,5%';position:absolute;top:50%;left:calc(100% + 16px);display:grid;width:94px;height:94px;place-items:center;transform:translateY(-50%);border:1px solid rgba(233,200,120,.42);border-radius:50%;color:#e9c878;background:radial-gradient(circle at 38% 32%,rgba(243,217,157,.16),rgba(10,48,37,.88) 58%,rgba(4,21,16,.96));box-shadow:0 18px 34px rgba(0,0,0,.34),inset 0 0 0 9px rgba(225,194,122,.035);font:600 1.38rem var(--font-display,Georgia,serif);letter-spacing:-.03em;text-shadow:0 8px 18px rgba(0,0,0,.34)}
 .reference-onboarding__visual>.premium-image{z-index:1}
 .reference-onboarding__visual-icon,.reference-onboarding__tasbih{z-index:3}
 .reference-onboarding__copy h1,.reference-onboarding__copy p{text-wrap:balance}
@@ -66,4 +66,5 @@
 .reference-mosque-hero>div{width:78%!important;max-width:238px}
 .reference-prayer-learning-hub__copy,.reference-prayer-course-hero__copy,.reference-guide-hero>div:last-child{max-width:74%}
 .reference-legacy-hero{grid-template-columns:minmax(0,1fr) 82px!important}
-.reference-legacy-hero img{max-width:94px}}
+.reference-legacy-hero img{max-width:94px}
+.reference-legacy-hero:has(>img[src*='bookmark-v2.webp']) .reference-legacy-hero__copy::after{left:calc(100% + 6px);width:78px;height:78px;font-size:1.16rem}}
