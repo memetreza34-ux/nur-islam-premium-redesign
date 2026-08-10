@@ -5,6 +5,7 @@ const prompt = fs.readFileSync(new URL('../src/shared/InstallAppPrompt.tsx', imp
 const main = fs.readFileSync(new URL('../src/app/main.tsx', import.meta.url), 'utf8');
 const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
 const manifest = JSON.parse(fs.readFileSync(new URL('../public/manifest.webmanifest', import.meta.url), 'utf8'));
+const serviceWorker = fs.readFileSync(new URL('../public/sw.js', import.meta.url), 'utf8');
 
 function pngSize(relativePath) {
   const buffer = fs.readFileSync(new URL(relativePath, import.meta.url));
@@ -55,6 +56,8 @@ const checks = [
   [hasManifestIcon('./nur-app-icon-512.png', '512x512', 'maskable'), 'manifest keeps the 512x512 maskable PNG icon'],
   [icon192?.width === 192 && icon192?.height === 192, 'the 192 PNG file has real 192x192 dimensions'],
   [icon512?.width === 512 && icon512?.height === 512, 'the 512 PNG file has real 512x512 dimensions'],
+  [serviceWorker.includes("scoped('nur-app-icon-192.png')"), 'service worker keeps the 192 install icon in the offline app shell'],
+  [serviceWorker.includes("scoped('nur-app-icon-512.png')"), 'service worker keeps the 512 install icon in the offline app shell'],
 ];
 
 const failures = checks.filter(([passed]) => !passed).map(([, message]) => message);
@@ -64,4 +67,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log('Install prompt check passed, including iPhone/iPad detection, Apple PWA metadata, exact 192/512 raster icons, standalone suppression and Add-to-Home-Screen guidance.');
+console.log('Install prompt check passed, including iPhone/iPad detection, Apple PWA metadata, exact 192/512 raster icons, offline icon caching, standalone suppression and Add-to-Home-Screen guidance.');
