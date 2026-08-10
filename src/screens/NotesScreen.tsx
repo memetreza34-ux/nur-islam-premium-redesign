@@ -11,7 +11,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   createNote as createCloudNote,
   deleteNote as deleteCloudNote,
@@ -73,7 +73,10 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
   const [body, setBody] = useState('');
   const [busy, setBusy] = useState(true);
   const [status, setStatus] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const localNoteIdRef = useRef(Date.now() * 1000);
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
 
   const selected = useMemo(() => notes.find((note) => note.id === selectedId) ?? null, [notes, selectedId]);
 
@@ -219,7 +222,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
   };
 
   return (
-    <motion.main className="screen reference-notes-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-notes-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Deine Gedanken</span><h1>Notizen</h1></div>
@@ -264,7 +267,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         </section>
       ) : null}
 
-      <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} role="status">{status}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{status ? <motion.div className="reference-account-status" initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={microTransition} role="status">{status}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
