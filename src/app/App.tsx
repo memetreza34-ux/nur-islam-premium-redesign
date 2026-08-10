@@ -423,6 +423,7 @@ function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: 
 export default function App() {
   const [onboardingComplete, setOnboardingComplete] = useState(hasCompletedOnboarding);
   const [activeTab, setActiveTab] = useState<Tab>('home');
+  const [navigationHistory, setNavigationHistory] = useState<Tab[]>([]);
   const [selectedSurahNumber, setSelectedSurahNumber] = useState(112);
   const [selectedAyahNumber, setSelectedAyahNumber] = useState(1);
   const [selectedDuaId, setSelectedDuaId] = useState<string | null>(null);
@@ -448,22 +449,44 @@ export default function App() {
     setSelectedCalendarDate(null);
   };
 
-  const navigate = (tab: Tab) => {
+  const moveTo = (tab: Tab, rememberOrigin = true) => {
+    if (tab === activeTab) return;
+    if (rememberOrigin) setNavigationHistory((current) => [...current, activeTab].slice(-24));
     if (tab === 'duas') setSelectedDuaId(null);
     if (tab === 'names') setSelectedNameId(null);
     if (tab === 'calendar') setSelectedCalendarDate(null);
     setActiveTab(tab);
   };
 
+  const navigate = (tab: Tab) => moveTo(tab, true);
+
+  const navigatePrimary = (tab: PrimaryTab) => {
+    clearDirectTargets();
+    setNavigationHistory([]);
+    setActiveTab(tab);
+  };
+
+  const goBack = (fallback: Tab = 'home') => {
+    setNavigationHistory((current) => {
+      const remaining = [...current];
+      let previous = remaining.pop();
+      while (previous === activeTab) previous = remaining.pop();
+      setActiveTab(previous ?? fallback);
+      return remaining;
+    });
+  };
+
   useEffect(() => {
     const openPrayerTracker = () => {
       setOnboardingComplete(true);
       clearDirectTargets();
+      setNavigationHistory([]);
       setActiveTab('prayer');
     };
     const openCalendar = () => {
       setOnboardingComplete(true);
       clearDirectTargets();
+      setNavigationHistory([]);
       setActiveTab('calendar');
     };
     const applyNavigationIntent = (intent: PendingNavigationIntent) => {
@@ -483,38 +506,36 @@ export default function App() {
     };
   }, []);
 
-  const goHome = () => {
-    clearDirectTargets();
-    setActiveTab('home');
-  };
-  const goQuran = () => {
+  const openQuran = () => {
     setSelectedAyahNumber(1);
-    setActiveTab('quran');
+    moveTo('quran');
   };
-  const goLearn = () => setActiveTab('learn');
   const openReader = (surahNumber: number, ayahNumber = 1) => {
     clearDirectTargets();
     setSelectedSurahNumber(surahNumber);
     setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)));
-    setActiveTab('reader');
+    moveTo('reader', activeTab !== 'reader');
   };
   const openSavedDua = (id: string) => {
     setSelectedDuaId(id);
     setSelectedNameId(null);
     setSelectedCalendarDate(null);
-    setActiveTab('duas');
+    moveTo('duas');
+    setSelectedDuaId(id);
   };
   const openSavedName = (id: string) => {
     setSelectedNameId(id);
     setSelectedDuaId(null);
     setSelectedCalendarDate(null);
-    setActiveTab('names');
+    moveTo('names');
+    setSelectedNameId(id);
   };
   const openSavedCalendarDate = (date: string) => {
     setSelectedCalendarDate(date);
     setSelectedDuaId(null);
     setSelectedNameId(null);
-    setActiveTab('calendar');
+    moveTo('calendar');
+    setSelectedCalendarDate(date);
   };
 
   if (!onboardingComplete) {
@@ -526,6 +547,7 @@ export default function App() {
           <OnboardingScreen onComplete={() => {
             setOnboardingComplete(true);
             clearDirectTargets();
+            setNavigationHistory([]);
             setActiveTab('home');
           }} />
         </div>
@@ -534,45 +556,45 @@ export default function App() {
   }
 
   const screen = isLegacyTab(activeTab)
-    ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goHome} />
+    ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
     : activeTab === 'home'
       ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
       : activeTab === 'quran'
-        ? <QuranScreen onBack={goHome} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
+        ? <QuranScreen onBack={goBack} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
         : activeTab === 'reader'
-          ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goQuran} onOpenSurah={(number) => openReader(number, 1)} />
+          ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goBack} onOpenSurah={(number) => openReader(number, 1)} />
           : activeTab === 'ayah'
-            ? <AyahDetailScreen onBack={goHome} />
+            ? <AyahDetailScreen onBack={goBack} />
             : activeTab === 'hadith'
-              ? <HadithDetailScreen onBack={goHome} />
+              ? <HadithDetailScreen onBack={goBack} />
               : activeTab === 'wudu'
-                ? <WorshipGuideScreen initialMode="wudu" onBack={goLearn} />
+                ? <WorshipGuideScreen initialMode="wudu" onBack={goBack} />
                 : activeTab === 'salah'
-                  ? <WorshipGuideScreen initialMode="salah" onBack={goLearn} />
+                  ? <WorshipGuideScreen initialMode="salah" onBack={goBack} />
                   : activeTab === 'legal'
-                    ? <LegalScreen onBack={() => navigate('profile')} />
+                    ? <LegalScreen onBack={goBack} />
                     : activeTab === 'dhikr'
-                    ? <DhikrScreen onBack={goHome} />
+                    ? <DhikrScreen onBack={goBack} />
                     : activeTab === 'qibla'
-                      ? <QiblaScreen onBack={goHome} />
+                      ? <QiblaScreen onBack={goBack} />
                       : activeTab === 'profile'
-                        ? <MoreScreen onBack={goHome} onNavigate={(destination) => navigate(destination)} />
+                        ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
                         : activeTab === 'prayer'
-                          ? <PrayerScreen onBack={goHome} />
+                          ? <PrayerScreen onBack={goBack} />
                           : activeTab === 'calendar'
-                            ? <CalendarScreen onBack={goHome} initialDateKey={selectedCalendarDate} />
+                            ? <CalendarScreen onBack={goBack} initialDateKey={selectedCalendarDate} />
                             : activeTab === 'learn'
-                              ? <LearnScreen onBack={goHome} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} />
+                              ? <LearnScreen onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} />
                               : activeTab === 'duas'
-                                ? <DuasScreen onBack={goHome} initialDuaId={selectedDuaId} />
+                                ? <DuasScreen onBack={goBack} initialDuaId={selectedDuaId} />
                                 : activeTab === 'names'
-                                  ? <NamesScreen onBack={goHome} initialNameId={selectedNameId} />
+                                  ? <NamesScreen onBack={goBack} initialNameId={selectedNameId} />
                                   : activeTab === 'mosques'
-                                    ? <MosqueScreen onBack={goHome} />
+                                    ? <MosqueScreen onBack={goBack} />
                                     : activeTab === 'collections'
                                       ? <CollectionsScreen
-                                          onBack={goHome}
-                                          onOpenQuran={goQuran}
+                                          onBack={goBack}
+                                          onOpenQuran={openQuran}
                                           onOpenReader={openReader}
                                           onOpenDua={openSavedDua}
                                           onOpenName={openSavedName}
@@ -580,7 +602,7 @@ export default function App() {
                                           onOpenHadith={() => navigate('hadith')}
                                           onOpenCalendarDate={openSavedCalendarDate}
                                         />
-                                      : <AssistantScreen onBack={goHome} />;
+                                      : <AssistantScreen onBack={goBack} />;
 
   return (
     <div className="app-background app-background--v2">
@@ -592,7 +614,7 @@ export default function App() {
             {screen}
           </motion.div>
         </AnimatePresence>
-        {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={navigate} /> : null}
+        {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={navigatePrimary} /> : null}
       </div>
       <InstallAppPrompt />
     </div>
