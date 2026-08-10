@@ -16,7 +16,7 @@ import {
   Sparkles,
   WifiOff,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 import {
   fetchSurahs,
@@ -95,6 +95,7 @@ export function QuranScreen({
   const [reloadToken, setReloadToken] = useState(0);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     let active = true;
@@ -156,12 +157,15 @@ export function QuranScreen({
     });
   };
 
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const toastTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
     <motion.main
       className="screen reference-quran-screen reference-quran-screen--complete"
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+      transition={screenTransition}
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
@@ -217,7 +221,7 @@ export function QuranScreen({
               const offline = OFFLINE_QURAN_SURAH_SET.has(surah.number);
               const favorite = favorites.has(surah.number);
               return (
-                <motion.article key={surah.number} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .008, .18) }}>
+                <motion.article key={surah.number} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .006, .12), ease: [0.22, 1, 0.36, 1] }}>
                   <button className="reference-quran-list__main" onClick={() => onOpenReader(surah.number, 1)}>
                     <span className="reference-quran-list__number">{surah.number}</span>
                     <span className="reference-quran-list__copy"><strong>{surah.englishName}</strong><small>{getGermanRevelationLabel(surah.revelationType)} · {surah.numberOfAyahs} Ayat</small></span>
@@ -243,7 +247,7 @@ export function QuranScreen({
         <span className="reference-quran-verse__action"><Sparkles size={17} /> Details öffnen</span>
       </button>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={toastTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
