@@ -64,3 +64,6 @@
 /* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
 @import './styles/visual-consistency.css';
 @import './styles/release-hardening.css';
+
+/* Deliberate final art direction: semantic premium hierarchy, not bug-fix overrides. */
+@import './styles/premium-art-direction.css';
