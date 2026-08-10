@@ -142,7 +142,26 @@ try {
   await installPrompt.waitFor({ state: 'visible', timeout: 8_000 });
   await shot(installPage, 'apple-04-install-prompt');
   await installPage.getByRole('button', { name: 'Anleitung' }).click();
-  await installPage.getByText('„Zum Home-Bildschirm“ wählen').waitFor({ state: 'visible', timeout: 5_000 });
+  const installGuideLastRow = installPage.getByText('„Zum Home-Bildschirm“ wählen');
+  await installGuideLastRow.waitFor({ state: 'visible', timeout: 5_000 });
+  await installPage.waitForTimeout(420);
+  const guideState = await installGuideLastRow.evaluate((node) => {
+    const rect = node.getBoundingClientRect();
+    const promptRect = node.closest('.reference-install-prompt')?.getBoundingClientRect();
+    return {
+      top: rect.top,
+      bottom: rect.bottom,
+      promptTop: promptRect?.top ?? -1,
+      promptBottom: promptRect?.bottom ?? -1,
+      viewportHeight: window.visualViewport?.height ?? window.innerHeight,
+    };
+  });
+  if (guideState.top < 0 || guideState.bottom > guideState.viewportHeight + 1) {
+    throw new Error(`Expanded iOS install guide leaves the Safari viewport: ${JSON.stringify(guideState)}.`);
+  }
+  if (guideState.promptTop < 0 || guideState.promptBottom > guideState.viewportHeight + 1) {
+    throw new Error(`Expanded install card itself leaves the Safari viewport: ${JSON.stringify(guideState)}.`);
+  }
   await shot(installPage, 'apple-05-install-guide');
   await installContext.close();
 
@@ -174,4 +193,4 @@ try {
   await browser.close();
 }
 
-console.log('Apple WebKit QA captured: painted iPhone Home, Ayah, focused Assistant, install flow, standalone mode and Light Theme with route-scroll assertions.');
+console.log('Apple WebKit QA captured: painted iPhone Home, Ayah, focused Assistant, install flow, standalone mode and Light Theme with route-scroll and install-guide viewport assertions.');
