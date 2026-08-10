@@ -16,6 +16,7 @@ on:
       - 'scripts/capture-legacy-reference-preview.mjs'
       - 'scripts/capture-light-reference-preview.mjs'
       - 'scripts/capture-apple-reference-preview.mjs'
+      - 'scripts/capture-apple-compact-preview.mjs'
       - '.github/workflows/reference-render-preview.yml'
 
 permissions:
@@ -86,6 +87,11 @@ jobs:
         env:
           PREVIEW_URL: http://127.0.0.1:4173/
         run: node scripts/capture-apple-reference-preview.mjs
+
+      - name: Capture compact iPhone WebKit screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-apple-compact-preview.mjs
 
       - name: Upload reference screenshots
         if: always()
