@@ -154,7 +154,7 @@ try {
 
   const moreNav = notesPage.locator('.bottom-nav__item').filter({ hasText: 'Mehr' }).first();
   await moreNav.click();
-  await notesPage.locator('.reference-more-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  await notesPage.locator('.reference-profile-screen').waitFor({ state: 'visible', timeout: 10_000 });
   const accountEntry = notesPage.locator('button.reference-account-entry').first();
   await accountEntry.scrollIntoViewIfNeeded();
   await accountEntry.click();
