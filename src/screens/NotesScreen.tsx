@@ -245,7 +245,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
             <em>{new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' }).format(new Date(note.updated_at))}</em>
           </button>
         ))}
-        {!busy && notes.length === 0 ? (
+        {!busy && notes.length === 0 && !editorOpen ? (
           <div className="reference-empty-result">
             <NotebookPen size={25} />
             <strong>Noch keine Notizen</strong>
