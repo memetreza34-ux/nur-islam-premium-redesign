@@ -1,316 +1,42 @@
-/* Prayer + Dhikr + Qibla final focal-art direction. Presentation only. */
+/* Prayer + Dhikr + Qibla focal art. */
+.reference-next-prayer{display:grid;isolation:isolate;min-height:300px!important;align-content:start;grid-auto-rows:max-content}
+.reference-next-prayer::before,.next-prayer-panel::before{content:'';position:absolute;z-index:0;right:-48px!important;bottom:-9px!important;width:270px!important;height:212px!important;opacity:.29!important;background:url('/premium-assets/high-res-objects/dome-v2.webp?v=20260808-release-hardening') center bottom/contain no-repeat!important;filter:drop-shadow(0 25px 23px rgba(0,0,0,.47)) saturate(.92) contrast(1.035)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);pointer-events:none}
+.reference-next-prayer::after{content:'';position:absolute;z-index:0;right:-76px;bottom:-92px;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(226,191,119,.1),rgba(38,125,91,.055) 44%,transparent 70%);filter:blur(9px);pointer-events:none}
+.reference-next-prayer>*:not(.next-prayer-panel__glow){position:relative;z-index:2}
+.reference-next-prayer>.next-prayer-panel__glow{position:absolute}
+.reference-next-prayer .next-prayer-panel__time{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 
-/* ---------- Prayer ---------- */
-.reference-next-prayer {
-  display: grid;
-  isolation: isolate;
-  min-height: 300px !important;
-  align-content: start;
-  grid-auto-rows: max-content;
-}
+.reference-dhikr-counter{isolation:isolate;min-height:420px!important}
+.reference-dhikr-counter__glow{top:12px!important;width:256px!important;height:256px!important;background:radial-gradient(circle,rgba(226,191,119,.145) 0%,rgba(49,139,103,.06) 39%,transparent 69%)!important}
+.reference-dhikr-counter__tasbih{top:10px!important;width:248px!important;height:248px!important;opacity:.36!important;filter:none!important}
+.reference-dhikr-counter__tasbih>img{object-fit:contain!important;filter:drop-shadow(0 20px 20px rgba(0,0,0,.43)) saturate(1.025) contrast(1.025)!important}
+.reference-dhikr-ring{margin-top:0;border:1px solid rgba(247,226,178,.13)!important;background:radial-gradient(circle at 48% 42%,#0d3127 0 54%,#08261e 56%,transparent 57%),conic-gradient(#f0d493 var(--dhikr-progress),rgba(226,191,119,.1) 0)!important;box-shadow:0 23px 48px rgba(0,0,0,.38),inset 0 0 0 10px rgba(2,18,14,.84),inset 0 0 0 11px rgba(244,218,160,.18),inset 0 12px 30px rgba(255,255,255,.025),0 0 30px rgba(226,191,119,.035)!important}
+.reference-dhikr-ring strong{color:#fff8ea;text-shadow:0 9px 23px rgba(0,0,0,.3)}
+.reference-dhikr-copy{max-width:330px}
+.reference-dhikr-copy small{max-width:290px;line-height:1.5;text-wrap:pretty}
 
-.reference-next-prayer::before,
-.next-prayer-panel::before {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  right: -48px !important;
-  bottom: -9px !important;
-  width: 270px !important;
-  height: 212px !important;
-  opacity: .29 !important;
-  background: url('/premium-assets/high-res-objects/dome-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
-  filter: drop-shadow(0 25px 23px rgba(0, 0, 0, .47)) saturate(.92) contrast(1.035) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
-  pointer-events: none;
-}
+.reference-qibla-stage{isolation:isolate;min-height:492px!important;background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg,#0d5743,#07372b 62%,#00120f)!important}
+.reference-qibla-stage__halo{top:18px!important;width:316px!important;height:316px!important;border:1px solid rgba(226,191,119,.04);background:radial-gradient(circle,rgba(226,191,119,.11),transparent 67%)!important;box-shadow:0 0 0 24px rgba(226,191,119,.012),0 0 0 48px rgba(226,191,119,.007)}
+.reference-qibla-stage__compass{width:286px!important;height:286px!important;overflow:visible;filter:none!important}
+.reference-qibla-stage__compass>img{object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 24px 24px rgba(0,0,0,.48)) saturate(1.02) contrast(1.04)!important}
+.reference-qibla-stage::after{z-index:2!important;width:82px!important;height:82px!important;opacity:.94!important;background:url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center/contain no-repeat!important;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5)) saturate(1.01) contrast(1.05)!important}
+.reference-qibla-stage__needle{z-index:4!important;color:#f2d79a!important;filter:drop-shadow(0 6px 9px rgba(0,0,0,.58))!important}
+.reference-qibla-stage__copy{z-index:4!important;margin-top:-3px!important}
+.reference-qibla-stage__copy h2{color:#fff8e9;font-size:1.78rem!important;text-shadow:0 9px 24px rgba(0,0,0,.28)}
+.reference-qibla-stage__copy p{max-width:300px;color:rgba(145,168,158,.81)!important;line-height:1.48}
 
-.reference-next-prayer::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  right: -76px;
-  bottom: -92px;
-  width: 290px;
-  height: 290px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(226,191,119,.1), rgba(38,125,91,.055) 44%, transparent 70%);
-  filter: blur(9px);
-  pointer-events: none;
-}
+[data-theme='light'] .reference-next-prayer,[data-theme='light'] .reference-dhikr-counter,[data-theme='light'] .reference-qibla-stage{color:#fff8e9;border-color:rgba(181,142,68,.27)!important;box-shadow:0 22px 54px rgba(60,44,20,.13),inset 0 1px 0 rgba(255,255,255,.045)!important}
+[data-theme='light'] .reference-next-prayer{background:radial-gradient(circle at 88% 16%,rgba(238,204,128,.15),transparent 12rem),linear-gradient(150deg,#0d4b3a,#05291f 57%,#021510)!important}
+[data-theme='light'] .reference-dhikr-counter{background:radial-gradient(circle at 50% 14%,rgba(226,191,119,.12),transparent 12rem),linear-gradient(160deg,#0b4434,#05271f 58%,#02130f)!important}
+[data-theme='light'] .reference-qibla-stage{background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg,#0d5743,#07372b 62%,#00120f)!important}
+[data-theme='light'] .reference-next-prayer h2,[data-theme='light'] .reference-next-prayer .arabic-label,[data-theme='light'] .reference-dhikr-counter h2,[data-theme='light'] .reference-qibla-stage__copy h2{color:#fff8e9!important}
+[data-theme='light'] .reference-next-prayer p,[data-theme='light'] .reference-dhikr-copy small,[data-theme='light'] .reference-qibla-stage__copy p{color:rgba(181,202,191,.8)!important}
 
-.reference-next-prayer > *:not(.next-prayer-panel__glow) {
-  position: relative;
-  z-index: 2;
-}
-
-.reference-next-prayer > .next-prayer-panel__glow {
-  position: absolute;
-}
-
-.reference-next-prayer .next-prayer-panel__time {
-  -webkit-backdrop-filter: blur(8px);
-  backdrop-filter: blur(8px);
-}
-
-/* ---------- Dhikr ---------- */
-.reference-dhikr-counter {
-  isolation: isolate;
-  min-height: 420px !important;
-}
-
-.reference-dhikr-counter__glow {
-  top: 12px !important;
-  width: 256px !important;
-  height: 256px !important;
-  background:
-    radial-gradient(circle, rgba(226,191,119,.145) 0%, rgba(49,139,103,.06) 39%, transparent 69%) !important;
-}
-
-/* Keep the raster near its intrinsic size: oversized presentation softened the
-   beads on high-density phones. The focal object stays atmospheric, not blurry. */
-.reference-dhikr-counter__tasbih {
-  top: 10px !important;
-  width: 248px !important;
-  height: 248px !important;
-  opacity: .36 !important;
-  filter: none !important;
-}
-
-.reference-dhikr-counter__tasbih > img {
-  object-fit: contain !important;
-  filter: drop-shadow(0 20px 20px rgba(0,0,0,.43)) saturate(1.025) contrast(1.025) !important;
-}
-
-.reference-dhikr-ring {
-  margin-top: 0;
-  border: 1px solid rgba(247, 226, 178, .13) !important;
-  background:
-    radial-gradient(circle at 48% 42%, #0d3127 0 54%, #08261e 56%, transparent 57%),
-    conic-gradient(#f0d493 var(--dhikr-progress), rgba(226,191,119,.1) 0) !important;
-  box-shadow:
-    0 23px 48px rgba(0,0,0,.38),
-    inset 0 0 0 10px rgba(2,18,14,.84),
-    inset 0 0 0 11px rgba(244,218,160,.18),
-    inset 0 12px 30px rgba(255,255,255,.025),
-    0 0 30px rgba(226,191,119,.035) !important;
-}
-
-.reference-dhikr-ring strong {
-  color: #fff8ea;
-  text-shadow: 0 9px 23px rgba(0,0,0,.3);
-}
-
-.reference-dhikr-copy {
-  max-width: 330px;
-}
-
-.reference-dhikr-copy small {
-  max-width: 290px;
-  line-height: 1.5;
-  text-wrap: pretty;
-}
-
-/* ---------- Qibla ---------- */
-.reference-qibla-stage {
-  isolation: isolate;
-  min-height: 492px !important;
-  background:
-    radial-gradient(circle at 50% 28%, rgba(226,191,119,.13), transparent 14rem),
-    radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
-    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
-}
-
-.reference-qibla-stage__halo {
-  top: 18px !important;
-  width: 316px !important;
-  height: 316px !important;
-  border: 1px solid rgba(226,191,119,.04);
-  background: radial-gradient(circle, rgba(226,191,119,.11), transparent 67%) !important;
-  box-shadow: 0 0 0 24px rgba(226,191,119,.012), 0 0 0 48px rgba(226,191,119,.007);
-}
-
-/* The source is a 320px-wide raster. Keeping the visible compass below that
-   width avoids needless interpolation and gives the copy more visual air. */
-.reference-qibla-stage__compass {
-  width: 286px !important;
-  height: 286px !important;
-  overflow: visible;
-  filter: none !important;
-}
-
-.reference-qibla-stage__compass > img {
-  object-fit: contain !important;
-  object-position: center !important;
-  filter: drop-shadow(0 24px 24px rgba(0,0,0,.48)) saturate(1.02) contrast(1.04) !important;
-}
-
-.reference-qibla-stage::after {
-  z-index: 2 !important;
-  width: 82px !important;
-  height: 82px !important;
-  opacity: .94 !important;
-  background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center / contain no-repeat !important;
-  filter: drop-shadow(0 14px 18px rgba(0,0,0,.5)) saturate(1.01) contrast(1.05) !important;
-}
-
-.reference-qibla-stage__needle {
-  z-index: 4 !important;
-  color: #f2d79a !important;
-  filter: drop-shadow(0 6px 9px rgba(0,0,0,.58)) !important;
-}
-
-.reference-qibla-stage__copy {
-  z-index: 4 !important;
-  margin-top: -3px !important;
-}
-
-.reference-qibla-stage__copy h2 {
-  color: #fff8e9;
-  font-size: 1.78rem !important;
-  text-shadow: 0 9px 24px rgba(0,0,0,.28);
-}
-
-.reference-qibla-stage__copy p {
-  max-width: 300px;
-  color: rgba(145, 168, 158, .81) !important;
-  line-height: 1.48;
-}
-
-/* Focal worship surfaces stay deep emerald in Light Theme so their golden
-   artwork keeps contrast and the product retains visual anchors. */
-[data-theme='light'] .reference-next-prayer,
-[data-theme='light'] .reference-dhikr-counter,
-[data-theme='light'] .reference-qibla-stage {
-  color: #fff8e9;
-  border-color: rgba(181, 142, 68, .27) !important;
-  box-shadow: 0 22px 54px rgba(60,44,20,.13), inset 0 1px 0 rgba(255,255,255,.045) !important;
-}
-
-[data-theme='light'] .reference-next-prayer {
-  background:
-    radial-gradient(circle at 88% 16%, rgba(238,204,128,.15), transparent 12rem),
-    linear-gradient(150deg, #0d4b3a, #05291f 57%, #021510) !important;
-}
-
-[data-theme='light'] .reference-dhikr-counter {
-  background:
-    radial-gradient(circle at 50% 14%, rgba(226,191,119,.12), transparent 12rem),
-    linear-gradient(160deg, #0b4434, #05271f 58%, #02130f) !important;
-}
-
-[data-theme='light'] .reference-qibla-stage {
-  background:
-    radial-gradient(circle at 50% 28%, rgba(226,191,119,.13), transparent 14rem),
-    radial-gradient(circle at 50% 83%, rgba(45,135,98,.09), transparent 13rem),
-    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
-}
-
-[data-theme='light'] .reference-next-prayer h2,
-[data-theme='light'] .reference-next-prayer .arabic-label,
-[data-theme='light'] .reference-dhikr-counter h2,
-[data-theme='light'] .reference-qibla-stage__copy h2 {
-  color: #fff8e9 !important;
-}
-
-[data-theme='light'] .reference-next-prayer p,
-[data-theme='light'] .reference-dhikr-copy small,
-[data-theme='light'] .reference-qibla-stage__copy p {
-  color: rgba(181,202,191,.8) !important;
-}
-
-/* ---------- Responsive ---------- */
-@media (max-width: 390px) {
-  .reference-next-prayer::before,
-  .next-prayer-panel::before {
-    right: -72px !important;
-    width: 248px !important;
-    height: 198px !important;
-  }
-
-  .reference-dhikr-counter {
-    min-height: 405px !important;
-  }
-
-  .reference-dhikr-counter__glow {
-    width: 240px !important;
-    height: 240px !important;
-  }
-
-  .reference-dhikr-counter__tasbih {
-    top: 8px !important;
-    width: 232px !important;
-    height: 232px !important;
-    opacity: .34 !important;
-  }
-
-  .reference-dhikr-ring {
-    width: 184px !important;
-    height: 184px !important;
-  }
-
-  .reference-qibla-stage {
-    min-height: 462px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 296px !important;
-    height: 296px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 270px !important;
-    height: 270px !important;
-  }
-
-  .reference-qibla-stage::after {
-    width: 78px !important;
-    height: 78px !important;
-  }
-}
-
-@media (max-width: 350px) {
-  .reference-dhikr-counter {
-    min-height: 390px !important;
-  }
-
-  .reference-dhikr-counter__tasbih {
-    width: 220px !important;
-    height: 220px !important;
-    opacity: .32 !important;
-  }
-
-  .reference-dhikr-ring {
-    width: 174px !important;
-    height: 174px !important;
-  }
-
-  .reference-qibla-stage {
-    min-height: 430px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 272px !important;
-    height: 272px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 248px !important;
-    height: 248px !important;
-  }
-
-  .reference-qibla-stage::after {
-    width: 70px !important;
-    height: 70px !important;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reference-dhikr-ring,
-  .reference-qibla-stage__compass > img,
-  .reference-next-prayer::before {
-    transition: none !important;
-    animation: none !important;
-  }
-}
+@media(max-width:390px){
+.reference-next-prayer::before,.next-prayer-panel::before{right:-72px!important;width:248px!important;height:198px!important}
+.reference-dhikr-counter{min-height:405px!important}.reference-dhikr-counter__glow{width:240px!important;height:240px!important}.reference-dhikr-counter__tasbih{top:8px!important;width:232px!important;height:232px!important;opacity:.34!important}.reference-dhikr-ring{width:184px!important;height:184px!important}
+.reference-qibla-stage{min-height:462px!important}.reference-qibla-stage__halo{width:296px!important;height:296px!important}.reference-qibla-stage__compass{width:270px!important;height:270px!important}.reference-qibla-stage::after{width:78px!important;height:78px!important}}
+@media(max-width:350px){
+.reference-dhikr-counter{min-height:390px!important}.reference-dhikr-counter__tasbih{width:220px!important;height:220px!important;opacity:.32!important}.reference-dhikr-ring{width:174px!important;height:174px!important}
+.reference-qibla-stage{min-height:430px!important}.reference-qibla-stage__halo{width:272px!important;height:272px!important}.reference-qibla-stage__compass{width:248px!important;height:248px!important}.reference-qibla-stage::after{width:70px!important;height:70px!important}}
+@media(prefers-reduced-motion:reduce){.reference-dhikr-ring,.reference-qibla-stage__compass>img,.reference-next-prayer::before{transition:none!important;animation:none!important}}
