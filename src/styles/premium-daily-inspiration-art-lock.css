@@ -9,8 +9,6 @@
   overflow: hidden;
 }
 
-/* Ayah detail uses one Mihrab source only. Keep the real image atmospheric so
-   the Arabic, meaning and actions stay the visible reading hierarchy. */
 .reference-ayah-hero {
   height: 410px;
   min-height: 0;
@@ -23,7 +21,8 @@
 .reference-ayah-hero__art {
   z-index: 0 !important;
   opacity: .07 !important;
-  mix-blend-mode: multiply;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
+  mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
 }
 
 .reference-ayah-hero__art > img {
@@ -65,7 +64,6 @@
   margin-top: 10px;
 }
 
-/* Hadith: bring the lantern into the same stacking context as the copy. */
 .hadith-card::after,
 .reference-hadith-hero::after {
   z-index: 0 !important;
@@ -106,7 +104,6 @@
     0 0 24px rgba(226,191,119,.055);
 }
 
-/* Home daily cards use the same visual grammar, but remain compact. */
 .verse-card--cream .verse-card__art {
   opacity: .11 !important;
   mix-blend-mode: multiply;
