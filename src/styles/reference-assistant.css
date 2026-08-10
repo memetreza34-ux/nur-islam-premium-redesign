@@ -167,6 +167,7 @@
 
 .reference-assistant-input {
   position: relative;
+  bottom: auto !important;
   z-index: 5;
   display: grid;
   grid-template-columns: minmax(0, 1fr) 44px;
