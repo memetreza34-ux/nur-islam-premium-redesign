@@ -145,8 +145,65 @@ try {
   }
   await shot(installPage, 'apple-09-compact-install-guide');
   await installContext.close();
+
+  const notesContext = await createContext();
+  const notesPage = await notesContext.newPage();
+  attachDiagnostics(notesPage, 'apple-compact-notes');
+  await notesPage.goto(appUrl.toString(), { waitUntil: 'domcontentloaded' });
+  await waitForHome(notesPage);
+
+  const moreNav = notesPage.locator('.bottom-nav__item').filter({ hasText: 'Mehr' }).first();
+  await moreNav.click();
+  await notesPage.locator('.reference-more-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const accountEntry = notesPage.locator('button.reference-account-entry').first();
+  await accountEntry.scrollIntoViewIfNeeded();
+  await accountEntry.click();
+  await notesPage.locator('.reference-account-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  await notesPage.locator('.reference-account-screen .reference-screen-header .icon-button').first().click();
+  await notesPage.locator('.reference-profile-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const notesEntry = notesPage.locator('.reference-profile-row').filter({ hasText: 'Notizen' }).first();
+  await notesEntry.scrollIntoViewIfNeeded();
+  await notesEntry.click();
+  await notesPage.locator('.reference-notes-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const newNote = notesPage.getByRole('button', { name: 'Neue Notiz schreiben' });
+  await newNote.scrollIntoViewIfNeeded();
+  await newNote.click();
+
+  const editor = notesPage.locator('.reference-note-editor');
+  await editor.waitFor({ state: 'visible', timeout: 5_000 });
+  await editor.scrollIntoViewIfNeeded();
+  const titleInput = notesPage.getByRole('textbox', { name: 'Titel der Notiz' });
+  await titleInput.focus();
+  await notesPage.waitForTimeout(180);
+
+  const editorState = await titleInput.evaluate((node) => {
+    const rect = node.getBoundingClientRect();
+    const viewportWidth = window.visualViewport?.width ?? window.innerWidth;
+    const viewportHeight = window.visualViewport?.height ?? window.innerHeight;
+    return {
+      top: rect.top,
+      right: rect.right,
+      bottom: rect.bottom,
+      left: rect.left,
+      fontSize: Number.parseFloat(getComputedStyle(node).fontSize),
+      viewportWidth,
+      viewportHeight,
+      scrollWidth: document.documentElement.scrollWidth,
+    };
+  });
+  if (editorState.fontSize < 16) {
+    throw new Error(`Notes title input can trigger iOS focus zoom: ${JSON.stringify(editorState)}.`);
+  }
+  if (editorState.top < 0 || editorState.bottom > editorState.viewportHeight + 1) {
+    throw new Error(`Focused Notes title is outside compact iPhone viewport: ${JSON.stringify(editorState)}.`);
+  }
+  if (editorState.left < 0 || editorState.right > editorState.viewportWidth + 1 || editorState.scrollWidth > editorState.viewportWidth + 1) {
+    throw new Error(`Notes editor overflows compact iPhone width: ${JSON.stringify(editorState)}.`);
+  }
+  await shot(notesPage, 'apple-10-compact-notes-editor');
+  await notesContext.close();
 } finally {
   await browser.close();
 }
 
-console.log('Compact Apple WebKit QA captured: 375x667 Home shell and expanded iOS install guide fit without horizontal overflow or viewport clipping.');
+console.log('Compact Apple WebKit QA captured: 375x667 Home, expanded iOS install guide and focused Notes editor fit without horizontal overflow, viewport clipping or iOS focus-zoom risk.');
