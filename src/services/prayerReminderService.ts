@@ -61,8 +61,8 @@ async function showPrayerNotification(prayer: PrayerScheduleItem) {
 
   const options: NotificationOptions = {
     body: `Es ist Zeit für ${prayer.label}. Öffne Nur Islam, um deinen Gebets-Tracker zu aktualisieren.`,
-    icon: `${APP_BASE}nur-app-icon.svg`,
-    badge: `${APP_BASE}nur-app-icon.svg`,
+    icon: `${APP_BASE}nur-app-icon-192.png`,
+    badge: `${APP_BASE}nur-app-icon-192.png`,
     tag: `nur-prayer-${dateKey()}-${prayer.id}`,
     data: { type: 'prayer-reminder', prayerId: prayer.id, url: PRAYER_TARGET_URL },
     silent: false,
@@ -128,11 +128,13 @@ export function startPrayerReminderScheduler() {
     if (document.visibilityState === 'visible') run();
   };
 
+  // This is a page/PWA scheduler, not a remote Web Push service. Browsers may
+  // suspend a fully closed app, so focus/visibility catch-up is intentional and
+  // the UI must not promise guaranteed closed-app delivery.
   run();
   timer = window.setInterval(run, CHECK_INTERVAL_MS);
   window.addEventListener('focus', run);
   document.addEventListener('visibilitychange', handleVisibility);
-  window.addEventListener('focus', run);
   window.addEventListener('nur:prayer-times-updated', run);
 
   return () => {
@@ -140,7 +142,6 @@ export function startPrayerReminderScheduler() {
     if (timer) window.clearInterval(timer);
     window.removeEventListener('focus', run);
     document.removeEventListener('visibilitychange', handleVisibility);
-    window.removeEventListener('focus', run);
     window.removeEventListener('nur:prayer-times-updated', run);
   };
 }
