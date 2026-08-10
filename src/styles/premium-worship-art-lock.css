@@ -3,6 +3,7 @@
 /* ---------- Prayer ---------- */
 .reference-next-prayer {
   isolation: isolate;
+  min-height: 300px !important;
 }
 
 .reference-next-prayer::before,
@@ -46,24 +47,24 @@
 /* ---------- Dhikr ---------- */
 .reference-dhikr-counter {
   isolation: isolate;
-  min-height: 462px !important;
+  min-height: 420px !important;
 }
 
 .reference-dhikr-counter__glow {
-  top: 17px !important;
-  width: 292px !important;
-  height: 292px !important;
+  top: 12px !important;
+  width: 276px !important;
+  height: 276px !important;
   background:
-    radial-gradient(circle, rgba(226,191,119,.135) 0%, rgba(49,139,103,.055) 39%, transparent 69%) !important;
+    radial-gradient(circle, rgba(226,191,119,.145) 0%, rgba(49,139,103,.06) 39%, transparent 69%) !important;
 }
 
 /* Old reference CSS intentionally faded this to .19. The real asset now forms
    a visible background halo behind the counter instead of disappearing. */
 .reference-dhikr-counter__tasbih {
-  top: 12px !important;
-  width: 286px !important;
-  height: 286px !important;
-  opacity: .31 !important;
+  top: 8px !important;
+  width: 276px !important;
+  height: 276px !important;
+  opacity: .34 !important;
   filter: none !important;
 }
 
@@ -73,7 +74,7 @@
 }
 
 .reference-dhikr-ring {
-  margin-top: 3px;
+  margin-top: 0;
   border: 1px solid rgba(247, 226, 178, .13) !important;
   background:
     radial-gradient(circle at 48% 42%, #0d3127 0 54%, #08261e 56%, transparent 57%),
@@ -209,6 +210,10 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 390px) {
+  .reference-next-prayer {
+    min-height: 288px !important;
+  }
+
   .reference-next-prayer::before,
   .next-prayer-panel::before {
     right: -72px !important;
@@ -217,18 +222,25 @@
   }
 
   .reference-dhikr-counter {
-    min-height: 440px !important;
+    min-height: 405px !important;
   }
 
   .reference-dhikr-counter__tasbih {
-    width: 266px !important;
-    height: 266px !important;
-    opacity: .29 !important;
+    top: 6px !important;
+    width: 254px !important;
+    height: 254px !important;
+    opacity: .32 !important;
+  }
+
+  .reference-dhikr-counter__glow {
+    top: 10px !important;
+    width: 260px !important;
+    height: 260px !important;
   }
 
   .reference-dhikr-ring {
-    width: 190px !important;
-    height: 190px !important;
+    width: 184px !important;
+    height: 184px !important;
   }
 
   .reference-qibla-stage {
@@ -252,14 +264,18 @@
 }
 
 @media (max-width: 350px) {
+  .reference-next-prayer {
+    min-height: 278px !important;
+  }
+
   .reference-dhikr-counter {
-    min-height: 418px !important;
+    min-height: 390px !important;
   }
 
   .reference-dhikr-counter__tasbih {
-    width: 244px !important;
-    height: 244px !important;
-    opacity: .27 !important;
+    width: 238px !important;
+    height: 238px !important;
+    opacity: .30 !important;
   }
 
   .reference-dhikr-ring {
@@ -284,7 +300,8 @@
   .reference-qibla-stage::after {
     width: 74px !important;
     height: 74px !important;
-  }}
+  }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-dhikr-ring,
@@ -292,4 +309,5 @@
   .reference-next-prayer::before {
     transition: none !important;
     animation: none !important;
-  }}
+  }
+}
