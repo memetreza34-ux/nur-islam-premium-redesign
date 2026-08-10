@@ -15,6 +15,7 @@ on:
       - 'scripts/capture-reference-preview.mjs'
       - 'scripts/capture-legacy-reference-preview.mjs'
       - 'scripts/capture-light-reference-preview.mjs'
+      - 'scripts/capture-apple-reference-preview.mjs'
       - '.github/workflows/reference-render-preview.yml'
 
 permissions:
@@ -27,7 +28,7 @@ concurrency:
 jobs:
   capture:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -41,8 +42,8 @@ jobs:
       - name: Install app dependencies
         run: npm ci
 
-      - name: Install Chromium for render QA
-        run: npx playwright install --with-deps chromium
+      - name: Install Chromium and WebKit for render QA
+        run: npx playwright install --with-deps chromium webkit
 
       - name: Build production app for local render QA
         env:
@@ -80,6 +81,11 @@ jobs:
         env:
           PREVIEW_URL: http://127.0.0.1:4173/
         run: node scripts/capture-light-reference-preview.mjs
+
+      - name: Capture iPhone WebKit screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-apple-reference-preview.mjs
 
       - name: Upload reference screenshots
         if: always()
