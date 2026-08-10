@@ -63,6 +63,9 @@
 .reference-notes-storage small{white-space:normal;overflow:visible;text-overflow:clip}
 .reference-quran-list__copy small,
 .reference-name-list__copy small{white-space:normal!important;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden!important}
+.reference-account-tabs>button:not(.is-active){filter:brightness(1.25);opacity:.94}
+.reference-account-form input::placeholder{color:rgba(176,197,186,.72)}
+.reference-notes-screen .reference-empty-result small{display:block;max-width:286px;font-size:.7rem;line-height:1.5;white-space:normal;overflow:visible;text-overflow:clip}
 [data-theme='light'] .calendar-weekdays{color:#a8752f}
 [data-theme='light'] .calendar-day{color:#365448}
 [data-theme='light'] .calendar-day em{color:#6f8d80}
