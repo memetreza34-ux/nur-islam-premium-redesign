@@ -86,6 +86,16 @@
   line-height: 1.5;
 }
 
+/* The collection shell adds a large bookmark via styles.css after the imported
+   layers. Use higher specificity, not another !important, so its real content
+   starts below that artwork instead of centering through it. */
+.reference-collections-screen.reference-collections-screen .reference-empty-result {
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: 8px;
+}
+
 .reference-reader-unavailable__actions {
   gap: 8px !important;
 }
