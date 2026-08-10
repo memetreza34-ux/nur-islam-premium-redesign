@@ -49,6 +49,32 @@ test('keeps the Quran reader inside the Quran hierarchy when opened from Home', 
   await expect(page.getByRole('heading', { name: 'Quran' })).toBeVisible();
 });
 
+test('browser Back and Forward preserve the synthetic Quran parent from Home', async ({ page }) => {
+  await page.locator('.journey-card--quran').click();
+  await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
+
+  await page.goBack();
+  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole('heading', { name: 'Quran' })).toBeVisible();
+
+  await page.goBack();
+  await expect(page.locator('.premium-home--v2')).toBeVisible({ timeout: 15_000 });
+
+  await page.goForward();
+  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
+});
+
+test('primary navigation resets the app-owned browser stack', async ({ page }) => {
+  await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
+  await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
+
+  await page.getByRole('navigation').getByText('Gebete', { exact: true }).click();
+  await expect(page.locator('.reference-prayer-screen')).toBeVisible();
+
+  const depth = await page.evaluate(() => window.history.state?.__nurIslamNavigation?.depth ?? -1);
+  expect(depth).toBe(0);
+});
+
 test('saves today’s Hadith and reopens that exact entry from Collections', async ({ page }) => {
   const hadithCard = page.locator('.hadith-card').first();
   await hadithCard.scrollIntoViewIfNeeded();

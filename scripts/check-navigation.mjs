@@ -9,6 +9,7 @@ const reader = await readFile(resolve(root, 'src/screens/QuranReaderScreen.tsx')
 const duas = await readFile(resolve(root, 'src/screens/DuasScreen.tsx'), 'utf8');
 const names = await readFile(resolve(root, 'src/screens/NamesScreen.tsx'), 'utf8');
 const calendar = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'), 'utf8');
+const browserNavigation = await readFile(resolve(root, 'src/services/browserNavigation.ts'), 'utf8');
 
 const requiredAppFragments = [
   "import { CollectionsScreen } from '../screens/CollectionsScreen';",
@@ -26,8 +27,16 @@ const requiredAppFragments = [
   'initialDateKey={selectedCalendarDate}',
   'initialAyahNumber={selectedAyahNumber}',
   'hadithId={selectedHadithId}',
-  'setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)))',
+  'const safeAyahNumber = Math.max(1, Math.floor(ayahNumber))',
   "onNavigate('legacy:ummah')",
+  'pushBrowserNavigation',
+  'replaceBrowserNavigation',
+  'readBrowserNavigation<NavigationSnapshot>',
+  "window.addEventListener('popstate'",
+  'window.history.back()',
+  'window.history.go(-depth)',
+  "activeTab: 'quran'",
+  "activeTab: 'reader' as const",
 ];
 
 for (const fragment of requiredAppFragments) {
@@ -35,6 +44,17 @@ for (const fragment of requiredAppFragments) {
 }
 
 if (app.includes('legacy:ummah-map')) throw new Error('Invalid legacy route remains: legacy:ummah-map');
+
+for (const fragment of [
+  "const NAVIGATION_STATE_KEY = '__nurIslamNavigation'",
+  'readBrowserNavigation',
+  'replaceBrowserNavigation',
+  'pushBrowserNavigation',
+  'window.history.replaceState',
+  'window.history.pushState',
+]) {
+  if (!browserNavigation.includes(fragment)) throw new Error(`Browser navigation state is missing: ${fragment}`);
+}
 
 const requiredCollectionHandlers = [
   'onClick={onOpenQuran}',
@@ -91,4 +111,4 @@ if (!calendar.includes('initialDateKey?: string | null') || !calendar.includes('
   throw new Error('Calendar cannot open a saved date directly.');
 }
 
-console.log('Navigation verified: history-aware screen return paths, Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names, Hadiths and calendar dates, and legacy route IDs remain valid.');
+console.log('Navigation verified: visible back controls and browser/system Back share app-owned history snapshots, Home-to-Reader preserves the logical Quran parent, Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names, Hadiths and calendar dates, and legacy route IDs remain valid.');

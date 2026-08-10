@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -38,6 +38,12 @@ import { MoreScreen } from '../screens/MoreScreen';
 import { NamesScreen } from '../screens/NamesScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { getHijriLabel } from '../services/hijriCalendar';
+import {
+  browserNavigationDepth,
+  pushBrowserNavigation,
+  readBrowserNavigation,
+  replaceBrowserNavigation,
+} from '../services/browserNavigation';
 import { consumePendingNavigation } from '../services/pendingNavigation';
 import type { PendingNavigationIntent } from '../services/pendingNavigation';
 import { PrayerScreen } from '../screens/PrayerScreen';
@@ -69,6 +75,17 @@ import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
 type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | LegacyTab;
+
+type NavigationSnapshot = {
+  activeTab: Tab;
+  navigationHistory: Tab[];
+  selectedSurahNumber: number;
+  selectedAyahNumber: number;
+  selectedDuaId: string | null;
+  selectedNameId: string | null;
+  selectedCalendarDate: string | null;
+  selectedHadithId: string | null;
+};
 
 type QuickAction = {
   label: string;
@@ -197,6 +214,25 @@ function hasCompletedOnboarding() {
   } catch {
     return false;
   }
+}
+
+function isNavigationSnapshot(value: unknown): value is NavigationSnapshot {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
+  const snapshot = value as Partial<NavigationSnapshot>;
+  return typeof snapshot.activeTab === 'string'
+    && Array.isArray(snapshot.navigationHistory)
+    && snapshot.navigationHistory.every((tab) => typeof tab === 'string')
+    && typeof snapshot.selectedSurahNumber === 'number'
+    && Number.isInteger(snapshot.selectedSurahNumber)
+    && snapshot.selectedSurahNumber >= 1
+    && snapshot.selectedSurahNumber <= 114
+    && typeof snapshot.selectedAyahNumber === 'number'
+    && Number.isInteger(snapshot.selectedAyahNumber)
+    && snapshot.selectedAyahNumber >= 1
+    && (snapshot.selectedDuaId === null || typeof snapshot.selectedDuaId === 'string')
+    && (snapshot.selectedNameId === null || typeof snapshot.selectedNameId === 'string')
+    && (snapshot.selectedCalendarDate === null || typeof snapshot.selectedCalendarDate === 'string')
+    && (snapshot.selectedHadithId === null || typeof snapshot.selectedHadithId === 'string');
 }
 
 function PremiumHome({
@@ -435,6 +471,19 @@ export default function App() {
   const [selectedNameId, setSelectedNameId] = useState<string | null>(null);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<string | null>(null);
   const [selectedHadithId, setSelectedHadithId] = useState<string | null>(null);
+  const currentNavigationSnapshot: NavigationSnapshot = {
+    activeTab,
+    navigationHistory,
+    selectedSurahNumber,
+    selectedAyahNumber,
+    selectedDuaId,
+    selectedNameId,
+    selectedCalendarDate,
+    selectedHadithId,
+  };
+  const latestNavigationSnapshotRef = useRef(currentNavigationSnapshot);
+  const pendingBrowserRootRef = useRef<NavigationSnapshot | null>(null);
+  latestNavigationSnapshotRef.current = currentNavigationSnapshot;
   const primaryActive: PrimaryTab = activeTab === 'prayer'
     ? 'prayer'
     : activeTab === 'calendar'
@@ -449,52 +498,126 @@ export default function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, [activeTab, onboardingComplete, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate, selectedHadithId]);
 
-  const clearDirectTargets = () => {
-    setSelectedDuaId(null);
-    setSelectedNameId(null);
-    setSelectedCalendarDate(null);
-    setSelectedHadithId(null);
+  const buildNavigationSnapshot = (overrides: Partial<NavigationSnapshot> = {}): NavigationSnapshot => ({
+    ...latestNavigationSnapshotRef.current,
+    ...overrides,
+  });
+
+  const applyNavigationSnapshot = (snapshot: NavigationSnapshot) => {
+    setActiveTab(snapshot.activeTab);
+    setNavigationHistory([...snapshot.navigationHistory].slice(-24));
+    setSelectedSurahNumber(snapshot.selectedSurahNumber);
+    setSelectedAyahNumber(snapshot.selectedAyahNumber);
+    setSelectedDuaId(snapshot.selectedDuaId);
+    setSelectedNameId(snapshot.selectedNameId);
+    setSelectedCalendarDate(snapshot.selectedCalendarDate);
+    setSelectedHadithId(snapshot.selectedHadithId);
   };
 
-  const moveTo = (tab: Tab, rememberOrigin = true) => {
-    if (tab === activeTab) return;
-    if (rememberOrigin) setNavigationHistory((current) => [...current, activeTab].slice(-24));
-    if (tab === 'duas') setSelectedDuaId(null);
-    if (tab === 'names') setSelectedNameId(null);
-    if (tab === 'calendar') setSelectedCalendarDate(null);
-    if (tab === 'hadith') setSelectedHadithId(null);
-    setActiveTab(tab);
+  const resetBrowserRoot = (snapshot: NavigationSnapshot) => {
+    const depth = browserNavigationDepth();
+    if (depth > 0) {
+      pendingBrowserRootRef.current = snapshot;
+      window.history.go(-depth);
+      return;
+    }
+    replaceBrowserNavigation(snapshot, 0);
+    applyNavigationSnapshot(snapshot);
+  };
+
+  const moveTo = (tab: Tab, rememberOrigin = true, overrides: Partial<NavigationSnapshot> = {}) => {
+    if (tab === activeTab && Object.keys(overrides).length === 0) return;
+    const nextHistory = rememberOrigin && tab !== activeTab
+      ? [...navigationHistory, activeTab].slice(-24)
+      : navigationHistory;
+    const snapshot = buildNavigationSnapshot({
+      activeTab: tab,
+      navigationHistory: nextHistory,
+      selectedDuaId: tab === 'duas' ? null : selectedDuaId,
+      selectedNameId: tab === 'names' ? null : selectedNameId,
+      selectedCalendarDate: tab === 'calendar' ? null : selectedCalendarDate,
+      selectedHadithId: tab === 'hadith' ? null : selectedHadithId,
+      ...overrides,
+    });
+
+    if (tab === activeTab) replaceBrowserNavigation(snapshot, browserNavigationDepth());
+    else pushBrowserNavigation(snapshot);
+    applyNavigationSnapshot(snapshot);
   };
 
   const navigate = (tab: Tab) => moveTo(tab, true);
 
   const navigatePrimary = (tab: PrimaryTab) => {
-    clearDirectTargets();
-    setNavigationHistory([]);
-    setActiveTab(tab);
+    resetBrowserRoot(buildNavigationSnapshot({
+      activeTab: tab,
+      navigationHistory: [],
+      selectedDuaId: null,
+      selectedNameId: null,
+      selectedCalendarDate: null,
+      selectedHadithId: null,
+    }));
   };
 
   const goBack = (fallback: Tab = 'home') => {
+    if (browserNavigationDepth() > 0) {
+      window.history.back();
+      return;
+    }
+
     const remaining = [...navigationHistory];
     let previous = remaining.pop();
     while (previous === activeTab) previous = remaining.pop();
-    setNavigationHistory(remaining);
-    setActiveTab(previous ?? fallback);
+    const snapshot = buildNavigationSnapshot({
+      activeTab: previous ?? fallback,
+      navigationHistory: remaining,
+      selectedDuaId: null,
+      selectedNameId: null,
+      selectedCalendarDate: null,
+      selectedHadithId: null,
+    });
+    replaceBrowserNavigation(snapshot, 0);
+    applyNavigationSnapshot(snapshot);
   };
 
   useEffect(() => {
-    const openPrayerTracker = () => {
-      setOnboardingComplete(true);
-      clearDirectTargets();
-      setNavigationHistory([]);
-      setActiveTab('prayer');
+    if (!onboardingComplete) return;
+
+    const handlePopState = (event: PopStateEvent) => {
+      const pendingRoot = pendingBrowserRootRef.current;
+      if (pendingRoot) {
+        pendingBrowserRootRef.current = null;
+        replaceBrowserNavigation(pendingRoot, 0);
+        applyNavigationSnapshot(pendingRoot);
+        return;
+      }
+
+      const entry = readBrowserNavigation<NavigationSnapshot>(event.state);
+      if (!entry || !isNavigationSnapshot(entry.snapshot)) return;
+      applyNavigationSnapshot(entry.snapshot);
     };
-    const openCalendar = () => {
+
+    const existing = readBrowserNavigation<NavigationSnapshot>();
+    if (existing && isNavigationSnapshot(existing.snapshot)) applyNavigationSnapshot(existing.snapshot);
+    else replaceBrowserNavigation(buildNavigationSnapshot(), 0);
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [onboardingComplete]);
+
+  useEffect(() => {
+    const openRootTab = (tab: 'prayer' | 'calendar') => {
       setOnboardingComplete(true);
-      clearDirectTargets();
-      setNavigationHistory([]);
-      setActiveTab('calendar');
+      resetBrowserRoot(buildNavigationSnapshot({
+        activeTab: tab,
+        navigationHistory: [],
+        selectedDuaId: null,
+        selectedNameId: null,
+        selectedCalendarDate: null,
+        selectedHadithId: null,
+      }));
     };
+    const openPrayerTracker = () => openRootTab('prayer');
+    const openCalendar = () => openRootTab('calendar');
     const applyNavigationIntent = (intent: PendingNavigationIntent) => {
       if (intent === 'prayer') openPrayerTracker();
       else openCalendar();
@@ -512,47 +635,85 @@ export default function App() {
     };
   }, []);
 
-  const openQuran = () => {
-    setSelectedAyahNumber(1);
-    moveTo('quran');
-  };
+  const openQuran = () => moveTo('quran', true, { selectedAyahNumber: 1 });
+
   const openReader = (surahNumber: number, ayahNumber = 1) => {
-    clearDirectTargets();
-    setSelectedSurahNumber(surahNumber);
-    setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)));
-    if (activeTab === 'reader') return;
-    const readerParent: Tab = activeTab === 'home' ? 'quran' : activeTab;
-    setNavigationHistory((current) => [...current, readerParent].slice(-24));
-    setActiveTab('reader');
+    const safeAyahNumber = Math.max(1, Math.floor(ayahNumber));
+    const directTargets = {
+      selectedDuaId: null,
+      selectedNameId: null,
+      selectedCalendarDate: null,
+      selectedHadithId: null,
+    };
+
+    if (activeTab === 'reader') {
+      const snapshot = buildNavigationSnapshot({
+        selectedSurahNumber: surahNumber,
+        selectedAyahNumber: safeAyahNumber,
+        ...directTargets,
+      });
+      replaceBrowserNavigation(snapshot, browserNavigationDepth());
+      applyNavigationSnapshot(snapshot);
+      return;
+    }
+
+    if (activeTab === 'home') {
+      const quranSnapshot = buildNavigationSnapshot({
+        activeTab: 'quran',
+        navigationHistory,
+        ...directTargets,
+      });
+      pushBrowserNavigation(quranSnapshot);
+      const readerSnapshot = {
+        ...quranSnapshot,
+        activeTab: 'reader' as const,
+        navigationHistory: [...navigationHistory, 'quran' as Tab].slice(-24),
+        selectedSurahNumber: surahNumber,
+        selectedAyahNumber: safeAyahNumber,
+      };
+      pushBrowserNavigation(readerSnapshot);
+      applyNavigationSnapshot(readerSnapshot);
+      return;
+    }
+
+    const readerSnapshot = buildNavigationSnapshot({
+      activeTab: 'reader',
+      navigationHistory: [...navigationHistory, activeTab].slice(-24),
+      selectedSurahNumber: surahNumber,
+      selectedAyahNumber: safeAyahNumber,
+      ...directTargets,
+    });
+    pushBrowserNavigation(readerSnapshot);
+    applyNavigationSnapshot(readerSnapshot);
   };
-  const openSavedDua = (id: string) => {
-    setSelectedNameId(null);
-    setSelectedCalendarDate(null);
-    setSelectedHadithId(null);
-    moveTo('duas');
-    setSelectedDuaId(id);
-  };
-  const openSavedName = (id: string) => {
-    setSelectedDuaId(null);
-    setSelectedCalendarDate(null);
-    setSelectedHadithId(null);
-    moveTo('names');
-    setSelectedNameId(id);
-  };
-  const openSavedCalendarDate = (date: string) => {
-    setSelectedDuaId(null);
-    setSelectedNameId(null);
-    setSelectedHadithId(null);
-    moveTo('calendar');
-    setSelectedCalendarDate(date);
-  };
-  const openSavedHadith = (id: string) => {
-    setSelectedDuaId(null);
-    setSelectedNameId(null);
-    setSelectedCalendarDate(null);
-    moveTo('hadith');
-    setSelectedHadithId(id);
-  };
+
+  const openSavedDua = (id: string) => moveTo('duas', true, {
+    selectedDuaId: id,
+    selectedNameId: null,
+    selectedCalendarDate: null,
+    selectedHadithId: null,
+  });
+
+  const openSavedName = (id: string) => moveTo('names', true, {
+    selectedDuaId: null,
+    selectedNameId: id,
+    selectedCalendarDate: null,
+    selectedHadithId: null,
+  });
+
+  const openSavedCalendarDate = (date: string) => moveTo('calendar', true, {
+    selectedDuaId: null,
+    selectedNameId: null,
+    selectedCalendarDate: date,
+    selectedHadithId: null,
+  });
+
+  const openSavedHadith = (id: string) => moveTo('hadith', true, {
+    selectedDuaId: null,
+    selectedNameId: null,
+    selectedCalendarDate: null,
+    selectedHadithId: id,
+  });
 
   if (!onboardingComplete) {
     return (
@@ -561,10 +722,17 @@ export default function App() {
         <div className="background-orbit background-orbit--two" />
         <div className="app-shell app-shell--onboarding">
           <OnboardingScreen onComplete={() => {
+            const snapshot = buildNavigationSnapshot({
+              activeTab: 'home',
+              navigationHistory: [],
+              selectedDuaId: null,
+              selectedNameId: null,
+              selectedCalendarDate: null,
+              selectedHadithId: null,
+            });
+            replaceBrowserNavigation(snapshot, 0);
+            applyNavigationSnapshot(snapshot);
             setOnboardingComplete(true);
-            clearDirectTargets();
-            setNavigationHistory([]);
-            setActiveTab('home');
           }} />
         </div>
       </div>

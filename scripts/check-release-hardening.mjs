@@ -141,8 +141,9 @@ requireText(calendar, [
 requireText(app, [
   "window.addEventListener('nur:open-calendar'",
   "window.removeEventListener('nur:open-calendar'",
-  "setActiveTab('calendar')",
-], 'Calendar app navigation');
+  "const openCalendar = () => openRootTab('calendar')",
+  'resetBrowserRoot(buildNavigationSnapshot({',
+], 'Calendar browser-aware app navigation');
 requireText(systemLayer, [
   'CalendarReminderBanner',
   "window.dispatchEvent(new Event('nur:open-calendar'))",

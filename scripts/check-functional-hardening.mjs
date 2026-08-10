@@ -105,7 +105,12 @@ requireText(app, [
   'getDailyHadith(now)',
   'selectedHadithId',
   'onOpenHadith={openSavedHadith}',
-  "const readerParent: Tab = activeTab === 'home' ? 'quran' : activeTab",
+  "activeTab: 'quran'",
+  "activeTab: 'reader' as const",
+  'pushBrowserNavigation(quranSnapshot)',
+  'pushBrowserNavigation(readerSnapshot)',
+  "window.addEventListener('popstate'",
+  'window.history.back()',
 ], 'Home and direct navigation');
 forbidText(app, [
   '33 von 100',
@@ -456,4 +461,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home and Quran use real persisted progress only, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader preserves its Quran parent in browser/system history, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');

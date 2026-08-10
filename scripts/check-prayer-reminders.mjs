@@ -82,8 +82,9 @@ if (!systemLayer.includes('PrayerReminderBanner') || !systemLayer.includes("new 
 }
 if (!app.includes("window.addEventListener('nur:open-prayer'")
   || !app.includes('const pending = consumePendingNavigation()')
-  || !app.includes("setActiveTab('prayer')")) {
-  throw new Error('App does not handle live or queued prayer navigation from reminders.');
+  || !app.includes("const openPrayerTracker = () => openRootTab('prayer')")
+  || !app.includes('resetBrowserRoot(buildNavigationSnapshot({')) {
+  throw new Error('App does not handle live or queued prayer navigation through the browser-aware root reset.');
 }
 if (!pwa.includes("event.data?.type === 'OPEN_PRAYER'")
   || !pwa.includes("queuePendingNavigation('prayer')")
