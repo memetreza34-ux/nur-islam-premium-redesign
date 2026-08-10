@@ -26,6 +26,7 @@ const duas = await read('src/data/duaData.ts');
 const dhikr = await read('src/data/dhikrData.ts');
 const names = await read('src/data/namesOfAllahData.ts');
 const learning = await read('src/data/islamicLearningContent.ts');
+const hadith = await read('src/data/hadithData.ts');
 
 // Entries are counted from their id lines so the numbers follow the data rather
 // than a hand-maintained constant.
@@ -44,12 +45,17 @@ const nameSources = countMatches(names, /\bsource:\s*'/g);
 const lessons = countMatches(learning, /^\s+categoryId:\s*'/gm);
 const lessonsWithSources = countMatches(learning, /^\s+sources:\s*\[/gm);
 
+const hadithEntries = countMatches(hadith, /^\s+id:\s*'/gm);
+const hadithSources = countMatches(hadith, /^\s+source:\s*'/gm);
+const hadithSummaryLabels = countMatches(hadith, /^\s+summary:\s*'Sinngemäßer Inhalt:/gm);
+
 const rows = [
   { area: 'Duas', items: duaEntries, withSource: duaSources },
   { area: 'Dhikr routines', items: dhikrRoutines, withSource: dhikrRoutineSources },
   { area: 'Dhikr counter steps', items: dhikrItems, withSource: dhikrItemSources },
   { area: '99 Names', items: nameEntries, withSource: nameSources },
   { area: 'Learning lessons', items: lessons, withSource: lessonsWithSources },
+  { area: 'Hadith summaries', items: hadithEntries, withSource: hadithSources },
 ];
 
 const pad = (value, width) => String(value).padEnd(width);
@@ -65,6 +71,7 @@ for (const row of rows) {
 }
 
 console.log('-'.repeat(55));
-console.log(`${complete} of ${rows.length} areas carry a source on every item.\n`);
+console.log(`${complete} of ${rows.length} areas carry a source on every item.`);
+console.log(`Hadith wording labels: ${hadithSummaryLabels}/${hadithEntries} explicitly marked as sinngemäße Inhaltsangaben.\n`);
 console.log('Presence of a citation is not a review. Nothing here is released');
 console.log('content until a qualified reviewer has signed it off.\n');
