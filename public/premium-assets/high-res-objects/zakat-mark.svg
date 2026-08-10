@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none">
+  <defs>
+    <linearGradient id="gold" x1="48" y1="36" x2="211" y2="222" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3D99D"/>
+      <stop offset=".52" stop-color="#D7AD58"/>
+      <stop offset="1" stop-color="#A8732E"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="translate(128 118) rotate(90) scale(116)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E8C576" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#E8C576" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="128" cy="128" r="116" fill="url(#glow)"/>
+  <circle cx="128" cy="128" r="91" stroke="url(#gold)" stroke-width="2" opacity=".55"/>
+  <circle cx="128" cy="128" r="76" fill="#0A3025" fill-opacity=".72" stroke="#E5C174" stroke-opacity=".32"/>
+  <path d="M78 91c11-18 28-28 50-28 28 0 50 17 58 43" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity=".7"/>
+  <path d="M178 165c-11 18-28 28-50 28-28 0-50-17-58-43" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity=".38"/>
+  <text x="128" y="142" text-anchor="middle" fill="url(#gold)" font-family="Georgia, 'Times New Roman', serif" font-size="49" font-weight="600" letter-spacing="-1">2,5%</text>
+  <circle cx="198" cy="68" r="4" fill="#F3D99D" opacity=".72"/>
+  <circle cx="59" cy="184" r="3" fill="#D7AD58" opacity=".55"/>
+</svg>
