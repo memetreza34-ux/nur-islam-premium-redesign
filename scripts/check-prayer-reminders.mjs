@@ -27,9 +27,18 @@ const schedulerFeatures = [
   'OBLIGATORY_REMINDER_IDS',
   'readEnabledReminderSet',
   '!prayer.obligatory',
+  'nur-app-icon-192.png',
+  'not a remote Web Push service',
+  'must not promise guaranteed closed-app delivery',
 ];
 for (const feature of schedulerFeatures) {
   if (!scheduler.includes(feature)) throw new Error(`Prayer reminder scheduler is missing: ${feature}`);
+}
+
+const focusAdds = [...scheduler.matchAll(/window\.addEventListener\('focus', run\)/g)].length;
+const focusRemoves = [...scheduler.matchAll(/window\.removeEventListener\('focus', run\)/g)].length;
+if (focusAdds !== 1 || focusRemoves !== 1) {
+  throw new Error(`Prayer reminder focus lifecycle must register exactly once and clean up exactly once; found ${focusAdds}/${focusRemoves}.`);
 }
 
 for (const feature of [
@@ -61,7 +70,8 @@ if (!main.includes('consumeInitialNavigationIntent')
 }
 // Closed-PWA launch navigation is queued before React mounts so a slow splash
 // cannot lose the reminder intent. The App consumes the queue after its live
-// prayer/calendar listeners are registered.
+// prayer/calendar listeners are registered. This protects click routing; it is
+// deliberately not a claim that a fully closed PWA can schedule its own wakeup.
 if (!main.includes("import { queuePendingNavigation } from '../services/pendingNavigation';")
   || !main.includes("localStorage.setItem('nur_onboarding_complete', 'true')")
   || !main.includes('queuePendingNavigation(intent)')) {
@@ -91,4 +101,4 @@ if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 
-console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, live/fallback bootstrap precedes the scheduler, and closed/live PWA reminder navigation is safely queued and forwarded to the prayer tracker.');
+console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, live/fallback bootstrap precedes the scheduler, the page/PWA lifecycle has one focus listener with catch-up, notification artwork uses the raster app icon, and closed/live notification clicks are safely queued to the prayer tracker without claiming guaranteed closed-app wakeups.');
