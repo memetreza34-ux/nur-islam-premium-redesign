@@ -21,7 +21,7 @@ import {
   WifiOff,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import {
   DEFAULT_MOSQUE_ORIGIN,
@@ -82,7 +82,11 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const [selected, setSelected] = useState<MosqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const toastTimerRef = useRef<number | null>(null);
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
+  const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .18, delay: reduceMotion ? 0 : Math.min(index * .02, .1), ease: [0.22, 1, 0.36, 1] as const });
 
   const closeDialog = useCallback(() => { setSelected(null); }, []);
   const mosqueDialog = useDialog(Boolean(selected), closeDialog, selected?.name);
@@ -176,7 +180,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const resultCount = snapshot?.results.length ?? 0;
 
   return (
-    <motion.main className="screen reference-mosque-screen reference-mosque-screen--live" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen reference-mosque-screen reference-mosque-screen--live" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">In deiner Nähe</span><h1>Moschee-Finder</h1></div>
@@ -207,7 +211,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       ) : visible.length ? (
         <section className="reference-mosque-list reference-mosque-list--live">
           {visible.map((mosque, index) => (
-            <motion.button key={mosque.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .025, .22) }} onClick={() => setSelected(mosque)}>
+            <motion.button key={mosque.id} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} onClick={() => setSelected(mosque)}>
               <span className="reference-mosque-list__pin"><MapPin size={20} /></span>
               <span><strong>{mosque.name}</strong><small>{mosque.address}</small><em>{formatDenomination(mosque.denomination)} · {mosque.serviceTimes ? `Gebetszeiten: ${mosque.serviceTimes}` : 'Gebetszeiten nicht hinterlegt'}</em></span>
               <span className="reference-mosque-distance">{formatDistance(mosque.distanceKm)}</span>
@@ -221,8 +225,8 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
 
       <AnimatePresence>
         {selected ? (
-          <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-            <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: 26, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 18, scale: .98 }}>
+          <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition}>
+            <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition}>
               <header>
                 <span className="reference-mosque-detail-modal__pin"><MapPin size={22} /></span>
                 <div><span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
@@ -247,7 +251,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 12 }}>{toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}>{toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
