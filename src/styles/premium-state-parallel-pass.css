@@ -8,7 +8,7 @@
   position: relative;
   overflow: hidden;
   min-height: 154px;
-  padding: 22px 18px !important;
+  padding: 22px 18px;
   border: 1px dashed rgba(232,199,122,.19) !important;
   border-radius: 22px !important;
   color: rgba(171,191,181,.82) !important;
@@ -218,7 +218,7 @@ button:disabled,
   .reference-mosque-error,
   .reference-notes-loading {
     min-height: 138px;
-    padding: 18px 14px !important;
+    padding: 18px 14px;
     border-radius: 19px !important;
   }
 
