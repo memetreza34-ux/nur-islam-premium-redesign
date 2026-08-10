@@ -2,6 +2,22 @@ name: Reference render preview
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - premium-design-finish
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'scripts/capture-reference-preview.mjs'
+      - 'scripts/capture-legacy-reference-preview.mjs'
+      - 'scripts/capture-light-reference-preview.mjs'
+      - 'scripts/capture-apple-reference-preview.mjs'
+      - 'scripts/capture-apple-compact-preview.mjs'
+      - '.github/workflows/reference-render-preview.yml'
   pull_request:
     branches:
       - premium-home-redesign
