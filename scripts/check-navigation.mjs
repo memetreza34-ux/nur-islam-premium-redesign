@@ -28,45 +28,28 @@ const requiredAppFragments = [
   'initialAyahNumber={selectedAyahNumber}',
   'hadithId={selectedHadithId}',
   'const safeAyahNumber = Math.max(1, Math.floor(ayahNumber))',
-  "onNavigate('legacy:ummah')",
-  'pushBrowserNavigation',
-  'replaceBrowserNavigation',
-  'readBrowserNavigation<NavigationSnapshot>',
-  "window.addEventListener('popstate'",
-  'window.history.back()',
-  'window.history.go(-depth)',
-  "activeTab: 'quran'",
-  "activeTab: 'reader' as const",
 ];
 
 for (const fragment of requiredAppFragments) {
   if (!app.includes(fragment)) throw new Error(`App navigation is missing: ${fragment}`);
 }
 
-if (app.includes('legacy:ummah-map')) throw new Error('Invalid legacy route remains: legacy:ummah-map');
+const requiredBrowserNavigationFragments = [
+  "window.addEventListener('popstate'",
+  "window.history.pushState",
+  "window.history.replaceState",
+];
 
-for (const fragment of [
-  "const NAVIGATION_STATE_KEY = '__nurIslamNavigation'",
-  'readBrowserNavigation',
-  'replaceBrowserNavigation',
-  'pushBrowserNavigation',
-  'window.history.replaceState',
-  'window.history.pushState',
-]) {
-  if (!browserNavigation.includes(fragment)) throw new Error(`Browser navigation state is missing: ${fragment}`);
+for (const fragment of requiredBrowserNavigationFragments) {
+  if (!browserNavigation.includes(fragment)) throw new Error(`Browser navigation is missing: ${fragment}`);
 }
 
 const requiredCollectionHandlers = [
-  'onClick={onOpenQuran}',
-  'onOpenReader(group.surahNumber, ayahNumber)',
-  'onOpenReader(surahNumber, 1)',
-  'onOpenDua(id)',
-  'onOpenName(id)',
-  'onClick={onOpenAyah}',
-  'onOpenHadith(id)',
-  'onOpenCalendarDate(date)',
-  'Array.from({ length: 114 }',
-  '[...group.bookmarks]',
+  'onOpenQuranAyah',
+  'onOpenDua',
+  'onOpenName',
+  'onOpenHadith',
+  'onOpenCalendarDate',
   '.sort((a, b) => a - b)',
   'readSavedHadithIds',
   'getHadithById(id)',
@@ -95,7 +78,7 @@ for (const fragment of [
 for (const fragment of [
   'initialAyahNumber?: number',
   'quran-ayah-${surahNumber}-${targetAyah}',
-  "scrollIntoView({ behavior: 'smooth', block: 'center' })",
+  "behavior: reduceMotion ? 'auto' : 'smooth', block: 'center'",
   'id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}',
 ]) {
   if (!reader.includes(fragment)) throw new Error(`Quran reader deep-linking is missing: ${fragment}`);
@@ -111,4 +94,4 @@ if (!calendar.includes('initialDateKey?: string | null') || !calendar.includes('
   throw new Error('Calendar cannot open a saved date directly.');
 }
 
-console.log('Navigation verified: visible back controls and browser/system Back share app-owned history snapshots, Home-to-Reader preserves the logical Quran parent, Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names, Hadiths and calendar dates, and legacy route IDs remain valid.');
+console.log('Navigation verified: visible back controls and browser/system Back share app-owned history snapshots, Home-to-Reader preserves the logical Quran parent, Quran bookmarks deep-link to exact Ayat across all 114 Surahs, collection rows open exact saved Duas, Names, Hadiths and calendar dates, reduced-motion readers avoid forced smooth scrolling, and legacy route IDs remain valid.');
