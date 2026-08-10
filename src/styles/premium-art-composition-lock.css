@@ -25,6 +25,38 @@
   min-width: 0;
 }
 
+/* Give Quran the primary position instead of three equally weighted narrow tiles. */
+.premium-home--v2 .journey-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.premium-home--v2 .journey-card {
+  min-height: 154px;
+}
+
+.premium-home--v2 .journey-card--quran {
+  grid-column: 1 / -1;
+  min-height: 190px;
+}
+
+.premium-home--v2 .journey-card--quran .premium-image {
+  top: -4px;
+  right: 0;
+  left: auto;
+  width: 56%;
+  height: 166px;
+  transform: none;
+}
+
+.premium-home--v2 .journey-card--quran > span:last-child {
+  max-width: 54%;
+}
+
+.premium-home--v2 .journey-card:not(.journey-card--quran) .premium-image {
+  height: 102px;
+}
+
 /* ---------- Prayer ---------- */
 .reference-next-prayer .next-prayer-panel__topline,
 .reference-next-prayer .next-prayer-panel__main,
@@ -255,6 +287,19 @@
 
   .premium-home--v2 .welcome-hero__copy p {
     max-width: 210px;
+  }
+
+  .premium-home--v2 .journey-card--quran {
+    min-height: 178px;
+  }
+
+  .premium-home--v2 .journey-card--quran .premium-image {
+    width: 59%;
+    height: 154px;
+  }
+
+  .premium-home--v2 .journey-card--quran > span:last-child {
+    max-width: 56%;
   }
 
   .reference-next-prayer .next-prayer-panel__main > div:first-child {
