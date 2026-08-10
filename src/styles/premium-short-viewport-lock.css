@@ -1,5 +1,8 @@
-/* Short-viewport / landscape visual guardrail.
-   Presentation only. Keeps art-directed screens usable when vertical space is scarce. */
+/* Short-viewport / landscape visual guardrail. */
+
+.reference-assistant-input {
+  bottom: auto;
+}
 
 @media (max-height: 680px) {
   .reference-splash {
