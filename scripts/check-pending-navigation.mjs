@@ -67,7 +67,7 @@ if (listenerIndex < 0 || consumeIndex < 0 || consumeIndex < listenerIndex) {
 }
 
 const startupQueueIndex = main.indexOf('queuePendingNavigation(intent)');
-const reactMountIndex = main.indexOf("ReactDOM.createRoot(document.getElementById('root')!).render(");
+const reactMountIndex = main.indexOf('ReactDOM.createRoot(rootElement).render(');
 if (startupQueueIndex < 0 || reactMountIndex < 0 || startupQueueIndex > reactMountIndex) {
   throw new Error('Startup URL navigation must be queued before React mounts.');
 }

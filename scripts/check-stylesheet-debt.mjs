@@ -30,7 +30,9 @@ const BUDGET = {
   files: 99,
   overrideFiles: 33,
   importantRules: 2281,
-  totalBytes: 721_328,
+  // Raised by 673 bytes for `.frame-guard`, the notice shown when the app is
+  // embedded by a foreign site. New surface, not another override layer.
+  totalBytes: 722_001,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

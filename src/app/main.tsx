@@ -12,6 +12,7 @@ import '@fontsource/amiri/400.css';
 import App from './App';
 import { resolveAppPath, versionAppPath } from './appPaths';
 import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
+import { blockForeignFraming, isFramedByForeignSite } from './frameGuard';
 import { startCalendarReminderScheduler } from '../services/calendarReminderService';
 import { startFastingReminderMaintenance } from '../services/fastingReminderService';
 import { startInstallPromptCapture } from '../services/installPromptService';
@@ -183,8 +184,14 @@ window.addEventListener('pagehide', () => {
   stopInstallPromptCapture();
 }, { once: true });
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <BootRoot />
-  </React.StrictMode>,
-);
+const rootElement = document.getElementById('root')!;
+
+if (isFramedByForeignSite()) {
+  blockForeignFraming(rootElement);
+} else {
+  ReactDOM.createRoot(rootElement).render(
+    <React.StrictMode>
+      <BootRoot />
+    </React.StrictMode>,
+  );
+}
