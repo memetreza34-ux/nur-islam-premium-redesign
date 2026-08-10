@@ -169,6 +169,9 @@ if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.include
 if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== './') {
   throw new Error('PWA manifest must keep id, start_url, and scope relative to its deployment location.');
 }
+if (manifest.display !== 'standalone' || manifest.display_override !== undefined) {
+  throw new Error('PWA manifest must use predictable standalone window geometry without an unhandled display override.');
+}
 if (manifest.background_color !== '#00120f' || manifest.theme_color !== '#001b16') {
   throw new Error('PWA manifest colors must match the dark reference palette.');
 }
@@ -205,4 +208,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
