@@ -1,0 +1,531 @@
+/*
+ * Premium art direction
+ *
+ * One deliberate late layer for the visible product language. Keep this file
+ * semantic: color hierarchy, surface depth, typography rhythm and composition.
+ * Feature-specific layout fixes belong in their feature stylesheet.
+ */
+
+:root {
+  --premium-ink-950: #020d0a;
+  --premium-ink-900: #041511;
+  --premium-ink-850: #071d17;
+  --premium-emerald-800: #0b3025;
+  --premium-emerald-700: #124434;
+  --premium-cream-100: #fff9ec;
+  --premium-cream-200: #f6ead4;
+  --premium-cream-400: #cbbfa9;
+  --premium-gold-300: #efd79f;
+  --premium-gold-400: #dfbd76;
+  --premium-gold-500: #bd9149;
+
+  --surface-base: rgba(5, 25, 20, .9);
+  --surface-raised: rgba(8, 38, 29, .84);
+  --surface-highlight: rgba(18, 65, 49, .72);
+  --surface-cream: #f4e8d1;
+  --border-subtle: rgba(240, 215, 159, .13);
+  --border-accent: rgba(240, 215, 159, .27);
+  --shadow-card: 0 18px 44px rgba(0, 0, 0, .24);
+  --shadow-hero: 0 28px 70px rgba(0, 0, 0, .34);
+
+  --space-section: 24px;
+  --radius-card-premium: 20px;
+  --radius-hero-premium: 28px;
+}
+
+:root:not([data-theme='light']) {
+  --bg-deep: var(--premium-ink-950);
+  --bg: var(--premium-ink-900);
+  --surface: var(--surface-raised);
+  --gold: var(--premium-gold-400);
+  --gold-bright: var(--premium-gold-300);
+  --gold-dark: var(--premium-gold-500);
+  --cream: var(--premium-cream-200);
+  --cream-strong: var(--premium-cream-100);
+  --muted: var(--premium-cream-400);
+  --muted-green: #a5b9ae;
+  --line: var(--border-subtle);
+  --line-strong: var(--border-accent);
+}
+
+/* Calm the canvas: premium depth should come from hierarchy, not visual noise. */
+:root:not([data-theme='light']) .app-background,
+:root:not([data-theme='light']) .app-background--v2 {
+  background:
+    radial-gradient(circle at 52% -8%, rgba(29, 101, 75, .24), transparent 30rem),
+    radial-gradient(circle at 95% 26%, rgba(213, 171, 89, .075), transparent 24rem),
+    linear-gradient(180deg, #061c16 0%, #03130f 47%, #020b09 100%);
+}
+
+:root:not([data-theme='light']) .app-background::before {
+  opacity: .055;
+}
+
+:root:not([data-theme='light']) .app-background--v2::after {
+  opacity: .045;
+  background-size: 56px 56px, 120px 120px;
+}
+
+.app-shell:not(.app-shell--onboarding) {
+  padding-inline: 15px;
+}
+
+.screen {
+  gap: var(--space-section);
+}
+
+/* Shared premium surfaces. Borders become quiet; lighting becomes directional. */
+:root:not([data-theme='light']) :where(
+  .glass-card,
+  .tracker--v2,
+  .continue-card--v2,
+  .hadith-card,
+  .ai-preview,
+  .recommendation-card,
+  .prayer-time-row,
+  .calendar-event-card,
+  .learning-card,
+  .settings-section,
+  .profile-card,
+  .reference-quran-list,
+  .reference-reader-verse,
+  .reference-source-card,
+  .reference-reflection-card,
+  .reference-mosque-live-status
+) {
+  border-color: var(--border-subtle);
+  background:
+    linear-gradient(145deg, rgba(16, 58, 44, .72), rgba(4, 24, 19, .91));
+  box-shadow: var(--shadow-card), inset 0 1px 0 rgba(255, 250, 235, .035);
+}
+
+:where(
+  .glass-card,
+  .tracker--v2,
+  .continue-card--v2,
+  .verse-card,
+  .hadith-card,
+  .ai-preview,
+  .recommendation-card,
+  .prayer-time-row,
+  .calendar-event-card,
+  .learning-card,
+  .settings-section,
+  .profile-card,
+  .reference-quran-list,
+  .reference-reader-verse,
+  .reference-source-card,
+  .reference-reflection-card,
+  .reference-mosque-live-status
+) {
+  border-radius: var(--radius-card-premium);
+}
+
+/* Typography: remove the tiny-dashboard feeling. */
+.overline {
+  color: var(--gold);
+  font-size: .68rem;
+  font-weight: 750;
+  letter-spacing: .14em;
+}
+
+.section-heading {
+  align-items: center;
+  padding-inline: 2px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.58rem, 6vw, 1.82rem);
+  font-weight: 650;
+  line-height: 1.03;
+}
+
+.text-button,
+.back-button {
+  min-height: 40px;
+  color: var(--muted-green);
+  font-size: .7rem;
+}
+
+/* Home: make the first viewport feel editorial rather than widget-heavy. */
+.premium-home--v2 {
+  gap: 26px;
+}
+
+.premium-home--v2 .brand-bar {
+  top: 14px;
+  right: 14px;
+  left: 14px;
+}
+
+.premium-home--v2 .brand-lockup {
+  display: inline-flex;
+  width: auto;
+  height: 44px;
+  gap: 8px;
+  padding: 4px 11px 4px 5px;
+  overflow: visible;
+  border-color: rgba(239, 215, 159, .16);
+  border-radius: 16px;
+  background: rgba(3, 19, 15, .62);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, .18);
+  backdrop-filter: blur(18px) saturate(115%);
+}
+
+.premium-home--v2 .brand-lockup > span:last-child {
+  display: grid;
+  gap: 1px;
+}
+
+.premium-home--v2 .brand-lockup strong {
+  font-size: 1.16rem;
+  line-height: .9;
+}
+
+.premium-home--v2 .brand-lockup small {
+  max-width: 98px;
+  overflow: hidden;
+  color: rgba(246, 234, 212, .58);
+  font-size: .48rem;
+  letter-spacing: .025em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.premium-home--v2 .brand-lockup__mark,
+.premium-home--v2 .brand-lockup__mark > img,
+.premium-home--v2 .brand-lockup__mark > .premium-image__fallback,
+.premium-home--v2 .brand-lockup__mark svg {
+  width: 34px;
+  height: 34px;
+}
+
+.premium-home--v2 .brand-lockup__mark {
+  transform: scale(.82);
+}
+
+.premium-home--v2 .welcome-hero {
+  min-height: 430px;
+  border-color: rgba(239, 215, 159, .19);
+  border-radius: var(--radius-hero-premium);
+  background:
+    radial-gradient(circle at 73% 24%, rgba(227, 185, 96, .16), transparent 14rem),
+    linear-gradient(155deg, #0c3a2c 0%, #08261e 48%, #03140f 100%);
+  box-shadow: var(--shadow-hero), inset 0 1px 0 rgba(255, 246, 220, .055);
+}
+
+.premium-home--v2 .welcome-hero::before {
+  opacity: .055;
+  background-size: 42px 42px;
+}
+
+.premium-home--v2 .welcome-hero__shade {
+  background:
+    linear-gradient(180deg, rgba(1, 12, 9, .08) 0%, rgba(1, 12, 9, .08) 46%, rgba(1, 12, 9, .78) 100%),
+    linear-gradient(90deg, rgba(2, 17, 13, .84) 0%, rgba(3, 22, 17, .5) 52%, rgba(3, 20, 16, .06) 100%);
+}
+
+.premium-home--v2 .welcome-hero__visual {
+  right: -74px;
+  bottom: 52px;
+  width: 410px;
+  height: 300px;
+  opacity: .88;
+  filter: drop-shadow(0 22px 30px rgba(0, 0, 0, .42));
+}
+
+.premium-home--v2 .welcome-hero__copy {
+  gap: 11px;
+  max-width: 82%;
+  padding: 92px 23px 118px;
+}
+
+.premium-home--v2 .welcome-hero__copy h1 {
+  max-width: 260px;
+  margin: 0;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  font-weight: 650;
+  line-height: .98;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.premium-home--v2 .welcome-hero__copy p {
+  max-width: 245px;
+  color: rgba(246, 234, 212, .72);
+  font-size: .76rem;
+  line-height: 1.55;
+}
+
+.premium-home--v2 .welcome-hero__date {
+  right: 14px;
+  bottom: 14px;
+  left: 14px;
+  min-height: 64px;
+  padding: 11px 14px;
+  border-color: rgba(239, 215, 159, .17);
+  border-radius: 18px;
+  background: rgba(4, 27, 21, .82);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .035);
+  backdrop-filter: blur(20px) saturate(115%);
+}
+
+.premium-home--v2 .welcome-hero__date-day {
+  font-size: 2.05rem;
+}
+
+.premium-home--v2 .welcome-hero__date strong {
+  font-size: .7rem;
+}
+
+.premium-home--v2 .welcome-hero__date small {
+  font-size: .6rem;
+}
+
+/* Next prayer is important, but visually subordinate to the welcome hero. */
+.premium-home--v2 .prayer-hero--v2 {
+  border-color: rgba(239, 215, 159, .14);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 90% 17%, rgba(222, 181, 95, .12), transparent 10rem),
+    linear-gradient(145deg, rgba(14, 62, 47, .92), rgba(4, 27, 21, .97));
+  box-shadow: 0 18px 45px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.premium-home--v2 .prayer-hero--v2::after {
+  opacity: .045;
+}
+
+.premium-home--v2 .prayer-hero--v2 .prayer-hero__content {
+  padding: 20px;
+}
+
+.premium-home--v2 .prayer-hero--v2 .hero-main h2 {
+  font-size: clamp(2.15rem, 9vw, 2.7rem);
+}
+
+.premium-home--v2 .hero-pill {
+  padding: 7px 10px;
+  border-color: rgba(255,255,255,.08);
+  background: rgba(255,255,255,.04);
+  font-size: .61rem;
+  letter-spacing: .11em;
+}
+
+.premium-home--v2 .location,
+.premium-home--v2 .countdown {
+  font-size: .72rem;
+}
+
+.premium-home--v2 .hero-orb {
+  width: 104px;
+  height: 104px;
+  border-color: rgba(239, 215, 159, .18);
+  background: radial-gradient(circle, rgba(223, 189, 118, .09), rgba(0,0,0,.08) 68%);
+}
+
+.premium-home--v2 .hero-orb__ring {
+  border-color: rgba(224, 190, 119, .1);
+  border-top-color: rgba(239, 215, 159, .78);
+  border-right-color: rgba(189, 145, 73, .72);
+}
+
+.premium-home--v2 .prayer-mini-times {
+  gap: 4px;
+  margin: 15px 0 11px;
+  padding: 10px 2px;
+}
+
+.premium-home--v2 .prayer-mini-times small {
+  font-size: .58rem;
+}
+
+.premium-home--v2 .prayer-mini-times strong {
+  font-size: .62rem;
+}
+
+.premium-home--v2 .prayer-source-note {
+  color: rgba(165, 185, 174, .66);
+  font-size: .57rem;
+}
+
+.premium-home--v2 .prayer-hero--v2 .gold-button {
+  display: inline-flex;
+  min-height: 42px;
+  margin-top: 16px;
+  padding: 10px 14px;
+  border-color: rgba(255, 249, 236, .22);
+  background: linear-gradient(135deg, #ecd39b, #c99c54);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .2);
+  font-size: .7rem;
+}
+
+/* Editorial journey: one feature card + two supporting cards reads more premium. */
+.premium-home--v2 .journey-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px;
+}
+
+.premium-home--v2 .journey-card {
+  min-height: 158px;
+  padding: 14px;
+  border-color: rgba(239, 215, 159, .13);
+  border-radius: 20px;
+  background: linear-gradient(155deg, rgba(17, 67, 50, .84), rgba(3, 25, 20, .96));
+  box-shadow: 0 16px 38px rgba(0,0,0,.22), inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.premium-home--v2 .journey-card--quran {
+  grid-column: 1 / -1;
+  min-height: 190px;
+}
+
+.premium-home--v2 .journey-card--quran .premium-image {
+  top: -7px;
+  right: 0;
+  left: auto;
+  width: 55%;
+  height: 165px;
+  transform: none;
+}
+
+.premium-home--v2 .journey-card--quran > span:last-child {
+  max-width: 54%;
+}
+
+.premium-home--v2 .journey-card:not(.journey-card--quran) .premium-image {
+  height: 102px;
+}
+
+.premium-home--v2 .journey-card small,
+.premium-home--v2 .journey-card em {
+  font-size: .62rem;
+  line-height: 1.35;
+}
+
+.premium-home--v2 .journey-card strong {
+  font-size: 1.28rem;
+  line-height: 1.02;
+}
+
+/* Daily actions: calmer icons and stronger labels. */
+.premium-home--v2 .quick-grid--v2 {
+  gap: 10px;
+}
+
+.premium-home--v2 .quick-grid--v2 .quick-card {
+  min-height: 132px;
+  border-color: rgba(239, 215, 159, .12);
+  border-radius: 19px;
+  box-shadow: 0 14px 34px rgba(0,0,0,.18);
+}
+
+.premium-home--v2 .quick-card__eyebrow {
+  font-size: .6rem;
+}
+
+.premium-home--v2 .quick-card strong {
+  font-size: .78rem;
+  line-height: 1.25;
+}
+
+.premium-home--v2 .continue-card--v2,
+.premium-home--v2 .ai-preview {
+  border-color: rgba(239, 215, 159, .13);
+}
+
+.premium-home--v2 .ai-preview {
+  grid-template-columns: 52px minmax(0, 1fr) 42px;
+  padding: 17px;
+}
+
+.premium-home--v2 .ai-preview p {
+  font-size: .68rem;
+}
+
+/* Bottom navigation should feel like a floating product control, not another card. */
+:root:not([data-theme='light']) .bottom-nav {
+  border-color: rgba(239, 215, 159, .13);
+  background: rgba(3, 20, 16, .88);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255,255,255,.035);
+  backdrop-filter: blur(24px) saturate(120%);
+}
+
+.bottom-nav {
+  border-radius: 24px;
+}
+
+.bottom-nav__item {
+  border-radius: 16px;
+}
+
+.bottom-nav__item small {
+  font-size: .61rem;
+  font-weight: 650;
+}
+
+:root:not([data-theme='light']) .bottom-nav__item--active,
+:root:not([data-theme='light']) .bottom-nav__item[aria-current='page'] {
+  background: linear-gradient(180deg, rgba(223, 189, 118, .13), rgba(223, 189, 118, .055));
+}
+
+/* Arabic text deserves deliberate vertical breathing room. */
+:where(.arabic-verse, .reference-reader-arabic, [dir='rtl']) {
+  font-family: Amiri, 'Noto Naskh Arabic', serif;
+  line-height: 1.9;
+}
+
+@media (max-width: 370px) {
+  .app-shell:not(.app-shell--onboarding) {
+    padding-inline: 12px;
+  }
+
+  .premium-home--v2 {
+    gap: 22px;
+  }
+
+  .premium-home--v2 .brand-lockup small {
+    display: none;
+  }
+
+  .premium-home--v2 .welcome-hero {
+    min-height: 410px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy {
+    max-width: 88%;
+    padding: 86px 20px 116px;
+  }
+
+  .premium-home--v2 .welcome-hero__visual {
+    right: -100px;
+  }
+
+  .premium-home--v2 .prayer-hero--v2 .prayer-hero__content {
+    padding: 17px;
+  }
+
+  .premium-home--v2 .hero-orb {
+    width: 92px;
+    height: 92px;
+  }
+
+  .premium-home--v2 .journey-card--quran > span:last-child {
+    max-width: 58%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .premium-home--v2 .welcome-hero__visual {
+    transition: transform 360ms cubic-bezier(.22, 1, .36, 1), filter 360ms ease;
+  }
+
+  @media (hover: hover) {
+    .premium-home--v2 .welcome-hero:hover .welcome-hero__visual {
+      transform: translate3d(-4px, -3px, 0) scale(1.012);
+      filter: drop-shadow(0 25px 34px rgba(0, 0, 0, .46));
+    }
+  }
+}
