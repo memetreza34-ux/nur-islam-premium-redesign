@@ -2,8 +2,11 @@
 
 /* ---------- Prayer ---------- */
 .reference-next-prayer {
+  display: grid;
   isolation: isolate;
   min-height: 300px !important;
+  align-content: start;
+  grid-auto-rows: max-content;
 }
 
 .reference-next-prayer::before,
