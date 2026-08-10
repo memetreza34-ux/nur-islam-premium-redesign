@@ -11,6 +11,8 @@
 
 .reference-next-prayer::before,
 .next-prayer-panel::before {
+  content: '';
+  position: absolute;
   z-index: 0;
   right: -48px !important;
   bottom: -9px !important;
@@ -21,6 +23,7 @@
   filter: drop-shadow(0 25px 23px rgba(0, 0, 0, .47)) saturate(.92) contrast(1.035) !important;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 17%, #000 38%, #000 100%);
+  pointer-events: none;
 }
 
 .reference-next-prayer::after {
