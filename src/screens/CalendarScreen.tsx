@@ -14,7 +14,7 @@ import {
   Trash2,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { readCalendarEntries, writeCalendarEntries } from '../services/calendarReminderService';
 import type { PersonalCalendarEntry } from '../services/calendarReminderService';
@@ -119,6 +119,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const [newTime, setNewTime] = useState('19:30');
   const [newReminder, setNewReminder] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const toastTimerRef = useRef<number | null>(null);
   const entryIdRef = useRef(Date.now() * 1000);
   const closeDialog = useCallback(() => { setShowAdd(false); }, []);
@@ -130,6 +131,8 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const hijriLabel = getHijriLabel(selectedDate);
   const selectedEvent = getCalendarEvent(selectedDate);
   const selectedEntries = entries.filter((entry) => entry.date === selectedDateKey);
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
+  const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
 
   useEffect(() => writeCalendarEntries(entries), [entries]);
   useEffect(() => {
@@ -193,7 +196,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   };
 
   return (
-    <motion.main className="screen calendar-screen reference-calendar-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}>
+    <motion.main className="screen calendar-screen reference-calendar-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">Nur Islam</span><h1>Kalender</h1></div>
@@ -270,8 +273,8 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
 
       <AnimatePresence>
         {showAdd ? (
-          <motion.div className="calendar-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowAdd(false)}>
-            <motion.section {...screenDialog.props} className="calendar-modal" initial={{ y: 30, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 20, opacity: 0 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="calendar-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setShowAdd(false)}>
+            <motion.section {...screenDialog.props} className="calendar-modal" initial={{ y: reduceMotion ? 0 : 16, opacity: 0, scale: reduceMotion ? 1 : .99 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: reduceMotion ? 0 : 8, opacity: 0, scale: reduceMotion ? 1 : .995 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <div className="calendar-modal__header"><div><span className="overline">{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(selectedDate)}</span><h2>Termin hinzufügen</h2></div><button className="icon-button" onClick={() => setShowAdd(false)} aria-label="Schließen"><X size={19} /></button></div>
               <label>Titel<input value={newTitle} onChange={(event) => setNewTitle(event.target.value)} maxLength={120} placeholder="z. B. Surah Al-Kahf lesen" autoFocus /></label>
               <label>Uhrzeit<input type="time" value={newTime} onChange={(event) => setNewTime(event.target.value)} /></label>
@@ -281,7 +284,7 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             </motion.section>
           </motion.div>
         ) : null}
-        {toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}
+        {toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}
       </AnimatePresence>
     </motion.main>
   );
