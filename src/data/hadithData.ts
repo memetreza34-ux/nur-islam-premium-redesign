@@ -65,6 +65,7 @@ export const HADITH_LIBRARY: readonly HadithEntry[] = [
 
 const SAVED_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved_ids';
 const LEGACY_DAILY_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved';
+const LEGACY_LIBRARY_FAVORITES_STORAGE_KEY = 'nur_hadith_library_favorites';
 
 function localDayNumber(date: Date) {
   return Math.floor(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()) / 86_400_000);
@@ -79,27 +80,35 @@ export function getHadithById(id: string | null | undefined) {
   return id ? HADITH_LIBRARY.find((entry) => entry.id === id) ?? null : null;
 }
 
+function addValidSavedValues(saved: Set<string>, raw: string | null, validIds: Set<string>) {
+  if (!raw) return;
+  const parsed = JSON.parse(raw) as unknown;
+  if (!Array.isArray(parsed)) return;
+  parsed.forEach((value) => {
+    if (typeof value === 'string' && validIds.has(value)) saved.add(value);
+  });
+}
+
 export function readSavedHadithIds() {
   const validIds = new Set(HADITH_LIBRARY.map((entry) => entry.id));
   const saved = new Set<string>();
   try {
-    const raw = localStorage.getItem(SAVED_HADITH_STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as unknown;
-      if (Array.isArray(parsed)) {
-        parsed.forEach((value) => {
-          if (typeof value === 'string' && validIds.has(value)) saved.add(value);
-        });
-      }
-    }
+    addValidSavedValues(saved, localStorage.getItem(SAVED_HADITH_STORAGE_KEY), validIds);
+    addValidSavedValues(saved, localStorage.getItem(LEGACY_LIBRARY_FAVORITES_STORAGE_KEY), validIds);
 
-    // The old implementation stored one boolean for the fixed intentions
+    // The old daily implementation stored one boolean for the fixed intentions
     // Hadith. Migrate it once so an existing bookmark is never silently lost.
     if (localStorage.getItem(LEGACY_DAILY_HADITH_STORAGE_KEY) === '1') {
       saved.add('intentions');
       localStorage.removeItem(LEGACY_DAILY_HADITH_STORAGE_KEY);
     }
-    localStorage.setItem(SAVED_HADITH_STORAGE_KEY, JSON.stringify([...saved]));
+
+    const serialized = JSON.stringify([...saved]);
+    localStorage.setItem(SAVED_HADITH_STORAGE_KEY, serialized);
+    // Keep the legacy library key mirrored until the old library screen has
+    // been fully migrated to the shared helper. This makes saving interoperable
+    // immediately in both directions instead of showing conflicting states.
+    localStorage.setItem(LEGACY_LIBRARY_FAVORITES_STORAGE_KEY, serialized);
   } catch {
     // Storage is optional in restricted browser modes.
   }
@@ -110,7 +119,9 @@ export function writeSavedHadithIds(ids: Set<string>) {
   const validIds = new Set(HADITH_LIBRARY.map((entry) => entry.id));
   const safe = [...ids].filter((id) => validIds.has(id));
   try {
-    localStorage.setItem(SAVED_HADITH_STORAGE_KEY, JSON.stringify(safe));
+    const serialized = JSON.stringify(safe);
+    localStorage.setItem(SAVED_HADITH_STORAGE_KEY, serialized);
+    localStorage.setItem(LEGACY_LIBRARY_FAVORITES_STORAGE_KEY, serialized);
   } catch {
     // Storage is optional in restricted browser modes.
   }
