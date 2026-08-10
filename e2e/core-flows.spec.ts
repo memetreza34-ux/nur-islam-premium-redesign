@@ -4,9 +4,8 @@ import { openApp } from './appReady';
 /**
  * Smoke tests for the flows a user actually performs.
  *
- * Everything else in this repository checks source text or unit behaviour.
- * Nothing until now started the built app and clicked it, so "it builds" and
- * "it works" were never the same statement.
+ * Source and unit checks protect individual contracts; this file proves that
+ * the built app still connects those contracts into usable browser flows.
  *
  * `?preview=1` skips the first-launch onboarding, which is covered separately.
  */
@@ -38,6 +37,53 @@ test('opens the Quran reader and shows Arabic verses', async ({ page }) => {
 
   // Al-Faatiha ships offline, so this must work with no network at all.
   await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
+});
+
+test('keeps the Quran reader inside the Quran hierarchy when opened from Home', async ({ page }) => {
+  await page.locator('.journey-card--quran').click();
+  await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
+
+  await page.getByRole('button', { name: 'Zurück zum Quran' }).click();
+
+  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByRole('heading', { name: 'Quran' })).toBeVisible();
+});
+
+test('saves today’s Hadith and reopens that exact entry from Collections', async ({ page }) => {
+  const hadithCard = page.locator('.hadith-card').first();
+  await hadithCard.scrollIntoViewIfNeeded();
+  await hadithCard.click();
+
+  await expect(page.getByRole('heading', { name: 'Hadith des Tages' })).toBeVisible();
+  const hadithTitle = (await page.locator('.reference-hadith-hero .hero-pill').textContent())?.trim();
+  expect(hadithTitle).toBeTruthy();
+
+  await page.getByRole('button', { name: 'Speichern' }).click();
+  await expect(page.getByRole('button', { name: 'Gespeichert' })).toBeVisible();
+
+  const savedIds = await page.evaluate(() => {
+    const raw = localStorage.getItem('nur_daily_hadith_saved_ids');
+    return raw ? JSON.parse(raw) as string[] : [];
+  });
+  expect(savedIds).toHaveLength(1);
+
+  await page.getByRole('button', { name: 'Zurück' }).click();
+  await expect(page.locator('.premium-home')).toBeVisible();
+
+  const collectionsEntry = page.getByRole('button').filter({ hasText: 'Meine Sammlung' }).first();
+  await collectionsEntry.scrollIntoViewIfNeeded();
+  await collectionsEntry.click();
+  await expect(page.locator('.reference-collections-screen')).toBeVisible();
+
+  const savedHadithRow = page.getByRole('button').filter({ hasText: hadithTitle! }).first();
+  await expect(savedHadithRow).toBeVisible();
+  await savedHadithRow.click();
+
+  await expect(page.getByRole('heading', { name: 'Gespeicherter Hadith' })).toBeVisible();
+  await expect(page.locator('.reference-hadith-hero .hero-pill')).toHaveText(hadithTitle!);
+
+  await page.getByRole('button', { name: 'Zurück' }).click();
+  await expect(page.locator('.reference-collections-screen')).toBeVisible();
 });
 
 test('counts a dhikr and keeps it across a reload', async ({ page }) => {
