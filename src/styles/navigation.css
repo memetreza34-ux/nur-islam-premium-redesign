@@ -50,9 +50,7 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Every label reserves two lines, whether it needs them or not. "Islam
-   verstehen" is the only one that wraps, and when it alone grew taller it
-   pushed its icon up and left the row visibly out of line. */
+/* Every label reserves two lines so all five icon baselines stay aligned. */
 .bottom-nav__item small {
   display: grid;
   max-width: 68px;
@@ -66,6 +64,8 @@
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+.bottom-nav__item small span{display:inline;width:auto;height:auto;border:0;border-radius:0;transition:none}
 
 .bottom-nav__item--active {
   color: #f2d79a;
@@ -92,7 +92,8 @@
 
 @media(max-width:370px){
 .bottom-nav{width:min(calc(100% - 18px),440px);padding-inline:5px}
-.bottom-nav__item small{max-width:60px;min-height:2.16em;overflow:visible;font-size:.5rem;text-overflow:clip}}
+.bottom-nav__item small{max-width:60px;min-height:2.16em;overflow:visible;font-size:.5rem;text-overflow:clip}
+.bottom-nav__item--learn small span{display:block}}
 
 .toast {
   position: fixed;
