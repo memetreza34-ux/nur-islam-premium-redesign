@@ -74,6 +74,24 @@ function prepareImmediatePreview() {
   if (manifest) manifest.href = resolveAppPath('manifest.webmanifest');
 }
 
+function startScreenScrollReset() {
+  const root = document.getElementById('root');
+  if (!root) return () => undefined;
+
+  let activeFrame: Element | null = null;
+  const syncScreen = () => {
+    const nextFrame = root.querySelector('.screen-transition-frame');
+    if (!nextFrame || nextFrame === activeFrame) return;
+    activeFrame = nextFrame;
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  };
+
+  const observer = new MutationObserver(syncScreen);
+  observer.observe(root, { childList: true, subtree: true });
+  syncScreen();
+  return () => observer.disconnect();
+}
+
 const stopInstallPromptCapture = startInstallPromptCapture();
 consumeInitialNavigationIntent();
 prepareImmediatePreview();
@@ -96,6 +114,8 @@ function BootRoot() {
     const timer = window.setTimeout(() => setReady(true), previewMode || reducedMotion ? 160 : 800);
     return () => window.clearTimeout(timer);
   }, []);
+
+  useEffect(() => ready ? startScreenScrollReset() : undefined, [ready]);
 
   useEffect(() => {
     let active = true;
