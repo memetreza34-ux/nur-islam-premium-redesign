@@ -12,7 +12,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { DUA_BY_ID, DUA_CATEGORIES, DUA_CATEGORY_BY_ID, DUAS } from '../data/duaData';
 import type { DuaCategoryId, DuaEntry } from '../data/duaData';
@@ -67,6 +67,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   });
   const [selected, setSelected] = useState<DuaEntry | null>(initialDua);
   const [toast, setToast] = useState<string | null>(null);
+  const reduceMotion = useReducedMotion();
   const closeDialog = useCallback(() => { setSelected(null); }, []);
   const screenDialog = useDialog(Boolean(selected), closeDialog, selected?.title);
 
@@ -134,13 +135,15 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
     : filter === 'favorites'
       ? 'Favoriten'
       : DUA_CATEGORY_BY_ID.get(filter)?.title ?? 'Duas';
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const overlayTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <motion.main
       className="screen reference-duas-screen reference-duas-screen--complete"
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+      transition={screenTransition}
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
@@ -190,7 +193,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
             const isFavorite = favorites.has(dua.id);
             const wasViewed = viewed.has(dua.id);
             return (
-              <motion.article key={dua.id} className="reference-dua-card reference-dua-card--complete" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .018, .24) }}>
+              <motion.article key={dua.id} className="reference-dua-card reference-dua-card--complete" initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .012, .16), ease: [0.22, 1, 0.36, 1] }}>
                 <div className="reference-dua-card__top">
                   <span><Sparkles size={15} /> {category?.title}</span>
                   <button className={isFavorite ? 'is-favorite' : ''} onClick={() => toggleFavorite(dua.id)} aria-label={`${dua.title} als Favorit markieren`} aria-pressed={isFavorite}><Heart size={18} fill={isFavorite ? 'currentColor' : 'none'} /></button>
@@ -212,8 +215,8 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
 
       <AnimatePresence>
         {selected ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section {...screenDialog.props} className="reference-dua-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
+            <motion.section {...screenDialog.props} className="reference-dua-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
               <span className="overline">{DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title}</span>
               <h2>{selected.title}</h2>
@@ -231,7 +234,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={overlayTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
