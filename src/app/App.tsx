@@ -21,9 +21,11 @@ import {
   SunMedium,
 } from 'lucide-react';
 import { AnimatePresence, motion } from 'motion/react';
+import { getDailyHadith } from '../data/hadithData';
 import { AssistantScreen } from '../screens/AssistantScreen';
 import { CalendarScreen } from '../screens/CalendarScreen';
 import { CollectionsScreen } from '../screens/CollectionsScreen';
+import { DailyHadithScreen } from '../screens/DailyHadithScreen';
 import { DhikrScreen } from '../screens/DhikrScreen';
 import { MosqueScreen } from '../screens/DiscoveryScreens';
 import { DuasScreen } from '../screens/DuasScreen';
@@ -44,7 +46,6 @@ import { QuranReaderScreen } from '../screens/QuranReaderScreen';
 import { QuranScreen } from '../screens/QuranScreen';
 import {
   AyahDetailScreen,
-  HadithDetailScreen,
   WorshipGuideScreen,
 } from '../screens/ReferenceReadingScreens';
 import {
@@ -211,6 +212,7 @@ function PremiumHome({
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
   const greeting = getHomeGreeting(now);
+  const dailyHadith = getDailyHadith(now);
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
     : 0;
@@ -378,7 +380,10 @@ function PremiumHome({
           <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
         </button>
-        <button className="hadith-card glass-card reference-daily-card-button" onClick={() => onNavigate('hadith')}><div className="card-title-row"><span><Quote size={16} /> Hadith des Tages</span></div><blockquote>Sinngemäß: Taten werden entsprechend den Absichten bewertet.</blockquote><footer>Sahih al-Bukhari 1</footer></button>
+        <button className="hadith-card glass-card reference-daily-card-button" onClick={() => onNavigate('hadith')}>
+          <div className="card-title-row"><span><Quote size={16} /> Hadith des Tages</span></div>
+          <blockquote>{dailyHadith.summary}</blockquote><footer>{dailyHadith.title} · {dailyHadith.source}</footer>
+        </button>
       </section>
 
       <button className="ai-preview" onClick={() => onNavigate('assistant')}>
@@ -429,6 +434,7 @@ export default function App() {
   const [selectedDuaId, setSelectedDuaId] = useState<string | null>(null);
   const [selectedNameId, setSelectedNameId] = useState<string | null>(null);
   const [selectedCalendarDate, setSelectedCalendarDate] = useState<string | null>(null);
+  const [selectedHadithId, setSelectedHadithId] = useState<string | null>(null);
   const primaryActive: PrimaryTab = activeTab === 'prayer'
     ? 'prayer'
     : activeTab === 'calendar'
@@ -441,12 +447,13 @@ export default function App() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-  }, [activeTab, onboardingComplete, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate]);
+  }, [activeTab, onboardingComplete, selectedSurahNumber, selectedAyahNumber, selectedDuaId, selectedNameId, selectedCalendarDate, selectedHadithId]);
 
   const clearDirectTargets = () => {
     setSelectedDuaId(null);
     setSelectedNameId(null);
     setSelectedCalendarDate(null);
+    setSelectedHadithId(null);
   };
 
   const moveTo = (tab: Tab, rememberOrigin = true) => {
@@ -455,6 +462,7 @@ export default function App() {
     if (tab === 'duas') setSelectedDuaId(null);
     if (tab === 'names') setSelectedNameId(null);
     if (tab === 'calendar') setSelectedCalendarDate(null);
+    if (tab === 'hadith') setSelectedHadithId(null);
     setActiveTab(tab);
   };
 
@@ -467,13 +475,11 @@ export default function App() {
   };
 
   const goBack = (fallback: Tab = 'home') => {
-    setNavigationHistory((current) => {
-      const remaining = [...current];
-      let previous = remaining.pop();
-      while (previous === activeTab) previous = remaining.pop();
-      setActiveTab(previous ?? fallback);
-      return remaining;
-    });
+    const remaining = [...navigationHistory];
+    let previous = remaining.pop();
+    while (previous === activeTab) previous = remaining.pop();
+    setNavigationHistory(remaining);
+    setActiveTab(previous ?? fallback);
   };
 
   useEffect(() => {
@@ -517,25 +523,32 @@ export default function App() {
     moveTo('reader', activeTab !== 'reader');
   };
   const openSavedDua = (id: string) => {
-    setSelectedDuaId(id);
     setSelectedNameId(null);
     setSelectedCalendarDate(null);
+    setSelectedHadithId(null);
     moveTo('duas');
     setSelectedDuaId(id);
   };
   const openSavedName = (id: string) => {
-    setSelectedNameId(id);
     setSelectedDuaId(null);
     setSelectedCalendarDate(null);
+    setSelectedHadithId(null);
     moveTo('names');
     setSelectedNameId(id);
   };
   const openSavedCalendarDate = (date: string) => {
-    setSelectedCalendarDate(date);
     setSelectedDuaId(null);
     setSelectedNameId(null);
+    setSelectedHadithId(null);
     moveTo('calendar');
     setSelectedCalendarDate(date);
+  };
+  const openSavedHadith = (id: string) => {
+    setSelectedDuaId(null);
+    setSelectedNameId(null);
+    setSelectedCalendarDate(null);
+    moveTo('hadith');
+    setSelectedHadithId(id);
   };
 
   if (!onboardingComplete) {
@@ -566,7 +579,7 @@ export default function App() {
           : activeTab === 'ayah'
             ? <AyahDetailScreen onBack={goBack} />
             : activeTab === 'hadith'
-              ? <HadithDetailScreen onBack={goBack} />
+              ? <DailyHadithScreen onBack={goBack} hadithId={selectedHadithId} />
               : activeTab === 'wudu'
                 ? <WorshipGuideScreen initialMode="wudu" onBack={goBack} />
                 : activeTab === 'salah'
@@ -599,7 +612,7 @@ export default function App() {
                                           onOpenDua={openSavedDua}
                                           onOpenName={openSavedName}
                                           onOpenAyah={() => navigate('ayah')}
-                                          onOpenHadith={() => navigate('hadith')}
+                                          onOpenHadith={openSavedHadith}
                                           onOpenCalendarDate={openSavedCalendarDate}
                                         />
                                       : <AssistantScreen onBack={goBack} />;
@@ -610,7 +623,7 @@ export default function App() {
       <div className="background-orbit background-orbit--two" />
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
         <AnimatePresence mode="wait">
-          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
+          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: .2 }}>
             {screen}
           </motion.div>
         </AnimatePresence>
