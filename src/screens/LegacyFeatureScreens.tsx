@@ -31,6 +31,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { versionAppPath } from '../app/appPaths';
+import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data/hadithData';
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
 import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule';
 
@@ -107,17 +108,6 @@ const quizQuestions = [
   { question: 'In welchem Monat wird gefastet?', answers: ['Muharram', 'Rajab', 'Ramadan', 'Shawwal'], correct: 2 },
   { question: 'Wohin richtet sich das Gebet?', answers: ['Madinah', 'Zur Kaaba', 'Jerusalem', 'Zum Sonnenaufgang'], correct: 1 },
   { question: 'Wie heißt die Gebetswaschung?', answers: ['Adhan', 'Wudu', 'Dhikr', 'Khutbah'], correct: 1 },
-] as const;
-
-const hadithItems = [
-  { id: 'intentions', title: 'Absichten', summary: 'Sinngemäßer Inhalt: Der Wert einer Handlung hängt von der Absicht ab.', source: 'Sahih al-Bukhari 1; Sahih Muslim 1907' },
-  { id: 'mercy', title: 'Barmherzigkeit', summary: 'Sinngemäßer Inhalt: Wer anderen keine Barmherzigkeit zeigt, dem wird keine Barmherzigkeit gezeigt.', source: 'Sahih al-Bukhari 6013; Sahih Muslim 2319' },
-  { id: 'good-word', title: 'Ein gutes Wort', summary: 'Sinngemäßer Inhalt: Auch ein gutes Wort gilt als Wohltätigkeit.', source: 'Sahih al-Bukhari 2989; Sahih Muslim 1009' },
-  { id: 'anger', title: 'Selbstbeherrschung', summary: 'Sinngemäßer Inhalt: Wirkliche Stärke zeigt sich darin, sich im Zorn zu beherrschen.', source: 'Sahih al-Bukhari 6114; Sahih Muslim 2609' },
-  { id: 'brother', title: 'Für den anderen wünschen', summary: 'Sinngemäßer Inhalt: Vollständiger Glaube schließt ein, für andere das Gute zu wünschen, das man für sich selbst wünscht.', source: 'Sahih al-Bukhari 13; Sahih Muslim 45' },
-  { id: 'ease', title: 'Erleichtern', summary: 'Sinngemäßer Inhalt: Erleichtert und erschwert nicht; gebt frohe Botschaft und schreckt nicht ab.', source: 'Sahih al-Bukhari 69; Sahih Muslim 1734' },
-  { id: 'cleanliness', title: 'Reinheit', summary: 'Sinngemäßer Inhalt: Reinheit besitzt im Glauben einen hohen Stellenwert.', source: 'Sahih Muslim 223' },
-  { id: 'smile', title: 'Freundlichkeit', summary: 'Sinngemäßer Inhalt: Freundliche Begegnung und ein lächelndes Gesicht sind gute Taten.', source: 'Jami at-Tirmidhi 1956' },
 ] as const;
 
 function readStored<T>(key: string, fallback: T): T {
@@ -320,13 +310,15 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
 
 function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const [query, setQuery] = useState('');
-  const [favorites, setFavorites] = useState<string[]>(() => readStored('nur_hadith_library_favorites', []));
-  const filtered = hadithItems.filter((item) => `${item.title} ${item.summary} ${item.source}`.toLocaleLowerCase('de-DE').includes(query.toLocaleLowerCase('de-DE')));
+  const [favorites, setFavorites] = useState(() => readSavedHadithIds());
+  const filtered = HADITH_LIBRARY.filter((item) => `${item.title} ${item.summary} ${item.source}`.toLocaleLowerCase('de-DE').includes(query.toLocaleLowerCase('de-DE')));
 
   const toggleFavorite = (id: string) => {
-    const value = favorites.includes(id) ? favorites.filter((item) => item !== id) : [...favorites, id];
+    const value = new Set(favorites);
+    if (value.has(id)) value.delete(id);
+    else value.add(id);
     setFavorites(value);
-    writeStored('nur_hadith_library_favorites', value);
+    writeSavedHadithIds(value);
   };
 
   return (
@@ -334,12 +326,15 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
       <FeatureHeader feature={feature} onBack={onBack} />
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <section className="reference-hadith-library">
-        {filtered.map((item) => (
-          <article key={item.id}>
-            <div><span className="overline">{item.title}</span><p>{item.summary}</p><small>{item.source}</small></div>
-            <button onClick={() => toggleFavorite(item.id)} aria-label={favorites.includes(item.id) ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={favorites.includes(item.id)} className={favorites.includes(item.id) ? 'is-saved' : ''}><Bookmark size={18} fill={favorites.includes(item.id) ? 'currentColor' : 'none'} /></button>
-          </article>
-        ))}
+        {filtered.map((item) => {
+          const saved = favorites.has(item.id);
+          return (
+            <article key={item.id}>
+              <div><span className="overline">{item.title}</span><p>{item.summary}</p><small>{item.source}</small></div>
+              <button onClick={() => toggleFavorite(item.id)} aria-label={saved ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={saved} className={saved ? 'is-saved' : ''}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>
+            </article>
+          );
+        })}
       </section>
       {!filtered.length ? <div className="reference-empty-result"><Search size={24} /><strong>Kein Hadith gefunden</strong><small>Ändere den Suchbegriff.</small></div> : null}
       <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die deutsche Formulierung ist als sinngemäße Inhaltsangabe gekennzeichnet. Wortlaut, Übersetzung und Einordnung benötigen vor Veröffentlichung eine fachliche Endprüfung.</p></section>
