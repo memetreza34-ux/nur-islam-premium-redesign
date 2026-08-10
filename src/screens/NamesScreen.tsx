@@ -11,7 +11,7 @@ import {
   Sparkles,
   X,
 } from 'lucide-react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
 import type { NameOfAllah } from '../data/namesOfAllahData';
 import { useDialog } from '../shared/useDialog';
@@ -65,6 +65,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
   const nameDialog = useDialog(Boolean(selected), closeName, selected?.latin);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => writeSet('nur_name_favorites', favorites), [favorites]);
   useEffect(() => writeSet('nur_name_learned', learned), [learned]);
@@ -116,12 +117,15 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
     });
   };
 
+  const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
+  const overlayTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
+
   return (
     <motion.main
       className="screen reference-names-screen reference-names-screen--complete"
-      initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: .38, ease: [0.22, 1, 0.36, 1] }}
+      transition={screenTransition}
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
@@ -166,7 +170,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
             const isFavorite = favorites.has(id);
             const isLearned = learned.has(id);
             return (
-              <motion.article key={id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: Math.min(index * .012, .22) }}>
+              <motion.article key={id} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .009, .14), ease: [0.22, 1, 0.36, 1] }}>
                 <button className="reference-name-list__main" onClick={() => setSelected(name)}>
                   <span className="reference-name-list__number">{String(name.id).padStart(2, '0')}</span>
                   <span className="reference-name-list__arabic" dir="rtl">{name.arabic}</span>
@@ -184,8 +188,8 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
 
       <AnimatePresence>
         {selected ? (
-          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)}>
-            <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: 24, scale: .97 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 14, scale: .98 }} onClick={(event) => event.stopPropagation()}>
+          <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
+            <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
               <span className="overline">Name {selected.id} von 99</span>
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
@@ -201,7 +205,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={overlayTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }
