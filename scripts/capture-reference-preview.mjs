@@ -111,6 +111,22 @@ try {
   await captureAt(page, '.inspiration-grid--v2', '01d-home-inspiration');
   await captureAt(page, '.welcome-hero', '01e-home-return-top');
 
+  const ayahCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Ayah im Fokus' }).first();
+  await ayahCard.waitFor({ state: 'visible', timeout: 10_000 });
+  await ayahCard.click();
+  await page.locator('.reference-ayah-hero').waitFor({ state: 'visible', timeout: 10_000 });
+  await waitForStableUi(page);
+  await capture(page, '01f-ayah-detail');
+  await returnHome(page);
+
+  const hadithCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Hadith des Tages' }).first();
+  await hadithCard.waitFor({ state: 'visible', timeout: 10_000 });
+  await hadithCard.click();
+  await page.locator('.reference-hadith-hero').waitFor({ state: 'visible', timeout: 10_000 });
+  await waitForStableUi(page);
+  await capture(page, '01g-hadith-detail');
+  await returnHome(page);
+
   const destinations = [
     ['Gebete', '02-prayer'],
     ['Kalender', '03-calendar'],
