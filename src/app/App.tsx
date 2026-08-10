@@ -376,7 +376,7 @@ function PremiumHome({
       <section className="inspiration-grid inspiration-grid--v2">
         <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
           <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
-          <div className="card-title-row"><span><Sparkles size={16} /> Ayah des Tages</span><span><BookHeart size={18} /></span></div>
+          <div className="card-title-row"><span><Sparkles size={16} /> Ayah im Fokus</span><span><BookHeart size={18} /></span></div>
           <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
         </button>
@@ -520,7 +520,10 @@ export default function App() {
     clearDirectTargets();
     setSelectedSurahNumber(surahNumber);
     setSelectedAyahNumber(Math.max(1, Math.floor(ayahNumber)));
-    moveTo('reader', activeTab !== 'reader');
+    if (activeTab === 'reader') return;
+    const readerParent: Tab = activeTab === 'home' ? 'quran' : activeTab;
+    setNavigationHistory((current) => [...current, readerParent].slice(-24));
+    setActiveTab('reader');
   };
   const openSavedDua = (id: string) => {
     setSelectedNameId(null);
