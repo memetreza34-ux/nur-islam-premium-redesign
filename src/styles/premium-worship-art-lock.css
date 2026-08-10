@@ -62,25 +62,25 @@
 
 .reference-dhikr-counter__glow {
   top: 12px !important;
-  width: 276px !important;
-  height: 276px !important;
+  width: 256px !important;
+  height: 256px !important;
   background:
     radial-gradient(circle, rgba(226,191,119,.145) 0%, rgba(49,139,103,.06) 39%, transparent 69%) !important;
 }
 
-/* Old reference CSS intentionally faded this to .19. The real asset now forms
-   a visible background halo behind the counter instead of disappearing. */
+/* Keep the raster near its intrinsic size: oversized presentation softened the
+   beads on high-density phones. The focal object stays atmospheric, not blurry. */
 .reference-dhikr-counter__tasbih {
-  top: 8px !important;
-  width: 276px !important;
-  height: 276px !important;
-  opacity: .34 !important;
+  top: 10px !important;
+  width: 248px !important;
+  height: 248px !important;
+  opacity: .36 !important;
   filter: none !important;
 }
 
 .reference-dhikr-counter__tasbih > img {
   object-fit: contain !important;
-  filter: drop-shadow(0 24px 23px rgba(0,0,0,.48)) saturate(1.035) contrast(1.03) !important;
+  filter: drop-shadow(0 20px 20px rgba(0,0,0,.43)) saturate(1.025) contrast(1.025) !important;
 }
 
 .reference-dhikr-ring {
@@ -123,17 +123,19 @@
 }
 
 .reference-qibla-stage__halo {
-  top: 11px !important;
-  width: 342px !important;
-  height: 342px !important;
+  top: 18px !important;
+  width: 316px !important;
+  height: 316px !important;
   border: 1px solid rgba(226,191,119,.04);
   background: radial-gradient(circle, rgba(226,191,119,.11), transparent 67%) !important;
-  box-shadow: 0 0 0 26px rgba(226,191,119,.012), 0 0 0 54px rgba(226,191,119,.007);
+  box-shadow: 0 0 0 24px rgba(226,191,119,.012), 0 0 0 48px rgba(226,191,119,.007);
 }
 
+/* The source is a 320px-wide raster. Keeping the visible compass below that
+   width avoids needless interpolation and gives the copy more visual air. */
 .reference-qibla-stage__compass {
-  width: 320px !important;
-  height: 320px !important;
+  width: 286px !important;
+  height: 286px !important;
   overflow: visible;
   filter: none !important;
 }
@@ -141,16 +143,16 @@
 .reference-qibla-stage__compass > img {
   object-fit: contain !important;
   object-position: center !important;
-  filter: drop-shadow(0 27px 28px rgba(0,0,0,.52)) saturate(1.025) contrast(1.045) !important;
+  filter: drop-shadow(0 24px 24px rgba(0,0,0,.48)) saturate(1.02) contrast(1.04) !important;
 }
 
 .reference-qibla-stage::after {
   z-index: 2 !important;
-  width: 88px !important;
-  height: 88px !important;
+  width: 82px !important;
+  height: 82px !important;
   opacity: .94 !important;
   background: url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260808-release-hardening') center / contain no-repeat !important;
-  filter: drop-shadow(0 15px 20px rgba(0,0,0,.53)) saturate(1.01) contrast(1.05) !important;
+  filter: drop-shadow(0 14px 18px rgba(0,0,0,.5)) saturate(1.01) contrast(1.05) !important;
 }
 
 .reference-qibla-stage__needle {
@@ -231,11 +233,16 @@
     min-height: 405px !important;
   }
 
+  .reference-dhikr-counter__glow {
+    width: 240px !important;
+    height: 240px !important;
+  }
+
   .reference-dhikr-counter__tasbih {
-    top: 6px !important;
-    width: 254px !important;
-    height: 254px !important;
-    opacity: .32 !important;
+    top: 8px !important;
+    width: 232px !important;
+    height: 232px !important;
+    opacity: .34 !important;
   }
 
   .reference-dhikr-ring {
@@ -248,18 +255,18 @@
   }
 
   .reference-qibla-stage__halo {
-    width: 315px !important;
-    height: 315px !important;
+    width: 296px !important;
+    height: 296px !important;
   }
 
   .reference-qibla-stage__compass {
-    width: 294px !important;
-    height: 294px !important;
+    width: 270px !important;
+    height: 270px !important;
   }
 
   .reference-qibla-stage::after {
-    width: 82px !important;
-    height: 82px !important;
+    width: 78px !important;
+    height: 78px !important;
   }
 }
 
@@ -269,9 +276,9 @@
   }
 
   .reference-dhikr-counter__tasbih {
-    width: 238px !important;
-    height: 238px !important;
-    opacity: .30 !important;
+    width: 220px !important;
+    height: 220px !important;
+    opacity: .32 !important;
   }
 
   .reference-dhikr-ring {
@@ -284,18 +291,18 @@
   }
 
   .reference-qibla-stage__halo {
-    width: 286px !important;
-    height: 286px !important;
+    width: 272px !important;
+    height: 272px !important;
   }
 
   .reference-qibla-stage__compass {
-    width: 270px !important;
-    height: 270px !important;
+    width: 248px !important;
+    height: 248px !important;
   }
 
   .reference-qibla-stage::after {
-    width: 74px !important;
-    height: 74px !important;
+    width: 70px !important;
+    height: 70px !important;
   }
 }
 
