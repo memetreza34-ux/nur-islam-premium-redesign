@@ -148,7 +148,11 @@
   background: rgba(160,70,48,.075);
 }
 
-button:disabled,
+/* The quiz options are exempt: they are disabled after an answer to lock the
+   choice in, not because they are unavailable. Dimming them to 42% and halving
+   their saturation erased the very feedback the answer is supposed to give —
+   the correct option was a washed-out grey next to the wrong one. */
+button:disabled:not(.reference-quiz-answers > button),
 .reference-install-prompt__action:disabled,
 .reference-account-cloud-grid > button:disabled,
 .reference-learning-course-navigation > button:disabled,

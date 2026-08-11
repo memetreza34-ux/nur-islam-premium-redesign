@@ -202,14 +202,35 @@
   background: rgba(232,199,122,.045) !important;
 }
 
+/* Once an answer is locked in, the three states have to be told apart at a
+   glance. At the previous alpha the picked option and the correct one differed
+   by a small check mark alone, and the screen stopped explaining itself. */
+.reference-quiz-answers > button:disabled {
+  color: rgba(255,248,232,.45);
+}
+
 .reference-quiz-answers > button.is-correct {
-  border-color: rgba(101,208,153,.32) !important;
-  background: rgba(63,170,111,.075) !important;
+  border-color: rgba(101,208,153,.6) !important;
+  background: rgba(63,170,111,.16) !important;
+  color: #eafff2 !important;
+}
+
+.reference-quiz-answers > button.is-correct > span {
+  border-color: #63d99a !important;
+  background: #63d99a !important;
+  color: #0d2b1e !important;
+}
+
+.reference-quiz-answers > button.is-wrong > span {
+  border-color: #e08a8a !important;
+  background: #e08a8a !important;
+  color: #2b0d0d !important;
 }
 
 .reference-quiz-answers > button.is-wrong {
-  border-color: rgba(218,121,100,.31) !important;
-  background: rgba(180,70,53,.065) !important;
+  border-color: rgba(218,121,100,.6) !important;
+  background: rgba(180,70,53,.15) !important;
+  color: #ffe6e6 !important;
 }
 
 .reference-quiz-result {

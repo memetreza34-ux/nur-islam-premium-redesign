@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { QUIZ_CATEGORIES } from '../data/quizData';
 import type { LucideIcon } from 'lucide-react';
 import {
   BadgeDollarSign,
@@ -102,14 +103,6 @@ const jumuahChecklist = [
   'Salawat und Dua vermehren',
 ] as const;
 
-const quizQuestions = [
-  { question: 'Wie viele Pflichtgebete gibt es täglich?', answers: ['Drei', 'Vier', 'Fünf', 'Sechs'], correct: 2 },
-  { question: 'Welche Sure eröffnet den Quran?', answers: ['Al-Fatiha', 'Al-Baqara', 'Al-Ikhlas', 'An-Nas'], correct: 0 },
-  { question: 'In welchem Monat wird gefastet?', answers: ['Muharram', 'Rajab', 'Ramadan', 'Shawwal'], correct: 2 },
-  { question: 'Wohin richtet sich das Gebet?', answers: ['Madinah', 'Zur Kaaba', 'Jerusalem', 'Zum Sonnenaufgang'], correct: 1 },
-  { question: 'Wie heißt die Gebetswaschung?', answers: ['Adhan', 'Wudu', 'Dhikr', 'Khutbah'], correct: 1 },
-] as const;
-
 function readStored<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
@@ -189,26 +182,40 @@ function LegacyMotionMain({ children, className = '' }: { children: ReactNode; c
 }
 
 function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  // Best scores are per category rather than one global number: with six
+  // categories a single figure says nothing about where you stand.
+  const [bestScores, setBestScores] = useState<Record<string, number>>(() => readStored('nur_quiz_best_scores', {}));
+  const [categoryId, setCategoryId] = useState<string | null>(null);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [complete, setComplete] = useState(false);
-  const [bestScore, setBestScore] = useState(() => Math.min(quizQuestions.length, Math.max(0, readStored('nur_quiz_best_score', 0))));
-  const question = quizQuestions[index];
+
+  const category = QUIZ_CATEGORIES.find((entry) => entry.id === categoryId) ?? null;
+  const questions = category?.questions ?? [];
+  const question = questions[index];
+
+  const startCategory = (id: string) => {
+    setCategoryId(id);
+    setIndex(0);
+    setSelected(null);
+    setScore(0);
+    setComplete(false);
+  };
 
   const answer = (answerIndex: number) => {
-    if (selected !== null) return;
+    if (selected !== null || !question) return;
     setSelected(answerIndex);
-    if (answerIndex === question.correct) setScore((value) => value + 1);
+    if (answerIndex === question.correctAnswer) setScore((value) => value + 1);
   };
 
   const next = () => {
-    if (selected === null) return;
-    if (index === quizQuestions.length - 1) {
-      const finalScore = Math.min(quizQuestions.length, score);
-      const nextBest = Math.max(bestScore, finalScore);
-      setBestScore(nextBest);
-      writeStored('nur_quiz_best_score', nextBest);
+    if (selected === null || !category) return;
+    if (index === questions.length - 1) {
+      const finalScore = Math.min(questions.length, score);
+      const nextBest = { ...bestScores, [category.id]: Math.max(bestScores[category.id] ?? 0, finalScore) };
+      setBestScores(nextBest);
+      writeStored('nur_quiz_best_scores', nextBest);
       setComplete(true);
       return;
     }
@@ -216,12 +223,30 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
     setSelected(null);
   };
 
-  const restart = () => {
-    setIndex(0);
-    setSelected(null);
-    setScore(0);
-    setComplete(false);
-  };
+  if (!category) {
+    return (
+      <LegacyMotionMain>
+        <FeatureHeader feature={feature} onBack={onBack} />
+        <section className="reference-quiz-categories">
+          {QUIZ_CATEGORIES.map((entry) => {
+            const best = bestScores[entry.id];
+            return (
+              <button key={entry.id} onClick={() => startCategory(entry.id)}>
+                <span className="reference-quiz-categories__copy">
+                  <strong>{entry.title}</strong>
+                  <small>{entry.description}</small>
+                  <em>{entry.questions.length} Fragen{best === undefined ? '' : ` · Bestwert ${best} von ${entry.questions.length}`}</em>
+                </span>
+                <ChevronRight size={18} />
+              </button>
+            );
+          })}
+        </section>
+      </LegacyMotionMain>
+    );
+  }
+
+  const best = bestScores[category.id] ?? 0;
 
   return (
     <LegacyMotionMain>
@@ -229,20 +254,21 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
       {complete ? (
         <section className="reference-quiz-result">
           <span><CircleCheck size={30} /></span>
-          <h2>{score} von {quizQuestions.length} richtig</h2>
-          <p>Bestwert: {bestScore} von {quizQuestions.length}. Die Speicherung erfolgt nur auf diesem Gerät.</p>
-          <button className="gold-button" onClick={restart}><RotateCcw size={17} /> Erneut versuchen</button>
+          <h2>{score} von {questions.length} richtig</h2>
+          <p>{category.title} · Bestwert {best} von {questions.length}. Die Speicherung erfolgt nur auf diesem Gerät.</p>
+          <button className="gold-button" onClick={() => startCategory(category.id)}><RotateCcw size={17} /> Erneut versuchen</button>
+          <button className="reference-quiz-back" onClick={() => setCategoryId(null)}><ChevronLeft size={16} /> Andere Kategorie</button>
         </section>
-      ) : (
+      ) : question ? (
         <section className="reference-quiz-card">
-          <div className="reference-quiz-progress"><span style={{ width: `${((index + 1) / quizQuestions.length) * 100}%` }} /></div>
-          <small>Frage {index + 1} von {quizQuestions.length} · Bestwert {bestScore}</small>
+          <div className="reference-quiz-progress"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
+          <small>{category.title} · Frage {index + 1} von {questions.length}</small>
           <h2>{question.question}</h2>
           <div className="reference-quiz-answers">
-            {question.answers.map((item, answerIndex) => {
+            {question.options.map((item, answerIndex) => {
               const isSelected = selected === answerIndex;
-              const isCorrect = selected !== null && answerIndex === question.correct;
-              const isWrong = isSelected && answerIndex !== question.correct;
+              const isCorrect = selected !== null && answerIndex === question.correctAnswer;
+              const isWrong = isSelected && answerIndex !== question.correctAnswer;
               return (
                 <button
                   key={item}
@@ -255,9 +281,17 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
               );
             })}
           </div>
-          <button className="gold-button" disabled={selected === null} onClick={next}>{index === quizQuestions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
+          {/* Shown only after answering: the reason is the point of the quiz,
+              but revealing it earlier would give the answer away. */}
+          {selected === null ? null : (
+            <p className="reference-quiz-explanation">
+              <ShieldCheck size={16} />
+              <span>{question.explanation}</span>
+            </p>
+          )}
+          <button className="gold-button" disabled={selected === null} onClick={next}>{index === questions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
         </section>
-      )}
+      ) : null}
     </LegacyMotionMain>
   );
 }
