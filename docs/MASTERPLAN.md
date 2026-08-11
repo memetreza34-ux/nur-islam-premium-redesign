@@ -1,119 +1,182 @@
-# Masterplan: Nur Islam bis zur Veröffentlichung
+# Masterplan: Nur Islam bis zum Launch
 
-Stand: 10. August 2026. Branch `premium-design-finish`.
+Stand: 10. August 2026 · Branch `premium-design-finish` · Bearbeiter: Claude Code allein
 
-Dieser Plan ersetzt den Parallelbetrieb mit ChatGPT. Ab jetzt arbeitet nur noch Claude Code am Repository, damit keine Rebases, doppelten Dateien oder überschriebenen Fixes mehr entstehen.
+Dieser Plan deckt **alles außer dem Impressum** ab: Funktion, Inhalt, Design, Release-Technik. Das Impressum trägt Arman selbst ein.
 
 ---
 
-## Die Kernaussage
+## 1. Bestandsaufnahme — gemessen, nicht geschätzt
 
-Die App ist technisch weiter, als sie sich anfühlt. Was die Veröffentlichung blockiert, ist **kein Code**:
+### Was wirklich fertig ist
 
-| Blocker | Wer | Aufwand |
+| Bereich | Stand |
+|---|---|
+| Quran | 114 Suren offline, arabisch + deutsche Bedeutung, 6236 Ayat geprüft |
+| Gebetszeiten | live über AlAdhan, Standort und Methode wählbar |
+| Moschee-Suche | live über Overpass/OpenStreetMap, mit Cache |
+| Duas | 47 Einträge mit Quellen |
+| 99 Namen | 99 Einträge, Suche, Fortschritt |
+| Dhikr | belegte Routinen, Tagesgrenze, Quellenanzeige |
+| Kalender | Hijri-Umrechnung, Ereignisse, Erinnerungen |
+| Konto & Cloud | Supabase mit RLS, Export, Löschung |
+| Sicherheit | strenge CSP, Frame-Schutz, kein XSS-Vektor, 0 Schwachstellen |
+
+### Die größte Lücke: 7 Bereiche sind nur Stichpunktlisten
+
+In `LegacyFeatureScreens.tsx` steht `featureContent: Record<GenericFeatureId, string[]>`. Das ist der gesamte Inhalt dieser sieben Bereiche:
+
+| Bereich | Inhalt heute | Im Altbestand verfügbar |
 |---|---|---|
-| Impressum- und Datenschutzangaben (7 Platzhalter) | **nur Arman** | ~30 Min |
-| Fachliche Prüfung der religiösen Inhalte | **nur Arman** (qualifizierte Person beauftragen) | Tage bis Wochen |
-| Supabase-Einstellungen im Dashboard | **nur Arman** | ~20 Min |
+| Propheten | **6 Stichpunkte** | 11 vollständige Einträge (`prophetService.ts`, 604 Zeilen) + 15 weitere Namen |
+| Wissensbibliothek | **4 Stichpunkte** | 12 Einträge (`knowledgeService.ts`, 530 Zeilen) |
+| Hajj & Umrah | **6 Stichpunkte** | — muss neu geschrieben werden |
+| Sunnah im Alltag | **6 Stichpunkte** | 207 Zeilen (`sunnahSinsService.ts`) |
+| Fehler & Reue | **6 Stichpunkte** | im selben Service |
+| Ummah-Übersicht | **4 Stichpunkte** | 268 Zeilen (`ummahService.ts`) |
+| Islamische Orte | **3 Stichpunkte** | — muss neu geschrieben werden |
 
-Solange diese drei offen sind, kann die App nicht veröffentlicht werden, egal wie viel Code entsteht. Deshalb stehen sie in Phase 0 und laufen parallel zu allem anderen.
+### Weitere gemessene Lücken
 
----
-
-## Was v1.0 ist — und was bewusst nicht
-
-Der schnellste Weg zu „fertig" ist nicht, alles zu bauen, sondern **einen ehrlichen Umfang festzulegen und den vollständig zu machen**.
-
-### In v1.0 drin
-- Gebetszeiten live über AlAdhan, mit Standort und Methode
-- Vollständiger Quran, 114 Suren, offline, arabisch + deutsche Bedeutung
-- Duas, Dhikr, 99 Namen, Qibla, Kalender, Moschee-Suche
-- Lernbereich, Hadith-Sammlung, Quiz
-- Konto, Cloud-Sicherung, Notizen
-- Nur auf Deutsch
-
-### Bewusst nicht in v1.0
-- **Weitere Sprachen.** Das alte Repo hatte elf. Jede zusätzliche Sprache vervielfacht *jede* spätere Inhaltsänderung. Erst wenn die deutschen Inhalte fachlich freigegeben sind, lohnt Übersetzung. Sonst übersetzt man Texte, die sich noch ändern.
-- **Quran-Rezitation.** Braucht eine lizenzierte Audioquelle. Das ist eine Rechte- und Lizenzfrage, keine Programmieraufgabe. Die Oberfläche täuscht heute korrekterweise keine Wiedergabe vor.
-
-Beides kommt in v1.1. Diese zwei Streichungen sind der größte Zeitgewinn im ganzen Plan.
-
----
-
-## Phase 0 — Blocker (Arman, ab sofort, parallel)
-
-1. **Impressum ausfüllen.** In `src/data/legalContent.ts` stehen 7× `<<BITTE AUSFÜLLEN>>`: Name, Straße, Ort, E-Mail. `npm run legal:check` schlägt fehl, solange sie da sind — ein Release-Build kommt damit nicht durch.
-2. **Fachliche Prüfung beauftragen.** Ich liefere in Phase 1 eine Prüfliste mit jedem Inhalt, seiner Quelle und offenem Prüfstatus. Diese Liste geht an eine qualifizierte Person. Das ist der längste Posten im Plan — deshalb sofort starten.
-3. **Supabase-Dashboard prüfen:** E-Mail-Bestätigung erzwungen, Rate-Limits, JWT-Laufzeit, Schutz gegen geleakte Passwörter.
-4. **Zwei Testkonten anlegen**, damit `npm run rls:verify` laufen kann.
-
----
-
-## Phase 1 — Inhalte auf Release-Niveau (Claude)
-
-Der größte inhaltliche Rückstand. Alles mit Quellenangabe, nichts erfunden, Herkunft aus dem Altbestand `nur-islam` oder belegten Quellen.
-
-| Bereich | Jetzt | Ziel |
+| Bereich | Heute | Im Altbestand |
 |---|---|---|
-| Hadithe | 8 | 40, thematisch geordnet, mit Sammlung und Nummer |
-| Quiz | dünn | 60 Fragen über alle Kategorien, mit Erklärung zur Antwort |
-| Lernbereich | 24 Stichpunkte in 6 Kategorien | echte Lektionen mit Fortschritt |
-| Assistent | 9 vorgefertigte Antworten | 40 Antworten, klare Grenze bei Rechtsfragen |
-| Duas | 47 | Prüfliste je Eintrag, Lücken schließen |
+| Quiz | **5 Fragen** | **60 Fragen** im Klartext in `add_quiz_data*.ts`, je mit Erklärung |
+| Hadithe | 8 | 17 (`hadithService.ts`) |
+| Lernbereich | 24 Stichpunkte, **0 echte Kurse** | 658 Zeilen (`learnService.ts`) |
+| Assistent | 9 vorgefertigte Antworten | — |
+| Sahabah | **fehlt komplett** | 14 Einträge (`add_sahabah_batch.ts`) |
+| Frauen im Islam | **fehlt komplett** | `add_women_batch.ts` |
 
-**Ergebnis dieser Phase:** eine vollständige Prüfliste `docs/INHALTE-PRUEFUNG.md` — jeder religiöse Inhalt mit Quelle, Herkunft und Feld für die Freigabe. Das ist das Dokument für Phase 0.2.
+**Wichtig:** all das liegt in Dateien, nicht in Firestore. Kein Datenbankzugang nötig. Weitere ~336 Quizfragen liegen zusätzlich in Firestore und wären nur mit Zugangsdaten erreichbar — für den Launch nicht nötig.
 
----
+### Kaputte oder tote Stellen
 
-## Phase 2 — Die letzten Halbfertigen (Claude)
+- `QuranReaderScreen.tsx:177` — ein Knopf meldet „Leseeinstellungen sind noch nicht verfügbar". Eine Funktion, die es in der Oberfläche gibt, aber nicht tut.
+- Qibla zeigt nur die berechnete Gradzahl, kein Gerätekompass.
+- Quran ohne Rezitation.
 
-- **Qibla:** Gerätekompass statt nur berechneter Gradzahl
-- **Moschee-Suche:** Fehlerfälle und leere Ergebnisse sauber abfangen
-- **Assistent:** Grenzen sichtbar machen — was er nicht beantwortet, muss er sagen
-- **Onboarding:** einmal komplett durchspielen und glätten
+### Design-Schulden
 
----
-
-## Phase 3 — Qualität (Claude)
-
-- **CSS-Schulden.** 98 Stylesheets, 2281 `!important`, 33 Override-Ebenen. Erst Design-Tokens als einzige Quelle, dann Ebenen auflösen. Ziel: unter 25 Dateien, unter 300 `!important`. Die Bremse `style-debt:check` sorgt dafür, dass es nicht zurückwächst.
-- **Jeder Screen einzeln** bei 320, 375 und 430px angeschaut und nachgemessen — nicht nur im Testlauf. Genau dieser Schritt hat den 126px-Navigationsfehler gefunden.
-- **Performance:** Bundle aufteilen, aktuell 706 KB CSS in einer Datei.
-- Hell-Modus, Reduced Motion, Tastaturbedienung.
+98 Stylesheets, **2281 `!important`**, 33 Override-Ebenen, 706 KB CSS. Jede Sichtänderung braucht heute eine neue Ebene, statt die Regel zu ändern, die das Problem verursacht. Das ist der Grund, warum sich das Fertigwerden zieht.
 
 ---
 
-## Phase 4 — Veröffentlichung
-
-1. Impressum-Daten einsetzen, `NUR_RELEASE=true npm run check`
-2. `npm run rls:verify` gegen das echte Projekt
-3. `/security-review` auf dem fertigen Stand
-4. PWA-Installation auf echtem iPhone und Android testen
-5. Store-Entscheidung: PWA über GitHub Pages, oder native Hülle über Capacitor
-
----
-
-## Reihenfolge und Abhängigkeiten
+## 2. Die vier Baustellen
 
 ```
-Phase 0 (Arman)  ──────────────────────────────────►  Phase 4
-                     ▲
-Phase 1 (Inhalte) ───┘ liefert die Prüfliste
-        │
-        ▼
-Phase 2 (Halbfertige)
-        │
-        ▼
-Phase 3 (Qualität)
+A · INHALT      die 7 Stichpunkt-Bereiche füllen, Quiz, Hadith, Lernkurse
+B · FUNKTION    Leseeinstellungen, Qibla-Sensor, Assistent-Grenzen
+C · DESIGN      CSS-Schulden, jeder Screen in echter Breite geprüft
+D · RELEASE     Prüfliste, RLS-Test, Geräte-Test, Store-Weg
 ```
-
-Phase 1 zuerst, weil sie die Prüfliste liefert und die fachliche Prüfung der langsamste Vorgang ist. Während geprüft wird, laufen Phase 2 und 3.
 
 ---
 
-## Arbeitsweise ab jetzt
+## 3. Arbeitspakete in Reihenfolge
 
-- **Ein Branch, ein Bearbeiter.** Kein paralleler ChatGPT-Zugriff mehr. Sonst entstehen wieder Fälle wie die doppelte `src/main.tsx`.
-- **Kleine Commits, sofort gepusht.** Jeder Commit lässt `npm run check` grün.
-- **Nichts gilt als fertig, bevor es im Browser in echter Breite nachgemessen wurde.** Grüne Tests haben den Navigationsfehler nicht gefunden — das Nachmessen bei 320px schon.
-- **Religiöse Inhalte:** ich prüfe Struktur, Vollständigkeit, Quellenangaben und Konsistenz. Die inhaltliche Richtigkeit bestätigt ein Mensch.
+### A1 — Quiz auf 60 Fragen · Größe: S
+Die Fragen liegen im Klartext in `add_quiz_data.ts`, `add_quiz_data2.ts`, `add_quiz_data3.ts`, je mit Antwortoptionen und **Erklärung**. Übertragen, Kategorien anlegen, Erklärung nach der Antwort anzeigen. Prüfskript auf Vollständigkeit und eindeutige IDs.
+
+*Warum zuerst: größter sichtbarer Gewinn pro Aufwand, reine Übertragung, kein neuer Text.*
+
+### A2 — Propheten, Sahabah, Frauen im Islam · Größe: L
+Aus `prophetService.ts` die 11 vollständigen Einträge übernehmen (Einleitung, Beschreibung, Kernpunkte, Lehren). Sahabah und Frauen im Islam als neue Bereiche ergänzen. Eigene Datendatei `src/data/`, eigener Screen statt der Stichpunktliste.
+
+### A3 — Wissensbibliothek, Sunnah, Reue, Ummah · Größe: M
+Aus `knowledgeService.ts`, `sunnahSinsService.ts`, `ummahService.ts` übertragen. Struktur wie bei den Duas: Kategorie, Eintrag, Quelle, Favorit.
+
+### A4 — Hajj & Umrah, Islamische Orte · Größe: M
+Die einzigen Bereiche ohne Altbestand. Muss neu geschrieben werden — **strikt mit Quellenangabe**, und in die Prüfliste, weil neu verfasst.
+
+### A5 — Hadithe 8 → 25 · Größe: S
+Aus `hadithService.ts`, mit Sammlung und Nummer je Eintrag.
+
+### A6 — Lernbereich: echte Kurse · Größe: L
+Heute 24 Stichpunkte in 6 Kategorien und keine Lektion. Aus `learnService.ts` (658 Zeilen) echte Lektionen mit Fortschritt bauen. `LearningCourseScreen.tsx` existiert bereits und wartet auf Inhalte.
+
+### A7 — Assistent auf 40 Antworten · Größe: M
+Mehr Themen, und vor allem: eine **sichtbare Grenze**. Bei Rechts-, Fatwa- und Personenfragen muss er sagen, dass er nicht antwortet, statt etwas Allgemeines zu liefern.
+
+### A8 — Prüfliste `docs/INHALTE-PRUEFUNG.md` · Größe: S
+Jeder religiöse Inhalt mit Herkunft, Quelle und Freigabefeld. **Das Dokument für die fachliche Prüfung.** Entsteht automatisch aus den Datendateien, damit es nicht veraltet.
+
+### B1 — Leseeinstellungen im Quran · Größe: S
+Den toten Knopf ersetzen: Schriftgröße, arabische Schriftart, Bedeutung ein/aus, dauerhaft gespeichert.
+
+### B2 — Qibla-Gerätekompass · Größe: M
+`deviceorientation` mit iOS-Berechtigung. Ohne Sensor bleibt die berechnete Gradzahl sichtbar — kein Rückschritt für Geräte ohne Magnetometer.
+
+### B3 — Fehlerfälle glätten · Größe: M
+Jeder Screen ohne Netz, ohne Standort, ohne Daten, beim ersten Start. Nie leere Flächen, immer eine ehrliche Aussage.
+
+### C1 — Design-Tokens · Größe: M
+Farben, Radien, Abstände, Schatten als einzige Quelle. Voraussetzung für alles Weitere im Design.
+
+### C2 — Override-Ebenen auflösen · Größe: L
+33 Lock- und Parallel-Pass-Dateien schrittweise in die Dateien zurückführen, die die Regel definieren. Ziel: **unter 25 Stylesheets, unter 300 `!important`**. Nach jedem Schritt Vorher/Nachher-Screenshots aller Screens; `style-debt:check` verhindert das Zurückwachsen.
+
+### C3 — Jeder Screen bei 320, 375 und 430px · Größe: M
+Nicht im Testlauf, sondern im Browser nachgemessen. Genau so wurde der 126px-Navigationsfehler gefunden, den kein grüner Test bemerkt hat.
+
+### C4 — Hell-Modus, Reduced Motion, Tastatur · Größe: M
+Alle drei existieren, aber sind nie vollständig durchgegangen worden.
+
+### C5 — Bundle aufteilen · Größe: S
+706 KB CSS in einer Datei, JS ungesplittet. Nach C2 deutlich einfacher.
+
+### D1 — `npm run rls:verify` · Größe: S
+Braucht zwei Testkonten. Erst dieser Lauf beweist, dass ein Konto wirklich nur eigene Daten sieht.
+
+### D2 — `/security-review` auf dem fertigen Stand · Größe: S
+
+### D3 — Echtes iPhone und Android · Größe: M
+PWA installieren, Benachrichtigungen, Standort, Offline-Start, Safe-Area am Notch.
+
+### D4 — Store-Entscheidung · Größe: M
+PWA über GitHub Pages, oder native Hülle über Capacitor für App Store und Play Store. Entscheidet über Aufwand und Zeitplan — deshalb früh besprechen, spät umsetzen.
+
+---
+
+## 4. Reihenfolge
+
+```
+A1 Quiz ──► A5 Hadith ──► A2 Propheten ──► A3 Wissen ──► A4 Hajj ──► A6 Kurse ──► A7 Assistent
+                │
+                └──► A8 Prüfliste ──────────────► fachliche Prüfung (Arman, parallel)
+B1 ──► B2 ──► B3        (zwischen den Inhaltspaketen)
+                              C1 ──► C2 ──► C3 ──► C4 ──► C5
+                                                            └──► D1 ──► D2 ──► D3 ──► D4
+```
+
+**Warum diese Reihenfolge:**
+- **A8 so früh wie möglich**, sobald genug Inhalt steht. Die fachliche Prüfung ist der langsamste Vorgang im ganzen Projekt und läuft dann parallel zu allem anderen.
+- **Inhalt vor Design.** Ein Screen mit echtem Inhalt sieht anders aus als einer mit vier Stichpunkten. Design vorher zu polieren heißt, es zweimal zu machen.
+- **C2 vor C3.** Solange 33 Override-Ebenen existieren, wird jede Sichtkorrektur zur 34. Ebene.
+- **D zuletzt**, weil es den fertigen Stand prüft.
+
+---
+
+## 5. Was ich nicht kann
+
+- **Fachliche Richtigkeit religiöser Inhalte.** Ich prüfe Struktur, Vollständigkeit, Quellenangaben und Konsistenz. Ob eine Übersetzung, ein Hadith oder eine Fiqh-Aussage korrekt ist, bestätigt ein qualifizierter Mensch. A8 liefert dafür die Vorlage.
+- **Supabase-Dashboard.** E-Mail-Bestätigung, Rate-Limits, JWT-Laufzeit, Schutz gegen geleakte Passwörter.
+- **Zwei Testkonten** für D1.
+- **Rezitationslizenz**, falls Audio noch in v1.0 soll.
+
+---
+
+## 6. Zwei Empfehlungen für Tempo
+
+1. **Weitere Sprachen erst nach der fachlichen Freigabe.** Das alte Repo hatte elf. Jede Sprache vervielfacht jede spätere Inhaltsänderung, und nicht freigegebene Texte müsste man zweimal übersetzen lassen. Die Datenstruktur bleibt vorbereitet.
+2. **Quran-Rezitation nach v1.0.** Das ist eine Lizenzfrage, keine Programmieraufgabe. Die Oberfläche täuscht heute korrekterweise keine Wiedergabe vor.
+
+Werden beide mitgetragen, ist der Weg deutlich kürzer. Werden sie es nicht, bleibt der Plan gültig — er dauert länger.
+
+---
+
+## 7. Arbeitsweise
+
+- **Ein Branch, ein Bearbeiter.** Kein paralleler Zugriff mehr. Der Parallelbetrieb hat heute eine doppelte `src/main.tsx` erzeugt und mehrfach Rebases erzwungen.
+- **Kleine Commits, sofort gepusht**, jeder mit grünem `npm run check`.
+- **Nichts gilt als fertig, bevor es im Browser in echter Breite nachgemessen wurde.**
+- **Jedes neue Inhaltspaket bekommt ein Prüfskript**, das Vollständigkeit, eindeutige IDs und vorhandene Quellenangaben erzwingt — damit später niemand still etwas entfernt.
