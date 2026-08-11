@@ -62,7 +62,7 @@
   color: #f6dfad;
 }
 
-.bottom-nav__item--active span {
+.bottom-nav__item--active > span {
   border-color: rgba(247, 226, 178, .28) !important;
   background:
     linear-gradient(145deg, rgba(232, 199, 122, .13), rgba(232, 199, 122, .055)) !important;
@@ -313,7 +313,7 @@
   color: #7b571e;
 }
 
-[data-theme='light'] .bottom-nav__item--active span {
+[data-theme='light'] .bottom-nav__item--active > span {
   border-color: rgba(139, 100, 34, .2) !important;
   background: rgba(161, 116, 40, .08) !important;
 }

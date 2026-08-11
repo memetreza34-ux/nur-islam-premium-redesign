@@ -22,8 +22,11 @@ function stored(key: string) {
 describe('Hadith library', () => {
   beforeEach(() => localStorage.clear());
 
-  it('keeps exactly eight unique, source-labelled summaries', () => {
-    expect(HADITH_LIBRARY).toHaveLength(8);
+  it('keeps every entry unique and source-labelled', () => {
+    // No exact count: the library grows as entries are carried over, and a
+    // pinned number turns each addition into a failing test for no reason.
+    // check-hadith-data.mjs holds the floor and the sourcing rules.
+    expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(25);
     expect(new Set(HADITH_LIBRARY.map((entry) => entry.id)).size).toBe(HADITH_LIBRARY.length);
     for (const entry of HADITH_LIBRARY) {
       expect(entry.title.trim()).not.toBe('');

@@ -147,7 +147,7 @@ textarea:focus-visible,
   min-height: 52px;
 }
 
-.bottom-nav__item--active span {
+.bottom-nav__item--active > span {
   box-shadow: 0 8px 20px rgba(194,137,45,.1), inset 0 1px 0 rgba(255,255,255,.035) !important;
 }
 
@@ -232,7 +232,7 @@ textarea:focus-visible,
   color: #815c22 !important;
 }
 
-[data-theme='light'] .bottom-nav__item--active span {
+[data-theme='light'] .bottom-nav__item--active > span {
   border-color: rgba(126,90,32,.19) !important;
   background: rgba(154,111,39,.075) !important;
 }

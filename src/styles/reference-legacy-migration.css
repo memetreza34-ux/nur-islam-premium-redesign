@@ -513,3 +513,16 @@
 }
 .reference-quiz-back svg { vertical-align: -3px; margin-right: 4px; }
 
+
+.reference-hadith-context {
+  display: grid;
+  gap: 11px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  padding: 15px 16px;
+  border: 1px solid rgba(225, 194, 122, .15);
+  border-radius: 20px;
+  background: linear-gradient(145deg, rgba(16, 53, 41, .82), rgba(4, 21, 16, .9));
+}
+.reference-hadith-context svg { margin-top: 2px; color: #d2ad5f; }
+.reference-hadith-context p { margin: 0; color: #c8d4cc; font-size: .82rem; line-height: 1.62; }

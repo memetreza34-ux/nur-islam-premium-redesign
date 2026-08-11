@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import {
+  BookOpen,
   Bookmark,
   BookmarkCheck,
   ChevronLeft,
@@ -82,6 +83,16 @@ export function DailyHadithScreen({
         <blockquote>{entry.summary}</blockquote>
         <footer>{entry.source}</footer>
       </section>
+
+      {/* Shown only where the carried-over entry brought one: an empty box
+          under every hadith would suggest a missing explanation rather than an
+          entry that never had one. */}
+      {entry.context ? (
+        <section className="reference-hadith-context">
+          <BookOpen size={18} />
+          <p>{entry.context}</p>
+        </section>
+      ) : null}
 
       <section className="reference-source-card reference-source-card--strong">
         <ShieldCheck size={19} />

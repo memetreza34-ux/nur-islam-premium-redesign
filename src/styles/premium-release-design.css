@@ -462,7 +462,7 @@ body {
   background: rgba(232, 199, 122, .035);
 }
 
-.bottom-nav__item--active span {
+.bottom-nav__item--active > span {
   border: 1px solid rgba(248, 224, 173, .32);
   color: #153229;
   background: linear-gradient(145deg, #f4dca5, #c89543);
