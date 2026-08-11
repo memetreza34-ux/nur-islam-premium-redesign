@@ -3,6 +3,25 @@ import { queuePendingNavigation } from '../services/pendingNavigation';
 
 const SERVICE_WORKER_VERSION = '14-20260808-release-hardening';
 
+/**
+ * Asks the worker to cache the remaining surahs, once the page is done loading
+ * and the browser reports itself idle.
+ *
+ * The worker used to start this from `activate`, where ~3 MB of downloads
+ * competed with the requests the first render was still waiting on. Nothing
+ * about the offline promise changes — only when the work begins.
+ */
+function requestQuranWarmup() {
+  const send = () => navigator.serviceWorker.controller?.postMessage({ type: 'WARM_QURAN' });
+  const schedule = () => {
+    const idle = (window as Window & { requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => void }).requestIdleCallback;
+    if (idle) idle(send, { timeout: 10_000 });
+    else window.setTimeout(send, 4_000);
+  };
+  if (document.readyState === 'complete') schedule();
+  else window.addEventListener('load', schedule, { once: true });
+}
+
 export function registerNurPwa() {
   const standalone = window.matchMedia('(display-mode: standalone)').matches
     || (window.navigator as Navigator & { standalone?: boolean }).standalone === true;
@@ -58,6 +77,7 @@ export function registerNurPwa() {
             if (worker.state === 'installed' && navigator.serviceWorker.controller) worker.postMessage({ type: 'SKIP_WAITING' });
           });
         });
+        requestQuranWarmup();
       })
       .catch(() => {
         // Die App bleibt online verwendbar, falls die Registrierung blockiert ist.

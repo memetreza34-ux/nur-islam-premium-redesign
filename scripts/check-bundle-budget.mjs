@@ -23,10 +23,23 @@ const root = process.cwd();
 const assets = resolve(root, 'dist/assets');
 
 const BUDGETS_KB = {
-  js: 215,
+  // Raised from 215 for the quiz catalogue, the prophets and the companion
+  // lists — roughly 20 KB gzipped of content the app did not have. This total
+  // counts every chunk, so it cannot see whether that weight is on the startup
+  // path; `entry` below is what covers that.
+  js: 225,
   css: 105,
-  total: 320,
+  total: 330,
 };
+
+/**
+ * The entry chunk on its own: what has to arrive before anything renders.
+ *
+ * The totals above treat a 20 KB chunk loaded when a screen is opened the same
+ * as 20 KB in the entry, so splitting a screen out looks like no improvement at
+ * all. It halved this number, and this budget is what keeps it there.
+ */
+const ENTRY_BUDGET_KB = 100;
 const MAX_RAW_JS_CHUNK_KB = 500;
 
 let entries;
@@ -79,6 +92,15 @@ if (oversizedJs.length) {
   );
 }
 
+const entry = detail.find(({ name }) => /^index-.*\.js$/.test(name));
+if (!entry) throw new Error('No entry chunk found in dist/assets; the naming scheme changed.');
+if (kb(entry.gzipped) > ENTRY_BUDGET_KB) {
+  throw new Error(
+    `Entry chunk is ${kb(entry.gzipped)} KB gzipped, budget ${ENTRY_BUDGET_KB} KB.\n`
+    + '  Load the screen that grew it on demand instead of adding it to startup.',
+  );
+}
+
 const largestJs = jsChunks.reduce((largest, entry) => !largest || entry.raw > largest.raw ? entry : largest, null);
 const largestLabel = largestJs ? ` Largest JS chunk: ${largestJs.name} at ${kb(largestJs.raw)} KB raw.` : '';
-console.log(`Bundle budget verified: ${kb(measured.js)} KB JS + ${kb(measured.css)} KB CSS = ${kb(total)} KB gzipped, within ${BUDGETS_KB.total} KB.${largestLabel}`);
+console.log(`Bundle budget verified: ${kb(measured.js)} KB JS + ${kb(measured.css)} KB CSS = ${kb(total)} KB gzipped, within ${BUDGETS_KB.total} KB. Entry chunk ${kb(entry.gzipped)} KB (budget ${ENTRY_BUDGET_KB} KB).${largestLabel}`);

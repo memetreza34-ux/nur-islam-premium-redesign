@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -27,8 +27,12 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { AccountScreen } from './AccountScreen';
-import { LegacyFeatureScreen, serviceLegacyFeatures } from './LegacyFeatureScreens';
-import type { LegacyFeatureId } from './LegacyFeatureScreens';
+// The screens are loaded on demand; only their metadata is needed to draw
+// the hub tiles.
+const LegacyFeatureScreen = lazy(() => import('./LegacyFeatureScreens')
+  .then((module) => ({ default: module.LegacyFeatureScreen })));
+import { serviceLegacyFeatures } from '../data/legacyFeatures';
+import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { NotesScreen } from './NotesScreen';
 import { getCachedSession, signOut, subscribeAuth } from '../services/nurBackend';
 import type { NurSession } from '../services/nurBackend';
@@ -228,7 +232,13 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
   if (subscreen === 'account') return <AccountScreen onBack={() => setSubscreen(null)} />;
   if (subscreen === 'notes') return <NotesScreen onBack={() => setSubscreen(null)} onOpenAccount={() => setSubscreen('account')} />;
-  if (legacyFeature) return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
+  if (legacyFeature) {
+    return (
+      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+        <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />
+      </Suspense>
+    );
+  }
 
   return (
     <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>

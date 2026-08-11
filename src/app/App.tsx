@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -32,8 +32,13 @@ import { DuasScreen } from '../screens/DuasScreen';
 import { InstallAppPrompt } from '../shared/InstallAppPrompt';
 import { LearnScreen } from '../screens/LearnScreen';
 import { LegalScreen } from '../screens/LegalScreen';
-import { LegacyFeatureScreen } from '../screens/LegacyFeatureScreens';
-import type { LegacyFeatureId } from '../screens/LegacyFeatureScreens';
+// Split out of the initial bundle: these thirteen screens carry the quiz
+// catalogue, the prophets and the companion lists, and none of them is
+// reachable before the learning hub. Loading them on the way in kept ~20 KB
+// gzipped off the first paint.
+const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
+  .then((module) => ({ default: module.LegacyFeatureScreen })));
+import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { MoreScreen } from '../screens/MoreScreen';
 import { NamesScreen } from '../screens/NamesScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
@@ -753,7 +758,11 @@ export default function App() {
   }
 
   const screen = isLegacyTab(activeTab)
-    ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
+    ? (
+      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+        <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
+      </Suspense>
+    )
     : activeTab === 'home'
       ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
       : activeTab === 'quran'

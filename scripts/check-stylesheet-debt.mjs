@@ -29,14 +29,15 @@ const styleDir = resolve(root, 'src/styles');
 const BUDGET = {
   files: 98,
   overrideFiles: 33,
-  importantRules: 2289,
+  importantRules: 2291,
   // Covers `.frame-guard`, the install-prompt scroll clearance, the quiz
   // answer states and the Hadith explanation card, plus the child combinators
-  // that stop the active navigation label being dressed as an icon box. The eight added `!important` sit in the file that already
+  // that stop the active navigation label being dressed as an icon box, and
+  // the prophet detail and person list surfaces, and the lazy-chunk fallback. The eight added `!important` sit in the file that already
   // owned those rules with `!important` throughout — matching that weight was
   // the only way to change them without adding a 34th override layer, which is
   // exactly the trade this budget exists to make visible.
-  totalBytes: 725_726,
+  totalBytes: 727_290,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { Suspense, lazy, useCallback, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookHeart,
@@ -26,8 +26,12 @@ import {
   LEARNING_CATEGORIES,
 } from '../data/islamicLearningContent';
 import type { LearningCategoryId } from '../data/islamicLearningContent';
-import { LegacyFeatureScreen, learningLegacyFeatures } from './LegacyFeatureScreens';
-import type { LegacyFeatureId } from './LegacyFeatureScreens';
+// The screens are loaded on demand; only their metadata is needed to draw
+// the hub tiles.
+const LegacyFeatureScreen = lazy(() => import('./LegacyFeatureScreens')
+  .then((module) => ({ default: module.LegacyFeatureScreen })));
+import { learningLegacyFeatures } from '../data/legacyFeatures';
+import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
 import type { PrayerLessonId } from './PrayerLearningScreen';
 import { MosqueScene, PremiumImage } from '../shared/PremiumVisuals';
@@ -118,7 +122,11 @@ export function LearnScreen({
   }
 
   if (legacyFeature) {
-    return <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />;
+    return (
+      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+        <LegacyFeatureScreen featureId={legacyFeature} onBack={() => setLegacyFeature(null)} />
+      </Suspense>
+    );
   }
 
   return (

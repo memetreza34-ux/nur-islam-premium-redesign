@@ -32,7 +32,10 @@ const [
   read('src/screens/MoreScreen.tsx'),
   read('src/screens/MosqueScreen.tsx'),
   read('src/screens/LearnScreen.tsx'),
-  read('src/screens/LegacyFeatureScreens.tsx'),
+  // The feature definitions moved into src/data/legacyFeatures.ts so the hub
+  // tiles can render without loading the screens; both are read as one.
+  Promise.all([read('src/screens/LegacyFeatureScreens.tsx'), read('src/data/legacyFeatures.ts')])
+    .then((parts) => parts.join('\n')),
   read('src/styles/premium-typography-icon-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
   read('src/styles.css'),

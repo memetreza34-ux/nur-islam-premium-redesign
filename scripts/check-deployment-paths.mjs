@@ -5,7 +5,9 @@ const root = process.cwd();
 const vite = await readFile(resolve(root, 'vite.config.ts'), 'utf8');
 const paths = await readFile(resolve(root, 'src/app/appPaths.ts'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/shared/PremiumVisuals.tsx'), 'utf8');
-const legacyFeatures = await readFile(resolve(root, 'src/screens/LegacyFeatureScreens.tsx'), 'utf8');
+// The hero paths live with the feature definitions, which moved into
+// src/data/legacyFeatures.ts when the screens were split out of startup.
+const legacyFeatures = await readFile(resolve(root, 'src/data/legacyFeatures.ts'), 'utf8');
 const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 const pwa = await readFile(resolve(root, 'src/app/pwa.ts'), 'utf8');
 const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');

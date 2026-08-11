@@ -1,5 +1,9 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
+import { PROPHETS } from '../data/prophetData';
 import { QUIZ_CATEGORIES } from '../data/quizData';
+import { learningLegacyFeatures, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
+import type { LegacyFeatureId, LegacyFeatureItem } from '../data/legacyFeatures';
 import type { LucideIcon } from 'lucide-react';
 import {
   BadgeDollarSign,
@@ -36,59 +40,12 @@ import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
 import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule';
 
-export type LegacyFeatureId =
-  | 'fasting'
-  | 'ummah'
-  | 'hadith-library'
-  | 'knowledge'
-  | 'prophets'
-  | 'quiz'
-  | 'hajj'
-  | 'sunnah'
-  | 'sins'
-  | 'places'
-  | 'jumuah'
-  | 'zakat'
-  | 'standby';
-
-export type LegacyFeatureItem = {
-  id: LegacyFeatureId;
-  title: string;
-  subtitle: string;
-  description: string;
-  icon: LucideIcon;
-  art: string;
-};
-
-const VISUAL_VERSION = '20260808-release-hardening';
-const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);
-
-export const learningLegacyFeatures: LegacyFeatureItem[] = [
-  { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Hadithe durchsuchen, lesen und lokal speichern.', icon: Library, art: '/premium-assets/high-res-objects/lantern-v2.webp' },
-  { id: 'knowledge', title: 'Wissensbibliothek', subtitle: 'Themen strukturiert lernen', description: 'Aqidah, Fiqh, Geschichte und Charakter in einem Bereich.', icon: BookOpenCheck, art: '/premium-assets/high-res-objects/quran-open-v2.webp' },
-  { id: 'prophets', title: 'Propheten', subtitle: 'Geschichten & Lehren', description: 'Überblicke über Propheten und zentrale Lehren ihrer Geschichten.', icon: Milestone, art: '/premium-assets/high-res-objects/mihrab-v2.webp' },
-  { id: 'quiz', title: 'Islam-Quiz', subtitle: 'Wissen testen', description: 'Kurze Fragen, direkte Auswertung und lokaler Bestwert.', icon: BrainCircuit, art: '/premium-assets/high-res-objects/quran-closed-v2.webp' },
-  { id: 'hajj', title: 'Hajj & Umrah', subtitle: 'Ablauf verstehen', description: 'Stationen, Begriffe und Vorbereitung kompakt geordnet.', icon: Mountain, art: '/premium-assets/high-res-objects/kaaba-v2.webp' },
-  { id: 'sunnah', title: 'Sunnah im Alltag', subtitle: 'Gute Gewohnheiten', description: 'Praktische, quellenorientierte Alltagserinnerungen.', icon: Sparkles, art: '/premium-assets/high-res-objects/sun-emblem-v2.webp' },
-  { id: 'sins', title: 'Fehler & Reue', subtitle: 'Rückkehr zu Allah', description: 'Ein ruhiger Bereich zu Reue, Wiedergutmachung und Hoffnung.', icon: ShieldCheck, art: '/premium-assets/high-res-objects/dome-v2.webp' },
-];
-
-export const serviceLegacyFeatures: LegacyFeatureItem[] = [
-  { id: 'fasting', title: 'Fasten-Assistent', subtitle: 'Freiwillige Fastentage', description: 'Montag, Donnerstag und berechnete weiße Tage mit echten lokalen Erinnerungen planen.', icon: MoonStar, art: '/premium-assets/high-res-objects/calendar-chip-v2.webp' },
-  { id: 'ummah', title: 'Ummah-Übersicht', subtitle: 'Muslime weltweit', description: 'Regionen, Orte und Gemeinschaften als Lernübersicht entdecken.', icon: Globe2, art: '/premium-assets/high-res-objects/dome-v2.webp' },
-  { id: 'places', title: 'Islamische Orte', subtitle: 'Makkah, Madinah & Al-Aqsa', description: 'Bedeutende Orte mit kompakten Einführungen.', icon: MapPinned, art: '/premium-assets/high-res-objects/mosque-gold-v2.webp' },
-  { id: 'jumuah', title: 'Jumuah', subtitle: 'Freitag vorbereiten', description: 'Eine lokal gespeicherte Checkliste für die Freitagsvorbereitung.', icon: CalendarHeart, art: '/premium-assets/high-res-objects/mihrab-arch-v2.webp' },
-  { id: 'zakat', title: 'Zakat-Rechner', subtitle: 'Planungshilfe', description: 'Eine transparente 2,5%-Planungsrechnung für eine zuvor fachlich bestimmte Bemessungsgrundlage.', icon: BadgeDollarSign, art: '/premium-assets/high-res-objects/bookmark-v2.webp' },
-  { id: 'standby', title: 'Gebetsanzeige', subtitle: 'Standby-Modus', description: 'Ruhige Live-Ansicht für das nächste Gebet mit optionalem Vollbild.', icon: Radio, art: '/premium-assets/high-res-objects/qibla-compass-v2.webp' },
-];
-
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
 
-type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby'>;
+type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby' | 'prophets' | 'sahabah' | 'women'>;
 
 const featureContent: Record<GenericFeatureId, string[]> = {
   knowledge: ['Grundlagen des Glaubens', 'Anbetung und Alltag', 'Islamische Geschichte', 'Charakter und Verhalten'],
-  prophets: ['Adam – Schöpfung und Verantwortung', 'Nuh – Geduld und Standhaftigkeit', 'Ibrahim – Vertrauen und Hingabe', 'Musa – Mut und Führung', 'Isa – Zeichen und Barmherzigkeit', 'Muhammad ﷺ – Vorbild und Botschaft'],
   hajj: ['Ihram und Absicht', 'Tawaf', 'Sa’i zwischen Safa und Marwa', 'Arafat', 'Muzdalifah und Mina', 'Abschluss und Rückkehr'],
   sunnah: ['Gute Absicht erneuern', 'Mit Bismillah beginnen', 'Freundlich sprechen', 'Dankbarkeit zeigen', 'Rechte anderer achten', 'Regelmäßig um Vergebung bitten'],
   sins: ['Fehler ehrlich erkennen', 'Die Handlung beenden', 'Allah um Vergebung bitten', 'Entschlossen nicht zurückzukehren', 'Rechte anderer wiederherstellen', 'Hoffnung nicht verlieren'],
@@ -493,6 +450,92 @@ function JumuahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack
   );
 }
 
+function ProphetsFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const prophet = PROPHETS.find((entry) => entry.id === openId) ?? null;
+
+  if (prophet) {
+    return (
+      <LegacyMotionMain>
+        <FeatureHeader feature={feature} onBack={() => setOpenId(null)} />
+        <section className="reference-person-detail">
+          {/* `role` is a full sentence in the source data, not a label, so it
+              reads as prose here. Setting it as the overline turned a two-line
+              sentence into all-caps. */}
+          <span className="overline">Prophet</span>
+          <h2>{prophet.name}{prophet.commonName ? ` · ${prophet.commonName}` : ''}</h2>
+          <p className="reference-person-detail__intro">{prophet.intro}</p>
+          <p>{prophet.description}</p>
+          <p>{prophet.role}</p>
+        </section>
+
+        <section className="reference-legacy-section">
+          <div className="section-heading"><div><span className="overline">Kernpunkte</span><h2>Worum es geht</h2></div><span className="reference-legacy-count">{prophet.keyPoints.length}</span></div>
+          <div className="reference-legacy-list reference-legacy-list--overview">
+            {prophet.keyPoints.map((point, index) => (
+              <article key={point}><span>{index + 1}</span><strong>{point}</strong></article>
+            ))}
+          </div>
+        </section>
+
+        <section className="reference-legacy-section">
+          <div className="section-heading"><div><span className="overline">Lehren</span><h2>Was daraus folgt</h2></div><span className="reference-legacy-count">{prophet.lessons.length}</span></div>
+          <div className="reference-legacy-list reference-legacy-list--overview">
+            {prophet.lessons.map((lesson, index) => (
+              <article key={lesson}><span>{index + 1}</span><strong>{lesson}</strong></article>
+            ))}
+          </div>
+        </section>
+
+        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Übernommener Inhalt ohne Einzelnachweis je Aussage. Die fachliche Prüfung steht vor der Veröffentlichung aus.</p></section>
+      </LegacyMotionMain>
+    );
+  }
+
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{PROPHETS.length}</span></div>
+        <div className="reference-person-list">
+          {PROPHETS.map((entry) => (
+            <button key={entry.id} onClick={() => setOpenId(entry.id)}>
+              <span><strong>{entry.name}</strong><small>{entry.intro}</small></span>
+              <ChevronRight size={18} />
+            </button>
+          ))}
+        </div>
+      </section>
+    </LegacyMotionMain>
+  );
+}
+
+function PeopleListFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  // Sahabah and women in Islam carry a name, an honorific and a role, and
+  // nothing more in the source data. They are listed rather than made tappable:
+  // a detail view would open on three lines and promise a biography that does
+  // not exist.
+  const isSahabah = feature.id === 'sahabah';
+  const entries = isSahabah
+    ? SAHABAH.map((entry) => ({ id: entry.id, name: entry.name, note: `${entry.honorific} · ${entry.role}` }))
+    : WOMEN_IN_ISLAM.map((entry) => ({ id: entry.id, name: entry.name, note: entry.note }));
+
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
+        <div className="reference-person-list reference-person-list--static">
+          {entries.map((entry) => (
+            <article key={entry.id}><strong>{entry.name}</strong><small>{entry.note}</small></article>
+          ))}
+        </div>
+      </section>
+      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Zu jeder Person sind bisher nur Name, Ehrenname und Rolle hinterlegt. Ausführliche Darstellungen folgen erst nach fachlicher Prüfung.</p></section>
+    </LegacyMotionMain>
+  );
+}
+
 function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const entries = featureContent[feature.id as GenericFeatureId] ?? [];
 
@@ -515,6 +558,8 @@ function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureIte
 export function LegacyFeatureScreen({ featureId, onBack }: { featureId: LegacyFeatureId; onBack: () => void }) {
   const feature = allFeatures.find((item) => item.id === featureId) ?? learningLegacyFeatures[0];
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'prophets') return <ProphetsFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'sahabah' || featureId === 'women') return <PeopleListFeature feature={feature} onBack={onBack} />;
   if (featureId === 'fasting') return <FastingFeature feature={feature} onBack={onBack} />;
   if (featureId === 'hadith-library') return <HadithLibraryFeature feature={feature} onBack={onBack} />;
   if (featureId === 'jumuah') return <JumuahFeature feature={feature} onBack={onBack} />;

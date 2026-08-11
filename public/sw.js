@@ -41,11 +41,12 @@ const APP_SHELL = [
   scoped('data/quran/de/114.json'),
 ];
 
-// The remaining 110 surahs are ~3 MB. Downloading them inside install would
-// hold up activation on a slow connection for a benefit nobody asked for yet,
-// so the shell above stays small and the rest is warmed afterwards, one file
-// at a time, skipping whatever is already cached. A failed file is simply
-// retried on the next activation, or fetched on demand by the read handler.
+// The remaining 110 surahs are ~3 MB. They are not part of install, and no
+// longer part of activate either: starting that download the moment the worker
+// takes over put it in direct competition with the requests the first render is
+// waiting on. The client asks for it once it has gone idle, and it runs one
+// file at a time, skipping whatever is already cached. A file that fails is
+// picked up on the next request, or fetched on demand by the read handler.
 const QURAN_WARM_URLS = Array.from({ length: 114 }, (_, index) => index + 1)
   .flatMap((number) => [scoped(`data/quran/ar/${number}.json`), scoped(`data/quran/de/${number}.json`)]);
 
@@ -84,13 +85,16 @@ self.addEventListener('activate', (event) => {
           .filter((key) => key !== CACHE_NAME && !key.startsWith(QURAN_CACHE_PREFIX))
           .map((key) => caches.delete(key)),
       ))
-      .then(() => self.clients.claim())
-      .then(() => warmQuranCache()),
+      .then(() => self.clients.claim()),
   );
 });
 
 self.addEventListener('message', (event) => {
   if (event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+  // Warming used to run from `activate`, which meant ~3 MB of surah files
+  // started downloading while the page was still fetching what it needed to
+  // render. The client asks for it once it is idle instead.
+  if (event.data?.type === 'WARM_QURAN') event.waitUntil(warmQuranCache());
 });
 
 self.addEventListener('notificationclick', (event) => {

@@ -39,7 +39,10 @@ const [
   read('src/screens/CollectionsScreen.tsx'),
   read('src/screens/AssistantScreen.tsx'),
   read('src/screens/MoreScreen.tsx'),
-  read('src/screens/LegacyFeatureScreens.tsx'),
+  // The feature definitions moved into src/data/legacyFeatures.ts so the hub
+  // tiles can render without loading the screens; both are read as one.
+  Promise.all([read('src/screens/LegacyFeatureScreens.tsx'), read('src/data/legacyFeatures.ts')])
+    .then((parts) => parts.join('\n')),
   read('src/screens/ReferenceReadingScreens.tsx'),
   read('src/styles/premium-onboarding-art-lock.css'),
   read('src/styles/premium-brand-entry-art-lock.css'),
