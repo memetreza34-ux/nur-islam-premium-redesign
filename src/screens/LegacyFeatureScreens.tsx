@@ -3,6 +3,8 @@ import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
 import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';
 import { REPENTANCE_GROUPS, SUNNAH_GROUPS } from '../data/practiceData';
 import { UMMAH_COUNTRIES, UMMAH_REGIONS, UMMAH_TOTAL } from '../data/ummahData';
+import { HAJJ_STATIONS, HOLY_PLACES, UMRAH_STATIONS } from '../data/pilgrimageData';
+import type { PilgrimageStation } from '../data/pilgrimageData';
 import { PROPHETS } from '../data/prophetData';
 import { QUIZ_CATEGORIES } from '../data/quizData';
 import { learningLegacyFeatures, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
@@ -44,13 +46,6 @@ import { syncRollingFastingReminders } from '../services/fastingReminderService'
 import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule';
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
-
-type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby' | 'prophets' | 'sahabah' | 'women' | 'knowledge' | 'sunnah' | 'sins' | 'ummah'>;
-
-const featureContent: Record<GenericFeatureId, string[]> = {
-  hajj: ['Ihram und Absicht', 'Tawaf', 'Sa’i zwischen Safa und Marwa', 'Arafat', 'Muzdalifah und Mina', 'Abschluss und Rückkehr'],
-  places: ['Al-Masjid al-Haram in Makkah', 'Al-Masjid an-Nabawi in Madinah', 'Al-Masjid al-Aqsa in Jerusalem'],
-};
 
 const jumuahChecklist = [
   'Ghusl und saubere Kleidung',
@@ -648,21 +643,82 @@ function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
   );
 }
 
-function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  const entries = featureContent[feature.id as GenericFeatureId] ?? [];
+function StationList({ stations }: { stations: readonly PilgrimageStation[] }) {
+  return (
+    <div className="reference-practice-list">
+      {stations.map((station, index) => (
+        <article key={station.id}>
+          <span className="reference-station-when">{index + 1} · {station.when}</span>
+          <strong>{station.title}</strong>
+          <p>{station.description}</p>
+          {/* Only where a clear verse exists. An entry without one shows
+              nothing rather than an invented reference. */}
+          {station.reference ? <small><ShieldCheck size={14} /> {station.reference}</small> : null}
+        </article>
+      ))}
+    </div>
+  );
+}
 
+function PilgrimageFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Umrah</span><h2>Der kleinere Ablauf</h2></div><span className="reference-legacy-count">{UMRAH_STATIONS.length}</span></div>
+        <StationList stations={UMRAH_STATIONS} />
+      </section>
+
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Hajj</span><h2>Die Stationen</h2></div><span className="reference-legacy-count">{HAJJ_STATIONS.length}</span></div>
+        <StationList stations={HAJJ_STATIONS} />
+      </section>
+
+      {/* This is the one area written for this app rather than carried over,
+          so the limit is stated rather than implied. */}
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Diese Übersicht beschreibt den Ablauf, nicht die Urteile. Was Pflicht und was Sunnah ist, was bei Versäumnissen gilt und worin sich die Rechtsschulen unterscheiden, gehört zu einer qualifizierten Quelle. Die Texte sind für diese App verfasst und stehen vor der Veröffentlichung zur fachlichen Prüfung.</p></section>
+    </LegacyMotionMain>
+  );
+}
+
+function HolyPlacesFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   return (
     <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
-        <div className="reference-legacy-list reference-legacy-list--overview">
-          {entries.map((entry, index) => (
-            <article key={entry}><span>{index + 1}</span><strong>{entry}</strong></article>
+        <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{HOLY_PLACES.length}</span></div>
+        <div className="reference-practice-list">
+          {HOLY_PLACES.map((place) => (
+            <article key={place.id}>
+              <span className="reference-station-when">{place.city}</span>
+              <strong>{place.name}</strong>
+              <p>{place.description}</p>
+              {place.reference ? <small><ShieldCheck size={14} /> {place.reference}</small> : null}
+            </article>
           ))}
         </div>
       </section>
-      <section className="reference-legacy-notice"><HeartHandshake size={19} /><p>Dieser Bereich ist aktuell eine Übersicht ohne vorgetäuschte Detail-Navigation. Vertiefende religiöse Inhalte werden erst als anklickbare Lektionen freigeschaltet, wenn Inhalt und Quellen fachlich geprüft sind.</p></section>
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Kurze Einordnungen, für diese App verfasst. Sie stehen vor der Veröffentlichung zur fachlichen Prüfung.</p></section>
+    </LegacyMotionMain>
+  );
+}
+
+/**
+ * Reached only if a feature id is added without a screen behind it.
+ *
+ * Every one of the fifteen has its own screen now, so this renders nothing that
+ * pretends to be content — it names the gap instead. The bullet lists this
+ * replaced did the opposite: four lines of text that looked like an article.
+ */
+function UnbuiltFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-notice">
+        <ShieldCheck size={19} />
+        <p>Für diesen Bereich ist noch kein Inhalt hinterlegt. Er wird erst freigeschaltet, wenn Inhalt und Quellen stehen.</p>
+      </section>
     </LegacyMotionMain>
   );
 }
@@ -674,11 +730,13 @@ export function LegacyFeatureScreen({ featureId, onBack }: { featureId: LegacyFe
   if (featureId === 'knowledge') return <KnowledgeFeature feature={feature} onBack={onBack} />;
   if (featureId === 'sunnah' || featureId === 'sins') return <PracticeFeature feature={feature} onBack={onBack} />;
   if (featureId === 'ummah') return <UmmahFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'hajj') return <PilgrimageFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'places') return <HolyPlacesFeature feature={feature} onBack={onBack} />;
   if (featureId === 'sahabah' || featureId === 'women') return <PeopleListFeature feature={feature} onBack={onBack} />;
   if (featureId === 'fasting') return <FastingFeature feature={feature} onBack={onBack} />;
   if (featureId === 'hadith-library') return <HadithLibraryFeature feature={feature} onBack={onBack} />;
   if (featureId === 'jumuah') return <JumuahFeature feature={feature} onBack={onBack} />;
   if (featureId === 'zakat') return <ZakatFeature feature={feature} onBack={onBack} />;
   if (featureId === 'standby') return <StandbyFeature feature={feature} onBack={onBack} />;
-  return <GenericOverviewFeature feature={feature} onBack={onBack} />;
+  return <UnbuiltFeature feature={feature} onBack={onBack} />;
 }

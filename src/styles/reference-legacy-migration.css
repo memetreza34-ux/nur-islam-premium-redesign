@@ -613,3 +613,11 @@
   line-height: 1.55;
 }
 .reference-practice-list small svg { margin-top: 3px; color: #d2ad5f; }
+
+.reference-station-when {
+  color: #d2ad5f;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}

@@ -34,11 +34,11 @@ const BUDGET = {
   // answer states and the Hadith explanation card, plus the child combinators
   // that stop the active navigation label being dressed as an icon box, and
   // the prophet detail and person list surfaces, the lazy-chunk fallback and
-  // the knowledge/practice surfaces. The eight added `!important` sit in the file that already
+  // the knowledge/practice surfaces and the pilgrimage station label. The eight added `!important` sit in the file that already
   // owned those rules with `!important` throughout — matching that weight was
   // the only way to change them without adding a 34th override layer, which is
   // exactly the trade this budget exists to make visible.
-  totalBytes: 728_079,
+  totalBytes: 728_221,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

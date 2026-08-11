@@ -398,9 +398,13 @@ requireText(legacy, [
   'requestFullscreen',
   'JumuahFeature',
   'nur_feature_jumuah_progress',
-  'GenericOverviewFeature',
+  // The generic overview is gone: all fifteen areas have their own screen with
+  // real content behind them. What it guarded against — a screen that looks
+  // like an article but holds four bullet points — is now covered by the
+  // fallback, which names the gap instead of dressing it up.
+  'UnbuiltFeature',
   'reference-legacy-list--overview',
-  'Dieser Bereich ist aktuell eine Übersicht ohne vorgetäuschte Detail-Navigation',
+  'Für diesen Bereich ist noch kein Inhalt hinterlegt',
   "featureId === 'jumuah'",
   "featureId === 'zakat'",
   "featureId === 'standby'",
