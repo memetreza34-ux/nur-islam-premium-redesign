@@ -1,5 +1,8 @@
 import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
+import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';
+import { REPENTANCE_GROUPS, SUNNAH_GROUPS } from '../data/practiceData';
+import { UMMAH_COUNTRIES, UMMAH_REGIONS, UMMAH_TOTAL } from '../data/ummahData';
 import { PROPHETS } from '../data/prophetData';
 import { QUIZ_CATEGORIES } from '../data/quizData';
 import { learningLegacyFeatures, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
@@ -42,14 +45,10 @@ import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
 
-type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby' | 'prophets' | 'sahabah' | 'women'>;
+type GenericFeatureId = Exclude<LegacyFeatureId, 'quiz' | 'fasting' | 'hadith-library' | 'jumuah' | 'zakat' | 'standby' | 'prophets' | 'sahabah' | 'women' | 'knowledge' | 'sunnah' | 'sins' | 'ummah'>;
 
 const featureContent: Record<GenericFeatureId, string[]> = {
-  knowledge: ['Grundlagen des Glaubens', 'Anbetung und Alltag', 'Islamische Geschichte', 'Charakter und Verhalten'],
   hajj: ['Ihram und Absicht', 'Tawaf', 'Sa’i zwischen Safa und Marwa', 'Arafat', 'Muzdalifah und Mina', 'Abschluss und Rückkehr'],
-  sunnah: ['Gute Absicht erneuern', 'Mit Bismillah beginnen', 'Freundlich sprechen', 'Dankbarkeit zeigen', 'Rechte anderer achten', 'Regelmäßig um Vergebung bitten'],
-  sins: ['Fehler ehrlich erkennen', 'Die Handlung beenden', 'Allah um Vergebung bitten', 'Entschlossen nicht zurückzukehren', 'Rechte anderer wiederherstellen', 'Hoffnung nicht verlieren'],
-  ummah: ['Gemeinschaften nach Region', 'Moscheen und Bildungsorte', 'Sprachen und Kulturen', 'Lokale Veranstaltungen'],
   places: ['Al-Masjid al-Haram in Makkah', 'Al-Masjid an-Nabawi in Madinah', 'Al-Masjid al-Aqsa in Jerusalem'],
 };
 
@@ -536,6 +535,119 @@ function PeopleListFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
   );
 }
 
+function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const [openId, setOpenId] = useState<string | null>(null);
+  const topic = KNOWLEDGE_TOPICS.find((entry) => entry.id === openId) ?? null;
+
+  if (topic) {
+    return (
+      <LegacyMotionMain>
+        <FeatureHeader feature={feature} onBack={() => setOpenId(null)} />
+        <section className="reference-person-detail">
+          <span className="overline">Thema</span>
+          <h2>{topic.title}</h2>
+          <p className="reference-person-detail__intro">{topic.intro}</p>
+        </section>
+        {topic.sections.map((section) => (
+          <section className="reference-legacy-section" key={section.subtitle}>
+            <div className="section-heading"><div><span className="overline">{section.subtitle}</span></div></div>
+            <p className="reference-topic-text">{section.text}</p>
+          </section>
+        ))}
+        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Übernommener Inhalt ohne Einzelnachweis je Aussage. Die fachliche Prüfung steht vor der Veröffentlichung aus.</p></section>
+      </LegacyMotionMain>
+    );
+  }
+
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Themen</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{KNOWLEDGE_TOPICS.length}</span></div>
+        <div className="reference-person-list">
+          {KNOWLEDGE_TOPICS.map((entry) => (
+            <button key={entry.id} onClick={() => setOpenId(entry.id)}>
+              <span><strong>{entry.title}</strong><small>{entry.intro}</small></span>
+              <ChevronRight size={18} />
+            </button>
+          ))}
+        </div>
+      </section>
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Glossar</span><h2>Begriffe</h2></div><span className="reference-legacy-count">{GLOSSARY_TERMS.length}</span></div>
+        <div className="reference-person-list reference-person-list--static">
+          {GLOSSARY_TERMS.map((entry) => (
+            <article key={entry.term}><strong>{entry.term}</strong><small>{entry.definition}</small></article>
+          ))}
+        </div>
+      </section>
+    </LegacyMotionMain>
+  );
+}
+
+function PracticeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  const groups = feature.id === 'sunnah' ? SUNNAH_GROUPS : REPENTANCE_GROUPS;
+  const total = groups.reduce((count, group) => count + group.items.length, 0);
+
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      {groups.map((group) => (
+        <section className="reference-legacy-section" key={group.id}>
+          <div className="section-heading"><div><span className="overline">{group.category}</span></div><span className="reference-legacy-count">{group.items.length}</span></div>
+          <div className="reference-practice-list">
+            {group.items.map((item) => (
+              <article key={item.title}>
+                <strong>{item.title}</strong>
+                <p>{item.description}</p>
+                {/* The proof travelled with the entry and is shown with it: an
+                    instruction about practice without its basis is the thing
+                    this app avoids everywhere else. */}
+                <small><ShieldCheck size={14} /> {item.proof}</small>
+              </article>
+            ))}
+          </div>
+        </section>
+      ))}
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>{total} Einträge mit dem jeweils hinterlegten Beleg. Wortlaut und Einordnung stehen vor der Veröffentlichung zur fachlichen Prüfung.</p></section>
+    </LegacyMotionMain>
+  );
+}
+
+function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
+  return (
+    <LegacyMotionMain>
+      <FeatureHeader feature={feature} onBack={onBack} />
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Größenordnung</span><h2>Weltweit</h2></div></div>
+        <p className="reference-topic-text">{UMMAH_TOTAL} Musliminnen und Muslime, verteilt auf:</p>
+        <div className="reference-person-list reference-person-list--static">
+          {UMMAH_REGIONS.map((region) => (
+            <article key={region.name}><strong>{region.name}</strong><small>{region.share}</small></article>
+          ))}
+        </div>
+      </section>
+
+      <section className="reference-legacy-section">
+        <div className="section-heading"><div><span className="overline">Länder</span><h2>Nach Bevölkerung</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
+        <div className="reference-person-list reference-person-list--static">
+          {UMMAH_COUNTRIES.map((country) => (
+            <article key={country.id}>
+              <strong>{country.name}</strong>
+              <small>{country.muslimPopulation} · {country.share} der Bevölkerung · {country.region}</small>
+              <small>{country.info}</small>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      {/* The old data carries no source and no reference year, so the figures
+          are labelled as the rough order of magnitude they are. */}
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die Zahlen stammen aus dem übernommenen Altbestand und tragen dort weder Quelle noch Stichjahr. Sie sind als Größenordnung zu lesen, nicht als belastbare Statistik, und werden vor der Veröffentlichung mit einer datierten Quelle ersetzt.</p></section>
+    </LegacyMotionMain>
+  );
+}
+
 function GenericOverviewFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const entries = featureContent[feature.id as GenericFeatureId] ?? [];
 
@@ -559,6 +671,9 @@ export function LegacyFeatureScreen({ featureId, onBack }: { featureId: LegacyFe
   const feature = allFeatures.find((item) => item.id === featureId) ?? learningLegacyFeatures[0];
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
   if (featureId === 'prophets') return <ProphetsFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'knowledge') return <KnowledgeFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'sunnah' || featureId === 'sins') return <PracticeFeature feature={feature} onBack={onBack} />;
+  if (featureId === 'ummah') return <UmmahFeature feature={feature} onBack={onBack} />;
   if (featureId === 'sahabah' || featureId === 'women') return <PeopleListFeature feature={feature} onBack={onBack} />;
   if (featureId === 'fasting') return <FastingFeature feature={feature} onBack={onBack} />;
   if (featureId === 'hadith-library') return <HadithLibraryFeature feature={feature} onBack={onBack} />;

@@ -580,3 +580,36 @@
 /* Holds the screen's height while the split chunk arrives, so the layout does
    not jump when it lands. */
 .screen-lazy-fallback { min-height: 60vh; }
+
+.reference-topic-text {
+  margin: 0;
+  color: #c3d0c7;
+  font-size: .86rem;
+  line-height: 1.68;
+}
+
+.reference-practice-list {
+  display: grid;
+  gap: 10px;
+}
+.reference-practice-list > article {
+  display: grid;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, .07);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .025);
+}
+.reference-practice-list strong { font-size: .92rem; }
+.reference-practice-list p { margin: 0; color: #c3d0c7; font-size: .82rem; line-height: 1.6; }
+.reference-practice-list small {
+  display: grid;
+  gap: 7px;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  padding-top: 4px;
+  color: #9db0a5;
+  font-size: .74rem;
+  line-height: 1.55;
+}
+.reference-practice-list small svg { margin-top: 3px; color: #d2ad5f; }

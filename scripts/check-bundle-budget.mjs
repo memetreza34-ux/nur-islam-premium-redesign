@@ -23,13 +23,15 @@ const root = process.cwd();
 const assets = resolve(root, 'dist/assets');
 
 const BUDGETS_KB = {
-  // Raised from 215 for the quiz catalogue, the prophets and the companion
-  // lists — roughly 20 KB gzipped of content the app did not have. This total
-  // counts every chunk, so it cannot see whether that weight is on the startup
-  // path; `entry` below is what covers that.
-  js: 225,
+  // Raised twice now for content the app did not have: the quiz catalogue, the
+  // prophets and companions, then the knowledge library, Sunnah, repentance and
+  // the Ummah overview. All of it landed in the on-demand chunk — the entry
+  // chunk has not moved from 95 KB across either step, which is the number
+  // `entry` below exists to protect. This total counts every chunk and cannot
+  // tell the difference.
+  js: 235,
   css: 105,
-  total: 330,
+  total: 340,
 };
 
 /**
