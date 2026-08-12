@@ -216,11 +216,13 @@ requireText(calendar, [
 ], 'Calendar direct open');
 
 requireText(assistant, [
-  'LOCAL_ANSWERS',
-  'findLocalAnswer',
-  'Quran 97:1–5',
-  'Quran 112:1–4',
-  'Kein lokaler Quellen-Treffer',
+  // The nine hand-written answers were replaced by a lookup over the app's own
+  // content, so an answer now points at an entry the user can open. The
+  // guarantee this list protects is unchanged: no invented answers, and the
+  // assistant says so when it has none. check-assistant-boundary covers the
+  // decline path for ruling questions.
+  'answerFromApp',
+  'reference-chat-hits',
   'Kein Fake-KI-Modus',
   'reference-chat-message__source',
   'infoOpen',

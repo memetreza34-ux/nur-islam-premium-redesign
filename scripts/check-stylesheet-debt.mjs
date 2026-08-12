@@ -33,11 +33,12 @@ const BUDGET = {
   // Grown by the surfaces added since: the foreign-frame notice, the
   // install-prompt scroll clearance, the quiz answer states, the Hadith
   // explanation card, the person and practice lists, the pilgrimage station
-  // label and the worship guide's tabs, Arabic wording and transliteration.
+  // label, the worship guide's tabs and Arabic wording, and the assistant's
+  // content-hit list.
   // Two of the added `!important` sit in files that already used it throughout
   // — matching that weight was the only way to change those rules without a
   // 34th override layer, which is the trade this budget exists to show.
-  totalBytes: 729_121,
+  totalBytes: 730_084,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

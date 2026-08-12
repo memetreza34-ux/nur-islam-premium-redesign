@@ -22,7 +22,12 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
-import { AssistantScreen } from '../screens/AssistantScreen';
+// Split out with the legacy screens: the assistant indexes the knowledge
+// topics, lessons, Hadiths, Duas, prophets and guides, and pulling all six into
+// startup put 10 KB gzipped in front of the first render for a screen reached
+// from a tile.
+const AssistantScreen = lazy(() => import('../screens/AssistantScreen')
+  .then((module) => ({ default: module.AssistantScreen })));
 import { CalendarScreen } from '../screens/CalendarScreen';
 import { CollectionsScreen } from '../screens/CollectionsScreen';
 import { DailyHadithScreen } from '../screens/DailyHadithScreen';
@@ -808,7 +813,11 @@ export default function App() {
                                           onOpenHadith={openSavedHadith}
                                           onOpenCalendarDate={openSavedCalendarDate}
                                         />
-                                      : <AssistantScreen onBack={goBack} />;
+                                      : (
+                                        <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+                                          <AssistantScreen onBack={goBack} />
+                                        </Suspense>
+                                      );
 
   return (
     <div className="app-background app-background--v2">

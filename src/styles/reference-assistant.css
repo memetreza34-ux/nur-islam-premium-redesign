@@ -215,3 +215,33 @@
   border-color: rgba(242, 215, 154, .24);
   background: linear-gradient(135deg, #f2d79a, #e2bf77);
 }
+.reference-chat-hits {
+  display: grid;
+  gap: 8px;
+  margin: 10px 0 2px;
+  padding: 0;
+  list-style: none;
+}
+.reference-chat-hits > li {
+  display: grid;
+  gap: 3px;
+  padding: 11px 12px;
+  border: 1px solid rgba(226, 191, 119, .16);
+  border-radius: 14px;
+  background: rgba(226, 191, 119, .05);
+}
+.reference-chat-hits strong { color: var(--cream-strong); font-size: .84rem; }
+.reference-chat-hits em {
+  color: var(--gold);
+  font-size: .64rem;
+  font-style: normal;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.reference-chat-hits span { color: var(--muted-green); font-size: .76rem; line-height: 1.5; }
+.reference-chat-hits small { color: var(--gold); font-size: .68rem; }
+
+/* The composer is sticky, so it floats over the thread while scrolling. This
+   is the room the last message needs to clear it instead of ending underneath. */
+.reference-chat-thread { padding-bottom: 12px; }
+.reference-chat-thread > :last-child { margin-bottom: 8px; }

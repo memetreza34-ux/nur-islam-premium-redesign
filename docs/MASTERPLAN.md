@@ -96,8 +96,10 @@ Aus `hadithService.ts`, mit Sammlung und Nummer je Eintrag.
 
 Die echte Lücke lag bei den Anleitungen: Wudu und Salah führten je sechs verkürzte Schritte **ohne arabischen Text**, drei Anleitungen fehlten ganz. Jetzt 5 Anleitungen, 50 Schritte, 18 davon mit arabischem Wortlaut und Umschrift — übernommen aus `learnService.ts`.
 
-### A7 — Assistent auf 40 Antworten · Größe: M
-Mehr Themen, und vor allem: eine **sichtbare Grenze**. Bei Rechts-, Fatwa- und Personenfragen muss er sagen, dass er nicht antwortet, statt etwas Allgemeines zu liefern.
+### A7 — Assistent: Grenze und Antworten aus dem Bestand · **erledigt**
+Statt 40 handgeschriebener Antworten sucht der Assistent jetzt im Bestand der App: Lektionen, Wissensthemen, Hadithe, Duas, Propheten und Anleitungen. Jede Antwort verweist auf einen Eintrag, den man öffnen und prüfen kann — und wächst mit dem Inhalt, ohne neue Behauptungen.
+
+Die **Grenze** ist der eigentliche Punkt: 26 Formulierungen für Rechts-, Fatwa- und persönliche Fragen werden **vor** jeder Suche abgewiesen. Ohne diese Reihenfolge hätte „Darf ich im Ramadan Wasser trinken?" einen Ramadan-Artikel getroffen und wie eine Antwort ausgesehen.
 
 ### A8 — Prüfliste `docs/INHALTE-PRUEFUNG.md` · **erledigt**
 186 Einträge mit Herkunft, Quelle und Häkchenfeld. Wird über `npm run review:write` aus den Datendateien erzeugt; `review:check` in der Prüfkette schlägt fehl, sobald sie nicht mehr zum Inhalt passt. Vorrangig zu prüfen: die 15 hier verfassten Pilgerfahrt-Einträge, die undatierten Ummah-Zahlen und die 17 Hadith-Belegstellen ohne Nummer.
