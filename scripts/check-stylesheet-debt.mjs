@@ -29,16 +29,15 @@ const styleDir = resolve(root, 'src/styles');
 const BUDGET = {
   files: 98,
   overrideFiles: 33,
-  importantRules: 2291,
-  // Covers `.frame-guard`, the install-prompt scroll clearance, the quiz
-  // answer states and the Hadith explanation card, plus the child combinators
-  // that stop the active navigation label being dressed as an icon box, and
-  // the prophet detail and person list surfaces, the lazy-chunk fallback and
-  // the knowledge/practice surfaces and the pilgrimage station label. The eight added `!important` sit in the file that already
-  // owned those rules with `!important` throughout — matching that weight was
-  // the only way to change them without adding a 34th override layer, which is
-  // exactly the trade this budget exists to make visible.
-  totalBytes: 728_221,
+  importantRules: 2293,
+  // Grown by the surfaces added since: the foreign-frame notice, the
+  // install-prompt scroll clearance, the quiz answer states, the Hadith
+  // explanation card, the person and practice lists, the pilgrimage station
+  // label and the worship guide's tabs, Arabic wording and transliteration.
+  // Two of the added `!important` sit in files that already used it throughout
+  // — matching that weight was the only way to change those rules without a
+  // 34th override layer, which is the trade this budget exists to show.
+  totalBytes: 729_121,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

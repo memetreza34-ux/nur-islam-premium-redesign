@@ -91,8 +91,10 @@ Die einzigen Bereiche ohne Altbestand. Muss neu geschrieben werden — **strikt 
 ### A5 — Hadithe 8 → 25 · Größe: S
 Aus `hadithService.ts`, mit Sammlung und Nummer je Eintrag.
 
-### A6 — Lernbereich: echte Kurse · Größe: L
-Heute 24 Stichpunkte in 6 Kategorien und keine Lektion. Aus `learnService.ts` (658 Zeilen) echte Lektionen mit Fortschritt bauen. `LearningCourseScreen.tsx` existiert bereits und wartet auf Inhalte.
+### A6 — Anleitungen für Wudu und Gebet · **erledigt**
+**Korrektur zur ersten Fassung dieses Plans:** der Lernbereich hatte nie „24 Stichpunkte und keine Lektion". Er trägt 18 vollständige Lektionen mit Absätzen, Kernpunkten, Quellenangaben und Verständnisfrage. Gezählt wurden damals `id:`-Zeilen, was 6 Kategorien und 18 Lektionen zusammenwarf.
+
+Die echte Lücke lag bei den Anleitungen: Wudu und Salah führten je sechs verkürzte Schritte **ohne arabischen Text**, drei Anleitungen fehlten ganz. Jetzt 5 Anleitungen, 50 Schritte, 18 davon mit arabischem Wortlaut und Umschrift — übernommen aus `learnService.ts`.
 
 ### A7 — Assistent auf 40 Antworten · Größe: M
 Mehr Themen, und vor allem: eine **sichtbare Grenze**. Bei Rechts-, Fatwa- und Personenfragen muss er sagen, dass er nicht antwortet, statt etwas Allgemeines zu liefern.

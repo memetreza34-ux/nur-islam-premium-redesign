@@ -621,3 +621,34 @@
   letter-spacing: .06em;
   text-transform: uppercase;
 }
+
+/* The base bar is a two-column grid, which turned five guides into three rows.
+   A horizontal scroller keeps them on one line at any width. */
+.reference-guide-tabs--wide {
+  display: flex !important;
+  grid-template-columns: none !important;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.reference-guide-tabs--wide::-webkit-scrollbar { display: none; }
+.reference-guide-tabs--wide > button { flex: 0 0 auto; white-space: nowrap; }
+
+.reference-guide-arabic {
+  display: block;
+  margin-top: 8px;
+  color: var(--cream-strong);
+  font-family: 'Amiri', Georgia, serif;
+  font-size: 1.15rem;
+  line-height: 1.9;
+}
+.reference-guide-translit {
+  display: block;
+  margin-top: 2px;
+  color: #d2ad5f;
+  font-size: .74rem;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* The hero column is narrow enough that a single word wrapped mid-letter. */
+.reference-guide-hero .hero-pill { white-space: nowrap; }

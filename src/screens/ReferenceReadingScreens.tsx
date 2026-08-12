@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { WORSHIP_GUIDES, WORSHIP_GUIDE_BY_ID } from '../data/worshipGuideData';
 import type { LucideIcon } from 'lucide-react';
 import {
   Bookmark,
@@ -24,6 +25,7 @@ import { PremiumImage } from '../shared/PremiumVisuals';
 type ToastState = string | null;
 
 type GuideMode = 'wudu' | 'salah';
+
 
 type GuideStep = {
   title: string;
@@ -140,74 +142,114 @@ export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
   );
 }
 
-const wuduSteps: GuideStep[] = [
-  { title: 'Absicht fassen', description: 'Fasse im Herzen die Absicht, die Gebetswaschung für Allah durchzuführen.', icon: Sparkles },
-  { title: 'Hände waschen', description: 'Wasche beide Hände gründlich bis zu den Handgelenken.', icon: Hand },
-  { title: 'Mund und Nase', description: 'Spüle den Mund und reinige die Nase behutsam.', icon: Droplets },
-  { title: 'Gesicht und Arme', description: 'Wasche das Gesicht und anschließend beide Arme bis einschließlich der Ellenbogen.', icon: Droplets },
-  { title: 'Kopf wischen', description: 'Wische mit nassen Händen über den Kopf; Details können je nach Rechtsschule variieren.', icon: Hand },
-  { title: 'Füße waschen', description: 'Wasche beide Füße bis einschließlich der Knöchel.', icon: Footprints },
-];
+/**
+ * Icons per guide, matched by position. The migrated data carries no icon, and
+ * a single repeated glyph beside ten steps reads as a bullet rather than as a
+ * step marker.
+ */
+const GUIDE_ICONS: Record<string, LucideIcon[]> = {
+  wudu: [Sparkles, Hand, Droplets, Droplets, Hand, Hand, Droplets, Footprints, Volume2, Check],
+  salah: [Sparkles, BookOpen, RotateCcw, Volume2, Sparkles, RotateCcw, Sparkles, BookOpen, Check, Volume2, Check],
+  'what-to-say': [Volume2, BookOpen, Volume2, RotateCcw, Volume2, Sparkles, Volume2, Sparkles, BookOpen, Volume2, Check],
+  mandatory: [Sparkles, Volume2, BookOpen, RotateCcw, Volume2, Sparkles, Volume2, Sparkles, BookOpen, Volume2, Check, Check],
+  mistakes: [RotateCcw, Volume2, Hand, Sparkles, BookOpen, Check],
+};
 
-const salahSteps: GuideStep[] = [
-  { title: 'Absicht und Takbir', description: 'Richte dich zur Qibla aus, fasse die Absicht und beginne mit dem Eröffnungstakbir.', icon: Sparkles },
-  { title: 'Stehen und rezitieren', description: 'Rezitiere Al-Fatihah und je nach Gebetseinheit weitere Quranverse.', icon: BookOpen },
-  { title: 'Ruku', description: 'Verbeuge dich ruhig und sprich die vorgeschriebenen Lobpreisungen.', icon: RotateCcw },
-  { title: 'Aufrichten', description: 'Richte dich vollständig aus der Verbeugung auf.', icon: Volume2 },
-  { title: 'Sujud', description: 'Vollziehe die Niederwerfung mit Ruhe und Demut.', icon: Sparkles },
-  { title: 'Sitzen und Abschluss', description: 'Vollende die Gebetseinheiten, Tashahhud und den Salam entsprechend dem Gebet.', icon: Check },
+const GUIDE_TABS: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: 'wudu', label: 'Wudu', icon: Droplets },
+  { id: 'salah', label: 'Salah', icon: Sparkles },
+  { id: 'what-to-say', label: 'Wortlaut', icon: Volume2 },
+  { id: 'mandatory', label: 'Pflichtteile', icon: Check },
+  { id: 'mistakes', label: 'Fehler', icon: RotateCcw },
 ];
 
 export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: GuideMode; onBack: () => void }) {
-  const [mode, setMode] = useState<GuideMode>(initialMode);
-  const [activeStep, setActiveStep] = useState(() => Math.max(0, Math.min(5, readStoredNumber(`nur_guide_${initialMode}_step`, 0))));
+  const [mode, setMode] = useState<string>(initialMode);
+  const [activeStep, setActiveStep] = useState(() => Math.max(0, readStoredNumber(`nur_guide_${initialMode}_step`, 0)));
   const { toast, flash } = useToast();
   const reduceMotion = useReducedMotion();
-  const steps = mode === 'wudu' ? wuduSteps : salahSteps;
+
+  const guide = WORSHIP_GUIDE_BY_ID.get(mode) ?? WORSHIP_GUIDES[0];
+  const steps = guide.steps;
+  const icons = GUIDE_ICONS[guide.id] ?? [];
+  // Clamped against the guide actually shown: the stored index belongs to a
+  // list whose length differs per guide, and each one grew when the full data
+  // was migrated.
+  const stepIndex = Math.min(activeStep, steps.length - 1);
 
   useEffect(() => {
-    try { localStorage.setItem(`nur_guide_${mode}_step`, String(activeStep)); } catch { /* optional */ }
-  }, [mode, activeStep]);
+    try { localStorage.setItem(`nur_guide_${mode}_step`, String(stepIndex)); } catch { /* optional */ }
+  }, [mode, stepIndex]);
 
-  const changeMode = (next: GuideMode) => {
+  const changeMode = (next: string) => {
     setMode(next);
-    setActiveStep(Math.max(0, Math.min(5, readStoredNumber(`nur_guide_${next}_step`, 0))));
+    setActiveStep(Math.max(0, readStoredNumber(`nur_guide_${next}_step`, 0)));
   };
 
   const completeGuide = () => {
     try { localStorage.setItem(`nur_guide_${mode}_complete`, '1'); } catch { /* optional */ }
-    flash(`${mode === 'wudu' ? 'Wudu' : 'Salah'}-Anleitung als abgeschlossen gespeichert`);
+    flash(`${guide.title} als abgeschlossen gespeichert`);
   };
 
-  const heroAsset = mode === 'wudu'
+  const heroAsset = guide.id === 'wudu'
     ? '/premium-assets/high-res-objects/mosque-gold-v2.webp'
     : '/premium-assets/high-res-objects/qibla-compass-v2.webp';
 
   return (
     <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
-      <ScreenHeader title={mode === 'wudu' ? 'Wudu lernen' : 'Salah lernen'} eyebrow="Schritt für Schritt" onBack={onBack} />
+      <ScreenHeader title={guide.title} eyebrow="Schritt für Schritt" onBack={onBack} />
 
-      <div className="reference-guide-tabs"><button className={mode === 'wudu' ? 'is-active' : ''} onClick={() => changeMode('wudu')}><Droplets size={18} /> Wudu</button><button className={mode === 'salah' ? 'is-active' : ''} onClick={() => changeMode('salah')}><Sparkles size={18} /> Salah</button></div>
+      <div className="reference-guide-tabs reference-guide-tabs--wide">
+        {GUIDE_TABS.map((tab) => (
+          <button key={tab.id} className={mode === tab.id ? 'is-active' : ''} onClick={() => changeMode(tab.id)}>
+            <tab.icon size={17} /> {tab.label}
+          </button>
+        ))}
+      </div>
 
-      <section className={`reference-guide-hero reference-guide-hero--${mode}`}>
-        <PremiumImage src={heroAsset} fallback={mode === 'wudu' ? <Droplets size={76} /> : <Sparkles size={76} />} />
-        <div><span className="hero-pill">{mode === 'wudu' ? 'Reinigung' : 'Gebet'}</span><h2>{mode === 'wudu' ? 'Bereite dich bewusst auf das Gebet vor.' : 'Lerne den Ablauf ruhig und verständlich.'}</h2><p>{steps.length} kompakte Schritte · Fortschritt lokal gespeichert</p></div>
+      <section className={`reference-guide-hero reference-guide-hero--${guide.id}`}>
+        <PremiumImage src={heroAsset} fallback={<Droplets size={76} />} />
+        {/* The intro is a sentence, not a heading: as an h2 it hit the display
+            face at hero size and broke mid-word in a narrow column. */}
+        <div><span className="hero-pill">Ablauf</span><h2>{guide.title}</h2><p>{guide.intro}</p><p>{steps.length} Schritte · Fortschritt lokal gespeichert</p></div>
       </section>
 
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Wichtiger Hinweis</strong><small>Dieser Bereich ist ein verständlicher Überblick. Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen. Für verbindliche Praxisfragen sollte eine vertrauenswürdige Lehrperson vor Ort hinzugezogen werden.</small></span></section>
-      <section className="reference-guide-progress"><span><strong>Schritt {activeStep + 1}</strong><small>von {steps.length}</small></span><div><i style={{ width: `${((activeStep + 1) / steps.length) * 100}%` }} /></div></section>
+      <section className="reference-guide-progress"><span><strong>Schritt {stepIndex + 1}</strong><small>von {steps.length}</small></span><div><i style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} /></div></section>
 
       <section className="reference-guide-steps">
         {steps.map((step, index) => {
-          const Icon = step.icon;
-          const active = index === activeStep;
-          const complete = index < activeStep;
-          return <button key={step.title} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}><span>{complete ? <CircleCheck size={20} /> : <Icon size={20} />}</span><span><small>Schritt {index + 1}</small><strong>{step.title}</strong><em>{step.description}</em></span><ChevronRight size={18} /></button>;
+          const Icon = icons[index] ?? Sparkles;
+          const active = index === stepIndex;
+          const complete = index < stepIndex;
+          return (
+            <button key={step.title} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}>
+              <span>{complete ? <CircleCheck size={20} /> : <Icon size={20} />}</span>
+              <span>
+                <small>Schritt {index + 1}</small>
+                <strong>{step.title}</strong>
+                <em>{step.description}</em>
+                {/* The words themselves, where the source carries them — the
+                    reason this guide exists rather than a summary of it. */}
+                {step.arabic ? <span className="reference-guide-arabic" dir="rtl" lang="ar">{step.arabic}</span> : null}
+                {step.transliteration ? <span className="reference-guide-translit">{step.transliteration}</span> : null}
+              </span>
+              <ChevronRight size={18} />
+            </button>
+          );
         })}
       </section>
 
-      <div className="reference-guide-navigation"><button disabled={activeStep === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => activeStep === steps.length - 1 ? completeGuide() : setActiveStep((value) => Math.min(steps.length - 1, value + 1))}>{activeStep === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div>
+      {guide.tips.length ? (
+        <section className="reference-legacy-notice">
+          <Sparkles size={19} />
+          <p>{guide.tips.join(' ')}</p>
+        </section>
+      ) : null}
+
+      <div className="reference-guide-navigation"><button disabled={stepIndex === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? completeGuide() : setActiveStep((value) => Math.min(steps.length - 1, value + 1))}>{stepIndex === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div>
       <Toast message={toast} />
     </motion.main>
   );
 }
+
