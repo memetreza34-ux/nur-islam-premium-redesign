@@ -27,6 +27,11 @@ const dhikr = await read('src/data/dhikrData.ts');
 const names = await read('src/data/namesOfAllahData.ts');
 const learning = await read('src/data/islamicLearningContent.ts');
 const hadith = await read('src/data/hadithData.ts');
+const practice = await read('src/data/practiceData.ts');
+const quiz = await read('src/data/quizData.ts');
+const pilgrimage = await read('src/data/pilgrimageData.ts');
+const knowledgeTopics = await read('src/data/knowledgeData.ts');
+const prophets = await read('src/data/prophetData.ts');
 
 // Entries are counted from their id lines so the numbers follow the data rather
 // than a hand-maintained constant.
@@ -49,6 +54,20 @@ const hadithEntries = countMatches(hadith, /^\s+id:\s*'/gm);
 const hadithSources = countMatches(hadith, /^\s+source:\s*'/gm);
 const hadithSummaryLabels = countMatches(hadith, /^\s+summary:\s*'Sinngemäßer Inhalt:/gm);
 
+// Areas migrated after this report was first written.
+const practiceItems = countMatches(practice, /^\s+title:\s*'/gm);
+const practiceProofs = countMatches(practice, /^\s+proof:\s*'/gm);
+
+const quizQuestions = countMatches(quiz, /^\s+question:\s*'/gm);
+
+// Pilgrimage carries a citation only where an exact one exists, so partial
+// coverage is the intended state rather than a gap to close.
+const pilgrimageEntries = countMatches(pilgrimage, /^\s{4}id:\s*'/gm);
+const pilgrimageRefs = countMatches(pilgrimage, /^\s+reference:\s*'/gm);
+
+const knowledgeCount = countMatches(knowledgeTopics.slice(0, knowledgeTopics.indexOf('GLOSSARY_TERMS')), /^\s{4}id:\s*'/gm);
+const prophetCount = countMatches(prophets, /^\s{4}id:\s*'/gm);
+
 const rows = [
   { area: 'Duas', items: duaEntries, withSource: duaSources },
   { area: 'Dhikr routines', items: dhikrRoutines, withSource: dhikrRoutineSources },
@@ -56,6 +75,11 @@ const rows = [
   { area: '99 Names', items: nameEntries, withSource: nameSources },
   { area: 'Learning lessons', items: lessons, withSource: lessonsWithSources },
   { area: 'Hadith summaries', items: hadithEntries, withSource: hadithSources },
+  { area: 'Sunnah & repentance', items: practiceItems, withSource: practiceProofs },
+  { area: 'Pilgrimage stations', items: pilgrimageEntries, withSource: pilgrimageRefs },
+  { area: 'Quiz questions', items: quizQuestions, withSource: 0 },
+  { area: 'Knowledge topics', items: knowledgeCount, withSource: 0 },
+  { area: 'Prophets', items: prophetCount, withSource: 0 },
 ];
 
 const pad = (value, width) => String(value).padEnd(width);

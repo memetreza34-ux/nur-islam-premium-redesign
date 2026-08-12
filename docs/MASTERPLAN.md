@@ -97,8 +97,8 @@ Heute 24 Stichpunkte in 6 Kategorien und keine Lektion. Aus `learnService.ts` (6
 ### A7 — Assistent auf 40 Antworten · Größe: M
 Mehr Themen, und vor allem: eine **sichtbare Grenze**. Bei Rechts-, Fatwa- und Personenfragen muss er sagen, dass er nicht antwortet, statt etwas Allgemeines zu liefern.
 
-### A8 — Prüfliste `docs/INHALTE-PRUEFUNG.md` · Größe: S
-Jeder religiöse Inhalt mit Herkunft, Quelle und Freigabefeld. **Das Dokument für die fachliche Prüfung.** Entsteht automatisch aus den Datendateien, damit es nicht veraltet.
+### A8 — Prüfliste `docs/INHALTE-PRUEFUNG.md` · **erledigt**
+186 Einträge mit Herkunft, Quelle und Häkchenfeld. Wird über `npm run review:write` aus den Datendateien erzeugt; `review:check` in der Prüfkette schlägt fehl, sobald sie nicht mehr zum Inhalt passt. Vorrangig zu prüfen: die 15 hier verfassten Pilgerfahrt-Einträge, die undatierten Ummah-Zahlen und die 17 Hadith-Belegstellen ohne Nummer.
 
 ### B1 — Leseeinstellungen im Quran · Größe: S
 Den toten Knopf ersetzen: Schriftgröße, arabische Schriftart, Bedeutung ein/aus, dauerhaft gespeichert.
