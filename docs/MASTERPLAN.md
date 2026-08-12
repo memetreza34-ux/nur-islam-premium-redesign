@@ -107,11 +107,11 @@ Die **Grenze** ist der eigentliche Punkt: 26 Formulierungen für Rechts-, Fatwa-
 ### B1 — Leseeinstellungen im Quran · **erledigt**
 Der Knopf öffnet jetzt einen echten Dialog statt zu Inline-Reglern zu scrollen: Schriftgröße, arabische Schrift (Amiri oder Systemschrift) und deutsche Bedeutung ein/aus — alle drei dauerhaft gespeichert. Vorher blieb nur die Schriftgröße erhalten; die Bedeutung wirkte nur deshalb dauerhaft, weil sie auf „an" stand.
 
-### B2 — Qibla-Gerätekompass · Größe: M
-`deviceorientation` mit iOS-Berechtigung. Ohne Sensor bleibt die berechnete Gradzahl sichtbar — kein Rückschritt für Geräte ohne Magnetometer.
+### B2 — Qibla-Gerätekompass · **war bereits fertig**
+**Zweite Korrektur an diesem Plan.** Der Sensor ist vollständig da: `deviceorientation`, iOS-Berechtigungsabfrage, WebKit-Kompass-Heading, Aufräumen bei Stopp, Timeout und Unmount, Schutz gegen verspätete Events. `check-qibla.mjs` sichert das ab. Die Behauptung stammte aus `legacy-feature-migration.md`, das an dieser Stelle veraltet war.
 
-### B3 — Fehlerfälle glätten · Größe: M
-Jeder Screen ohne Netz, ohne Standort, ohne Daten, beim ersten Start. Nie leere Flächen, immer eine ehrliche Aussage.
+### B3 — Fehlerfälle glätten · **erledigt (waren bereits da, jetzt bewiesen)**
+Alle Listen-Screens hatten schon einen Leerzustand. Statt sie nachzubauen, wurden sie in ihren Leerfall getrieben und der Nachweis dauerhaft gemacht: `e2e/empty-states.spec.ts` prüft Quran, Duas, 99 Namen, Sammlung, Moscheen offline, Notizen und Kalender — sieben Tests. Ein Screen, der künftig ins Leere rendert, fällt damit auf.
 
 ### C1 — Design-Tokens · Größe: M
 Farben, Radien, Abstände, Schatten als einzige Quelle. Voraussetzung für alles Weitere im Design.
