@@ -104,8 +104,8 @@ Die **Grenze** ist der eigentliche Punkt: 26 Formulierungen für Rechts-, Fatwa-
 ### A8 — Prüfliste `docs/INHALTE-PRUEFUNG.md` · **erledigt**
 186 Einträge mit Herkunft, Quelle und Häkchenfeld. Wird über `npm run review:write` aus den Datendateien erzeugt; `review:check` in der Prüfkette schlägt fehl, sobald sie nicht mehr zum Inhalt passt. Vorrangig zu prüfen: die 15 hier verfassten Pilgerfahrt-Einträge, die undatierten Ummah-Zahlen und die 17 Hadith-Belegstellen ohne Nummer.
 
-### B1 — Leseeinstellungen im Quran · Größe: S
-Den toten Knopf ersetzen: Schriftgröße, arabische Schriftart, Bedeutung ein/aus, dauerhaft gespeichert.
+### B1 — Leseeinstellungen im Quran · **erledigt**
+Der Knopf öffnet jetzt einen echten Dialog statt zu Inline-Reglern zu scrollen: Schriftgröße, arabische Schrift (Amiri oder Systemschrift) und deutsche Bedeutung ein/aus — alle drei dauerhaft gespeichert. Vorher blieb nur die Schriftgröße erhalten; die Bedeutung wirkte nur deshalb dauerhaft, weil sie auf „an" stand.
 
 ### B2 — Qibla-Gerätekompass · Größe: M
 `deviceorientation` mit iOS-Berechtigung. Ohne Sensor bleibt die berechnete Gradzahl sichtbar — kein Rückschritt für Geräte ohne Magnetometer.

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bookmark,
   BookmarkCheck,
@@ -14,11 +14,13 @@ import {
   Plus,
   RefreshCw,
   Settings2,
+  X,
   Share2,
   ShieldCheck,
   WifiOff,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { useDialog } from '../shared/useDialog';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 import {
   fetchSurahBundle,
@@ -38,6 +40,25 @@ function readFontSize() {
     return Math.min(48, Math.max(26, Math.round(value)));
   } catch {
     return 34;
+  }
+}
+
+/** Meaning stayed on across restarts only by accident: it was never stored. */
+function readShowMeaning() {
+  try {
+    return localStorage.getItem('nur_reader_show_meaning') !== '0';
+  } catch {
+    return true;
+  }
+}
+
+export type ReaderArabicFont = 'amiri' | 'system';
+
+function readArabicFont(): ReaderArabicFont {
+  try {
+    return localStorage.getItem('nur_reader_arabic_font') === 'system' ? 'system' : 'amiri';
+  } catch {
+    return 'amiri';
   }
 }
 
@@ -90,7 +111,9 @@ export function QuranReaderScreen({
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
   const [fontSize, setFontSize] = useState(readFontSize);
-  const [showMeaning, setShowMeaning] = useState(true);
+  const [showMeaning, setShowMeaning] = useState(readShowMeaning);
+  const [arabicFont, setArabicFont] = useState<ReaderArabicFont>(readArabicFont);
+  const [settingsOpen, setSettingsOpen] = useState(false);
   const [activeAyah, setActiveAyah] = useState(() => normalizePositiveInteger(initialAyahNumber));
   const [bookmarks, setBookmarks] = useState(() => readBookmarks(surahNumber));
   const [toast, setToast] = useState<string | null>(null);
@@ -141,6 +164,14 @@ export function QuranReaderScreen({
   }, [fontSize]);
 
   useEffect(() => {
+    try { localStorage.setItem('nur_reader_show_meaning', showMeaning ? '1' : '0'); } catch { /* optional */ }
+  }, [showMeaning]);
+
+  useEffect(() => {
+    try { localStorage.setItem('nur_reader_arabic_font', arabicFont); } catch { /* optional */ }
+  }, [arabicFont]);
+
+  useEffect(() => {
     try { localStorage.setItem(`nur_quran_bookmarks_${surahNumber}`, JSON.stringify([...bookmarks])); } catch { /* optional */ }
   }, [bookmarks, surahNumber]);
 
@@ -171,15 +202,9 @@ export function QuranReaderScreen({
     }, 2200);
   };
 
-  const openReaderControls = () => {
-    const controls = document.querySelector<HTMLElement>('.reference-reader-controls');
-    if (!controls) {
-      flash('Leseeinstellungen sind noch nicht verfügbar');
-      return;
-    }
-    controls.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
-    window.setTimeout(() => controls.querySelector<HTMLButtonElement>('button')?.focus({ preventScroll: true }), reduceMotion ? 0 : 280);
-  };
+  const closeSettings = useCallback(() => { setSettingsOpen(false); }, []);
+  const settingsDialog = useDialog(settingsOpen, closeSettings, 'Leseeinstellungen');
+
 
   const progress = useMemo(() => {
     if (!bundle) return 0;
@@ -242,7 +267,7 @@ export function QuranReaderScreen({
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zum Quran"><ChevronLeft size={20} /></button>
         <div><span className="overline">{readerLabel}</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
-        <button className="icon-button" onClick={openReaderControls} aria-label="Leseeinstellungen öffnen"><Settings2 size={20} /></button>
+        <button className="icon-button" onClick={() => setSettingsOpen(true)} aria-label="Leseeinstellungen öffnen"><Settings2 size={20} /></button>
       </header>
 
       {loading ? (
@@ -291,7 +316,7 @@ export function QuranReaderScreen({
                   onClick={() => setActiveAyah(ayahNumber)}
                 >
                   <header><span>{ayahNumber}</span><div><button onClick={(event) => { event.stopPropagation(); void copyAyah(index); }} aria-label="Ayah kopieren"><Copy size={17} /></button><button onClick={(event) => { event.stopPropagation(); toggleBookmark(ayahNumber); }} className={saved ? 'is-saved' : ''} aria-label="Ayah speichern">{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button></div></header>
-                  <p dir="rtl" style={{ fontSize }}>{ayah.text}</p>
+                  <p dir="rtl" style={{ fontSize, fontFamily: arabicFont === 'system' ? 'system-ui, sans-serif' : undefined }}>{ayah.text}</p>
                   {showMeaning && german ? <blockquote><small>{bundle.source === 'offline' ? 'Sinngemäße deutsche Bedeutung' : `Deutsche Übersetzung · ${bundle.translationLabel}`}</small>{german}</blockquote> : null}
                   <footer><span>{bundle.meta.number}:{ayahNumber}</span><button onClick={(event) => { event.stopPropagation(); void shareAyah(index); }}><Share2 size={15} /> Teilen</button></footer>
                 </motion.article>
@@ -307,6 +332,52 @@ export function QuranReaderScreen({
           </button>
         </>
       )}
+
+      <AnimatePresence>
+        {settingsOpen ? (
+          <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeSettings(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <motion.section
+              {...settingsDialog.props}
+              className="reference-profile-modal reference-reader-settings-modal"
+              initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
+            >
+              <header>
+                <div><span className="overline">Lesen</span><h2>Leseeinstellungen</h2></div>
+                <button className="reference-modal-close" onClick={closeSettings} aria-label="Schließen"><X size={20} /></button>
+              </header>
+
+              <div className="reference-reader-setting">
+                <span><strong>Schriftgröße</strong><small>Gilt für den arabischen Text.</small></span>
+                <div className="reference-font-control">
+                  <button onClick={() => setFontSize((value) => Math.max(26, value - 2))} aria-label="Schrift verkleinern"><Minus size={16} /></button>
+                  <strong>{fontSize}</strong>
+                  <button onClick={() => setFontSize((value) => Math.min(48, value + 2))} aria-label="Schrift vergrößern"><Plus size={16} /></button>
+                </div>
+              </div>
+
+              <div className="reference-reader-setting">
+                <span><strong>Arabische Schrift</strong><small>Amiri ist mitgeliefert; die Systemschrift nutzt die Schrift deines Geräts.</small></span>
+                <div className="reference-choice-row">
+                  <button className={arabicFont === 'amiri' ? 'is-active' : ''} onClick={() => setArabicFont('amiri')} aria-pressed={arabicFont === 'amiri'}>Amiri</button>
+                  <button className={arabicFont === 'system' ? 'is-active' : ''} onClick={() => setArabicFont('system')} aria-pressed={arabicFont === 'system'}>System</button>
+                </div>
+              </div>
+
+              <div className="reference-reader-setting">
+                <span><strong>Deutsche Bedeutung</strong><small>Wird unter jedem Vers angezeigt.</small></span>
+                <div className="reference-choice-row">
+                  <button className={showMeaning ? 'is-active' : ''} onClick={() => setShowMeaning(true)} aria-pressed={showMeaning}>An</button>
+                  <button className={!showMeaning ? 'is-active' : ''} onClick={() => setShowMeaning(false)} aria-pressed={!showMeaning}>Aus</button>
+                </div>
+              </div>
+
+              <p className="reference-reader-settings-note">Die Einstellungen gelten für alle Suren und bleiben auf diesem Gerät gespeichert.</p>
+            </motion.section>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={toastTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>

@@ -81,7 +81,11 @@ for (const fragment of [
 for (const fragment of [
   'initialAyahNumber?: number',
   'quran-ayah-${surahNumber}-${targetAyah}',
-  "behavior: reduceMotion ? 'auto' : 'smooth', block: 'center'",
+  // Deep-linking to an Ayah still honours reduced motion; the ternary this used
+  // to pin lived in the scroll-to-settings helper, which a real settings dialog
+  // replaced.
+  "if (reduceMotion) target.scrollIntoView({ behavior: 'auto', block: 'center' });",
+  "else target.scrollIntoView({ behavior: 'smooth', block: 'center' });",
   'id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}',
 ]) {
   if (!reader.includes(fragment)) throw new Error(`Quran reader deep-linking is missing: ${fragment}`);

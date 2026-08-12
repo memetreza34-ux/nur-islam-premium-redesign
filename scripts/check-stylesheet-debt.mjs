@@ -34,11 +34,11 @@ const BUDGET = {
   // install-prompt scroll clearance, the quiz answer states, the Hadith
   // explanation card, the person and practice lists, the pilgrimage station
   // label, the worship guide's tabs and Arabic wording, and the assistant's
-  // content-hit list.
+  // content-hit list, and the reader's settings dialog.
   // Two of the added `!important` sit in files that already used it throughout
   // — matching that weight was the only way to change those rules without a
   // 34th override layer, which is the trade this budget exists to show.
-  totalBytes: 730_084,
+  totalBytes: 731_605,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

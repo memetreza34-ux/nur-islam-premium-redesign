@@ -266,7 +266,11 @@ forbidText(readingScreens, [
   'Ayah des Tages',
   'Tägliche Inspiration',
   'export function QuranReaderScreen',
+  // A toast pretending the settings opened. They are a real dialog now, so the
+  // claim must not come back — and neither may the message the button used to
+  // show while the surah was still loading, which said the feature did not exist.
   'Leseeinstellungen geöffnet',
+  'Leseeinstellungen sind noch nicht verfügbar',
   'Lerneinstellungen geöffnet',
 ], 'Focused Ayah and worship guide actions');
 
