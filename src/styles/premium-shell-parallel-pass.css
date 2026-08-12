@@ -22,7 +22,7 @@
 }
 
 .app-shell--detail .reference-screen-header .overline {
-  color: rgba(232, 199, 122, .75);
+  color: var(--gold-text);
 }
 
 /* Bottom navigation */

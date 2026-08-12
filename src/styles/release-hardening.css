@@ -421,6 +421,8 @@
 
 /* A real, intentionally restrained light appearance. */
 html[data-theme='light'] {
+  /* 5.6:1 on the light surface, where the ornament gold manages 1.55:1. */
+  --gold-text: #7a5a22;
   --bg-deep: #e8dfd0;
   --bg: #f0e8da;
   --surface: rgba(255, 250, 239, .88);

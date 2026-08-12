@@ -58,7 +58,7 @@ body {
 }
 
 .overline {
-  color: var(--gold-soft);
+  color: var(--gold-text);
   font-size: .62rem;
   letter-spacing: .145em;
 }

@@ -117,7 +117,7 @@ body {
 }
 
 .overline {
-  color: var(--premium-gold);
+  color: var(--gold-text);
   font-size: .59rem;
   letter-spacing: .14em;
 }

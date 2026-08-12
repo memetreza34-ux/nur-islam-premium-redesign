@@ -267,7 +267,7 @@
   min-height: 130px;
   border: 1px dashed rgba(232, 199, 122, .16);
   border-radius: 20px;
-  background: rgba(4, 28, 22, .52);
+  background: var(--surface);
 }
 
 .calendar-modal {

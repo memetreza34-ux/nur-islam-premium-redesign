@@ -113,8 +113,10 @@ Der Knopf öffnet jetzt einen echten Dialog statt zu Inline-Reglern zu scrollen:
 ### B3 — Fehlerfälle glätten · **erledigt (waren bereits da, jetzt bewiesen)**
 Alle Listen-Screens hatten schon einen Leerzustand. Statt sie nachzubauen, wurden sie in ihren Leerfall getrieben und der Nachweis dauerhaft gemacht: `e2e/empty-states.spec.ts` prüft Quran, Duas, 99 Namen, Sammlung, Moscheen offline, Notizen und Kalender — sieben Tests. Ein Screen, der künftig ins Leere rendert, fällt damit auf.
 
-### C1 — Design-Tokens · Größe: M
-Farben, Radien, Abstände, Schatten als einzige Quelle. Voraussetzung für alles Weitere im Design.
+### C1 — Design-Tokens · **teilweise erledigt: der Hell-Modus-Fehler ist behoben**
+Die reine Umstellung von Literalen auf Tokens ist blockiert: von 127 Rohwerten, die exakt Token-Werten entsprechen, werden **66 von den Prüfskripten wörtlich festgehalten**. Die Guards sind gegen Literale geschrieben — genau das hält das CSS in Literalform. Beides muss zusammen umgestellt werden, das gehört zu C2.
+
+Der messbare Schaden daraus ist aber behoben: `--gold` wird im Hell-Modus nicht umdefiniert, also stand goldener Text mit 1,55:1 auf Creme. Neues Token `--gold-text` (hell: 5,6:1), dazu eine hartkodierte dunkle Kartenfüllung auf `var(--surface)` umgestellt. `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs und lässt nichts unter 3:1 durch.
 
 ### C2 — Override-Ebenen auflösen · Größe: L
 33 Lock- und Parallel-Pass-Dateien schrittweise in die Dateien zurückführen, die die Regel definieren. Ziel: **unter 25 Stylesheets, unter 300 `!important`**. Nach jedem Schritt Vorher/Nachher-Screenshots aller Screens; `style-debt:check` verhindert das Zurückwachsen.
