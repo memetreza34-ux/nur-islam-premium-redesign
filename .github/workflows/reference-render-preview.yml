@@ -1,0 +1,123 @@
+name: Reference render preview
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - premium-design-finish
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'scripts/capture-reference-preview.mjs'
+      - 'scripts/capture-legacy-reference-preview.mjs'
+      - 'scripts/capture-light-reference-preview.mjs'
+      - 'scripts/capture-apple-reference-preview.mjs'
+      - 'scripts/capture-apple-compact-preview.mjs'
+      - '.github/workflows/reference-render-preview.yml'
+  pull_request:
+    branches:
+      - premium-home-redesign
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'vite.config.ts'
+      - 'scripts/capture-reference-preview.mjs'
+      - 'scripts/capture-legacy-reference-preview.mjs'
+      - 'scripts/capture-light-reference-preview.mjs'
+      - 'scripts/capture-apple-reference-preview.mjs'
+      - 'scripts/capture-apple-compact-preview.mjs'
+      - '.github/workflows/reference-render-preview.yml'
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reference-render-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  capture:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Setup Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install app dependencies
+        run: npm ci
+
+      - name: Install Chromium and WebKit for render QA
+        run: npx playwright install --with-deps chromium webkit
+
+      - name: Build production app for local render QA
+        env:
+          VITE_BASE_PATH: /
+        run: npm run build
+
+      - name: Start production preview
+        run: |
+          npm run preview -- --host 0.0.0.0 --port 4173 > /tmp/nur-preview.log 2>&1 &
+          echo $! > /tmp/nur-preview.pid
+
+      - name: Wait for preview
+        run: |
+          URL='http://127.0.0.1:4173/'
+          for attempt in {1..40}; do
+            if curl --fail --silent --show-error "$URL" > /dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/nur-preview.log
+          exit 1
+
+      - name: Capture core reference screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-reference-preview.mjs
+
+      - name: Capture legacy premium screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-legacy-reference-preview.mjs
+
+      - name: Capture light-theme premium screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-light-reference-preview.mjs
+
+      - name: Capture iPhone WebKit screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-apple-reference-preview.mjs
+
+      - name: Capture compact iPhone WebKit screens
+        env:
+          PREVIEW_URL: http://127.0.0.1:4173/
+        run: node scripts/capture-apple-compact-preview.mjs
+
+      - name: Upload reference screenshots
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: nur-islam-reference-preview-390x844
+          path: artifacts/reference-preview/*.png
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Show preview log on failure
+        if: failure()
+        run: cat /tmp/nur-preview.log || true

@@ -1,0 +1,74 @@
+.reference-quran-online-note {
+  border-color: rgba(96, 173, 138, .24);
+  background: linear-gradient(145deg, rgba(10, 58, 43, .74), rgba(4, 27, 21, .92));
+}
+
+.reference-quran-availability.is-online {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  border-color: rgba(100, 169, 203, .28);
+  color: #b9dbea;
+  background: rgba(61, 127, 158, .12);
+}
+
+.reference-reader-source-pill {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 5px;
+  margin-top: 8px;
+  padding: 5px 8px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 999px;
+  color: var(--gold-soft);
+  background: rgba(3, 24, 18, .68);
+  font-size: .45rem;
+  font-weight: 750;
+}
+
+.reference-reader-source-pill.is-network {
+  border-color: rgba(100, 169, 203, .3);
+  color: #c5e4f0;
+  background: rgba(61, 127, 158, .13);
+}
+
+.reference-reader-source-pill.is-cache {
+  border-color: rgba(126, 190, 142, .3);
+  color: #c7e7cf;
+  background: rgba(75, 143, 94, .13);
+}
+
+.reference-reader-unavailable__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.reference-reader-unavailable__actions button {
+  display: inline-flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 0 16px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 12px;
+  color: var(--cream-strong);
+  background: rgba(255, 255, 255, .04);
+  cursor: pointer;
+  font-size: .55rem;
+  font-weight: 800;
+}
+
+.reference-reader-unavailable__actions button:first-child {
+  border: 0;
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+@media (max-width: 370px) {
+  .reference-quran-availability.is-online {
+    display: none;
+  }}

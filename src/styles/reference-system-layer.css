@@ -1,0 +1,129 @@
+.reference-network-status {
+  position: fixed;
+  z-index: 135;
+  top: max(12px, env(safe-area-inset-top));
+  left: 50%;
+  display: flex;
+  width: min(calc(100% - 28px), 348px);
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid rgba(232, 199, 122, .26);
+  border-radius: 14px;
+  color: var(--cream-strong);
+  background: rgba(5, 24, 19, .94);
+  box-shadow: 0 16px 38px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .035);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: translateX(-50%);
+}
+
+.reference-network-status.is-offline {
+  border-color: rgba(232, 199, 122, .28);
+  color: var(--gold-bright);
+}
+
+.reference-network-status.is-online {
+  border-color: rgba(101, 210, 137, .24);
+  color: #9ee0b3;
+}
+
+.reference-network-status > span {
+  display: grid;
+  min-width: 0;
+  gap: 1px;
+}
+
+.reference-network-status strong {
+  color: var(--cream-strong);
+  font-size: .58rem;
+}
+
+.reference-network-status small {
+  overflow: hidden;
+  color: var(--muted-green);
+  font-size: .46rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-system-error {
+  position: relative;
+  display: grid;
+  min-height: 100svh;
+  overflow: hidden;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: max(24px, env(safe-area-inset-top)) 24px max(24px, env(safe-area-inset-bottom));
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 29%, rgba(36, 118, 87, .22), transparent 18rem),
+    linear-gradient(165deg, #0b2a21 0%, #041611 58%, #020a08 100%);
+}
+
+.reference-system-error__halo {
+  position: absolute;
+  top: 18%;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(232, 199, 122, .1);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(214, 175, 55, .1), transparent 68%);
+}
+
+.reference-system-error__logo,
+.reference-system-error__logo img,
+.reference-system-error__logo .premium-image__fallback,
+.reference-system-error__logo svg {
+  width: 94px;
+  height: 94px;
+}
+
+.reference-system-error__logo,
+.reference-system-error__icon,
+.reference-system-error h1,
+.reference-system-error p,
+.reference-system-error .overline,
+.reference-system-error .gold-button {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-system-error__icon {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  margin-top: 4px;
+  border: 1px solid rgba(232, 199, 122, .26);
+  border-radius: 15px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.reference-system-error h1,
+.reference-system-error p {
+  margin: 0;
+}
+
+.reference-system-error h1 {
+  max-width: 330px;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+  line-height: 1.02;
+}
+
+.reference-system-error p {
+  max-width: 310px;
+  color: var(--muted-green);
+  font-size: .62rem;
+  line-height: 1.58;
+}
+
+.reference-system-error .gold-button {
+  width: min(100%, 250px);
+  margin-top: 10px;
+}

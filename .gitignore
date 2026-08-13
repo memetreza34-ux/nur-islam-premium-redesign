@@ -1,0 +1,19 @@
+node_modules/
+dist/
+dist-ssr/
+
+# Real environment files carry project secrets; only .env.example belongs in git.
+.env
+.env.*
+!.env.example
+
+*.local
+*.log
+npm-debug.log*
+
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+.idea/
+playwright-report/
+test-results/

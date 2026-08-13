@@ -1,0 +1,136 @@
+.premium-home--v2 {
+  position: relative;
+  padding-top: 0;
+}
+
+.premium-home--v2 .brand-bar {
+  position: absolute;
+  z-index: 8;
+  top: 13px;
+  right: 13px;
+  left: 13px;
+  min-height: 40px;
+  padding: 0;
+  pointer-events: none;
+}
+
+.premium-home--v2 .brand-bar button {
+  pointer-events: auto;
+}
+
+.premium-home--v2 .brand-lockup > span:last-child {
+  display: none;
+}
+
+.premium-home--v2 .brand-lockup__mark,
+.premium-home--v2 .brand-lockup__mark > img,
+.premium-home--v2 .brand-lockup__mark > .premium-image__fallback,
+.premium-home--v2 .brand-lockup__mark svg {
+  width: 38px;
+  height: 38px;
+}
+
+.premium-home--v2 .brand-lockup {
+  display: grid;
+  width: 39px;
+  height: 39px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .25);
+  border-radius: 13px;
+  background: rgba(0, 27, 22, .72);
+  backdrop-filter: blur(15px);
+}
+
+.premium-home--v2 .brand-lockup__mark {
+  transform: scale(.72);
+}
+
+.premium-home--v2 .brand-bar__actions .icon-button {
+  border-color: rgba(226, 191, 119, .25);
+  background: rgba(0, 27, 22, .72);
+  backdrop-filter: blur(15px);
+}
+
+.premium-home--v2 .welcome-hero {
+  margin-top: 0;
+  min-height: 392px;
+}
+
+.premium-home--v2 .welcome-hero__copy {
+  padding-top: 82px;
+}
+
+.premium-home--v2 .welcome-hero__copy h1 {
+  max-width: 270px;
+  margin: 8px 0 0;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.05rem, 8.5vw, 2.7rem);
+  font-weight: 600;
+  line-height: .94;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.premium-home--v2 .welcome-hero__copy h1::after {
+  content: none;
+}
+
+.premium-home--v2 .prayer-hero--v2 .gold-button {
+  display: none;
+}
+
+.premium-home--v2 .prayer-hero--v2 .prayer-hero__content {
+  padding-bottom: 13px;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading .overline {
+  display: block;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2 {
+  font-size: 1.48rem;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2::after {
+  content: none;
+}
+
+.premium-home--v2 .content-section:has(.journey-grid) .text-button {
+  color: var(--muted-green);
+  font-size: .55rem;
+}
+
+.premium-home--v2 .journey-card {
+  min-height: 156px;
+}
+
+.premium-home--v2 .journey-card .premium-image {
+  height: 111px;
+}
+
+.premium-home--v2 .quick-grid--v2,
+.premium-home--v2 .continue-card--v2,
+.premium-home--v2 .inspiration-grid--v2,
+.premium-home--v2 .ai-preview,
+.premium-home--v2 .recommendations {
+  margin-top: 2px;
+}
+
+[data-theme='light'] .premium-home--v2 :is(.welcome-hero__date strong,.prayer-hero--v2 .hero-pill,.prayer-hero--v2 .hero-orb strong){color:#fff8ea}
+
+@media (max-width: 370px) {
+  .premium-home--v2 .welcome-hero {
+    min-height: 390px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy {
+    max-width: 82%;
+    padding-top: 76px;
+  }
+
+  .premium-home--v2 .welcome-hero__copy h1 {
+    max-width: 228px;
+    font-size: 2.05rem;
+  }}

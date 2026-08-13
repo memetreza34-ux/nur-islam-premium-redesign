@@ -1,0 +1,245 @@
+/* Short-viewport / landscape visual guardrail. */
+
+.reference-assistant-input {
+  bottom: auto;
+}
+
+@media (max-height: 680px) {
+  .reference-splash {
+    min-height: calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom))) !important;
+    padding-block: 24px !important;
+  }
+
+  .reference-splash__mark {
+    width: 74px !important;
+    height: 74px !important;
+  }
+
+  .reference-splash__mosque {
+    bottom: -54px !important;
+    width: 320px !important;
+    height: 232px !important;
+    opacity: .16 !important;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 248px !important;
+  }
+
+  .reference-onboarding__visual--1 > .premium-image {
+    width: 270px !important;
+    height: 204px !important;
+  }
+
+  .reference-onboarding__visual--2 > .premium-image {
+    width: 194px !important;
+    height: 194px !important;
+  }
+
+  .reference-onboarding__visual--3 > .premium-image {
+    width: 202px !important;
+    height: 170px !important;
+  }
+
+  .reference-onboarding__visual--3 .reference-onboarding__tasbih {
+    width: 104px !important;
+    height: 104px !important;
+  }
+
+  .reference-qibla-stage {
+    min-height: 405px !important;
+    padding-top: 22px !important;
+  }
+
+  .reference-qibla-stage__halo {
+    width: 278px !important;
+    height: 278px !important;
+  }
+
+  .reference-qibla-stage__compass {
+    width: 264px !important;
+    height: 264px !important;
+  }
+
+  .reference-qibla-stage__needle {
+    top: 50px !important;
+    height: 106px !important;
+  }
+
+  .reference-dhikr-counter {
+    min-height: 390px !important;
+    padding-top: 22px !important;
+  }
+
+  .reference-dhikr-counter__glow,
+  .reference-dhikr-counter__tasbih {
+    width: 230px !important;
+    height: 230px !important;
+  }
+
+  .reference-dhikr-ring {
+    width: 180px !important;
+    height: 180px !important;
+  }
+
+  .reference-dhikr-ring strong {
+    font-size: 3.4rem !important;
+  }
+
+  .reference-standby-stage {
+    min-height: 390px !important;
+  }
+}
+
+@media (orientation: landscape) and (max-height: 600px) {
+  .app-shell:not(.app-shell--onboarding) {
+    padding-top: max(8px, env(safe-area-inset-top)) !important;
+    padding-bottom: max(76px, calc(64px + env(safe-area-inset-bottom))) !important;
+  }
+
+  .app-shell--detail {
+    padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+  }
+
+  .screen {
+    gap: 11px !important;
+  }
+
+  .reference-screen-header {
+    min-height: 48px !important;
+    padding-block: 1px 4px !important;
+  }
+
+  .premium-home--v2 .welcome-hero {
+    min-height: 300px !important;
+  }
+
+  .premium-home--v2 .welcome-hero__copy {
+    padding-top: 68px !important;
+    padding-bottom: 92px !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual {
+    height: 230px !important;
+    width: 310px !important;
+  }
+
+  .reference-qibla-stage {
+    min-height: 350px !important;
+  }
+
+  .reference-qibla-stage__halo {
+    width: 236px !important;
+    height: 236px !important;
+  }
+
+  .reference-qibla-stage__compass {
+    width: 224px !important;
+    height: 224px !important;
+  }
+
+  .reference-qibla-stage__needle {
+    top: 44px !important;
+    height: 90px !important;
+  }
+
+  .reference-qibla-stage__copy {
+    margin-top: -2px !important;
+  }
+
+  .reference-dhikr-counter {
+    min-height: 345px !important;
+    gap: 8px !important;
+  }
+
+  .reference-dhikr-counter__glow,
+  .reference-dhikr-counter__tasbih {
+    top: 14px !important;
+    width: 205px !important;
+    height: 205px !important;
+  }
+
+  .reference-dhikr-ring {
+    width: 164px !important;
+    height: 164px !important;
+  }
+
+  .reference-dhikr-copy h2 {
+    font-size: 1.55rem !important;
+  }
+
+  .reference-dhikr-copy p {
+    font-size: 1.2rem !important;
+  }
+
+  .reference-standby-stage {
+    min-height: 340px !important;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 220px !important;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 1.8rem !important;
+  }
+}
+
+@media (max-height: 520px) {
+  .reference-splash__mosque {
+    opacity: .11 !important;
+  }
+
+  .reference-splash__brand .overline {
+    display: none;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 190px !important;
+  }
+
+  .reference-onboarding__points {
+    gap: 4px !important;
+  }
+
+  .reference-qibla-stage {
+    min-height: 320px !important;
+  }
+
+  .reference-qibla-stage__compass {
+    width: 200px !important;
+    height: 200px !important;
+  }
+
+  .reference-qibla-stage__halo {
+    width: 210px !important;
+    height: 210px !important;
+  }
+
+  .reference-dhikr-counter {
+    min-height: 315px !important;
+  }
+
+  .reference-dhikr-ring {
+    width: 150px !important;
+    height: 150px !important;
+  }
+
+  .reference-dhikr-ring strong {
+    font-size: 2.9rem !important;
+  }
+
+  .reference-standby-stage {
+    min-height: 310px !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-splash,
+  .reference-onboarding__visual,
+  .reference-qibla-stage,
+  .reference-dhikr-counter,
+  .reference-standby-stage {
+    transition: none !important;
+  }
+}

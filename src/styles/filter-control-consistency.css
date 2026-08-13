@@ -1,0 +1,139 @@
+.reference-input-search {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr) 20px;
+  min-height: 48px;
+  align-items: center;
+  gap: 9px;
+  padding: 0 13px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 15px;
+  color: var(--muted-green);
+  background: rgba(7, 36, 28, .86);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .025);
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 150ms ease;
+}
+
+.reference-input-search:focus-within {
+  border-color: rgba(232, 199, 122, .52);
+  background: rgba(9, 43, 33, .94);
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .07), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-input-search input {
+  width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  color: var(--cream-strong);
+  background: transparent;
+  font-size: var(--text-body-small, .62rem);
+  line-height: 1.35;
+}
+
+.reference-input-search input::placeholder {
+  overflow: hidden;
+  color: rgba(145, 168, 158, .76);
+  text-overflow: ellipsis;
+}
+
+.reference-input-search > svg {
+  flex: 0 0 auto;
+  color: var(--gold-soft);
+  stroke-width: var(--icon-stroke, 1.75);
+}
+
+.reference-filter-tabs {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  gap: 7px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 2px 5px;
+  scroll-padding-inline: 2px;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-inline: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-x;
+}
+
+.reference-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-filter-tabs button {
+  display: inline-flex;
+  flex: 0 0 auto !important;
+  min-width: max-content;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  scroll-snap-align: start;
+  padding: 0 13px;
+  border: 1px solid rgba(214, 175, 55, .17);
+  border-radius: 999px;
+  color: var(--cream-strong);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  font-size: var(--text-caption, .58rem);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
+}
+
+.reference-filter-tabs button.is-active {
+  border-color: rgba(232, 199, 122, .52);
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+  box-shadow: 0 7px 18px rgba(85, 56, 15, .18), inset 0 1px 0 rgba(255, 255, 255, .18);
+}
+
+.reference-filter-tabs button:focus-visible {
+  outline: 2px solid var(--focus-ring, rgba(244, 218, 160, .9));
+  outline-offset: 2px;
+}
+
+.reference-dua-results-label,
+.reference-quran-results {
+  min-height: 26px;
+  gap: 10px;
+}
+
+.reference-dua-results-label small,
+.reference-quran-results small {
+  text-align: right;
+}
+
+@media (hover: hover) {
+  .reference-filter-tabs button:not(.is-active):hover {
+    border-color: rgba(232, 199, 122, .36);
+    color: var(--cream-strong);
+    background: rgba(214, 175, 55, .06);
+  }}
+
+@media (hover: none) {
+  .reference-filter-tabs button:active {
+    transform: scale(.98);
+  }}
+
+@media (max-width: 370px) {
+  .reference-input-search {
+    grid-template-columns: 20px minmax(0, 1fr) 18px;
+    gap: 7px;
+    padding-inline: 11px;
+  }
+
+  .reference-filter-tabs button {
+    min-height: 42px;
+    padding-inline: 11px;
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-input-search,
+  .reference-filter-tabs button {
+    transition: none !important;
+  }}

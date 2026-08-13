@@ -1,0 +1,182 @@
+:root {
+  --compact-touch-target: 44px;
+}
+
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-assistant-input button,
+  .reference-install-prompt__close,
+  .reference-prayer-reminder-banner__close,
+  .reference-prayer-complete-replay,
+  .reference-modal-close,
+  .reference-learning-completion-modal__close,
+  .prayer-completion-modal__close,
+  .reference-prayer-settings-modal__close,
+  .reference-mosque-detail-modal__close,
+  .reference-profile-modal__close) {
+  width: var(--compact-touch-target) !important;
+  min-width: var(--compact-touch-target);
+  height: var(--compact-touch-target) !important;
+  min-height: var(--compact-touch-target);
+  padding: 0;
+  place-items: center;
+  flex: 0 0 auto;
+}
+
+/* Text/icon actions keep their natural width but always expose a 44px-tall hit area. */
+:where(
+  .reference-dua-card__top button,
+  .reference-dua-card footer button,
+  .selected-date-card button,
+  .reference-nearby-label button,
+  .reference-install-prompt__action,
+  .reference-prayer-reminder-banner__open
+) {
+  min-height: var(--compact-touch-target);
+  min-width: var(--compact-touch-target);
+  align-items: center;
+  justify-content: center;
+}
+
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-assistant-input button,
+  .reference-install-prompt__close,
+  .reference-prayer-reminder-banner__close
+) {
+  border-radius: 13px;
+}
+
+/* Parent columns must reserve the same width as the enlarged controls. */
+.reference-quran-list--catalog > article {
+  grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) !important;
+}
+
+.reference-name-list--complete > article {
+  grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important;
+}
+
+.calendar-month-nav {
+  grid-template-columns: var(--compact-touch-target) minmax(0, 1fr) var(--compact-touch-target) !important;
+}
+
+.calendar-entry-row {
+  grid-template-columns: var(--compact-touch-target) minmax(0, 1fr) var(--compact-touch-target) !important;
+}
+
+.reference-assistant-input {
+  grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important;
+}
+
+.reference-prayer-reminder-banner {
+  grid-template-columns: 44px minmax(0, 1fr) auto var(--compact-touch-target) !important;
+}
+
+/* Preserve the visual icon size while enlarging the actual hit area. */
+:where(
+  .reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-assistant-input button,
+  .reference-install-prompt__close,
+  .reference-prayer-reminder-banner__close
+) > svg {
+  width: 18px;
+  height: 18px;
+}
+
+@media (hover: hover) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .calendar-entry-row > button,
+    .favorite-button,
+    .reference-qibla-location button,
+    .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
+    .reference-prayer-reminder-banner__close,
+    .reference-prayer-reminder-banner__open,
+    .reference-dua-card__top button,
+    .reference-dua-card footer button,
+    .reference-nearby-label button
+  ):hover {
+    border-color: rgba(232, 199, 122, .4);
+    background: rgba(214, 175, 55, .08);
+  }}
+
+@media (hover: none) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .calendar-entry-row > button,
+    .favorite-button,
+    .reference-qibla-location button,
+    .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
+    .reference-prayer-reminder-banner__close,
+    .reference-prayer-reminder-banner__open,
+    .reference-dua-card__top button,
+    .reference-dua-card footer button,
+    .reference-nearby-label button
+  ):active {
+    transform: scale(.97);
+  }}
+
+@media (max-width: 370px) {
+  .reference-quran-list--catalog > article,
+  .reference-name-list--complete > article,
+  .calendar-month-nav,
+  .calendar-entry-row {
+    column-gap: 6px;
+  }
+
+  .reference-assistant-input {
+    gap: 5px;
+  }
+
+  .reference-prayer-reminder-banner {
+    gap: 7px !important;
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  :where(
+    .reference-quran-favorite,
+    .reference-name-state,
+    .reference-name-list--complete .reference-name-heart,
+    .calendar-month-nav > button,
+    .calendar-entry-row > button,
+    .favorite-button,
+    .reference-qibla-location button,
+    .reference-assistant-input button,
+    .reference-install-prompt__close,
+    .reference-install-prompt__action,
+    .reference-prayer-reminder-banner__close,
+    .reference-prayer-reminder-banner__open,
+    .reference-dua-card__top button,
+    .reference-dua-card footer button,
+    .reference-nearby-label button
+  ) {
+    transition: none !important;
+  }}

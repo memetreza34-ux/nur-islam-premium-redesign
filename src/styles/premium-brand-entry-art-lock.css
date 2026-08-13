@@ -1,0 +1,162 @@
+/* Entry and system branding visual lock. Presentation only. */
+
+.reference-splash {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-splash__mosque {
+  position: absolute !important;
+  z-index: 0;
+  right: -46px;
+  bottom: -8px;
+  width: 390px !important;
+  height: 292px !important;
+  opacity: .22 !important;
+  overflow: visible;
+}
+
+.reference-splash__mosque::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  right: 6%;
+  bottom: 8%;
+  width: 80%;
+  height: 68%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 191, 119, .18), rgba(13, 87, 67, .07) 48%, transparent 73%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+.reference-splash__mosque > img {
+  object-fit: contain !important;
+  object-position: right bottom !important;
+  filter: drop-shadow(0 28px 26px rgba(0,0,0,.48)) saturate(.88) contrast(1.04) !important;
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, #000 60%, rgba(0,0,0,.62) 80%, transparent 100%);
+  mask-image: linear-gradient(0deg, #000 0%, #000 60%, rgba(0,0,0,.62) 80%, transparent 100%);
+}
+
+.reference-splash__brand {
+  position: relative;
+  z-index: 3;
+}
+
+.reference-splash__mark {
+  position: relative;
+  width: 92px !important;
+  height: 92px !important;
+  overflow: visible;
+}
+
+.reference-splash__mark::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -18%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 215, 154, .22), rgba(226, 191, 119, .06) 48%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+
+.reference-splash__mark > img {
+  object-fit: contain !important;
+  filter: drop-shadow(0 19px 24px rgba(0,0,0,.44)) saturate(1.03) contrast(1.035) !important;
+}
+
+.reference-splash__brand h1 {
+  letter-spacing: -.045em;
+  text-shadow: 0 15px 38px rgba(0,0,0,.32), 0 0 22px rgba(226, 191, 119, .045) !important;
+}
+
+.reference-splash__loader {
+  position: relative;
+  z-index: 4;
+  overflow: hidden;
+  border-radius: 999px;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.25);
+}
+
+.reference-splash__loader span {
+  box-shadow: 0 0 10px rgba(242, 215, 154, .3);
+}
+
+/* Error state remains visually part of the same brand family. */
+.reference-system-error {
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-system-error__logo {
+  position: relative;
+  width: 88px !important;
+  height: 88px !important;
+  overflow: visible;
+}
+
+.reference-system-error__logo::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 191, 119, .17), transparent 70%);
+  filter: blur(9px);
+  pointer-events: none;
+}
+
+.reference-system-error__logo > img {
+  object-fit: contain !important;
+  filter: drop-shadow(0 18px 23px rgba(0,0,0,.42)) saturate(1.02) !important;
+}
+
+.reference-system-error__halo {
+  opacity: .72;
+}
+
+[data-theme='light'] .reference-splash__mosque > img,
+[data-theme='light'] .reference-system-error__logo > img {
+  filter: drop-shadow(0 17px 20px rgba(62,45,20,.2)) saturate(.94) contrast(1.02) !important;
+}
+
+@media (max-width: 390px) {
+  .reference-splash__mosque {
+    right: -74px;
+    width: 360px !important;
+    height: 274px !important;
+  }
+
+  .reference-splash__mark {
+    width: 84px !important;
+    height: 84px !important;
+  }}
+
+@media (max-width: 350px) {
+  .reference-splash__mosque {
+    right: -96px;
+    width: 330px !important;
+    height: 254px !important;
+    opacity: .19 !important;
+  }
+
+  .reference-splash__mark {
+    width: 78px !important;
+    height: 78px !important;
+  }}
+
+@media (prefers-reduced-motion: no-preference) {
+  .reference-splash__mark::before {
+    animation: nurSplashGlow 4.8s ease-in-out infinite alternate;
+  }}
+
+@keyframes nurSplashGlow {
+  from { opacity: .62; scale: .96; }
+  to { opacity: 1; scale: 1.04; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-splash__mark::before {
+    animation: none !important;
+  }}

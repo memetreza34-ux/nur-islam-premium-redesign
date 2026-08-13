@@ -1,0 +1,224 @@
+/* Viewport-safe modal system for short and narrow mobile screens. */
+.reference-modal-backdrop,
+.reference-prayer-settings-backdrop,
+.reference-learning-completion-backdrop,
+.reference-prayer-course-complete,
+.prayer-completion-backdrop {
+  z-index: 160 !important;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding:
+    max(12px, env(safe-area-inset-top))
+    12px
+    max(12px, env(safe-area-inset-bottom));
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reference-modal-backdrop::-webkit-scrollbar,
+.reference-prayer-settings-backdrop::-webkit-scrollbar,
+.reference-learning-completion-backdrop::-webkit-scrollbar,
+.reference-prayer-course-complete::-webkit-scrollbar,
+.prayer-completion-backdrop::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-modal-backdrop,
+.reference-prayer-settings-backdrop {
+  align-items: end !important;
+  justify-items: center;
+}
+
+.reference-learning-completion-backdrop,
+.reference-prayer-course-complete,
+.prayer-completion-backdrop {
+  align-items: center !important;
+  justify-items: center;
+}
+
+.reference-profile-modal,
+.reference-prayer-settings-modal,
+.reference-mosque-detail-modal,
+.reference-learning-completion-modal,
+.reference-prayer-course-complete > section,
+.prayer-completion-modal {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  width: min(100%, 430px);
+  max-height: calc(100dvh - max(24px, env(safe-area-inset-top)) - max(24px, env(safe-area-inset-bottom)));
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  margin: 0 auto !important;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(226, 191, 119, .25) transparent;
+  -webkit-overflow-scrolling: touch;
+}
+
+.reference-learning-completion-modal,
+.reference-prayer-course-complete > section,
+.prayer-completion-modal {
+  width: min(100%, 390px);
+}
+
+.reference-profile-modal::-webkit-scrollbar,
+.reference-prayer-settings-modal::-webkit-scrollbar,
+.reference-mosque-detail-modal::-webkit-scrollbar,
+.reference-learning-completion-modal::-webkit-scrollbar,
+.reference-prayer-course-complete > section::-webkit-scrollbar,
+.prayer-completion-modal::-webkit-scrollbar {
+  width: 4px;
+}
+
+.reference-profile-modal::-webkit-scrollbar-thumb,
+.reference-prayer-settings-modal::-webkit-scrollbar-thumb,
+.reference-mosque-detail-modal::-webkit-scrollbar-thumb,
+.reference-learning-completion-modal::-webkit-scrollbar-thumb,
+.reference-prayer-course-complete > section::-webkit-scrollbar-thumb,
+.prayer-completion-modal::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: rgba(226, 191, 119, .24);
+}
+
+.reference-modal-close,
+.reference-prayer-settings-modal__close,
+.reference-mosque-detail-modal__close,
+.reference-learning-completion-modal__close,
+.prayer-completion-modal__close {
+  position: sticky !important;
+  z-index: 12;
+  top: 0 !important;
+  right: auto !important;
+  display: grid;
+  width: 44px !important;
+  min-width: 44px;
+  height: 44px !important;
+  min-height: 44px;
+  place-items: center;
+  justify-self: end;
+  margin: 0 0 -44px auto;
+  padding: 0;
+  border-radius: 13px !important;
+  background: rgba(4, 25, 20, .92) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .28);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+.reference-profile-modal h2,
+.reference-prayer-settings-modal h2,
+.reference-mosque-detail-modal h2,
+.reference-learning-completion-modal h2,
+.reference-prayer-course-complete h2,
+.prayer-completion-modal h2 {
+  padding-right: 48px;
+  text-wrap: balance;
+}
+
+.reference-choice-grid,
+.reference-settings-toggles,
+.reference-prayer-settings-group > div,
+.reference-learning-completion-stats,
+.reference-learning-completion-actions,
+.prayer-completion-stats,
+.prayer-completion-actions,
+.reference-mosque-detail-actions {
+  min-width: 0;
+}
+
+.reference-choice,
+.reference-settings-toggles > button,
+.reference-prayer-settings-group button,
+.reference-learning-completion-actions button,
+.prayer-completion-actions > button,
+.reference-mosque-detail-actions button,
+.reference-mosque-detail-actions a {
+  min-height: 44px;
+}
+
+@media (max-width: 370px) {
+  .reference-profile-modal,
+  .reference-prayer-settings-modal,
+  .reference-mosque-detail-modal,
+  .reference-learning-completion-modal,
+  .reference-prayer-course-complete > section,
+  .prayer-completion-modal {
+    padding-right: 17px;
+    padding-left: 17px;
+  }
+
+  .reference-learning-completion-stats,
+  .prayer-completion-stats {
+    gap: 6px;
+  }}
+
+@media (max-width: 350px) {
+  .reference-learning-completion-actions,
+  .prayer-completion-actions,
+  .reference-mosque-detail-actions {
+    grid-template-columns: 1fr !important;
+  }}
+
+@media (max-height: 680px) {
+  .reference-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-learning-completion-backdrop,
+  .reference-prayer-course-complete,
+  .prayer-completion-backdrop {
+    align-items: start !important;
+    padding-top: max(8px, env(safe-area-inset-top));
+    padding-bottom: max(8px, env(safe-area-inset-bottom));
+  }
+
+  .reference-profile-modal,
+  .reference-prayer-settings-modal,
+  .reference-mosque-detail-modal,
+  .reference-learning-completion-modal,
+  .reference-prayer-course-complete > section,
+  .prayer-completion-modal {
+    max-height: calc(100dvh - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)));
+    gap: 7px;
+    padding-top: 17px;
+    padding-bottom: 16px;
+  }
+
+  .reference-learning-completion-burst {
+    width: 104px;
+    height: 88px;
+  }
+
+  .prayer-completion-burst {
+    width: 132px;
+    height: 132px;
+  }
+
+  .prayer-completion-burst::before {
+    width: 92px;
+    height: 92px;
+  }
+
+  .prayer-completion-burst::after {
+    width: 118px;
+    height: 118px;
+  }
+
+  .reference-profile-modal__icon,
+  .reference-prayer-settings-modal__icon,
+  .reference-mosque-detail-modal__pin {
+    width: 46px;
+    height: 46px;
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-profile-modal,
+  .reference-prayer-settings-modal,
+  .reference-mosque-detail-modal,
+  .reference-learning-completion-modal,
+  .reference-prayer-course-complete > section,
+  .prayer-completion-modal {
+    scroll-behavior: auto;
+  }}

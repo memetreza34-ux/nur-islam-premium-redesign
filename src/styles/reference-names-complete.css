@@ -1,0 +1,274 @@
+.reference-names-screen--complete {
+  gap: 14px;
+}
+
+.reference-name-progress {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(15, 53, 42, .9), rgba(4, 24, 19, .97));
+}
+
+.reference-name-progress__icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .28);
+  border-radius: 14px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .08);
+}
+
+.reference-name-progress > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-name-progress small,
+.reference-name-progress em {
+  color: var(--muted-green);
+  font-size: .5rem;
+  font-style: normal;
+}
+
+.reference-name-progress strong {
+  color: var(--cream-strong);
+  font-size: .72rem;
+}
+
+.reference-name-progress__bar {
+  grid-column: 1 / -1;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.reference-name-progress__bar span {
+  display: block;
+  height: 100%;
+  min-width: 0;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #c9953a, #efd394);
+  transition: width .35s ease;
+}
+
+.reference-name-filter-tabs button {
+  flex: 1 0 auto;
+}
+
+.reference-name-list--complete {
+  display: grid;
+}
+
+.reference-name-list--complete > article {
+  display: grid;
+  min-height: 73px;
+  grid-template-columns: minmax(0, 1fr) 38px 38px;
+  align-items: center;
+  border-bottom: 1px solid rgba(214, 175, 55, .09);
+}
+
+.reference-name-list--complete > article:last-child {
+  border-bottom: 0;
+}
+
+.reference-name-list__main {
+  display: grid;
+  min-width: 0;
+  min-height: 72px;
+  grid-template-columns: 30px 75px minmax(0, 1fr);
+  align-items: center;
+  gap: 9px;
+  padding: 9px 4px 9px 11px;
+  border: 0;
+  color: var(--cream-strong);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-name-list__number {
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(214, 175, 55, .17);
+  border-radius: 10px;
+  color: var(--gold-soft);
+  background: rgba(214, 175, 55, .05);
+  font-size: .48rem;
+}
+
+.reference-name-list__copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-name-list__copy strong,
+.reference-name-list__copy small {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  /* German compounds do not break on their own, so at 320px five meanings and
+     one name ended in an ellipsis rather than a word. The document is lang=de,
+     so the browser can hyphenate them instead of cutting them. */
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.reference-name-list__copy strong {
+  font-size: .67rem;
+}
+
+.reference-name-list__copy small {
+  color: var(--muted-green);
+  font-size: .49rem;
+}
+
+.reference-name-list--complete .reference-name-list__arabic {
+  font-size: 1.05rem;
+  text-align: right;
+}
+
+.reference-name-state,
+.reference-name-list--complete .reference-name-heart {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border: 0;
+  border-radius: 11px;
+  color: var(--muted-green);
+  background: transparent;
+  cursor: pointer;
+}
+
+.reference-name-state.is-active,
+.reference-name-list--complete .reference-name-heart.is-active {
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .08);
+}
+
+.reference-name-state.is-active {
+  color: #b9e2c4;
+  background: rgba(89, 161, 111, .11);
+}
+
+.reference-name-modal {
+  position: relative;
+  display: grid;
+  width: min(100%, 360px);
+  max-height: calc(100dvh - 34px);
+  overflow-y: auto;
+  gap: 10px;
+  padding: 24px;
+  border: 1px solid rgba(232, 199, 122, .35);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 76% 11%, rgba(214, 175, 55, .14), transparent 12rem),
+    linear-gradient(145deg, #103b2e, #041611 72%);
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .65);
+  text-align: center;
+}
+
+.reference-name-modal__arabic {
+  margin: 14px 0 0;
+  color: var(--gold-bright);
+  font-family: Amiri, serif;
+  font-size: 3rem;
+  line-height: 1.4;
+  text-shadow: 0 14px 24px rgba(0, 0, 0, .38);
+}
+
+.reference-name-modal h2,
+.reference-name-modal__meaning {
+  margin: 0;
+}
+
+.reference-name-modal h2 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.reference-name-modal__meaning {
+  color: var(--gold-soft);
+  font-size: .72rem;
+}
+
+.reference-name-modal__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 11px;
+  border: 1px solid rgba(214, 175, 55, .16);
+  border-radius: 13px;
+  color: var(--muted-green);
+  background: rgba(0, 0, 0, .12);
+  font-size: .5rem;
+  line-height: 1.55;
+  text-align: left;
+}
+
+.reference-name-modal__notice svg {
+  flex: 0 0 auto;
+  color: var(--gold-soft);
+}
+
+.reference-name-modal__actions {
+  display: grid;
+  grid-template-columns: .8fr 1.2fr;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.reference-name-modal__actions button {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 13px;
+  color: var(--gold-soft);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  font-size: .55rem;
+  font-weight: 700;
+}
+
+.reference-name-modal__actions button.is-active {
+  border-color: rgba(232, 199, 122, .48);
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+@media (max-width: 370px) {
+  /* The article columns and this padding used to be narrowed here too. Both
+     were dead: the 44px touch targets and the padding shorthand in
+     premium-depth-lock.css already win. What is left is the one measurement
+     that matters — at 320px the two 44px actions and a 65px Arabic column left
+     the meaning 72px, and two of the 99 names lost their ending even across
+     three lines. The Arabic still sets cleanly at 54px. */
+  .reference-name-list__main {
+    grid-template-columns: 27px 54px minmax(0, 1fr);
+    gap: 7px;
+  }
+
+  /* Only "Dhul-Jalali wal-Ikram" is long enough to need this, and it has a
+     space to break at. Everything shorter still sets on one line. */
+  .reference-name-list__copy strong {
+    white-space: normal;
+  }
+
+  .reference-name-modal__actions {
+    grid-template-columns: 1fr;
+  }}

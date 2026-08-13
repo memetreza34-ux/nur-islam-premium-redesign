@@ -1,0 +1,364 @@
+/* Foundation and original screen structure */
+@import './styles/base.css';
+@import './styles/home.css';
+@import './styles/prayer.css';
+@import './styles/prayer-list.css';
+@import './styles/calendar.css';
+@import './styles/learn.css';
+@import './styles/more.css';
+@import './styles/more-controls.css';
+@import './styles/navigation.css';
+@import './styles/premium-v2.css';
+
+/* Reference-driven visual system */
+@import './styles/reference-exact.css';
+@import './styles/reference-assets.css';
+@import './styles/reference-learning.css';
+@import './styles/reference-profile.css';
+@import './styles/reference-home-exact.css';
+@import './styles/reference-core-screens.css';
+@import './styles/reference-prayer-calendar.css';
+@import './styles/reference-discovery.css';
+@import './styles/reference-assistant.css';
+@import './styles/reference-reading.css';
+@import './styles/reference-interaction-fixes.css';
+@import './styles/reference-onboarding.css';
+@import './styles/reference-shell.css';
+@import './styles/reference-prayer-dynamic.css';
+@import './styles/reference-calendar-dynamic.css';
+@import './styles/reference-functional-polish.css';
+@import './styles/reference-content-integrity.css';
+@import './styles/reference-app-finish.css';
+@import './styles/reference-install-prompt.css';
+@import './styles/reference-system-layer.css';
+@import './styles/reference-sprite.css';
+@import './styles/reference-asset-recovery.css';
+@import './styles/reference-mobile-viewport.css';
+@import './styles/reference-valid-assets-v2.css';
+@import './styles/reference-valid-assets-secondary.css';
+@import './styles/reference-legacy-migration.css';
+@import './styles/reference-shared-prayer.css';
+
+/* Completed feature areas */
+@import './styles/reference-names-complete.css';
+@import './styles/reference-duas-complete.css';
+@import './styles/reference-quran-complete.css';
+@import './styles/reference-dhikr-complete.css';
+@import './styles/reference-prayer-learning-completion.css';
+@import './styles/reference-live-prayer-times.css';
+@import './styles/reference-learning-courses.css';
+@import './styles/reference-prayer-reminders.css';
+@import './styles/reference-quran-online.css';
+@import './styles/reference-mosque-live.css';
+@import './styles/reference-more-hub.css';
+
+/* Cross-screen interaction, overlay, readability and touch polish */
+@import './styles/visual-interaction-polish.css';
+@import './styles/overlay-safety.css';
+@import './styles/micro-ui-consistency.css';
+@import './styles/filter-control-consistency.css';
+@import './styles/touch-target-consistency.css';
+
+/* Final cross-screen guardrails: spacing, icons, imagery, accessibility, mobile layout */
+@import './styles/visual-consistency.css';
+@import './styles/release-hardening.css';
+@import './styles/premium-release-design.css';
+@import './styles/premium-core-screens.css';
+@import './styles/premium-entry-system.css';
+@import './styles/premium-visual-lock.css';
+@import './styles/premium-flow-lock.css';
+@import './styles/premium-depth-lock.css';
+@import './styles/functional-hardening.css';
+@import './styles/functional-legacy-overview.css';
+@import './styles/premium-design-parallel-pass.css';
+@import './styles/premium-core-parallel-pass.css';
+@import './styles/premium-shell-parallel-pass.css';
+@import './styles/premium-secondary-parallel-pass.css';
+@import './styles/premium-learning-reading-parallel-pass.css';
+@import './styles/premium-legacy-parallel-pass.css';
+@import './styles/premium-responsive-accessibility-pass.css';
+@import './styles/premium-state-parallel-pass.css';
+
+/* Final visual art direction: image fit, lighting, depth, effects and composition only. */
+@import './styles/premium-art-direction-lock.css';
+@import './styles/premium-visual-effects-lock.css';
+@import './styles/premium-art-composition-lock.css';
+@import './styles/premium-brand-entry-art-lock.css';
+@import './styles/premium-typography-icon-lock.css';
+@import './styles/premium-atmosphere-details-lock.css';
+@import './styles/premium-onboarding-art-lock.css';
+@import './styles/premium-daily-inspiration-art-lock.css';
+@import './styles/premium-quran-art-lock.css';
+@import './styles/premium-devotional-art-lock.css';
+@import './styles/premium-worship-art-lock.css';
+@import './styles/premium-discovery-collection-art-lock.css';
+@import './styles/premium-visual-runtime-lock.css';
+@import './styles/premium-profile-brand-lock.css';
+@import './styles/premium-learning-art-lock.css';
+@import './styles/premium-account-notes-assistant-lock.css';
+@import './styles/premium-mobile-modal-input-lock.css';
+@import './styles/premium-motion-performance-lock.css';
+@import './styles/premium-system-surfaces-lock.css';
+@import './styles/premium-short-viewport-lock.css';
+@import './styles/premium-keyboard-focus-lock.css';
+@import './styles/premium-readable-type-lock.css';
+@import './styles/premium-reference-geometry-lock.css';
+
+/* Small lock corrections that keep grid geometry while removing fake actions. */
+.reference-prayer-learning-actions > button > svg {
+  position: static;
+  justify-self: end;
+}
+
+.reference-reading-header-spacer {
+  display: block;
+  width: 44px;
+  height: 44px;
+}
+
+.brand-lockup,
+.reference-choice--static {
+  cursor: default;
+}
+
+/* Lucide React exposes semantic icon classes reliably; keep destructive note actions distinct. */
+.reference-note-editor__heading > button:has(.lucide-trash-2) {
+  border-color: rgba(215, 133, 106, .13) !important;
+  color: #e6ad96 !important;
+  background: rgba(130, 55, 36, .045) !important;
+}
+
+/* The empty collection is a real product state, not a developer placeholder. */
+.reference-collections-screen .reference-empty-result {
+  position: relative;
+  isolation: isolate;
+  min-height: 286px;
+  overflow: hidden;
+  padding: 132px 24px 28px;
+  border: 1px solid rgba(226, 191, 119, .16) !important;
+  border-style: solid !important;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(226, 191, 119, .1), transparent 9rem),
+    linear-gradient(145deg, rgba(7, 55, 43, .76), rgba(0, 18, 15, .94));
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .02);
+  text-align: center;
+}
+
+.reference-collections-screen .reference-empty-result::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -58px;
+  left: 50%;
+  width: 250px;
+  height: 250px;
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226, 191, 119, .09), rgba(13, 87, 67, .035) 48%, transparent 72%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.reference-collections-screen .reference-empty-result > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-collections-screen .reference-empty-result > svg {
+  position: absolute;
+  top: 49px;
+  left: 50%;
+  width: 52px;
+  height: 52px;
+  transform: translateX(-50%) rotate(-3deg);
+  color: #e2bf77;
+  fill: rgba(226, 191, 119, .045);
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, .36));
+}
+
+.reference-collections-screen .reference-empty-result strong {
+  color: #fff8ea;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.22rem;
+  font-weight: 600;
+}
+
+.reference-collections-screen .reference-empty-result small {
+  max-width: 265px;
+  color: rgba(145, 168, 158, .84);
+  font-size: .58rem;
+  line-height: 1.55;
+}
+
+[data-theme='light'] .reference-collections-screen .reference-empty-result {
+  border-color: rgba(117, 87, 37, .14) !important;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(167, 123, 45, .08), transparent 9rem),
+    linear-gradient(145deg, rgba(255, 253, 247, .99), rgba(241, 233, 215, .98));
+  box-shadow: 0 16px 34px rgba(61, 46, 23, .08), inset 0 1px 0 rgba(255, 255, 255, .82);
+}
+
+[data-theme='light'] .reference-collections-screen .reference-empty-result strong {
+  color: #17382c;
+}
+
+[data-theme='light'] .reference-collections-screen .reference-empty-result small {
+  color: rgba(58, 80, 67, .7);
+}
+
+/* The Home hero uses the correct mosque-gold artwork already; keep its premium
+   gold character visible in the real dark render instead of letting it sink
+   into the emerald background. */
+.premium-home--v2 .welcome-hero__visual {
+  opacity: 1 !important;
+}
+
+.premium-home--v2 .welcome-hero__visual::before {
+  background: radial-gradient(circle, rgba(242, 215, 154, .25), rgba(65, 155, 117, .09) 44%, transparent 72%) !important;
+}
+
+.premium-home--v2 .welcome-hero__visual > img {
+  filter:
+    drop-shadow(0 28px 25px rgba(0, 0, 0, .48))
+    brightness(1.12)
+    saturate(1.08)
+    contrast(1.055) !important;
+}
+
+/* The final onboarding slide can exceed a phone viewport once permission
+   choices are shown. Keep footer actions in normal document flow so they never
+   cover a permission card; the onboarding shell already owns vertical scroll. */
+.app-shell--onboarding {
+  overflow-y: auto !important;
+}
+
+.reference-onboarding:has(.reference-onboarding__permissions) {
+  min-height: auto !important;
+  align-content: start !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.reference-onboarding__slide:has(.reference-onboarding__permissions) {
+  padding-bottom: 8px !important;
+}
+
+.reference-onboarding__footer {
+  position: static !important;
+  inset: auto !important;
+  transform: none !important;
+  flex: none !important;
+  width: 100% !important;
+  margin-top: 4px !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Final focal mosque treatment. The source asset intentionally contains a lot
+   of transparent breathing room; these compositions scale the actual
+   architecture, not the card geometry, so the approved artwork reads clearly
+   in the real 390x844 render. */
+.reference-splash__mosque {
+  right: -22px !important;
+  bottom: 8px !important;
+  width: 338px !important;
+  height: 258px !important;
+  opacity: .42 !important;
+}
+
+.reference-splash__mosque > img {
+  transform: translate(24px, -2px) scale(1.38) !important;
+  transform-origin: right bottom !important;
+  filter:
+    drop-shadow(0 30px 28px rgba(0, 0, 0, .5))
+    brightness(1.2)
+    saturate(1.15)
+    contrast(1.07) !important;
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, #000 72%, rgba(0,0,0,.82) 90%, transparent 100%) !important;
+  mask-image: linear-gradient(0deg, #000 0%, #000 72%, rgba(0,0,0,.82) 90%, transparent 100%) !important;
+}
+
+.reference-mosque-hero > .premium-image {
+  right: -6px !important;
+  bottom: 0 !important;
+  width: 210px !important;
+  height: 232px !important;
+  opacity: .72 !important;
+  overflow: visible !important;
+}
+
+.reference-mosque-hero > .premium-image > img {
+  transform: translate(24px, -12px) scale(1.82) !important;
+  transform-origin: right bottom !important;
+  filter:
+    drop-shadow(0 28px 25px rgba(0, 0, 0, .5))
+    brightness(1.18)
+    saturate(1.12)
+    contrast(1.06) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.42) 25%, #000 54%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.42) 25%, #000 54%, #000 100%);
+}
+
+/* Home uses the same approved mosque source but a calmer, larger atmospheric
+   composition. It sits on the free right side of the 42px hero, behind the
+   copy/date hierarchy, and fades before it can reduce text contrast. */
+.premium-home--v2 .welcome-hero__visual {
+  position: absolute !important;
+  z-index: 1 !important;
+  right: -8px !important;
+  bottom: 74px !important;
+  width: 242px !important;
+  height: 286px !important;
+  opacity: .5 !important;
+  overflow: visible !important;
+}
+
+.premium-home--v2 .welcome-hero__visual > img {
+  transform: translate(30px, 4px) scale(1.72) !important;
+  transform-origin: right bottom !important;
+  filter:
+    drop-shadow(0 34px 30px rgba(0, 0, 0, .5))
+    brightness(1.14)
+    saturate(1.1)
+    contrast(1.06) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
+}
+
+.premium-home--v2 .welcome-hero__copy,
+.premium-home--v2 .welcome-hero__date {
+  position: relative;
+  z-index: 3 !important;
+}
+
+@media (max-width: 350px) {
+  .reference-splash__mosque {
+    right: -36px !important;
+    width: 310px !important;
+    height: 238px !important;
+    opacity: .36 !important;
+  }
+
+  .reference-mosque-hero > .premium-image {
+    right: -14px !important;
+    width: 184px !important;
+    height: 220px !important;
+    opacity: .64 !important;
+  }
+
+  .reference-mosque-hero > .premium-image > img {
+    transform: translate(22px, -8px) scale(1.7) !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual {
+    right: -20px !important;
+    bottom: 70px !important;
+    width: 214px !important;
+    height: 264px !important;
+    opacity: .43 !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual > img {
+    transform: translate(28px, 4px) scale(1.62) !important;
+  }
+}

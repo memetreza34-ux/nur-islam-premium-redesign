@@ -1,0 +1,37 @@
+.reference-dhikr-category-grid button.is-active {
+  border-color: rgba(232, 199, 122, .48);
+  background:
+    radial-gradient(circle at 50% 0%, rgba(214, 175, 55, .11), transparent 7rem),
+    linear-gradient(145deg, rgba(18, 65, 50, .96), rgba(5, 29, 23, .99));
+  box-shadow: 0 12px 24px rgba(0, 0, 0, .18), inset 0 0 0 1px rgba(232, 199, 122, .05);
+}
+
+.reference-dhikr-category-grid button.is-active > span {
+  color: #10251e;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-dhikr-category-grid button.is-active strong {
+  color: var(--gold-bright);
+}
+
+.reference-qibla-stage__needle {
+  transition: transform .65s cubic-bezier(.22, 1, .36, 1);
+}
+
+.reference-qibla-location > button {
+  transition: border-color .2s ease, background .2s ease, transform .2s ease;
+}
+
+.reference-qibla-location > button.is-loading {
+  border-color: rgba(232, 199, 122, .5);
+  background: rgba(214, 175, 55, .1);
+}
+
+.reference-qibla-location > button.is-loading svg {
+  animation: reference-location-spin 1s linear infinite;
+}
+
+@keyframes reference-location-spin {
+  to { transform: rotate(360deg); }
+}

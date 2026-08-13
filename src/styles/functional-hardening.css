@@ -1,0 +1,506 @@
+/* Functional hardening layer: visible controls in this file correspond to real actions. */
+
+/* Quran reader: only real controls remain. */
+.reference-reader-controls {
+  grid-template-columns: minmax(0, 1fr) auto !important;
+  align-items: stretch;
+}
+
+.reference-reader-controls > button {
+  min-height: 48px;
+}
+
+.reference-reader-controls > button.is-active {
+  border-color: rgba(232, 199, 122, .32) !important;
+  color: var(--premium-gold-bright, #f6dfac) !important;
+  background: linear-gradient(145deg, rgba(229, 190, 106, .1), rgba(8, 47, 36, .9)) !important;
+}
+
+.reference-reader-verse {
+  scroll-margin-top: 88px;
+}
+
+.reference-reader-verse.is-active {
+  outline: 1px solid rgba(246, 223, 172, .2);
+  outline-offset: 2px;
+}
+
+/* Prayer reminder controls represent only obligatory prayers. */
+.prayer-alert--disabled {
+  display: block;
+  width: 34px;
+  height: 34px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  opacity: .22;
+}
+
+/* Local sourced assistant. */
+.reference-chat-message > div {
+  display: grid;
+  min-width: 0;
+  gap: 8px;
+}
+
+.reference-chat-message__source {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: fit-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid rgba(232, 199, 122, .14);
+  border-radius: 999px;
+  color: rgba(235, 211, 156, .86);
+  background: rgba(232, 199, 122, .045);
+  font-size: .49rem;
+  line-height: 1.3;
+}
+
+.reference-chat-message__source svg {
+  flex: 0 0 auto;
+}
+
+.reference-assistant-input button[type='submit']:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+  transform: none !important;
+}
+
+/* Dhikr statistics: the header chart control opens a real daily summary. */
+.reference-dhikr-stats-modal {
+  position: relative;
+  display: grid;
+  width: min(100%, 420px);
+  max-height: min(82vh, 720px);
+  gap: 14px;
+  overflow: auto;
+  padding: 25px 20px 20px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 27px;
+  background:
+    radial-gradient(circle at 88% 5%, rgba(232, 199, 122, .11), transparent 10rem),
+    linear-gradient(155deg, rgba(8, 48, 37, .99), rgba(3, 24, 18, .99));
+  box-shadow: 0 28px 80px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-dhikr-stats-modal__icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 16px;
+  color: var(--premium-gold-bright, #f6dfac);
+  background: rgba(232, 199, 122, .07);
+}
+
+.reference-dhikr-stats-modal h2 {
+  margin: -5px 0 0;
+  color: var(--premium-cream, #fff7e8);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+
+.reference-dhikr-stats-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-dhikr-stats-summary > span {
+  display: grid;
+  min-width: 0;
+  gap: 4px;
+  padding: 12px 10px;
+  border: 1px solid rgba(232, 199, 122, .14);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.reference-dhikr-stats-summary strong {
+  overflow-wrap: anywhere;
+  color: var(--premium-gold-bright, #f6dfac);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.reference-dhikr-stats-summary small,
+.reference-dhikr-stats-note,
+.reference-dhikr-stats-list small {
+  color: rgba(157, 184, 171, .84);
+  font-size: .49rem;
+  line-height: 1.4;
+}
+
+.reference-dhikr-stats-list {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-dhikr-stats-list article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 92px auto;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 12px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, .018);
+}
+
+.reference-dhikr-stats-list article > span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.reference-dhikr-stats-list article strong {
+  color: var(--premium-cream, #fff7e8);
+  font-size: .62rem;
+}
+
+.reference-dhikr-stats-list article > div {
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .065);
+}
+
+.reference-dhikr-stats-list article > div i {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #b88634, #f4dda8);
+}
+
+.reference-dhikr-stats-list em {
+  min-width: 34px;
+  color: rgba(232, 199, 122, .9);
+  font-size: .52rem;
+  font-style: normal;
+  text-align: right;
+}
+
+/* Fasting reminder now uses the calendar reminder engine. */
+.reference-fasting-reminder-settings {
+  display: grid;
+  gap: 9px;
+  padding: 13px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .055), transparent 8rem),
+    linear-gradient(145deg, rgba(9, 48, 37, .9), rgba(3, 22, 17, .98));
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .02);
+}
+
+.reference-fasting-reminder-settings > label {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 11px;
+  border: 1px solid rgba(232, 199, 122, .12);
+  border-radius: 14px;
+  color: var(--premium-cream, #fff7e8);
+  background: rgba(255, 255, 255, .023);
+  font-size: .56rem;
+  font-weight: 750;
+}
+
+.reference-fasting-reminder-settings > label > span {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.reference-fasting-reminder-settings > label svg {
+  color: var(--premium-gold, #e6c57f);
+}
+
+.reference-fasting-reminder-settings input[type='time'] {
+  min-width: 96px;
+  min-height: 40px;
+  padding: 0 9px;
+  border: 1px solid rgba(232, 199, 122, .18);
+  border-radius: 12px;
+  outline: 0;
+  color: var(--premium-cream, #fff7e8);
+  color-scheme: dark;
+  background: rgba(1, 15, 12, .72);
+  font: inherit;
+  font-weight: 700;
+}
+
+.reference-fasting-reminder-settings input[type='time']:focus {
+  border-color: rgba(232, 199, 122, .52);
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .065);
+}
+
+.reference-fasting-reminder-settings .reference-legacy-toggle {
+  border-color: rgba(232, 199, 122, .14);
+  background: rgba(255, 255, 255, .018);
+  box-shadow: none;
+}
+
+.reference-fasting-reminder-status {
+  padding: 3px 5px 1px;
+  color: rgba(157, 184, 171, .88);
+  font-size: .5rem;
+  line-height: 1.45;
+}
+
+/* Zakat planning calculator: transparent calculation, no legal/religious verdict. */
+.reference-zakat-calculator {
+  display: grid;
+  gap: 13px;
+  padding: 19px;
+  border: 1px solid rgba(232, 199, 122, .2);
+  border-radius: 25px;
+  background:
+    radial-gradient(circle at 86% 8%, rgba(232, 199, 122, .11), transparent 11rem),
+    linear-gradient(150deg, #0b4434, #05271e 58%, #02130f);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, .28), inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+.reference-zakat-calculator h2,
+.reference-zakat-calculator p {
+  margin: 0;
+}
+
+.reference-zakat-calculator h2 {
+  color: var(--premium-cream, #fff7e8);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -.025em;
+}
+
+.reference-zakat-calculator > p {
+  color: rgba(158, 182, 170, .88);
+  font-size: .58rem;
+  line-height: 1.58;
+}
+
+.reference-zakat-calculator > label {
+  display: grid;
+  gap: 6px;
+  color: var(--premium-gold, #e6c57f);
+  font-size: .52rem;
+  font-weight: 800;
+}
+
+.reference-zakat-calculator input {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 13px;
+  border: 1px solid rgba(232, 199, 122, .16);
+  border-radius: 14px;
+  outline: 0;
+  color: var(--premium-cream, #fff7e8);
+  background: rgba(255, 255, 255, .025);
+  font: inherit;
+  font-size: .7rem;
+}
+
+.reference-zakat-calculator input:focus {
+  border-color: rgba(232, 199, 122, .5);
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .065);
+}
+
+.reference-zakat-result {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 3px;
+}
+
+.reference-zakat-result > span {
+  display: grid;
+  gap: 4px;
+  padding: 13px;
+  border: 1px solid rgba(232, 199, 122, .15);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, .025);
+}
+
+.reference-zakat-result small {
+  color: rgba(157, 180, 169, .82);
+  font-size: .48rem;
+}
+
+.reference-zakat-result strong {
+  overflow-wrap: anywhere;
+  color: var(--premium-gold-bright, #f6dfac);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+}
+
+/* Standby is now an actual live next-prayer view. */
+.reference-standby-screen {
+  min-height: 100svh;
+}
+
+.reference-standby-stage {
+  position: relative;
+  display: grid;
+  min-height: 430px;
+  align-content: center;
+  justify-items: center;
+  gap: 9px;
+  overflow: hidden;
+  padding: 30px 20px;
+  border: 1px solid rgba(232, 199, 122, .24);
+  border-radius: 30px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 50% 33%, rgba(234, 199, 119, .14), transparent 13rem),
+    radial-gradient(circle at 50% 80%, rgba(38, 128, 91, .15), transparent 17rem),
+    linear-gradient(165deg, #0a4233, #04231b 58%, #010b08);
+  box-shadow: 0 28px 76px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-standby-stage::before {
+  content: '';
+  position: absolute;
+  width: 260px;
+  height: 260px;
+  border: 1px solid rgba(232, 199, 122, .08);
+  border-radius: 50%;
+  box-shadow: 0 0 0 44px rgba(232, 199, 122, .018), 0 0 0 92px rgba(232, 199, 122, .01);
+}
+
+.reference-standby-stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-standby-arabic {
+  margin: 10px 0 0;
+  color: var(--premium-gold-bright, #f6dfac);
+  font-family: Amiri, serif;
+  font-size: 1.65rem;
+}
+
+.reference-standby-stage h2 {
+  margin: 0;
+  color: var(--premium-cream, #fff7e8);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3.55rem;
+  font-weight: 600;
+  line-height: .9;
+  letter-spacing: -.035em;
+}
+
+.reference-standby-stage > strong {
+  margin-top: 4px;
+  color: var(--premium-gold-bright, #f6dfac);
+  font-size: 2.05rem;
+  font-weight: 650;
+  letter-spacing: -.03em;
+}
+
+.reference-standby-countdown {
+  margin-bottom: 12px;
+  color: rgba(190, 210, 200, .88);
+  font-size: .66rem;
+}
+
+.reference-standby-stage .gold-button {
+  min-height: 46px;
+}
+
+/* Home values are now real data; give changing labels enough room. */
+.premium-home--v2 .journey-card em,
+.premium-home--v2 .journey-card strong,
+.continue-card--v2 h3,
+.continue-card--v2 p {
+  overflow-wrap: anywhere;
+}
+
+/* Light mode for the newly functional controls. */
+[data-theme='light'] .reference-fasting-reminder-settings,
+[data-theme='light'] .reference-zakat-calculator,
+[data-theme='light'] .reference-standby-stage,
+[data-theme='light'] .reference-dhikr-stats-modal {
+  border-color: rgba(96, 74, 31, .16);
+  background: linear-gradient(145deg, rgba(255, 251, 241, .98), rgba(239, 232, 214, .98));
+  box-shadow: 0 16px 42px rgba(44, 38, 27, .1);
+}
+
+[data-theme='light'] .reference-zakat-calculator h2,
+[data-theme='light'] .reference-zakat-calculator input,
+[data-theme='light'] .reference-standby-stage h2,
+[data-theme='light'] .reference-fasting-reminder-settings > label,
+[data-theme='light'] .reference-dhikr-stats-modal h2,
+[data-theme='light'] .reference-dhikr-stats-list article strong {
+  color: #20372e;
+}
+
+[data-theme='light'] .reference-zakat-calculator input,
+[data-theme='light'] .reference-fasting-reminder-settings input[type='time'] {
+  color-scheme: light;
+  color: #20372e;
+  background: rgba(255, 255, 255, .7);
+}
+
+[data-theme='light'] .reference-standby-countdown,
+[data-theme='light'] .reference-zakat-calculator > p,
+[data-theme='light'] .reference-fasting-reminder-status,
+[data-theme='light'] .reference-dhikr-stats-summary small,
+[data-theme='light'] .reference-dhikr-stats-note,
+[data-theme='light'] .reference-dhikr-stats-list small {
+  color: #5f7168;
+}
+
+@media (max-width: 370px) {
+  .reference-zakat-calculator {
+    padding: 16px;
+    border-radius: 22px;
+  }
+
+  .reference-zakat-result {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-standby-stage {
+    min-height: 390px;
+    border-radius: 25px;
+  }
+
+  .reference-standby-stage h2 {
+    font-size: 3rem;
+  }
+
+  .reference-fasting-reminder-settings > label {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-fasting-reminder-settings input[type='time'] {
+    width: 100%;
+  }
+
+  .reference-dhikr-stats-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .reference-dhikr-stats-list article {
+    grid-template-columns: minmax(0, 1fr) 72px auto;
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-reader-controls *,
+  .reference-fasting-reminder-settings *,
+  .reference-zakat-calculator *,
+  .reference-standby-stage *,
+  .reference-dhikr-stats-modal * {
+    transition: none !important;
+    animation: none !important;
+  }}

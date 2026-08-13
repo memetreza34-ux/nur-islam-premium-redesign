@@ -1,0 +1,78 @@
+.reference-daily-card-button,
+.reference-quran-verse--button {
+  width: 100%;
+  border: inherit;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  text-align: inherit;
+}
+
+.reference-daily-card-button {
+  appearance: none;
+}
+
+.reference-daily-card-button .card-title-row > span:last-child {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border-radius: 10px;
+}
+
+.reference-quran-verse--button {
+  display: grid;
+  justify-items: stretch;
+  padding: 18px;
+}
+
+.reference-quran-verse--button > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-quran-verse__action {
+  display: flex;
+  width: fit-content;
+  align-items: center;
+  gap: 7px;
+  margin-top: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba(226, 191, 119, .22);
+  border-radius: 11px;
+  color: var(--gold-soft);
+  font-size: .52rem;
+  background: rgba(214, 175, 55, .055);
+}
+
+.reference-reader-controls button,
+.reference-guide-tabs button,
+.reference-guide-steps button,
+.reference-detail-actions button,
+.reference-ayah-hero button,
+.reference-reader-next,
+.reference-quran-verse--button,
+.reference-daily-card-button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reference-reader-controls button:focus-visible,
+.reference-guide-tabs button:focus-visible,
+.reference-guide-steps button:focus-visible,
+.reference-detail-actions button:focus-visible,
+.reference-ayah-hero button:focus-visible,
+.reference-reader-next:focus-visible,
+.reference-quran-verse--button:focus-visible,
+.reference-daily-card-button:focus-visible {
+  outline: 2px solid rgba(232, 199, 122, .7);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .reference-guide-steps > button:hover,
+  .reference-reader-next:hover,
+  .reference-daily-card-button:hover,
+  .reference-quran-verse--button:hover {
+    border-color: rgba(232, 199, 122, .42);
+    transform: translateY(-1px);
+  }}

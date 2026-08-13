@@ -1,0 +1,35 @@
+.screen-transition-frame {
+  width: 100%;
+}
+
+.app-shell--detail {
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+}
+
+.app-shell--onboarding {
+  width: min(100%, 430px);
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
+}
+
+.app-shell--onboarding .reference-onboarding {
+  width: 100%;
+}
+
+.app-shell--detail .reference-screen-header {
+  position: sticky;
+  z-index: 30;
+  top: max(7px, env(safe-area-inset-top));
+  margin: -2px -2px 2px;
+  padding: 7px 3px;
+  border: 1px solid rgba(226, 191, 119, .14);
+  border-radius: 18px;
+  background: rgba(0, 27, 22, .9);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+@media (min-width: 760px) {
+  .app-shell--onboarding {
+    width: min(100%, 452px);
+  }}

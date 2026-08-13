@@ -1,0 +1,213 @@
+/* Daily inspiration artwork integration. Presentation only. */
+
+.reference-ayah-hero,
+.reference-hadith-hero,
+.verse-card--cream,
+.hadith-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-ayah-hero {
+  height: 410px;
+  min-height: 0;
+  aspect-ratio: auto;
+  align-content: start;
+  gap: 10px;
+  padding: 24px 22px 22px;
+}
+
+.reference-ayah-hero__art {
+  z-index: 0 !important;
+  opacity: .07 !important;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
+  mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
+}
+
+.reference-ayah-hero__art > img {
+  object-position: center 45% !important;
+  filter: saturate(.62) contrast(1.04) !important;
+  transform: scale(.96);
+}
+
+.reference-ayah-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,.32), transparent 10rem),
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 44%, rgba(91,64,27,.08));
+  pointer-events: none;
+}
+
+.reference-ayah-hero > *:not(.reference-ayah-hero__art) {
+  position: relative;
+  z-index: 2 !important;
+}
+
+.reference-ayah-hero > p[dir='rtl'] {
+  margin: 18px 0 4px;
+  font-size: 2.22rem;
+  line-height: 1.55;
+  text-shadow: 0 5px 18px rgba(94,67,29,.08);
+}
+
+.reference-ayah-hero blockquote {
+  max-width: 304px;
+  font-size: 1.04rem;
+  line-height: 1.42;
+}
+
+.reference-ayah-hero > div {
+  margin-top: 10px;
+}
+
+.hadith-card::after,
+.reference-hadith-hero::after {
+  z-index: 0 !important;
+  right: -16px !important;
+  bottom: -22px !important;
+  width: 148px !important;
+  height: 174px !important;
+  opacity: .19 !important;
+  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
+}
+
+.hadith-card::before,
+.reference-hadith-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -58px;
+  bottom: -62px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(226,191,119,.13), transparent 70%);
+  filter: blur(8px);
+  pointer-events: none;
+}
+
+.hadith-card > *,
+.reference-hadith-hero > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-hadith-hero__mark {
+  box-shadow:
+    0 13px 28px rgba(0,0,0,.2),
+    inset 0 1px 0 rgba(255,255,255,.04),
+    0 0 24px rgba(226,191,119,.055);
+}
+
+.verse-card--cream .verse-card__art {
+  opacity: .11 !important;
+  mix-blend-mode: multiply;
+}
+
+.verse-card--cream .verse-card__art > img {
+  object-position: center 46% !important;
+  transform: scale(1.04);
+}
+
+.hadith-card,
+.reference-hadith-hero {
+  background:
+    radial-gradient(circle at 100% 100%, rgba(226,191,119,.13), transparent 8rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
+}
+
+.hadith-card blockquote,
+.reference-hadith-hero blockquote {
+  color: rgba(255,248,234,.91) !important;
+  text-shadow: 0 3px 18px rgba(0,0,0,.34);
+}
+
+.hadith-card .overline,
+.reference-hadith-hero .overline {
+  color: rgba(145,168,158,.8) !important;
+}
+
+.hadith-card footer,
+.reference-hadith-hero footer {
+  color: rgba(226,191,119,.8) !important;
+}
+
+[data-theme='light'] .reference-ayah-hero__art,
+[data-theme='light'] .verse-card--cream .verse-card__art {
+  opacity: .055 !important;
+}
+
+[data-theme='light'] .hadith-card,
+[data-theme='light'] .reference-hadith-hero {
+  color: #17382c;
+  background:
+    radial-gradient(circle at 100% 100%, rgba(151,111,43,.05), transparent 8rem),
+    linear-gradient(145deg, #fffdf7, #eee5d0) !important;
+}
+
+[data-theme='light'] .hadith-card blockquote,
+[data-theme='light'] .reference-hadith-hero blockquote {
+  color: rgba(23,56,44,.86) !important;
+  text-shadow: none;
+}
+
+[data-theme='light'] .hadith-card .overline,
+[data-theme='light'] .reference-hadith-hero .overline {
+  color: rgba(58,80,67,.72) !important;
+}
+
+[data-theme='light'] .hadith-card footer,
+[data-theme='light'] .reference-hadith-hero footer {
+  color: #8d6d39 !important;
+}
+
+[data-theme='light'] .hadith-card::after,
+[data-theme='light'] .reference-hadith-hero::after {
+  opacity: .17 !important;
+  filter: drop-shadow(0 14px 16px rgba(62,45,20,.17)) saturate(.86) !important;
+}
+
+@media (max-width: 390px) {
+  .reference-ayah-hero {
+    height: 392px;
+    padding: 22px 18px 20px;
+  }
+
+  .reference-ayah-hero > p[dir='rtl'] {
+    margin-top: 14px;
+    font-size: 2.05rem;
+  }
+
+  .reference-hadith-hero::after {
+    right: -28px !important;
+    width: 136px !important;
+    height: 164px !important;
+    opacity: .18 !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-ayah-hero {
+    height: 376px;
+    gap: 8px;
+  }
+
+  .reference-ayah-hero > p[dir='rtl'] {
+    font-size: 1.92rem;
+  }
+
+  .reference-ayah-hero blockquote {
+    font-size: .98rem;
+  }
+
+  .hadith-card::after,
+  .reference-hadith-hero::after {
+    right: -38px !important;
+    opacity: .16 !important;
+  }
+}

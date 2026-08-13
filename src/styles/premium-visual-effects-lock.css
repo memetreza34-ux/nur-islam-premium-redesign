@@ -1,0 +1,339 @@
+/* Final premium effect direction.
+   CSS-only visual treatment. Effects stay subtle, device-aware and reduced-motion safe. */
+
+/* ---------- Shared depth ---------- */
+.welcome-hero,
+.prayer-hero--v2,
+.reference-next-prayer,
+.reference-qibla-stage,
+.reference-dhikr-counter,
+.reference-prayer-learning-hub,
+.reference-prayer-course-hero,
+.reference-learning-course-hero,
+.reference-guide-hero,
+.reference-mosque-hero,
+.reference-duas-hero,
+.reference-names-hero,
+.reference-legacy-hero,
+.reference-onboarding__visual {
+  box-shadow:
+    0 27px 68px rgba(0, 0, 0, .31),
+    0 0 0 1px rgba(232, 199, 122, .025),
+    inset 0 1px 0 rgba(255, 255, 255, .04),
+    inset 0 -54px 80px rgba(0, 0, 0, .09) !important;
+}
+
+/* Top-edge light makes large surfaces feel machined rather than flat. */
+.welcome-hero,
+.reference-next-prayer,
+.reference-qibla-stage,
+.reference-dhikr-counter,
+.reference-prayer-learning-hub,
+.reference-prayer-course-hero,
+.reference-learning-course-hero,
+.reference-guide-hero,
+.reference-mosque-hero,
+.reference-legacy-hero,
+.reference-onboarding__visual {
+  border-color: rgba(239, 207, 139, .28) !important;
+}
+
+/* ---------- Gold buttons ---------- */
+.gold-button {
+  border-color: rgba(255, 246, 221, .34) !important;
+  background: linear-gradient(135deg, #f5dda5 0%, #deb866 48%, #bf8731 100%) !important;
+  box-shadow:
+    0 11px 24px rgba(93, 60, 15, .22),
+    0 2px 0 rgba(255, 255, 255, .16) inset,
+    0 -1px 0 rgba(91, 58, 16, .16) inset !important;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .2);
+}
+
+.gold-button:disabled {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08) !important;
+}
+
+/* ---------- Glass surfaces ---------- */
+.glass-card,
+.reference-account-form,
+.reference-note-editor,
+.reference-calendar-event,
+.reference-selected-date,
+.reference-dua-card--complete,
+.reference-name-list--complete,
+.reference-mosque-list--live > button,
+.reference-learning-lesson-card,
+.reference-learning-key-points,
+.reference-learning-sources,
+.reference-learning-quiz,
+.reference-legacy-section,
+.reference-quiz-card,
+.reference-quiz-result,
+.reference-zakat-calculator,
+.reference-fasting-reminder-settings {
+  -webkit-backdrop-filter: blur(18px) saturate(1.04);
+  backdrop-filter: blur(18px) saturate(1.04);
+}
+
+/* ---------- Image response ---------- */
+.premium-image > img,
+.reference-legacy-hero img {
+  transition: filter .24s ease, opacity .24s ease, scale .28s cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journey-card:hover .premium-image > img,
+  .reference-collection-grid > button:hover .premium-image > img,
+  .continue-card--v2:hover .premium-image > img,
+  .ai-preview:hover .premium-image > img,
+  .reference-account-entry:hover .premium-image > img,
+  .reference-services-grid > button:hover img,
+  .reference-expanded-learning-grid > button:hover img {
+    scale: 1.035;
+    filter: drop-shadow(0 20px 22px rgba(0, 0, 0, .46)) saturate(1.04) brightness(1.025) !important;
+  }
+
+  .reference-legacy-hero:hover img {
+    scale: 1.02;
+    filter: drop-shadow(0 25px 24px rgba(0, 0, 0, .5)) saturate(1.035) brightness(1.02) !important;
+  }
+
+  .welcome-hero:hover .welcome-hero__visual > img,
+  .reference-mosque-hero:hover > .premium-image > img,
+  .reference-learning-hero:hover .premium-image > img,
+  .reference-prayer-learning-hub:hover > .premium-image > img,
+  .reference-guide-hero:hover > .premium-image > img {
+    scale: 1.012;
+  }}
+
+/* ---------- Interactive card polish ---------- */
+.journey-card,
+.quick-card,
+.recommendation-card,
+.reference-category-card,
+.reference-core-access-grid button,
+.reference-services-grid > button,
+.reference-expanded-learning-grid > button,
+.reference-collection-grid > button,
+.reference-collection-rows > button,
+.reference-learning-lesson-selector button,
+.reference-prayer-course-selector button,
+.reference-guide-steps > button,
+.reference-prayer-lesson-steps button,
+.reference-quiz-answers button,
+.reference-learning-quiz__options button {
+  transition:
+    border-color .2s ease,
+    background .2s ease,
+    box-shadow .22s ease,
+    filter .2s ease,
+    translate .22s cubic-bezier(.22, 1, .36, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .journey-card:hover,
+  .quick-card:hover,
+  .recommendation-card:hover,
+  .reference-category-card:hover,
+  .reference-core-access-grid button:hover,
+  .reference-services-grid > button:hover,
+  .reference-expanded-learning-grid > button:hover,
+  .reference-collection-grid > button:hover,
+  .reference-collection-rows > button:hover,
+  .reference-learning-lesson-selector button:hover,
+  .reference-prayer-course-selector button:hover,
+  .reference-guide-steps > button:hover,
+  .reference-prayer-lesson-steps button:hover,
+  .reference-quiz-answers button:hover,
+  .reference-learning-quiz__options button:hover {
+    translate: 0 -1px;
+    border-color: rgba(239, 207, 139, .3) !important;
+    box-shadow:
+      0 17px 38px rgba(0, 0, 0, .22),
+      inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+  }}
+
+/* ---------- Active state depth ---------- */
+.reference-filter-tabs button.is-active,
+.reference-dua-filter-tabs > button.is-active,
+.reference-name-filter-tabs > button.is-active,
+.reference-learning-lesson-selector button.is-active,
+.reference-prayer-course-selector button.is-active,
+.reference-guide-tabs button.is-active,
+.reference-dhikr-step-tabs button.is-active,
+.reference-dhikr-category-grid button.is-active,
+.reference-calendar-grid .calendar-day--selected {
+  box-shadow:
+    0 9px 22px rgba(186, 128, 37, .19),
+    inset 0 1px 0 rgba(255, 255, 255, .36),
+    0 0 0 1px rgba(255, 238, 199, .05) !important;
+}
+
+/* ---------- Icon gems ---------- */
+.quick-card__icon,
+.reference-category-card__icon,
+.reference-core-access-grid__icon,
+.reference-profile-row__icon,
+.reference-mosque-list__pin,
+.reference-account-cloud-grid > button > svg,
+.reference-note-editor__heading > span,
+.reference-learning-quiz__heading > span,
+.reference-prayer-learning-actions > button > span:first-child,
+.reference-expanded-learning-grid__icon,
+.reference-services-grid__icon,
+.reference-legacy-header-icon {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .045),
+    0 8px 18px rgba(0, 0, 0, .14);
+}
+
+/* ---------- Progress bars ---------- */
+.reading-progress,
+.reference-reader-progress,
+.reference-name-progress__bar,
+.reference-dua-progress__bar,
+.reference-prayer-lesson-progress,
+.reference-learning-course-hero__progress > span,
+.reference-prayer-course-hero__progress > span,
+.reference-knowledge-overview > span,
+.reference-quiz-progress,
+.next-prayer-panel__progress,
+.reference-guide-progress > div {
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, .22);
+}
+
+.reading-progress span,
+.reference-reader-progress i,
+.reference-name-progress__bar span,
+.reference-dua-progress__bar span,
+.reference-prayer-lesson-progress > span,
+.reference-learning-course-hero__progress i,
+.reference-prayer-course-hero__progress i,
+.reference-knowledge-overview i,
+.reference-quiz-progress span,
+.next-prayer-panel__progress > span,
+.reference-guide-progress > div > i {
+  box-shadow: 0 0 11px rgba(236, 199, 113, .22);
+}
+
+/* ---------- Modal depth ---------- */
+.reference-profile-modal,
+.reference-dua-modal,
+.reference-name-modal,
+.reference-mosque-detail-modal,
+.reference-prayer-settings-modal,
+.reference-learning-plan-modal,
+.reference-learning-completion-modal,
+.prayer-completion-modal,
+.calendar-modal,
+.reference-dhikr-stats-modal {
+  border-color: rgba(244, 218, 160, .31) !important;
+  box-shadow:
+    0 36px 96px rgba(0, 0, 0, .57),
+    0 0 0 1px rgba(232, 199, 122, .025),
+    inset 0 1px 0 rgba(255, 255, 255, .045) !important;
+}
+
+.reference-modal-backdrop,
+.reference-prayer-settings-backdrop,
+.reference-learning-completion-backdrop,
+.prayer-completion-backdrop,
+.calendar-modal-backdrop {
+  -webkit-backdrop-filter: blur(13px) saturate(.9);
+  backdrop-filter: blur(13px) saturate(.9);
+}
+
+/* ---------- Focus lighting ---------- */
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline-color: rgba(248, 225, 174, .88) !important;
+  box-shadow: 0 0 0 3px rgba(232, 199, 122, .09);
+}
+
+/* ---------- Hero ambient light: extremely slow and subtle ---------- */
+@media (prefers-reduced-motion: no-preference) {
+  .premium-home--v2 .welcome-hero__visual::before,
+  .reference-mosque-hero > .premium-image::before,
+  .reference-onboarding__visual > .premium-image::before {
+    animation: nurAmbientGlow 8s ease-in-out infinite alternate;
+  }
+
+  .hero-orb__ring {
+    animation: nurOrbBreath 5.5s ease-in-out infinite;
+  }
+}
+
+@keyframes nurAmbientGlow {
+  from { opacity: .68; scale: .96; }
+  to { opacity: 1; scale: 1.035; }
+}
+
+@keyframes nurOrbBreath {
+  0%, 100% { opacity: .58; scale: .98; }
+  50% { opacity: .9; scale: 1.025; }
+}
+
+/* ---------- Light theme restraint ---------- */
+[data-theme='light'] .welcome-hero,
+[data-theme='light'] .reference-next-prayer,
+[data-theme='light'] .reference-qibla-stage,
+[data-theme='light'] .reference-dhikr-counter,
+[data-theme='light'] .reference-prayer-learning-hub,
+[data-theme='light'] .reference-prayer-course-hero,
+[data-theme='light'] .reference-learning-course-hero,
+[data-theme='light'] .reference-guide-hero,
+[data-theme='light'] .reference-mosque-hero,
+[data-theme='light'] .reference-legacy-hero {
+  box-shadow:
+    0 20px 52px rgba(65, 48, 22, .11),
+    inset 0 1px 0 rgba(255, 255, 255, .7) !important;
+}
+
+[data-theme='light'] .glass-card,
+[data-theme='light'] .reference-account-form,
+[data-theme='light'] .reference-note-editor,
+[data-theme='light'] .reference-learning-lesson-card,
+[data-theme='light'] .reference-learning-key-points,
+[data-theme='light'] .reference-learning-sources,
+[data-theme='light'] .reference-learning-quiz {
+  -webkit-backdrop-filter: blur(15px) saturate(.96);
+  backdrop-filter: blur(15px) saturate(.96);
+}
+
+/* ---------- Low-width visual restraint ---------- */
+@media (max-width: 350px) {
+  .welcome-hero,
+  .reference-next-prayer,
+  .reference-qibla-stage,
+  .reference-dhikr-counter,
+  .reference-learning-hero,
+  .reference-prayer-learning-hub,
+  .reference-prayer-course-hero,
+  .reference-guide-hero,
+  .reference-mosque-hero,
+  .reference-legacy-hero {
+    box-shadow:
+      0 20px 48px rgba(0, 0, 0, .27),
+      inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .premium-home--v2 .welcome-hero__visual::before,
+  .reference-mosque-hero > .premium-image::before,
+  .reference-onboarding__visual > .premium-image::before,
+  .hero-orb__ring,
+  .premium-image > img,
+  .reference-legacy-hero img,
+  .journey-card,
+  .quick-card,
+  .recommendation-card,
+  .reference-category-card {
+    animation: none !important;
+    transition: none !important;
+    translate: none !important;
+    scale: 1 !important;
+  }}

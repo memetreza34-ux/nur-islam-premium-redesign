@@ -1,0 +1,159 @@
+.reference-install-prompt {
+  position: fixed;
+  z-index: 120;
+  right: 14px;
+  bottom: calc(86px + env(safe-area-inset-bottom));
+  left: 14px;
+  display: grid;
+  width: min(calc(100% - 28px), 402px);
+  grid-template-columns: 48px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  margin: 0 auto;
+  padding: 12px 13px;
+  border: 1px solid rgba(232, 199, 122, .32);
+  border-radius: 18px;
+  color: var(--cream-strong);
+  background:
+    radial-gradient(circle at 8% 50%, rgba(214, 175, 55, .1), transparent 7rem),
+    linear-gradient(145deg, rgba(15, 56, 43, .97), rgba(3, 20, 16, .98));
+  box-shadow: 0 22px 55px rgba(0, 0, 0, .47), inset 0 1px 0 rgba(255, 255, 255, .04);
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+}
+
+.reference-install-prompt__close {
+  position: absolute;
+  top: -8px;
+  right: -6px;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border: 1px solid rgba(232, 199, 122, .24);
+  border-radius: 10px;
+  color: var(--muted-green);
+  background: #071e18;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .28);
+  cursor: pointer;
+}
+
+.reference-install-prompt__logo,
+.reference-install-prompt__logo img,
+.reference-install-prompt__logo .premium-image__fallback,
+.reference-install-prompt__logo svg {
+  width: 47px;
+  height: 47px;
+}
+
+.reference-install-prompt__copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-install-prompt__copy .overline {
+  font-size: .46rem;
+  letter-spacing: .12em;
+}
+
+.reference-install-prompt__copy strong {
+  overflow: hidden;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: .94rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-install-prompt__copy small {
+  color: var(--muted-green);
+  font-size: .47rem;
+  line-height: 1.35;
+}
+
+.reference-install-prompt__error {
+  margin-top: 3px;
+  color: #efc69d;
+  font-size: .45rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.reference-install-prompt__action {
+  display: flex;
+  min-height: 37px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 244, 215, .3);
+  border-radius: 11px;
+  color: #10251e;
+  background: linear-gradient(135deg, #f0d394, #c9953a);
+  box-shadow: 0 8px 17px rgba(89, 57, 12, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
+  cursor: pointer;
+  font-size: .52rem;
+  font-weight: 700;
+}
+
+.reference-install-prompt__action:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.reference-install-prompt__success {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(91, 204, 127, .26);
+  border-radius: 12px;
+  color: #9ee0b3;
+  background: rgba(91, 204, 127, .07);
+}
+
+.reference-install-prompt__ios {
+  display: grid;
+  grid-column: 1 / -1;
+  gap: 7px;
+  overflow: hidden;
+  padding-top: 9px;
+  border-top: 1px solid rgba(214, 175, 55, .12);
+}
+
+.reference-install-prompt__ios span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cream);
+  font-size: .52rem;
+}
+
+.reference-install-prompt__ios svg {
+  color: var(--gold-bright);
+}
+
+.is-standalone .reference-install-prompt {
+  display: none;
+}
+
+@media (max-width: 370px) {
+  .reference-install-prompt {
+    grid-template-columns: 42px 1fr;
+  }
+
+  .reference-install-prompt__logo,
+  .reference-install-prompt__logo img,
+  .reference-install-prompt__logo .premium-image__fallback,
+  .reference-install-prompt__logo svg {
+    width: 41px;
+    height: 41px;
+  }
+
+  .reference-install-prompt__action,
+  .reference-install-prompt__success {
+    grid-column: 1 / -1;
+    width: 100%;
+  }}

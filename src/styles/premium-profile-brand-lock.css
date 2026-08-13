@@ -1,0 +1,274 @@
+/* Profile / account / settings final brand lock. Presentation only. */
+
+/* Image sources are owned by each screen component. This layer only controls
+   presentation so a late CSS rule can never replace Quran, Qibla, mosque or
+   profile artwork with a different asset. */
+
+/* ---------- Profile greeting ---------- */
+.reference-profile-greeting {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-height: 124px !important;
+  background:
+    radial-gradient(circle at 7% 22%, rgba(226, 191, 119, .13), transparent 10rem),
+    radial-gradient(circle at 94% 100%, rgba(13, 87, 67, .1), transparent 9rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 59%, #00120f 100%) !important;
+}
+
+.reference-profile-greeting::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  left: -52px;
+  bottom: -70px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid rgba(226, 191, 119, .045);
+  border-radius: 50%;
+  box-shadow: 0 0 0 27px rgba(226, 191, 119, .012), 0 0 0 53px rgba(226, 191, 119, .006);
+  pointer-events: none;
+}
+
+.reference-profile-greeting > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-profile-greeting__logo {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+.reference-profile-greeting__logo::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: -16%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(242, 215, 154, .16), transparent 70%);
+  filter: blur(7px);
+  pointer-events: none;
+}
+
+.reference-profile-greeting__logo .premium-image > img {
+  object-fit: contain !important;
+  object-position: center !important;
+  filter: drop-shadow(0 13px 17px rgba(0,0,0,.36)) saturate(1.03) contrast(1.03) !important;
+}
+
+.reference-profile-greeting h2 {
+  text-wrap: balance;
+}
+
+.reference-profile-greeting p {
+  max-width: 270px !important;
+  text-wrap: pretty;
+}
+
+.reference-profile-avatar {
+  position: relative;
+  overflow: hidden;
+  color: #f2d79a !important;
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255,255,255,.07), transparent 55%),
+    linear-gradient(145deg, rgba(226, 191, 119, .13), rgba(226, 191, 119, .045)) !important;
+}
+
+/* ---------- Direct access / rows ---------- */
+.reference-core-access-grid button,
+.reference-profile-row,
+.reference-services-grid > button,
+.reference-account-entry {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-core-access-grid button::after,
+.reference-services-grid > button::after,
+.reference-account-entry::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -42px;
+  right: -42px;
+  width: 106px;
+  height: 106px;
+  border: 1px solid rgba(226, 191, 119, .025);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.reference-core-access-grid button > *,
+.reference-services-grid > button > *,
+.reference-account-entry > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-profile-row::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 2px;
+  background: linear-gradient(180deg, transparent, rgba(226, 191, 119, .16), transparent);
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reference-profile-row:hover::before {
+    opacity: 1;
+  }}
+
+.reference-profile-row > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Settings modal ---------- */
+.reference-profile-modal {
+  position: relative;
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+.reference-profile-modal::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -80px;
+  right: -72px;
+  width: 220px;
+  height: 220px;
+  border: 1px solid rgba(226, 191, 119, .06);
+  border-radius: 50%;
+  box-shadow: 0 0 0 31px rgba(226, 191, 119, .014), 0 0 0 62px rgba(226, 191, 119, .007);
+  pointer-events: none;
+}
+
+.reference-profile-modal > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-profile-modal__icon {
+  box-shadow: 0 12px 25px rgba(0,0,0,.17), inset 0 1px 0 rgba(255,255,255,.04);
+}
+
+.reference-choice {
+  transition: border-color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+
+.reference-choice--active {
+  box-shadow: inset 3px 0 0 rgba(226, 191, 119, .42), inset 0 1px 0 rgba(255,255,255,.025) !important;
+}
+
+/* ---------- Account + notes finish ---------- */
+.reference-account-hero,
+.reference-notes-storage,
+.reference-note-editor {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-account-hero::after,
+.reference-notes-storage::after,
+.reference-note-editor::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -58px;
+  right: -52px;
+  width: 145px;
+  height: 145px;
+  border: 1px solid rgba(226, 191, 119, .03);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(226, 191, 119, .008);
+  pointer-events: none;
+}
+
+.reference-account-hero > *,
+.reference-notes-storage > *,
+.reference-note-editor > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-account-cloud-grid > button {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.reference-account-cloud-grid > button::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  right: -43px;
+  bottom: -52px;
+  width: 120px;
+  height: 120px;
+  border: 1px solid rgba(226, 191, 119, .025);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.reference-account-cloud-grid > button > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-profile-greeting {
+  /* Keep the identity hero dark; settings below may become ivory. */
+  color: #fff8ea;
+  background:
+    radial-gradient(circle at 7% 22%, rgba(226, 191, 119, .13), transparent 10rem),
+    radial-gradient(circle at 94% 100%, rgba(13, 87, 67, .1), transparent 9rem),
+    linear-gradient(145deg, #0d5743 0%, #07372b 59%, #00120f 100%) !important;
+}
+
+[data-theme='light'] .reference-profile-greeting h2 {
+  color: #fff8ea !important;
+}
+
+[data-theme='light'] .reference-profile-greeting p {
+  color: rgba(246, 235, 214, .76) !important;
+}
+
+[data-theme='light'] .reference-profile-greeting__logo .premium-image > img {
+  filter: drop-shadow(0 13px 17px rgba(0,0,0,.32)) saturate(1.02) !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-profile-greeting {
+    min-height: 116px !important;
+  }
+
+  .reference-profile-greeting p {
+    max-width: 240px !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-profile-greeting {
+    min-height: 108px !important;
+  }
+
+  .reference-profile-greeting p {
+    max-width: 220px !important;
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-profile-row::before,
+  .reference-choice {
+    transition: none !important;
+  }}

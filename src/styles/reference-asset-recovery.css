@@ -1,0 +1,58 @@
+/*
+ * Premium image fallback behavior.
+ * Real WebP assets are shown by default. The SVG fallback is displayed only
+ * when PremiumImage marks the failed <img> as hidden.
+ */
+.premium-image {
+  position: relative;
+  display: block;
+  overflow: visible;
+}
+
+.premium-image > img {
+  display: block !important;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  opacity: 1 !important;
+}
+
+.premium-image > img[hidden] {
+  display: none !important;
+}
+
+.premium-image > .premium-image__fallback {
+  position: absolute;
+  inset: 0;
+  display: none !important;
+  width: 100%;
+  height: 100%;
+}
+
+.premium-image > .premium-image__fallback:not([hidden]) {
+  display: block !important;
+}
+
+.premium-image > .premium-image__fallback > svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.welcome-hero__visual > img,
+.reference-learning-hero .premium-image > img {
+  object-position: center bottom;
+  filter: saturate(.94) contrast(1.04) drop-shadow(0 24px 22px rgba(0, 0, 0, .45));
+}
+
+.brand-lockup__mark > img,
+.ai-preview__mark > img,
+.reference-profile-greeting__logo > img {
+  filter: drop-shadow(0 8px 14px rgba(0, 0, 0, .3));
+}
+
+.journey-card .premium-image > img,
+.continue-card__cover .premium-image > img,
+.reference-quran-continue__book > img {
+  filter: drop-shadow(0 15px 16px rgba(0, 0, 0, .42));
+}

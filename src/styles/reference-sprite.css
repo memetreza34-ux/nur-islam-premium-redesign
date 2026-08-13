@@ -1,0 +1,20 @@
+.reference-sprite{
+  pointer-events: none;
+  display: block;
+  width: 128px;
+  height: 128px;
+  flex: 0 0 auto;
+  object-fit: contain;
+  filter: drop-shadow(0 16px 22px rgba(0, 0, 0, .38));
+  user-select: none;
+}
+
+.reference-sprite {
+  background-repeat: no-repeat;
+  background-size: 512px 256px;
+}
+
+.screen-transition-frame {
+  position: relative;
+  isolation: isolate;
+}

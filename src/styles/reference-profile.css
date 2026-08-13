@@ -1,0 +1,323 @@
+.reference-profile-screen {
+  gap: 15px;
+}
+
+.reference-profile-greeting {
+  position: relative;
+  display: grid;
+  grid-template-columns: 58px 1fr 43px;
+  align-items: center;
+  gap: 12px;
+  overflow: hidden;
+  padding: 15px;
+  border: 1px solid rgba(226, 191, 119, .28);
+  border-radius: 42px;
+  background:
+    radial-gradient(circle at 16% 50%, rgba(226, 191, 119, .12), transparent 8rem),
+    linear-gradient(145deg, rgba(13, 87, 67, .95), rgba(0, 18, 15, .98));
+  box-shadow: 0 15px 32px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-profile-greeting::after {
+  content: '۞';
+  position: absolute;
+  right: 22px;
+  bottom: -42px;
+  color: rgba(226, 191, 119, .045);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 9rem;
+  pointer-events: none;
+}
+
+.reference-profile-greeting__logo,
+.reference-profile-greeting__logo img,
+.reference-profile-greeting__logo .premium-image__fallback,
+.reference-profile-greeting__logo svg {
+  width: 56px;
+  height: 56px;
+}
+
+.reference-profile-greeting > div {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-profile-greeting h2,
+.reference-profile-greeting p {
+  margin: 0;
+}
+
+.reference-profile-greeting h2 {
+  overflow: hidden;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.35rem;
+  font-weight: 600;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-profile-greeting p {
+  max-width: 225px;
+  color: var(--muted-green);
+  font-size: .57rem;
+  line-height: 1.47;
+}
+
+.reference-profile-avatar {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(242, 215, 154, .34);
+  border-radius: 50%;
+  color: var(--gold-bright);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 700;
+  background: rgba(226, 191, 119, .09);
+}
+
+.reference-profile-section {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-profile-section__label {
+  padding-left: 4px;
+  color: var(--gold);
+  font-size: .55rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.reference-profile-list {
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 28px;
+  background: linear-gradient(145deg, rgba(7, 55, 43, .88), rgba(0, 18, 15, .96));
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024);
+}
+
+.reference-profile-row {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 37px 1fr 18px;
+  align-items: center;
+  gap: 10px;
+  min-height: 62px;
+  padding: 10px 13px;
+  border: 0;
+  border-bottom: 1px solid rgba(226, 191, 119, .1);
+  color: var(--cream-strong);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-profile-row:last-child {
+  border-bottom: 0;
+}
+
+.reference-profile-row__icon {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .25);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(226, 191, 119, .07);
+}
+
+.reference-profile-row__copy {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-profile-row__copy strong {
+  font-size: .68rem;
+  font-weight: 600;
+}
+
+.reference-profile-row__copy small {
+  overflow: hidden;
+  color: var(--muted-green);
+  font-size: .51rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.reference-profile-row > svg {
+  color: var(--gold);
+}
+
+.reference-profile-logout {
+  display: flex;
+  min-height: 47px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(226, 191, 119, .22);
+  border-radius: 18px;
+  color: var(--gold);
+  background: rgba(0, 27, 22, .78);
+  cursor: pointer;
+}
+
+.reference-profile-modal {
+  position: relative;
+  display: grid;
+  gap: 8px;
+  width: min(100%, 430px);
+  margin: 0 auto max(74px, env(safe-area-inset-bottom));
+  padding: 22px;
+  border: 1px solid rgba(226, 191, 119, .34);
+  border-radius: 28px;
+  color: var(--cream-strong);
+  background:
+    radial-gradient(circle at 82% 3%, rgba(226, 191, 119, .1), transparent 12rem),
+    linear-gradient(145deg, #0d5743, #07372b 64%, #00120f);
+  box-shadow: 0 28px 70px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+
+.reference-profile-modal__icon {
+  display: grid;
+  width: 54px;
+  height: 54px;
+  place-items: center;
+  margin-bottom: 3px;
+  border: 1px solid rgba(226, 191, 119, .3);
+  border-radius: 18px;
+  color: var(--gold-bright);
+  background: rgba(226, 191, 119, .08);
+}
+
+.reference-profile-modal h2,
+.reference-profile-modal p {
+  margin: 0;
+}
+
+.reference-profile-modal h2 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.reference-profile-modal p {
+  color: var(--muted-green);
+  font-size: .66rem;
+  line-height: 1.55;
+}
+
+.reference-choice-grid,
+.reference-settings-toggles {
+  display: grid;
+  gap: 8px;
+  margin: 6px 0 8px;
+}
+
+.reference-choice {
+  display: grid;
+  grid-template-columns: 28px 1fr 18px;
+  align-items: center;
+  gap: 9px;
+  min-height: 49px;
+  padding: 8px 11px;
+  border: 1px solid rgba(226, 191, 119, .17);
+  border-radius: 18px;
+  color: var(--cream);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-choice > svg:first-child {
+  color: var(--gold);
+}
+
+.reference-choice > svg:last-child {
+  color: var(--gold-bright);
+}
+
+.reference-choice--active {
+  border-color: rgba(242, 215, 154, .47);
+  background: rgba(226, 191, 119, .08);
+}
+
+.reference-settings-toggles > button {
+  display: flex;
+  min-height: 60px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 9px 11px;
+  border: 1px solid rgba(226, 191, 119, .17);
+  border-radius: 18px;
+  color: var(--cream);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-settings-toggles > button > span {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 9px;
+}
+
+.reference-settings-toggles > button > span > svg {
+  color: var(--gold);
+}
+
+.reference-settings-toggles > button > span > span {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-settings-toggles strong {
+  font-size: .64rem;
+}
+
+.reference-settings-toggles small {
+  color: var(--muted-green);
+  font-size: .5rem;
+}
+
+.reference-settings-toggles em {
+  position: relative;
+  display: block;
+  flex: 0 0 auto;
+  width: 38px;
+  height: 22px;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .06);
+}
+
+.reference-settings-toggles em i {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(246, 235, 214, .7);
+  transition: transform .2s ease, background .2s ease;
+}
+
+.reference-settings-toggles em.is-on {
+  background: rgba(226, 191, 119, .18);
+}
+
+.reference-settings-toggles em.is-on i {
+  background: var(--gold-bright);
+  transform: translateX(16px);
+}

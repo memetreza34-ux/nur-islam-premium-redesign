@@ -1,0 +1,51 @@
+.reference-prototype-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 11px 12px;
+  border: 1px solid rgba(91, 190, 123, .19);
+  border-radius: 14px;
+  color: #98dbae;
+  background: rgba(61, 158, 91, .05);
+}
+
+.reference-prototype-note > svg {
+  flex: 0 0 auto;
+  margin-top: 1px;
+}
+
+.reference-prototype-note > span {
+  display: grid;
+  gap: 2px;
+}
+
+.reference-prototype-note strong {
+  color: var(--cream-strong);
+  font-size: .56rem;
+}
+
+.reference-prototype-note small {
+  color: var(--muted-green);
+  font-size: .48rem;
+  line-height: 1.45;
+}
+
+.reference-dua-card blockquote {
+  display: grid;
+  gap: 5px;
+}
+
+.reference-dua-card blockquote > small {
+  color: var(--gold);
+  font-size: .46rem;
+  font-weight: 700;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
+
+.reference-collections-screen .reference-empty-result {
+  min-height: 180px;
+  border: 1px solid rgba(214, 175, 55, .17);
+  border-radius: 17px;
+  background: rgba(8, 35, 28, .7);
+}

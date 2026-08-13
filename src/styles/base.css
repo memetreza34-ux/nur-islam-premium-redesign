@@ -1,0 +1,175 @@
+:root {
+  color-scheme: dark;
+  font-family: Inter, system-ui, sans-serif;
+  background: #001b16;
+  color: #f6ebd6;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  --bg-deep: #00120f;
+  --bg: #001b16;
+  --surface: rgba(7, 55, 43, 0.82);
+  --gold: #e2bf77;
+  /* Gold used as text. `--gold` stays the ornament colour on borders, icons and
+     fills; on a light background it reads at 1.55:1, which is not text. */
+  --gold-text: #e2bf77;
+  --gold-bright: #f2d79a;
+  --gold-dark: #8d6d39;
+  --cream: #f6ebd6;
+  --cream-strong: #fff8ea;
+  --muted: #b9b09f;
+  --muted-green: #91a89e;
+  --line: rgba(226, 191, 119, 0.22);
+  --line-strong: rgba(226, 191, 119, 0.42);
+  --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+  --shadow-soft: 0 16px 38px rgba(0, 0, 0, 0.24);
+  --radius-xl: 42px;
+  --radius-lg: 28px;
+}
+
+* { box-sizing: border-box; }
+html { min-width: 320px; min-height: 100%; background: var(--bg-deep); }
+body { margin: 0; min-width: 320px; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; background: var(--bg-deep); }
+button, input, select, textarea { font: inherit; }
+button { color: inherit; }
+button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+
+.app-background {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 18% 2%, rgba(13, 87, 67, 0.34), transparent 25rem),
+    radial-gradient(circle at 88% 18%, rgba(226, 191, 119, 0.12), transparent 22rem),
+    linear-gradient(180deg, #042a21 0%, #001b16 48%, #00120f 100%);
+}
+
+.app-background::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.15;
+  background-image:
+    linear-gradient(30deg, transparent 24%, rgba(226, 191, 119, 0.14) 25%, transparent 26%),
+    linear-gradient(150deg, transparent 24%, rgba(226, 191, 119, 0.1) 25%, transparent 26%);
+  background-size: 72px 126px;
+  mask-image: linear-gradient(to bottom, black, transparent 58%);
+}
+
+.background-orbit {
+  position: fixed;
+  border: 1px solid rgba(226, 191, 119, 0.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+.background-orbit--one { width: 580px; height: 580px; top: -320px; right: -260px; }
+.background-orbit--two { width: 340px; height: 340px; left: -230px; top: 42vh; }
+
+.app-shell {
+  position: relative;
+  width: min(100%, 470px);
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: max(18px, env(safe-area-inset-top)) 18px calc(110px + env(safe-area-inset-bottom));
+}
+
+.screen { display: grid; gap: 22px; }
+.glass-card {
+  border: 1px solid var(--line);
+  background: linear-gradient(145deg, rgba(13, 87, 67, 0.68), rgba(7, 55, 43, 0.76));
+  box-shadow: var(--shadow-soft), inset 0 1px 0 rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.overline {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--gold-text);
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.17em;
+  text-transform: uppercase;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 28px;
+}
+
+.topbar h1,
+.section-heading h2{
+  margin: 4px 0 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+.topbar h1 { font-size: clamp(1.45rem, 5.7vw, 1.78rem); line-height: 1; }
+.topbar__actions { display: flex; gap: 8px; }
+
+.icon-button,
+.play-button,
+.card-title-row button {
+  display: inline-grid;
+  place-items: center;
+  border: 1px solid var(--line);
+  color: var(--gold-bright);
+  background: rgba(255, 255, 255, 0.05);
+  cursor: pointer;
+  transition: 180ms ease;
+}
+.icon-button { width: 42px; height: 42px; border-radius: 18px; }
+.icon-button:hover,
+.play-button:hover,
+.card-title-row button:hover {
+  border-color: var(--line-strong);
+  background: rgba(226, 191, 119, 0.1);
+  transform: translateY(-1px);
+}
+
+.hero-meta,
+.hero-main,
+.card-title-row,
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-section { display: grid; gap: 14px; }
+.section-heading { align-items: flex-end; gap: 14px; padding: 0 2px; }
+.section-heading h2 { font-size: 1.72rem; line-height: 1; }
+
+.text-button{
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  color: var(--gold);
+  background: transparent;
+  font-size: 0.7rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+@media (max-width: 380px) {
+  .app-shell { padding-inline: 13px; }}
+
+@media (min-width: 760px) {
+  .app-shell { width: min(100%, 520px); padding-inline: 24px; }}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }}

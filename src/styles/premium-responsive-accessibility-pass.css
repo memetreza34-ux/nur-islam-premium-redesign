@@ -1,0 +1,383 @@
+/* Final presentation-only guardrail for viewport, focus and input quality. */
+
+html {
+  scroll-padding-top: calc(78px + env(safe-area-inset-top));
+}
+
+body {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+button:disabled,
+input:disabled,
+select:disabled,
+textarea:disabled {
+  cursor: not-allowed;
+}
+
+input::placeholder,
+textarea::placeholder {
+  opacity: .72;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid rgba(247,226,178,.78) !important;
+  outline-offset: 3px !important;
+}
+
+.app-shell {
+  isolation: isolate;
+}
+
+.app-shell--detail {
+  padding-bottom: max(30px, env(safe-area-inset-bottom)) !important;
+}
+
+.screen {
+  min-width: 0;
+}
+
+.screen > * {
+  min-width: 0;
+}
+
+.reference-screen-header {
+  max-width: 100%;
+}
+
+.reference-screen-header > div {
+  min-width: 0;
+}
+
+.reference-screen-header h1,
+.reference-screen-header .overline {
+  overflow-wrap: anywhere;
+}
+
+/* More stable readable headings across narrow devices. */
+.section-heading > div,
+.section-heading h2,
+.section-heading .overline {
+  min-width: 0;
+}
+
+.section-heading h2 {
+  text-wrap: balance;
+}
+
+.reference-detail-screen h2,
+.reference-guide-screen h2,
+.reference-learning-course-screen h2,
+.reference-prayer-course-screen h2,
+.reference-legacy-screen h2,
+.reference-assistant-screen h2,
+.reference-account-screen h2 {
+  text-wrap: balance;
+}
+
+/* Prevent long user/API values from forcing horizontal scrolling. */
+.reference-account-screen strong,
+.reference-account-screen small,
+.reference-notes-screen strong,
+.reference-notes-screen small,
+.reference-mosque-screen--live strong,
+.reference-mosque-screen--live small,
+.reference-chat-message,
+.reference-learning-sources strong,
+.reference-learning-sources p,
+.reference-legacy-screen strong,
+.reference-legacy-screen p {
+  overflow-wrap: anywhere;
+}
+
+/* Smooth, discreet horizontal scrollers. */
+.reference-filter-tabs,
+.reference-learning-lesson-selector,
+.reference-prayer-course-selector,
+.reference-dua-filter-tabs,
+.reference-name-filter-tabs,
+.reference-quran-filter-tabs {
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.reference-filter-tabs::-webkit-scrollbar,
+.reference-learning-lesson-selector::-webkit-scrollbar,
+.reference-prayer-course-selector::-webkit-scrollbar,
+.reference-dua-filter-tabs::-webkit-scrollbar,
+.reference-name-filter-tabs::-webkit-scrollbar,
+.reference-quran-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-filter-tabs > button,
+.reference-learning-lesson-selector > button,
+.reference-prayer-course-selector > button,
+.reference-dua-filter-tabs > button,
+.reference-name-filter-tabs > button,
+.reference-quran-filter-tabs > button {
+  scroll-snap-align: start;
+}
+
+/* Bottom navigation: stronger safe-area and selected-state definition. */
+.bottom-nav {
+  bottom: max(12px, env(safe-area-inset-bottom)) !important;
+  width: min(calc(100% - 24px), 452px) !important;
+  border-color: rgba(247,226,178,.22) !important;
+}
+
+.bottom-nav__item {
+  min-height: 52px;
+}
+
+.bottom-nav__item--active > span {
+  box-shadow: 0 8px 20px rgba(194,137,45,.1), inset 0 1px 0 rgba(255,255,255,.035) !important;
+}
+
+/* Form surfaces */
+.reference-account-form input,
+.reference-note-editor input,
+.reference-note-editor textarea,
+.calendar-modal input,
+.reference-legacy-search input,
+.reference-fasting-reminder-settings input,
+.reference-zakat-calculator input,
+.reference-input-search input,
+.reference-assistant-input input {
+  caret-color: #e8c77d;
+}
+
+.reference-account-form input:focus-visible,
+.reference-note-editor input:focus-visible,
+.reference-note-editor textarea:focus-visible,
+.calendar-modal input:focus-visible,
+.reference-legacy-search input:focus-visible,
+.reference-fasting-reminder-settings input:focus-visible,
+.reference-zakat-calculator input:focus-visible,
+.reference-input-search input:focus-visible,
+.reference-assistant-input input:focus-visible {
+  outline: 0 !important;
+}
+
+/* Modal viewport guardrails */
+.reference-modal-backdrop,
+.reference-prayer-settings-backdrop,
+.prayer-completion-backdrop,
+.reference-learning-completion-backdrop,
+.reference-prayer-course-complete,
+.calendar-modal-backdrop {
+  padding-top: max(16px, env(safe-area-inset-top)) !important;
+  padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
+}
+
+.reference-profile-modal,
+.reference-dua-modal,
+.reference-name-modal,
+.reference-dhikr-stats-modal,
+.reference-prayer-settings-modal,
+.prayer-completion-modal,
+.reference-learning-completion-modal,
+.reference-learning-plan-modal,
+.calendar-modal {
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(232,199,122,.24) transparent;
+}
+
+/* Toast never collides with nav or safe area. */
+.toast {
+  bottom: calc(104px + env(safe-area-inset-bottom)) !important;
+  max-width: min(calc(100% - 30px), 420px) !important;
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* Light theme global focus/background refinements. */
+[data-theme='light'] button:focus-visible,
+[data-theme='light'] input:focus-visible,
+[data-theme='light'] select:focus-visible,
+[data-theme='light'] textarea:focus-visible,
+[data-theme='light'] [tabindex]:focus-visible {
+  outline-color: rgba(126,90,32,.72) !important;
+}
+
+[data-theme='light'] .bottom-nav {
+  border-color: rgba(117,87,37,.18) !important;
+  background: rgba(255,252,244,.92) !important;
+  box-shadow: 0 20px 48px rgba(61,46,23,.14), inset 0 1px 0 rgba(255,255,255,.82) !important;
+}
+
+[data-theme='light'] .bottom-nav__item {
+  color: rgba(52,75,64,.64);
+}
+
+[data-theme='light'] .bottom-nav__item--active {
+  color: #815c22 !important;
+}
+
+[data-theme='light'] .bottom-nav__item--active > span {
+  border-color: rgba(126,90,32,.19) !important;
+  background: rgba(154,111,39,.075) !important;
+}
+
+[data-theme='light'] .toast {
+  border-color: rgba(117,87,37,.18) !important;
+  color: #17382c !important;
+  background: rgba(255,252,244,.96) !important;
+  box-shadow: 0 18px 44px rgba(61,46,23,.16) !important;
+}
+
+/* Phones around common 375–390px widths. */
+@media (max-width:390px) {
+  .app-shell {
+    padding-inline: 13px !important;
+  }
+
+  .screen {
+    gap: 14px;
+  }
+
+  .reference-screen-header {
+    min-height: 54px !important;
+  }
+
+  .reference-screen-header .icon-button,
+  .reference-reading-header-spacer {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .section-heading {
+    gap: 9px;
+  }
+
+  .bottom-nav {
+    width: min(calc(100% - 18px), 452px) !important;
+    padding: 6px !important;
+    border-radius: 23px !important;
+  }
+
+  .bottom-nav__item {
+    min-height: 50px;
+  }
+
+  .bottom-nav__item > span {
+    width: 35px !important;
+    height: 35px !important;
+  }
+
+  .toast {
+    bottom: calc(96px + env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Minimum supported width. Avoid collapsing controls below useful touch size. */
+@media (max-width:350px) {
+  .app-shell {
+    padding-inline: 10px !important;
+  }
+
+  .screen {
+    gap: 12px;
+  }
+
+  .reference-screen-header h1 {
+    font-size: clamp(1.2rem, 7vw, 1.5rem) !important;
+  }
+
+  .reference-screen-header .overline {
+    font-size: .5rem !important;
+  }
+
+  .bottom-nav {
+    width: calc(100% - 12px) !important;
+    padding-inline: 4px !important;
+  }
+
+  .bottom-nav__item {
+    min-width: 0;
+    padding-inline: 0 !important;
+  }
+
+  .bottom-nav__item small {
+    max-width: 100%;
+    overflow: hidden;
+    font-size: .49rem !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .reference-filter-tabs > button,
+  .reference-dua-filter-tabs > button,
+  .reference-name-filter-tabs > button,
+  .reference-quran-filter-tabs > button {
+    min-height: 40px !important;
+    padding-inline: 11px !important;
+  }
+
+  .toast {
+    width: calc(100% - 20px) !important;
+    justify-content: center;
+    border-radius: 16px !important;
+  }
+}
+
+/* Larger viewports retain the phone-product feel without feeling undersized. */
+@media (min-width:760px) {
+  .app-shell:not(.app-shell--onboarding) {
+    width: min(100%, 540px) !important;
+    padding-inline: 26px !important;
+  }
+
+  .bottom-nav {
+    width: min(calc(100% - 36px), 470px) !important;
+  }
+}
+
+@media (prefers-contrast:more) {
+  .glass-card,
+  .reference-legacy-section,
+  .reference-learning-lesson-card,
+  .reference-guide-steps > button,
+  .reference-profile-list,
+  .reference-collection-section {
+    border-color: rgba(247,226,178,.34) !important;
+  }
+
+  [data-theme='light'] .glass-card,
+  [data-theme='light'] .reference-legacy-section,
+  [data-theme='light'] .reference-learning-lesson-card,
+  [data-theme='light'] .reference-guide-steps > button,
+  [data-theme='light'] .reference-profile-list,
+  [data-theme='light'] .reference-collection-section {
+    border-color: rgba(88,64,24,.3) !important;
+  }}
+
+@media (prefers-reduced-motion:reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  .bottom-nav,
+  .toast,
+  .reference-install-prompt {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }}

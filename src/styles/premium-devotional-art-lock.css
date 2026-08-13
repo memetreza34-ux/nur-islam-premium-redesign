@@ -1,0 +1,315 @@
+/* Duas + 99 Names final devotional art direction. Presentation only. */
+
+/* ---------- Duas hero ---------- */
+.reference-duas-hero {
+  isolation: isolate;
+  height: 330px !important;
+  padding: 22px 138px 22px 21px !important;
+  background:
+    radial-gradient(circle at 82% 24%, rgba(226, 191, 119, .12), transparent 11rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
+}
+
+.reference-duas-hero::after {
+  right: -3px !important;
+  bottom: -4px !important;
+  width: 174px !important;
+  height: 170px !important;
+  opacity: .82 !important;
+  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
+  filter: drop-shadow(0 21px 21px rgba(0, 0, 0, .42)) saturate(.98) contrast(1.025) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);
+}
+
+.reference-duas-hero__ornament {
+  right: -3px !important;
+  bottom: -58px !important;
+  opacity: .42;
+  color: rgba(246, 223, 172, .07) !important;
+}
+
+.reference-duas-hero > h2,
+.reference-duas-hero > p,
+.reference-duas-hero > .hero-pill,
+.reference-duas-hero > .overline {
+  z-index: 3 !important;
+}
+
+.reference-duas-hero h2 {
+  max-width: 230px;
+  text-wrap: balance;
+}
+
+.reference-duas-hero p {
+  max-width: 220px !important;
+  color: rgba(145, 168, 158, .8) !important;
+  text-wrap: pretty;
+}
+
+/* ---------- Dua cards ---------- */
+.reference-dua-card--complete {
+  position: relative;
+  isolation: isolate;
+}
+
+.reference-dua-card--complete::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -38px;
+  right: -34px;
+  width: 126px;
+  height: 126px;
+  border: 1px solid rgba(226, 191, 119, .035);
+  border-radius: 50%;
+  box-shadow: 0 0 0 22px rgba(226, 191, 119, .012);
+  pointer-events: none;
+}
+
+.reference-dua-card--complete > * {
+  position: relative;
+  z-index: 1;
+}
+
+.reference-dua-card__arabic {
+  border-color: rgba(226, 191, 119, .12) !important;
+  background:
+    radial-gradient(circle at 90% 8%, rgba(226, 191, 119, .045), transparent 8rem),
+    rgba(0, 0, 0, .105) !important;
+  text-shadow: 0 7px 20px rgba(0, 0, 0, .19);
+}
+
+.reference-dua-card--complete:has(.is-favorite) {
+  border-color: rgba(247, 226, 178, .26) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, .19), inset 3px 0 0 rgba(226, 191, 119, .35) !important;
+}
+
+/* ---------- Dua modal ---------- */
+.reference-dua-modal {
+  isolation: isolate;
+}
+
+.reference-dua-modal::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: -66px;
+  right: -66px;
+  width: 210px;
+  height: 210px;
+  border: 1px solid rgba(226, 191, 119, .055);
+  border-radius: 50%;
+  box-shadow: 0 0 0 30px rgba(226, 191, 119, .014), 0 0 0 60px rgba(226, 191, 119, .008);
+  pointer-events: none;
+}
+
+.reference-dua-modal > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-dua-modal__arabic {
+  padding: 18px 16px !important;
+  border-color: rgba(247, 226, 178, .17) !important;
+  border-radius: 18px !important;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(226, 191, 119, .055), transparent 9rem),
+    rgba(0, 0, 0, .13) !important;
+  font-size: clamp(1.45rem, 6.2vw, 1.8rem) !important;
+  text-shadow: 0 10px 24px rgba(0, 0, 0, .26);
+}
+
+/* ---------- 99 Names hero ---------- */
+.reference-names-hero {
+  isolation: isolate;
+  min-height: 228px !important;
+  padding: 24px 136px 24px 21px !important;
+  background:
+    radial-gradient(circle at 82% 45%, rgba(226, 191, 119, .14), transparent 10rem),
+    linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
+}
+
+.reference-names-hero::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 50%;
+  right: 17px;
+  width: 116px;
+  height: 116px;
+  border: 1px solid rgba(244, 218, 160, .1);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 17px rgba(226, 191, 119, .026),
+    0 0 0 35px rgba(226, 191, 119, .014),
+    0 0 42px rgba(226, 191, 119, .06);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.reference-names-hero__allah {
+  z-index: 2 !important;
+  top: 50% !important;
+  right: 26px !important;
+  max-width: none !important;
+  color: #f2d79a !important;
+  font-size: 4.55rem !important;
+  line-height: 1 !important;
+  transform: translateY(-51%);
+  text-shadow: 0 17px 30px rgba(0, 0, 0, .42), 0 0 25px rgba(226, 191, 119, .08) !important;
+}
+
+.reference-names-hero > h2,
+.reference-names-hero > p,
+.reference-names-hero > .hero-pill,
+.reference-names-hero > .overline {
+  position: relative;
+  z-index: 3 !important;
+  max-width: 225px !important;
+}
+
+.reference-names-hero p {
+  color: rgba(145, 168, 158, .8) !important;
+  text-wrap: pretty;
+}
+
+/* ---------- Names list ---------- */
+.reference-name-list--complete > article {
+  transition: border-color .18s ease, background .18s ease;
+}
+
+.reference-name-list__arabic {
+  color: #f2d79a !important;
+  line-height: 1.35;
+  text-align: right;
+  text-shadow: 0 6px 18px rgba(0,0,0,.16);
+}
+
+.reference-name-list--complete > article:has(.reference-name-heart.is-active) {
+  background: linear-gradient(90deg, rgba(226, 191, 119, .026), transparent 54%);
+}
+
+/* ---------- Name modal ---------- */
+.reference-name-modal {
+  isolation: isolate;
+  overflow-x: hidden;
+}
+
+.reference-name-modal::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 38px;
+  left: 50%;
+  width: 148px;
+  height: 148px;
+  border: 1px solid rgba(226, 191, 119, .07);
+  border-radius: 50%;
+  box-shadow: 0 0 0 24px rgba(226, 191, 119, .018), 0 0 0 48px rgba(226, 191, 119, .009);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.reference-name-modal > * {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-name-modal__arabic {
+  margin-top: 18px !important;
+  color: #f2d79a !important;
+  font-size: clamp(3rem, 13vw, 3.65rem) !important;
+  text-shadow: 0 16px 29px rgba(0, 0, 0, .4), 0 0 24px rgba(226, 191, 119, .055) !important;
+}
+
+/* ---------- Light theme ---------- */
+[data-theme='light'] .reference-duas-hero,
+[data-theme='light'] .reference-names-hero {
+  /* Heroes remain emerald feature surfaces for visual continuity. */
+  color: #fff8e9;
+}
+
+[data-theme='light'] .reference-duas-hero h2,
+[data-theme='light'] .reference-names-hero h2 {
+  color: #fff8e9 !important;
+}
+
+[data-theme='light'] .reference-duas-hero p,
+[data-theme='light'] .reference-names-hero p {
+  color: rgba(226, 237, 230, .75) !important;
+}
+
+[data-theme='light'] .reference-names-hero__allah {
+  color: #f2d79a !important;
+}
+
+[data-theme='light'] .reference-dua-card__arabic,
+[data-theme='light'] .reference-dua-modal__arabic,
+[data-theme='light'] .reference-name-list__arabic,
+[data-theme='light'] .reference-name-modal__arabic {
+  text-shadow: none !important;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 390px) {
+  .reference-duas-hero {
+    padding-right: 112px !important;
+  }
+
+  .reference-duas-hero::after {
+    right: -11px !important;
+    width: 154px !important;
+    height: 152px !important;
+  }
+
+  .reference-names-hero {
+    padding-right: 112px !important;
+  }
+
+  .reference-names-hero::after {
+    right: 8px;
+    width: 100px;
+    height: 100px;
+  }
+
+  .reference-names-hero__allah {
+    right: 17px !important;
+    font-size: 4rem !important;
+  }
+}
+
+@media (max-width: 350px) {
+  .reference-duas-hero {
+    padding-right: 94px !important;
+  }
+
+  .reference-duas-hero::after {
+    right: -22px !important;
+    width: 136px !important;
+    height: 136px !important;
+    opacity: .73 !important;
+  }
+
+  .reference-names-hero {
+    padding-right: 98px !important;
+  }
+
+  .reference-names-hero__allah {
+    right: 11px !important;
+    font-size: 3.55rem !important;
+  }
+
+  .reference-names-hero::after {
+    right: 3px;
+    width: 90px;
+    height: 90px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reference-dua-card--complete,
+  .reference-name-list--complete > article {
+    transition: none !important;
+  }
+}

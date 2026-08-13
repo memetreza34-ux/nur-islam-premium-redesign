@@ -1,0 +1,120 @@
+.bottom-nav {
+  position: fixed;
+  z-index: 20;
+  left: 50%;
+  bottom: max(13px, env(safe-area-inset-bottom));
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  width: min(calc(100% - 28px), 440px);
+  padding: 8px;
+  transform: translateX(-50%);
+  border: 1px solid rgba(226, 191, 119, 0.28);
+  border-radius: 26px;
+  background: rgba(0, 27, 22, 0.92);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55), inset 0 1px rgba(255, 255, 255, 0.045);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+.bottom-nav__item {
+  display: grid;
+  min-width: 0;
+  justify-items: center;
+  align-content: center;
+  gap: 3px;
+  padding: 4px 1px;
+  border: 0;
+  border-radius: 18px;
+  color: rgba(246, 235, 214, 0.64);
+  background: transparent;
+  cursor: pointer;
+  transition: color 180ms ease, background 180ms ease;
+}
+
+.bottom-nav__item > span {
+  display: grid;
+  width: 37px;
+  height: 37px;
+  place-items: center;
+  border: 1px solid transparent;
+  border-radius: 13px;
+  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.bottom-nav__item svg {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+/* Block, not grid or flex: as a grid item this label resolved to min-content,
+   the width of "verstehen" alone, so the rest wrapped one character per line,
+   seven lines tall, and pushed the whole bar up over the install prompt.
+   The two reserved lines are what keeps the row aligned — "Islam verstehen"
+   is the only label that needs both, and when it alone grew the other four
+   icons sat visibly higher than it. */
+.bottom-nav__item small {
+  display: block;
+  max-width: 68px;
+  min-height: 2.16em;
+  overflow: hidden;
+  font-size: 0.54rem;
+  font-weight: 700;
+  line-height: 1.08;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: normal;
+}
+
+
+.bottom-nav__item--active {
+  color: #f2d79a;
+}
+
+.bottom-nav__item--active > span {
+  border-color: rgba(226, 191, 119, 0.34);
+  background: rgba(226, 191, 119, 0.12);
+  box-shadow: 0 0 20px rgba(226, 191, 119, 0.17), inset 0 1px rgba(255, 255, 255, 0.035);
+}
+
+.bottom-nav__item--active svg {
+  filter: drop-shadow(0 0 7px rgba(242, 215, 154, 0.24));
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav__item:hover:not(.bottom-nav__item--active) {
+    color: rgba(255, 248, 234, 0.86);
+  }
+
+  .bottom-nav__item:hover > span {
+    background: rgba(255, 255, 255, 0.025);
+  }}
+
+@media(max-width:370px){
+.bottom-nav{width:min(calc(100% - 18px),440px);padding-inline:5px}
+.bottom-nav__item small{max-width:60px;min-height:2.16em;overflow:visible;font-size:.5rem;text-overflow:clip}
+.bottom-nav__item--learn small span{display:block}}
+
+.toast {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: calc(100px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: max-content;
+  max-width: calc(100% - 34px);
+  padding: 12px 16px;
+  transform: translateX(-50%);
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  color: var(--cream);
+  background: rgba(0, 27, 22, 0.96);
+  box-shadow: var(--shadow);
+  font-size: 0.72rem;
+  font-weight: 700;
+}

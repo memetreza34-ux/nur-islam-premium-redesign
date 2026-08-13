@@ -1,0 +1,449 @@
+/* Premium shell finish for concurrent design work.
+   Presentation-only: navigation, onboarding, overlays, toasts and install surfaces. */
+
+/* App shell and sticky detail headers */
+.app-shell--detail .reference-screen-header {
+  top: max(8px, env(safe-area-inset-top));
+  min-height: 58px;
+  margin: -1px -2px 4px;
+  padding: 7px 4px;
+  border-color: rgba(232, 199, 122, .14) !important;
+  border-radius: 18px !important;
+  background:
+    linear-gradient(145deg, rgba(5, 31, 24, .9), rgba(2, 18, 14, .88)) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+  backdrop-filter: blur(22px) saturate(1.08);
+  -webkit-backdrop-filter: blur(22px) saturate(1.08);
+}
+
+.app-shell--detail .reference-screen-header .icon-button {
+  border-color: rgba(232, 199, 122, .13);
+  background: rgba(255, 255, 255, .018);
+}
+
+.app-shell--detail .reference-screen-header .overline {
+  color: var(--gold-text);
+}
+
+/* Bottom navigation */
+.bottom-nav {
+  width: min(calc(100% - 24px), 448px);
+  bottom: max(11px, env(safe-area-inset-bottom));
+  padding: 7px 8px 8px;
+  border-color: rgba(247, 226, 178, .22) !important;
+  border-radius: 28px !important;
+  background:
+    linear-gradient(145deg, rgba(4, 31, 24, .94), rgba(2, 19, 15, .96)) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+  backdrop-filter: blur(28px) saturate(1.1);
+  -webkit-backdrop-filter: blur(28px) saturate(1.1);
+}
+
+.bottom-nav__item {
+  min-height: 55px;
+  padding: 3px 1px 2px;
+  border-radius: 18px;
+  transition: color .18s ease, background .18s ease, transform .18s ease;
+}
+
+.bottom-nav__item > span {
+  width: 38px;
+  height: 38px;
+  border-radius: 13px;
+}
+
+.bottom-nav__item small {
+  color: inherit;
+  font-size: .52rem;
+  letter-spacing: .01em;
+}
+
+.bottom-nav__item--active {
+  color: #f6dfad;
+}
+
+.bottom-nav__item--active > span {
+  border-color: rgba(247, 226, 178, .28) !important;
+  background:
+    linear-gradient(145deg, rgba(232, 199, 122, .13), rgba(232, 199, 122, .055)) !important;
+  box-shadow: 0 8px 18px rgba(194, 137, 45, .12), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
+}
+
+.bottom-nav__item:focus-visible {
+  outline: 2px solid rgba(247, 226, 178, .72);
+  outline-offset: 1px;
+}
+
+/* Toasts */
+.toast {
+  bottom: calc(104px + env(safe-area-inset-bottom));
+  min-height: 44px;
+  max-width: min(calc(100% - 30px), 430px);
+  padding: 10px 14px;
+  border-color: rgba(247, 226, 178, .23) !important;
+  border-radius: 15px !important;
+  color: #fff8e9 !important;
+  background:
+    radial-gradient(circle at 0% 50%, rgba(232, 199, 122, .08), transparent 6rem),
+    rgba(5, 37, 28, .97) !important;
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  font-size: .66rem;
+  line-height: 1.35;
+}
+
+.toast > svg {
+  flex: 0 0 auto;
+  color: #efd392;
+}
+
+/* Generic modal backdrops */
+.reference-modal-backdrop,
+.reference-prayer-settings-backdrop,
+.prayer-completion-backdrop,
+.calendar-modal-backdrop {
+  background: rgba(0, 10, 7, .68) !important;
+  backdrop-filter: blur(9px) saturate(.9);
+  -webkit-backdrop-filter: blur(9px) saturate(.9);
+}
+
+.reference-modal-close,
+.reference-prayer-settings-modal__close,
+.prayer-completion-modal__close {
+  border-color: rgba(232, 199, 122, .18) !important;
+  color: rgba(238, 226, 203, .78) !important;
+  background: rgba(2, 20, 15, .72) !important;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, .18);
+}
+
+.reference-modal-close:focus-visible,
+.reference-prayer-settings-modal__close:focus-visible,
+.prayer-completion-modal__close:focus-visible {
+  outline: 2px solid rgba(247, 226, 178, .72);
+  outline-offset: 2px;
+}
+
+/* Install prompt */
+.reference-install-prompt {
+  right: 12px;
+  bottom: calc(91px + env(safe-area-inset-bottom));
+  left: 12px;
+  width: min(calc(100% - 24px), 410px);
+  min-height: 78px;
+  padding: 13px 14px;
+  border-color: rgba(247, 226, 178, .3) !important;
+  border-radius: 21px !important;
+  background:
+    radial-gradient(circle at 5% 50%, rgba(232, 199, 122, .12), transparent 7rem),
+    linear-gradient(145deg, rgba(16, 63, 48, .98), rgba(3, 22, 17, .99)) !important;
+  box-shadow: 0 26px 68px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .045) !important;
+  backdrop-filter: blur(26px) saturate(1.08);
+  -webkit-backdrop-filter: blur(26px) saturate(1.08);
+}
+
+.reference-install-prompt__logo {
+  filter: drop-shadow(0 9px 14px rgba(0, 0, 0, .25));
+}
+
+.reference-install-prompt__copy strong {
+  color: #fff8e9;
+  font-size: 1rem;
+  letter-spacing: -.015em;
+}
+
+.reference-install-prompt__copy small {
+  color: rgba(171, 191, 181, .79);
+}
+
+.reference-install-prompt__action {
+  min-height: 40px;
+  padding-inline: 12px;
+  border-color: rgba(255, 244, 215, .34) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 9px 20px rgba(101, 65, 13, .2), inset 0 1px 0 rgba(255, 255, 255, .45) !important;
+}
+
+.reference-install-prompt__close {
+  top: -7px;
+  right: -5px;
+  border-radius: 11px !important;
+  background: rgba(5, 31, 24, .98) !important;
+}
+
+.reference-install-prompt__ios {
+  border-top-color: rgba(232, 199, 122, .1) !important;
+}
+
+/* Onboarding */
+.app-shell--onboarding {
+  width: min(100%, 440px);
+}
+
+.reference-onboarding {
+  gap: 20px;
+  padding-top: 4px;
+}
+
+.reference-onboarding::before {
+  inset: -90px -70px auto;
+  height: 450px;
+  background:
+    radial-gradient(circle at 50% 32%, rgba(39, 125, 94, .26), transparent 62%),
+    radial-gradient(circle at 82% 18%, rgba(232, 199, 122, .06), transparent 14rem);
+}
+
+.reference-onboarding__brand > .premium-image {
+  filter: drop-shadow(0 9px 15px rgba(0, 0, 0, .24));
+}
+
+.reference-onboarding__topbar > button {
+  border-color: rgba(232, 199, 122, .14) !important;
+  border-radius: 13px !important;
+  background: rgba(5, 32, 25, .64) !important;
+}
+
+.reference-onboarding__visual {
+  min-height: 326px;
+  border-color: rgba(247, 226, 178, .35) !important;
+  border-radius: 30px !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(232, 199, 122, .18), transparent 13rem),
+    radial-gradient(circle at 10% 100%, rgba(55, 143, 107, .1), transparent 10rem),
+    linear-gradient(150deg, rgba(17, 66, 51, .99), rgba(4, 23, 18, .995)) !important;
+  box-shadow: 0 30px 74px rgba(0, 0, 0, .4), inset 0 1px 0 rgba(255, 255, 255, .045) !important;
+}
+
+.reference-onboarding__halo {
+  border-color: rgba(247, 226, 178, .15) !important;
+  box-shadow: 0 0 0 36px rgba(232, 199, 122, .028), 0 0 0 74px rgba(232, 199, 122, .018) !important;
+}
+
+.reference-onboarding__copy {
+  gap: 9px;
+}
+
+.reference-onboarding__copy h1 {
+  max-width: 350px;
+  font-size: 2.2rem;
+  line-height: .96;
+  letter-spacing: -.035em;
+  text-wrap: balance;
+}
+
+.reference-onboarding__copy p {
+  max-width: 340px;
+  color: rgba(171, 191, 181, .8);
+  font-size: .66rem;
+  line-height: 1.62;
+}
+
+.reference-onboarding__points {
+  gap: 8px;
+}
+
+.reference-onboarding__points span {
+  min-height: 28px;
+  padding: 3px 0;
+}
+
+.reference-onboarding__permissions {
+  gap: 8px;
+}
+
+.reference-onboarding__permissions > button {
+  min-height: 61px;
+  padding: 10px 12px;
+  border-color: rgba(232, 199, 122, .14) !important;
+  border-radius: 17px !important;
+  background:
+    radial-gradient(circle at 0% 50%, rgba(232, 199, 122, .045), transparent 6rem),
+    rgba(7, 37, 29, .79) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
+}
+
+.reference-onboarding__permissions > button > span:first-child {
+  border: 1px solid rgba(232, 199, 122, .14);
+  border-radius: 13px;
+  background: rgba(232, 199, 122, .055);
+}
+
+.reference-onboarding__permissions > button.is-ready {
+  border-color: rgba(94, 202, 129, .3) !important;
+  background: rgba(57, 154, 89, .065) !important;
+}
+
+.reference-onboarding__privacy {
+  color: rgba(153, 177, 165, .74);
+}
+
+.reference-onboarding__dots button.is-active::after {
+  width: 26px;
+  box-shadow: 0 0 14px rgba(212, 166, 78, .14);
+}
+
+.reference-onboarding__actions {
+  gap: 9px;
+}
+
+.reference-onboarding__back,
+.reference-onboarding__actions .gold-button {
+  min-height: 48px;
+  border-radius: 14px !important;
+}
+
+/* Light theme shell */
+[data-theme='light'] .app-shell--detail .reference-screen-header,
+[data-theme='light'] .bottom-nav,
+[data-theme='light'] .reference-install-prompt,
+[data-theme='light'] .reference-modal-close,
+[data-theme='light'] .reference-prayer-settings-modal__close,
+[data-theme='light'] .prayer-completion-modal__close {
+  color: #17382c;
+  border-color: rgba(117, 87, 37, .16) !important;
+  background: rgba(255, 252, 243, .94) !important;
+  box-shadow: 0 18px 42px rgba(61, 46, 23, .1), inset 0 1px 0 rgba(255, 255, 255, .82) !important;
+}
+
+[data-theme='light'] .bottom-nav__item {
+  color: rgba(61, 82, 70, .68);
+}
+
+[data-theme='light'] .bottom-nav__item--active {
+  color: #7b571e;
+}
+
+[data-theme='light'] .bottom-nav__item--active > span {
+  border-color: rgba(139, 100, 34, .2) !important;
+  background: rgba(161, 116, 40, .08) !important;
+}
+
+[data-theme='light'] .toast {
+  color: #17382c !important;
+  border-color: rgba(117, 87, 37, .16) !important;
+  background: rgba(255, 252, 243, .97) !important;
+  box-shadow: 0 18px 42px rgba(61, 46, 23, .12) !important;
+}
+
+[data-theme='light'] .reference-install-prompt__copy strong {
+  color: #17382c;
+}
+
+[data-theme='light'] .reference-install-prompt__copy small {
+  color: rgba(57, 78, 67, .72);
+}
+
+[data-theme='light'] .reference-onboarding::before {
+  background:
+    radial-gradient(circle at 50% 32%, rgba(75, 145, 113, .1), transparent 62%),
+    radial-gradient(circle at 82% 18%, rgba(167, 123, 45, .06), transparent 14rem);
+}
+
+[data-theme='light'] .reference-onboarding__visual {
+  border-color: rgba(117, 87, 37, .22) !important;
+  background:
+    radial-gradient(circle at 50% 28%, rgba(167, 123, 45, .1), transparent 13rem),
+    linear-gradient(150deg, #fffdf7, #eee6d3) !important;
+  box-shadow: 0 24px 58px rgba(61, 46, 23, .12), inset 0 1px 0 rgba(255, 255, 255, .85) !important;
+}
+
+[data-theme='light'] .reference-onboarding__copy h1,
+[data-theme='light'] .reference-onboarding__brand,
+[data-theme='light'] .reference-onboarding__permissions > button {
+  color: #17382c;
+}
+
+[data-theme='light'] .reference-onboarding__copy p,
+[data-theme='light'] .reference-onboarding__permissions small,
+[data-theme='light'] .reference-onboarding__privacy {
+  color: rgba(57, 78, 67, .72);
+}
+
+[data-theme='light'] .reference-onboarding__permissions > button,
+[data-theme='light'] .reference-onboarding__topbar > button {
+  border-color: rgba(117, 87, 37, .14) !important;
+  background: rgba(255, 252, 243, .78) !important;
+}
+
+/* Compact phones */
+@media (max-width: 390px) {
+  .bottom-nav {
+    width: min(calc(100% - 18px), 448px);
+    padding-inline: 6px;
+  }
+
+  .bottom-nav__item {
+    min-height: 52px;
+  }
+
+  .bottom-nav__item > span {
+    width: 36px;
+    height: 36px;
+  }
+
+  .reference-install-prompt {
+    right: 9px;
+    left: 9px;
+    width: min(calc(100% - 18px), 410px);
+    padding: 11px 12px;
+    border-radius: 19px !important;
+  }
+
+  .reference-onboarding__visual {
+    min-height: 300px;
+    border-radius: 26px !important;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 350px) {
+  .bottom-nav {
+    bottom: max(7px, env(safe-area-inset-bottom));
+    width: calc(100% - 12px);
+    border-radius: 24px !important;
+  }
+
+  .bottom-nav__item > span {
+    width: 34px;
+    height: 34px;
+  }
+
+  .bottom-nav__item small {
+    font-size: .47rem;
+  }
+
+  .reference-install-prompt {
+    bottom: calc(84px + env(safe-area-inset-bottom));
+  }
+
+  .reference-onboarding__visual {
+    min-height: 276px;
+  }
+
+  .reference-onboarding__copy h1 {
+    font-size: 1.86rem;
+  }}
+
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav__item:hover {
+    color: #e8c77f;
+    background: rgba(232, 199, 122, .025);
+  }
+
+  .reference-onboarding__permissions > button:hover,
+  .reference-onboarding__topbar > button:hover,
+  .reference-install-prompt__action:hover {
+    transform: translateY(-1px);
+  }}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav__item,
+  .reference-onboarding__permissions > button,
+  .reference-onboarding__topbar > button,
+  .reference-install-prompt__action {
+    transition: none !important;
+    transform: none !important;
+  }}

@@ -1,0 +1,355 @@
+.prayer-screen,
+.calendar-screen {
+  gap: 15px;
+}
+
+.prayer-page-header,
+.calendar-page-header {
+  display: grid;
+  min-height: 54px;
+  grid-template-columns: 42px 1fr 42px;
+  align-items: center;
+  gap: 11px;
+  padding: 1px 0 5px;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.prayer-page-header > div,
+.calendar-page-header > div {
+  display: grid;
+  justify-items: center;
+  gap: 1px;
+  text-align: center;
+}
+
+.prayer-page-header h1,
+.calendar-page-header h1 {
+  margin: 0;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.42rem;
+  font-weight: 600;
+}
+
+.prayer-location-card {
+  display: grid;
+  min-height: 61px;
+  grid-template-columns: 39px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 16px;
+}
+
+.prayer-location-card__icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .24);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.prayer-location-card > span:nth-child(2) {
+  display: grid;
+  gap: 2px;
+}
+
+.prayer-location-card small {
+  color: var(--muted-green);
+  font-size: .49rem;
+}
+
+.prayer-location-card strong {
+  font-size: .66rem;
+}
+
+.prayer-location-card button {
+  border: 0;
+  color: var(--gold-soft);
+  background: transparent;
+  cursor: pointer;
+  font-size: .55rem;
+}
+
+.next-prayer-panel {
+  min-height: 315px;
+  padding: 18px;
+  border: 1px solid rgba(226, 191, 119, .37);
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 82% 28%, rgba(214, 175, 55, .14), transparent 12rem),
+    linear-gradient(145deg, #103c2f, #07281f 57%, #041813);
+  box-shadow: 0 21px 47px rgba(0, 0, 0, .31), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.next-prayer-panel__topline {
+  position: relative;
+  z-index: 2;
+}
+
+.next-prayer-panel__main {
+  position: relative;
+  z-index: 2;
+  margin: 20px 0 16px;
+}
+
+.next-prayer-panel__main h2 {
+  margin: 2px 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.15rem;
+  font-weight: 500;
+}
+
+.next-prayer-panel__main p {
+  color: var(--muted-green);
+  font-size: .55rem;
+}
+
+.next-prayer-panel__time strong {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2.65rem;
+  font-weight: 500;
+}
+
+.next-prayer-panel__time span {
+  color: var(--gold-soft);
+  font-size: .52rem;
+}
+
+.next-prayer-panel__progress {
+  position: relative;
+  z-index: 2;
+  height: 5px;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .07);
+}
+
+.next-prayer-panel__progress span {
+  display: block;
+  width: 62%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, #edcf8b, #bd8428);
+}
+
+.next-prayer-panel__actions {
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+}
+
+.adhan-button {
+  border-color: rgba(226, 191, 119, .24);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .06);
+}
+
+.daily-prayer-progress {
+  border-radius: 17px;
+}
+
+.daily-prayer-progress h3,
+.daily-prayer-progress p {
+  margin: 0;
+}
+
+.daily-prayer-progress h3 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.13rem;
+}
+
+.daily-prayer-progress p {
+  color: var(--muted-green);
+  font-size: .53rem;
+}
+
+.prayer-schedule-list {
+  overflow: hidden;
+  border: 1px solid rgba(214, 175, 55, .2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(15, 53, 42, .88), rgba(4, 24, 19, .96));
+  box-shadow: 0 13px 27px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024);
+}
+
+.prayer-time-row {
+  min-height: 66px;
+  padding: 8px 10px;
+  border: 0;
+  border-bottom: 1px solid rgba(214, 175, 55, .09);
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.prayer-time-row:last-child {
+  border-bottom: 0;
+}
+
+.prayer-time-row--next {
+  background: rgba(214, 175, 55, .065);
+  box-shadow: inset 3px 0 0 var(--gold);
+}
+
+.prayer-time-row__icon {
+  border-color: rgba(226, 191, 119, .22);
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .06);
+}
+
+.prayer-time-row__name strong,
+.prayer-time-row__time {
+  color: var(--cream-strong);
+}
+
+.prayer-time-row__name small,
+.prayer-time-row__name em {
+  color: var(--muted-green);
+}
+
+.method-card {
+  border-radius: 17px;
+}
+
+.calendar-month-card {
+  overflow: hidden;
+  padding: 17px 14px 14px;
+  border-color: rgba(226, 191, 119, .27);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(214, 175, 55, .08), transparent 14rem),
+    linear-gradient(145deg, rgba(15, 55, 43, .92), rgba(4, 24, 19, .98));
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .03);
+}
+
+.calendar-month-nav h2,
+.calendar-month-nav p {
+  margin: 0;
+}
+
+.calendar-month-nav h2 {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.48rem;
+  font-weight: 600;
+}
+
+.calendar-month-nav p {
+  color: var(--muted-green);
+  font-size: .52rem;
+}
+
+.calendar-month-nav > button {
+  display: grid;
+  width: 36px;
+  height: 36px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 12px;
+  color: var(--gold-soft);
+  background: rgba(214, 175, 55, .045);
+  cursor: pointer;
+}
+
+.calendar-weekdays {
+  color: var(--gold-soft);
+}
+
+.calendar-weekdays span {
+  font-size: .51rem;
+}
+
+.calendar-day {
+  min-height: 43px;
+  border-radius: 12px;
+  color: var(--cream);
+}
+
+.calendar-day:hover {
+  background: rgba(214, 175, 55, .05);
+}
+
+.calendar-day--selected {
+  color: #12261f;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+  box-shadow: 0 8px 18px rgba(82, 53, 13, .25);
+}
+
+.calendar-day--today:not(.calendar-day--selected) {
+  border-color: rgba(232, 199, 122, .45);
+  color: var(--gold-bright);
+}
+
+.selected-date-card {
+  grid-template-columns: 40px 1fr auto;
+  padding: 12px;
+  border-radius: 17px;
+}
+
+.selected-date-card__icon {
+  border-color: rgba(226, 191, 119, .24);
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .07);
+}
+
+.selected-date-card small,
+.selected-date-card em {
+  color: var(--muted-green);
+}
+
+.selected-date-card button {
+  border-color: rgba(226, 191, 119, .22);
+  color: var(--gold-soft);
+  background: rgba(214, 175, 55, .05);
+}
+
+.calendar-event-card {
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    radial-gradient(circle at 88% 10%, rgba(214, 175, 55, .09), transparent 9rem),
+    linear-gradient(145deg, rgba(16, 58, 45, .94), rgba(4, 25, 20, .98));
+}
+
+.calendar-event-card h3 {
+  margin: 9px 0 3px;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+}
+
+.calendar-event-card p {
+  color: var(--muted-green);
+  font-size: .57rem;
+}
+
+.calendar-entry-row,
+.calendar-empty-state {
+  border-radius: 16px;
+}
+
+.calendar-modal {
+  border-color: rgba(226, 191, 119, .31);
+  border-radius: 23px;
+  background:
+    radial-gradient(circle at 82% 4%, rgba(214, 175, 55, .1), transparent 12rem),
+    linear-gradient(145deg, #103b2e, #061d17 64%, #041510);
+}
+
+.calendar-modal label {
+  color: var(--gold-soft);
+}
+
+.calendar-modal input {
+  border-color: rgba(226, 191, 119, .19);
+  border-radius: 13px;
+  color: var(--cream-strong);
+  background: rgba(255, 255, 255, .035);
+}

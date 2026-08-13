@@ -1,0 +1,537 @@
+/* Release-stage account, notes, reminder and appearance styles. */
+
+.reference-account-entry,
+.reference-notes-storage,
+.reference-account-hero,
+.reference-account-security,
+.reference-calendar-calculation-note {
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 17px;
+  background: linear-gradient(145deg, rgba(14, 58, 45, .9), rgba(4, 24, 19, .96));
+  box-shadow: 0 15px 34px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+
+.reference-account-entry {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) auto;
+  width: 100%;
+  min-height: 68px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  color: inherit;
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-account-entry > span:first-child,
+.reference-account-header-icon {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .25);
+  border-radius: 13px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .075);
+}
+
+.reference-account-entry > span:nth-child(2),
+.reference-notes-storage > span,
+.reference-account-security > span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-account-entry strong,
+.reference-notes-storage strong,
+.reference-account-security strong {
+  color: var(--cream-strong);
+  font-size: .61rem;
+}
+
+.reference-account-entry small,
+.reference-notes-storage small,
+.reference-account-security small,
+.reference-account-security em {
+  color: var(--muted-green);
+  font-size: .49rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.reference-account-screen,
+.reference-notes-screen {
+  gap: 14px;
+}
+
+.reference-account-hero {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 13px;
+  padding: 16px;
+  background:
+    radial-gradient(circle at 12% 10%, rgba(224, 189, 112, .12), transparent 8rem),
+    linear-gradient(145deg, rgba(16, 70, 53, .95), rgba(4, 25, 20, .98));
+}
+
+.reference-account-hero > span {
+  display: grid;
+  width: 50px;
+  height: 50px;
+  place-items: center;
+  border-radius: 16px;
+  color: #17382b;
+  background: linear-gradient(145deg, #f2da99, #bc8533);
+}
+
+.reference-account-hero.is-guest > span {
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .09);
+  border: 1px solid rgba(226, 191, 119, .27);
+}
+
+.reference-account-hero small,
+.reference-account-hero h2,
+.reference-account-hero p {
+  margin: 0;
+}
+
+.reference-account-hero small {
+  color: var(--gold);
+  font-size: .49rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.reference-account-hero h2 {
+  margin-top: 3px;
+  overflow-wrap: anywhere;
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.45rem;
+  line-height: 1.02;
+}
+
+.reference-account-hero p {
+  margin-top: 5px;
+  color: var(--muted-green);
+  font-size: .56rem;
+  line-height: 1.52;
+}
+
+.reference-account-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  padding: 5px;
+  border: 1px solid rgba(226, 191, 119, .15);
+  border-radius: 16px;
+  background: rgba(4, 25, 20, .72);
+}
+
+.reference-account-tabs button {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  border: 0;
+  border-radius: 12px;
+  color: var(--muted-green);
+  background: transparent;
+  font-size: .55rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.reference-account-tabs button.is-active {
+  color: #15362a;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-account-form {
+  display: grid;
+  gap: 11px;
+  padding: 15px;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 18px;
+  background: rgba(5, 29, 23, .9);
+}
+
+.reference-account-form label {
+  display: grid;
+  gap: 6px;
+  color: var(--gold-soft, var(--gold));
+  font-size: .51rem;
+  font-weight: 800;
+}
+
+.reference-account-form label > div {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  min-height: 45px;
+  align-items: center;
+  padding: 0 10px;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 13px;
+  color: var(--gold);
+  background: rgba(255, 255, 255, .025);
+}
+
+.reference-account-form input,
+.reference-note-editor input,
+.reference-note-editor textarea {
+  width: 100%;
+  min-width: 0;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 12px;
+  outline: 0;
+  color: var(--cream-strong);
+  background: rgba(255, 255, 255, .025);
+}
+
+.reference-account-form label > div input {
+  min-height: 42px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}
+
+.reference-account-form > label > input {
+  min-height: 45px;
+  padding: 0 12px;
+}
+
+.reference-account-form input:focus,
+.reference-note-editor input:focus,
+.reference-note-editor textarea:focus {
+  border-color: rgba(232, 199, 122, .54);
+  box-shadow: 0 0 0 3px rgba(214, 175, 55, .07);
+}
+
+.reference-account-cloud-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.reference-account-cloud-grid button {
+  display: grid;
+  min-height: 126px;
+  align-content: center;
+  justify-items: start;
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(226, 191, 119, .19);
+  border-radius: 17px;
+  color: var(--gold-bright);
+  background: linear-gradient(145deg, rgba(14, 57, 44, .88), rgba(4, 23, 18, .96));
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-account-cloud-grid strong { color: var(--cream-strong); font-size: .66rem; }
+.reference-account-cloud-grid small { color: var(--muted-green); font-size: .49rem; line-height: 1.45; }
+
+.reference-account-security,
+.reference-calendar-calculation-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  padding: 11px 12px;
+  color: #98dbae;
+  border-color: rgba(91, 190, 123, .19);
+  background: rgba(61, 158, 91, .05);
+}
+
+.reference-account-security > svg,
+.reference-calendar-calculation-note > svg { flex: 0 0 auto; margin-top: 1px; }
+
+.reference-account-logout {
+  min-height: 44px;
+  border: 1px solid rgba(213, 119, 101, .2);
+  border-radius: 14px;
+  color: #e8b0a3;
+  background: rgba(156, 70, 55, .055);
+  cursor: pointer;
+}
+
+.reference-account-data {
+  display: grid;
+  gap: 8px;
+}
+
+.reference-account-data > button,
+.reference-account-data-confirm button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  border-radius: 14px;
+  border: 1px solid rgba(226, 191, 119, .2);
+  color: #e8dcbd;
+  background: rgba(226, 191, 119, .05);
+  cursor: pointer;
+}
+
+.reference-account-data > button.is-destructive,
+.reference-account-data-confirm button.is-destructive {
+  border-color: rgba(213, 119, 101, .28);
+  color: #e8b0a3;
+  background: rgba(156, 70, 55, .075);
+}
+
+.reference-account-data-confirm {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(213, 119, 101, .28);
+  background: rgba(156, 70, 55, .07);
+}
+
+.reference-account-data-confirm > p {
+  margin: 0;
+  font-size: .82rem;
+  line-height: 1.45;
+  color: #f0cbc1;
+}
+
+.reference-account-data-confirm > div {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.reference-account-status {
+  padding: 10px 12px;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 13px;
+  color: var(--cream);
+  background: rgba(5, 31, 24, .94);
+  font-size: .52rem;
+  line-height: 1.45;
+}
+
+.reference-notes-storage {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 12px;
+}
+
+.reference-notes-storage > svg { color: var(--gold); }
+.reference-notes-storage > button {
+  min-height: 36px;
+  padding: 0 10px;
+  border: 1px solid rgba(226, 191, 119, .22);
+  border-radius: 11px;
+  color: var(--gold-bright);
+  background: rgba(214, 175, 55, .06);
+  font-size: .48rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.reference-notes-loading {
+  display: flex;
+  min-height: 100px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted-green);
+  font-size: .54rem;
+}
+
+.reference-notes-list {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-notes-list > button {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  min-height: 62px;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid rgba(226, 191, 119, .14);
+  border-radius: 14px;
+  color: inherit;
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+  text-align: left;
+}
+
+.reference-notes-list > button.is-active {
+  border-color: rgba(232, 199, 122, .48);
+  background: rgba(214, 175, 55, .075);
+}
+
+.reference-notes-list > button > span { display: grid; min-width: 0; gap: 2px; }
+.reference-notes-list strong { overflow: hidden; color: var(--cream-strong); font-size: .58rem; white-space: nowrap; text-overflow: ellipsis; }
+.reference-notes-list small { overflow: hidden; color: var(--muted-green); font-size: .47rem; white-space: nowrap; text-overflow: ellipsis; }
+.reference-notes-list em { color: var(--gold); font-size: .44rem; font-style: normal; }
+
+.reference-note-editor {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(14, 57, 44, .88), rgba(4, 23, 18, .96));
+}
+
+.reference-note-editor__heading {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.reference-note-editor__heading > span { display: flex; align-items: center; gap: 7px; color: var(--cream-strong); font-size: .58rem; }
+.reference-note-editor__heading > button {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .16);
+  border-radius: 12px;
+  color: var(--muted-green);
+  background: rgba(255, 255, 255, .025);
+  cursor: pointer;
+}
+
+.reference-note-editor input { min-height: 45px; padding: 0 12px; }
+.reference-note-editor textarea { resize: vertical; min-height: 148px; padding: 11px 12px; line-height: 1.55; }
+
+.reference-calendar-calculation-note > span { display: grid; gap: 2px; }
+.reference-calendar-calculation-note strong { color: var(--cream-strong); font-size: .55rem; }
+.reference-calendar-calculation-note small,
+.reference-calendar-reminder-help { color: var(--muted-green); font-size: .48rem; line-height: 1.48; }
+.reference-calendar-reminder-help { display: block; margin-top: -2px; }
+
+.reference-calendar-reminder-banner { top: max(84px, calc(env(safe-area-inset-top) + 72px)); }
+
+/* A real, intentionally restrained light appearance. */
+html[data-theme='light'] {
+  /* 5.6:1 on the light surface, where the ornament gold manages 1.55:1. */
+  --gold-text: #7a5a22;
+  --bg-deep: #e8dfd0;
+  --bg: #f0e8da;
+  --surface: rgba(255, 250, 239, .88);
+  --cream: #284b3e;
+  --cream-strong: #13362b;
+  --muted: #6f746d;
+  --muted-green: #637970;
+  --line: rgba(95, 78, 45, .18);
+  --line-strong: rgba(134, 98, 38, .38);
+  --shadow: 0 24px 70px rgba(57, 45, 25, .14);
+  --shadow-soft: 0 16px 38px rgba(57, 45, 25, .11);
+  background: #e8dfd0;
+  color: #17392e;
+}
+
+html[data-theme='light'] body,
+html[data-theme='light'] .app-background {
+  background:
+    radial-gradient(circle at 15% 3%, rgba(50, 130, 98, .13), transparent 24rem),
+    radial-gradient(circle at 86% 12%, rgba(193, 146, 57, .13), transparent 20rem),
+    linear-gradient(180deg, #f7f0e4 0%, #eee5d7 55%, #e5dbc9 100%);
+}
+
+html[data-theme='light'] .app-background::before { opacity: .08; }
+
+html[data-theme='light'] .glass-card,
+html[data-theme='light'] .reference-account-entry,
+html[data-theme='light'] .reference-account-hero,
+html[data-theme='light'] .reference-notes-storage,
+html[data-theme='light'] .reference-note-editor,
+html[data-theme='light'] .reference-profile-row,
+html[data-theme='light'] .reference-core-access-grid > button,
+html[data-theme='light'] .reference-services-grid > button,
+html[data-theme='light'] .reference-settings-toggles > button,
+html[data-theme='light'] .reference-choice,
+html[data-theme='light'] .reference-calendar-event,
+html[data-theme='light'] .reference-selected-date {
+  color: var(--cream);
+  border-color: rgba(119, 87, 39, .2);
+  background: linear-gradient(145deg, rgba(255, 252, 245, .94), rgba(239, 229, 211, .96));
+  box-shadow: 0 12px 28px rgba(69, 54, 31, .09), inset 0 1px 0 rgba(255, 255, 255, .65);
+}
+
+html[data-theme='light'] .reference-screen-header,
+html[data-theme='light'] .bottom-nav,
+html[data-theme='light'] .reference-profile-modal,
+html[data-theme='light'] .calendar-modal,
+html[data-theme='light'] .reference-prayer-settings-modal {
+  color: var(--cream);
+  border-color: rgba(119, 87, 39, .2) !important;
+  background: rgba(248, 240, 226, .94) !important;
+  box-shadow: 0 14px 36px rgba(69, 54, 31, .12) !important;
+}
+
+html[data-theme='light'] .reference-screen-header h1,
+html[data-theme='light'] h1,
+html[data-theme='light'] h2,
+html[data-theme='light'] h3,
+html[data-theme='light'] strong { color: var(--cream-strong); }
+
+html[data-theme='light'] input,
+html[data-theme='light'] textarea {
+  color: var(--cream-strong);
+  background: rgba(255, 255, 255, .58);
+}
+
+html[data-theme='light'] .reference-network-status,
+html[data-theme='light'] .reference-prayer-reminder-banner {
+  color: var(--cream-strong);
+  background: rgba(248, 240, 226, .97);
+  box-shadow: 0 14px 36px rgba(69, 54, 31, .16);
+}
+
+@media (max-width: 370px) {
+  .reference-account-cloud-grid { grid-template-columns: 1fr; }
+  .reference-account-cloud-grid button { min-height: 96px; }
+  .reference-notes-storage { grid-template-columns: 30px minmax(0, 1fr); }
+  .reference-notes-storage > button,
+  .reference-notes-storage > svg:last-child { grid-column: 1 / -1; justify-self: stretch; }}
+.frame-guard {
+  display: grid;
+  min-height: 100vh;
+  align-content: center;
+  justify-items: center;
+  gap: 14px;
+  padding: 28px;
+  text-align: center;
+}
+.frame-guard h1 {
+  margin: 0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 2rem;
+  color: var(--cream-strong);
+}
+.frame-guard p {
+  max-width: 34ch;
+  margin: 0;
+  color: var(--muted-green);
+  font-size: .95rem;
+  line-height: 1.6;
+}
+.frame-guard a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 20px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, var(--gold-bright), #e2bf77);
+  color: #10251e;
+  font-weight: 700;
+  text-decoration: none;
+}

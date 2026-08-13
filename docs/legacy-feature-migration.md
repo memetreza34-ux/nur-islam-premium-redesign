@@ -1,0 +1,83 @@
+# Nur Islam – Funktionsmigration in die Premium-Struktur
+
+Ziel: Das neue Premium-Design bleibt die einzige zukünftige App-Struktur. Sinnvolle Funktionen aus `memetreza34-ux/nur-islam` werden kontrolliert übernommen, ohne das Original-Repository zu verändern.
+
+## Statuslegende
+
+- **Vorhanden** – bereits als eigener Premium-Screen umgesetzt
+- **Migriert** – aus der alten Funktionsstruktur wieder erreichbar und funktional
+- **Teilweise** – Oberfläche und Kerninteraktion vorhanden, vollständige geprüfte Datenquelle fehlt noch
+- **Offen** – noch nicht in die neue Struktur übernommen
+
+## Hauptfunktionen
+
+| Funktion | Status | Nächster Qualitätsschritt |
+|---|---|---|
+| Startseite | Vorhanden | Gemeinsamer dynamischer Demo-Zeitplan mit Gebetsseite eingebunden; echte Quelle bleibt offen |
+| Gebetszeiten | Teilweise | Echte standort- und methodenabhängige Quelle anbinden |
+| Islamischer Kalender | Vorhanden | Regionale Hijri-Abweichungen und Ereignisquelle ergänzen |
+| Quran | Migriert | 114-Suren-Katalog, Suche, Filter, Favoriten und Offline-Reader; alle 114 Suren liegen paarweise lokal vor (Arabisch und deutscher Altbestand, 6236 Ayat). Fachliche Endprüfung der deutschen Bedeutungen bleibt offen |
+| Dhikr | Migriert | Belegte Routinen nach dem Gebet, morgens und vor dem Schlafen sowie neutraler freier Zähler; tägliche Einzelstände, automatische Tagesgrenze, Fortschritt und sichtbare Quellen |
+| Qibla | Vorhanden | Gerätesensor für reale Kompassrotation ergänzen |
+| Duas | Migriert | 34 Einträge in 13 Kategorien, Suche, Favoriten, Lesefortschritt, Detailansicht, Kopieren und Teilen; fachliche Einzelprüfung ausstehend |
+| 99 Namen Allahs | Migriert | 99 Einträge, Suche, Favoriten, Lernstatus, Fortschritt und Detailansicht; fachliche Endprüfung von Reihenfolge, Schreibweisen und Bedeutungen ausstehend |
+| Moscheesuche | Teilweise | Live-Karten- und Standortdaten anbinden |
+| Sammlungen | Migriert | Quran-Ayah-Lesezeichen aller lokalen Suren, Lieblingssuren, Duas, Namen, Tagesinhalte und Kalendertage werden zusammengeführt; direkte Zielnavigation und Export bleiben offen |
+| Nur-Assistent | Teilweise | Sicheren Backend- und Quellenprozess entwickeln |
+
+## Quran-Migration
+
+| Bestandteil | Status | Umsetzung |
+|---|---|---|
+| Surenverzeichnis | Migriert | Lokale Metadaten für alle 114 Suren, fortlaufende Nummern, Ayah-Anzahl und Offenbarungsort |
+| Surensuche | Migriert | Suche nach Nummer, Transliteration und arabischem Namen |
+| Filter | Migriert | Alle, offline verfügbar, Favoriten, mekkanisch und medinensisch |
+| Reader | Migriert | Dynamische Sure, arabischer Text, sinngemäße deutsche Bedeutung, Schriftgröße, Bedeutungsanzeige, Kopieren, Teilen und lokale Lesezeichen |
+| Lesefortschritt | Migriert | Letzte Sure und aktive Ayah werden lokal gespeichert und auf Home/Quran weitergeführt |
+| Offline-PWA | Migriert | Katalog und vier Kernsuren liegen im App-Shell-Cache; die übrigen 110 werden nach der Aktivierung im Hintergrund nachgeladen |
+| Vollständiger Textbestand | Migriert | Alle 114 Suren paarweise in Arabisch und Deutsch aus dem Altbestand übernommen; 6236 Ayat, Zählung gegen `surahs.json` geprüft |
+| Audio | Offen | Erst mit geprüfter Rezitationsquelle aktivieren; aktuelle Oberfläche täuscht keine Wiedergabe vor |
+| Deutsche Bedeutungen | Teilweise | Altbestand übernommen und ausdrücklich als sinngemäße Bedeutung markiert; fachliche Endprüfung ausstehend |
+
+## Dhikr-Migration
+
+| Bestandteil | Status | Umsetzung |
+|---|---|---|
+| Nach dem Gebet | Migriert | 33 Tasbih, 33 Tahmid, 33 Takbir und abschließender Tahlil; Quellenhinweis Sahih Muslim 597a |
+| Morgenroutine | Migriert | Dreimaliger umfassender Tasbih; Quellenhinweis Sahih Muslim 2726a |
+| Vor dem Schlafen | Migriert | Tasbih, Tahmid und Takbir mit sichtbarem Variantenhinweis; Quellenhinweis Sahih al-Bukhari 6318 |
+| Freier Zähler | Migriert | Neutraler persönlicher Zähler ohne behauptete religiöse Sollzahl |
+| Tagesfortschritt | Migriert | Einzelstände je Routine und Dhikr, automatischer Datumswechsel und Routine-Fortschritt |
+| Quellenanzeige | Migriert | Quelle, sinngemäße Bedeutung und Variantenhinweis direkt im Screen |
+
+## Wiederhergestellte Lernfunktionen
+
+| Funktion | Status | Umsetzung im Premium-Repo |
+|---|---|---|
+| Hadith-Sammlung | Migriert | Suche, 8 gekennzeichnete Inhaltsangaben, Quellen und lokale Favoriten |
+| Wissensbibliothek | Migriert | Premium-Übersicht mit lokalem Fortschritt |
+| Propheten | Migriert | Strukturierte Themenübersicht mit lokalem Fortschritt |
+| Islam-Quiz | Migriert | 5 Fragen, direkte Auswertung und lokaler Bestwert |
+| Hajj & Umrah | Migriert | Geordnete Stationen und lokaler Lernfortschritt |
+| Sunnah im Alltag | Migriert | Alltagspunkte mit lokalem Fortschritt |
+| Fehler & Reue | Migriert | Ruhige Schrittstruktur mit Sicherheitshinweis |
+| Wudu & Salah | Vorhanden | Schrittanleitungen und gespeicherter Fortschritt |
+
+## Wiederhergestellte Dienste
+
+| Funktion | Status | Umsetzung im Premium-Repo |
+|---|---|---|
+| Fasten-Assistent | Migriert | Nächster Montag/Donnerstag, berechnete weiße Tage, lokale Erinnerung |
+| Ummah-Weltkarte | Migriert | Premium-Übersicht; echte Karten- und Community-Daten noch offen |
+| Islamische Orte | Migriert | Makkah, Madinah und Al-Aqsa als strukturierte Einführung |
+| Jumuah | Migriert | Freitagscheckliste mit lokalem Fortschritt |
+| Zakat | Migriert | Grundlagenstruktur und deutlicher Beratungshinweis |
+| Gebetsanzeige/Standby | Migriert | Funktionsstruktur; echter Vollbild- und Wake-Lock-Modus noch offen |
+
+## Verbindliche Regeln
+
+1. Das Original-Repository bleibt unverändert.
+2. Das neue Premium-Repository ist die Zielanwendung.
+3. Keine religiöse Übersetzung, Rechtsauskunft oder Quellenangabe wird ungeprüft als endgültig veröffentlicht.
+4. Demo-, lokale oder berechnete Daten werden sichtbar als solche gekennzeichnet.
+5. Eine alte Funktion gilt erst als vollständig migriert, wenn Navigation, Daten, Speicherung, Fehlerzustände und mobile Darstellung geprüft wurden.
