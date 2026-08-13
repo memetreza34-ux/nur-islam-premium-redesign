@@ -124,8 +124,8 @@ Der messbare Schaden daraus ist aber behoben: `--gold` wird im Hell-Modus nicht 
 ### C3 — Jeder Screen bei 320, 375 und 430px · Größe: M
 Nicht im Testlauf, sondern im Browser nachgemessen. Genau so wurde der 126px-Navigationsfehler gefunden, den kein grüner Test bemerkt hat.
 
-### C4 — Hell-Modus, Reduced Motion, Tastatur · Größe: M
-Alle drei existieren, aber sind nie vollständig durchgegangen worden.
+### C4 — Hell-Modus, Reduced Motion, Tastatur · **zwei von drei belegt**
+Hell-Modus: `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs, nichts unter 3:1 (C1). Reduced Motion: `e2e/reduced-motion.spec.ts` prüft, dass unter `prefers-reduced-motion` keine Endlos-Animation mehr läuft. Tastaturbedienung steht noch aus.
 
 ### C5 — Bundle aufteilen · Größe: S
 706 KB CSS in einer Datei, JS ungesplittet. Nach C2 deutlich einfacher.
