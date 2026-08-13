@@ -11,7 +11,6 @@ const files = new Map(await Promise.all([
   ['prayerList', 'src/styles/prayer-list.css'],
   ['calendar', 'src/styles/calendar.css'],
   ['learn', 'src/styles/learn.css'],
-  ['learnModal', 'src/styles/learn-modal.css'],
   ['more', 'src/styles/more.css'],
   ['moreControls', 'src/styles/more-controls.css'],
   ['navigation', 'src/styles/navigation.css'],
@@ -77,13 +76,6 @@ requireTokens('learn', [
   '.learning-card{',
   'border-radius:28px',
 ]);
-requireTokens('learnModal', [
-  '.learn-modal{',
-  'border-radius:28px',
-  'linear-gradient(160deg,#0d5743,#00120f)',
-  '.learn-modal__close{',
-  'border-radius:18px',
-]);
 requireTokens('more', [
   '.settings-header{',
   'border-radius:18px',
@@ -129,10 +121,6 @@ forbidTokens('learn', [
   'border-radius:24px', 'border-radius:32px', 'border-radius:15px', 'border-radius:14px',
   'border-radius:11px', 'border-radius:12px', 'border-radius:26px', 'border-radius:25px',
   '#0a513d', '#021a14', '#c99c51', '#f4daa0', '#b88d46', '#f1d58f',
-]);
-forbidTokens('learnModal', [
-  'border-radius:30px', 'border-radius:12px', 'border-radius:21px', 'border-radius:14px',
-  '#0b4938', '#021a14',
 ]);
 forbidTokens('more', [
   'border-radius:24px', 'border-radius:30px', 'border-radius:26px', 'border-radius:21px',

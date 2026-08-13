@@ -9,7 +9,6 @@ const learning = await readFile(resolve(root, 'src/styles/reference-learning-cou
 const prayer = await readFile(resolve(root, 'src/styles/reference-prayer-learning-completion.css'), 'utf8');
 const prayerTimes = await readFile(resolve(root, 'src/styles/reference-live-prayer-times.css'), 'utf8');
 const mosque = await readFile(resolve(root, 'src/styles/reference-mosque-live.css'), 'utf8');
-const learnModal = await readFile(resolve(root, 'src/styles/learn-modal.css'), 'utf8');
 
 if (!styleIndex.includes("@import './styles/overlay-safety.css';")) {
   throw new Error('Overlay safety stylesheet is not loaded.');
@@ -20,7 +19,6 @@ if (styleIndex.indexOf("@import './styles/overlay-safety.css';") > styleIndex.in
 
 const expectedExistingOverlays = [
   [profile, '.reference-profile-modal'],
-  [learnModal, '.learn-modal-backdrop'],
   [learning, '.reference-learning-completion-backdrop'],
   [prayer, '.prayer-completion-backdrop'],
   [prayerTimes, '.reference-prayer-settings-backdrop'],
@@ -32,7 +30,6 @@ for (const [source, selector] of expectedExistingOverlays) {
 
 const requiredBackdropSelectors = [
   '.reference-modal-backdrop',
-  '.learn-modal-backdrop',
   '.reference-prayer-settings-backdrop',
   '.reference-mosque-detail-backdrop',
   '.reference-learning-completion-backdrop',
@@ -45,7 +42,6 @@ for (const selector of requiredBackdropSelectors) {
 
 const requiredModalSelectors = [
   '.reference-profile-modal',
-  '.learn-modal',
   '.reference-prayer-settings-modal',
   '.reference-mosque-detail-modal',
   '.reference-learning-completion-modal',
@@ -79,7 +75,6 @@ for (const requirement of [
 
 const closeSelectors = [
   '.reference-modal-close',
-  '.learn-modal__close',
   '.reference-prayer-settings-modal__close',
   '.reference-mosque-detail-modal__close',
   '.reference-learning-completion-modal__close',

@@ -58,7 +58,10 @@
 
 .reference-quran-list__arabic {
   color: #e2bf77 !important;
-  line-height: 1.35;
+  /* Amiri sets the harakat above and below the base line, so 1.35 leaves the
+     marks outside the box and `overflow: hidden` cuts them off. Measured: the
+     glyphs need 25px where the line box gave 22px. */
+  line-height: 1.7;
 }
 
 .reference-quran-list--catalog > article {

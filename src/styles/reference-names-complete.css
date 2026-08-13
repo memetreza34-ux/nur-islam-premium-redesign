@@ -116,6 +116,11 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  /* German compounds do not break on their own, so at 320px five meanings and
+     one name ended in an ellipsis rather than a word. The document is lang=de,
+     so the browser can hyphenate them instead of cutting them. */
+  hyphens: auto;
+  overflow-wrap: break-word;
 }
 
 .reference-name-list__copy strong {
@@ -247,14 +252,21 @@
 }
 
 @media (max-width: 370px) {
-  .reference-name-list--complete > article {
-    grid-template-columns: minmax(0, 1fr) 34px 34px;
+  /* The article columns and this padding used to be narrowed here too. Both
+     were dead: the 44px touch targets and the padding shorthand in
+     premium-depth-lock.css already win. What is left is the one measurement
+     that matters — at 320px the two 44px actions and a 65px Arabic column left
+     the meaning 72px, and two of the 99 names lost their ending even across
+     three lines. The Arabic still sets cleanly at 54px. */
+  .reference-name-list__main {
+    grid-template-columns: 27px 54px minmax(0, 1fr);
+    gap: 7px;
   }
 
-  .reference-name-list__main {
-    grid-template-columns: 27px 65px minmax(0, 1fr);
-    gap: 7px;
-    padding-left: 8px;
+  /* Only "Dhul-Jalali wal-Ikram" is long enough to need this, and it has a
+     space to break at. Everything shorter still sets on one line. */
+  .reference-name-list__copy strong {
+    white-space: normal;
   }
 
   .reference-name-modal__actions {

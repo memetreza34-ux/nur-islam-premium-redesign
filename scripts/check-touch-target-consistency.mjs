@@ -62,7 +62,6 @@ for (const selector of [
   '.reference-prayer-settings-modal__close',
   '.reference-mosque-detail-modal__close',
   '.reference-profile-modal__close',
-  '.learn-modal__close',
 ]) {
   if (!touch.includes(selector)) throw new Error(`Compact touch target coverage is missing: ${selector}`);
 }

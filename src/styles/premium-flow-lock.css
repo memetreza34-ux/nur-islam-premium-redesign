@@ -278,7 +278,9 @@
   color: var(--flow-text);
   font-size: 1.55rem;
   font-weight: 600;
-  line-height: .96;
+  /* .96 gave a 23px line box to glyphs that need 26px, and this heading is
+     clipped, so the name lost its bottom 3px at every width. */
+  line-height: 1.1;
 }
 
 .reference-profile-greeting p {

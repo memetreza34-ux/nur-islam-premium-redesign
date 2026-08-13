@@ -122,7 +122,6 @@ html:not([data-theme='light']) :where(
   .reference-learning-completion-modal,
   .reference-learning-plan-modal,
   .calendar-modal,
-  .learn-modal,
   .reference-mosque-detail-modal,
   .reference-prayer-course-complete > section
 ) {
@@ -142,7 +141,6 @@ html:not([data-theme='light']) :where(
   .reference-reader-controls > button,
   .reference-filter-tabs button,
   .reference-modal-close,
-  .learn-modal__close,
   .reference-prayer-settings-modal__close,
   .reference-mosque-detail-modal__close,
   .reference-learning-completion-modal__close,

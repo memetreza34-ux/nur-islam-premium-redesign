@@ -11,7 +11,6 @@
 .reference-learning-completion-modal,
 .reference-learning-plan-modal,
 .calendar-modal,
-.learn-modal,
 .reference-mosque-detail-modal,
 .reference-prayer-course-complete > section {
   isolation: isolate;
@@ -37,7 +36,6 @@
 .reference-learning-completion-modal::before,
 .reference-learning-plan-modal::before,
 .calendar-modal::before,
-.learn-modal::before,
 .reference-mosque-detail-modal::before {
   content: '';
   position: absolute;
@@ -60,7 +58,6 @@
 }
 
 .reference-modal-close,
-.learn-modal__close,
 .reference-prayer-settings-modal__close,
 .reference-mosque-detail-modal__close,
 .reference-learning-completion-modal__close,
@@ -73,7 +70,6 @@
 }
 
 .reference-modal-backdrop,
-.learn-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .reference-mosque-detail-backdrop,
 .reference-learning-completion-backdrop,
@@ -160,7 +156,6 @@
 [data-theme='light'] .reference-learning-completion-modal,
 [data-theme='light'] .reference-learning-plan-modal,
 [data-theme='light'] .calendar-modal,
-[data-theme='light'] .learn-modal,
 [data-theme='light'] .reference-mosque-detail-modal,
 [data-theme='light'] .reference-prayer-course-complete > section {
   color: #17382c;
@@ -172,7 +167,6 @@
 }
 
 [data-theme='light'] .reference-modal-close,
-[data-theme='light'] .learn-modal__close,
 [data-theme='light'] .reference-prayer-settings-modal__close,
 [data-theme='light'] .reference-mosque-detail-modal__close,
 [data-theme='light'] .reference-learning-completion-modal__close,
@@ -184,7 +178,6 @@
 }
 
 [data-theme='light'] .reference-modal-backdrop,
-[data-theme='light'] .learn-modal-backdrop,
 [data-theme='light'] .reference-prayer-settings-backdrop,
 [data-theme='light'] .reference-mosque-detail-backdrop,
 [data-theme='light'] .reference-learning-completion-backdrop,
@@ -205,7 +198,6 @@
   .reference-learning-completion-modal,
   .reference-learning-plan-modal,
   .calendar-modal,
-  .learn-modal,
   .reference-mosque-detail-modal,
   .reference-prayer-course-complete > section {
     border-radius: 28px !important;
@@ -214,7 +206,6 @@
 
 @media (prefers-reduced-transparency: reduce) {
   .reference-modal-backdrop,
-  .learn-modal-backdrop,
   .reference-prayer-settings-backdrop,
   .reference-mosque-detail-backdrop,
   .reference-learning-completion-backdrop,

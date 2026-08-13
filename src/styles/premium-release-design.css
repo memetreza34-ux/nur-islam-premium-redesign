@@ -542,7 +542,6 @@ body {
 
 /* Modals */
 .reference-modal-backdrop,
-.learn-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .reference-mosque-detail-backdrop,
 .calendar-modal-backdrop{
@@ -552,7 +551,6 @@ body {
 }
 
 .reference-profile-modal,
-.learn-modal,
 .reference-prayer-settings-modal,
 .reference-mosque-detail-modal,
 .calendar-modal,

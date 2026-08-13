@@ -1,6 +1,5 @@
 /* Viewport-safe modal system for short and narrow mobile screens. */
 .reference-modal-backdrop,
-.learn-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .reference-mosque-detail-backdrop,
 .reference-learning-completion-backdrop,
@@ -20,7 +19,6 @@
 }
 
 .reference-modal-backdrop::-webkit-scrollbar,
-.learn-modal-backdrop::-webkit-scrollbar,
 .reference-prayer-settings-backdrop::-webkit-scrollbar,
 .reference-mosque-detail-backdrop::-webkit-scrollbar,
 .reference-learning-completion-backdrop::-webkit-scrollbar,
@@ -30,7 +28,6 @@
 }
 
 .reference-modal-backdrop,
-.learn-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .reference-mosque-detail-backdrop {
   align-items: end !important;
@@ -45,7 +42,6 @@
 }
 
 .reference-profile-modal,
-.learn-modal,
 .reference-prayer-settings-modal,
 .reference-mosque-detail-modal,
 .reference-learning-completion-modal,
@@ -73,7 +69,6 @@
 }
 
 .reference-profile-modal::-webkit-scrollbar,
-.learn-modal::-webkit-scrollbar,
 .reference-prayer-settings-modal::-webkit-scrollbar,
 .reference-mosque-detail-modal::-webkit-scrollbar,
 .reference-learning-completion-modal::-webkit-scrollbar,
@@ -83,7 +78,6 @@
 }
 
 .reference-profile-modal::-webkit-scrollbar-thumb,
-.learn-modal::-webkit-scrollbar-thumb,
 .reference-prayer-settings-modal::-webkit-scrollbar-thumb,
 .reference-mosque-detail-modal::-webkit-scrollbar-thumb,
 .reference-learning-completion-modal::-webkit-scrollbar-thumb,
@@ -94,7 +88,6 @@
 }
 
 .reference-modal-close,
-.learn-modal__close,
 .reference-prayer-settings-modal__close,
 .reference-mosque-detail-modal__close,
 .reference-learning-completion-modal__close,
@@ -120,7 +113,6 @@
 }
 
 .reference-profile-modal h2,
-.learn-modal h2,
 .reference-prayer-settings-modal h2,
 .reference-mosque-detail-modal h2,
 .reference-learning-completion-modal h2,
@@ -132,7 +124,6 @@
 
 .reference-choice-grid,
 .reference-settings-toggles,
-.learn-modal__stats,
 .reference-prayer-settings-group > div,
 .reference-learning-completion-stats,
 .reference-learning-completion-actions,
@@ -154,7 +145,6 @@
 
 @media (max-width: 370px) {
   .reference-profile-modal,
-  .learn-modal,
   .reference-prayer-settings-modal,
   .reference-mosque-detail-modal,
   .reference-learning-completion-modal,
@@ -164,7 +154,6 @@
     padding-left: 17px;
   }
 
-  .learn-modal__stats,
   .reference-learning-completion-stats,
   .prayer-completion-stats {
     gap: 6px;
@@ -179,7 +168,6 @@
 
 @media (max-height: 680px) {
   .reference-modal-backdrop,
-  .learn-modal-backdrop,
   .reference-prayer-settings-backdrop,
   .reference-mosque-detail-backdrop,
   .reference-learning-completion-backdrop,
@@ -191,7 +179,6 @@
   }
 
   .reference-profile-modal,
-  .learn-modal,
   .reference-prayer-settings-modal,
   .reference-mosque-detail-modal,
   .reference-learning-completion-modal,
@@ -224,7 +211,6 @@
   }
 
   .reference-profile-modal__icon,
-  .learn-modal__icon,
   .reference-prayer-settings-modal__icon,
   .reference-mosque-detail-modal__pin {
     width: 46px;
@@ -233,7 +219,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reference-profile-modal,
-  .learn-modal,
   .reference-prayer-settings-modal,
   .reference-mosque-detail-modal,
   .reference-learning-completion-modal,

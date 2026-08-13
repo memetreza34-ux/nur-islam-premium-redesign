@@ -27,19 +27,15 @@ const styleDir = resolve(root, 'src/styles');
 // in a single afternoon. That growth rate is the reason for the cap, so these
 // numbers start where reality was, not where it should be.
 const BUDGET = {
-  files: 98,
+  // First reduction rather than another raise. `learn-modal` and `tracker` were
+  // styled across nine files and held in place by four of these guards, while
+  // the built JS renders neither class — proven by grepping `dist/` for them.
+  // Removing both took one stylesheet and 21 rules out, and the guards that
+  // required them went with it, so the rules cannot come back unnoticed.
+  files: 97,
   overrideFiles: 33,
   importantRules: 2293,
-  // Grown by the surfaces added since: the foreign-frame notice, the
-  // install-prompt scroll clearance, the quiz answer states, the Hadith
-  // explanation card, the person and practice lists, the pilgrimage station
-  // label, the worship guide's tabs and Arabic wording, and the assistant's
-  // content-hit list, the reader's settings dialog and the --gold-text token
-  // that makes gold readable on the light surface.
-  // Two of the added `!important` sit in files that already used it throughout
-  // — matching that weight was the only way to change those rules without a
-  // 34th override layer, which is the trade this budget exists to show.
-  totalBytes: 731_874,
+  totalBytes: 730_443,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

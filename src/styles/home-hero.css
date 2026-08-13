@@ -114,17 +114,12 @@
   transition: 180ms ease;
 }
 .gold-button:hover { transform: translateY(-2px); filter: brightness(1.04); }
-
-.tracker { padding: 20px; border-radius: var(--radius-lg); }
-.tracker__summary { display: flex; align-items: center; gap: 16px; }
-.tracker h3,
 .continue-card h3 {
   margin: 4px 0 3px;
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.5rem;
   line-height: 1.05;
 }
-.tracker p,
 .continue-card p {
   margin: 0;
   color: var(--muted-green);
@@ -163,6 +158,4 @@
 @media (max-width: 380px) {
   .prayer-hero { min-height: 380px; padding: 21px; }
   .hero-main { margin-top: 35px; }
-  .tracker { padding: 16px; }
-  .tracker__summary { gap: 12px; }
   .prayer-check { font-size: 0.56rem; }}

@@ -197,7 +197,6 @@ for (const selector of [
   '.reference-learning-completion-modal',
   '.reference-learning-plan-modal',
   '.calendar-modal',
-  '.learn-modal',
   '.reference-mosque-detail-modal',
   '.reference-prayer-course-complete > section',
   '.reference-input-search',

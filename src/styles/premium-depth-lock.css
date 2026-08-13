@@ -616,9 +616,13 @@
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .018);
 }
 
+/* The learned and favourite buttons are siblings of this element, each with
+   its own grid column on the article. Reserving 84px here subtracted their
+   width a second time, and at 320px the meaning column was left with 7px —
+   one letter per line. */
 .reference-name-list__main {
   min-height: 84px;
-  padding: 10px 84px 10px 10px;
+  padding: 10px 10px;
 }
 
 .reference-name-list__number {
@@ -1241,10 +1245,6 @@
 
   .reference-dua-card__arabic {
     font-size: 1.35rem;
-  }
-
-  .reference-name-list__main {
-    padding-right: 75px;
   }
 
   .reference-qibla-stage {

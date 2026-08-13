@@ -21,7 +21,7 @@
 
 @media(update:slow){
 .premium-home--v2 .welcome-hero__visual::before,.reference-mosque-hero>.premium-image::before,.reference-onboarding__visual>.premium-image::before,.hero-orb__ring,.background-orbit,.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}
-.bottom-nav,.app-shell--detail .reference-screen-header,.reference-assistant-input,.reference-modal-backdrop,.learn-modal-backdrop,.reference-prayer-settings-backdrop,.reference-mosque-detail-backdrop,.calendar-modal-backdrop{-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}}
+.bottom-nav,.app-shell--detail .reference-screen-header,.reference-assistant-input,.reference-modal-backdrop,.reference-prayer-settings-backdrop,.reference-mosque-detail-backdrop,.calendar-modal-backdrop{-webkit-backdrop-filter:blur(10px)!important;backdrop-filter:blur(10px)!important}}
 
 @media(max-width:350px){.premium-home--v2 .welcome-hero__visual,.reference-splash__mosque{animation:none!important}}
 

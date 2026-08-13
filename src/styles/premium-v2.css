@@ -238,8 +238,6 @@
 .prayer-mini-times small { font-size: .52rem; }
 .prayer-mini-times strong { font-size: .58rem; }
 
-.tracker--v2 { border-radius: 26px; }
-
 .journey-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -20,9 +20,7 @@
   .prayer-completion-modal__close,
   .reference-prayer-settings-modal__close,
   .reference-mosque-detail-modal__close,
-  .reference-profile-modal__close,
-  .learn-modal__close
-) {
+  .reference-profile-modal__close) {
   width: var(--compact-touch-target) !important;
   min-width: var(--compact-touch-target);
   height: var(--compact-touch-target) !important;

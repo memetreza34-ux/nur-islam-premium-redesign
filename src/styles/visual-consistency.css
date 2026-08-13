@@ -165,7 +165,6 @@ textarea:focus-visible {
 
 :where(
   .glass-card,
-  .tracker--v2,
   .continue-card--v2,
   .verse-card,
   .hadith-card,

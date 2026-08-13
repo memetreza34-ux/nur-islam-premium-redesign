@@ -85,10 +85,6 @@
   padding-bottom: 13px;
 }
 
-.premium-home--v2 .tracker--v2 {
-  display: none;
-}
-
 .premium-home--v2 .content-section:has(.journey-grid) .section-heading .overline {
   display: block;
 }
