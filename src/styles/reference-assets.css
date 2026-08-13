@@ -84,10 +84,6 @@
   pointer-events: none;
 }
 
-.account-card__ornament {
-  opacity: .06;
-}
-
 @media (max-width: 370px) {
   .next-prayer-panel::before {
     right: -102px;

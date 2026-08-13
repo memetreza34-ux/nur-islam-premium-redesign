@@ -27,15 +27,15 @@ const styleDir = resolve(root, 'src/styles');
 // in a single afternoon. That growth rate is the reason for the cap, so these
 // numbers start where reality was, not where it should be.
 const BUDGET = {
-  // First reduction rather than another raise. `learn-modal` and `tracker` were
-  // styled across nine files and held in place by four of these guards, while
-  // the built JS renders neither class — proven by grepping `dist/` for them.
-  // Removing both took one stylesheet and 21 rules out, and the guards that
-  // required them went with it, so the rules cannot come back unnoticed.
+  // Reductions, not raises. Twenty class names were styled here while the built
+  // JS renders none of them — checked by grepping `dist/assets/*.js`, which is
+  // what the browser actually gets, rather than trusting the source. Several
+  // were held in place by these very guards, so guard and rule were removed
+  // together; that pairing is the reason the debt could not shrink before.
   files: 97,
   overrideFiles: 33,
   importantRules: 2293,
-  totalBytes: 730_443,
+  totalBytes: 725_940,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

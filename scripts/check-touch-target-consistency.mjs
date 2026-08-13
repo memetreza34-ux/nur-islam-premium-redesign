@@ -44,7 +44,6 @@ for (const selector of [
   '.calendar-month-nav > button',
   '.calendar-entry-row > button',
   '.favorite-button',
-  '.reference-dhikr-remembrance button',
   '.reference-qibla-location button',
   '.reference-assistant-input button',
   '.reference-install-prompt__close',

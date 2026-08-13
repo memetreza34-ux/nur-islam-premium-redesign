@@ -18,8 +18,3 @@
   position: relative;
   isolation: isolate;
 }
-
-.reference-artwork-layer .reference-sprite,
-.reference-artwork-host .reference-sprite{
-  position: absolute;
-}

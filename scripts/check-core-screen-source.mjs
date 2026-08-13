@@ -86,8 +86,6 @@ requireTokens('more', [
   'border-radius:18px',
 ]);
 requireTokens('moreControls', [
-  '.choice-pill,.prayer-alert-chip{',
-  'border-radius:18px',
   '.settings-modal{',
   'border-radius:28px',
   'linear-gradient(160deg,#0d5743,#00120f)',

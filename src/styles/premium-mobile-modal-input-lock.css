@@ -71,7 +71,6 @@
 
 .reference-modal-backdrop,
 .reference-prayer-settings-backdrop,
-.reference-mosque-detail-backdrop,
 .reference-learning-completion-backdrop,
 .reference-prayer-course-complete,
 .prayer-completion-backdrop,
@@ -179,7 +178,6 @@
 
 [data-theme='light'] .reference-modal-backdrop,
 [data-theme='light'] .reference-prayer-settings-backdrop,
-[data-theme='light'] .reference-mosque-detail-backdrop,
 [data-theme='light'] .reference-learning-completion-backdrop,
 [data-theme='light'] .reference-prayer-course-complete,
 [data-theme='light'] .prayer-completion-backdrop,
@@ -207,7 +205,6 @@
 @media (prefers-reduced-transparency: reduce) {
   .reference-modal-backdrop,
   .reference-prayer-settings-backdrop,
-  .reference-mosque-detail-backdrop,
   .reference-learning-completion-backdrop,
   .reference-prayer-course-complete,
   .prayer-completion-backdrop,

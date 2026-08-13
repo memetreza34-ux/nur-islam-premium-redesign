@@ -1,7 +1,6 @@
 /* Viewport-safe modal system for short and narrow mobile screens. */
 .reference-modal-backdrop,
 .reference-prayer-settings-backdrop,
-.reference-mosque-detail-backdrop,
 .reference-learning-completion-backdrop,
 .reference-prayer-course-complete,
 .prayer-completion-backdrop {
@@ -20,7 +19,6 @@
 
 .reference-modal-backdrop::-webkit-scrollbar,
 .reference-prayer-settings-backdrop::-webkit-scrollbar,
-.reference-mosque-detail-backdrop::-webkit-scrollbar,
 .reference-learning-completion-backdrop::-webkit-scrollbar,
 .reference-prayer-course-complete::-webkit-scrollbar,
 .prayer-completion-backdrop::-webkit-scrollbar {
@@ -28,8 +26,7 @@
 }
 
 .reference-modal-backdrop,
-.reference-prayer-settings-backdrop,
-.reference-mosque-detail-backdrop {
+.reference-prayer-settings-backdrop {
   align-items: end !important;
   justify-items: center;
 }
@@ -169,7 +166,6 @@
 @media (max-height: 680px) {
   .reference-modal-backdrop,
   .reference-prayer-settings-backdrop,
-  .reference-mosque-detail-backdrop,
   .reference-learning-completion-backdrop,
   .reference-prayer-course-complete,
   .prayer-completion-backdrop {

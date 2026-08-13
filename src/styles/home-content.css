@@ -52,8 +52,6 @@
   line-height: 1;
 }
 .quick-card__arrow { position: absolute; right: 14px; bottom: 14px; color: var(--gold-dark); }
-.quick-card--cream { background: linear-gradient(145deg, rgba(141, 109, 57, 0.42), rgba(0, 27, 22, 0.9)); }
-.quick-card--emerald { background: linear-gradient(145deg, rgba(13, 87, 67, 0.7), rgba(0, 27, 22, 0.9)); }
 
 .continue-card {
   display: grid;

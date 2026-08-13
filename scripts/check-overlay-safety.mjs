@@ -22,7 +22,6 @@ const expectedExistingOverlays = [
   [learning, '.reference-learning-completion-backdrop'],
   [prayer, '.prayer-completion-backdrop'],
   [prayerTimes, '.reference-prayer-settings-backdrop'],
-  [mosque, '.reference-mosque-detail-backdrop'],
 ];
 for (const [source, selector] of expectedExistingOverlays) {
   if (!source.includes(selector)) throw new Error(`Expected overlay implementation is missing: ${selector}`);
@@ -31,7 +30,6 @@ for (const [source, selector] of expectedExistingOverlays) {
 const requiredBackdropSelectors = [
   '.reference-modal-backdrop',
   '.reference-prayer-settings-backdrop',
-  '.reference-mosque-detail-backdrop',
   '.reference-learning-completion-backdrop',
   '.reference-prayer-course-complete',
   '.prayer-completion-backdrop',

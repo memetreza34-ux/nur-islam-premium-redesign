@@ -322,14 +322,6 @@ body {
   box-shadow: 0 13px 30px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
 }
 
-.quick-grid--v2 .quick-card--cream {
-  background: linear-gradient(145deg, rgba(81, 65, 39, .32), rgba(3, 25, 20, .97));
-}
-
-.quick-grid--v2 .quick-card--emerald {
-  background: linear-gradient(145deg, rgba(12, 76, 56, .78), rgba(3, 25, 20, .97));
-}
-
 .quick-card__icon {
   width: 43px;
   height: 43px;
@@ -543,7 +535,6 @@ body {
 /* Modals */
 .reference-modal-backdrop,
 .reference-prayer-settings-backdrop,
-.reference-mosque-detail-backdrop,
 .calendar-modal-backdrop{
   background: rgba(0, 8, 6, .72) !important;
   backdrop-filter: blur(16px) saturate(.9) !important;
