@@ -86,9 +86,17 @@ for (const promise of ['exportAccountData', 'deleteCloudData']) {
   }
 }
 
-const placeholderCount = [...legal.matchAll(/OPERATOR_PLACEHOLDER/g)].length;
-// One declaration, one comparison in the helper, plus the fields still unfilled.
-const unfilled = placeholderCount > 2;
+// Read the operator block itself rather than counting how often the token
+// appears in the file. The count was off by one against its own comment — the
+// declaration, the comparison in the helper *and* the sentence in the header
+// doc-block make three, one over the threshold, so a fully completed imprint
+// still failed the release build. Nobody had hit that yet because nobody had
+// filled it in.
+const operatorBlock = /export const operator\s*=\s*\{([\s\S]*?)\}/.exec(legal);
+if (!operatorBlock) {
+  throw new Error('Could not find the operator block in src/data/legalContent.ts.');
+}
+const unfilled = operatorBlock[1].includes('OPERATOR_PLACEHOLDER');
 
 if (unfilled && RELEASE) {
   throw new Error('Imprint still contains placeholders. Fill in src/data/legalContent.ts before a release build.');
