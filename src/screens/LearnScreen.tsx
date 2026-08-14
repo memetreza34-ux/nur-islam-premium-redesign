@@ -15,7 +15,6 @@ import {
   Settings,
   Sparkles,
   Star,
-  TimerReset,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -142,7 +141,7 @@ export function LearnScreen({
         <div className="reference-prayer-learning-hub__copy">
           <span className="hero-pill">Das A und O</span>
           <h2>Beten lernen</h2>
-          <p>Vom Wudu über Qibla und Gebetszeiten bis zum vollständigen Ablauf aller fünf Pflichtgebete.</p>
+          <p>Vom Wudu über die Qibla bis zum vollständigen Ablauf aller fünf Pflichtgebete — Rakʿah für Rakʿah, mit arabischem Wortlaut und Bedeutung.</p>
           <div className="reference-prayer-learning-hub__progress">
             <span><i style={{ width: `${coreProgress}%` }} /></span>
             <strong>{completedCoreLessons}/6 Grundlagen abgeschlossen</strong>
@@ -156,7 +155,10 @@ export function LearnScreen({
 
       <section className="reference-prayer-learning-actions">
         <button onClick={() => setWuduOpen(true)}><span><Droplets size={22} /></span><span><strong>Wudu lernen</strong><small>Vorbereitung Schritt für Schritt</small></span><ChevronRight size={17} /></button>
-        <button onClick={onOpenPrayer}><span><TimerReset size={22} /></span><span><strong>Gebetszeiten</strong><small>Heute tracken und erinnern</small></span><ChevronRight size={17} /></button>
+        {/* Was "Gebetszeiten", which belongs on the Gebete tab and only
+            duplicated it here. This screen is for learning, so the tile leads
+            to the sequence itself. */}
+        <button onClick={() => setPrayerLesson(nextPrayer.id)}><span><BookOpen size={22} /></span><span><strong>Gebetsablauf</strong><small>Jede Rakʿah mit Wortlaut</small></span><ChevronRight size={17} /></button>
         <button onClick={onOpenQibla}><span><Compass size={22} /></span><span><strong>Qibla finden</strong><small>Standort und Live-Kompass</small></span><ChevronRight size={17} /></button>
       </section>
 
