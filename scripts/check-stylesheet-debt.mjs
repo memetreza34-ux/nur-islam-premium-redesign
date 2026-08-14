@@ -35,7 +35,7 @@ const BUDGET = {
   files: 97,
   overrideFiles: 33,
   importantRules: 2293,
-  totalBytes: 725_940,
+  totalBytes: 725_668,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));
