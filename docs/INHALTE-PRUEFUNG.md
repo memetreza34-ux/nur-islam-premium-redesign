@@ -13,8 +13,8 @@ ist, entscheidet die Prüfung selbst.
 
 | | |
 |---|---|
-| Einträge insgesamt | 186 |
-| davon ohne Einzelnachweis | 111 |
+| Einträge insgesamt | 215 |
+| davon ohne Einzelnachweis | 127 |
 | davon für diese App verfasst | 15 |
 
 ## Zuerst prüfen
@@ -274,6 +274,49 @@ Die Zahlen tragen im Altbestand weder Quelle noch Stichjahr. Sie sind entweder d
 | 15 | Frankreich | — (undatiert) | übernommen | ☐ |
 | 16 | Deutschland | — (undatiert) | übernommen | ☐ |
 | 17 | Großbritannien | — (undatiert) | übernommen | ☐ |
+
+## Gebetsablauf (Rakʿah) ⚠️
+
+Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift und deutsche Bedeutung zu prüfen — außerdem die Zusammensetzung der Rakʿah, die sich zwischen den Rechtsschulen in Details unterscheidet.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Takbir al-Ihram | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 2 | Eröffnungs-Bittgebet (Sana) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 3 | Zuflucht suchen & Basmalah | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 4 | Sure Al-Fatihah | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 5 | Eine weitere Sure (z. B. Al-Ikhlas) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 6 | Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 7 | Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 8 | Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 9 | Sitzen zwischen den Niederwerfungen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 10 | Zweite Niederwerfung | — (Bewegung) | übernommen | ☐ |
+| 11 | Tashahhud (At-Tahiyyat) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 12 | Salawat auf den Propheten ﷺ | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 13 | Bittgebet vor dem Salam (optional) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 14 | Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+
+## Kalendertermine
+
+Aus dem Altbestand übernommen. Zu prüfen sind Hijri-Datum, Bedeutung und die angegebene Praxis — insbesondere dort, wo die Begehung unter Gelehrten unterschiedlich bewertet wird.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Islamisches Neujahr | — (keine) | übernommen | ☐ |
+| 2 | Tasuʿa | — (keine) | übernommen | ☐ |
+| 3 | Ashura | — (keine) | übernommen | ☐ |
+| 4 | Geburt des Propheten ﷺ | — (keine) | übernommen | ☐ |
+| 5 | Isra und Miʿraj | — (keine) | übernommen | ☐ |
+| 6 | Mitte Shaʿban | — (keine) | übernommen | ☐ |
+| 7 | Ramadan beginnt | — (keine) | übernommen | ☐ |
+| 8 | Letzte zehn Nächte des Ramadan | — (keine) | übernommen | ☐ |
+| 9 | Laylat al-Qadr | — (keine) | übernommen | ☐ |
+| 10 | Eid al-Fitr | — (keine) | übernommen | ☐ |
+| 11 | Erste zehn Tage von Dhul-Hijjah | — (keine) | übernommen | ☐ |
+| 12 | Tag at-Tarwiyah | — (keine) | übernommen | ☐ |
+| 13 | Tag von Arafah | — (keine) | übernommen | ☐ |
+| 14 | Eid al-Adha | — (keine) | übernommen | ☐ |
+| 15 | Ayyam at-Tashriq | — (keine) | übernommen | ☐ |
 
 ---
 

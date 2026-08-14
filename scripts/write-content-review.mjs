@@ -135,6 +135,37 @@ areas.push({
   rows: values(ummah.slice(ummah.indexOf('UMMAH_COUNTRIES')), 'name').map((name) => ({ text: name, source: '— (undatiert)', origin: CARRIED })),
 });
 
+// --- Gebetsablauf -----------------------------------------------------------
+// The spoken steps of the prayer: Quranic recitation, the Tashahhud, the
+// Salawat and the supplications. Wording that a beginner will repeat verbatim,
+// so the Arabic, its transliteration and its German meaning each need checking.
+const rakats = await read('src/data/prayerRakatData.ts');
+const rakatSteps = [...rakats.matchAll(/const [A-Z_0-9]+: RakatStep = \{[\s\S]*?title: '([^']+)'[\s\S]*?\n\};/g)]
+  .map((match) => match[0]);
+areas.push({
+  name: 'Gebetsablauf (Rakʿah)',
+  priority: true,
+  note: 'Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift und deutsche Bedeutung zu prüfen — außerdem die Zusammensetzung der Rakʿah, die sich zwischen den Rechtsschulen in Details unterscheidet.',
+  rows: rakatSteps.map((step) => ({
+    text: /title: '([^']+)'/.exec(step)?.[1] ?? 'Schritt',
+    source: /arabic: '/.test(step) ? 'Wortlaut ohne Belegstelle' : '— (Bewegung)',
+    origin: CARRIED,
+  })),
+});
+
+// --- Islamischer Kalender ---------------------------------------------------
+const events = await read('src/data/islamicEventsData.ts');
+const eventBlock = events.slice(events.indexOf('ISLAMIC_EVENTS'), events.indexOf('export const WHITE_DAYS'));
+areas.push({
+  name: 'Kalendertermine',
+  note: 'Aus dem Altbestand übernommen. Zu prüfen sind Hijri-Datum, Bedeutung und die angegebene Praxis — insbesondere dort, wo die Begehung unter Gelehrten unterschiedlich bewertet wird.',
+  rows: values(eventBlock, 'title').map((title) => ({
+    text: title,
+    source: '— (keine)',
+    origin: CARRIED,
+  })),
+});
+
 // --- Report -----------------------------------------------------------------
 const total = areas.reduce((count, area) => count + area.rows.length, 0);
 const withoutSource = areas.reduce(
