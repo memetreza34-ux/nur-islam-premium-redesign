@@ -23,15 +23,22 @@ const root = process.cwd();
 const assets = resolve(root, 'dist/assets');
 
 const BUDGETS_KB = {
-  // Raised twice now for content the app did not have: the quiz catalogue, the
-  // prophets and companions, then the knowledge library, Sunnah, repentance and
-  // the Ummah overview. All of it landed in the on-demand chunk — the entry
-  // chunk has not moved from 95 KB across either step, which is the number
-  // `entry` below exists to protect. This total counts every chunk and cannot
-  // tell the difference.
-  js: 235,
+  // Raised three times now for content the app did not have: the quiz
+  // catalogue, the prophets and companions, then the knowledge library, Sunnah,
+  // repentance and the Ummah overview, and now the prayer sequence — every
+  // Rakʿah with its Arabic wording, transliteration and German meaning, which
+  // is what turned the prayer course from seven generic positions into
+  // something you can actually learn from.
+  //
+  // The last step is also the case this file warns about: the sequence first
+  // landed in the entry chunk and pushed it to exactly its 100 KB limit, so it
+  // was split into `prayer-rakats`. That brought the entry back to 98 KB and
+  // added ~3 KB here, because a separate chunk compresses worse than the same
+  // bytes inlined. Paying that on the total to protect the first paint is the
+  // trade this pair of budgets exists to make visible.
+  js: 240,
   css: 105,
-  total: 340,
+  total: 345,
 };
 
 /**

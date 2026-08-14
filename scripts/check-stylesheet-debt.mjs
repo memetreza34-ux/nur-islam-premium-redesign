@@ -35,7 +35,12 @@ const BUDGET = {
   files: 97,
   overrideFiles: 33,
   importantRules: 2293,
-  totalBytes: 725_668,
+  // Raised once, for the prayer sequence: the course now shows the Arabic
+  // wording, its transliteration and its German meaning for every spoken step,
+  // which needs styles that did not exist before. This is new surface in the
+  // file that owns it, not a 34th layer correcting an older one — the
+  // distinction this budget exists to make visible.
+  totalBytes: 727_259,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

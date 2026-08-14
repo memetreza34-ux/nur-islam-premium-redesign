@@ -1,26 +1,37 @@
 import { useEffect, useMemo, useState } from 'react';
-import type { LucideIcon } from 'lucide-react';
 import {
-  BookOpen,
   Check,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   Compass,
-  Footprints,
-  Hand,
-  HeartHandshake,
   MapPin,
   RotateCcw,
   ShieldCheck,
   Sparkles,
   TimerReset,
-  Volume2,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage, QiblaObject } from '../shared/PremiumVisuals';
+import { PRAYER_PRACTICE_TIPS, PRAYER_RAKATS_BY_ID } from '../data/prayerRakatData';
+import type { PrayerPosture } from '../data/prayerRakatData';
 
 export type PrayerLessonId = 'fajr' | 'dhuhr' | 'asr' | 'maghrib' | 'isha';
+
+/**
+ * The posture is written out rather than drawn as an icon. Seven line glyphs
+ * for standing, bowing and prostrating are not distinguishable at 19px, and
+ * the word is what someone learning the prayer actually needs.
+ */
+const POSTURE_LABEL: Record<PrayerPosture, string> = {
+  takbir: 'Stehend, Hände erhoben',
+  qiyam: 'Stehend',
+  ruku: 'Verbeugung',
+  standing: 'Aufgerichtet',
+  sujud: 'Niederwerfung',
+  sitting: 'Sitzend',
+  taslim: 'Sitzend, Kopf zur Seite',
+};
 
 type PrayerLesson = {
   id: PrayerLessonId;
@@ -31,28 +42,12 @@ type PrayerLesson = {
   note: string;
 };
 
-type LessonStep = {
-  title: string;
-  description: string;
-  icon: LucideIcon;
-};
-
 export const PRAYER_LESSONS: PrayerLesson[] = [
   { id: 'fajr', label: 'Fajr', arabic: 'الفجر', rakahs: 2, timeLabel: 'Morgengebet', note: 'Zwei Pflicht-Rakʿah' },
   { id: 'dhuhr', label: 'Dhuhr', arabic: 'الظهر', rakahs: 4, timeLabel: 'Mittagsgebet', note: 'Vier Pflicht-Rakʿah' },
   { id: 'asr', label: 'Asr', arabic: 'العصر', rakahs: 4, timeLabel: 'Nachmittagsgebet', note: 'Vier Pflicht-Rakʿah' },
   { id: 'maghrib', label: 'Maghrib', arabic: 'المغرب', rakahs: 3, timeLabel: 'Abendgebet', note: 'Drei Pflicht-Rakʿah' },
   { id: 'isha', label: 'Isha', arabic: 'العشاء', rakahs: 4, timeLabel: 'Nachtgebet', note: 'Vier Pflicht-Rakʿah' },
-];
-
-const lessonSteps: LessonStep[] = [
-  { title: 'Vorbereiten und ausrichten', description: 'Prüfe Gebetszeit, Reinheit, Kleidung und Qibla. Fasse die Absicht im Herzen.', icon: Compass },
-  { title: 'Eröffnungstakbir und Stehen', description: 'Beginne das Gebet und stehe ruhig. Lerne die Handhaltung entsprechend deiner Rechtsschule.', icon: Hand },
-  { title: 'Al-Fatihah und Rezitation', description: 'Rezitiere Al-Fatihah. In den vorgesehenen Einheiten folgt eine weitere Quranrezitation.', icon: BookOpen },
-  { title: 'Ruku und Aufrichten', description: 'Gehe ruhig in die Verbeugung und richte dich anschließend vollständig wieder auf.', icon: RotateCcw },
-  { title: 'Sujud und Sitzen', description: 'Vollziehe die Niederwerfung, sitze kurz und vollziehe die zweite Niederwerfung.', icon: Sparkles },
-  { title: 'Nächste Rakʿah', description: 'Stehe für die nächste Gebetseinheit auf und wiederhole den passenden Ablauf.', icon: Footprints },
-  { title: 'Tashahhud und Salam', description: 'Beende das Gebet nach der letzten Rakʿah mit dem Sitzen und dem Salam.', icon: HeartHandshake },
 ];
 
 const preparationItems = [
@@ -99,7 +94,7 @@ export function PrayerLearningScreen({
   onOpenPrayerTimes: () => void;
 }) {
   const [selectedPrayerId, setSelectedPrayerId] = useState<PrayerLessonId>(initialPrayer);
-  const [activeStep, setActiveStep] = useState(() => Math.max(0, Math.min(lessonSteps.length - 1, readNumber(`nur_prayer_lesson_${initialPrayer}_step`, 0))));
+  const [activeStep, setActiveStep] = useState(() => Math.max(0, readNumber(`nur_prayer_lesson_${initialPrayer}_step`, 0)));
   const [practiceRakah, setPracticeRakah] = useState(() => Math.max(1, readNumber(`nur_prayer_lesson_${initialPrayer}_rakah`, 1)));
   const [preparation, setPreparation] = useState(() => readStringSet('nur_prayer_learning_preparation'));
   const [completedLessons, setCompletedLessons] = useState(() => readStringSet('nur_prayer_learning_complete'));
@@ -111,6 +106,19 @@ export function PrayerLearningScreen({
     () => PRAYER_LESSONS.find((prayer) => prayer.id === selectedPrayerId) ?? PRAYER_LESSONS[0],
     [selectedPrayerId],
   );
+
+  // The steps belong to one Rakʿah, not to the prayer as a whole: the first
+  // opens with the Takbir, the middle ones drop the second Surah, and only the
+  // last carries the Tashahhud and the Salam. Showing one generic list for all
+  // of them was the reason this screen could not teach the prayer.
+  const rakats = PRAYER_RAKATS_BY_ID.get(selectedPrayerId)?.rakats ?? [];
+  const currentRakat = rakats[Math.min(practiceRakah, rakats.length) - 1] ?? rakats[0];
+  const steps = currentRakat?.steps ?? [];
+  const stepIndex = Math.max(0, Math.min(steps.length - 1, activeStep));
+  const currentStep = steps[stepIndex];
+  const isLastRakat = practiceRakah >= rakats.length;
+  const atLastStep = stepIndex === steps.length - 1;
+
   const lessonComplete = completedLessons.has(selectedPrayerId);
   const courseProgress = Math.round((completedLessons.size / PRAYER_LESSONS.length) * 100);
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
@@ -136,8 +144,14 @@ export function PrayerLearningScreen({
   const selectPrayer = (id: PrayerLessonId) => {
     const prayer = PRAYER_LESSONS.find((item) => item.id === id) ?? PRAYER_LESSONS[0];
     setSelectedPrayerId(id);
-    setActiveStep(Math.max(0, Math.min(lessonSteps.length - 1, readNumber(`nur_prayer_lesson_${id}_step`, 0))));
+    setActiveStep(Math.max(0, readNumber(`nur_prayer_lesson_${id}_step`, 0)));
     setPracticeRakah(Math.max(1, Math.min(prayer.rakahs, readNumber(`nur_prayer_lesson_${id}_rakah`, 1))));
+  };
+
+  /** Moving between Rakʿah restarts the sequence — each one has its own steps. */
+  const selectRakah = (value: number) => {
+    setPracticeRakah(value);
+    setActiveStep(0);
   };
 
   const togglePreparation = (item: string) => {
@@ -152,6 +166,22 @@ export function PrayerLearningScreen({
     setCompletedLessons((current) => new Set(current).add(selectedPrayerId));
     setCompletionOpen(true);
     navigator.vibrate?.([45, 35, 70]);
+  };
+
+  /** Walks the whole prayer: past the last step of a Rakʿah comes the next one. */
+  const goToNextStep = () => {
+    if (!atLastStep) { setActiveStep(stepIndex + 1); return; }
+    if (!isLastRakat) { selectRakah(practiceRakah + 1); return; }
+    completeLesson();
+  };
+
+  const goToPreviousStep = () => {
+    if (stepIndex > 0) { setActiveStep(stepIndex - 1); return; }
+    if (practiceRakah > 1) {
+      const previous = rakats[practiceRakah - 2];
+      setPracticeRakah(practiceRakah - 1);
+      setActiveStep(Math.max(0, (previous?.steps.length ?? 1) - 1));
+    }
   };
 
   const restartLesson = () => {
@@ -201,6 +231,62 @@ export function PrayerLearningScreen({
         <span className={lessonComplete ? 'is-complete' : ''}>{lessonComplete ? <CircleCheck size={22} /> : <strong>{selectedPrayer.rakahs}</strong>}<small>Rakʿah</small></span>
       </section>
 
+      <section className="reference-rakah-practice">
+        <div><span className="overline">Übungsmodus</span><h2>Rakʿah {practiceRakah} von {selectedPrayer.rakahs}</h2><p>Gehe die Positionen bewusst durch. Es läuft kein Zeitdruck.</p></div>
+        <div className="reference-rakah-dots">{Array.from({ length: selectedPrayer.rakahs }, (_, index) => <button key={index} className={practiceRakah === index + 1 ? 'is-active' : practiceRakah > index + 1 ? 'is-complete' : ''} onClick={() => selectRakah(index + 1)} aria-label={`Rakʿah ${index + 1}`}>{practiceRakah > index + 1 ? <Check size={13} /> : index + 1}</button>)}</div>
+        <div className="reference-rakah-actions"><button disabled={practiceRakah === 1} onClick={() => selectRakah(Math.max(1, practiceRakah - 1))}><ChevronLeft size={16} /> Vorherige</button><button disabled={practiceRakah === selectedPrayer.rakahs} onClick={() => selectRakah(Math.min(selectedPrayer.rakahs, practiceRakah + 1))}>Nächste Rakʿah <ChevronRight size={16} /></button></div>
+      </section>
+
+      {currentStep ? (
+        <section className="reference-rakah-step-detail">
+          <div className="section-heading">
+            <div><span className="overline">{currentRakat?.title} · Schritt {stepIndex + 1} von {steps.length}</span><h2>{currentStep.title}</h2></div>
+            <span className="reference-rakah-posture">{POSTURE_LABEL[currentStep.posture]}</span>
+          </div>
+          <div className="reference-prayer-lesson-progress"><span style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} /></div>
+          <p className="reference-rakah-step-detail__description">{currentStep.description}</p>
+          {currentStep.arabic ? (
+            <div className="reference-rakah-wording">
+              <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
+              <p className="reference-rakah-wording__transliteration">{currentStep.transliteration}</p>
+              <p className="reference-rakah-wording__translation">{currentStep.translation}</p>
+            </div>
+          ) : null}
+          <div className="reference-prayer-course-navigation">
+            <button disabled={stepIndex === 0 && practiceRakah === 1} onClick={goToPreviousStep}><ChevronLeft size={17} /> Zurück</button>
+            <button className="gold-button" onClick={goToNextStep}>
+              {atLastStep && isLastRakat
+                ? <>{lessonComplete ? <CircleCheck size={17} /> : <Sparkles size={17} />}{lessonComplete ? 'Erneut abschließen' : 'Gebet abschließen'}</>
+                : <>{atLastStep ? 'Nächste Rakʿah' : 'Nächster Schritt'} <ChevronRight size={17} /></>}
+            </button>
+          </div>
+        </section>
+      ) : null}
+
+      <section className="reference-prayer-lesson-steps">
+        <div className="section-heading"><div><span className="overline">Ablauf</span><h2>{currentRakat?.title}</h2></div><span>{steps.length} Schritte</span></div>
+        <div>
+          {steps.map((step, index) => {
+            const active = stepIndex === index;
+            const complete = index < stepIndex;
+            return (
+              <button key={`${step.id}-${index}`} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}>
+                <span>{complete ? <CircleCheck size={19} /> : <strong>{index + 1}</strong>}</span>
+                <span><small>{POSTURE_LABEL[step.posture]}</small><strong>{step.title}</strong><em>{step.transliteration ?? step.description}</em></span>
+                <ChevronRight size={17} />
+              </button>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="reference-prayer-tips">
+        <div className="section-heading"><div><span className="overline">Worauf es ankommt</span><h2>Hinweise</h2></div></div>
+        <ul>{PRAYER_PRACTICE_TIPS.map((tip) => <li key={tip}>{tip}</li>)}</ul>
+      </section>
+
+      {/* Below the sequence on purpose: the checklist is what you do once
+          before praying, the sequence is what this screen is for. */}
       <section className="reference-prayer-preparation">
         <div className="section-heading"><div><span className="overline">Vor dem Gebet</span><h2>Vorbereitung</h2></div><button className="text-button" onClick={onOpenPrayerTimes}><TimerReset size={15} /> Zeiten</button></div>
         <div>
@@ -213,40 +299,6 @@ export function PrayerLearningScreen({
       </section>
 
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.</small></span></section>
-
-      <section className="reference-rakah-practice">
-        <div><span className="overline">Übungsmodus</span><h2>Rakʿah {practiceRakah} von {selectedPrayer.rakahs}</h2><p>Gehe die Positionen bewusst durch. Es läuft kein Zeitdruck.</p></div>
-        <div className="reference-rakah-dots">{Array.from({ length: selectedPrayer.rakahs }, (_, index) => <button key={index} className={practiceRakah === index + 1 ? 'is-active' : practiceRakah > index + 1 ? 'is-complete' : ''} onClick={() => setPracticeRakah(index + 1)} aria-label={`Rakʿah ${index + 1}`}>{practiceRakah > index + 1 ? <Check size={13} /> : index + 1}</button>)}</div>
-        <div className="reference-rakah-actions"><button disabled={practiceRakah === 1} onClick={() => setPracticeRakah((value) => Math.max(1, value - 1))}><ChevronLeft size={16} /> Vorherige</button><button disabled={practiceRakah === selectedPrayer.rakahs} onClick={() => setPracticeRakah((value) => Math.min(selectedPrayer.rakahs, value + 1))}>Nächste Rakʿah <ChevronRight size={16} /></button></div>
-      </section>
-
-      <section className="reference-prayer-lesson-steps">
-        <div className="section-heading"><div><span className="overline">Ablauf</span><h2>Positionen lernen</h2></div><span>{activeStep + 1}/{lessonSteps.length}</span></div>
-        <div className="reference-prayer-lesson-progress"><span style={{ width: `${((activeStep + 1) / lessonSteps.length) * 100}%` }} /></div>
-        <div>
-          {lessonSteps.map((step, index) => {
-            const Icon = step.icon;
-            const active = activeStep === index;
-            const complete = index < activeStep;
-            return (
-              <button key={step.title} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}>
-                <span>{complete ? <CircleCheck size={19} /> : <Icon size={19} />}</span>
-                <span><small>Schritt {index + 1}</small><strong>{step.title}</strong><em>{step.description}</em></span>
-                <ChevronRight size={17} />
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      <div className="reference-prayer-course-navigation">
-        <button disabled={activeStep === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={17} /> Zurück</button>
-        {activeStep === lessonSteps.length - 1 ? (
-          <button className="gold-button" onClick={completeLesson}>{lessonComplete ? <CircleCheck size={17} /> : <Sparkles size={17} />}{lessonComplete ? 'Erneut abschließen' : 'Lektion abschließen'}</button>
-        ) : (
-          <button className="gold-button" onClick={() => setActiveStep((value) => Math.min(lessonSteps.length - 1, value + 1))}>Nächster Schritt <ChevronRight size={17} /></button>
-        )}
-      </div>
 
       {lessonComplete ? <button className="reference-prayer-course-restart" onClick={restartLesson}><RotateCcw size={16} /> Lektion neu beginnen</button> : null}
 

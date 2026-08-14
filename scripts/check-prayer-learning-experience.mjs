@@ -19,7 +19,12 @@ const requiredCourseFeatures = [
   'Gebetskurs',
   'Vorbereitung',
   'Übungsmodus',
-  'Positionen lernen',
+  // Was 'Positionen lernen', the heading over seven generic positions that were
+  // identical for all five prayers and carried no wording. The course now walks
+  // the actual Rakʿah, so the check follows the sequence instead of a caption.
+  'PRAYER_RAKATS_BY_ID',
+  'POSTURE_LABEL',
+  'reference-rakah-wording__arabic',
   'nur_prayer_learning_complete',
   'nur_prayer_learning_preparation',
   'mihrab-arch-v2.webp',

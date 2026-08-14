@@ -12,6 +12,10 @@ export default defineConfig(({ command }) => ({
     rollupOptions: {
       output: {
         manualChunks(id) {
+          // The full prayer sequence — every Rakʿah with its Arabic wording,
+          // transliteration and meaning — is only read on the prayer course.
+          // Left in the entry chunk it delayed the first paint of every screen.
+          if (id.includes('/src/data/prayerRakatData')) return 'prayer-rakats';
           if (!id.includes('node_modules')) return undefined;
           if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) return 'react-vendor';
           if (id.includes('/motion/')) return 'motion-vendor';
