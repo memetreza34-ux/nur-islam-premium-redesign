@@ -1,6 +1,22 @@
 # Masterplan: Nur Islam bis zum Launch
 
-Stand: 10. August 2026 · Branch `premium-design-finish` · Bearbeiter: Claude Code allein
+Stand: 14. August 2026 · Branch `premium-design-finish` · Bearbeiter: Claude Code allein
+
+> **Was heute noch fehlt — die kurze Fassung.** Der Release-Build scheitert an
+> genau einer Stelle: dem Impressum. `NUR_RELEASE=true npm run check` läuft
+> durch bis `legal:check` und bricht dort ab, weil in `src/data/legalContent.ts`
+> fünfmal `<<BITTE AUSFÜLLEN>>` steht. Alles andere in der Kette ist grün.
+>
+> GitHub Pages ist eingeschaltet (Source: GitHub Actions), `main` trägt den
+> vollständigen Stand, und der Deploy-Workflow läuft bei jedem Push — er lädt
+> nur nichts hoch, solange das Impressum leer ist. Das ist die Absicht: die App
+> kann nicht ohne Anbieterangabe öffentlich werden. Sobald die vier Angaben
+> stehen, ist sie unter
+> `https://memetreza34-ux.github.io/nur-islam-premium-redesign/` erreichbar.
+>
+> Danach bleiben nur noch Prüfungen, keine Bauarbeiten: D1 (RLS mit zwei
+> Testkonten), D3 (echtes iPhone/Android) und die fachliche Inhaltsprüfung aus
+> A8, die weiterhin bei 0 von 186 abgehakten Einträgen steht.
 
 Dieser Plan deckt **alles außer dem Impressum** ab: Funktion, Inhalt, Design, Release-Technik. Das Impressum trägt Arman selbst ein.
 
@@ -51,13 +67,20 @@ In `LegacyFeatureScreens.tsx` steht `featureContent: Record<GenericFeatureId, st
 
 ### Kaputte oder tote Stellen
 
-- `QuranReaderScreen.tsx:177` — ein Knopf meldet „Leseeinstellungen sind noch nicht verfügbar". Eine Funktion, die es in der Oberfläche gibt, aber nicht tut.
+> Die Bestandsaufnahme oben ist der Stand vom 10. August und bleibt als
+> Ausgangspunkt stehen. Die Inhaltslücken sind seither über A1–A8 geschlossen,
+> die Punkte hier über B1–B3; die Einzelheiten stehen bei den jeweiligen
+> Paketen. Was heute noch offen ist, steht im Kasten ganz oben.
+
+- `QuranReaderScreen.tsx:177` — ein Knopf meldet „Leseeinstellungen sind noch nicht verfügbar". Eine Funktion, die es in der Oberfläche gibt, aber nicht tut. **Erledigt in B1.**
 - Qibla zeigt nur die berechnete Gradzahl, kein Gerätekompass.
 - Quran ohne Rezitation.
 
 ### Design-Schulden
 
-98 Stylesheets, **2281 `!important`**, 33 Override-Ebenen, 706 KB CSS. Jede Sichtänderung braucht heute eine neue Ebene, statt die Regel zu ändern, die das Problem verursacht. Das ist der Grund, warum sich das Fertigwerden zieht.
+Bei der ersten Fassung dieses Plans: 98 Stylesheets, **2281 `!important`**, 33 Override-Ebenen, 706 KB CSS. Jede Sichtänderung braucht eine neue Ebene, statt die Regel zu ändern, die das Problem verursacht. Das ist der Grund, warum sich das Fertigwerden zieht.
+
+Heute: **97 Stylesheets, 2293 `!important`, 33 Override-Ebenen, 709 KB.** Die Zahl war zwischenzeitlich auf 745 KB gestiegen — der Aufräumschritt in C2 hat sie erstmals unter den Ausgangswert gedrückt. Die 33 Ebenen stehen unverändert; sie sind die eigentliche Arbeit.
 
 ---
 
@@ -118,11 +141,26 @@ Die reine Umstellung von Literalen auf Tokens ist blockiert: von 127 Rohwerten, 
 
 Der messbare Schaden daraus ist aber behoben: `--gold` wird im Hell-Modus nicht umdefiniert, also stand goldener Text mit 1,55:1 auf Creme. Neues Token `--gold-text` (hell: 5,6:1), dazu eine hartkodierte dunkle Kartenfüllung auf `var(--surface)` umgestellt. `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs und lässt nichts unter 3:1 durch.
 
-### C2 — Override-Ebenen auflösen · Größe: L
+### C2 — Override-Ebenen auflösen · Größe: L · **begonnen: 20 KB entfernt, 33 Ebenen stehen noch**
 33 Lock- und Parallel-Pass-Dateien schrittweise in die Dateien zurückführen, die die Regel definieren. Ziel: **unter 25 Stylesheets, unter 300 `!important`**. Nach jedem Schritt Vorher/Nachher-Screenshots aller Screens; `style-debt:check` verhindert das Zurückwachsen.
 
-### C3 — Jeder Screen bei 320, 375 und 430px · Größe: M
+**Erster Durchgang gemacht — totes CSS.** 21 Klassennamen wurden in den Stylesheets gepflegt, die das gebaute JS nie rendert. Der Beweis ist `grep` auf `dist/assets/*.js` — das, was der Browser bekommt —, nicht die Quelle. Entfernt: `learn-modal` (eine ganze Datei), `tracker`, die Gefahr-Variante des Einstellungs-Modals, die Auswahl-Pillen, das Konto-Ornament, beide Quick-Card-Tönungen, Artwork-Host und -Layer, der Gebets-Halo, das Moschee-Backdrop (verlor seinen Zweck, als das Modal auf `.reference-modal-backdrop` wechselte) und `.topbar`. Ergebnis: 98 → 97 Dateien, 745 → 725 KB, Budget dreimal gesenkt statt erhöht.
+
+**Der Kern der Sache**, und der Grund, warum das vorher nicht schrumpfen konnte: sechs dieser Regeln wurden von den Prüfskripten selbst festgehalten. Ein Guard, der einen Selektor verlangt, den nichts rendert, schützt kein Verhalten — er verhindert nur das Aufräumen. Guard und Regel mussten zusammen weg.
+
+**Ein Weg wurde geprüft und verworfen.** 500 Deklarationen stehen wortgleich doppelt: derselbe Selektor setzt dieselbe Eigenschaft auf denselben Wert, und nur die spätere wirkt. Sie zu entfernen bringt 13 KB und ändert nachweislich nichts am Ergebnis — aber es entfernt die Werte aus den **Quelldateien** und lässt die Lock-Ebenen als einzige Wahrheit zurück. Fünf Guards schlugen dabei an, und sie hatten recht: `check-core-screen-source.mjs` prüft absichtlich, dass `navigation.css` seine 18px selbst trägt und nicht nur die 33. Ebene. Das ist die Abhängigkeit, die C2 abbauen soll, nicht vertiefen. Zurückgenommen.
+
+**Daraus folgt die Richtung für den Rest von C2:** nicht die frühe Deklaration löschen, sondern die späte — die Lock-Ebene auflösen und den Wert in der Quelldatei stehen lassen. Das geht nicht automatisch, weil zwischen Quelle und Lock andere Werte liegen können (bei `.bottom-nav__item` etwa 14px und 16px zwischen den beiden 18px). Jede Zusammenführung muss einzeln geprüft und mit Screenshots belegt werden.
+
+### C3 — Jeder Screen bei 320, 375 und 430px · **Werkzeug steht, drei Fehler behoben**
 Nicht im Testlauf, sondern im Browser nachgemessen. Genau so wurde der 126px-Navigationsfehler gefunden, den kein grüner Test bemerkt hat.
+
+`e2e/layout-audit.spec.ts` macht das jetzt dauerhaft: fünf Tabs und sieben Hubs bei 320, 375 und 430px, und es schlägt fehl, sobald Text abgeschnitten wird, ohne dass man ihn erreichen kann. Beim ersten Lauf fand es drei Fehler, die kein grüner Test und keine Screenshot-Durchsicht bemerkt hatte:
+
+- Die Begrüßung gab 24px-Glyphen eine 23px-Zeilenbox und schnitt den Überhang ab — der Name jedes Nutzers verlor unten 3px, bei **jeder** Breite.
+- Die 99-Namen-Liste ließ der Bedeutungsspalte auf einem 320px-Gerät 72px: zwei Zeilen à acht Zeichen. Sechs Bedeutungen endeten mitten im Wort. Die Spalte kann nicht breiter werden, solange die beiden Aktionen 44px behalten müssen — also gibt die arabische Spalte 11px ab, der Zeilenumbruch darf eine dritte Zeile, und deutsche Komposita werden getrennt statt abgeschnitten. Alle 99 arabischen Namen passen weiterhin in ihre Spalte, nachgemessen.
+
+Was noch aussteht: die Prüfung fängt nur senkrechtes Abschneiden. Seitliches Abschneiden per `text-overflow: ellipsis` ist an vielen Stellen gewollt und müsste einzeln bewertet werden.
 
 ### C4 — Hell-Modus, Reduced Motion, Tastatur · **zwei von drei belegt**
 Hell-Modus: `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs, nichts unter 3:1 (C1). Reduced Motion: `e2e/reduced-motion.spec.ts` prüft, dass unter `prefers-reduced-motion` keine Endlos-Animation mehr läuft. Tastaturbedienung steht noch aus.
@@ -130,13 +168,18 @@ Hell-Modus: `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs, 
 ### C5 — Bundle aufteilen · Größe: S
 706 KB CSS in einer Datei, JS ungesplittet. Nach C2 deutlich einfacher.
 
+### D0 — Veröffentlichungsweg · **erledigt bis auf das Impressum**
+GitHub Pages ist eingeschaltet, Source steht auf GitHub Actions — das war der eine manuelle Schritt, der im README seit Wochen offen stand. `main` trägt jetzt den vollständigen Stand; vorher lag es 1106 Commits zurück, weshalb der Deploy-Workflow (der nur auf `main` hört) nie etwas Aktuelles zu veröffentlichen hatte.
+
+Der Workflow baut mit `NUR_RELEASE=true` und bricht deshalb am leeren Impressum ab, bevor irgendein Artefakt hochgeladen wird. Zwei Läufe belegen das: beide scheitern an genau dieser Zeile und an nichts sonst. Das ist der Beweis, dass der Rest release-fähig ist — und zugleich die Zusicherung, dass nichts ohne Anbieterangabe online geht.
+
 ### D1 — `npm run rls:verify` · Größe: S
 Braucht zwei Testkonten. Erst dieser Lauf beweist, dass ein Konto wirklich nur eigene Daten sieht.
 
 ### D2 — `/security-review` auf dem fertigen Stand · Größe: S
 
 ### D3 — Echtes iPhone und Android · Größe: M
-PWA installieren, Benachrichtigungen, Standort, Offline-Start, Safe-Area am Notch.
+PWA installieren, Benachrichtigungen, Standort, Offline-Start, Safe-Area am Notch. Ab jetzt möglich, sobald das Impressum steht — vorher gab es keine erreichbare Adresse zum Installieren.
 
 ### D4 — Store-Entscheidung · Größe: M
 PWA über GitHub Pages, oder native Hülle über Capacitor für App Store und Play Store. Entscheidet über Aufwand und Zeitplan — deshalb früh besprechen, spät umsetzen.
