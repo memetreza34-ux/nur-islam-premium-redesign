@@ -15,7 +15,9 @@ import {
   Settings2,
   Share2,
   Sparkles,
+  SunDim,
   Sunrise,
+  Sunset,
   SunMedium,
   Volume2,
   X,
@@ -102,6 +104,8 @@ function getHijriDate(date = new Date()) {
 function PrayerIcon({ prayer, size = 21 }: { prayer: PrayerScheduleItem; size?: number }) {
   if (prayer.visual === 'moon') return <MoonStar size={size} />;
   if (prayer.visual === 'sunrise') return <Sunrise size={size} />;
+  if (prayer.visual === 'sunset') return <Sunset size={size} />;
+  if (prayer.visual === 'afternoon') return <SunDim size={size} />;
   return <SunMedium size={size} />;
 }
 

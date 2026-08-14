@@ -6,8 +6,21 @@ const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'mosque-gold.webp': 'mosque-gold-v2.webp',
   'mosque-gold.png': 'mosque-gold-v2.webp',
   'mosque.webp': 'mosque-gold-v2.webp',
-  // The archived mosque raster decodes as 0x0 in Chromium. Keep the historic
-  // v2 source contract, but terminate its alias chain at the valid vector art.
+  // This redirect is why Home, the splash and the onboarding show a flat vector
+  // sketch where the code asks for the mosque photograph, and why Home looks
+  // unlike the rest of the app.
+  //
+  // Its stated reason — "the archived mosque raster decodes as 0x0 in
+  // Chromium" — is only half true, and the half that is true is a dev-server
+  // artifact. Measured: the file is a valid VP8X WebP at 387x267; Chromium
+  // decodes it at 387x267 when requested without a query string, and fails
+  // only with the `?v=` cache-busting parameter, which Vite's dev server
+  // treats as a module query. `vite preview` serves the same URL, query and
+  // all, as 14751 bytes of image/webp.
+  //
+  // Removing it therefore looks safe but is not yet proven: the production
+  // preview would not boot the app far enough to confirm the image renders
+  // there, so this stays until someone checks it on the built site.
   'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',

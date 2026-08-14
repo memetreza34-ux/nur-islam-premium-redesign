@@ -17,7 +17,9 @@ import {
   Play,
   Quote,
   Sparkles,
+  SunDim,
   Sunrise,
+  Sunset,
   SunMedium,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -89,6 +91,7 @@ import {
   PRAYER_SCHEDULE,
   PRAYER_SCHEDULE_META,
 } from '../services/prayerSchedule';
+import type { PrayerScheduleItem } from '../services/prayerSchedule';
 import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
@@ -221,9 +224,16 @@ function readDhikrTotalToday() {
   }
 }
 
-function PrayerVisual({ visual, size = 14 }: { visual: 'moon' | 'sunrise' | 'sun'; size?: number }) {
+/**
+ * The union is taken from the schedule rather than repeated, because it was
+ * repeated: this copy still knew only three positions after the schedule grew
+ * to five, so Home kept drawing Asr with the midday sun.
+ */
+function PrayerVisual({ visual, size = 14 }: { visual: PrayerScheduleItem['visual']; size?: number }) {
   if (visual === 'moon') return <MoonStar size={size} />;
   if (visual === 'sunrise') return <Sunrise size={size} />;
+  if (visual === 'sunset') return <Sunset size={size} />;
+  if (visual === 'afternoon') return <SunDim size={size} />;
   return <SunMedium size={size} />;
 }
 

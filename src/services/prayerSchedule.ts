@@ -8,7 +8,13 @@ export type PrayerScheduleItem = {
   time: string;
   description: string;
   obligatory: boolean;
-  visual: 'moon' | 'sunrise' | 'sun';
+  /**
+   * Where the sun stands, not just whether it is up. Dhuhr and Asr both used
+   * to be 'sun' and drew the same high midday glyph, so the afternoon prayer
+   * looked like the midday one — and Maghrib, the sunset prayer, was drawn
+   * with a sunrise.
+   */
+  visual: 'moon' | 'sunrise' | 'sun' | 'afternoon' | 'sunset';
 };
 
 export type PrayerScheduleMeta = {
@@ -35,8 +41,8 @@ export const PRAYER_SCHEDULE: PrayerScheduleItem[] = [
   { id: 'fajr', label: 'Fajr', compactLabel: 'Fajr', arabic: 'الفجر', time: '04:18', description: 'Morgengebet', obligatory: true, visual: 'moon' },
   { id: 'sunrise', label: 'Sonnenaufgang', compactLabel: 'Sonne', arabic: 'الشروق', time: '05:54', description: 'Shuruq', obligatory: false, visual: 'sunrise' },
   { id: 'dhuhr', label: 'Dhuhr', compactLabel: 'Dhuhr', arabic: 'الظهر', time: '12:45', description: 'Mittagsgebet', obligatory: true, visual: 'sun' },
-  { id: 'asr', label: 'Asr', compactLabel: 'Asr', arabic: 'العصر', time: '16:42', description: 'Nachmittagsgebet', obligatory: true, visual: 'sun' },
-  { id: 'maghrib', label: 'Maghrib', compactLabel: 'Maghrib', arabic: 'المغرب', time: '19:36', description: 'Abendgebet', obligatory: true, visual: 'sunrise' },
+  { id: 'asr', label: 'Asr', compactLabel: 'Asr', arabic: 'العصر', time: '16:42', description: 'Nachmittagsgebet', obligatory: true, visual: 'afternoon' },
+  { id: 'maghrib', label: 'Maghrib', compactLabel: 'Maghrib', arabic: 'المغرب', time: '19:36', description: 'Abendgebet', obligatory: true, visual: 'sunset' },
   { id: 'isha', label: 'Isha', compactLabel: 'Isha', arabic: 'العشاء', time: '21:07', description: 'Nachtgebet', obligatory: true, visual: 'moon' },
 ];
 
