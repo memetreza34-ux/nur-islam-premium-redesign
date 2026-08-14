@@ -35,12 +35,15 @@ const BUDGET = {
   files: 97,
   overrideFiles: 33,
   importantRules: 2293,
-  // Raised once, for the prayer sequence: the course now shows the Arabic
-  // wording, its transliteration and its German meaning for every spoken step,
-  // which needs styles that did not exist before. This is new surface in the
-  // file that owns it, not a 34th layer correcting an older one — the
-  // distinction this budget exists to make visible.
-  totalBytes: 727_259,
+  // Raised twice, both for surface that did not exist: the prayer sequence
+  // (Arabic wording, transliteration and German meaning for every spoken step)
+  // and the calendar's occasions, which now explain what a day is and what is
+  // done on it rather than only marking it. Both live in the file that owns the
+  // component, not in a 34th layer correcting an older one — the distinction
+  // this budget exists to make visible. The calendar block needed no
+  // `!important`: `.calendar-event-card p.x` outranks `.calendar-event-card p`
+  // on specificity alone, which is the cheaper way to win.
+  totalBytes: 727_922,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

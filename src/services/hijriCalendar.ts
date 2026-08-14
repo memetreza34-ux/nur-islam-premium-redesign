@@ -47,6 +47,23 @@ export function getHijriDay(date: Date) {
   }
 }
 
+/**
+ * Month of the Hijri year, 1 = Muharram, or 0 when unavailable.
+ *
+ * Read as a number rather than a name: the month names come out localised and
+ * transliterated differently per platform, and matching an event to "Ramadan"
+ * by string is exactly the kind of thing that quietly stops working.
+ */
+export function getHijriMonth(date: Date) {
+  try {
+    const parts = new Intl.DateTimeFormat(calendarLocale('en'), { month: 'numeric' }).formatToParts(date);
+    const month = Number(parts.find((part) => part.type === 'month')?.value ?? 0);
+    return Number.isInteger(month) && month >= 1 && month <= 12 ? month : 0;
+  } catch {
+    return 0;
+  }
+}
+
 /** German Hijri date, e.g. "25. Safar 1448 AH". */
 export function getHijriLabel(date: Date, fallback = 'Islamisches Datum') {
   try {

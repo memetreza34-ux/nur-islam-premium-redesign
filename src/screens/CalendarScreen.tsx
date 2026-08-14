@@ -18,11 +18,20 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { readCalendarEntries, writeCalendarEntries } from '../services/calendarReminderService';
 import type { PersonalCalendarEntry } from '../services/calendarReminderService';
-import { getHijriDay, getHijriLabel } from '../services/hijriCalendar';
+import { getHijriDay, getHijriLabel, getHijriMonth } from '../services/hijriCalendar';
+import {
+  WEEKLY_FAST_EVENT,
+  WHITE_DAYS,
+  WHITE_DAYS_EVENT,
+  findIslamicEvents,
+  isFastingForbidden,
+} from '../data/islamicEventsData';
 
 type CalendarEvent = {
   title: string;
   subtitle: string;
+  meaning?: string;
+  practice?: string;
   fasting: boolean;
   sourceNote: string;
 };
@@ -85,14 +94,41 @@ function getMonthData(offset: number) {
   return { first, year, month, daysInMonth, cells };
 }
 
+const HIJRI_SOURCE_NOTE = 'Der Termin ist aus dem Hijri-Kalender des Geräts berechnet. Die örtliche Mondsichtung kann um einen Tag abweichen.';
+
+/**
+ * What falls on this day, most significant first.
+ *
+ * The order matters: Eid outranks the white days it can collide with, and a
+ * named occasion outranks the weekly voluntary fast. Before this, the calendar
+ * knew only the white days and Monday/Thursday — Ramadan, both Eids, Arafah and
+ * Laylat al-Qadr were nowhere in a screen that exists to show them.
+ */
 function getCalendarEvent(date: Date): CalendarEvent | null {
   const hijriDay = getHijriDay(date);
-  if ([13, 14, 15].includes(hijriDay)) {
+  const hijriMonth = getHijriMonth(date);
+  const fastingForbidden = isFastingForbidden(hijriMonth, hijriDay);
+
+  const [named] = findIslamicEvents(hijriMonth, hijriDay);
+  if (named) {
     return {
-      title: 'Weiße Tage',
+      title: named.title,
+      subtitle: `${hijriDay}. Tag des ${hijriMonth}. islamischen Monats`,
+      meaning: named.meaning,
+      practice: named.practice,
+      fasting: named.fasting && !fastingForbidden,
+      sourceNote: HIJRI_SOURCE_NOTE,
+    };
+  }
+
+  if (WHITE_DAYS.includes(hijriDay as (typeof WHITE_DAYS)[number])) {
+    return {
+      title: WHITE_DAYS_EVENT.title,
       subtitle: `${hijriDay}. berechneter Tag des islamischen Monats`,
-      fasting: true,
-      sourceNote: 'Der Hinweis basiert auf dem berechneten Hijri-Kalender des Geräts. Örtliche Mondsichtung kann um einen Tag abweichen.',
+      meaning: WHITE_DAYS_EVENT.meaning,
+      practice: WHITE_DAYS_EVENT.practice,
+      fasting: !fastingForbidden,
+      sourceNote: HIJRI_SOURCE_NOTE,
     };
   }
 
@@ -101,7 +137,9 @@ function getCalendarEvent(date: Date): CalendarEvent | null {
     return {
       title: weekday === 1 ? 'Montagsfasten' : 'Donnerstagsfasten',
       subtitle: 'Freiwilliger Fastentag',
-      fasting: true,
+      meaning: WEEKLY_FAST_EVENT.meaning,
+      practice: WEEKLY_FAST_EVENT.practice,
+      fasting: !fastingForbidden,
       sourceNote: 'Dieser Hinweis basiert ausschließlich auf dem lokalen Wochentag.',
     };
   }
@@ -217,15 +255,21 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             if (!day) return <span className="calendar-day calendar-day--empty" key={`empty-${index}`} />;
             const cellDate = new Date(monthData.year, monthData.month, day);
             const dateKey = getDateKey(cellDate);
-            const event = Boolean(getCalendarEvent(cellDate));
+            const event = getCalendarEvent(cellDate);
+            // A named occasion — Ramadan, Eid, Arafah — is worth more than the
+            // recurring voluntary fast, so it gets its own mark rather than
+            // sharing one dot with every Monday.
+            const named = Boolean(event && findIslamicEvents(getHijriMonth(cellDate), getHijriDay(cellDate)).length > 0);
             const personal = entries.some((entry) => entry.date === dateKey);
             const selected = day === selectedDay;
             const isToday = dateKey === getDateKey(new Date());
-            const hijriDay = getHijriDay(cellDate);
             return (
-              <button key={day} className={`calendar-day${selected ? ' calendar-day--selected' : ''}${isToday ? ' calendar-day--today' : ''}`} onClick={() => setSelectedDay(day)}>
-                <strong>{day}</strong><em>{hijriDay || ''}</em>
-                <span className="calendar-day__dots">{event ? <i className="calendar-dot calendar-dot--event" /> : null}{personal ? <i className="calendar-dot calendar-dot--personal" /> : null}</span>
+              <button key={day} className={`calendar-day${selected ? ' calendar-day--selected' : ''}${isToday ? ' calendar-day--today' : ''}`} onClick={() => setSelectedDay(day)} aria-label={event ? `${day}. — ${event.title}` : undefined}>
+                {/* One number, the one people navigate by. The Hijri date stays
+                    in the month header and on the selected day, where there is
+                    room to label it as calculated. */}
+                <strong>{day}</strong>
+                <span className="calendar-day__dots">{named ? <i className="calendar-dot calendar-dot--named" /> : event ? <i className="calendar-dot calendar-dot--event" /> : null}{personal ? <i className="calendar-dot calendar-dot--personal" /> : null}</span>
               </button>
             );
           })}
@@ -251,6 +295,8 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             })} aria-label="Hinweis als Favorit speichern"><Heart size={18} fill={favorites.has(selectedDateKey) ? 'currentColor' : 'none'} /></button>
           </div>
           <h3>{selectedEvent.title}</h3><p>{selectedEvent.subtitle}</p>
+          {selectedEvent.meaning ? <p className="calendar-event-card__meaning">{selectedEvent.meaning}</p> : null}
+          {selectedEvent.practice ? <p className="calendar-event-card__practice"><Sparkles size={13} /> {selectedEvent.practice}</p> : null}
           {selectedEvent.fasting ? <span className="fasting-chip"><Sparkles size={14} /> Freiwilliges Fasten</span> : null}
           <span className="reference-calendar-event__source"><ShieldCheck size={14} /> {selectedEvent.sourceNote}</span>
         </section>
