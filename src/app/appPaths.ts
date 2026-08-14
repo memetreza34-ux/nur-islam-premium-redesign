@@ -6,22 +6,19 @@ const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'mosque-gold.webp': 'mosque-gold-v2.webp',
   'mosque-gold.png': 'mosque-gold-v2.webp',
   'mosque.webp': 'mosque-gold-v2.webp',
-  // This redirect is why Home, the splash and the onboarding show a flat vector
-  // sketch where the code asks for the mosque photograph, and why Home looks
-  // unlike the rest of the app.
+  // All four mosque rasters are the same truncated file: the RIFF header
+  // announces 24090 bytes, 14743 are present, and the VP8 chunk carrying the
+  // actual picture is missing — only the alpha channel survived. Chromium
+  // decodes it as 0x0, which is what the earlier note here observed.
   //
-  // Its stated reason — "the archived mosque raster decodes as 0x0 in
-  // Chromium" — is only half true, and the half that is true is a dev-server
-  // artifact. Measured: the file is a valid VP8X WebP at 387x267; Chromium
-  // decodes it at 387x267 when requested without a query string, and fails
-  // only with the `?v=` cache-busting parameter, which Vite's dev server
-  // treats as a module query. `vite preview` serves the same URL, query and
-  // all, as 14751 bytes of image/webp.
+  // It used to point at mosque-gold-v2.svg, a flat vector sketch that looked
+  // nothing like the photography everywhere else in the app. The dome is a
+  // real photograph of the same subject — dome, minarets, crescent — and it is
+  // intact, so Home, the splash and the onboarding now match the rest.
   //
-  // Removing it therefore looks safe but is not yet proven: the production
-  // preview would not boot the app far enough to confirm the image renders
-  // there, so this stays until someone checks it on the built site.
-  'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
+  // Repairing the original is not possible: the image data is not in the file
+  // and no earlier commit has it either.
+  'mosque-gold-v2.webp': 'dome-v2.webp',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
   'quran-open.webp': 'quran-open-v2.webp',

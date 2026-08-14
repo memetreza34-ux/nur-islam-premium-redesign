@@ -77,6 +77,21 @@ const recoveredAssets = [
   'bookmark-v2.webp',
 ];
 
+/**
+ * The four mosque rasters are the same truncated file: the RIFF header
+ * announces 24090 bytes, 14743 are present, and the VP8 chunk holding the
+ * picture never made it in — only the alpha channel did. Chromium decodes them
+ * as 0x0. They are aliased to dome-v2.webp in appPaths.ts, so nothing renders
+ * them, and no earlier commit has an intact copy to restore.
+ *
+ * They are named here rather than skipped silently, so the integrity check
+ * below stays meaningful for every other asset.
+ */
+const KNOWN_TRUNCATED = new Set([
+  'mosque-gold-v2.webp',
+  'mosque-v2.webp',
+]);
+
 for (const name of recoveredAssets) {
   const path = resolve(recoveredDirectory, name);
   const fileStats = await stat(path);
@@ -90,6 +105,38 @@ for (const name of recoveredAssets) {
   }
   if (data.subarray(8, 12).toString('ascii') !== 'WEBP') {
     throw new Error(`Recovered asset is not WebP: ${name}`);
+  }
+
+  // A valid header is not a valid image. Checking only RIFF/WEBP is why four
+  // truncated files shipped for months while the app quietly fell back to a
+  // vector sketch on Home, the splash and the onboarding.
+  const declaredSize = data.readUInt32LE(4);
+  const actualSize = data.length - 8;
+  const chunks = [];
+  let offset = 12;
+  let malformed = false;
+  while (offset + 8 <= data.length) {
+    const id = data.subarray(offset, offset + 4).toString('ascii');
+    const size = data.readUInt32LE(offset + 4);
+    if (!/^[\x20-\x7e]{4}$/.test(id) || offset + 8 + size > data.length) { malformed = true; break; }
+    chunks.push(id.trim());
+    offset += 8 + size + (size % 2);
+  }
+  const hasPixels = chunks.includes('VP8') || chunks.includes('VP8L');
+
+  if (KNOWN_TRUNCATED.has(name)) {
+    if (!malformed && declaredSize === actualSize && hasPixels) {
+      throw new Error(`${name} is intact now — remove it from KNOWN_TRUNCATED and drop its alias in appPaths.ts.`);
+    }
+    continue;
+  }
+
+  if (declaredSize !== actualSize) {
+    throw new Error(`${name} is truncated: the RIFF header declares ${declaredSize} bytes of payload, ${actualSize} are present.`);
+  }
+  if (malformed) throw new Error(`${name} has a malformed chunk table and will not decode.`);
+  if (!hasPixels) {
+    throw new Error(`${name} carries no VP8/VP8L image data (only ${chunks.join(', ')}), so it decodes as 0x0.`);
   }
 }
 
