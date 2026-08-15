@@ -190,4 +190,18 @@ test('reads a long surah from the local bundle instead of the network', async ({
 
   await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
   expect(onlineCalls, 'Al-Baqara must come from the bundled files').toEqual([]);
+
+  // The bundled German is a verbatim third-party translation. It was labelled
+  // "Sinngemäße deutsche Bedeutung aus dem übernommenen Altbestand" — the app's
+  // own paraphrase — while the licence credited a translator whose text was not
+  // even in the bundle. Whoever's words these are has to be on the screen.
+  await expect(page.getByText('Bubenheim & Elyas').first()).toBeVisible();
+  await expect(page.getByText(/Sinngemäße deutsche Bedeutung/)).toHaveCount(0);
+
+  // 2:201, the verse the source guard fingerprints, in the wording that tells
+  // the two editions apart: Bubenheim has "im Diesseits Gutes", Abu Rida "in
+  // dieser Welt Gutes". Reading it back here is what proves the shipped files
+  // are the edition the screen claims.
+  await expect(page.getByText(/im Diesseits Gutes und im Jenseits Gutes/).first()).toBeVisible();
+  await expect(page.getByText(/in dieser Welt Gutes und im Jenseits Gutes/)).toHaveCount(0);
 });

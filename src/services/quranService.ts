@@ -31,19 +31,21 @@ export interface QuranSurahBundle {
 const DATA_BASE = `${import.meta.env.BASE_URL}data/quran`;
 const ONLINE_API_BASE = 'https://api.alquran.cloud/v1';
 const ONLINE_ARABIC_EDITION = 'quran-uthmani';
-// The same edition the 114 bundled Surahs were built from. It used to name
-// de.bubenheim while every offline file held de.aburida, so a Surah reaching
-// the reader through this fallback came back in a different German rendering
-// than the identical Surah read offline — with nothing on screen saying so.
-const ONLINE_GERMAN_EDITION = 'de.aburida';
+// The same edition the 114 bundled Surahs are built from — keep the two in
+// step. They were not: every offline file held de.aburida while this asked for
+// de.bubenheim, so a Surah reaching the reader through the fallback came back
+// in a different German rendering than the identical Surah read offline, with
+// nothing on screen saying so. The bundle is rebuilt from this edition by
+// scripts/build-quran-bundle.mjs.
+const ONLINE_GERMAN_EDITION = 'de.bubenheim';
 const ONLINE_CACHE_NAME = 'nur-quran-online-v1';
 const ONLINE_TIMEOUT_MS = 12000;
 const memoryCache = new Map<string, unknown>();
 
 /**
- * Alle 114 Suren liegen paarweise offline vor: arabischer Text und der
- * übernommene deutsche Altbestand. Der Online-Weg bleibt nur als Notfallpfad,
- * falls eine lokale Datei einmal fehlt oder beschädigt ist.
+ * Alle 114 Suren liegen paarweise offline vor: arabischer Uthmani-Text und die
+ * deutsche Übersetzung von Bubenheim & Elyas. Der Online-Weg bleibt nur als
+ * Notfallpfad, falls eine lokale Datei einmal fehlt oder beschädigt ist.
  */
 export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);
 export const OFFLINE_QURAN_SURAH_SET = new Set<number>(OFFLINE_QURAN_SURAHS);
@@ -236,7 +238,10 @@ export async function fetchSurahBundle(number: number): Promise<QuranSurahBundle
     german,
     source: 'offline',
     sourceLabel: 'Lokaler Offline-Bestand',
-    translationLabel: 'übernommener deutscher Altbestand',
+    // Named, not described. The offline files are the same Bubenheim & Elyas
+    // text the online path serves; calling them an anonymous "Altbestand" hid
+    // whose translation the app was actually showing.
+    translationLabel: 'Bubenheim & Elyas',
   };
 }
 

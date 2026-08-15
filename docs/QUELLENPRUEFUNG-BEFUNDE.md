@@ -89,30 +89,49 @@ nicht gibt — der Fehler, der jedes Korrekturlesen überlebt, weil die Zahl
 plausibel aussieht und niemand Verse zählt. `npm run quran-citations:report`
 druckt jede Stelle mit ihrem Vers für die fachliche Prüfung.
 
-### Falsch angegebene Quran-Übersetzung — behoben
+### Falsch ausgelieferte Quran-Übersetzung — behoben
 
-**Die App liefert nicht die Übersetzung, die sie nennt.** Die Lizenzangabe
-führte „Bubenheim & Elyas", der Offline-Bestand ist zeichengenau die Wiedergabe
-von **Abu Rida Muhammad ibn Ahmad ibn Rassoul** (`de.aburida`). An zwei Stellen
-gegen beide Ausgaben geprüft (2:201 und 18:10).
+**Die App lieferte nicht die Übersetzung, die sie überall nannte.** Die
+Lizenzangabe führte „Bubenheim & Elyas", der Online-Fallback holte
+`de.bubenheim`, das Prüfskript nagelte `de.bubenheim` fest, und der Leser trug
+„Bubenheim & Elyas" als Rückfallbeschriftung. Nur die 114 Offline-Dateien waren
+zeichengenau die Wiedergabe von **Abu Rida** (`de.aburida`) — an 2:201 und 18:10
+gegen beide Ausgaben geprüft.
 
-Drei Stellen waren betroffen und sind angeglichen:
+Niemand hatte sich für Abu Rida entschieden; beim Erzeugen des Offline-Bestands
+wurde die falsche Ausgabe gezogen, und kein Skript hielt fest, woher die 1,3 MB
+stammten. Der Bestand ist deshalb aus `de.bubenheim` neu gebaut — das, worauf
+der restliche Code immer zielte. 6236 Ayat, Zählung je Sure unverändert.
 
-1. `legalContent.ts` nennt jetzt den tatsächlich ausgelieferten Übersetzer.
-2. `quranService.ts` holte im Online-Fallback `de.bubenheim` — eine Sure über
-   diesen Weg wäre in einer **anderen** deutschen Wiedergabe erschienen als
-   dieselbe Sure offline, ohne Hinweis auf dem Bildschirm. Jetzt `de.aburida`.
-3. `check-quran-data.mjs` hielt die falsche Ausgabe fest. Jetzt prüft es
-   Bestand, Fallback und Lizenzangabe gegeneinander, mit einem Fingerabdruck
-   auf 2:201.
+Fünf Stellen waren betroffen und sind jetzt deckungsgleich:
+
+1. `public/data/quran/de` — neu gebaut aus `de.bubenheim`.
+2. `quranService.ts` — Fallback-Ausgabe und Bestand stammen aus derselben
+   Quelle. Vorher wäre eine nachgeladene Sure in einer **anderen** deutschen
+   Wiedergabe erschienen als dieselbe Sure offline, ohne Hinweis am Bildschirm.
+3. Die Bestandsbeschriftung hieß „übernommener deutscher Altbestand" und nennt
+   jetzt den Übersetzer.
+4. Der Leser beschriftete den Text offline als „Sinngemäße deutsche Bedeutung" —
+   eine wortwörtlich übernommene fremde Übersetzung, ausgegeben als eigene lose
+   Wiedergabe. Er nennt jetzt in beiden Pfaden den Übersetzer.
+5. `check-quran-data.mjs` hielt die Abweichung fest. Es prüft jetzt Bestand,
+   Fallback, Leserbeschriftung und Lizenzangabe gegeneinander, mit einem
+   Fingerabdruck auf 2:201.
+
+Dazu liegt `scripts/build-quran-bundle.mjs` im Repo, damit nachvollziehbar
+bleibt, aus welcher Ausgabe der Bestand stammt. Der e2e-Test zum Leser liest
+2:201 am Bildschirm zurück und unterscheidet die beiden Ausgaben an ihrer
+Formulierung („im Diesseits Gutes" gegen „in dieser Welt Gutes").
 
 Der arabische Text ist wie angegeben Uthmani.
 
-> **Für Arman:** ob die App Abu Rida oder Bubenheim & Elyas ausliefern *soll*,
-> ist eine Lizenz- und Inhaltsfrage, keine technische. Beide sind
-> urheberrechtlich geschützte Werke, die hier vollständig offline mitgeliefert
-> werden. Die Lizenzangabe stimmt jetzt mit dem überein, was ausgeliefert wird —
-> ob die Weitergabe erlaubt ist, ist damit **nicht** geklärt.
+> **Für Arman:** Bubenheim & Elyas stammt vom König-Fahd-Komplex und ist die
+> Übersetzung, die kostenlose, nicht-kommerzielle Apps üblicherweise verbreiten
+> — was zu dem passt, was das Impressum über diese App sagt. Das ist der Grund
+> für die Umstellung. Es ist trotzdem ein geschütztes Werk, das hier
+> vollständig offline mitgeliefert wird: **die Erlaubnis dafür ist damit nicht
+> erteilt**, sie ist nur wahrscheinlicher zu bekommen. Eine Anfrage beim
+> Rechteinhaber steht weiterhin aus.
 
 ---
 

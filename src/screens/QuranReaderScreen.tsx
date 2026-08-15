@@ -220,9 +220,11 @@ export function QuranReaderScreen({
     });
   };
 
-  const germanAttribution = bundle?.source === 'offline'
-    ? 'Sinngemäße deutsche Bedeutung aus dem übernommenen Altbestand'
-    : `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Bubenheim & Elyas'}`;
+  // Offline and online serve the same edition, so the credit does not depend on
+  // where the text came from. It used to: offline was labelled a "sinngemäße
+  // Bedeutung aus dem Altbestand", which was a verbatim third-party translation
+  // presented as the app's own paraphrase.
+  const germanAttribution = `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Bubenheim & Elyas'}`;
 
   const copyAyah = async (index: number) => {
     if (!bundle) return;
@@ -294,7 +296,7 @@ export function QuranReaderScreen({
           <section className="reference-reader-source">
             <ShieldCheck size={17} />
             {bundle.source === 'offline' ? (
-              <span><strong>Lokaler arabischer Qurantext · Sure {bundle.meta.number}</strong><small>Die deutsche Fassung stammt aus dem übernommenen Altbestand und wird als sinngemäße Bedeutung angezeigt. Eine fachliche Endprüfung bleibt vor Veröffentlichung erforderlich.</small></span>
+              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Sure {bundle.meta.number} liegt vollständig auf dem Gerät und wird ohne externe Anfrage geladen. Die Übersetzung wird unverändert angezeigt.</small></span>
             ) : (
               <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Geladen über Al Quran Cloud und im Browser zwischengespeichert. Die Übersetzung wird unverändert angezeigt und nicht automatisch erneut übersetzt.</small></span>
             )}
@@ -317,7 +319,7 @@ export function QuranReaderScreen({
                 >
                   <header><span>{ayahNumber}</span><div><button onClick={(event) => { event.stopPropagation(); void copyAyah(index); }} aria-label="Ayah kopieren"><Copy size={17} /></button><button onClick={(event) => { event.stopPropagation(); toggleBookmark(ayahNumber); }} className={saved ? 'is-saved' : ''} aria-label="Ayah speichern">{saved ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button></div></header>
                   <p dir="rtl" style={{ fontSize, fontFamily: arabicFont === 'system' ? 'system-ui, sans-serif' : undefined }}>{ayah.text}</p>
-                  {showMeaning && german ? <blockquote><small>{bundle.source === 'offline' ? 'Sinngemäße deutsche Bedeutung' : `Deutsche Übersetzung · ${bundle.translationLabel}`}</small>{german}</blockquote> : null}
+                  {showMeaning && german ? <blockquote><small>Deutsche Übersetzung · {bundle.translationLabel}</small>{german}</blockquote> : null}
                   <footer><span>{bundle.meta.number}:{ayahNumber}</span><button onClick={(event) => { event.stopPropagation(); void shareAyah(index); }}><Share2 size={15} /> Teilen</button></footer>
                 </motion.article>
               );

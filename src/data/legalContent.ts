@@ -147,7 +147,7 @@ export const licenseSections: LegalSection[] = [
     heading: 'Textquellen',
     paragraphs: [
       'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
-      'Deutsche Quran-Wiedergabe: Abu Rida Muhammad ibn Ahmad ibn Rassoul über Al Quran Cloud.',
+      'Deutsche Quran-Wiedergabe: Bubenheim & Elyas über Al Quran Cloud.',
       'Herkunft und Nutzungsrechte der einzelnen Textbestände werden fortlaufend dokumentiert. Inhalte ohne belegte Quelle sind in der App als solche gekennzeichnet.',
     ],
   },
