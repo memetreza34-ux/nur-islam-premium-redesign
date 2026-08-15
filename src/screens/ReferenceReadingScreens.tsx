@@ -13,6 +13,9 @@ import {
   Droplets,
   Footprints,
   Hand,
+  HeartHandshake,
+  Landmark,
+  ListChecks,
   RotateCcw,
   Share2,
   ShieldCheck,
@@ -153,14 +156,26 @@ const GUIDE_ICONS: Record<string, LucideIcon[]> = {
   'what-to-say': [Volume2, BookOpen, Volume2, RotateCcw, Volume2, Sparkles, Volume2, Sparkles, BookOpen, Volume2, Check],
   mandatory: [Sparkles, Volume2, BookOpen, RotateCcw, Volume2, Sparkles, Volume2, Sparkles, BookOpen, Volume2, Check, Check],
   mistakes: [RotateCcw, Volume2, Hand, Sparkles, BookOpen, Check],
+  sahw: [RotateCcw, BookOpen, Sparkles, RotateCcw, Check, Hand, Volume2],
+  shahada: [Volume2, Sparkles, BookOpen, RotateCcw, Hand, Check],
+  women: [Hand, Sparkles, RotateCcw, Volume2, BookOpen, Check, Hand],
+  'more-prayers': [Sparkles, Sparkles, RotateCcw, Volume2, Sparkles, BookOpen, Check],
+  'special-cases': [RotateCcw, RotateCcw, Check, Check, Hand, Volume2, Sparkles],
+  occasions: [Sparkles, HeartHandshake, ListChecks, Volume2, Landmark, RotateCcw, Check],
 };
 
 const GUIDE_TABS: { id: string; label: string; icon: LucideIcon }[] = [
+  { id: 'shahada', label: 'Shahada', icon: Sparkles },
   { id: 'wudu', label: 'Wudu', icon: Droplets },
   { id: 'salah', label: 'Salah', icon: Sparkles },
   { id: 'what-to-say', label: 'Wortlaut', icon: Volume2 },
   { id: 'mandatory', label: 'Pflichtteile', icon: Check },
   { id: 'mistakes', label: 'Fehler', icon: RotateCcw },
+  { id: 'sahw', label: 'Verzählt?', icon: RotateCcw },
+  { id: 'women', label: 'Für Frauen', icon: Hand },
+  { id: 'more-prayers', label: 'Weitere Gebete', icon: Sparkles },
+  { id: 'special-cases', label: 'Reise & Ausfall', icon: RotateCcw },
+  { id: 'occasions', label: 'Anlässe', icon: HeartHandshake },
 ];
 
 export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: GuideMode; onBack: () => void }) {
