@@ -31,7 +31,11 @@ export interface QuranSurahBundle {
 const DATA_BASE = `${import.meta.env.BASE_URL}data/quran`;
 const ONLINE_API_BASE = 'https://api.alquran.cloud/v1';
 const ONLINE_ARABIC_EDITION = 'quran-uthmani';
-const ONLINE_GERMAN_EDITION = 'de.bubenheim';
+// The same edition the 114 bundled Surahs were built from. It used to name
+// de.bubenheim while every offline file held de.aburida, so a Surah reaching
+// the reader through this fallback came back in a different German rendering
+// than the identical Surah read offline — with nothing on screen saying so.
+const ONLINE_GERMAN_EDITION = 'de.aburida';
 const ONLINE_CACHE_NAME = 'nur-quran-online-v1';
 const ONLINE_TIMEOUT_MS = 12000;
 const memoryCache = new Map<string, unknown>();

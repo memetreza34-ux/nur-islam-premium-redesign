@@ -70,7 +70,7 @@ if (totalAyahs !== 6236) {
 const onlineServiceFeatures = [
   "ONLINE_API_BASE = 'https://api.alquran.cloud/v1'",
   "ONLINE_ARABIC_EDITION = 'quran-uthmani'",
-  "ONLINE_GERMAN_EDITION = 'de.bubenheim'",
+  "ONLINE_GERMAN_EDITION = 'de.aburida'",
   "ONLINE_CACHE_NAME = 'nur-quran-online-v1'",
   'AbortController',
   'ONLINE_TIMEOUT_MS',
@@ -82,6 +82,32 @@ const onlineServiceFeatures = [
 ];
 for (const required of onlineServiceFeatures) {
   if (!serviceSource.includes(required)) throw new Error(`Online Quran service is missing: ${required}`);
+}
+
+// Three places have to agree on which German rendering the app ships: the
+// bundled files the reader shows, the edition the online fallback asks for,
+// and the translator the licence names. They did not. Every offline file held
+// Abu Rida while the service fetched de.bubenheim and the imprint credited
+// Bubenheim & Elyas, so the app read one translation, could fall back to a
+// second, and credited a third combination of the two.
+//
+// The fingerprint is one Ayah of the shipped edition, quoted exactly. Swapping
+// the bundle for a different translation changes it and fails here.
+const ABU_RIDA_2_201 =
+  'Und unter ihnen sind manche, die sagen: "Unser Herr, gib uns in dieser Welt Gutes und im Jenseits Gutes und verschone uns vor der Strafe des Feuers!"';
+const baqara = JSON.parse(await readFile(resolve(dataRoot, 'de/2.json'), 'utf8'));
+const bundled201 = baqara.ayahs.find((ayah) => ayah.numberInSurah === 201)?.text;
+if (bundled201 !== ABU_RIDA_2_201) {
+  throw new Error(
+    'The bundled German Quran is no longer the Abu Rida rendering the licence credits.\n' +
+      'If the bundle was replaced on purpose, update ONLINE_GERMAN_EDITION, the licence text in ' +
+      'src/data/legalContent.ts and this fingerprint together — never one of the three alone.',
+  );
+}
+
+const legalSource = await readFile(resolve(root, 'src/data/legalContent.ts'), 'utf8');
+if (!legalSource.includes('Abu Rida')) {
+  throw new Error('The licence section no longer credits the German Quran translation the app actually ships.');
 }
 
 const appSource = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
