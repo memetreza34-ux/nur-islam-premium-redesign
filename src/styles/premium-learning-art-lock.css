@@ -54,21 +54,19 @@
   position: relative;
   isolation: isolate;
   overflow: hidden;
-  min-height: 250px !important;
+  min-height: 132px !important;
   background:
     radial-gradient(circle at 83% 24%, rgba(226,191,119,.13), transparent 12rem),
     linear-gradient(145deg, #0d5743, #07372b 61%, #00120f) !important;
 }
 .reference-prayer-course-hero__copy { z-index: 4 !important; max-width: 67% !important; }
-.reference-prayer-course-hero__copy h2 { color: #fff8ea !important; text-wrap: balance; }
-.reference-prayer-course-hero__copy p { color: rgba(145,168,158,.8) !important; text-wrap: pretty; }
 .reference-prayer-course-hero > .premium-image {
   position: absolute !important;
   z-index: 2 !important;
-  right: -4px !important;
-  bottom: -8px !important;
-  width: 190px !important;
-  height: 226px !important;
+  right: -6px !important;
+  bottom: -6px !important;
+  width: 124px !important;
+  height: 148px !important;
   overflow: visible;
 }
 .reference-prayer-course-hero > .premium-image > img {
@@ -175,11 +173,9 @@
 [data-theme='light'] .reference-guide-hero,
 [data-theme='light'] .reference-learning-course-hero { color: #fff8ea; }
 [data-theme='light'] .reference-prayer-learning-hub__copy h2,
-[data-theme='light'] .reference-prayer-course-hero__copy h2,
 [data-theme='light'] .reference-guide-hero h2,
 [data-theme='light'] .reference-learning-course-hero h2 { color: #fff8ea !important; }
 [data-theme='light'] .reference-prayer-learning-hub__copy p,
-[data-theme='light'] .reference-prayer-course-hero__copy p,
 [data-theme='light'] .reference-guide-hero p { color: rgba(246,235,214,.76) !important; }
 [data-theme='light'] .reference-learn-screen .learning-hero {
   background: radial-gradient(circle at 92% 12%,rgba(242,215,154,.16),transparent 15rem),linear-gradient(145deg,#0d5743,#00120f) !important;
@@ -191,7 +187,6 @@
   .reference-prayer-course-hero__copy,
   .reference-guide-hero > div:last-child { max-width: 70% !important; }
   .reference-prayer-learning-hub > .premium-image { right: -22px !important; width: 184px !important; height: 224px !important; }
-  .reference-prayer-course-hero > .premium-image { right: -20px !important; width: 171px !important; height: 207px !important; }
   .reference-guide-hero > .premium-image { right: -18px !important; width: 162px !important; height: 176px !important; }
 }
 @media (max-width:350px) {
@@ -199,7 +194,6 @@
   .reference-prayer-course-hero__copy,
   .reference-guide-hero > div:last-child { max-width: 74% !important; }
   .reference-prayer-learning-hub > .premium-image { right: -36px !important; width: 169px !important; height: 210px !important; }
-  .reference-prayer-course-hero > .premium-image { right: -34px !important; width: 156px !important; height: 194px !important; }
   .reference-guide-hero > .premium-image { right: -31px !important; width: 148px !important; height: 164px !important; }
 }
 @media (prefers-reduced-motion:reduce) {

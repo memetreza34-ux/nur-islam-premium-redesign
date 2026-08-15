@@ -8,10 +8,14 @@ const course = await readFile(resolve(root, 'src/screens/PrayerLearningScreen.ts
 const prayer = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-prayer-learning-completion.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
+// The five lessons moved out of the screen into their own module so the
+// learning hub can list them without pulling the whole prayer sequence into
+// the entry bundle. They are still what this check is about.
+const lessons = await readFile(resolve(root, 'src/data/prayerLessons.ts'), 'utf8');
 
 const requiredPrayerIds = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
 for (const id of requiredPrayerIds) {
-  if (!course.includes(`id: '${id}'`)) throw new Error(`Prayer learning course is missing ${id}.`);
+  if (!lessons.includes(`id: '${id}'`)) throw new Error(`Prayer learning course is missing ${id}.`);
 }
 
 const requiredCourseFeatures = [

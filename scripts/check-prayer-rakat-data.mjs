@@ -13,13 +13,29 @@ const root = process.cwd();
 const source = await readFile(resolve(root, 'src/data/prayerRakatData.ts'), 'utf8');
 const screen = await readFile(resolve(root, 'src/screens/PrayerLearningScreen.tsx'), 'utf8');
 
-// Rakʿah counts are fixed for the obligatory prayers.
+// Rakʿah counts are fixed for the obligatory prayers. The builders take extra
+// arguments (recitation), so match the call rather than an exact string.
 const expectedRakats = { fajr: 2, dhuhr: 4, asr: 4, maghrib: 3, isha: 4 };
 for (const [id, count] of Object.entries(expectedRakats)) {
   const builder = count === 2 ? 'twoRakatPrayer' : count === 3 ? 'threeRakatPrayer' : 'fourRakatPrayer';
-  if (!source.includes(`${builder}('${id}')`)) {
+  if (!new RegExp(`${builder}\\('${id}'[,)]`).test(source)) {
     throw new Error(`${id} is not built as a ${count}-Rakʿah prayer.`);
   }
+}
+
+// Recitation is aloud in Fajr and in the opening units of Maghrib and Isha,
+// silent in Dhuhr and Asr — the first thing anyone notices when praying, and
+// wrong values here teach the wrong habit.
+for (const [id, expected] of [['dhuhr', 'silent'], ['asr', 'silent'], ['isha', 'aloud']]) {
+  if (!new RegExp(`RakatPrayer\\('${id}', '${expected}'\\)`).test(source)) {
+    throw new Error(`${id} no longer opens with "${expected}" recitation.`);
+  }
+}
+if (!/rakatOne\('aloud'\)/.test(source)) {
+  throw new Error('Fajr must recite aloud in its first Rakʿah.');
+}
+if (!/recitation: 'silent'/.test(source)) {
+  throw new Error('The third and fourth Rakʿah must be marked as recited silently.');
 }
 
 // Every step a worshipper speaks must carry all three: the Arabic, how to say
@@ -45,6 +61,10 @@ for (const [, name] of steps) {
   if (!/arabic: '/.test(body)) continue;
   if (!/transliteration: '/.test(body)) throw new Error(`Prayer step ${name} has Arabic but no transliteration.`);
   if (!/translation: '/.test(body)) throw new Error(`Prayer step ${name} has Arabic but no German meaning.`);
+  // How often it is spoken belongs to the step, not to a sentence inside the
+  // description. Written only as prose („Sage dreimal“) it disappeared from the
+  // step list — the view people actually practise from.
+  if (!/repetitions: \d/.test(body)) throw new Error(`Prayer step ${name} has wording but does not say how often it is spoken.`);
 }
 
 // The steps that make a Rakʿah a Rakʿah, and the ones that only close a prayer.
@@ -60,6 +80,37 @@ if (!/rakatOne[\s\S]*?steps: \[TAKBIR, SANA/.test(source)) {
 }
 if (!/closingSteps = \[TASHAHHUD, SALAWAT, DUA_BEFORE_SALAM, TASLIM\]/.test(source)) {
   throw new Error('The closing sequence must end with Tashahhud, Salawat, Dua and Taslim.');
+}
+
+// What is spoken three times is shown three times. A single paragraph under a
+// "3×" badge states the number but leaves the person practising to count in
+// their head; the runs are what they read along with.
+if (!/reference-rakah-runs/.test(screen) || !/repetitionRuns/.test(screen)) {
+  throw new Error('The step detail no longer repeats the wording once per spoken run.');
+}
+// Each run carries the transliteration too. Someone learning the prayer reads
+// from the transliteration, so printing it once under three Arabic lines would
+// withhold the repetition from the very line being read.
+if (!/reference-rakah-runs[\s\S]{0,700}reference-rakah-wording__transliteration/.test(screen)) {
+  throw new Error('The repeated runs must show the transliteration, not only the Arabic.');
+}
+if (!/repetitionLabels: \['nach rechts', 'nach links'\]/.test(source)) {
+  throw new Error('The two Taslim runs must stay labelled by direction, not just counted.');
+}
+
+// Der Durchlauf ist der Grund, warum der Kurs beim Üben freie Hände lässt.
+// Er muss dabei denselben Weg nehmen wie das Weitertippen — sonst läuft er an
+// der Rakʿah-Grenze anders als der Ablauf, den er vorführen soll.
+if (!/reference-rakah-run/.test(screen) || !/runMode/.test(screen)) {
+  throw new Error('The prayer course no longer offers a guided run.');
+}
+if (!/onFinished=\{runMode \? goToNextStep : undefined\}/.test(screen)) {
+  throw new Error('The guided run must advance through goToNextStep, like tapping does.');
+}
+// Was dreimal gesprochen wird, klingt im Durchlauf dreimal — sonst widerspricht
+// der Ton den drei Zeilen, die daneben stehen.
+if (!/recitationUrlsForRun/.test(source) || !/recitationUrlsForRun/.test(screen)) {
+  throw new Error('The guided run no longer repeats a recitation as often as the step is spoken.');
 }
 
 // The screen has to render the wording, not just hold the data.

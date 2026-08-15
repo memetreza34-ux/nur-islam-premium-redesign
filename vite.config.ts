@@ -16,6 +16,14 @@ export default defineConfig(({ command }) => ({
           // transliteration and meaning — is only read on the prayer course.
           // Left in the entry chunk it delayed the first paint of every screen.
           if (id.includes('/src/data/prayerRakatData')) return 'prayer-rakats';
+          // Dieselbe Überlegung für die Anleitungen: acht Guides mit
+          // arabischem Wortlaut, gelesen wird immer nur einer, und das erst
+          // nach einem Tippen. Im Entry-Chunk haben sie den ersten Aufbau
+          // jedes Bildschirms verzögert und ihn auf sein 100-KB-Limit gedrückt.
+          if (id.includes('/src/data/worshipGuideData')) return 'worship-guides';
+          // Ebenso die Dhikr-Routinen: sieben Listen mit arabischem Wortlaut,
+          // die erst zählen, wenn jemand den Zähler öffnet.
+          if (id.includes('/src/data/dhikrData')) return 'dhikr-routines';
           if (!id.includes('node_modules')) return undefined;
           if (id.includes('/react/') || id.includes('/react-dom/') || id.includes('/scheduler/')) return 'react-vendor';
           if (id.includes('/motion/')) return 'motion-vendor';

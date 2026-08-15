@@ -13,6 +13,7 @@
     "test:watch": "vitest",
     "e2e": "playwright test",
     "rls:verify": "node scripts/verify-rls.mjs",
+    "recitation:verify": "node scripts/verify-recitations.mjs",
     "assets:check": "node scripts/check-reference-assets.mjs",
     "image-map:check": "node scripts/check-reference-image-map.mjs",
     "icon-map:check": "node scripts/check-reference-icon-map.mjs",
