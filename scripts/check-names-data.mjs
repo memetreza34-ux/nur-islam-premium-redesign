@@ -27,6 +27,28 @@ if (new Set(normalizedNames).size < 98) {
   throw new Error('Names data contains unexpected duplicate transliterations.');
 }
 
+// Two Names carrying the same German meaning are indistinguishable in the list
+// and in search, and the distinction between them is simply lost. Al-Jabbar and
+// Al-Qahhar both read "Der Bezwinger" until the app's own Quran text settled
+// it: Bubenheim renders al-Qahhar "der Allbezwinger" (12:39, 40:16) and
+// al-Jabbar "der Gewalthaber" (59:23).
+const meanings = [...dataSource.matchAll(/meaning: '([^']+)'|meaning: "([^"]+)"/g)]
+  .map((match) => (match[1] ?? match[2]).toLowerCase().trim());
+if (meanings.length !== 99) {
+  throw new Error(`Expected 99 Names meanings, found ${meanings.length}.`);
+}
+const seenMeanings = new Map();
+meanings.forEach((meaning, index) => {
+  const other = seenMeanings.get(meaning);
+  if (other !== undefined) {
+    throw new Error(
+      `Names ${ids[other].latin} and ${ids[index].latin} share the meaning "${meaning}" — ` +
+        'the two are indistinguishable in the list. Give each the wording that tells them apart.',
+    );
+  }
+  seenMeanings.set(meaning, index);
+});
+
 for (const required of [
   'nur_name_favorites',
   'nur_name_learned',

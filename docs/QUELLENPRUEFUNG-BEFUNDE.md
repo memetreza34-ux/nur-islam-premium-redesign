@@ -135,6 +135,42 @@ Der arabische Text ist wie angegeben Uthmani.
 
 ---
 
+### Strukturprüfung der übrigen Inhaltsblöcke
+
+Nachdem im Hadith-Block 5 von 25 Einträgen Dubletten waren, wurden Quiz, Duas,
+99 Namen, Propheten, Wissensbibliothek, Kalender und Dhikr maschinell auf
+dieselben Fehlerarten geprüft: doppelte IDs, doppelte Inhalte, leere Felder,
+ungültige Verweise, ungültige Hijri-Daten.
+
+**Die Blöcke sind sauber** — keine doppelten IDs, keine leeren Felder, alle
+Kalenderdaten in gültigen Bereichen, alle 60 Quizfragen mit vier Optionen,
+gültigem Antwortindex und Erklärung. Zwei Ausnahmen:
+
+**1. Das Quiz war ohne Wissen zur Hälfte lösbar.** Die richtige Antwort lag
+31-mal von 60 auf Position B und nur 2-mal auf D:
+
+| Position | A | B | C | D |
+|---|---:|---:|---:|---:|
+| vorher | 9 | **31** | 18 | **2** |
+| jetzt | 15 | 15 | 15 | 15 |
+
+Wer immer die zweite Option tippt, hatte 52 % richtig. Das Muster lernt man in
+einer Sitzung, und danach bringt das Quiz nichts mehr bei. Die Optionen wurden
+umsortiert — **gleicher Fragetext, gleiche Optionsmenge, gleiche richtige
+Antwort**, nur eine andere Position. Maschinell nachgewiesen: bei allen 60
+Fragen ist der Text der richtigen Antwort unverändert. `quiz:check` hält die
+Verteilung jetzt in einem Band von 9 bis 21 je Position.
+
+**2. Zwei der 99 Namen trugen dieselbe Bedeutung.** Al-Jabbar (9) und
+Al-Qahhar (15) lasen beide „Der Bezwinger" und waren damit in Liste und Suche
+nicht unterscheidbar. Aufgelöst mit der Wortwahl, die der Quran-Text der App
+selbst verwendet: al-Qahhar „der Allbezwinger" (12:39, 40:16), al-Jabbar „der
+Gewalthaber" (59:23). Nichts hinzuerfunden. `names:check` weist zwei gleiche
+Bedeutungen künftig ab.
+
+> Beides sind Struktur-, keine Inhaltsbefunde. Ob die 60 Antworten und die 99
+> Bedeutungen **fachlich** stimmen, bleibt Sache der Prüfung.
+
 ## Offen — Entscheidung nötig
 
 ### Ummah-Zahlen (17 Einträge) ⚠️
