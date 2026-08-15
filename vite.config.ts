@@ -5,7 +5,10 @@ export default defineConfig(({ command }) => ({
   base: process.env.VITE_BASE_PATH ?? (command === 'build' ? '/nur-islam-premium-redesign/' : '/'),
   plugins: [react()],
   server: {
-    port: 3000,
+    // 3000 stays the default so nothing about the usual workflow changes. The
+    // override exists because a second session on the same checkout otherwise
+    // cannot start the app at all: the port is taken and Vite pins it here.
+    port: Number(process.env.PORT) || 3000,
     host: '0.0.0.0',
   },
   build: {
