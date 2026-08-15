@@ -346,7 +346,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
               {modal === 'support' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung werden Koordinaten für Gebetszeiten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen. Quran-Suren außerhalb des festen Offline-Bestands werden bei Bedarf von Al Quran Cloud geladen.</p>
+                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung werden Koordinaten für Gebetszeiten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen. Der arabische Quran-Text liegt vollständig auf dem Gerät; die deutsche Wiedergabe wird beim Öffnen einer Sure von Al Quran Cloud geladen und danach im Browser gespeichert.</p>
                   <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Cloud nur nach Anmeldung und bewusster Sicherung</span><span><CircleCheck size={16} /> Keine Werbe-Tracker im App-Code</span><span><CircleCheck size={16} /> Religiöse Hinweise ersetzen keine Fatwa</span></div>
                 </>
               ) : null}

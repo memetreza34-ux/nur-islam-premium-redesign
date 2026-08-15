@@ -144,6 +144,13 @@ export const licenseSections: LegalSection[] = [
     ],
   },
   {
+    heading: 'Illustrationen',
+    paragraphs: [
+      'Die Bildobjekte und Illustrationen der App wurden mit ChatGPT (OpenAI) für dieses Projekt erzeugt. Es wurde kein Bildmaterial Dritter übernommen.',
+      'Rein maschinell erzeugte Bilder genießen nach deutschem Recht keinen eigenen Urheberrechtsschutz.',
+    ],
+  },
+  {
     heading: 'Aufnahmen',
     paragraphs: [
       'Quran-Rezitation im Gebetskurs: Mishary Alafasy, bezogen über Islamic Network (cdn.islamic.network).',

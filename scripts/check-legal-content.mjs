@@ -86,6 +86,27 @@ for (const promise of ['exportAccountData', 'deleteCloudData']) {
   }
 }
 
+// Every category of material the app carries has to be accounted for in the
+// licence section. Fonts, icons, map data and text sources were all named while
+// the 29 illustrations — the app's entire visual identity — appeared nowhere,
+// and the only note about them said "aus dem Chat", which could mean generated
+// there or pasted in from somewhere else. A store submission asks you to
+// confirm you hold the rights to all of it.
+for (const [category, marker] of [
+  ['illustrations', 'Illustrationen'],
+  ['recitation recordings', 'Aufnahmen'],
+  ['fonts and icons', 'Schriften und Symbole'],
+  ['map data', 'Kartendaten'],
+  ['text sources', 'Textquellen'],
+]) {
+  if (!legal.includes(`heading: '${marker}'`)) {
+    throw new Error(
+      `The licence section no longer accounts for ${category} (missing heading: ${marker}).\n` +
+        'Every kind of third-party or generated material the app carries belongs in there.',
+    );
+  }
+}
+
 // Read the operator block itself rather than counting how often the token
 // appears in the file. The count was off by one against its own comment — the
 // declaration, the comparison in the helper *and* the sentence in the header
