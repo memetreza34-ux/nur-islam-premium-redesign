@@ -52,6 +52,12 @@
   line-height: 1;
 }
 .quick-card__arrow { position: absolute; right: 14px; bottom: 14px; color: var(--gold-dark); }
+/* App.tsx builds the modifier: `quick-card quick-card--${accent}`, with accent
+   gold, cream or emerald. The literal never appears in the built JS, so the
+   grep that looked for it declared these dead and removed them. Four of the six
+   cards on Home lost their tint that way. */
+.quick-card--cream { background: linear-gradient(145deg, rgba(141, 109, 57, 0.42), rgba(0, 27, 22, 0.9)); }
+.quick-card--emerald { background: linear-gradient(145deg, rgba(13, 87, 67, 0.7), rgba(0, 27, 22, 0.9)); }
 
 .continue-card {
   display: grid;

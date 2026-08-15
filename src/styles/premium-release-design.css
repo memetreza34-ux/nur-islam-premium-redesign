@@ -322,6 +322,18 @@ body {
   box-shadow: 0 13px 30px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
 }
 
+/* The accent variants the six cards actually render. Removed once as dead
+   because `quick-card--${accent}` never spells the modifier out in the built
+   JS; the grep could not see it, and neither could the style snapshot, which
+   at the time only compared Home against itself. */
+.quick-grid--v2 .quick-card--cream {
+  background: linear-gradient(145deg, rgba(81, 65, 39, .32), rgba(3, 25, 20, .97));
+}
+
+.quick-grid--v2 .quick-card--emerald {
+  background: linear-gradient(145deg, rgba(12, 76, 56, .78), rgba(3, 25, 20, .97));
+}
+
 .quick-card__icon {
   width: 43px;
   height: 43px;

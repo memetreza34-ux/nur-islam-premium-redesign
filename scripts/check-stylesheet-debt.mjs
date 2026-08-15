@@ -81,7 +81,15 @@ const BUDGET = {
   // welcher Schritt gerade läuft. Er ist der Grund, warum der Kurs beim Üben
   // die Hände frei lässt — man betet mit, statt zwischen den Positionen zum
   // Weitertippen zu greifen.
-  totalBytes: 732_742,
+  // Raised by ~1 KB to put back four rules that were removed as dead and were
+  // not: `.quick-card--cream` and `.quick-card--emerald`, plain and scoped by
+  // `.quick-grid--v2`. App.tsx renders them as `quick-card--${accent}`, which
+  // never spells the name out in the built JS, so the grep that proved the
+  // sweep could not see them and four of the six cards on Home went untinted
+  // for two days. Growth that restores shipped design is the one raise this
+  // budget is meant to allow; dynamic-classes:check now fails before such a
+  // removal can land again.
+  totalBytes: 733_800,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));
