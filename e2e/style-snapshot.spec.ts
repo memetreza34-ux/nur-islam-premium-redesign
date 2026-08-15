@@ -31,6 +31,12 @@ const PROPERTIES = [
 
 test('snapshots the computed styles', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
+  // Freeze the clock. Two runs of identical code used to differ by the width of
+  // the countdown text and of the prayer progress bar, a four-to-eight line
+  // floor of noise that a real but small change hides under. Filtering the
+  // clock out of the dump only caught the ones printing hh:mm; the widths they
+  // drive leaked through.
+  await page.clock.setFixedTime(new Date('2026-08-15T10:00:00'));
   await openApp(page);
   const lines: string[] = [];
 
@@ -60,12 +66,63 @@ test('snapshots the computed styles', async ({ page }) => {
     await capture(`tab:${tab}`);
   }
 
-  for (const hub of ['Quran', 'Dhikr', 'Duas', '99 Namen', 'Sammlung']) {
+  // Moscheen is deliberately absent: it asks for a location and queries
+  // Overpass, so it settles differently from run to run and blocked this walk.
+  for (const hub of ['Quran', 'Dhikr', 'Duas', '99 Namen', 'Sammlung', 'Konto', 'Notizen', 'Assistent']) {
     await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
     await page.waitForTimeout(400);
-    await page.getByRole('button').filter({ hasText: hub }).first().click();
+    const entry = page.getByRole('button').filter({ hasText: hub }).first();
+    if (await entry.count() === 0) continue;
+    await entry.click();
     await capture(`hub:${hub}`);
   }
+
+  // The surfaces above are the ones the app opens on. Several stylesheets exist
+  // only for states this walk never entered — a dialog, a focused control, the
+  // light theme, a short screen — so a change in them measured as "no change"
+  // for the reason that nothing looked. These four close that gap.
+
+  // Back to a known shell first. Detail screens hide the bottom navigation, so
+  // continuing from wherever the walk above ended clicks into nothing.
+  await openApp(page);
+
+  // A dialog, open, with focus inside it.
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.waitForTimeout(600);
+  const namesEntry = page.getByRole('button').filter({ hasText: '99 Namen' }).first();
+  await namesEntry.waitFor({ state: 'visible', timeout: 15_000 });
+  await namesEntry.click();
+  await page.waitForTimeout(700);
+  const nameEntry = page.getByRole('button').filter({ hasText: /Ar-Rahman/ }).first();
+  if (await nameEntry.count() > 0) {
+    await nameEntry.click();
+    await capture('state:dialog');
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(300);
+  }
+
+  // A focused control, so focus rings are part of the record.
+  await page.getByRole('navigation').getByText('Start', { exact: true }).click();
+  await page.waitForTimeout(400);
+  await page.keyboard.press('Tab');
+  await page.keyboard.press('Tab');
+  await capture('state:focus');
+
+  // The light theme, which has its own token set.
+  await page.evaluate(() => {
+    localStorage.setItem('nur_theme', 'light');
+    document.documentElement.setAttribute('data-theme', 'light');
+  });
+  await capture('state:light');
+  await page.evaluate(() => {
+    localStorage.setItem('nur_theme', 'dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  });
+
+  // A short screen, where the layout has its own rules.
+  await page.setViewportSize({ width: 375, height: 520 });
+  await capture('state:short-viewport');
+  await page.setViewportSize({ width: 375, height: 812 });
 
   // The live countdown changes between runs and would drown the diff.
   writeFileSync(target!, lines.filter((line) => !/\d{2}:\d{2}/.test(line)).join('\n'));
