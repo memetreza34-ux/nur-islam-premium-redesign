@@ -13,9 +13,9 @@ ist, entscheidet die Prüfung selbst.
 
 | | |
 |---|---|
-| Einträge insgesamt | 215 |
-| davon ohne Einzelnachweis | 127 |
-| davon für diese App verfasst | 15 |
+| Einträge insgesamt | 327 |
+| davon ohne Einzelnachweis | 166 |
+| davon für diese App verfasst | 70 |
 
 ## Zuerst prüfen
 
@@ -284,17 +284,143 @@ Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift u
 | 1 | Takbir al-Ihram | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 2 | Eröffnungs-Bittgebet (Sana) | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 3 | Zuflucht suchen & Basmalah | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 4 | Sure Al-Fatihah | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 5 | Eine weitere Sure (z. B. Al-Ikhlas) | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 6 | Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 7 | Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 8 | Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 9 | Sitzen zwischen den Niederwerfungen | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 10 | Zweite Niederwerfung | — (Bewegung) | übernommen | ☐ |
-| 11 | Tashahhud (At-Tahiyyat) | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 12 | Salawat auf den Propheten ﷺ | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 13 | Bittgebet vor dem Salam (optional) | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 14 | Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 4 | Basmalah | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 5 | Sure Al-Fatihah | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 6 | Eine weitere Sure (z. B. Al-Ikhlas) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 7 | Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 8 | Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 9 | Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 10 | Sitzen zwischen den Niederwerfungen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 11 | Zweite Niederwerfung | — (Bewegung) | übernommen | ☐ |
+| 12 | Aufstehen zur nächsten Rakʿah | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 13 | Tashahhud (At-Tahiyyat) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 14 | Salawat auf den Propheten ﷺ | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 15 | Bittgebet vor dem Salam (optional) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 16 | Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+
+## Anleitungen zur Praxis ⚠️
+
+Beschreiben, wie etwas getan wird. Sechs sind hier verfasst und besonders zu prüfen: „Wenn etwas schiefgeht“ (Sujud as-Sahw — was ein Versehen nach sich zieht und was nicht), „Die Shahada“ (Wortlaut und die Angaben zum Eintritt in den Islam) „Frauen im Gebet“, wo mehrere Punkte zwischen den Rechtsschulen verlaufen, sowie „Weitere Gebete“ und „Besondere Lagen“ — dort stehen Rakʿah-Zahlen und Erleichterungen (Qasr, Zusammenlegen, Nachholen), die unmittelbar befolgt werden, und „Zu besonderen Anlässen“ mit dem Ablauf des Toten- und des Eid-Gebets.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Wudu: Wudu (Gebetswaschung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 2 | Wudu: Absicht (Niyyah) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 3 | Wudu: Hände waschen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 4 | Wudu: Mund ausspülen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 5 | Wudu: Nase reinigen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 6 | Wudu: Gesicht waschen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 7 | Wudu: Arme waschen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 8 | Wudu: Kopf streichen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 9 | Wudu: Ohren reinigen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 10 | Wudu: Füße waschen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 11 | Wudu: Dua nach dem Wudu | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 12 | Salah: Salah (Gebet) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 13 | Salah: Vorbereitung | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 14 | Salah: Takbir al-Ihram | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 15 | Salah: Qiyam & Rezitation (1. Rak'ah) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 16 | Salah: Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 17 | Salah: Aufstehen aus Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 18 | Salah: Sujud (1. Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 19 | Salah: Sitzen zwischen Sujud | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 20 | Salah: Sujud (2. Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 21 | Salah: Weitere Rak'ahs | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 22 | Salah: Tashahhud (Sitzen) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 23 | Salah: Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 24 | Wortlaut: Was sagt man im Gebet? | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 25 | Wortlaut: Takbir (Beginn & Wechsel) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 26 | Wortlaut: Eröffnung Bittgebet (Sana) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 27 | Wortlaut: Al-Fatiha (Die Eröffnende) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 28 | Wortlaut: Im Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 29 | Wortlaut: Beim Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 30 | Wortlaut: Im Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 31 | Wortlaut: Zwischen den Niederwerfungen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 32 | Wortlaut: Tashahhud (Erster Teil) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 33 | Wortlaut: Salawat (Segenswünsche) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 34 | Wortlaut: Dua nach Salawat (Optional) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 35 | Wortlaut: Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 36 | Pflichtteile: Pflichtteile & Grundlagen | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 37 | Pflichtteile: Die Absicht (Niyyah) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 38 | Pflichtteile: Stehen (Qiyam) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 39 | Pflichtteile: Takbir al-Ihram | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 40 | Pflichtteile: Rezitation der Al-Fatiha | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 41 | Pflichtteile: Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 42 | Pflichtteile: Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 43 | Pflichtteile: Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 44 | Pflichtteile: Sitzen zwischen den Sujud | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 45 | Pflichtteile: Das letzte Sitzen & Tashahhud | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 46 | Pflichtteile: Taslim | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 47 | Pflichtteile: Ruhe (Tuma'ninah) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 48 | Pflichtteile: Reihenfolge (Tartib) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 49 | Häufige Fehler: Häufige Fehler | — (keine) | übernommen | ☐ |
+| 50 | Häufige Fehler: Zu schnelles Beten | — (keine) | übernommen | ☐ |
+| 51 | Häufige Fehler: Umherschauen | — (keine) | übernommen | ☐ |
+| 52 | Häufige Fehler: Unvollständiger Sujud | — (keine) | übernommen | ☐ |
+| 53 | Häufige Fehler: Vor dem Imam bewegen | — (keine) | übernommen | ☐ |
+| 54 | Häufige Fehler: Laute Rezitation bei leisen Gebeten | — (keine) | übernommen | ☐ |
+| 55 | Häufige Fehler: Kleidung während des Gebets richten | — (keine) | übernommen | ☐ |
+| 56 | Wenn etwas schiefgeht: Wenn etwas schiefgeht | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 57 | Wenn etwas schiefgeht: Was Sujud as-Sahw ist | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 58 | Wenn etwas schiefgeht: Du hast ein Pflichtteil vergessen | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 59 | Wenn etwas schiefgeht: Du bist dir unsicher, wie viele Rakʿah | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 60 | Wenn etwas schiefgeht: Du hast eine Rakʿah zu viel gebetet | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 61 | Wenn etwas schiefgeht: Wann die Niederwerfung erfolgt | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 62 | Wenn etwas schiefgeht: Was Sujud as-Sahw nicht heilt | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 63 | Wenn etwas schiefgeht: Falsch rezitiert oder verhaspelt | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 64 | Die Shahada: Die Shahada | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 65 | Die Shahada: Der Wortlaut | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 66 | Die Shahada: Erster Teil: „Kein Gott außer Allah“ | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 67 | Die Shahada: Zweiter Teil: „Muhammad ist der Gesandte Allahs“ | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 68 | Die Shahada: Wo sie im Alltag vorkommt | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 69 | Die Shahada: Wenn du den Islam annehmen möchtest | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 70 | Die Shahada: Was danach kommt | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 71 | Frauen im Gebet: Frauen im Gebet | — (keine) | hier verfasst | ☐ |
+| 72 | Frauen im Gebet: Kleidung im Gebet | — (keine) | hier verfasst | ☐ |
+| 73 | Frauen im Gebet: Die Haltung in Ruku und Sujud | — (keine) | hier verfasst | ☐ |
+| 74 | Frauen im Gebet: Menstruation und Wochenbett | — (keine) | hier verfasst | ☐ |
+| 75 | Frauen im Gebet: Laut oder leise rezitieren | — (keine) | hier verfasst | ☐ |
+| 76 | Frauen im Gebet: Im Gemeinschaftsgebet | — (keine) | hier verfasst | ☐ |
+| 77 | Frauen im Gebet: Moschee oder zu Hause | — (keine) | hier verfasst | ☐ |
+| 78 | Frauen im Gebet: Wenn Kinder dazwischenkommen | — (keine) | hier verfasst | ☐ |
+| 79 | Weitere Gebete: Weitere Gebete | — (keine) | hier verfasst | ☐ |
+| 80 | Weitere Gebete: Sunnah-Gebete rund um die Pflicht (Rawatib) | — (keine) | hier verfasst | ☐ |
+| 81 | Weitere Gebete: Die zwei vor Fajr | — (keine) | hier verfasst | ☐ |
+| 82 | Weitere Gebete: Witr — der Abschluss der Nacht | — (keine) | hier verfasst | ☐ |
+| 83 | Weitere Gebete: Tahajjud — das Nachtgebet | — (keine) | hier verfasst | ☐ |
+| 84 | Weitere Gebete: Duha — der Vormittag | — (keine) | hier verfasst | ☐ |
+| 85 | Weitere Gebete: Das Freitagsgebet (Jumuah) | — (keine) | hier verfasst | ☐ |
+| 86 | Weitere Gebete: Wenn du zwischen Pflicht und Sunnah wählen musst | — (keine) | hier verfasst | ☐ |
+| 87 | Besondere Lagen: Besondere Lagen | — (keine) | hier verfasst | ☐ |
+| 88 | Besondere Lagen: Auf Reisen: vier werden zwei (Qasr) | — (keine) | hier verfasst | ☐ |
+| 89 | Besondere Lagen: Auf Reisen: zwei Gebete zusammenlegen (Jam) | — (keine) | hier verfasst | ☐ |
+| 90 | Besondere Lagen: Ein Gebet ist ausgefallen | — (keine) | hier verfasst | ☐ |
+| 91 | Besondere Lagen: Mehrere Gebete nachholen | — (keine) | hier verfasst | ☐ |
+| 92 | Besondere Lagen: Im Sitzen beten | — (keine) | hier verfasst | ☐ |
+| 93 | Besondere Lagen: Wenn die Zeit knapp wird | — (keine) | hier verfasst | ☐ |
+| 94 | Besondere Lagen: Unterwegs ohne Gebetsplatz | — (keine) | hier verfasst | ☐ |
+| 95 | Zu besonderen Anlässen: Zu besonderen Anlässen | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 96 | Zu besonderen Anlässen: Das Eid-Gebet | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 97 | Zu besonderen Anlässen: Das Totengebet (Janazah) | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 98 | Zu besonderen Anlässen: Janazah: die vier Takbirat der Reihe nach | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 99 | Zu besonderen Anlässen: Istikhara — vor einer Entscheidung | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 100 | Zu besonderen Anlässen: Zwei Rakʿah beim Betreten der Moschee | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 101 | Zu besonderen Anlässen: Das Gebet der Reue | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+| 102 | Zu besonderen Anlässen: Zeiten, in denen nicht gebetet wird | Wortlaut ohne Belegstelle | hier verfasst | ☐ |
+
+## Unterschiede der Rechtsschulen ⚠️
+
+Hier verfasst. Je Punkt sind alle vier angegebenen Positionen zu prüfen, und ob die Frage überhaupt so trennscharf zwischen den Schulen verläuft. Innerhalb einer Schule gibt es zu mehreren dieser Punkte mehr als eine überlieferte Position; wo die Angabe das verkürzt, ist sie zu ergänzen.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Wie hoch werden die Hände beim Takbir gehoben? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 2 | Wo liegen die Hände danach im Stehen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 3 | Wird nach dem Takbir ein Eröffnungsbittgebet gesprochen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 4 | Wird die Basmalah vor Al-Fatihah gesprochen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 5 | Wird „Amin“ am Ende laut oder leise gesprochen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 6 | Werden die Hände vor der Verbeugung noch einmal gehoben? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 7 | Gehört ein Qunut-Bittgebet zum Fajr-Gebet? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+| 8 | Wie wird im letzten Sitzen gesessen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
 
 ## Kalendertermine
 

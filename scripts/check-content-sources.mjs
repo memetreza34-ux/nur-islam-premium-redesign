@@ -27,6 +27,7 @@ const duas = await read('src/data/duaData.ts');
 const dhikr = await read('src/data/dhikrData.ts');
 const learning = await read('src/data/islamicLearningContent.ts');
 const hadith = await read('src/data/hadithData.ts');
+const rakats = await read('src/data/prayerRakatData.ts');
 
 const duaEntries = count(duas, /^\s+id:\s*'/gm);
 const duaSources = count(duas, /^\s+source:\s*'/gm);
@@ -64,4 +65,15 @@ if (labelledHadithSummaries < hadithEntries) {
   throw new Error(`Every Hadith summary must remain explicitly labelled as sinngemäß: ${hadithEntries} entries but ${labelledHadithSummaries} labelled summaries.`);
 }
 
-console.log(`Content sources verified: ${duaEntries} duas, ${dhikrRoutines} dhikr routines, ${lessons} lessons and ${hadithEntries} Hadith summaries each carry source attribution; every Hadith summary is explicitly labelled sinngemäß. Citation presence is not a review; counter steps and the 99 Names remain uncited, see npm run content:report.`);
+// The prayer sequence was the last set carrying Arabic wording with no
+// attribution at all. Every step that puts words in someone's mouth now names
+// where they come from — Quran by exact place, transmitted formulas by
+// collection. Movement-only steps have no wording and need none.
+const spokenSteps = count(rakats, /^\s+arabic:\s*'/gm);
+const rakatSources = count(rakats, /^\s+source:\s*'/gm);
+if (spokenSteps === 0) throw new Error('No prayer steps found; the parser no longer matches the data.');
+if (rakatSources < spokenSteps) {
+  throw new Error(`Every spoken prayer step must cite a source: ${spokenSteps} steps with wording but ${rakatSources} sources.`);
+}
+
+console.log(`Content sources verified: ${duaEntries} duas, ${dhikrRoutines} dhikr routines, ${lessons} lessons, ${hadithEntries} Hadith summaries and ${spokenSteps} spoken prayer steps each carry source attribution; every Hadith summary is explicitly labelled sinngemäß. Citation presence is not a review; counter steps and the 99 Names remain uncited, see npm run content:report.`);
