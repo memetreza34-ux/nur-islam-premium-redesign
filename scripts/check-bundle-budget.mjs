@@ -36,9 +36,32 @@ const BUDGETS_KB = {
   // added ~3 KB here, because a separate chunk compresses worse than the same
   // bytes inlined. Paying that on the total to protect the first paint is the
   // trade this pair of budgets exists to make visible.
-  js: 240,
+  // 243 now: the prayer course gained posture figures and the aloud/silent
+  // marking per Rakʿah, which pushed the entry chunk to 101 KB — over the
+  // budget below that protects the first paint. The course is loaded on demand
+  // instead, bringing the entry back to 98 KB and adding ~2 KB here, since a
+  // separate chunk compresses worse than the same bytes inlined. That trade is
+  // the whole reason these two budgets are kept apart.
+  //
+  // Raised again for the four schools of law: one comparison per step where the
+  // practice differs, and for three guides the app did not have — Sujud
+  // as-Sahw, the Shahada, and the questions that only come up for women. All of
+  // it sits in on-demand chunks, not the entry, so the number that decides the
+  // first paint is untouched — which is exactly the distinction the pair of
+  // budgets below exists to keep visible.
+  //
+  // Und für zwei Anleitungen, die die App nicht hatte: was außer der Pflicht
+  // gebetet wird, und was auf Reisen, bei Krankheit oder nach einem
+  // ausgefallenen Gebet gilt. Beide liegen im `worship-guides`-Chunk, der erst
+  // beim Öffnen einer Anleitung geladen wird.
+  //
+  // Zuletzt für die Anleitung zu den Anlässen (Eid, Janazah, Istikhara) und
+  // drei Dhikr-Routinen, die fehlten — allen voran der Abend, der im Quran und
+  // in der Überlieferung immer neben dem Morgen steht. Auch die Dhikr-Daten
+  // liegen jetzt in einem eigenen Chunk statt im Entry.
+  js: 253,
   css: 105,
-  total: 345,
+  total: 349,
 };
 
 /**
@@ -48,7 +71,11 @@ const BUDGETS_KB = {
  * as 20 KB in the entry, so splitting a screen out looks like no improvement at
  * all. It halved this number, and this budget is what keeps it there.
  */
-const ENTRY_BUDGET_KB = 100;
+// Lowered from 100 after the worship guides left the entry chunk: eight
+// guides with Arabic wording that nobody reads before tapping into one. That
+// took the entry from 100 KB — exactly at the old limit — to 93 KB. The
+// budget follows the gain down so the next addition cannot quietly spend it.
+const ENTRY_BUDGET_KB = 95;
 const MAX_RAW_JS_CHUNK_KB = 500;
 
 let entries;
