@@ -72,6 +72,32 @@ if (screen.includes('const quizQuestions = [')) {
   throw new Error('The five inline quiz questions are back; the catalogue in src/data/quizData.ts is the source.');
 }
 
+// Where the correct answer sits has to stay spread across the four positions.
+// Carried over from the old repo, 31 of 60 answers sat on B and only 2 on D:
+// always tapping the second option scored 52% without knowing anything, which
+// is not a quiz, and the pattern is learned within one sitting. The options
+// were reordered — same wording, same correct answer, different position.
+const answerPositions = questions.map(([, , , correctAnswer]) => Number(correctAnswer));
+const spread = [0, 0, 0, 0];
+for (const position of answerPositions) spread[position] = (spread[position] ?? 0) + 1;
+
+// Four positions over sixty questions is fifteen each. The band is wide enough
+// that adding a question does not fail the build, and narrow enough that a
+// guessable catalogue does.
+const even = answerPositions.length / 4;
+const lowest = Math.floor(even * 0.6);
+const highest = Math.ceil(even * 1.4);
+spread.forEach((count, position) => {
+  if (count < lowest || count > highest) {
+    throw new Error(
+      `The correct answer sits on position ${position} ${count} times out of ${answerPositions.length} ` +
+        `(expected between ${lowest} and ${highest}).\nSpread: ${spread.map((n, i) => `${i}:${n}`).join('  ')}\n` +
+        'Reorder the options of a few questions — never change which option is correct.',
+    );
+  }
+});
+
 console.log(
-  `Quiz verified: ${categoryIds.length} categories, ${questions.length} questions with unique ids, in-range answers and an explanation each, chosen by category and scored per category.`,
+  `Quiz verified: ${categoryIds.length} categories, ${questions.length} questions with unique ids, in-range answers and an explanation each, ` +
+    `chosen by category and scored per category; correct answers spread ${spread.map((n, i) => `${i}:${n}`).join(' ')}.`,
 );
