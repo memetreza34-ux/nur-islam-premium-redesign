@@ -61,4 +61,26 @@ if (offenders.length) {
   );
 }
 
-console.log(`Dialog accessibility verified: ${dialogCount} dialogs carry a role, an accessible name, Escape-to-close and focus handling.`);
+// Moving focus into a dialog is only half of it. Without holding Tab inside,
+// three presses walked out of the overlay onto the bottom navigation, where the
+// controls are covered but still operable and nothing says where focus went.
+// Every dialog inherits this from the one hook, so the hook is where it is
+// checked.
+const hook = await readFile(resolve(root, 'src/shared/useDialog.ts'), 'utf8');
+for (const required of [
+  "event.key !== 'Tab'",
+  'event.preventDefault()',
+  'event.shiftKey',
+  'dialog.contains(active)',
+]) {
+  if (!hook.includes(required)) {
+    throw new Error(
+      `useDialog no longer keeps Tab inside the dialog (missing: ${required}).\n` +
+        'Without the trap a keyboard user tabs out of the overlay onto controls they cannot see.',
+    );
+  }
+}
+
+console.log(
+  `Dialog accessibility verified: ${dialogCount} dialogs carry a role, an accessible name, Escape-to-close, focus handling and a Tab trap.`,
+);

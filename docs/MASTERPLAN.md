@@ -162,8 +162,12 @@ Nicht im Testlauf, sondern im Browser nachgemessen. Genau so wurde der 126px-Nav
 
 Was noch aussteht: die Prüfung fängt nur senkrechtes Abschneiden. Seitliches Abschneiden per `text-overflow: ellipsis` ist an vielen Stellen gewollt und müsste einzeln bewertet werden.
 
-### C4 — Hell-Modus, Reduced Motion, Tastatur · **zwei von drei belegt**
-Hell-Modus: `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs, nichts unter 3:1 (C1). Reduced Motion: `e2e/reduced-motion.spec.ts` prüft, dass unter `prefers-reduced-motion` keine Endlos-Animation mehr läuft. Tastaturbedienung steht noch aus.
+### C4 — Hell-Modus, Reduced Motion, Tastatur · **erledigt**
+Hell-Modus: `e2e/light-contrast.spec.ts` misst jeden Textknoten auf fünf Tabs, nichts unter 3:1 (C1). Reduced Motion: `e2e/reduced-motion.spec.ts` prüft, dass unter `prefers-reduced-motion` keine Endlos-Animation mehr läuft.
+
+Tastatur: `e2e/keyboard.spec.ts` prüft drei Dinge im Browser — die Navigation ist allein mit Tab erreichbar und mit Enter bedienbar, jedes Bedienelement sieht fokussiert anders aus als unfokussiert, und ein Dialog nimmt den Fokus, hält ihn und gibt ihn bei Escape zurück.
+
+**Der dritte Punkt fiel beim ersten Lauf durch, und zwar zu Recht.** `useDialog` verschob den Fokus in den Dialog, hielt ihn dort aber nicht: nach drei Tab-Anschlägen stand er auf „Start" in der unteren Navigation — hinter dem Overlay, verdeckt, aber bedienbar. Das betraf alle 12 Dialoge, weil sie sich den Hook teilen. Der Hook fängt Tab jetzt ein (vorwärts, rückwärts, und wenn der Fokus bereits außerhalb steht); `dialog-a11y:check` verlangt das Verhalten, drei Unit-Tests sichern es ab.
 
 ### C5 — Bundle aufteilen · Größe: S
 706 KB CSS in einer Datei, JS ungesplittet. Nach C2 deutlich einfacher.

@@ -38,6 +38,12 @@ function pressEscape() {
   });
 }
 
+function pressTab({ shift = false } = {}) {
+  const event = new KeyboardEvent('keydown', { key: 'Tab', shiftKey: shift, bubbles: true, cancelable: true });
+  act(() => { document.dispatchEvent(event); });
+  return event;
+}
+
 beforeEach(() => {
   container = document.createElement('div');
   document.body.appendChild(container);
@@ -95,5 +101,41 @@ describe('dialog behaviour', () => {
     render();
     pressEscape();
     expect(container.querySelector('#dialog')).toBeNull();
+  });
+
+  it('wraps Tab round inside the dialog instead of letting it out', () => {
+    // Moving focus in on open was not enough: Tab walked out of the overlay and
+    // onto the navigation underneath, where controls are covered but operable.
+    render();
+    openDialog();
+    expect(document.activeElement?.id).toBe('inside');
+
+    // '#inside' is both the first and the last focusable element here, so a
+    // forward Tab has to be cancelled and focus held.
+    const forward = pressTab();
+    expect(forward.defaultPrevented).toBe(true);
+    expect(document.activeElement?.id).toBe('inside');
+
+    const backward = pressTab({ shift: true });
+    expect(backward.defaultPrevented).toBe(true);
+    expect(document.activeElement?.id).toBe('inside');
+  });
+
+  it('pulls focus back when it is already outside the open dialog', () => {
+    render();
+    openDialog();
+
+    container.querySelector<HTMLButtonElement>('#opener')!.focus();
+    expect(document.activeElement?.id).toBe('opener');
+
+    const event = pressTab();
+    expect(event.defaultPrevented).toBe(true);
+    expect(document.activeElement?.id).toBe('inside');
+  });
+
+  it('leaves Tab alone while closed', () => {
+    render();
+    const event = pressTab();
+    expect(event.defaultPrevented).toBe(false);
   });
 });

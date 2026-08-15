@@ -14,6 +14,8 @@ import { useEffect, useRef } from 'react';
  *   const dialog = useDialog(Boolean(selected), () => setSelected(null), selected?.latin);
  *   <motion.section {...dialog.props}>
  */
+const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 export function useDialog(open: boolean, onClose: () => void, label: string | undefined) {
   const dialogRef = useRef<HTMLElement | null>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
@@ -25,15 +27,51 @@ export function useDialog(open: boolean, onClose: () => void, label: string | un
 
     // Move focus into the dialog so the next Tab stays inside it and a screen
     // reader starts reading here rather than behind the overlay.
-    const focusTarget = dialogRef.current?.querySelector<HTMLElement>(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-    ) ?? dialogRef.current;
+    const focusTarget = dialogRef.current?.querySelector<HTMLElement>(FOCUSABLE) ?? dialogRef.current;
     focusTarget?.focus({ preventScroll: true });
 
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
-      event.stopPropagation();
-      onClose();
+      if (event.key === 'Escape') {
+        event.stopPropagation();
+        onClose();
+        return;
+      }
+
+      // Keep Tab inside the dialog. Moving focus in on open was not enough:
+      // three presses walked out of the overlay and onto the bottom navigation
+      // underneath, where the controls are covered but still operable, and
+      // nothing on screen says where focus went.
+      if (event.key !== 'Tab') return;
+      const dialog = dialogRef.current;
+      if (!dialog) return;
+
+      const focusable = [...dialog.querySelectorAll<HTMLElement>(FOCUSABLE)]
+        .filter((element) => !element.hasAttribute('disabled') && element.offsetParent !== null);
+      if (focusable.length === 0) {
+        // Nothing to land on — hold focus on the dialog rather than let it out.
+        event.preventDefault();
+        dialog.focus({ preventScroll: true });
+        return;
+      }
+
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+
+      if (!active || !dialog.contains(active)) {
+        event.preventDefault();
+        (event.shiftKey ? last : first).focus({ preventScroll: true });
+        return;
+      }
+      if (event.shiftKey && active === first) {
+        event.preventDefault();
+        last.focus({ preventScroll: true });
+        return;
+      }
+      if (!event.shiftKey && active === last) {
+        event.preventDefault();
+        first.focus({ preventScroll: true });
+      }
     };
 
     document.addEventListener('keydown', handleKeyDown);
