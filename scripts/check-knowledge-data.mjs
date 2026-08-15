@@ -59,7 +59,7 @@ if (countries.length < 15) throw new Error(`Ummah overview holds ${countries.len
 for (const requirement of [
   "import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';",
   "import { REPENTANCE_GROUPS, SUNNAH_GROUPS } from '../data/practiceData';",
-  "import { UMMAH_COUNTRIES, UMMAH_REGIONS, UMMAH_TOTAL } from '../data/ummahData';",
+  "import { UMMAH_COUNTRIES, UMMAH_REGIONS } from '../data/ummahData';",
   "if (featureId === 'knowledge') return <KnowledgeFeature",
   "if (featureId === 'sunnah' || featureId === 'sins') return <PracticeFeature",
   "if (featureId === 'ummah') return <UmmahFeature",

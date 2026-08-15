@@ -248,7 +248,7 @@ Je Eintrag sind Einordnung, Beschreibung, Kernpunkte und Lehren zu prüfen.
 
 ## Ummah-Übersicht ⚠️
 
-Die Zahlen tragen im Altbestand weder Quelle noch Stichjahr. Sie sind entweder durch eine datierte Quelle zu ersetzen oder zu entfernen. Die App weist derzeit offen darauf hin.
+Die absoluten Bevölkerungszahlen sind entfernt: sie trugen weder Quelle noch Stichjahr und lagen gegen Pew (Stand 2020) messbar daneben. Zu prüfen bleiben die Anteile in Prozent, die dieselbe Quellenlücke haben, sowie die Einordnungstexte je Land.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|

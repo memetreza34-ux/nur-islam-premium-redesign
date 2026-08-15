@@ -171,30 +171,35 @@ Bedeutungen künftig ab.
 > Beides sind Struktur-, keine Inhaltsbefunde. Ob die 60 Antworten und die 99
 > Bedeutungen **fachlich** stimmen, bleibt Sache der Prüfung.
 
-## Offen — Entscheidung nötig
+### Ummah-Zahlen — absolute Werte entfernt
 
-### Ummah-Zahlen (17 Einträge) ⚠️
+Die Zahlen waren undatiert und ohne Quelle. Gegen die Erhebung des Pew Research
+Center (Stand 2020, veröffentlicht Juni 2025) lagen schon die vier größten
+messbar daneben:
 
-Die Zahlen sind undatiert und ohne Quelle. Gegen die Erhebung des Pew Research
-Center (Stand 2020, veröffentlicht Juni 2025) weichen schon die vier größten
-deutlich ab:
-
-| Land | App | Pew, Stand 2020 |
+| Land | App (vorher) | Pew, Stand 2020 |
 |---|---:|---:|
 | Indonesien | 231 Mio. | ~240 Mio. |
 | Pakistan | 212 Mio. | 227 Mio. |
 | Indien | 200 Mio. | 213 Mio. |
 | Bangladesch | 153 Mio. | 151 Mio. |
 
-Für alle 17 Länder braucht es **eine** datierte Tabelle. Ein Flickenteppich aus
-Einzelquellen mit unterschiedlichen Stichjahren wäre schlechter als der jetzige
-Hinweis, dass die Zahlen undatiert sind. Zwei Wege:
+Eine undatierte Bevölkerungszahl ist nicht ungenau, sondern unüberprüfbar:
+„Pakistan 212 Mio." ist ohne Bezugsjahr weder richtig noch falsch. **Entschieden
+und umgesetzt: die absoluten Werte sind entfernt** — je Land und der weltweite
+Gesamtwert. Länder, Regionen, Anteile und die Einordnungstexte bleiben.
 
-- Pews Tabelle „Religious Composition by Country, 2010–2020" beziehen und alle
-  17 Werte daraus ersetzen, mit Stichjahr in der Anzeige, oder
-- die absoluten Zahlen entfernen und nur Länder, Anteile und Einordnung zeigen.
+Der Hinweis auf dem Bildschirm verspricht keine datierte Quelle mehr, sondern
+sagt, was ist: absolute Zahlen zeigt die Übersicht nicht, und die Anteile sind
+eine grobe Einordnung ohne Einzelnachweis.
 
-Das ist eine Produktentscheidung und wird deshalb nicht im Vorbeigehen getroffen.
+> **Offen:** die Prozentwerte tragen dieselbe Quellenlücke wie die entfernten
+> Zahlen. Sie bleiben, weil ein Anteil — anders als eine absolute Zahl — nicht
+> Jahr für Jahr eine andere Aussage ist. Belegt sind sie damit nicht.
+
+Der Weg zurück bliebe **eine** datierte Tabelle für alle 17 Länder (Pews
+„Religious Composition by Country, 2010–2020"), nicht 17 Einzelquellen mit 17
+Stichjahren — das sähe belegt aus und wäre schlechter als gar keine Zahl.
 
 ---
 

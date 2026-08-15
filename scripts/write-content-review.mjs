@@ -139,7 +139,7 @@ areas.push({
   name: 'Ummah-Übersicht',
   tier: 'D',
   priority: true,
-  note: 'Die Zahlen tragen im Altbestand weder Quelle noch Stichjahr. Sie sind entweder durch eine datierte Quelle zu ersetzen oder zu entfernen. Die App weist derzeit offen darauf hin.',
+  note: 'Die absoluten Bevölkerungszahlen sind entfernt: sie trugen weder Quelle noch Stichjahr und lagen gegen Pew (Stand 2020) messbar daneben. Zu prüfen bleiben die Anteile in Prozent, die dieselbe Quellenlücke haben, sowie die Einordnungstexte je Land.',
   rows: values(ummah.slice(ummah.indexOf('UMMAH_COUNTRIES')), 'name').map((name) => ({ text: name, source: '— (undatiert)', origin: CARRIED })),
 });
 

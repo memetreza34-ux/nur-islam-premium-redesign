@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, type ReactNode } from 'react';
 import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
 import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';
 import { REPENTANCE_GROUPS, SUNNAH_GROUPS } from '../data/practiceData';
-import { UMMAH_COUNTRIES, UMMAH_REGIONS, UMMAH_TOTAL } from '../data/ummahData';
+import { UMMAH_COUNTRIES, UMMAH_REGIONS } from '../data/ummahData';
 import { HAJJ_STATIONS, HOLY_PLACES, UMRAH_STATIONS } from '../data/pilgrimageData';
 import type { PilgrimageStation } from '../data/pilgrimageData';
 import { PROPHETS } from '../data/prophetData';
@@ -614,8 +614,8 @@ function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
     <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Größenordnung</span><h2>Weltweit</h2></div></div>
-        <p className="reference-topic-text">{UMMAH_TOTAL} Musliminnen und Muslime, verteilt auf:</p>
+        <div className="section-heading"><div><span className="overline">Verteilung</span><h2>Weltweit</h2></div></div>
+        <p className="reference-topic-text">Wie sich die muslimische Weltbevölkerung auf die Regionen verteilt:</p>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_REGIONS.map((region) => (
             <article key={region.name}><strong>{region.name}</strong><small>{region.share}</small></article>
@@ -624,21 +624,22 @@ function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
       </section>
 
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Länder</span><h2>Nach Bevölkerung</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
+        <div className="section-heading"><div><span className="overline">Länder</span><h2>Muslimischer Anteil</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_COUNTRIES.map((country) => (
             <article key={country.id}>
               <strong>{country.name}</strong>
-              <small>{country.muslimPopulation} · {country.share} der Bevölkerung · {country.region}</small>
+              <small>{country.share} der Bevölkerung · {country.region}</small>
               <small>{country.info}</small>
             </article>
           ))}
         </div>
       </section>
 
-      {/* The old data carries no source and no reference year, so the figures
-          are labelled as the rough order of magnitude they are. */}
-      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Die Zahlen stammen aus dem übernommenen Altbestand und tragen dort weder Quelle noch Stichjahr. Sie sind als Größenordnung zu lesen, nicht als belastbare Statistik, und werden vor der Veröffentlichung mit einer datierten Quelle ersetzt.</p></section>
+      {/* The absolute figures are gone rather than promised. What is left still
+          carries no source, and the notice says so instead of announcing a fix
+          that has no date on it. */}
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Absolute Bevölkerungszahlen zeigt diese Übersicht nicht mehr: die übernommenen Werte trugen weder Quelle noch Stichjahr, und eine undatierte Bevölkerungszahl lässt sich nicht überprüfen. Auch die Anteile hier sind eine grobe Einordnung ohne Einzelnachweis, keine Statistik.</p></section>
     </LegacyMotionMain>
   );
 }
