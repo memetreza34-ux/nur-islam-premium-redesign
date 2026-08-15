@@ -203,7 +203,7 @@ export function LearningCourseScreen({
           <h2>{category.description}</h2>
           <div className="reference-learning-course-hero__progress">
             <span><i style={{ width: `${categoryProgress}%` }} /></span>
-            <strong>{categoryCompleted}/{lessons.length} Lektionen abgeschlossen</strong>
+            <strong>{categoryCompleted} von {lessons.length} Lektionen gelesen</strong>
           </div>
         </div>
         <span className="reference-learning-course-hero__icon"><CategoryIcon size={54} /></span>
@@ -227,7 +227,11 @@ export function LearningCourseScreen({
           <span className="overline">{selectedLesson.eyebrow}</span>
           <h2>{selectedLesson.title}</h2>
           <p>{selectedLesson.summary}</p>
-          <div><span><BookOpen size={15} /> {selectedLesson.duration}</span><span className={completed.has(selectedLesson.id) ? 'is-complete' : ''}>{completed.has(selectedLesson.id) ? <CircleCheck size={15} /> : <GraduationCap size={15} />}{completed.has(selectedLesson.id) ? 'Abgeschlossen' : 'In Bearbeitung'}</span></div>
+          <div><span><BookOpen size={15} /> {selectedLesson.duration}</span><span className={completed.has(selectedLesson.id) ? 'is-complete' : ''}>{completed.has(selectedLesson.id) ? <CircleCheck size={15} /> : <GraduationCap size={15} />}{/* „In Bearbeitung“ stand hier und wurde als Zustand der App gelesen —
+              als sei die Lektion noch nicht fertig geschrieben. Gemeint ist der
+              Fortschritt des Lesenden, und der heißt schlicht: noch nicht
+              gelesen. */}
+            {completed.has(selectedLesson.id) ? 'Abgeschlossen' : 'Noch nicht gelesen'}</span></div>
         </header>
 
         <section className="reference-learning-reading">

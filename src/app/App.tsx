@@ -834,8 +834,14 @@ export default function App() {
       <div className="background-orbit background-orbit--one" />
       <div className="background-orbit background-orbit--two" />
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
+        {/* The frame carries no fade of its own. It used to animate opacity
+            0 -> 1 -> 0 around every screen change, while each screen already
+            animates itself in. Switching tabs faster than that 120ms exit left
+            the frame stuck at opacity 0 with a fully rendered screen inside
+            it — a blank app until the next tap. Reproduced by clicking through
+            the tab bar at 60ms intervals. */}
         <AnimatePresence mode="wait">
-          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .12, ease: [0.22, 1, 0.36, 1] }}>
+          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame">
             {screen}
           </motion.div>
         </AnimatePresence>

@@ -31,8 +31,13 @@ const LegacyFeatureScreen = lazy(() => import('./LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
 import { learningLegacyFeatures } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
-import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
-import type { PrayerLessonId } from './PrayerLearningScreen';
+// Loaded on demand: the course carries the full prayer sequence with its
+// Arabic wording and the posture figures, which pushed the startup bundle past
+// its entry budget. The hub only needs the five prayers' names.
+const PrayerLearningScreen = lazy(() => import('./PrayerLearningScreen')
+  .then((module) => ({ default: module.PrayerLearningScreen })));
+import { PRAYER_LESSONS } from '../data/prayerLessons';
+import type { PrayerLessonId } from '../data/prayerLessons';
 import { MosqueScene, PremiumImage } from '../shared/PremiumVisuals';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
@@ -107,12 +112,14 @@ export function LearnScreen({
 
   if (prayerLesson) {
     return (
+      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
       <PrayerLearningScreen
         initialPrayer={prayerLesson}
         onBack={() => setPrayerLesson(null)}
         onOpenQibla={onOpenQibla}
         onOpenPrayerTimes={onOpenPrayer}
       />
+      </Suspense>
     );
   }
 
@@ -196,7 +203,7 @@ export function LearnScreen({
               <motion.button key={category.id} className={completedInCategory === lessons.length ? 'reference-category-card is-complete' : 'reference-category-card'} onClick={() => setLearningCategory(category.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .98 }}>
                 <span className="reference-category-card__ornament" aria-hidden="true">۞</span>
                 <span className="reference-category-card__icon">{completedInCategory === lessons.length ? <CircleCheck size={24} /> : <Icon size={24} />}</span>
-                <strong>{category.title}</strong><small>{category.subtitle}</small><em>{completedInCategory}/{lessons.length} Lektionen</em>
+                <strong>{category.title}</strong><small>{category.subtitle}</small><em>{completedInCategory} von {lessons.length} gelesen</em>
               </motion.button>
             );
           })}

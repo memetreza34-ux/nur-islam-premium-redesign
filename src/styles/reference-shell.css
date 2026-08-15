@@ -15,7 +15,11 @@
   width: 100%;
 }
 
-.app-shell--detail .reference-screen-header {
+/* Auf jedem Bildschirm mit Kopfzeile, nicht nur auf Detailseiten. Der
+   Gebetskurs, der Lernbereich und der Kalender tragen die Fußnavigation und
+   fielen deshalb aus dieser Regel — ausgerechnet die langen Seiten, auf denen
+   man zum Zurückgehen erst wieder ganz nach oben scrollen musste. */
+.reference-screen-header {
   position: sticky;
   z-index: 30;
   top: max(7px, env(safe-area-inset-top));
