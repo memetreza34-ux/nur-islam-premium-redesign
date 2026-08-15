@@ -40,25 +40,35 @@ for (const number of offlineNumbers) {
   const meta = surahs.find((surah) => surah.number === number);
   if (!meta) throw new Error(`Offline surah ${number} is missing from metadata.`);
 
-  const [arabic, german] = await Promise.all([
-    readFile(resolve(dataRoot, 'ar', `${number}.json`), 'utf8').then(JSON.parse),
-    readFile(resolve(dataRoot, 'de', `${number}.json`), 'utf8').then(JSON.parse),
-  ]);
+  const arabic = JSON.parse(await readFile(resolve(dataRoot, 'ar', `${number}.json`), 'utf8'));
 
-  for (const [language, detail] of [['ar', arabic], ['de', german]]) {
-    if (detail.number !== number || detail.numberOfAyahs !== meta.numberOfAyahs) {
-      throw new Error(`${language}/${number}.json metadata does not match surahs.json.`);
-    }
-    if (!Array.isArray(detail.ayahs) || detail.ayahs.length !== meta.numberOfAyahs) {
-      throw new Error(`${language}/${number}.json has an invalid ayah count.`);
-    }
-    detail.ayahs.forEach((ayah, index) => {
-      if (ayah.numberInSurah !== index + 1 || typeof ayah.text !== 'string' || !ayah.text.trim()) {
-        throw new Error(`${language}/${number}.json has invalid ayah ${index + 1}.`);
-      }
-    });
+  if (arabic.number !== number || arabic.numberOfAyahs !== meta.numberOfAyahs) {
+    throw new Error(`ar/${number}.json metadata does not match surahs.json.`);
   }
+  if (!Array.isArray(arabic.ayahs) || arabic.ayahs.length !== meta.numberOfAyahs) {
+    throw new Error(`ar/${number}.json has an invalid ayah count.`);
+  }
+  arabic.ayahs.forEach((ayah, index) => {
+    if (ayah.numberInSurah !== index + 1 || typeof ayah.text !== 'string' || !ayah.text.trim()) {
+      throw new Error(`ar/${number}.json has invalid ayah ${index + 1}.`);
+    }
+  });
   totalAyahs += arabic.ayahs.length;
+}
+
+// The German rendering is deliberately not here. Bubenheim & Elyas is a
+// protected work; shipping all 114 Surahs of it made this app the distributor,
+// which needs the rights holder's permission. It is fetched per Surah instead
+// and cached in the reader's own browser. A `de/` directory reappearing means
+// that decision was reversed by accident.
+try {
+  await readFile(resolve(dataRoot, 'de/1.json'), 'utf8');
+  throw new Error(
+    'public/data/quran/de is back. The German translation is fetched per Surah, not shipped —\n' +
+      'bundling it makes this app the distributor of a protected work.',
+  );
+} catch (error) {
+  if (error.code !== 'ENOENT') throw error;
 }
 
 // The Kufan count the metadata is built on. A silently truncated or duplicated
@@ -95,22 +105,28 @@ for (const required of onlineServiceFeatures) {
 //
 // The fingerprint is one Ayah of the shipped edition, quoted exactly. Swapping
 // the bundle for a different translation changes it and fails here.
-const BUBENHEIM_2_201 =
-  'Unter ihnen gibt es aber auch solche, die sagen: "Unser Herr, gib uns im Diesseits Gutes und im Jenseits Gutes, und bewahre uns vor der Strafe des (Höllen)feuers!';
-const baqara = JSON.parse(await readFile(resolve(dataRoot, 'de/2.json'), 'utf8'));
-const bundled201 = baqara.ayahs.find((ayah) => ayah.numberInSurah === 201)?.text;
-if (bundled201 !== BUBENHEIM_2_201) {
-  throw new Error(
-    'The bundled German Quran is no longer the Bubenheim & Elyas rendering the licence credits.\n' +
-      'Rebuild it with scripts/build-quran-bundle.mjs, or — if the edition changed on purpose — update\n' +
-      'ONLINE_GERMAN_EDITION, the reader label, the licence text in src/data/legalContent.ts and this\n' +
-      'fingerprint together. Never one of the four alone.',
-  );
-}
-
 const legalSource = await readFile(resolve(root, 'src/data/legalContent.ts'), 'utf8');
 if (!legalSource.includes('Bubenheim & Elyas')) {
-  throw new Error('The licence section no longer credits the German Quran translation the app actually ships.');
+  throw new Error('The licence section no longer credits the German Quran translation the reader is shown.');
+}
+
+// The translation must stay a fetch, never a bundled asset. Requesting both
+// editions at once was how it used to work, and it is the shape to guard
+// against: it downloads the Arabic half the device already has, and it couples
+// the two so a failed translation takes the Arabic text down with it.
+if (serviceSource.includes(`${'editions'}/`)) {
+  throw new Error('The Quran service requests both editions again; only the translation is fetched.');
+}
+for (const required of [
+  'german: SurahDetail | null',
+  "translationSource: translation?.source ?? 'unavailable'",
+]) {
+  if (!serviceSource.includes(required)) {
+    throw new Error(
+      `The Quran service no longer treats the translation as optional (missing: ${required}).\n` +
+        'A Surah has to render from the bundled Arabic when the translation cannot be fetched.',
+    );
+  }
 }
 
 const appSource = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
@@ -196,4 +212,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} paired offline surahs (${totalAyahs} ayahs), validated Al Quran Cloud fallback, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} Surahs in Arabic offline (${totalAyahs} ayahs), the German rendering fetched per Surah and never bundled, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);

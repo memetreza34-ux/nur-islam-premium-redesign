@@ -177,10 +177,15 @@ test('reads a long surah from the local bundle instead of the network', async ({
   // Only four surahs used to ship locally; everything else came from
   // api.alquran.cloud. Al-Baqara is the longest surah and was the clearest
   // case of that gap, so it stands in for the other 109 that moved offline.
+  //
+  // The Arabic is what moved offline and stayed there. The German rendering is
+  // fetched per Surah on purpose — bundling a protected translation made this
+  // app its distributor — so exactly one request is expected here, and it must
+  // ask for the translation alone, not for the Arabic the device already holds.
   const onlineCalls: string[] = [];
   await page.route('**://api.alquran.cloud/**', async (route) => {
     onlineCalls.push(route.request().url());
-    await route.abort();
+    await route.continue();
   });
 
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
@@ -189,7 +194,10 @@ test('reads a long surah from the local bundle instead of the network', async ({
   await page.getByRole('button').filter({ hasText: /Al-Baqara/ }).first().click();
 
   await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
-  expect(onlineCalls, 'Al-Baqara must come from the bundled files').toEqual([]);
+
+  expect(onlineCalls.length, 'only the translation is fetched, and only once').toBe(1);
+  expect(onlineCalls[0], 'the request must name the translation edition').toContain('de.bubenheim');
+  expect(onlineCalls[0], 'the Arabic is bundled and must not be requested').not.toContain('quran-uthmani');
 
   // The bundled German is a verbatim third-party translation. It was labelled
   // "Sinngemäße deutsche Bedeutung aus dem übernommenen Altbestand" — the app's

@@ -19,33 +19,43 @@ export interface SurahDetail extends Surah {
   ayahs: QuranAyah[];
 }
 
+/** Where the German rendering came from, or why it is missing. */
+export type TranslationSource = 'network' | 'cache' | 'unavailable';
+
 export interface QuranSurahBundle {
   meta: Surah;
   arabic: SurahDetail;
-  german: SurahDetail;
+  /** Null when the translation could not be fetched — offline, most likely. */
+  german: SurahDetail | null;
   source: QuranBundleSource;
   sourceLabel: string;
+  translationSource: TranslationSource;
   translationLabel: string;
 }
 
 const DATA_BASE = `${import.meta.env.BASE_URL}data/quran`;
 const ONLINE_API_BASE = 'https://api.alquran.cloud/v1';
 const ONLINE_ARABIC_EDITION = 'quran-uthmani';
-// The same edition the 114 bundled Surahs are built from — keep the two in
-// step. They were not: every offline file held de.aburida while this asked for
-// de.bubenheim, so a Surah reaching the reader through the fallback came back
-// in a different German rendering than the identical Surah read offline, with
-// nothing on screen saying so. The bundle is rebuilt from this edition by
-// scripts/build-quran-bundle.mjs.
+// The German rendering is fetched, never shipped.
+//
+// Bubenheim & Elyas is a protected work. Bundling all 114 Surahs meant the app
+// itself distributed it, which needs permission from the rights holder and
+// would have to be answered before any app store submission. Requesting it per
+// Surah moves that: Al Quran Cloud serves the text, the reader's own browser
+// caches its copy, and this app ships none of it. The same shape the recitation
+// recordings already use.
+//
+// The Arabic Uthmani text stays bundled. It is not a protected work, and it is
+// what makes the reader usable with no connection at all.
 const ONLINE_GERMAN_EDITION = 'de.bubenheim';
 const ONLINE_CACHE_NAME = 'nur-quran-online-v1';
 const ONLINE_TIMEOUT_MS = 12000;
 const memoryCache = new Map<string, unknown>();
 
 /**
- * Alle 114 Suren liegen paarweise offline vor: arabischer Uthmani-Text und die
- * deutsche Übersetzung von Bubenheim & Elyas. Der Online-Weg bleibt nur als
- * Notfallpfad, falls eine lokale Datei einmal fehlt oder beschädigt ist.
+ * Alle 114 Suren liegen im arabischen Uthmani-Text offline vor. Die deutsche
+ * Wiedergabe wird beim Öffnen einer Sure geladen und im Browser des Nutzers
+ * zwischengespeichert — sie ist nicht Teil der App.
  */
 export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);
 export const OFFLINE_QURAN_SURAH_SET = new Set<number>(OFFLINE_QURAN_SURAHS);
@@ -104,7 +114,9 @@ async function fetchOfflineSurahDetail(number: number, language: 'ar' | 'de'): P
 }
 
 function getOnlineRequestUrl(number: number) {
-  return `${ONLINE_API_BASE}/surah/${number}/editions/${ONLINE_ARABIC_EDITION},${ONLINE_GERMAN_EDITION}`;
+  // Only the translation. The Arabic side is on the device, so asking for both
+  // would download the half we already have on every Surah.
+  return `${ONLINE_API_BASE}/surah/${number}/${ONLINE_GERMAN_EDITION}`;
 }
 
 function validateEdition(edition: QuranApiEdition | undefined, meta: Surah, identifier: string) {
@@ -122,34 +134,16 @@ function validateEdition(edition: QuranApiEdition | undefined, meta: Surah, iden
   return edition;
 }
 
-function parseOnlineBundle(payload: QuranApiResponse, meta: Surah, source: Exclude<QuranBundleSource, 'offline'>): QuranSurahBundle {
-  if (payload.code !== 200 || !Array.isArray(payload.data)) {
+function parseOnlineBundle(payload: QuranApiResponse, meta: Surah): SurahDetail {
+  if (payload.code !== 200 || !payload.data || Array.isArray(payload.data)) {
     throw new Error('Die Quran-Quelle lieferte keine gültige Antwort.');
   }
 
-  const arabicEdition = validateEdition(
-    payload.data.find((edition) => edition.edition?.identifier === ONLINE_ARABIC_EDITION),
-    meta,
-    ONLINE_ARABIC_EDITION,
-  );
-  const germanEdition = validateEdition(
-    payload.data.find((edition) => edition.edition?.identifier === ONLINE_GERMAN_EDITION),
-    meta,
-    ONLINE_GERMAN_EDITION,
-  );
-
-  const toDetail = (edition: QuranApiEdition): SurahDetail => ({
-    ...meta,
-    ayahs: edition.ayahs.map((ayah) => ({ numberInSurah: ayah.numberInSurah, text: ayah.text.trim() })),
-  });
+  const germanEdition = validateEdition(payload.data, meta, ONLINE_GERMAN_EDITION);
 
   return {
-    meta,
-    arabic: toDetail(arabicEdition),
-    german: toDetail(germanEdition),
-    source,
-    sourceLabel: source === 'cache' ? 'Al Quran Cloud · Browser-Cache' : 'Al Quran Cloud · Online',
-    translationLabel: 'Bubenheim & Elyas',
+    ...meta,
+    ayahs: germanEdition.ayahs.map((ayah) => ({ numberInSurah: ayah.numberInSurah, text: ayah.text.trim() })),
   };
 }
 
@@ -160,7 +154,7 @@ async function readOnlineCache(url: string, meta: Surah) {
     const response = await cache.match(url);
     if (!response) return null;
     const payload = await response.json() as QuranApiResponse;
-    return parseOnlineBundle(payload, meta, 'cache');
+    return parseOnlineBundle(payload, meta);
   } catch {
     return null;
   }
@@ -176,10 +170,16 @@ async function writeOnlineCache(url: string, response: Response) {
   }
 }
 
-async function fetchOnlineSurahBundle(meta: Surah): Promise<QuranSurahBundle> {
+/**
+ * The German rendering for one Surah, from the browser cache if it is already
+ * there. Returns null instead of throwing: a missing translation must not take
+ * the Arabic text down with it, which is the whole point of keeping the two
+ * apart.
+ */
+async function fetchTranslation(meta: Surah): Promise<{ detail: SurahDetail; source: TranslationSource } | null> {
   const url = getOnlineRequestUrl(meta.number);
   const cached = await readOnlineCache(url, meta);
-  if (cached) return cached;
+  if (cached) return { detail: cached, source: 'cache' };
 
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), ONLINE_TIMEOUT_MS);
@@ -191,14 +191,13 @@ async function fetchOnlineSurahBundle(meta: Surah): Promise<QuranSurahBundle> {
     if (!response.ok) throw new Error(`Quran-Quelle antwortet mit ${response.status}.`);
     const cacheCopy = response.clone();
     const payload = await response.json() as QuranApiResponse;
-    const bundle = parseOnlineBundle(payload, meta, 'network');
+    const detail = parseOnlineBundle(payload, meta);
     await writeOnlineCache(url, cacheCopy);
-    return bundle;
-  } catch (reason) {
-    if ((reason as DOMException)?.name === 'AbortError') {
-      throw new Error('Die Quran-Quelle hat zu lange nicht geantwortet.');
-    }
-    throw reason;
+    return { detail, source: 'network' };
+  } catch {
+    // Offline, blocked, timed out or malformed — all the same to the reader,
+    // which shows the Arabic and says the meaning needs a connection once.
+    return null;
   } finally {
     window.clearTimeout(timeout);
   }
@@ -210,37 +209,27 @@ export async function fetchSurahBundle(number: number): Promise<QuranSurahBundle
   const meta = surahs.find((surah) => surah.number === number);
   if (!meta) throw new Error('Sure wurde in der lokalen Liste nicht gefunden.');
 
-  if (!OFFLINE_QURAN_SURAH_SET.has(number)) {
-    return fetchOnlineSurahBundle(meta);
+  // Arabic first and on its own. It is bundled, so it renders with no
+  // connection; the translation is then asked for separately and is allowed to
+  // fail without taking the Surah with it.
+  const arabic = await fetchOfflineSurahDetail(number, 'ar');
+  if (arabic.ayahs.length !== meta.numberOfAyahs) {
+    throw new Error('Die lokale Quran-Datei dieser Sure ist unvollständig.');
   }
 
-  // Every surah is bundled, so the online edition is no longer a routine path.
-  // It stays reachable for the one case the local copy cannot serve: a missing
-  // or truncated file. Reading on is better than a dead screen, and the bundle
-  // still reports which source the text came from.
-  let arabic: SurahDetail;
-  let german: SurahDetail;
-  try {
-    [arabic, german] = await Promise.all([
-      fetchOfflineSurahDetail(number, 'ar'),
-      fetchOfflineSurahDetail(number, 'de'),
-    ]);
-    if (arabic.ayahs.length !== meta.numberOfAyahs || german.ayahs.length !== meta.numberOfAyahs) {
-      throw new Error('Die lokalen Quran-Dateien dieser Sure sind unvollständig.');
-    }
-  } catch {
-    return fetchOnlineSurahBundle(meta);
-  }
+  const translation = await fetchTranslation(meta);
 
   return {
     meta,
     arabic,
-    german,
+    german: translation?.detail ?? null,
     source: 'offline',
-    sourceLabel: 'Lokaler Offline-Bestand',
-    // Named, not described. The offline files are the same Bubenheim & Elyas
-    // text the online path serves; calling them an anonymous "Altbestand" hid
-    // whose translation the app was actually showing.
+    // Describes the Arabic, which is the part this app ships. The translation
+    // reports itself separately through translationSource.
+    sourceLabel: 'Arabisch auf dem Gerät',
+    translationSource: translation?.source ?? 'unavailable',
+    // Named, not described: an anonymous "Altbestand" hid whose translation the
+    // app was showing.
     translationLabel: 'Bubenheim & Elyas',
   };
 }

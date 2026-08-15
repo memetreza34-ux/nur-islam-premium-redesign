@@ -125,13 +125,41 @@ Formulierung („im Diesseits Gutes" gegen „in dieser Welt Gutes").
 
 Der arabische Text ist wie angegeben Uthmani.
 
-> **Für Arman:** Bubenheim & Elyas stammt vom König-Fahd-Komplex und ist die
-> Übersetzung, die kostenlose, nicht-kommerzielle Apps üblicherweise verbreiten
-> — was zu dem passt, was das Impressum über diese App sagt. Das ist der Grund
-> für die Umstellung. Es ist trotzdem ein geschütztes Werk, das hier
-> vollständig offline mitgeliefert wird: **die Erlaubnis dafür ist damit nicht
-> erteilt**, sie ist nur wahrscheinlicher zu bekommen. Eine Anfrage beim
-> Rechteinhaber steht weiterhin aus.
+### Die Übersetzung wird nicht mehr mitgeliefert
+
+**Die Lizenzfrage ist damit gegenstandslos, nicht beantwortet.**
+
+Solange die App alle 114 Suren der Übersetzung mitbrachte, war sie deren
+Verbreiter — und das braucht die Erlaubnis des Rechteinhabers, spätestens bei
+einer Store-Einreichung. Die deutsche Wiedergabe wird jetzt beim Öffnen einer
+Sure von Al Quran Cloud geholt und im Browser des Nutzers gespeichert. Al Quran
+Cloud verbreitet, der Nutzer ruft ab, die App liefert nur die Anfrage. Dasselbe
+Muster, das die sechs Rezitationsaufnahmen im Gebetskurs schon nutzten.
+
+Der arabische Uthmani-Text bleibt vollständig offline — er ist nicht geschützt
+und macht den Leser ohne jede Verbindung benutzbar.
+
+| | vorher | jetzt |
+|---|---|---|
+| Arabisch | offline | offline |
+| Deutsch | offline mitgeliefert | beim Öffnen geladen, dann im Browser |
+| Datenmenge | 3,0 MB | 1,7 MB |
+| Ohne Verbindung | beides lesbar | Arabisch lesbar, Hinweis zur Bedeutung |
+
+Der Preis steht auf dem Bildschirm statt im Kleingedruckten: wer eine Sure
+zuerst ohne Verbindung öffnet, sieht den arabischen Text und den Satz, dass die
+Bedeutung einmal eine Verbindung braucht. Danach steht sie auch offline.
+
+Abgesichert durch `quran:check` (schlägt fehl, sobald `public/data/quran/de`
+wieder auftaucht oder die Übersetzung nicht mehr optional ist) und zwei
+e2e-Tests: einer belegt, dass genau **eine** Abfrage rausgeht und die nur die
+Übersetzung anfordert, der andere, dass ohne Verbindung der arabische Text
+steht und der Hinweis erscheint.
+
+> **Für Arman:** die Anfrage beim König-Fahd-Komplex lohnt weiterhin — mit
+> Erlaubnis kann der Offline-Bestand zurück, und `scripts/build-quran-bundle.mjs`
+> liegt dafür bereit. Sie ist nur keine Bedingung mehr für den Launch, auch
+> nicht für den App Store.
 
 ---
 

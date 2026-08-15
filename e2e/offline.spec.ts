@@ -37,6 +37,12 @@ test('opens a bundled surah with no connection', async ({ page, context }) => {
   await page.getByRole('button').filter({ hasText: /Al-Faatiha|Lesen|Weiterlesen/ }).first().click();
 
   await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 20_000 });
+
+  // The Arabic is bundled and the German rendering is fetched, so with no
+  // connection the Surah is still readable and the screen has to say why the
+  // meaning is missing rather than leave a blank where it used to be.
+  await expect(page.getByText('Deutsch fehlt')).toBeVisible();
+  await expect(page.getByText(/braucht dafür einmal eine Verbindung/)).toBeVisible();
 });
 
 test('reports a failure instead of inventing mosques when offline', async ({ page, context }) => {

@@ -226,12 +226,22 @@ export function QuranReaderScreen({
   // presented as the app's own paraphrase.
   const germanAttribution = `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Bubenheim & Elyas'}`;
 
+  // Without a translation the copied text is the Arabic and the reference —
+  // never an empty "Deutsche Übersetzung:" line implying one was there.
+  const ayahText = (index: number) => {
+    if (!bundle) return '';
+    const arabic = bundle.arabic.ayahs[index]?.text ?? '';
+    const german = bundle.german?.ayahs[index]?.text;
+    const reference = `${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`;
+    return german
+      ? `${arabic}\n\n${germanAttribution}:\n${german}\n\n${reference}`
+      : `${arabic}\n\n${reference}`;
+  };
+
   const copyAyah = async (index: number) => {
     if (!bundle) return;
-    const arabic = bundle.arabic.ayahs[index]?.text ?? '';
-    const german = bundle.german.ayahs[index]?.text ?? '';
     try {
-      await copyText(`${arabic}\n\n${germanAttribution}:\n${german}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`);
+      await copyText(ayahText(index));
       flash(`Ayah ${index + 1} kopiert`);
     } catch {
       flash('Kopieren war nicht möglich');
@@ -240,7 +250,7 @@ export function QuranReaderScreen({
 
   const shareAyah = async (index: number) => {
     if (!bundle) return;
-    const text = `${bundle.arabic.ayahs[index]?.text ?? ''}\n\n${germanAttribution}:\n${bundle.german.ayahs[index]?.text ?? ''}\n\n${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`;
+    const text = ayahText(index);
     try {
       if (typeof navigator.share === 'function') {
         await navigator.share({ title: `${bundle.meta.englishName} ${bundle.meta.number}:${index + 1}`, text });
@@ -256,11 +266,14 @@ export function QuranReaderScreen({
 
   const nextNumber = Math.min(114, surahNumber + 1);
   const nextAvailable = nextNumber !== surahNumber;
-  const readerLabel = bundle?.source === 'offline'
-    ? 'Offline-Reader'
-    : bundle?.source === 'cache'
+  // The Arabic is always on the device; only the translation varies. Saying
+  // "Offline-Reader" over a screen whose meaning had to be fetched would be a
+  // claim about the wrong half.
+  const readerLabel = bundle?.translationSource === 'unavailable'
+    ? 'Arabisch offline'
+    : bundle?.translationSource === 'cache'
       ? 'Im Browser gespeichert'
-      : 'Online-Reader';
+      : 'Bedeutung geladen';
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const toastTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -295,10 +308,10 @@ export function QuranReaderScreen({
 
           <section className="reference-reader-source">
             <ShieldCheck size={17} />
-            {bundle.source === 'offline' ? (
-              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Sure {bundle.meta.number} liegt vollständig auf dem Gerät und wird ohne externe Anfrage geladen. Die Übersetzung wird unverändert angezeigt.</small></span>
+            {bundle.translationSource === 'unavailable' ? (
+              <span><strong>Arabisch: Uthmani · Deutsch fehlt</strong><small>Der arabische Text liegt auf dem Gerät. Die deutsche Wiedergabe wird beim Öffnen einer Sure geladen und braucht dafür einmal eine Verbindung; danach bleibt sie im Browser gespeichert.</small></span>
             ) : (
-              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Geladen über Al Quran Cloud und im Browser zwischengespeichert. Die Übersetzung wird unverändert angezeigt und nicht automatisch erneut übersetzt.</small></span>
+              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Der arabische Text liegt auf dem Gerät. Die Übersetzung {bundle.translationSource === 'cache' ? 'kommt aus dem Browser-Cache' : 'wurde über Al Quran Cloud geladen und im Browser gespeichert'} und wird unverändert angezeigt.</small></span>
             )}
           </section>
 
@@ -306,7 +319,7 @@ export function QuranReaderScreen({
             {bundle.arabic.ayahs.map((ayah, index) => {
               const ayahNumber = ayah.numberInSurah;
               const saved = bookmarks.has(ayahNumber);
-              const german = bundle.german.ayahs[index]?.text;
+              const german = bundle.german?.ayahs[index]?.text;
               return (
                 <motion.article
                   id={`quran-ayah-${bundle.meta.number}-${ayahNumber}`}

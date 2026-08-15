@@ -14,8 +14,16 @@
  *   node scripts/build-quran-bundle.mjs                 # de.bubenheim
  *   node scripts/build-quran-bundle.mjs de.aburida      # another edition
  *
- * Afterwards `npm run quran:check` has to pass: it holds the Ayah totals, and
- * it fingerprints one verse against the edition the licence credits.
+ * **This script is currently disarmed on purpose.** The German rendering is no
+ * longer shipped: bundling a protected translation made this app its
+ * distributor, which needs the rights holder's permission, so it is fetched per
+ * Surah instead. `quran:check` fails as soon as `public/data/quran/de` exists
+ * again, and running this will therefore break the build.
+ *
+ * It stays for the day permission arrives. Putting the bundle back means this
+ * script *and* reversing the fetch in quranService.ts *and* the guard — all
+ * three, or the app ends up in the split state it was in before, reading one
+ * source and crediting another.
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';

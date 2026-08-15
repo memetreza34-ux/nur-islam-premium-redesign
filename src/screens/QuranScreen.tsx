@@ -192,7 +192,7 @@ export function QuranScreen({
 
       <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Offline zuerst, online nur bei Bedarf</strong><small>Alle {OFFLINE_QURAN_SURAHS.length} Suren liegen auf dem Gerät und werden ohne externe Anfrage geladen. Al Quran Cloud wird nur noch angefragt, wenn eine lokale Datei fehlt; das Ergebnis wird dann im Browser zwischengespeichert. Welche Ausgabe eine Sure trägt, steht im Leser über dem Text.</small></span>
+        <span><strong>Arabisch offline, Bedeutung beim Öffnen</strong><small>Alle {OFFLINE_QURAN_SURAHS.length} Suren liegen im arabischen Text auf dem Gerät und werden ohne externe Anfrage geladen. Die deutsche Wiedergabe holt die App beim Öffnen einer Sure von Al Quran Cloud und speichert sie im Browser; danach steht sie auch ohne Verbindung. Wer die Sure zuerst ohne Verbindung öffnet, sieht den arabischen Text und einen Hinweis.</small></span>
       </section>
 
       <label className="reference-input-search">

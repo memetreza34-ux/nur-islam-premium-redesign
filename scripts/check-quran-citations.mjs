@@ -22,10 +22,15 @@ const CITATION = /(?:Quran|Koran)\s*\(?(\d{1,3}):(\d{1,3})(?:[–-](\d{1,3}))?\)
 const dataDir = resolve(root, 'src/data');
 const files = (await readdir(dataDir)).filter((name) => name.endsWith('.ts') && !name.endsWith('.test.ts'));
 
+// Ayah counts come from the catalogue, not from a text file: the German
+// rendering is fetched per Surah rather than shipped, so it is not on disk to
+// count. The Arabic is, and --report reads it for the wording.
+const catalogue = JSON.parse(await readFile(resolve(root, 'public/data/quran/surahs.json'), 'utf8'));
+
 const surahCache = new Map();
-async function loadSurah(number) {
+async function loadArabic(number) {
   if (!surahCache.has(number)) {
-    const path = resolve(root, `public/data/quran/de/${number}.json`);
+    const path = resolve(root, `public/data/quran/ar/${number}.json`);
     surahCache.set(number, JSON.parse(await readFile(path, 'utf8')));
   }
   return surahCache.get(number);
@@ -52,7 +57,11 @@ for (const file of files) {
       continue;
     }
 
-    const surah = await loadSurah(surahNumber);
+    const surah = catalogue.find((entry) => entry.number === surahNumber);
+    if (!surah) {
+      problems.push(`${file}: ${cited} names Surah ${surahNumber}, which is not in the catalogue.`);
+      continue;
+    }
     if (last > surah.numberOfAyahs) {
       problems.push(
         `${file}: ${cited} points at Ayah ${last}, but Surah ${surahNumber} (${surah.englishName}) has ${surah.numberOfAyahs}.`,
@@ -61,7 +70,8 @@ for (const file of files) {
     }
 
     if (REPORT) {
-      const verses = surah.ayahs
+      const arabic = await loadArabic(surahNumber);
+      const verses = arabic.ayahs
         .filter((ayah) => ayah.numberInSurah >= first && ayah.numberInSurah <= last)
         .map((ayah) => `${ayah.numberInSurah}: ${ayah.text}`)
         .join('\n     ');
