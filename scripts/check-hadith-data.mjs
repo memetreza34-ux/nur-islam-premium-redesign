@@ -1,14 +1,19 @@
 /**
  * The Hadith library has to stay traceable.
  *
- * Every entry names a collection, and that is the minimum: an unsourced Hadith
- * in a prayer app is worse than no Hadith. Beyond that this tracks how precise
- * the sourcing is. The eight entries written for this app cite a number within
- * the collection; the seventeen carried over from the old repository name the
- * collection only, because that is all the old data held.
+ * Every entry names a collection *and* a number within it. An unsourced Hadith
+ * in a prayer app is worse than no Hadith, and a collection name without a
+ * number cannot be checked by the reader.
  *
- * That gap is reported rather than hidden, and it may only shrink. Numbers are
- * never filled in from memory — they come from the scholarly review.
+ * The seventeen entries carried over from the old repository held the
+ * collection only. Their numbers were looked up against the collections
+ * themselves and each narration was read back against its summary before the
+ * number was written down. Five of those seventeen turned out to be a second
+ * copy of an already numbered entry and were merged, which is why the floor
+ * below is 20 and not 25.
+ *
+ * The budget stays at zero: a new entry arrives with its number or not at all.
+ * Numbers are never written from memory.
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -31,8 +36,8 @@ const ids = [...library.matchAll(/^ {4}id: '([^']+)',$/gm)].map((match) => match
 if (entries.length !== ids.length) {
   throw new Error(`Only ${entries.length} of ${ids.length} Hadith entries have the full id/title/summary/source shape.`);
 }
-if (entries.length < 25) {
-  throw new Error(`Hadith library holds ${entries.length} entries; at least 25 are expected.`);
+if (entries.length < 20) {
+  throw new Error(`Hadith library holds ${entries.length} entries; at least 20 are expected.`);
 }
 if (new Set(ids).size !== ids.length) {
   const seen = new Set();
@@ -57,13 +62,30 @@ for (const [, id, , summary, entrySource] of entries) {
   if (!/\d/.test(entrySource)) withoutNumber++;
 }
 
-// Pinned at today's count so the gap can close but not widen.
-const MISSING_NUMBER_BUDGET = 17;
+// The gap is closed. It may not reopen: an entry without a number is a claim
+// the reader cannot check.
+const MISSING_NUMBER_BUDGET = 0;
 if (withoutNumber > MISSING_NUMBER_BUDGET) {
   throw new Error(
     `${withoutNumber} Hadith entries cite a collection without a number, above the budget of ${MISSING_NUMBER_BUDGET}.\n` +
-      'Add the reference from the scholarly review and lower the budget in the same commit; never write a number from memory.',
+      'Look the reference up in the collection and read the narration back against the summary; never write a number from memory.',
   );
+}
+
+// Two entries citing the same reference are the same narration written twice.
+// That is how five duplicates survived in here: each pair reached the library
+// from a different import, one numbered and one not, so nothing matched on
+// text. The daily rotation then showed the same Hadith twice per cycle.
+const byReference = new Map();
+for (const [, id, , , entrySource] of entries) {
+  const existing = byReference.get(entrySource);
+  if (existing) {
+    throw new Error(
+      `Hadith ${id} and ${existing} both cite "${entrySource}" — the same narration twice.\n` +
+        'Merge them into one entry rather than letting the daily rotation repeat it.',
+    );
+  }
+  byReference.set(entrySource, id);
 }
 
 if (!screen.includes('entry.context ? (')) {
@@ -71,5 +93,5 @@ if (!screen.includes('entry.context ? (')) {
 }
 
 console.log(
-  `Hadith verified: ${entries.length} entries with unique ids, every one naming a known collection and marked as a sinngemäße Inhaltsangabe; ${withoutNumber} still lack a number within the collection (budget ${MISSING_NUMBER_BUDGET}).`,
+  `Hadith verified: ${entries.length} entries with unique ids and distinct references, every one naming a known collection with a number and marked as a sinngemäße Inhaltsangabe.`,
 );

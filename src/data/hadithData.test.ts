@@ -25,8 +25,9 @@ describe('Hadith library', () => {
   it('keeps every entry unique and source-labelled', () => {
     // No exact count: the library grows as entries are carried over, and a
     // pinned number turns each addition into a failing test for no reason.
-    // check-hadith-data.mjs holds the floor and the sourcing rules.
-    expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(25);
+    // check-hadith-data.mjs holds the floor and the sourcing rules. The floor
+    // dropped from 25 to 20 when five duplicated narrations were merged.
+    expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(20);
     expect(new Set(HADITH_LIBRARY.map((entry) => entry.id)).size).toBe(HADITH_LIBRARY.length);
     for (const entry of HADITH_LIBRARY) {
       expect(entry.title.trim()).not.toBe('');
@@ -90,6 +91,23 @@ describe('Hadith favorites migration', () => {
     writeSavedHadithIds(new Set(['anger', 'invalid', 'anger', 'cleanliness']));
     expect(stored(CURRENT_KEY)).toEqual(['anger', 'cleanliness']);
     expect(stored(LEGACY_LIBRARY_KEY)).toEqual(['anger', 'cleanliness']);
+  });
+
+  it('keeps a bookmark that was saved on the merged half of a duplicated Hadith', () => {
+    // 'die-taten-sind-entsprechend' was the unnumbered second copy of the
+    // intentions Hadith. Anyone who bookmarked that copy keeps the bookmark.
+    store(CURRENT_KEY, ['die-taten-sind-entsprechend', 'die-reinheit-ist-die']);
+    expect([...readSavedHadithIds()]).toEqual(['intentions', 'cleanliness']);
+    expect(stored(CURRENT_KEY)).toEqual(['intentions', 'cleanliness']);
+  });
+
+  it('does not save the merged and surviving id as two separate favorites', () => {
+    writeSavedHadithIds(new Set(['smile', 'dein-lacheln-deinem-bruder']));
+    expect(stored(CURRENT_KEY)).toEqual(['smile']);
+  });
+
+  it('resolves a merged id to the surviving entry', () => {
+    expect(getHadithById('keiner-von-euch-glaubt')?.id).toBe('brother');
   });
 
   it('keeps an intentionally empty favorites set empty', () => {
