@@ -192,7 +192,7 @@ export function QuranScreen({
 
       <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Offline zuerst, online nur bei Bedarf</strong><small>Die vier lokalen Suren werden ohne externe Anfrage geladen. Weitere Suren kommen aus Al Quran Cloud mit arabischem Uthmani-Text und deutscher Bubenheim-&-Elyas-Übersetzung und werden anschließend im Browser zwischengespeichert.</small></span>
+        <span><strong>Offline zuerst, online nur bei Bedarf</strong><small>Alle {OFFLINE_QURAN_SURAHS.length} Suren liegen auf dem Gerät und werden ohne externe Anfrage geladen. Al Quran Cloud wird nur noch angefragt, wenn eine lokale Datei fehlt; das Ergebnis wird dann im Browser zwischengespeichert. Welche Ausgabe eine Sure trägt, steht im Leser über dem Text.</small></span>
       </section>
 
       <label className="reference-input-search">
