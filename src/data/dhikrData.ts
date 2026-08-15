@@ -107,6 +107,107 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     ],
   },
   {
+    /**
+     * Das Gegenstück zum Morgen. Es fehlte — obwohl „Morgen und Abend“ im
+     * Quran und in der Überlieferung durchgehend als Paar vorkommen und die
+     * App den Morgen bereits führte.
+     */
+    id: 'evening',
+    title: 'Dhikr am Abend',
+    shortTitle: 'Abend',
+    description: 'Das Gegenstück zum Morgen-Dhikr, gesprochen nach dem Nachmittag bis zum Einbruch der Nacht.',
+    source: 'Sunan Abu Dawud; Sunan at-Tirmidhi',
+    note: 'Die Zeitspanne wird unterschiedlich angegeben — verbreitet ist zwischen Asr und Maghrib.',
+    items: [
+      {
+        id: 'evening-amsayna',
+        latin: 'Amsayna wa amsal-mulku lillah',
+        arabic: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ',
+        meaning: 'Wir haben den Abend erreicht, und die Herrschaft gehört Allah.',
+        target: 1,
+      },
+      {
+        id: 'evening-protection',
+        latin: 'Bismillahil-ladhi la yadurru ma\'asmihi shay',
+        arabic: 'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ',
+        meaning: 'Im Namen Allahs, bei dessen Namen nichts schaden kann.',
+        target: 3,
+      },
+      {
+        id: 'evening-tasbih',
+        latin: 'SubhanAllahi wa bihamdih',
+        arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
+        meaning: 'Preis sei Allah, und Ihm gebührt das Lob.',
+        target: 100,
+      },
+      {
+        id: 'evening-tahlil',
+        latin: 'La ilaha illallahu wahdahu la sharika lah',
+        arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
+        meaning: 'Es gibt keinen Gott außer Allah allein, Er hat keinen Partner.',
+        target: 10,
+      },
+    ],
+  },
+  {
+    /**
+     * Die häufigste Frage nach einem Fehler ist, was man jetzt sagt. Bisher
+     * stand die Antwort in der App nur verstreut in den Duas.
+     */
+    id: 'istighfar',
+    title: 'Um Vergebung bitten',
+    shortTitle: 'Vergebung',
+    description: 'Kurze Formeln der Umkehr, die zu jeder Zeit und an jedem Ort gesprochen werden können.',
+    source: 'Sahih al-Bukhari; Sahih Muslim',
+    note: 'Keine der Formeln ist an eine Zahl gebunden — die Zielwerte sind verbreitete Gewohnheiten, keine Vorschrift.',
+    items: [
+      {
+        id: 'astaghfirullah',
+        latin: 'Astaghfirullah',
+        arabic: 'أَسْتَغْفِرُ اللَّهَ',
+        meaning: 'Ich bitte Allah um Vergebung.',
+        target: 100,
+      },
+      {
+        id: 'rabbighfir',
+        latin: 'Rabbighfir li wa tub ’alayya',
+        arabic: 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ',
+        meaning: 'Mein Herr, vergib mir und nimm meine Umkehr an.',
+        target: 100,
+      },
+      {
+        id: 'astaghfirullah-atub',
+        latin: 'Astaghfirullaha wa atubu ilayh',
+        arabic: 'أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ',
+        meaning: 'Ich bitte Allah um Vergebung und wende mich Ihm zu.',
+        target: 33,
+      },
+    ],
+  },
+  {
+    id: 'salawat',
+    title: 'Segenswünsche für den Propheten',
+    shortTitle: 'Salawat',
+    description: 'Segenswünsche für den Propheten ﷺ — besonders am Freitag verbreitet, an keinen Tag gebunden.',
+    source: 'Sunan Abu Dawud; Sunan an-Nasa’i',
+    items: [
+      {
+        id: 'salawat-short',
+        latin: 'Allahumma salli ’ala Muhammad',
+        arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ',
+        meaning: 'O Allah, segne Muhammad.',
+        target: 100,
+      },
+      {
+        id: 'salawat-full',
+        latin: 'Allahumma salli wa sallim ’ala nabiyyina Muhammad',
+        arabic: 'اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ',
+        meaning: 'O Allah, segne unseren Propheten Muhammad und schenke ihm Frieden.',
+        target: 33,
+      },
+    ],
+  },
+  {
     id: 'free-counter',
     title: 'Freier Zähler',
     shortTitle: 'Frei',

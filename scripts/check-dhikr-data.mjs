@@ -7,10 +7,12 @@ const screenSource = await readFile(resolve(root, 'src/screens/DhikrScreen.tsx')
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const hardeningStyles = await readFile(resolve(root, 'src/styles/functional-hardening.css'), 'utf8');
 
-const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|before-sleep|free-counter)'/g)].map((match) => match[1]);
+const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|evening|before-sleep|istighfar|salawat|free-counter)'/g)].map((match) => match[1]);
 const uniqueRoutineIds = new Set(routineIds);
 
-for (const required of ['after-prayer', 'morning-weighted', 'before-sleep', 'free-counter']) {
+// Der Abend gehört zum Morgen: „Morgen und Abend“ kommt in Quran und
+// Überlieferung als Paar vor, und die App führte lange nur die eine Hälfte.
+for (const required of ['after-prayer', 'morning-weighted', 'evening', 'before-sleep', 'istighfar', 'salawat', 'free-counter']) {
   if (!uniqueRoutineIds.has(required)) throw new Error(`Dhikr routine is missing: ${required}`);
 }
 
