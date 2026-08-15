@@ -258,13 +258,24 @@ ist, entscheidet die Prüfung selbst.
 
 ## Zuerst prüfen
 
-1. **Hajj, Umrah und heilige Stätten** — der einzige Bereich, den niemand vorher
+Wer eine Stunde hat, gibt sie hier aus — nach dem, was ein Fehler anrichtet,
+nicht nach Umfang.
+
+1. **Anleitungen zur Praxis, die vorschreiben statt beschreiben** — Sujud
+   as-Sahw, Qasr und Zusammenlegen auf Reisen, Nachholen, Frauen im Gebet, das
+   Toten- und das Eid-Gebet. Wer das liest, betet danach. Ein Fehler hier wird
+   unmittelbar befolgt und fällt niemandem auf.
+2. **Unterschiede der Rechtsschulen** — acht Punkte, je vier Positionen. Zu
+   prüfen ist auch, ob die Frage überhaupt so trennscharf verläuft.
+3. **Hajj, Umrah und heilige Stätten** — der einzige Bereich, den niemand vorher
    geschrieben hat. Alles andere wurde aus \`memetreza34-ux/nur-islam\`
    übernommen; diese Texte entstanden für diese App.
-2. **Ummah-Zahlen** — undatiert und ohne Quelle. Entweder datierte Quelle
-   nachtragen oder entfernen.
-3. **Hadith-Belegstellen ohne Nummer** — im Altbestand nur mit Sammlungsnamen
-   hinterlegt. Nummern nachtragen, nicht schätzen.
+
+Erledigt und nicht mehr vorrangig: die Hadith-Belegstellen tragen inzwischen
+alle ihre Nummer, jede einzeln nachgeschlagen und gegen die Inhaltsangabe
+gelesen; die undatierten Ummah-Zahlen sind entfernt. Beides ist in
+\`docs/QUELLENPRUEFUNG-BEFUNDE.md\` festgehalten — dort steht auch, was an den
+Duas und Quran-Stellen bereits geprüft ist und was daran offen blieb.
 
 ## Wie zu verwenden
 

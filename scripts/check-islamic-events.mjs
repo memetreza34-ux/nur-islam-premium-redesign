@@ -70,6 +70,39 @@ if (missed.length > 0) {
   );
 }
 
+// The dates themselves, pinned.
+//
+// A range check catches "month 13" and "day 42". It does not catch Ashura
+// sliding to the 9th of Muharram or Arafah to the 10th of Dhul-Hijjah, and
+// those are the errors that matter: a fasting day announced one day off sends
+// someone to fast on the wrong day, and on 10 Dhul-Hijjah fasting is actually
+// forbidden. Nothing in the app would have noticed.
+//
+// Only the dates that are not disputed are pinned here. Mawlid on 12 Rabiʿ I,
+// Isra and Miʿraj on 27 Rajab and the marker for Laylat al-Qadr on 27 Ramadan
+// are the widely used dates rather than settled ones, so they stay out — the
+// entries themselves say as much on screen.
+const FIXED_DATES = {
+  'islamic-new-year': [1, [1]],
+  tasua: [1, [9]],
+  ashura: [1, [10]],
+  ramadan: [9, [1]],
+  'eid-al-fitr': [10, [1]],
+  tarwiyah: [12, [8]],
+  arafah: [12, [9]],
+  'eid-al-adha': [12, [10]],
+  tashriq: [12, [11, 12, 13]],
+};
+for (const [id, [month, days]] of Object.entries(FIXED_DATES)) {
+  const event = events.find((entry) => entry.id === id);
+  if (!event) throw new Error(`The calendar no longer holds the occasion "${id}".`);
+  if (event.month !== month || event.days.join(',') !== days.join(',')) {
+    throw new Error(
+      `${id} sits on ${event.month}/${event.days.join(',')} but belongs on ${month}/${days.join(',')}.`,
+    );
+  }
+}
+
 // Fasting must not be suggested on the days it is forbidden.
 if (!source.includes('NO_FASTING_DAYS') || !source.includes('isFastingForbidden')) {
   throw new Error('The calendar no longer suppresses fasting hints on Eid and the Tashriq days.');

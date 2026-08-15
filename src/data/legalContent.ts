@@ -144,6 +144,14 @@ export const licenseSections: LegalSection[] = [
     ],
   },
   {
+    heading: 'Aufnahmen',
+    paragraphs: [
+      'Quran-Rezitation im Gebetskurs: Mishary Alafasy, bezogen über Islamic Network (cdn.islamic.network).',
+      'Aufnahmen der überlieferten Gebetsformeln: Hisn al-Muslim (hisnmuslim.com).',
+      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Anbietern nicht abschließend geklärt.',
+    ],
+  },
+  {
     heading: 'Textquellen',
     paragraphs: [
       'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
