@@ -6,7 +6,6 @@ on:
     branches:
       - premium-design-finish
       - final-design-release-pass
-      - final-icon-consistency-pass
     paths:
       - 'src/**'
       - 'public/**'
