@@ -17,6 +17,7 @@ const [
   mosque,
   learn,
   legacy,
+  nurIcons,
   iconCss,
   finalLock,
   styleIndex,
@@ -32,10 +33,9 @@ const [
   read('src/screens/MoreScreen.tsx'),
   read('src/screens/MosqueScreen.tsx'),
   read('src/screens/LearnScreen.tsx'),
-  // The feature definitions moved into src/data/legacyFeatures.ts so the hub
-  // tiles can render without loading the screens; both are read as one.
   Promise.all([read('src/screens/LegacyFeatureScreens.tsx'), read('src/data/legacyFeatures.ts')])
     .then((parts) => parts.join('\n')),
+  read('src/shared/NurIcons.tsx'),
   read('src/styles/premium-typography-icon-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
   read('src/styles.css'),
@@ -65,13 +65,10 @@ requireFragments(app, 'Primary navigation', [
   "onNavigate('profile')",
 ]);
 
-// This file pins which icon belongs to which action. The eyebrow next to a
-// label is supporting copy that design rewrites freely, so it is deliberately
-// not part of the assertion: pinning it here broke the build on a wording
-// change while the icon mapping was never in question.
+// App keeps stable Nur* wrapper names during the release pass so navigation and
+// card data do not need structural churn. Their implementation is guarded below
+// and must remain real lucide-react components rather than custom SVG drawings.
 for (const [label, icon] of [
-  // The Home tiles moved off Lucide onto the app's own set: at 25px the generic
-  // glyphs read as placeholder next to the rendered artwork on the same screen.
   ['Quran lesen', 'NurQuranIcon'],
   ['Beten lernen', 'NurMihrabIcon'],
   ['99 Namen Allahs', 'NurRosetteIcon'],
@@ -82,6 +79,29 @@ for (const [label, icon] of [
   const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
   if (!pairing.test(app)) {
     throw new Error(`Home semantic cards icon mapping is missing: ${label} -> ${icon}`);
+  }
+}
+
+requireFragments(nurIcons, 'Lucide-backed Nur icons', [
+  "from 'lucide-react'",
+  'return <BookOpen {...sharedProps(props)} />;',
+  'return <GraduationCap {...sharedProps(props)} />;',
+  'return <CircleDot {...sharedProps(props)} />;',
+  'return <Compass {...sharedProps(props)} />;',
+  'return <HandHeart {...sharedProps(props)} />;',
+  'return <Sparkles {...sharedProps(props)} />;',
+  'return <MapPin {...sharedProps(props)} />;',
+  'return <CalendarDays {...sharedProps(props)} />;',
+  'return <Bookmark {...sharedProps(props)} />;',
+  'return <SunMedium {...sharedProps(props)} />;',
+  'return <BrainCircuit {...sharedProps(props)} />;',
+  'return <MessageCircleQuestion {...sharedProps(props)} />;',
+  'strokeWidth: 1.75',
+]);
+
+for (const forbidden of ['<svg', '<path', '<circle', '<rect', '<polygon', '<line']) {
+  if (nurIcons.includes(forbidden)) {
+    throw new Error(`Nur UI icons must use lucide-react; custom SVG primitive is forbidden: ${forbidden}`);
   }
 }
 
@@ -198,4 +218,4 @@ if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
   throw new Error('The final 1.75 Lucide lock must remain the last stylesheet import.');
 }
 
-console.log('Reference icon map verified: primary navigation, honest Home actions and core controls are fixed, all 13 additional features keep exact ID-to-icon pairs, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');
+console.log('Reference icon map verified: UI actions use lucide-react only, custom SVG primitives are blocked, semantic mappings are fixed, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');
