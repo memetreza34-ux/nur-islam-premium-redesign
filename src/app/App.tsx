@@ -1,4 +1,5 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
+import type { UIEvent } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
@@ -46,6 +47,7 @@ import { LegalScreen } from '../screens/LegalScreen';
 const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
 import type { LegacyFeatureId } from '../data/legacyFeatures';
+import { readScreenScroll, rememberScreenScroll } from '../services/screenScrollMemory';
 import { MoreScreen } from '../screens/MoreScreen';
 import { NamesScreen } from '../screens/NamesScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
@@ -829,6 +831,28 @@ export default function App() {
                                         </Suspense>
                                       );
 
+  const screenKey = `${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`;
+
+  const rememberScroll = (event: UIEvent<HTMLDivElement>) => {
+    rememberScreenScroll(screenKey, event.currentTarget.scrollTop);
+  };
+
+  /**
+   * Puts a returning screen back where it was left. The assignment is repeated
+   * on the next frame because a screen that renders its list after mount is
+   * still short at this point, and the browser clamps a scroll offset to the
+   * height it can currently reach.
+   */
+  const restoreScreenScroll = (node: HTMLDivElement | null) => {
+    if (!node) return;
+    const offset = readScreenScroll(screenKey);
+    if (offset === 0) return;
+    node.scrollTop = offset;
+    requestAnimationFrame(() => {
+      if (node.isConnected && node.scrollTop < offset) node.scrollTop = offset;
+    });
+  };
+
   return (
     <div className="app-background app-background--v2">
       <div className="background-orbit background-orbit--one" />
@@ -841,7 +865,7 @@ export default function App() {
             it — a blank app until the next tap. Reproduced by clicking through
             the tab bar at 60ms intervals. */}
         <AnimatePresence mode="wait">
-          <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame">
+          <motion.div key={screenKey} ref={restoreScreenScroll} onScroll={rememberScroll} className="screen-transition-frame">
             {screen}
           </motion.div>
         </AnimatePresence>
