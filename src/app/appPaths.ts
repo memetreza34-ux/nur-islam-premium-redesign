@@ -3,12 +3,13 @@ const PREMIUM_ASSET_PREFIX = 'premium-assets/high-res-objects/';
 const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp',
   'nur-logo-emblem.png': 'nur-logo-emblem-v2.webp',
-  'mosque-gold.webp': 'mosque-gold-v2.webp',
-  'mosque-gold.png': 'mosque-gold-v2.webp',
-  'mosque.webp': 'mosque-gold-v2.webp',
-  // mosque-gold-v2.webp is known to be truncated. Do not silently redirect it
-  // to a different subject (for example dome-v2.webp). PremiumImage should see
-  // the decode failure and render the semantic fallback supplied by the screen.
+  'mosque-gold.webp': 'mosque-gold-v2.svg',
+  'mosque-gold.png': 'mosque-gold-v2.svg',
+  'mosque.webp': 'mosque-gold-v2.svg',
+  // The committed mosque-gold-v2.webp raster is truncated. Recover the exact
+  // same mosque role with the intact scalable SVG instead of substituting a
+  // different dome image or relying on an image-load failure at runtime.
+  'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
   'quran-open.webp': 'quran-open-v2.webp',
