@@ -41,17 +41,32 @@ grant select, insert, update, delete on table public.nur_islam_profiles to authe
 grant select, insert, update, delete on table public.nur_islam_user_state to authenticated;
 grant select, insert, update, delete on table public.nur_islam_notes to authenticated;
 
+-- Each policy is dropped first so this file can be replayed against a database
+-- that already carries part of it, the same way the tables above are guarded.
+-- `create policy` has no `if not exists` form.
+drop policy if exists "nur_islam_profiles_select_own" on public.nur_islam_profiles;
 create policy "nur_islam_profiles_select_own" on public.nur_islam_profiles for select to authenticated using ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_profiles_insert_own" on public.nur_islam_profiles;
 create policy "nur_islam_profiles_insert_own" on public.nur_islam_profiles for insert to authenticated with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_profiles_update_own" on public.nur_islam_profiles;
 create policy "nur_islam_profiles_update_own" on public.nur_islam_profiles for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_profiles_delete_own" on public.nur_islam_profiles;
 create policy "nur_islam_profiles_delete_own" on public.nur_islam_profiles for delete to authenticated using ((select auth.uid()) = user_id);
 
+drop policy if exists "nur_islam_state_select_own" on public.nur_islam_user_state;
 create policy "nur_islam_state_select_own" on public.nur_islam_user_state for select to authenticated using ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_state_insert_own" on public.nur_islam_user_state;
 create policy "nur_islam_state_insert_own" on public.nur_islam_user_state for insert to authenticated with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_state_update_own" on public.nur_islam_user_state;
 create policy "nur_islam_state_update_own" on public.nur_islam_user_state for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_state_delete_own" on public.nur_islam_user_state;
 create policy "nur_islam_state_delete_own" on public.nur_islam_user_state for delete to authenticated using ((select auth.uid()) = user_id);
 
+drop policy if exists "nur_islam_notes_select_own" on public.nur_islam_notes;
 create policy "nur_islam_notes_select_own" on public.nur_islam_notes for select to authenticated using ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_notes_insert_own" on public.nur_islam_notes;
 create policy "nur_islam_notes_insert_own" on public.nur_islam_notes for insert to authenticated with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_notes_update_own" on public.nur_islam_notes;
 create policy "nur_islam_notes_update_own" on public.nur_islam_notes for update to authenticated using ((select auth.uid()) = user_id) with check ((select auth.uid()) = user_id);
+drop policy if exists "nur_islam_notes_delete_own" on public.nur_islam_notes;
 create policy "nur_islam_notes_delete_own" on public.nur_islam_notes for delete to authenticated using ((select auth.uid()) = user_id);

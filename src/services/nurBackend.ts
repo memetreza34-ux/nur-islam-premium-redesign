@@ -10,13 +10,16 @@ export type NurSession = {
   user: NurUser;
 };
 
+/**
+ * The cloud profile carries only what the app reads back from it. Theme and
+ * prayer notification settings live in local storage and travel inside the
+ * backup payload; mirroring them into columns here produced rows that
+ * contradicted the app, because nothing ever wrote the user's actual choice.
+ */
 export type NurProfile = {
   user_id: string;
   display_name: string;
-  theme: 'dark' | 'light' | 'system';
   language: 'de';
-  prayer_notifications: boolean;
-  cloud_sync: boolean;
   created_at?: string;
   updated_at?: string;
 };
@@ -228,14 +231,12 @@ export async function upsertProfile(input: Partial<Omit<NurProfile, 'user_id' | 
   const session = await getSession();
   if (!session) throw new Error('Bitte melde dich zuerst an.');
   const current = await loadProfile();
+  // updated_at is deliberately absent: a database trigger stamps it, so the
+  // value cannot be bent by a wrong device clock.
   const row: NurProfile = {
     user_id: session.user.id,
     display_name: input.display_name ?? current?.display_name ?? 'Nur Nutzer',
-    theme: input.theme ?? current?.theme ?? 'dark',
     language: 'de',
-    prayer_notifications: input.prayer_notifications ?? current?.prayer_notifications ?? false,
-    cloud_sync: input.cloud_sync ?? current?.cloud_sync ?? true,
-    updated_at: new Date().toISOString(),
   };
   const response = await authenticatedFetch('nur_islam_profiles?on_conflict=user_id', {
     method: 'POST',
@@ -275,12 +276,13 @@ export async function backupLocalState() {
   const response = await authenticatedFetch('nur_islam_user_state?on_conflict=user_id', {
     method: 'POST',
     headers: { Prefer: 'resolution=merge-duplicates,return=representation' },
+    // client_updated_at is this device's clock and is sent as such; updated_at
+    // is stamped by a database trigger, so the returned row carries server time.
     body: JSON.stringify({
       user_id: session.user.id,
       schema_version: STORAGE_SCHEMA_VERSION,
       payload: collectLocalState(),
       client_updated_at: now,
-      updated_at: now,
     }),
   });
   const rows = await response.json() as Array<{ updated_at?: string }>;
@@ -294,6 +296,13 @@ export async function restoreCloudState() {
   const rows = await response.json() as Array<{ schema_version: number; payload: unknown; updated_at: string }>;
   const cloud = rows[0];
   if (!cloud || !cloud.payload || typeof cloud.payload !== 'object' || Array.isArray(cloud.payload)) return null;
+  // The version is recorded on every backup precisely so a newer format cannot
+  // be poured into an older app. Reading it and then ignoring it would leave
+  // that promise unkept, so a backup this build does not understand is refused
+  // rather than half-applied.
+  if (cloud.schema_version > STORAGE_SCHEMA_VERSION) {
+    throw new Error('Diese Sicherung stammt aus einer neueren App-Version. Bitte aktualisiere Nur Islam und versuche es erneut.');
+  }
   const payload = cloud.payload as Record<string, unknown>;
   Object.entries(payload).forEach(([key, value]) => {
     if (!shouldBackUpKey(key) || typeof value !== 'string') return;
@@ -324,7 +333,9 @@ export async function updateNote(id: string, title: string, body: string) {
   const response = await authenticatedFetch(`nur_islam_notes?id=eq.${encodeURIComponent(id)}`, {
     method: 'PATCH',
     headers: { Prefer: 'return=representation' },
-    body: JSON.stringify({ title: title.trim(), body, updated_at: new Date().toISOString() }),
+    // The trigger stamps updated_at, which also keeps the note list ordering
+    // honest: a device with a wrong clock cannot pin its note to the top.
+    body: JSON.stringify({ title: title.trim(), body }),
   });
   const rows = await response.json() as NurNote[];
   return rows[0];

@@ -41,7 +41,7 @@ const [
   read('src/styles.css'),
   read('src/styles/release-hardening.css'),
   read('index.html'),
-  read('supabase/migrations/202608080001_create_nur_islam_backend.sql'),
+  read('supabase/migrations/20260808040606_create_nur_islam_backend.sql'),
 ]);
 
 function requireText(source, requirements, label) {

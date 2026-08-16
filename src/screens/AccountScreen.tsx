@@ -84,7 +84,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
           try { return localStorage.getItem('nur_pending_display_name') || ''; } catch { return ''; }
         })();
         const name = profile?.display_name || pendingName || next.user.email.split('@')[0] || 'Nur Nutzer';
-        const saved = await upsertProfile({ display_name: name, cloud_sync: true });
+        const saved = await upsertProfile({ display_name: name });
         storeDisplayName(saved.display_name);
         try { localStorage.removeItem('nur_pending_display_name'); } catch { /* optional */ }
         setStatus('Anmeldung erfolgreich. Cloud-Synchronisierung ist verfügbar.');
@@ -94,7 +94,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
         storeDisplayName(name);
         if (result.session) {
           setSession(result.session);
-          await upsertProfile({ display_name: name, cloud_sync: true });
+          await upsertProfile({ display_name: name });
           setStatus('Konto erstellt und angemeldet.');
         } else {
           try { localStorage.setItem('nur_pending_display_name', name); } catch { /* optional */ }
