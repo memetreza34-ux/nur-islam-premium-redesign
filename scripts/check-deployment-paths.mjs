@@ -36,10 +36,6 @@ for (const requirement of viteRequirements) {
   if (!vite.includes(requirement)) throw new Error(`Vite base path is missing: ${requirement}`);
 }
 
-// CI actions are part of the release surface too. checkout/setup-node v7 use
-// the supported Node 24 action runtime; older majors had begun emitting runtime
-// deprecation warnings on GitHub-hosted runners. Keep all project workflows on
-// the same maintained major instead of allowing individual files to drift.
 for (const [name, workflow] of Object.entries(workflows)) {
   for (const requirement of ['actions/checkout@v7', 'actions/setup-node@v7']) {
     if (!workflow.includes(requirement)) throw new Error(`${name} is missing current CI runtime action: ${requirement}`);
@@ -54,9 +50,6 @@ for (const name of ['e2e.yml', 'reference-render-preview.yml']) {
   }
 }
 
-// GitHub Pages is a real release surface, not a feature-branch preview. Keep
-// both the trigger and the strict release gate source-controlled so a later
-// workflow edit cannot silently publish a draft or bypass legal/release checks.
 for (const requirement of [
   'branches: [main]',
   "NUR_RELEASE: 'true'",
@@ -82,7 +75,8 @@ for (const requirement of [
 
 const requiredAssetAliases = [
   "'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp'",
-  "'mosque-gold.webp': 'mosque-gold-v2.webp'",
+  "'mosque-gold.webp': 'mosque-gold-v2.svg'",
+  "'mosque-gold-v2.webp': 'mosque-gold-v2.svg'",
   "'quran-closed.webp': 'quran-closed-v2.webp'",
   "'tasbih.webp': 'tasbih-v2.webp'",
   "'qibla-compass.webp': 'qibla-compass-v2.webp'",
@@ -130,10 +124,6 @@ for (const requirement of [
   if (!pwa.includes(requirement)) throw new Error(`PWA registration is not deployment-safe: ${requirement}`);
 }
 
-// The registration version has to match the worker's cache name, otherwise a
-// deployed worker is never picked up. Derived from the worker rather than
-// written out here: a hard-coded number has to be edited on every bump, and
-// the one time that was forgotten the two silently diverged.
 const workerCache = worker.match(/const CACHE_NAME = `nur-islam-premium-v(\d+)-\$\{VISUAL_VERSION\}`/);
 const workerVisual = worker.match(/const VISUAL_VERSION = '([^']+)'/);
 if (!workerCache || !workerVisual) {
@@ -210,4 +200,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: current Node 24 GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, legacy-to-v2 premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, same-subject mosque SVG recovery plus legacy premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
