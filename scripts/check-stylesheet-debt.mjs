@@ -89,7 +89,7 @@ const BUDGET = {
   // for two days. Growth that restores shipped design is the one raise this
   // budget is meant to allow; dynamic-classes:check now fails before such a
   // removal can land again.
-  totalBytes: 733_800,
+  totalBytes: 733_678,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));
