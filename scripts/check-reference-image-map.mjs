@@ -151,7 +151,7 @@ requireFragments(more, 'Profile / More', [
 
 // These mappings are release guardrails, not historical snapshots. Compact UI
 // chips must not be enlarged as hero art, and known truncated rasters must not
-// be reintroduced into a plain <img> path that has no semantic fallback.
+// be reintroduced into a plain <img> path without same-subject recovery.
 const legacyArtMap = {
   'hadith-library': 'lantern-v2.webp',
   knowledge: 'quran-open-v2.webp',
@@ -162,7 +162,7 @@ const legacyArtMap = {
   sins: 'dome-v2.webp',
   fasting: 'lantern-v2.webp',
   ummah: 'dome-v2.webp',
-  places: 'dome-v2.webp',
+  places: 'mosque-gold-v2.svg',
   jumuah: 'mihrab-arch-v2.webp',
   zakat: 'bookmark-v2.webp',
   standby: 'qibla-compass-v2.webp',
@@ -181,7 +181,7 @@ if (fastingDefinition.includes('calendar-chip-v2.webp')) {
 }
 const placesDefinition = featureObject(legacy, 'places');
 if (placesDefinition.includes('mosque-gold-v2.webp')) {
-  throw new Error('Islamic Places must not use the known truncated mosque-gold-v2.webp in a plain img hero.');
+  throw new Error('Islamic Places must use the intact mosque SVG rather than the truncated mosque WebP.');
 }
 
 requireFragments(reading, 'Daily Ayah and worship guides', [
@@ -304,4 +304,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens, corrected legacy hero assets, onboarding compositions and CSS ornaments keep intentional mappings; compact UI art and known broken mosque rasters cannot be reintroduced as plain hero images.');
+console.log('Reference image map verified: primary screens, corrected legacy hero assets, onboarding compositions and CSS ornaments keep intentional mappings; compact UI art is blocked and Islamic Places uses the intact scalable mosque artwork.');
