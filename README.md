@@ -1,72 +1,112 @@
-# Nur Islam Premium Redesign
+# Nur Islam Premium
 
-Premium redesign and functional hardening branch for the Nur Islam app.
+Mobile-first PWA für Quran, Gebetszeiten, Qibla, Dhikr, Duas, Lernen und weitere islamische Alltagsbereiche.
 
-## Active development branch
+## Aktueller Projektmodus
 
-The complete application lives on `premium-home-redesign`. The current design + functionality stabilization work is developed on `premium-design-finish` and reviewed through PR #2 before it is merged back.
+**Keine neuen Features im aktuellen Finish-Pass.**
 
-## Current priorities
+Der aktive Release-Candidate-Code liegt auf `premium-design-finish`. Ziel ist jetzt ausschließlich, die vorhandene App kontrolliert fertigzustellen: Stabilität, Designqualität, reale Geräteprüfung, religiöser Fachreview, Rechte/Datenschutz und Release-Härtung.
 
-1. Premium, consistent mobile-first design across all core screens.
-2. Every visible control should either perform a real action or clearly be presented as informational.
-3. Persisted user progress must be reflected consistently on Home, Quran, Dhikr, collections and learning screens.
-4. Prayer times, reminders and direct PWA navigation must share the same current schedule.
-5. Account, cloud backup and cloud notes use the isolated `nur_islam_*` Supabase tables with RLS and least-privilege CRUD grants.
-6. Religious content that has not completed an independent scholarly/editorial review remains visibly marked and must not be presented as release-certified.
+Die verbindliche Aussage zum aktuellen Stand steht in:
 
-## Functional hardening completed on `premium-design-finish`
+- [`CURRENT-STATUS.md`](./CURRENT-STATUS.md) – Single Source of Truth für den heutigen Implementierungs- und Release-Status.
+- [`docs/nur-islam-premium-masterplan/`](./docs/nur-islam-premium-masterplan/) – langfristige Anleitung, Prüfpfade und Zielbild; nicht automatisch der heutige Ist-Stand.
+- [`docs/DESIGN-FINAL-PASS.md`](./docs/DESIGN-FINAL-PASS.md) – Regeln und Ergebnis des aktuellen Design-Finish-Passes.
 
-- Home resumes the real last-read Quran Surah and Ayah and shows actual Dhikr totals.
-- Quran bookmarks are detected across all 114 Surahs and deep-link to the exact saved Ayah.
-- Saved Duas, Names and calendar dates open their exact saved content.
-- Quran reader controls shown to users are functional; the old fake audio placeholder was removed.
-- Daily Ayah/Hadith copy and share actions use browser APIs instead of toast-only demo actions.
-- The Nur Assistant answers only supported local source-backed topics and refuses to invent unsupported religious answers.
-- Fasting reminders are connected to the shared calendar reminder scheduler.
-- Standby mode displays live next-prayer data and uses the browser Fullscreen API.
-- The Zakat screen provides a transparent 2.5% planning calculation without pretending to decide religious obligation.
-- Prayer reminders start only after the initial shared prayer-time bootstrap, avoiding a fallback/live timing race.
-- Wudu/Salah guide completion is persisted.
-- Supabase `authenticated` access to Nur Islam tables is limited to SELECT/INSERT/UPDATE/DELETE and scoped by RLS.
-- Static regression checks were updated to match the current centralized navigation and reminder architecture.
+## Technischer Stand in Kurzform
 
-## Validation
+Der aktuelle RC enthält unter anderem:
 
-The intended full validation command is:
+- React/TypeScript/Vite-PWA;
+- Dark- und Light-Theme;
+- alle 114 Suren mit arabischem Uthmani-Text offline;
+- surenweise geladene und gecachte deutsche Quran-Übersetzung;
+- Gebetszeiten mit Live/Cache/Fallback-Pfad;
+- Qibla-/Device-Orientation-Pfad;
+- Dhikr, Duas, Namen, Kalender, Lern- und Wissensbereiche;
+- optionalen Supabase-Account mit RLS, Backup/Restore und Cloud-Notizen;
+- lokalen quellengebundenen Nur-Assistenten ohne frei generierende religiöse Antworten;
+- automatisierte Unit-/Integration-, E2E-, Release-, Asset-, Icon- und Browser-Render-Prüfungen.
+
+Der RC ist **noch kein freigegebener öffentlicher Produktionsrelease**. Die verbleibenden P0-Blocker stehen in [`CURRENT-STATUS.md`](./CURRENT-STATUS.md).
+
+## Lokale Entwicklung
+
+Voraussetzung: aktuelle Node-22-Umgebung.
+
+```bash
+npm ci
+npm run dev
+```
+
+Für einen Produktionsbuild:
+
+```bash
+npm run build
+```
+
+## Zentrales Quality Gate
+
+Vor jedem Release-relevanten Merge:
 
 ```bash
 npm run check
 ```
 
-It covers content/data checks, navigation and interaction checks, release and functional-hardening checks, unit tests (`vitest run`), TypeScript (`tsc --noEmit`) and the Vite production build.
+Der Check umfasst unter anderem Content-/Datenregeln, Navigation, Assets, Bild-/Icon-Mappings, Security-/Legal-/Release-Guardrails, Tests, TypeScript, Production Build, Bundle-Budget und Stylesheet-Debt.
+
+Browser-E2E:
+
+```bash
+npm run e2e
+```
+
+GitHub Actions ist aktiv; die Workflows auf `premium-design-finish` liefern die jeweils aktuellste CI-Evidenz.
 
 ### Pre-push hook
 
-While Actions cannot run, a local hook is the only automated gate before the shared branch, and red commits have reached it more than once. `npm install` enables it automatically, so there is nothing to remember.
-
-It runs `npm run check` and refuses the push when it fails, which costs about a minute per push. Bypass deliberately with `git push --no-verify`.
-
-If it ever needs enabling by hand:
+`npm install`/Projektsetup aktiviert den Repository-Hook. Falls er manuell gesetzt werden muss:
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. Therefore the complete `npm run check`, TypeScript build validation and real browser/device QA have **not** yet been certified for this branch. The source-level regression suite has been updated to represent the intended behavior, but it still needs an executable runner before release.
+Der Hook führt das lokale Quality Gate aus und soll rote Commits vor dem Push stoppen. Ein absichtliches `--no-verify` ist kein Release-Nachweis.
 
 ## Deployment
 
-`.github/workflows/deploy-pages.yml` builds the app and publishes `dist/` to GitHub Pages on every push to `premium-design-finish`. The build already targets `/nur-islam-premium-redesign/` as its base path, which matches the default GitHub Pages project URL, so no further routing changes are needed.
+Der produktionsnahe GitHub-Pages-Workflow liegt in `.github/workflows/deploy-pages.yml`.
 
-One manual, one-time step, in the repository's **Settings → Pages**: set **Source** to **GitHub Actions**. Until that is done, the workflow runs but has nowhere to publish to.
+Er läuft automatisch **nur auf `main`** oder manuell über `workflow_dispatch`.
 
-This also needs the same GitHub Actions billing fix as the check workflow above — neither can run while that is blocked.
+Vor dem Pages-Upload wird ausgeführt:
 
-Optional: set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as repository Actions **variables** (Settings → Secrets and variables → Actions → Variables) to build against a specific Supabase project. Both are the public client key and project URL — not secrets, since the publishable key is meant to be readable in a browser bundle and is scoped by row-level security. Leaving them unset builds against the same public default the code already falls back to locally.
+```bash
+NUR_RELEASE=true npm run check
+```
 
-## Backend
+Damit sollen releasekritische Zustände – insbesondere noch nicht ausgefüllte Legal-/Betreiberangaben – den öffentlichen Release stoppen.
 
-Supabase resources are intentionally namespaced with `nur_islam_*` so this app does not overwrite tables belonging to other projects in the shared Supabase project.
+`premium-design-finish` ist deshalb bewusst ein Release-Candidate-Branch und wird nicht durch jeden Push automatisch als Produktion veröffentlicht.
 
-Never place a Supabase service-role key in the frontend. Only the public/publishable client key belongs in a browser build.
+Optional können `VITE_SUPABASE_URL` und `VITE_SUPABASE_PUBLISHABLE_KEY` als GitHub-Actions-Variablen gesetzt werden. Das sind öffentliche Browser-Client-Konfigurationswerte; ein Supabase-Service-Role-Key darf niemals in Frontend, Repository oder öffentlichen Build gelangen.
+
+## Backend-Sicherheitsregel
+
+Supabase-Ressourcen der App sind mit `nur_islam_*` namespaced. Zugriff auf die Nutzerbereiche ist über RLS und authentifizierte CRUD-Rechte begrenzt.
+
+**Nie** einen Service-Role-Key im Browser verwenden. Nur die öffentliche/publishable Client-Konfiguration gehört in einen Frontend-Build.
+
+## Release-Reihenfolge
+
+1. `premium-design-finish` ohne neue Features stabilisieren.
+2. automatisierte QA grün halten.
+3. reale iPhone-/Android-Prüfung abschließen.
+4. religiösen P0-Fachreview abschließen.
+5. Audio-/Nutzungsrechte und Betreiber-/Datenschutzangaben klären.
+6. finale Release-Checkliste abzeichnen.
+7. erst danach RC kontrolliert nach `main` übernehmen.
+8. GitHub-Pages-Release beobachten und Smoke-Test durchführen.
+
+Details und offene Punkte: [`CURRENT-STATUS.md`](./CURRENT-STATUS.md).
