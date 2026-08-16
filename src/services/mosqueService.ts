@@ -165,9 +165,13 @@ function normalizeElement(element: OverpassElement, origin: MosqueSearchOrigin):
   };
 }
 
+// Six decimals is ten centimetres, which is a home address rather than a search
+// area. The search radius is kilometres wide, so three decimals (~110 m) finds
+// the same mosques while OpenStreetMap only learns the neighbourhood. Distances
+// in the result list keep using the precise origin, which never leaves the app.
 function buildOverpassQuery(origin: MosqueSearchOrigin, radiusMeters: number) {
-  const latitude = origin.latitude.toFixed(6);
-  const longitude = origin.longitude.toFixed(6);
+  const latitude = origin.latitude.toFixed(3);
+  const longitude = origin.longitude.toFixed(3);
   return `[out:json][timeout:20];\n(\n  nwr["amenity"="place_of_worship"]["religion"="muslim"](around:${radiusMeters},${latitude},${longitude});\n  nwr["building"="mosque"](around:${radiusMeters},${latitude},${longitude});\n  nwr["place_of_worship"="musalla"]["religion"="muslim"](around:${radiusMeters},${latitude},${longitude});\n);\nout center tags;`;
 }
 

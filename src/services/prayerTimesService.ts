@@ -202,6 +202,15 @@ export function getInitialPrayerTimesSnapshot(date = new Date()): PrayerTimesSna
   return loadCachedPrayerTimes(date) ?? createFallbackSnapshot(loadPrayerLocation(), loadPrayerPreferences(), date);
 }
 
+/**
+ * Prayer times only change by seconds within a city, so the request does not
+ * need the device's exact position. Two decimals is roughly a kilometre: enough
+ * for a correct schedule, not enough to point at a home address.
+ */
+function coarseCoordinate(value: number) {
+  return Math.round(value * 100) / 100;
+}
+
 export async function fetchPrayerTimes(
   location = loadPrayerLocation(),
   preferences = loadPrayerPreferences(),
@@ -211,8 +220,8 @@ export async function fetchPrayerTimes(
   const timeout = window.setTimeout(() => controller.abort(), 9000);
   const apiDate = getApiDate(date);
   const url = new URL(`https://api.aladhan.com/v1/timings/${apiDate}`);
-  url.searchParams.set('latitude', String(location.latitude));
-  url.searchParams.set('longitude', String(location.longitude));
+  url.searchParams.set('latitude', String(coarseCoordinate(location.latitude)));
+  url.searchParams.set('longitude', String(coarseCoordinate(location.longitude)));
   url.searchParams.set('method', String(preferences.method));
   url.searchParams.set('school', String(preferences.school));
 

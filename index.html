@@ -22,6 +22,15 @@
       needs a real header, which GitHub Pages cannot set.
     -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' https://cdn.islamic.network https://www.hisnmuslim.com; font-src 'self'; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://overpass-api.de https://overpass.kumi.systems https://jmswsgwnvmvsfayeodcd.supabase.co; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
+    <!--
+      Every request leaving the app otherwise carries the page it came from.
+      The mosque finder opens whatever website OpenStreetMap has on record, so
+      without this a stranger's server would learn which app sent the visitor.
+      Unlike the other hardening headers (X-Content-Type-Options, HSTS,
+      Permissions-Policy), the referrer policy is honoured in a meta tag, so it
+      works on GitHub Pages, which cannot send headers at all.
+    -->
+    <meta name="referrer" content="no-referrer" />
     <meta name="theme-color" content="#001b16" />
     <meta name="color-scheme" content="dark light" />
     <meta name="description" content="Nur Islam – Gebetszeiten, Quran, Dhikr, Qibla und islamisches Wissen in einer ruhigen Premium-App." />
