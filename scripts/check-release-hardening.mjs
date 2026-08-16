@@ -108,15 +108,29 @@ requireText(onboarding, [
   'OBLIGATORY_PRAYER_IDS',
 ], 'Onboarding integration');
 
-requireText(more, [
+// Account, notes and the service features are rendered by the app rather than
+// by this screen. Holding them here was what kept them out of the navigation:
+// as local state they pushed no history entry, so the Android back button did
+// nothing and the active tab could not return to the list. The requirement
+// moved to the app with them, and this screen has to keep routing rather than
+// rendering.
+requireText(app, [
   '<AccountScreen',
   '<NotesScreen',
+  "activeTab === 'account'",
+  "activeTab === 'notes'",
+], 'Account and notes as navigable screens');
+requireText(more, [
+  "onNavigate('account')",
+  "destination: 'notes'",
+  'onNavigate(`legacy:${feature.id}`)',
   "localStorage.setItem('nur_prayer_notifications'",
   'applyTheme(next)',
   'await signOut()',
   'Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache',
 ], 'Profile/settings integration');
 forbidText(more, ['premium_prayer_notifications', 'premium_cloud_sync', 'bis Firebase verbunden wird'], 'Profile/settings integration');
+forbidText(more, ['<AccountScreen', '<NotesScreen', '<LegacyFeatureScreen'], 'Profile screens outside navigation');
 
 requireText(calendarService, [
   'dateKey?: unknown',

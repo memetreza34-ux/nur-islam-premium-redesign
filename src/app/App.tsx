@@ -48,7 +48,9 @@ const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
 import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { readScreenScroll, rememberScreenScroll } from '../services/screenScrollMemory';
+import { AccountScreen } from '../screens/AccountScreen';
 import { MoreScreen } from '../screens/MoreScreen';
+import { NotesScreen } from '../screens/NotesScreen';
 import { NamesScreen } from '../screens/NamesScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { getHijriLabel } from '../services/hijriCalendar';
@@ -98,7 +100,7 @@ import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
 
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
-type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | LegacyTab;
+type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | 'account' | 'notes' | LegacyTab;
 
 type NavigationSnapshot = {
   activeTab: Tab;
@@ -151,6 +153,8 @@ const screensWithBottomNavigation = new Set<Tab>([
   'mosques',
   'collections',
   'assistant',
+  'account',
+  'notes',
 ]);
 
 function isLegacyTab(tab: Tab): tab is LegacyTab {
@@ -525,7 +529,7 @@ export default function App() {
       ? 'calendar'
       : activeTab === 'learn'
         ? 'learn'
-        : ['profile', 'duas', 'names', 'mosques', 'collections', 'assistant'].includes(activeTab)
+        : ['profile', 'duas', 'names', 'mosques', 'collections', 'assistant', 'account', 'notes'].includes(activeTab)
           ? 'profile'
           : 'home';
 
@@ -802,6 +806,10 @@ export default function App() {
                       ? <QiblaScreen onBack={goBack} />
                       : activeTab === 'profile'
                         ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
+                        : activeTab === 'account'
+                        ? <AccountScreen onBack={goBack} />
+                        : activeTab === 'notes'
+                        ? <NotesScreen onBack={goBack} onOpenAccount={() => navigate('account')} />
                         : activeTab === 'prayer'
                           ? <PrayerScreen onBack={goBack} />
                           : activeTab === 'calendar'
