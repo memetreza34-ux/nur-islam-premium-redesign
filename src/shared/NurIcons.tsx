@@ -5,6 +5,7 @@ import {
   CalendarDays,
   CircleDot,
   Compass,
+  GraduationCap,
   HandHeart,
   MapPin,
   MessageCircleQuestion,
@@ -43,7 +44,7 @@ export function NurQuranIcon(props: IconProps) {
 }
 
 export function NurMihrabIcon(props: IconProps) {
-  return <HandHeart {...sharedProps(props)} />;
+  return <GraduationCap {...sharedProps(props)} />;
 }
 
 export function NurTasbihIcon(props: IconProps) {
