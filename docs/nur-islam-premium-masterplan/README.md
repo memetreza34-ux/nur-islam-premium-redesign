@@ -1,27 +1,59 @@
-# Nur Islam Premium – Beispiel-Masterplan für die Besprechung mit Claude Code
+# Nur Islam Premium – Masterplan und vollständige App-Anleitung
 
-**Stand der übertragenen Anleitung:** 8. August 2026  
+**Ursprung der übertragenen Anleitung:** 8. August 2026  
 **Quellprojekt:** `memetreza34-ux/von-idee-bis-fertig`  
-**App-Repository:** `memetreza34-ux/nur-islam-premium-redesign`  
-**ursprüngliche Auditbasis der Anleitung:** Branch `premium-home-redesign`, HEAD `25e744a460b2c482b31d7b8c083a4998f6523e10`  
-**Dokumentationsbranch wurde erstellt von:** App-HEAD `d41bd1b46b2d9c224bef2ea0c1920f4e4d7cc5c4`
+**App-Repository:** `memetreza34-ux/nur-islam-premium-redesign`
 
-> **WICHTIG FÜR CLAUDE CODE:** Diese Dokumentation ist eine **Beispiel-, Diskussions- und Planungsanleitung**. Sie ist **keine automatische Ausführungsanweisung**. Prüfe jede Aussage zuerst gegen den aktuellen Repository-Stand. Implementiere, installiere, migriere, lösche oder refaktoriere nichts nur deshalb, weil es hier empfohlen wird.
+## Vor jeder Arbeit zuerst lesen
 
-## So soll Claude Code damit arbeiten
+Der aktuelle Implementierungs- und Release-Status steht **nicht** in den historischen Planungsannahmen dieses Ordners, sondern zentral in:
 
-1. Zuerst [`CLAUDE-CODE-BRIEFING.md`](./CLAUDE-CODE-BRIEFING.md) lesen.
-2. Danach die Anleitung und den **aktuellen** Code von A bis Z vergleichen.
-3. Empfehlungen jeweils markieren als:
+[`../../CURRENT-STATUS.md`](../../CURRENT-STATUS.md)
+
+Diese Datei ist die **Single Source of Truth** für:
+
+- was heute tatsächlich implementiert ist;
+- welcher Branch der Release Candidate ist;
+- welche QA bereits belegt ist;
+- welche Punkte noch echte Release-Blocker sind;
+- welche Themen bewusst nicht zum aktuellen V1-Finish gehören.
+
+> **WICHTIG FÜR CLAUDE CODE UND ANDERE CODING-AGENTS:** Diese Dokumentation ist eine Planungs-, Prüf- und Arbeitsanleitung. Sie ist **keine automatische Ausführungsanweisung**. Prüfe jede Aussage zuerst gegen `CURRENT-STATUS.md` und den aktuellen Repository-Code. Implementiere, installiere, migriere, lösche oder refaktoriere nichts nur deshalb, weil es hier als mögliche Zielarchitektur oder spätere Phase beschrieben wird.
+
+## Aktueller Owner-Entscheid für V1
+
+Für den laufenden Finish-Pass gilt:
+
+**Keine neuen Features.**
+
+Priorität ist ausschließlich:
+
+1. vorhandene App stabilisieren;
+2. konkrete Design-/Bild-/Icon-/Lesbarkeitsfehler beseitigen;
+3. automatisierte QA grün halten;
+4. reale Geräte-/Sensorprüfung abschließen;
+5. religiösen Fachreview abschließen;
+6. Rechte, Datenschutz und Betreiberangaben abschließen;
+7. kontrolliert releasen.
+
+Native Store-Pakete, Payments, frei generierende KI und zusätzliche große Module gehören nicht in diesen Finish-Pass, sofern der Owner diese Scope-Entscheidung nicht später ausdrücklich ändert.
+
+## So soll ein Coding-Agent mit der Anleitung arbeiten
+
+1. Zuerst [`../../CURRENT-STATUS.md`](../../CURRENT-STATUS.md) lesen.
+2. Danach [`CLAUDE-CODE-BRIEFING.md`](./CLAUDE-CODE-BRIEFING.md) lesen.
+3. Anschließend die relevante Anleitung gegen den **aktuellen** Code vergleichen.
+4. Jede Empfehlung einordnen als:
    - `bereits umgesetzt`;
    - `noch relevant`;
    - `veraltet`;
-   - `bewusstes Nicht-Ziel`;
-   - `Entscheidung des Owners nötig`.
-4. Widersprüche zwischen Dokumentation und aktuellem Code offen nennen.
-5. Keine Annahme als Tatsache ausgeben.
-6. Vor größeren Architektur-, Backend-, Payment-, Store-, KI- oder Content-Entscheidungen erst Varianten und Folgen besprechen.
-7. Erst Code ändern, wenn der Owner die nächste Umsetzungsphase ausdrücklich freigibt.
+   - `bewusstes Nicht-Ziel für V1`;
+   - `Owner-/Fachentscheidung nötig`.
+5. Widersprüche zwischen Dokumentation und Code offen nennen.
+6. Keine Annahme als Tatsache ausgeben.
+7. Vor größeren Architektur-, Backend-, Payment-, Store-, KI- oder Content-Entscheidungen erst prüfen, ob das Thema überhaupt zum aktuellen Scope gehört.
+8. Keine neuen Features in den Release Candidate einschleusen.
+9. Ein Punkt gilt erst als fertig, wenn es echte Evidenz gibt.
 
 ## Was diese Anleitung abdeckt
 
@@ -48,29 +80,32 @@ Ist-Analyse
 → Release-Gates
 ```
 
+Nicht jeder Bereich ist Bestandteil der aktuellen V1-Umsetzung. Einige Kapitel dokumentieren bewusst spätere Entscheidungsräume.
+
 ## Empfohlene Lesereihenfolge
 
-1. [`00-IST-ANALYSE-A-Z.md`](./00-IST-ANALYSE-A-Z.md)
-2. [`01-PRODUKT-ZIELBILD.md`](./01-PRODUKT-ZIELBILD.md)
-3. [`11-MARKT-WETTBEWERB-VALIDIERUNG.md`](./11-MARKT-WETTBEWERB-VALIDIERUNG.md)
-4. [`02-FUNKTIONS-UND-CONTENT-MATRIX.md`](./02-FUNKTIONS-UND-CONTENT-MATRIX.md)
-5. [`03-RELIGIOESE-INHALTE-QUELLEN-REVIEW.md`](./03-RELIGIOESE-INHALTE-QUELLEN-REVIEW.md)
-6. [`04-UX-UI-PREMIUM-SYSTEM.md`](./04-UX-UI-PREMIUM-SYSTEM.md)
-7. [`05-ARCHITEKTUR-STACK-DATEN.md`](./05-ARCHITEKTUR-STACK-DATEN.md)
-8. [`06-KI-ASSISTENT-SICHERHEIT.md`](./06-KI-ASSISTENT-SICHERHEIT.md)
-9. [`07-SECURITY-DATENSCHUTZ-RECHT.md`](./07-SECURITY-DATENSCHUTZ-RECHT.md)
-10. [`12-NATIVE-IOS-ANDROID-STORE-STRATEGIE.md`](./12-NATIVE-IOS-ANDROID-STORE-STRATEGIE.md)
+1. [`STATUS.md`](./STATUS.md) – verweist auf den aktuellen zentralen Status.
+2. [`00-IST-ANALYSE-A-Z.md`](./00-IST-ANALYSE-A-Z.md)
+3. [`01-PRODUKT-ZIELBILD.md`](./01-PRODUKT-ZIELBILD.md)
+4. [`11-MARKT-WETTBEWERB-VALIDIERUNG.md`](./11-MARKT-WETTBEWERB-VALIDIERUNG.md)
+5. [`02-FUNKTIONS-UND-CONTENT-MATRIX.md`](./02-FUNKTIONS-UND-CONTENT-MATRIX.md)
+6. [`03-RELIGIOESE-INHALTE-QUELLEN-REVIEW.md`](./03-RELIGIOESE-INHALTE-QUELLEN-REVIEW.md)
+7. [`04-UX-UI-PREMIUM-SYSTEM.md`](./04-UX-UI-PREMIUM-SYSTEM.md)
+8. [`05-ARCHITEKTUR-STACK-DATEN.md`](./05-ARCHITEKTUR-STACK-DATEN.md)
+9. [`06-KI-ASSISTENT-SICHERHEIT.md`](./06-KI-ASSISTENT-SICHERHEIT.md)
+10. [`07-SECURITY-DATENSCHUTZ-RECHT.md`](./07-SECURITY-DATENSCHUTZ-RECHT.md)
 11. [`08-TESTING-QA-RELEASE.md`](./08-TESTING-QA-RELEASE.md)
-12. [`09-MONETARISIERUNG-LAUNCH-BETRIEB.md`](./09-MONETARISIERUNG-LAUNCH-BETRIEB.md)
-13. [`14-KOSTEN-PROFITABILITAET.md`](./14-KOSTEN-PROFITABILITAET.md)
-14. [`15-ACCOUNT-UND-TOOLS-SETUP.md`](./15-ACCOUNT-UND-TOOLS-SETUP.md)
-15. [`13-MARKETING-ASO-GROWTH.md`](./13-MARKETING-ASO-GROWTH.md)
-16. [`16-CONTENT-BETRIEBSHANDBUCH.md`](./16-CONTENT-BETRIEBSHANDBUCH.md)
-17. [`17-INTERNATIONALISIERUNG-LOKALISIERUNG.md`](./17-INTERNATIONALISIERUNG-LOKALISIERUNG.md)
-18. [`19-QURAN-AUDIO-REZITATION.md`](./19-QURAN-AUDIO-REZITATION.md)
-19. [`10-ROADMAP-BIS-FERTIG.md`](./10-ROADMAP-BIS-FERTIG.md)
-20. [`18-VOLLSTAENDIGKEIT-GEGEN-MASTER.md`](./18-VOLLSTAENDIGKEIT-GEGEN-MASTER.md)
-21. [`RELEASE-CHECKLISTE.md`](./RELEASE-CHECKLISTE.md)
+12. [`12-NATIVE-IOS-ANDROID-STORE-STRATEGIE.md`](./12-NATIVE-IOS-ANDROID-STORE-STRATEGIE.md)
+13. [`09-MONETARISIERUNG-LAUNCH-BETRIEB.md`](./09-MONETARISIERUNG-LAUNCH-BETRIEB.md)
+14. [`14-KOSTEN-PROFITABILITAET.md`](./14-KOSTEN-PROFITABILITAET.md)
+15. [`15-ACCOUNT-UND-TOOLS-SETUP.md`](./15-ACCOUNT-UND-TOOLS-SETUP.md)
+16. [`13-MARKETING-ASO-GROWTH.md`](./13-MARKETING-ASO-GROWTH.md)
+17. [`16-CONTENT-BETRIEBSHANDBUCH.md`](./16-CONTENT-BETRIEBSHANDBUCH.md)
+18. [`17-INTERNATIONALISIERUNG-LOKALISIERUNG.md`](./17-INTERNATIONALISIERUNG-LOKALISIERUNG.md)
+19. [`19-QURAN-AUDIO-REZITATION.md`](./19-QURAN-AUDIO-REZITATION.md)
+20. [`10-ROADMAP-BIS-FERTIG.md`](./10-ROADMAP-BIS-FERTIG.md)
+21. [`18-VOLLSTAENDIGKEIT-GEGEN-MASTER.md`](./18-VOLLSTAENDIGKEIT-GEGEN-MASTER.md)
+22. [`RELEASE-CHECKLISTE.md`](./RELEASE-CHECKLISTE.md)
 
 ## Arbeitsregister
 
@@ -81,4 +116,8 @@ Ist-Analyse
 
 ## Grundregel
 
-**Vollständige Anleitung ≠ fertige App.** Ein Haken zählt erst mit echtem Nachweis. Religiöse Fachfreigaben, Rechtsprüfung, Marktbelege, Builds, reale Gerätetests, Store-Freigaben und wirtschaftliche Tragfähigkeit dürfen nicht durch Dokumentation ersetzt oder erfunden werden.
+**Vollständige Anleitung ≠ fertige App.**
+
+Ein Haken zählt erst mit echtem Nachweis. Religiöse Fachfreigaben, Rechtsprüfung, Rechteklärung, Builds, reale Gerätetests, Store-Freigaben und wirtschaftliche Tragfähigkeit dürfen nicht durch Dokumentation ersetzt oder erfunden werden.
+
+Für den jeweils aktuellen Ist-Stand gilt immer [`../../CURRENT-STATUS.md`](../../CURRENT-STATUS.md).
