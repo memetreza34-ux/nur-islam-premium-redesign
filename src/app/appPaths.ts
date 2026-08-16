@@ -6,19 +6,9 @@ const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'mosque-gold.webp': 'mosque-gold-v2.webp',
   'mosque-gold.png': 'mosque-gold-v2.webp',
   'mosque.webp': 'mosque-gold-v2.webp',
-  // All four mosque rasters are the same truncated file: the RIFF header
-  // announces 24090 bytes, 14743 are present, and the VP8 chunk carrying the
-  // actual picture is missing — only the alpha channel survived. Chromium
-  // decodes it as 0x0, which is what the earlier note here observed.
-  //
-  // It used to point at mosque-gold-v2.svg, a flat vector sketch that looked
-  // nothing like the photography everywhere else in the app. The dome is a
-  // real photograph of the same subject — dome, minarets, crescent — and it is
-  // intact, so Home, the splash and the onboarding now match the rest.
-  //
-  // Repairing the original is not possible: the image data is not in the file
-  // and no earlier commit has it either.
-  'mosque-gold-v2.webp': 'dome-v2.webp',
+  // mosque-gold-v2.webp is known to be truncated. Do not silently redirect it
+  // to a different subject (for example dome-v2.webp). PremiumImage should see
+  // the decode failure and render the semantic fallback supplied by the screen.
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
   'quran-open.webp': 'quran-open-v2.webp',
