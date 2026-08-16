@@ -5,7 +5,7 @@ name: End-to-end smoke
 # place for it.
 on:
   push:
-    branches: [premium-design-finish]
+    branches: [premium-design-finish, final-design-release-pass]
   pull_request:
     branches: [main, premium-design-finish]
   workflow_dispatch:
