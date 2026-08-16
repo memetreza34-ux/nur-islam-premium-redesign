@@ -192,7 +192,7 @@ export function LearningCourseScreen({
     <motion.main className="screen reference-learning-course-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zu Lernen"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Islam lernen</span><h1>{category.title}</h1></div>
+        <div><span className="overline">Islam verstehen</span><h1>{category.title}</h1></div>
         <button className="icon-button" onClick={shareLesson} aria-label="Lektion teilen"><Share2 size={19} /></button>
       </header>
 

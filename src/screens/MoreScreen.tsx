@@ -2,7 +2,6 @@ import { Suspense, lazy, useCallback, useEffect, useMemo, useState } from 'react
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
-  Bookmark,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
@@ -91,7 +90,9 @@ const coreShortcuts: CoreShortcut[] = [
 
 const journeyRows: ProfileRow[] = [
   { id: 'journey', title: 'Meine Reise', description: 'Deinen Lernfortschritt ansehen', icon: Route, destination: 'learn' },
-  { id: 'bookmarks', title: 'Lesezeichen', description: 'Gespeicherte Verse und Inhalte', icon: Bookmark, destination: 'collections' },
+  // "Lesezeichen" used to sit here and opened the same screen as "Sammlung"
+  // above, under a second name. Two entries for one destination is the kind of
+  // thing that makes a reader doubt they found the right one.
   { id: 'notes', title: 'Notizen', description: 'Lokal oder geschützt in der Cloud', icon: NotebookPen, subscreen: 'notes' },
   { id: 'reminders', title: 'Erinnerungen', description: 'Gebete direkt verwalten', icon: BellRing, destination: 'prayer' },
 ];
@@ -104,7 +105,10 @@ const preferenceRows: ProfileRow[] = [
 
 const supportRows: ProfileRow[] = [
   { id: 'onboarding', title: 'Einführung wiederholen', description: 'Premium-Einstieg erneut ansehen', icon: RotateCcw, action: 'onboarding' },
-  { id: 'help', title: 'Hilfe & Datenschutz', description: 'Datenquellen und lokale Speicherung', icon: CircleHelp, action: 'support' },
+  // Named "Hilfe & Datenschutz" before, directly above "Impressum &
+  // Datenschutz": two rows whose titles claimed the same subject, so the only
+  // way to tell them apart was to read the small line underneath.
+  { id: 'help', title: 'Hilfe & Datenquellen', description: 'Woher die Inhalte kommen und was lokal bleibt', icon: CircleHelp, action: 'support' },
   { id: 'legal', title: 'Impressum & Datenschutz', description: 'Anbieter, Datenverarbeitung und Lizenzen', icon: ScrollText, destination: 'legal' },
   { id: 'about', title: 'Über Nur', description: 'Version und Produktprinzipien', icon: Info, action: 'about' },
 ];

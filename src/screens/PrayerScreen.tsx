@@ -36,6 +36,7 @@ import {
 } from '../services/prayerTimesService';
 import type { AsrSchool, PrayerCalculationMethod } from '../services/prayerTimesService';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
+import { getHijriLabel } from '../services/hijriCalendar';
 
 const obligatoryIds = OBLIGATORY_PRAYER_IDS;
 const celebrationParticles = Array.from({ length: 18 }, (_, index) => ({
@@ -93,12 +94,13 @@ function getGregorianDate(date = new Date()) {
   return new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
+// This screen used to format its own Hijri date with the bare `islamic`
+// calendar, which resolves to a tabular civil calendar and ran a day ahead of
+// the shared service: the header said 4. Rabiʻ I while Home and Calendar both
+// said 3. One app cannot hold two dates, so it reads from the same pinned
+// Umm al-Qura source as everything else.
 function getHijriDate(date = new Date()) {
-  try {
-    return new Intl.DateTimeFormat('de-DE-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
-  } catch {
-    return 'Islamisches Datum';
-  }
+  return getHijriLabel(date, 'Islamisches Datum');
 }
 
 function PrayerIcon({ prayer, size = 21 }: { prayer: PrayerScheduleItem; size?: number }) {
