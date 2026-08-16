@@ -3,7 +3,7 @@ name: Premium redesign check
 on:
   workflow_dispatch:
   push:
-    branches: [premium-home-redesign, premium-design-finish, final-design-release-pass, final-icon-consistency-pass]
+    branches: [premium-home-redesign, premium-design-finish, final-design-release-pass]
   pull_request:
     branches: [main, premium-home-redesign]
 
