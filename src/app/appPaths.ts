@@ -3,22 +3,13 @@ const PREMIUM_ASSET_PREFIX = 'premium-assets/high-res-objects/';
 const PREMIUM_ASSET_ALIASES: Record<string, string> = {
   'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp',
   'nur-logo-emblem.png': 'nur-logo-emblem-v2.webp',
-  'mosque-gold.webp': 'mosque-gold-v2.webp',
-  'mosque-gold.png': 'mosque-gold-v2.webp',
-  'mosque.webp': 'mosque-gold-v2.webp',
-  // All four mosque rasters are the same truncated file: the RIFF header
-  // announces 24090 bytes, 14743 are present, and the VP8 chunk carrying the
-  // actual picture is missing — only the alpha channel survived. Chromium
-  // decodes it as 0x0, which is what the earlier note here observed.
-  //
-  // It used to point at mosque-gold-v2.svg, a flat vector sketch that looked
-  // nothing like the photography everywhere else in the app. The dome is a
-  // real photograph of the same subject — dome, minarets, crescent — and it is
-  // intact, so Home, the splash and the onboarding now match the rest.
-  //
-  // Repairing the original is not possible: the image data is not in the file
-  // and no earlier commit has it either.
-  'mosque-gold-v2.webp': 'dome-v2.webp',
+  'mosque-gold.webp': 'mosque-gold-v2.svg',
+  'mosque-gold.png': 'mosque-gold-v2.svg',
+  'mosque.webp': 'mosque-gold-v2.svg',
+  // The committed mosque-gold-v2.webp raster is truncated. Recover the exact
+  // same mosque role with the intact scalable SVG instead of substituting a
+  // different dome image or relying on an image-load failure at runtime.
+  'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
   'quran-open.webp': 'quran-open-v2.webp',

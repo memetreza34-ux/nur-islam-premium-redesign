@@ -39,8 +39,6 @@ const [
   read('src/screens/CollectionsScreen.tsx'),
   read('src/screens/AssistantScreen.tsx'),
   read('src/screens/MoreScreen.tsx'),
-  // The feature definitions moved into src/data/legacyFeatures.ts so the hub
-  // tiles can render without loading the screens; both are read as one.
   Promise.all([read('src/screens/LegacyFeatureScreens.tsx'), read('src/data/legacyFeatures.ts')])
     .then((parts) => parts.join('\n')),
   read('src/screens/ReferenceReadingScreens.tsx'),
@@ -151,6 +149,9 @@ requireFragments(more, 'Profile / More', [
   'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
 ]);
 
+// These mappings are release guardrails, not historical snapshots. Compact UI
+// chips must not be enlarged as hero art, and known truncated rasters must not
+// be reintroduced into a plain <img> path without same-subject recovery.
 const legacyArtMap = {
   'hadith-library': 'lantern-v2.webp',
   knowledge: 'quran-open-v2.webp',
@@ -159,9 +160,9 @@ const legacyArtMap = {
   hajj: 'kaaba-v2.webp',
   sunnah: 'sun-emblem-v2.webp',
   sins: 'dome-v2.webp',
-  fasting: 'calendar-chip-v2.webp',
+  fasting: 'lantern-v2.webp',
   ummah: 'dome-v2.webp',
-  places: 'mosque-gold-v2.webp',
+  places: 'mosque-gold-v2.svg',
   jumuah: 'mihrab-arch-v2.webp',
   zakat: 'bookmark-v2.webp',
   standby: 'qibla-compass-v2.webp',
@@ -172,6 +173,15 @@ for (const [id, filename] of Object.entries(legacyArtMap)) {
   if (!definition.includes(expected)) {
     throw new Error(`Legacy feature ${id} must keep artwork ${filename}.`);
   }
+}
+
+const fastingDefinition = featureObject(legacy, 'fasting');
+if (fastingDefinition.includes('calendar-chip-v2.webp')) {
+  throw new Error('Fasting hero must not enlarge calendar-chip-v2.webp; it is a compact UI asset.');
+}
+const placesDefinition = featureObject(legacy, 'places');
+if (placesDefinition.includes('mosque-gold-v2.webp')) {
+  throw new Error('Islamic Places must use the intact mosque SVG rather than the truncated mosque WebP.');
 }
 
 requireFragments(reading, 'Daily Ayah and worship guides', [
@@ -294,4 +304,4 @@ for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'
   }
 }
 
-console.log('Reference image map verified: primary screens, single-source Ayah artwork, onboarding compositions, all 13 additional features and CSS-driven ornaments keep exact selector-or-ID to asset pairs; focal crop rules are protected and visible TSX uses final -v2 WebPs.');
+console.log('Reference image map verified: primary screens, corrected legacy hero assets, onboarding compositions and CSS ornaments keep intentional mappings; compact UI art is blocked and Islamic Places uses the intact scalable mosque artwork.');
