@@ -146,8 +146,9 @@ export const licenseSections: LegalSection[] = [
   {
     heading: 'Illustrationen',
     paragraphs: [
-      'Die Bildobjekte und Illustrationen der App wurden mit ChatGPT (OpenAI) für dieses Projekt erzeugt. Es wurde kein Bildmaterial Dritter übernommen.',
-      'Rein maschinell erzeugte Bilder genießen nach deutschem Recht keinen eigenen Urheberrechtsschutz.',
+      'Die projektspezifischen Bildobjekte und Illustrationen der App wurden für dieses Projekt mit ChatGPT (OpenAI) erzeugt.',
+      'Nach den OpenAI-Nutzungsbedingungen stehen dem Nutzer im Verhältnis zu OpenAI und soweit rechtlich zulässig die Rechte am Output zu. Generative Outputs können anderen Outputs ähneln und sind nicht notwendigerweise einzigartig.',
+      'Ob und in welchem Umfang einzelne KI-generierte oder menschlich bearbeitete Elemente in Deutschland urheberrechtlichen Schutz genießen, wird hier nicht pauschal behauptet. Maßgeblich sind die gesetzlichen Voraussetzungen und die konkrete Entstehung des jeweiligen Elements.',
     ],
   },
   {
@@ -155,7 +156,7 @@ export const licenseSections: LegalSection[] = [
     paragraphs: [
       'Quran-Rezitation im Gebetskurs: Mishary Alafasy, bezogen über Islamic Network (cdn.islamic.network).',
       'Aufnahmen der überlieferten Gebetsformeln: Hisn al-Muslim (hisnmuslim.com).',
-      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Anbietern nicht abschließend geklärt.',
+      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Rechteinhabern bzw. Anbietern nicht abschließend geklärt. Die bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt.',
     ],
   },
   {
