@@ -1,0 +1,61 @@
+name: Apply Premium launcher polish
+
+on:
+  push:
+    branches: [finish-navigation-visual-polish]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !startsWith(github.event.head_commit.message, '[launcher-patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Integrate Premium launcher into More screen flow
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          tsx = Path('src/app/PremiumSystemLayer.tsx')
+          s = tsx.read_text()
+          s = s.replace('  Sparkles,\n', '  CircleDot,\n')
+          s = s.replace('<Sparkles size={18} />', '<CircleDot size={18} />')
+          s = s.replace("  const [profileVisible, setProfileVisible] = useState(false);\n", "  const [profileHost, setProfileHost] = useState<HTMLElement | null>(null);\n")
+          s = s.replace(
+              "    let currentHost: HTMLElement | null = null;\n\n    const sync = () => {\n      setProfileVisible(Boolean(root.querySelector('.reference-profile-screen')));\n      const home = root.querySelector<HTMLElement>('.premium-home');",
+              "    let currentHost: HTMLElement | null = null;\n    let currentProfileHost: HTMLElement | null = null;\n\n    const sync = () => {\n      const profile = root.querySelector<HTMLElement>('.reference-profile-screen');\n      if (!profile) {\n        if (currentProfileHost?.isConnected) currentProfileHost.remove();\n        currentProfileHost = null;\n        setProfileHost(null);\n      } else if (!currentProfileHost || !currentProfileHost.isConnected || currentProfileHost.parentElement !== profile) {\n        currentProfileHost = document.createElement('div');\n        currentProfileHost.className = 'premium-local-launcher-host';\n        const account = profile.querySelector(':scope > .reference-account-entry');\n        if (account?.nextSibling) profile.insertBefore(currentProfileHost, account.nextSibling);\n        else profile.appendChild(currentProfileHost);\n        setProfileHost(currentProfileHost);\n      }\n\n      const home = root.querySelector<HTMLElement>('.premium-home');"
+          )
+          s = s.replace(
+              "      if (currentHost?.isConnected) currentHost.remove();\n    };",
+              "      if (currentHost?.isConnected) currentHost.remove();\n      if (currentProfileHost?.isConnected) currentProfileHost.remove();\n    };"
+          )
+          old = "      {profileVisible && !open ? <button className=\"premium-local-launcher\" onClick={() => setOpen(true)}><Crown size={17} /><span><strong>Nur Premium</strong><small>0,99 € · Funktionen ansehen</small></span></button> : null}"
+          new = "      {profileHost && !open ? createPortal(<button className=\"premium-local-launcher\" onClick={() => setOpen(true)}><Crown size={19} /><span><strong>Nur Premium</strong><small>0,99 € · Komfortfunktionen ansehen</small></span></button>, profileHost) : null}"
+          if old not in s:
+              raise SystemExit('Premium launcher return target not found')
+          s = s.replace(old, new)
+          if 'profileVisible' in s or 'Sparkles' in s:
+              raise SystemExit('Stale Premium launcher/icon token remains')
+          tsx.write_text(s)
+
+          css = Path('src/styles/premium-local-features.css')
+          c = css.read_text()
+          block = re.compile(r"\.premium-local-launcher \{.*?\n\}\n", re.S)
+          replacement = """.premium-local-launcher-host {\n  display: grid;\n  width: 100%;\n}\n\n.premium-local-launcher {\n  position: static;\n  display: flex;\n  width: 100%;\n  min-height: 64px;\n  align-items: center;\n  justify-content: flex-start;\n  gap: 12px;\n  padding: 12px 14px;\n  border: 1px solid rgba(226, 191, 119, .28);\n  border-radius: 18px;\n  background: linear-gradient(145deg, rgba(20, 75, 59, .78), rgba(2, 33, 27, .9));\n  box-shadow: inset 0 1px rgba(255, 255, 255, .035);\n  color: var(--cream-strong);\n  cursor: pointer;\n  text-align: left;\n}\n"""
+          c, n = block.subn(replacement, c, count=1)
+          if n != 1:
+              raise SystemExit(f'Expected one launcher CSS block, replaced {n}')
+          css.write_text(c)
+          PY
+      - name: Commit polish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/app/PremiumSystemLayer.tsx src/styles/premium-local-features.css
+          git commit -m "[launcher-patch] Integrate Premium entry into More screen"
+          git push origin HEAD:finish-navigation-visual-polish
