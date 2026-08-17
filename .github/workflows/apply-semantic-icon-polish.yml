@@ -1,0 +1,49 @@
+name: Apply semantic icon polish
+
+on:
+  push:
+    branches: [semantic-icon-label-polish]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !startsWith(github.event.head_commit.message, '[semantic-icon-patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Replace AI-like glyphs with semantic icons
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          learn = Path('src/screens/LearnScreen.tsx')
+          s = learn.read_text()
+          s = s.replace('  Sparkles,\n', '  ShieldCheck,\n')
+          s = s.replace('  aqidah: Sparkles,', '  aqidah: ShieldCheck,')
+          s = s.replace('        {/* Titled "Islam lernen" before, while the tab that opens it says\n            "Islam verstehen". The tab is the name the reader navigates by, so\n            the screen answers to it rather than to a second name. */}\n        <div><span className="overline">Nur Islam</span><h1>Islam verstehen</h1></div>',
+                        '        <div><span className="overline">Nur Islam</span><h1>Lernen</h1></div>')
+          if 'Sparkles' in s or '<h1>Islam verstehen</h1>' in s:
+              raise SystemExit('Stale LearnScreen AI icon/label remains')
+          learn.write_text(s)
+
+          assistant = Path('src/screens/AssistantScreen.tsx')
+          a = assistant.read_text()
+          a = a.replace('  CircleCheck,\n  Send,', '  CircleCheck,\n  BookOpen,\n  Search,\n  Send,')
+          a = a.replace('  Sparkles,\n', '')
+          a = a.replace('<span className="reference-chat-message__mark"><Sparkles size={16} /></span>', '<span className="reference-chat-message__mark"><BookOpen size={16} /></span>')
+          a = a.replace('<span><Sparkles size={16} /></span><strong>{question}</strong>', '<span><Search size={16} /></span><strong>{question}</strong>')
+          if 'Sparkles' in a:
+              raise SystemExit('Stale AssistantScreen Sparkles icon remains')
+          assistant.write_text(a)
+          PY
+      - name: Commit polish
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/screens/LearnScreen.tsx src/screens/AssistantScreen.tsx
+          git commit -m "[semantic-icon-patch] Replace AI-like icons and align Learn label"
+          git push origin HEAD:semantic-icon-label-polish
