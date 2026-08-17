@@ -91,15 +91,15 @@ requireTokens('moreControls', [
   'linear-gradient(160deg,#0d5743,#00120f)',
 ]);
 requireTokens('navigation', [
-  'border-radius: 26px',
+  'border-radius: 24px',
   '.bottom-nav__item {',
-  'border-radius: 18px',
-  // Child, not descendant: the learn label is two words in their own spans, and
-  // the loose selector sized each of them like an icon box.
+  'border-radius: 16px',
   '.bottom-nav__item > span {',
-  'border-radius: 13px',
-  'stroke-width: 1.75',
-  'color: #f2d79a',
+  'border-radius: 10px',
+  'white-space: nowrap',
+  'color: #f3d996',
+  'box-shadow: none',
+  '@media (max-height: 720px)',
 ]);
 
 forbidTokens('prayer', [
@@ -130,4 +130,4 @@ forbidTokens('moreControls', [
   '#0b4938', '#021a14', '#f3d99d', '#c79b50',
 ]);
 
-console.log('Core screen source verified: Home, Prayer, Calendar, Learning, More and bottom navigation use the approved source-level 42/28/18/26/13 geometry and reference emerald/gold palette without the known legacy near-match values.');
+console.log('Core screen source verified: Home, Prayer, Calendar, Learning and More keep the approved reference geometry/palette, while bottom navigation uses the compact one-line 24/16/10 treatment without the old nested active-icon glow or new override debt.');

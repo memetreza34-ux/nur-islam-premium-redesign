@@ -12,10 +12,10 @@ import { openApp } from './appReady';
 test('no unreadable text in the light theme', async ({ page }) => {
   await openApp(page);
   await page.evaluate(() => { localStorage.setItem('nur_theme', 'light'); document.documentElement.setAttribute('data-theme', 'light'); });
-  const tabs = ['Start', 'Gebete', 'Kalender', 'Islam', 'Mehr'];
+  const tabs = ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr'];
   const all: string[] = [];
   for (const tab of tabs) {
-    await page.getByRole('navigation').getByText(tab, { exact: false }).first().click();
+    await page.getByRole('navigation').getByText(tab, { exact: true }).click();
     await page.waitForTimeout(800);
     const bad = await page.evaluate((tabName) => {
       const parse = (v: string) => (v.match(/\d+(\.\d+)?/g) ?? []).slice(0, 3).map(Number);

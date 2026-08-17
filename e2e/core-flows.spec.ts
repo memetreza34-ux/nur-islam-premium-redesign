@@ -27,7 +27,7 @@ test('opens on the home screen with a prayer schedule', async ({ page }) => {
 });
 
 test('reaches every primary tab', async ({ page }) => {
-  for (const label of ['Gebete', 'Kalender', 'Mehr']) {
+  for (const label of ['Gebet', 'Quran', 'Lernen', 'Mehr']) {
     await page.getByRole('navigation').getByText(label, { exact: true }).click();
     await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
   }
@@ -71,11 +71,21 @@ test('primary navigation resets the app-owned browser stack', async ({ page }) =
   await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
 
-  await page.getByRole('navigation').getByText('Gebete', { exact: true }).click();
+  await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
   await expect(page.locator('.reference-prayer-screen')).toBeVisible();
 
   const depth = await page.evaluate(() => window.history.state?.__nurIslamNavigation?.depth ?? -1);
   expect(depth).toBe(0);
+});
+
+test('secondary devotional screens keep the correct primary tab active', async ({ page }) => {
+  await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
+  await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
+  await expect(page.getByRole('navigation').getByRole('button', { name: 'Gebet' })).toHaveAttribute('aria-current', 'page');
+
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByText('Duas', { exact: true }).first().click();
+  await expect(page.getByRole('navigation').getByRole('button', { name: 'Lernen' })).toHaveAttribute('aria-current', 'page');
 });
 
 test('saves today’s Hadith and reopens that exact entry from Collections', async ({ page }) => {
@@ -162,7 +172,7 @@ test('reports no console errors while navigating', async ({ page }) => {
     if (message.type() === 'error') errors.push(message.text());
   });
 
-  for (const label of ['Gebete', 'Kalender', 'Islam verstehen', 'Mehr']) {
+  for (const label of ['Gebet', 'Quran', 'Lernen', 'Mehr']) {
     await page.getByRole('navigation').getByText(label, { exact: true }).click();
     await page.waitForTimeout(250);
   }

@@ -25,14 +25,17 @@ function requireTokens(source, label, tokens) {
   }
 }
 
-requireTokens(navigation, 'Bottom navigation', [
-  'background: rgba(0, 27, 22, 0.92)',
-  'color: rgba(246, 235, 214, 0.64)',
-  'color: #f2d79a',
+requireTokens(navigation, 'Bottom navigation source', [
+  'background: rgba(0, 27, 22, 0.94)',
+  'color: rgba(207, 220, 212, 0.66)',
+  'color: #f3d996',
   'stroke-width: 1.75',
-  'border-radius: 26px',
-  'border-radius: 18px',
-  'border-radius: 13px',
+  'border-radius: 24px',
+  'border-radius: 16px',
+  'border-radius: 10px',
+  'white-space: nowrap',
+  'box-shadow: none',
+  '@media (max-height: 720px)',
 ]);
 
 requireTokens(referenceShell, 'Detail shell base', [
@@ -155,15 +158,20 @@ requireTokens(finalLock, 'Account/notes/assistant final utility material', [
   'linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important',
 ]);
 
-requireTokens(finalLock, 'Final shell/brand override', [
+requireTokens(finalLock, 'Final shell/brand/navigation override', [
   '.reference-splash,',
   '.app-shell--detail .reference-screen-header',
   'background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important',
   '.bottom-nav {',
-  'border-radius: 26px !important',
-  'background: linear-gradient(145deg, rgba(0, 27, 22, .96), rgba(0, 18, 15, .98)) !important',
+  'border-radius: 24px !important',
+  'background: linear-gradient(150deg, rgba(5, 35, 27, .965), rgba(1, 20, 15, .975)) !important',
+  '.bottom-nav__item {',
+  'border-radius: 16px !important',
+  '.bottom-nav__item > span',
+  'border-radius: 10px !important',
   '.bottom-nav__item--active',
-  'color: #f2d79a !important',
+  'color: #f3d996 !important',
+  'box-shadow: none !important',
   '.reference-onboarding__visual',
   'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
   '.reference-onboarding__visual-icon,',
@@ -173,7 +181,7 @@ requireTokens(finalLock, 'Final shell/brand override', [
   "[data-theme='light'] .app-shell--detail .reference-screen-header",
   "[data-theme='light'] .bottom-nav",
   "[data-theme='light'] .reference-onboarding__visual",
-  'background: rgba(255, 252, 243, .94) !important',
+  'background: rgba(255, 252, 243, .965) !important',
   'linear-gradient(150deg, #fffdf7, #eee6d3) !important',
 ]);
 
@@ -321,4 +329,4 @@ for (const staleProfile of [
   }
 }
 
-console.log('Reference system surfaces verified: Splash/entry brand, shell/navigation/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry with explicit light-theme preservation.');
+console.log('Reference system surfaces verified: Splash/entry brand, compact one-line bottom navigation, shell/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, protected icon weight and mobile-safe geometry with explicit light-theme preservation.');

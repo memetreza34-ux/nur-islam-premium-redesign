@@ -20,7 +20,7 @@ import { openApp } from './appReady';
  * against that specific race — which is now impossible by construction, since
  * the frame no longer animates.
  */
-const TABS = ['Start', 'Gebete', 'Kalender', 'Islam', 'Mehr'];
+const TABS = ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr'];
 
 async function visibleState(page: import('@playwright/test').Page) {
   return page.evaluate(() => {
@@ -70,7 +70,7 @@ test('every primary tab settles visible on its own', async ({ page }) => {
   const nav = page.getByRole('navigation');
 
   for (const tab of TABS) {
-    await nav.getByText(tab, { exact: false }).first().click();
+    await nav.getByText(tab, { exact: true }).click();
     await page.waitForTimeout(900);
     const state = await visibleState(page);
     expect(state.frameOpacity, `${tab}: frame invisible`).toBeGreaterThan(0.9);

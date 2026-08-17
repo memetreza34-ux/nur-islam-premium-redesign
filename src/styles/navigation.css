@@ -2,46 +2,50 @@
   position: fixed;
   z-index: 20;
   left: 50%;
-  bottom: max(13px, env(safe-area-inset-bottom));
+  bottom: max(10px, env(safe-area-inset-bottom));
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  width: min(calc(100% - 28px), 440px);
-  padding: 8px;
+  width: min(calc(100% - 20px), 440px);
+  padding: 6px;
   transform: translateX(-50%);
-  border: 1px solid rgba(226, 191, 119, 0.28);
-  border-radius: 26px;
-  background: rgba(0, 27, 22, 0.92);
-  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.55), inset 0 1px rgba(255, 255, 255, 0.045);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(226, 191, 119, 0.2);
+  border-radius: 24px;
+  background: rgba(0, 27, 22, 0.94);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.42), inset 0 1px rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(24px) saturate(1.08);
+  -webkit-backdrop-filter: blur(24px) saturate(1.08);
 }
 
 .bottom-nav__item {
   display: grid;
   min-width: 0;
+  min-height: 58px;
   justify-items: center;
   align-content: center;
   gap: 3px;
-  padding: 4px 1px;
-  border: 0;
-  border-radius: 18px;
-  color: rgba(246, 235, 214, 0.64);
+  padding: 6px 2px 5px;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  color: rgba(207, 220, 212, 0.66);
   background: transparent;
   cursor: pointer;
-  transition: color 180ms ease, background 180ms ease;
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
 }
 
 .bottom-nav__item > span {
   display: grid;
-  width: 37px;
-  height: 37px;
+  width: 30px;
+  height: 28px;
   place-items: center;
-  border: 1px solid transparent;
-  border-radius: 13px;
-  transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  box-shadow: none;
 }
 
 .bottom-nav__item svg {
+  width: 20px;
+  height: 20px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.75;
@@ -50,53 +54,45 @@
   vector-effect: non-scaling-stroke;
 }
 
-/* Block, not grid or flex: as a grid item this label resolved to min-content,
-   the width of "verstehen" alone, so the rest wrapped one character per line,
-   seven lines tall, and pushed the whole bar up over the install prompt.
-   The two reserved lines are what keeps the row aligned — "Islam verstehen"
-   is the only label that needs both, and when it alone grew the other four
-   icons sat visibly higher than it. */
 .bottom-nav__item small {
   display: block;
-  max-width: 68px;
-  min-height: 2.16em;
-  overflow: hidden;
-  font-size: 0.54rem;
-  font-weight: 700;
-  line-height: 1.08;
+  min-height: 0;
+  overflow: visible;
+  font-size: .58rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: .01em;
   text-align: center;
-  text-overflow: ellipsis;
-  white-space: normal;
+  white-space: nowrap;
 }
-
 
 .bottom-nav__item--active {
-  color: #f2d79a;
+  color: #f3d996;
+  border-color: rgba(226, 191, 119, 0.18);
+  background: linear-gradient(145deg, rgba(226, 191, 119, 0.14), rgba(226, 191, 119, 0.045));
 }
 
-.bottom-nav__item--active > span {
-  border-color: rgba(226, 191, 119, 0.34);
-  background: rgba(226, 191, 119, 0.12);
-  box-shadow: 0 0 20px rgba(226, 191, 119, 0.17), inset 0 1px rgba(255, 255, 255, 0.035);
-}
-
-.bottom-nav__item--active svg {
-  filter: drop-shadow(0 0 7px rgba(242, 215, 154, 0.24));
-}
+.bottom-nav__item--active svg { transform: translateY(-1px); }
 
 @media (hover: hover) and (pointer: fine) {
   .bottom-nav__item:hover:not(.bottom-nav__item--active) {
-    color: rgba(255, 248, 234, 0.86);
-  }
-
-  .bottom-nav__item:hover > span {
+    color: rgba(255, 248, 234, 0.88);
     background: rgba(255, 255, 255, 0.025);
-  }}
+  }
+}
 
-@media(max-width:370px){
-.bottom-nav{width:min(calc(100% - 18px),440px);padding-inline:5px}
-.bottom-nav__item small{max-width:60px;min-height:2.16em;overflow:visible;font-size:.5rem;text-overflow:clip}
-.bottom-nav__item--learn small span{display:block}}
+@media (max-width: 370px) {
+  .bottom-nav { width: min(calc(100% - 14px), 440px); padding-inline: 5px; }
+  .bottom-nav__item small { font-size: .54rem; }
+}
+
+@media (max-height: 720px) {
+  .bottom-nav { bottom: max(6px, env(safe-area-inset-bottom)); padding: 4px 5px; }
+  .bottom-nav__item { min-height: 52px; padding-block: 4px; }
+  .bottom-nav__item > span { width: 28px; height: 25px; }
+  .bottom-nav__item svg { width: 19px; height: 19px; }
+  .bottom-nav__item small { font-size: .52rem; }
+}
 
 .toast {
   position: fixed;
@@ -115,6 +111,6 @@
   color: var(--cream);
   background: rgba(0, 27, 22, 0.96);
   box-shadow: var(--shadow);
-  font-size: 0.72rem;
+  font-size: .72rem;
   font-weight: 700;
 }

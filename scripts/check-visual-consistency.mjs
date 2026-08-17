@@ -29,12 +29,6 @@ const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
 const geometryImport = "@import './styles/premium-reference-geometry-lock.css';";
-// Layers may load after the shared guardrails, but only as a declared kind of
-// layer: a premium `-lock`/`-pass` art layer, a functional hardening layer, or
-// one of the named originals. Anything else is an unnamed sheet quietly
-// outranking the guardrails, which is what this check exists to catch. Naming
-// rather than an exact list keeps design work from having to edit this file for
-// every new layer.
 const postGuardrailNames = new Set([
   'release-hardening.css',
   'premium-release-design.css',
@@ -125,9 +119,12 @@ for (const requirement of [
   'border-radius: 28px !important',
   'border-radius: 18px !important',
   '.bottom-nav',
-  'border-radius: 26px !important',
+  'border-radius: 24px !important',
+  '.bottom-nav__item',
+  'border-radius: 16px !important',
   '.bottom-nav__item > span',
-  'border-radius: 13px !important',
+  'border-radius: 10px !important',
+  'box-shadow: none !important',
   ':where(svg.lucide)',
   'stroke-width: 1.75 !important',
   'stroke-linecap: round !important',
@@ -157,12 +154,14 @@ if (!navigation.includes('.bottom-nav') || !viewport.includes('env(safe-area-ins
   throw new Error('Bottom navigation or safe-area handling is missing.');
 }
 for (const requirement of [
-  'color: rgba(246, 235, 214, 0.64)',
-  'color: #f2d79a',
+  'color: rgba(207, 220, 212, 0.66)',
+  'color: #f3d996',
   'vector-effect: non-scaling-stroke',
-  'box-shadow: 0 0 20px rgba(226, 191, 119, 0.17)',
+  'white-space: nowrap',
+  'background: linear-gradient(145deg, rgba(226, 191, 119, 0.14), rgba(226, 191, 119, 0.045))',
+  'box-shadow: none',
 ]) {
-  if (!navigation.includes(requirement)) throw new Error(`Reference navigation icon state is missing: ${requirement}`);
+  if (!navigation.includes(requirement)) throw new Error(`Refreshed navigation source state is missing: ${requirement}`);
 }
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');
@@ -185,9 +184,9 @@ for (const requirement of requiredImageBehavior) {
 
 const navigationItems = [
   "{ id: 'home', label: 'Start'",
-  "{ id: 'prayer', label: 'Gebete'",
-  "{ id: 'calendar', label: 'Kalender'",
-  "{ id: 'learn', label: 'Islam verstehen'",
+  "{ id: 'prayer', label: 'Gebet'",
+  "{ id: 'quran', label: 'Quran'",
+  "{ id: 'learn', label: 'Lernen'",
   "{ id: 'profile', label: 'Mehr'",
 ];
 for (const item of navigationItems) {
@@ -195,6 +194,15 @@ for (const item of navigationItems) {
 }
 if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
   throw new Error('Bottom navigation must expose the active page semantically.');
+}
+if (!app.includes("['prayer', 'calendar', 'dhikr', 'qibla'].includes(activeTab)")) {
+  throw new Error('Prayer-related secondary screens must keep Gebet active in the primary navigation.');
+}
+if (!app.includes("['quran', 'reader', 'ayah'].includes(activeTab)")) {
+  throw new Error('Quran-related screens must keep Quran active in the primary navigation.');
+}
+if (!app.includes("['learn', 'duas', 'names', 'assistant'].includes(activeTab)")) {
+  throw new Error('Learning-related secondary screens must keep Lernen active in the primary navigation.');
 }
 if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {
   throw new Error('Home daily Ayah card must use the Mihrab artwork from the reference composition.');
@@ -290,5 +298,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last 18/28/42 geometry + 1.75 Lucide lock, navigation/header icon states and labels, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last hero/card/control geometry plus compact 24/16/10 navigation and 1.75 Lucide lock, correct section-active semantics, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );

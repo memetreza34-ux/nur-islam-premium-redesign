@@ -175,6 +175,12 @@
   background: rgba(75, 143, 94, .12);
 }
 
+[data-theme='light'] .reference-quran-availability.is-available {
+  border-color: rgba(49, 93, 69, .22);
+  color: #315d45;
+  background: rgba(49, 93, 69, .09);
+}
+
 .reference-quran-favorite {
   display: grid;
   width: 36px;
@@ -299,4 +305,5 @@
 
   .reference-quran-list__arabic {
     font-size: .78rem;
-  }}
+  }
+}
