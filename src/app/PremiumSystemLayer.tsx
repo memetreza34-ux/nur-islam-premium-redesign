@@ -15,7 +15,7 @@ import {
   NotebookPen,
   Palette,
   Plus,
-  Sparkles,
+  CircleDot,
   Target,
   Trash2,
   X,
@@ -180,7 +180,7 @@ function PremiumHomeWidgets({ onOpen }: { onOpen: () => void }) {
         ) : null}
         {settings.widgets.includes('dhikr') ? (
           <button onClick={onOpen} className="premium-local-widget">
-            <Sparkles size={18} />
+            <CircleDot size={18} />
             <span><small>Heute gezählt</small><strong>{dhikr} Dhikr</strong><em>lokal gespeichert</em></span>
           </button>
         ) : null}
@@ -511,7 +511,7 @@ function PremiumPanel({ onClose }: { onClose: () => void }) {
 
 export function PremiumSystemLayer() {
   const [open, setOpen] = useState(false);
-  const [profileVisible, setProfileVisible] = useState(false);
+  const [profileHost, setProfileHost] = useState<HTMLElement | null>(null);
   const [homeHost, setHomeHost] = useState<HTMLElement | null>(null);
   const [reminderMessage, setReminderMessage] = useState<string | null>(null);
   const [, setPreferencesVersion] = useState(0);
@@ -528,9 +528,23 @@ export function PremiumSystemLayer() {
     const root = document.getElementById('root');
     if (!root) return undefined;
     let currentHost: HTMLElement | null = null;
+    let currentProfileHost: HTMLElement | null = null;
 
     const sync = () => {
-      setProfileVisible(Boolean(root.querySelector('.reference-profile-screen')));
+      const profile = root.querySelector<HTMLElement>('.reference-profile-screen');
+      if (!profile) {
+        if (currentProfileHost?.isConnected) currentProfileHost.remove();
+        currentProfileHost = null;
+        setProfileHost(null);
+      } else if (!currentProfileHost || !currentProfileHost.isConnected || currentProfileHost.parentElement !== profile) {
+        currentProfileHost = document.createElement('div');
+        currentProfileHost.className = 'premium-local-launcher-host';
+        const account = profile.querySelector(':scope > .reference-account-entry');
+        if (account?.nextSibling) profile.insertBefore(currentProfileHost, account.nextSibling);
+        else profile.appendChild(currentProfileHost);
+        setProfileHost(currentProfileHost);
+      }
+
       const home = root.querySelector<HTMLElement>('.premium-home');
       if (!home) {
         if (currentHost?.isConnected) currentHost.remove();
@@ -558,6 +572,7 @@ export function PremiumSystemLayer() {
       observer.disconnect();
       window.removeEventListener('nur:premium-data-changed', handlePremiumChange);
       if (currentHost?.isConnected) currentHost.remove();
+      if (currentProfileHost?.isConnected) currentProfileHost.remove();
     };
   }, []);
 
@@ -588,7 +603,7 @@ export function PremiumSystemLayer() {
 
   return (
     <>
-      {profileVisible && !open ? <button className="premium-local-launcher" onClick={() => setOpen(true)}><Crown size={17} /><span><strong>Nur Premium</strong><small>0,99 € · Funktionen ansehen</small></span></button> : null}
+      {profileHost && !open ? createPortal(<button className="premium-local-launcher" onClick={() => setOpen(true)}><Crown size={19} /><span><strong>Nur Premium</strong><small>0,99 € · Komfortfunktionen ansehen</small></span></button>, profileHost) : null}
       {homeHost ? createPortal(<PremiumHomeWidgets onOpen={() => setOpen(true)} />, homeHost) : null}
       {open ? createPortal(<PremiumPanel onClose={() => setOpen(false)} />, document.body) : null}
       {reminderMessage ? <aside className="premium-local-reminder-banner" role="alert"><BellRing size={18} /><span><small>Premium-Erinnerung</small><strong>{reminderMessage}</strong></span><button onClick={() => setReminderMessage(null)} aria-label="Erinnerung schließen"><X size={16} /></button></aside> : null}

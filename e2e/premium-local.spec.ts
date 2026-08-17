@@ -52,3 +52,29 @@ test('creates a local routine and persists its daily completion', async ({ page 
   await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
   await expect(page.getByText('1/2 erledigt')).toBeVisible();
 });
+
+test('Premium entry sits in the More screen flow without covering shortcuts', async ({ page }) => {
+  await openApp(page);
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+
+  const launcher = page.getByRole('button', { name: /Nur Premium/ });
+  await expect(launcher).toBeVisible();
+  await expect(launcher).toHaveCSS('position', 'static');
+
+  const host = page.locator('.premium-local-launcher-host');
+  await expect(host).toBeVisible();
+  await expect(host.locator('xpath=..')).toHaveClass(/reference-profile-screen/);
+
+  const account = page.locator('.reference-account-entry');
+  const shortcuts = page.locator('.reference-core-access');
+  const boxes = await Promise.all([account.boundingBox(), launcher.boundingBox(), shortcuts.boundingBox()]);
+  const [accountBox, launcherBox, shortcutsBox] = boxes;
+  expect(accountBox).not.toBeNull();
+  expect(launcherBox).not.toBeNull();
+  expect(shortcutsBox).not.toBeNull();
+  expect(launcherBox!.y).toBeGreaterThanOrEqual(accountBox!.y + accountBox!.height - 1);
+  expect(launcherBox!.y + launcherBox!.height).toBeLessThanOrEqual(shortcutsBox!.y + 1);
+
+  await launcher.click();
+  await expect(page.getByRole('dialog', { name: 'Nur Islam Premium' })).toBeVisible();
+});
