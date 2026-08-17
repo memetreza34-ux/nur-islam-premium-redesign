@@ -9,7 +9,7 @@ appUrl.searchParams.set('preview', '1');
 
 const groups = [
   {
-    nav: 'Islam verstehen',
+    nav: 'Lernen',
     parent: '.reference-learn-screen',
     scope: '.reference-expanded-learning-grid > button',
     startIndex: 27,
@@ -176,4 +176,4 @@ try {
   await browser.close();
 }
 
-console.log('Legacy premium reference screenshots captured at 390x844 and 340x740.');
+console.log('Legacy premium reference screenshots captured at 390x844 and 340x740 through the refreshed Lernen/Mehr navigation.');

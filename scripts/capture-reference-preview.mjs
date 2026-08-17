@@ -128,9 +128,9 @@ try {
   await returnHome(page);
 
   const destinations = [
-    ['Gebete', '02-prayer'],
-    ['Kalender', '03-calendar'],
-    ['Islam verstehen', '04-learning'],
+    ['Gebet', '02-prayer'],
+    ['Quran', '03a-quran-primary'],
+    ['Lernen', '04-learning'],
     ['Mehr', '05-more'],
   ];
 
@@ -143,6 +143,16 @@ try {
   await clickNav(page, 'Start');
   await waitForStableUi(page);
   await capture(page, '06-home-return');
+
+  // Calendar remains a first-class screen, but no longer occupies one of the
+  // five primary tabs. Capture it through the real Home date affordance.
+  const calendarEntry = page.locator('.welcome-hero__date').first();
+  await calendarEntry.waitFor({ state: 'visible', timeout: 10_000 });
+  await calendarEntry.click();
+  await page.locator('.reference-calendar-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await waitForStableUi(page);
+  await capture(page, '03-calendar');
+  await returnHome(page);
 
   const quranJourney = page.locator('.journey-card--quran').first();
   await quranJourney.waitFor({ state: 'visible' });
