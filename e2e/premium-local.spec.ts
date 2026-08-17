@@ -3,9 +3,12 @@ import { openApp } from './appReady';
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => {
+    const cleanMarker = 'nur_premium_e2e_cleaned';
+    if (sessionStorage.getItem(cleanMarker) === '1') return;
     for (const key of Object.keys(localStorage)) {
       if (key.startsWith('nur_premium_')) localStorage.removeItem(key);
     }
+    sessionStorage.setItem(cleanMarker, '1');
   });
 });
 
