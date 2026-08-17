@@ -62,7 +62,7 @@ body {
   padding: 8px 6px !important;
   border-color: rgba(232, 199, 122, .14) !important;
   border-radius: 18px !important;
-  background: linear-gradient(180deg, rgba(4, 28, 22, .9), rgba(2, 18, 14, .82)) !important;
+  background: linear-gradient(180deg, #041c16, #02120e) !important;
   box-shadow: 0 10px 32px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
   backdrop-filter: blur(24px) saturate(1.08) !important;
   -webkit-backdrop-filter: blur(24px) saturate(1.08) !important;
