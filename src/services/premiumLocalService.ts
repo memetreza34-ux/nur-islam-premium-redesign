@@ -413,7 +413,6 @@ export function capturePremiumDailySnapshot(now = new Date()) {
 }
 
 export function readPremiumStats(days = 30): PremiumDailySnapshot[] {
-  capturePremiumDailySnapshot();
   const snapshots = readJson<Record<string, PremiumDailySnapshot>>(STATS_KEY, {});
   return Array.from({ length: Math.min(120, Math.max(1, days)) }, (_, offset) => {
     const date = new Date();
