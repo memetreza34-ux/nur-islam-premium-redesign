@@ -5,7 +5,7 @@ on:
   push:
     branches: [premium-home-redesign, premium-design-finish, final-design-release-pass]
   pull_request:
-    branches: [main, premium-home-redesign]
+    branches: [main, premium-home-redesign, premium-design-finish]
 
 permissions:
   contents: read
