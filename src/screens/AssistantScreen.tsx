@@ -4,9 +4,10 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  BookOpen,
+  Search,
   Send,
   ShieldCheck,
-  Sparkles,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -95,7 +96,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
         <section className="reference-chat-thread" aria-live="polite">
           {messages.map((message, index) => (
             <motion.div key={message.id} className={`reference-chat-message reference-chat-message--${message.role}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={{ ...microTransition, delay: reduceMotion ? 0 : Math.min(index * .025, .08) }}>
-              {message.role === 'assistant' ? <span className="reference-chat-message__mark"><Sparkles size={16} /></span> : null}
+              {message.role === 'assistant' ? <span className="reference-chat-message__mark"><BookOpen size={16} /></span> : null}
               <div>
                 <p>{message.text}</p>
                 {/* Each hit names an entry the user can open and check, rather
@@ -121,7 +122,7 @@ export function AssistantScreen({ onBack }: { onBack: () => void }) {
         <section className="reference-assistant-suggestions">
           <div className="section-heading"><div><span className="overline">Direkt verfügbar</span><h2>Fragen mit Quellen</h2></div></div>
           <div>
-            {suggestions.map((question) => <button key={question} onClick={() => useSuggestion(question)}><span><Sparkles size={16} /></span><strong>{question}</strong><ChevronRight size={17} /></button>)}
+            {suggestions.map((question) => <button key={question} onClick={() => useSuggestion(question)}><span><Search size={16} /></span><strong>{question}</strong><ChevronRight size={17} /></button>)}
           </div>
         </section>
       )}

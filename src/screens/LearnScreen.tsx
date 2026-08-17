@@ -13,7 +13,7 @@ import {
   Landmark,
   Scale,
   Settings,
-  Sparkles,
+  ShieldCheck,
   Star,
   X,
 } from 'lucide-react';
@@ -42,7 +42,7 @@ import { MosqueScene, PremiumImage } from '../shared/PremiumVisuals';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
 
 const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
-  aqidah: Sparkles,
+  aqidah: ShieldCheck,
   fiqh: Scale,
   tafsir: BookOpen,
   seerah: Landmark,
@@ -139,10 +139,7 @@ export function LearnScreen({
     <motion.main className="screen reference-learn-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
-        {/* Titled "Islam lernen" before, while the tab that opens it says
-            "Islam verstehen". The tab is the name the reader navigates by, so
-            the screen answers to it rather than to a second name. */}
-        <div><span className="overline">Nur Islam</span><h1>Islam verstehen</h1></div>
+        <div><span className="overline">Nur Islam</span><h1>Lernen</h1></div>
         <button className="icon-button" onClick={() => setLearningPlanOpen(true)} aria-label="Lernplan öffnen"><Settings size={20} /></button>
       </header>
 
