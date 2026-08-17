@@ -360,10 +360,10 @@ function readPrayerCount(date: string) {
   return Array.isArray(stored) ? Math.min(5, new Set(stored.filter((value) => typeof value === 'string')).size) : 0;
 }
 
-function readDhikrSnapshot() {
+function readDhikrSnapshot(): { date: string; total: number } | null {
   const stored = readJson<{ date?: unknown; counts?: unknown }>('nur_dhikr_daily_v2', {});
   if (typeof stored.date !== 'string' || !stored.counts || typeof stored.counts !== 'object' || Array.isArray(stored.counts)) return null;
-  const total = Object.values(stored.counts as Record<string, unknown>).reduce((sum, value) => sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0), 0);
+  const total = Object.values(stored.counts as Record<string, unknown>).reduce<number>((sum, value) => sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0), 0);
   return { date: stored.date, total };
 }
 
