@@ -61,15 +61,19 @@ export type PremiumFavoriteRef = {
   group: string;
 };
 
-const SETTINGS_KEY = 'nur_premium_settings_v1';
-const QURAN_PLAN_KEY = 'nur_premium_quran_plan_v1';
-const ROUTINES_KEY = 'nur_premium_routines_v1';
-const ROUTINE_DAYS_KEY = 'nur_premium_routine_days_v1';
-const REMINDERS_KEY = 'nur_premium_reminders_v1';
-const FOLDERS_KEY = 'nur_premium_folders_v1';
-const JOURNAL_KEY = 'nur_premium_journal_v1';
-const STATS_KEY = 'nur_premium_stats_v1';
-const REMINDER_FIRED_KEY = 'nur_premium_reminders_fired_v1';
+// `nurBackend.collectLocalState()` intentionally uploads only `nur_*` and
+// `premium_*` keys. This distinct prefix keeps the local-first Premium package,
+// especially the private journal, outside cloud backups unless the user is
+// later given an explicit Premium sync feature and consent flow.
+const SETTINGS_KEY = 'local_nur_premium_settings_v1';
+const QURAN_PLAN_KEY = 'local_nur_premium_quran_plan_v1';
+const ROUTINES_KEY = 'local_nur_premium_routines_v1';
+const ROUTINE_DAYS_KEY = 'local_nur_premium_routine_days_v1';
+const REMINDERS_KEY = 'local_nur_premium_reminders_v1';
+const FOLDERS_KEY = 'local_nur_premium_folders_v1';
+const JOURNAL_KEY = 'local_nur_premium_journal_v1';
+const STATS_KEY = 'local_nur_premium_stats_v1';
+const REMINDER_FIRED_KEY = 'local_nur_premium_reminders_fired_v1';
 
 export const PREMIUM_HOME_SECTIONS: PremiumHomeSection[] = ['journey', 'discover', 'continue', 'inspiration', 'assistant', 'recommendations'];
 export const PREMIUM_WIDGETS: PremiumWidgetId[] = ['prayer', 'quran', 'dhikr', 'routine'];
