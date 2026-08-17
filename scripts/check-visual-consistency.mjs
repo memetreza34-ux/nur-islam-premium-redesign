@@ -29,12 +29,6 @@ const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
 const geometryImport = "@import './styles/premium-reference-geometry-lock.css';";
-// Layers may load after the shared guardrails, but only as a declared kind of
-// layer: a premium `-lock`/`-pass` art layer, a functional hardening layer, or
-// one of the named originals. Anything else is an unnamed sheet quietly
-// outranking the guardrails, which is what this check exists to catch. Naming
-// rather than an exact list keeps design work from having to edit this file for
-// every new layer.
 const postGuardrailNames = new Set([
   'release-hardening.css',
   'premium-release-design.css',
@@ -125,9 +119,12 @@ for (const requirement of [
   'border-radius: 28px !important',
   'border-radius: 18px !important',
   '.bottom-nav',
-  'border-radius: 26px !important',
+  'border-radius: 24px !important',
+  '.bottom-nav__item',
+  'border-radius: 16px !important',
   '.bottom-nav__item > span',
-  'border-radius: 13px !important',
+  'border-radius: 10px !important',
+  'box-shadow: none !important',
   ':where(svg.lucide)',
   'stroke-width: 1.75 !important',
   'stroke-linecap: round !important',
@@ -162,9 +159,9 @@ for (const requirement of [
   'vector-effect: non-scaling-stroke',
   'white-space: nowrap',
   'background: linear-gradient(145deg, rgba(226, 191, 119, 0.14), rgba(226, 191, 119, 0.045))',
-  'box-shadow: none !important',
+  'box-shadow: none',
 ]) {
-  if (!navigation.includes(requirement)) throw new Error(`Refreshed navigation state is missing: ${requirement}`);
+  if (!navigation.includes(requirement)) throw new Error(`Refreshed navigation source state is missing: ${requirement}`);
 }
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');
@@ -301,5 +298,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last 18/28/42 geometry + 1.75 Lucide lock, refreshed one-line primary navigation, correct section-active semantics, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last hero/card/control geometry plus compact 24/16/10 navigation and 1.75 Lucide lock, correct section-active semantics, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );
