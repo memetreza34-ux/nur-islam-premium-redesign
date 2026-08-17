@@ -1,0 +1,37 @@
+name: Apply global opaque header
+
+on:
+  push:
+    branches: [opaque-detail-header-polish]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !startsWith(github.event.head_commit.message, '[global-opaque-header]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Remove alpha from final shared sticky header surface
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('src/styles/premium-release-design.css')
+          source = path.read_text()
+          old = "background: linear-gradient(180deg, rgba(4, 28, 22, .9), rgba(2, 18, 14, .82)) !important;"
+          new = "background: linear-gradient(180deg, #041c16, #02120e) !important;"
+          count = source.count(old)
+          if count != 1:
+              raise SystemExit(f'Expected exactly one final shared header background, found {count}')
+          path.write_text(source.replace(old, new))
+          PY
+      - name: Commit patch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/styles/premium-release-design.css
+          git commit -m "[global-opaque-header] Make final sticky header surface opaque"
+          git push origin HEAD:opaque-detail-header-polish
