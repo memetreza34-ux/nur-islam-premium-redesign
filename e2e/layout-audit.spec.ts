@@ -12,9 +12,9 @@ const WIDTHS = [320, 375, 430];
 
 const SURFACES = [
   { kind: 'tab', name: 'Start' },
-  { kind: 'tab', name: 'Gebete' },
-  { kind: 'tab', name: 'Kalender' },
-  { kind: 'tab', name: 'Islam' },
+  { kind: 'tab', name: 'Gebet' },
+  { kind: 'tab', name: 'Quran' },
+  { kind: 'tab', name: 'Lernen' },
   { kind: 'tab', name: 'Mehr' },
   { kind: 'hub', name: 'Quran' },
   { kind: 'hub', name: 'Dhikr' },
@@ -35,7 +35,7 @@ for (const width of WIDTHS) {
 
     for (const surface of SURFACES) {
       if (surface.kind === 'tab') {
-        await page.getByRole('navigation').getByText(surface.name, { exact: false }).first().click();
+        await page.getByRole('navigation').getByText(surface.name, { exact: true }).click();
       } else {
         await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
         await page.waitForTimeout(300);
