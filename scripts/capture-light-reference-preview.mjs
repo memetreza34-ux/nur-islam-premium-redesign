@@ -124,15 +124,15 @@ try {
   await returnHome();
 
   for (const [label, name] of [
-    ['Gebete', '02-prayer'],
-    ['Kalender', '03-calendar'],
-    ['Islam verstehen', '04-learning'],
+    ['Gebet', '02-prayer'],
+    ['Quran', '03a-quran-primary'],
+    ['Lernen', '04-learning'],
     ['Mehr', '05-more'],
   ]) {
     await nav(label);
     await settle();
     await assertLightTheme();
-    if (label === 'Islam verstehen') {
+    if (label === 'Lernen') {
       await assertBrightHeroTitle('.reference-prayer-learning-hub h2', 'Learning');
     }
     await shot(name);
@@ -140,6 +140,15 @@ try {
 
   await nav('Start');
   await settle();
+  const calendarEntry = page.locator('.welcome-hero__date').first();
+  await calendarEntry.waitFor({ state: 'visible', timeout: 10_000 });
+  await calendarEntry.click();
+  await page.locator('.reference-calendar-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  await settle();
+  await assertLightTheme();
+  await shot('03-calendar');
+  await returnHome();
+
   const quranJourney = page.locator('.journey-card--quran').first();
   await quranJourney.waitFor({ state: 'visible', timeout: 10_000 });
   await quranJourney.click();
@@ -192,4 +201,4 @@ try {
   await browser.close();
 }
 
-console.log('Light-theme premium reference screenshots captured at 390x844 with daily-detail and focal-title contrast assertions.');
+console.log('Light-theme premium reference screenshots captured at 390x844 with refreshed primary navigation, Calendar via Home, daily-detail and focal-title contrast assertions.');
