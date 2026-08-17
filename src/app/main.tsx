@@ -24,6 +24,9 @@ import { SplashScreen } from '../screens/SplashScreen';
 import { initializeTheme } from '../services/themeService';
 import '../styles.css';
 import '../styles/premium-legacy-art-final.css';
+import '../styles/premium-local-features.css';
+
+const PremiumSystemLayer = React.lazy(() => import('./PremiumSystemLayer').then(({ PremiumSystemLayer }) => ({ default: PremiumSystemLayer })));
 
 const VISUAL_VERSION = '20260808-release-hardening';
 const PREVIEW_ASSETS = [
@@ -169,6 +172,9 @@ function BootRoot() {
         <motion.div key="app" className="app-entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28 }}>
           <AppErrorBoundary>
             <App />
+            <React.Suspense fallback={null}>
+              <PremiumSystemLayer />
+            </React.Suspense>
             <NetworkStatus />
             <PrayerReminderBanner />
             <CalendarReminderBanner />

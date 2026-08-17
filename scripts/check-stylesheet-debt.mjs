@@ -32,7 +32,11 @@ const BUDGET = {
   // what the browser actually gets, rather than trusting the source. Several
   // were held in place by these very guards, so guard and rule were removed
   // together; that pairing is the reason the debt could not shrink before.
-  files: 97,
+  //
+  // Premium adds one deliberately isolated stylesheet for a genuinely new
+  // product surface (plans, routines, widgets, statistics and local settings),
+  // rather than another lock/parallel override layer. It adds no `!important`.
+  files: 98,
   overrideFiles: 33,
   importantRules: 2285,
   // Raised three times now, each for surface that did not exist: the prayer
@@ -89,7 +93,8 @@ const BUDGET = {
   // for two days. Growth that restores shipped design is the one raise this
   // budget is meant to allow; dynamic-classes:check now fails before such a
   // removal can land again.
-  totalBytes: 733_678,
+  // Premium's new isolated surface adds exactly 21,161 bytes and no lock layer.
+  totalBytes: 754_839,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));
