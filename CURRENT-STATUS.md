@@ -21,7 +21,12 @@ Die verbleibende Arbeit konzentriert sich auf:
 6. kontrollierten Beta-/Release-Pfad;
 7. **erst danach** echte Abo-Abrechnung und Premium-Entitlement.
 
-Die operative Checkliste steht in [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md).
+Arbeitsunterlagen:
+
+- [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md) – operative Gesamtcheckliste.
+- [`docs/AUDIO-RIGHTS-AUDIT.md`](./docs/AUDIO-RIGHTS-AUDIT.md) – aktueller Rechte-/Quellennachweis für Audio.
+- [`docs/REAL-DEVICE-QA.md`](./docs/REAL-DEVICE-QA.md) – reale iPhone-/Android-Abnahmematrix.
+- [`docs/RELEASE-OPERATIONS.md`](./docs/RELEASE-OPERATIONS.md) – Beta-, Smoke-Test- und Rollback-Runbook.
 
 ## 2. Was technisch bereits steht
 
@@ -142,16 +147,19 @@ Priorisiert:
 
 ### P0 – Audio-/Nutzungsrechte
 
-Noch nicht abschließend freigegeben:
+Die aktuelle Recherche ist in [`docs/AUDIO-RIGHTS-AUDIT.md`](./docs/AUDIO-RIGHTS-AUDIT.md) dokumentiert.
 
-- Mishary Alafasy über Islamic Network;
-- Hisn-al-Muslim-Aufnahmen.
+**Islamic Network / Al Quran Cloud:** Die aktuell veröffentlichten Terms beschreiben die Einbindung von Rezitationen und erlauben nach ihrem Wortlaut auch die Einbindung in kommerzielle Produkte. Gleichzeitig verbleiben Copyrights bei den Rezitatoren und die Terms weisen darauf hin, dass eine Entfernung verlangt werden kann. Das ist eine dokumentierte Nutzungsgrundlage, wird aber nicht als unbeschränkte eigene Rechtefreigabe behandelt.
 
-Vor Release müssen die Rechte dokumentiert geklärt **oder** die betroffenen Audiofunktionen deaktiviert/entfernt werden.
+**Hisn al-Muslim:** Für die verwendeten Audioaufnahmen wurde bei der aktuellen öffentlichen Prüfung keine eindeutige Weiterverwendungs-/Einbettungslizenz gefunden. Dieser Teil bleibt offen.
+
+Vor Release muss die konkrete Audio-Nutzung final rechtlich bestätigt **oder** die jeweils unsichere Audiofunktion deaktiviert/entfernt werden.
 
 ### P0 – reale Geräte
 
-Mindestens ein reales iPhone und ein reales Android-Gerät müssen dokumentiert geprüft werden für:
+Mindestens ein reales iPhone und ein reales Android-Gerät müssen dokumentiert geprüft werden. Die vollständige Matrix ist in [`docs/REAL-DEVICE-QA.md`](./docs/REAL-DEVICE-QA.md) vorbereitet.
+
+P0-Mindestumfang:
 
 - PWA-Installation;
 - Start/Update/Offline/Recovery;
@@ -166,11 +174,13 @@ WebKit-/Browser-Simulation ersetzt diese physische Abnahme nicht.
 
 ### P1 – Release-Betrieb
 
-Vor breiter Veröffentlichung:
+Das Beta-/Smoke-/Rollback-Vorgehen ist in [`docs/RELEASE-OPERATIONS.md`](./docs/RELEASE-OPERATIONS.md) vorbereitet.
 
-- Support-/Korrekturweg festlegen;
-- letzte bekannte grüne Version als Rollback-Ziel festhalten;
-- Beta-/Staged-Rollout nutzen;
+Noch real durchzuführen bzw. mit Betreiberangaben zu vervollständigen:
+
+- echte Support-/Kontaktadresse sichtbar machen;
+- letzte bekannte grüne Produktions-SHA unmittelbar vor Release festhalten;
+- Beta-/Staged-Rollout tatsächlich durchführen;
 - finalen Smoke-Test nach Deployment durchführen.
 
 ## 5. Payment / 0,99-€-Abo – bewusst letzter Schritt
@@ -206,7 +216,7 @@ Damit bleibt der öffentliche Release absichtlich blockiert, solange insbesonder
 1. technische/Legal-Härtung ohne neue Produktmodule abschließen;
 2. Betreiberangaben eintragen und rechtlich prüfen lassen;
 3. religiösen P0-Fachreview abschließen;
-4. Audio-Rechte klären oder Audio deaktivieren;
+4. Audio-Rechte final bestätigen oder unsichere Audiofunktion deaktivieren;
 5. reale iPhone-/Android-Abnahme abschließen;
 6. Payment/Entitlement als letzten Produkt-Schritt integrieren und erneut rechtlich/technisch prüfen;
 7. `NUR_RELEASE=true npm run check`, E2E und Visual-QA grün bestätigen;
@@ -222,7 +232,7 @@ V1 ist erst fertig, wenn alle relevanten Aussagen belegt sind:
 - reale iPhone-/Android-Prüfung dokumentiert;
 - Prayer/Qibla real geprüft;
 - Betreiber-/Datenschutz-/Rechtspaket ausgefüllt und final geprüft;
-- Audio-Nutzungsrechte geklärt oder Audio deaktiviert;
+- Audio-Nutzungsrechte final bestätigt oder unsichere Audiofunktion deaktiviert;
 - priorisierter religiöser Fachreview abgeschlossen;
 - falls Premium bezahlt startet: echtes, serverseitig bestätigtes Entitlement statt lokaler Scheinfreischaltung;
 - kontrollierter Release-/Rollback-Pfad festgelegt;
