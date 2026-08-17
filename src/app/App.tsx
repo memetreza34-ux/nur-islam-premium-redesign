@@ -8,9 +8,12 @@ import {
   BrainCircuit,
   CalendarDays,
   ChevronRight,
+  Clock3,
   Globe2,
+  GraduationCap,
   HandHeart,
   Home,
+  LayoutGrid,
   MapPin,
   Menu,
   MessageCircleQuestion,
@@ -97,9 +100,9 @@ import {
 import type { PrayerScheduleItem } from '../services/prayerSchedule';
 import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
 
-type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
+type PrimaryTab = 'home' | 'prayer' | 'quran' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
-type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | 'account' | 'notes' | LegacyTab;
+type Tab = PrimaryTab | 'calendar' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | 'account' | 'notes' | LegacyTab;
 
 type NavigationSnapshot = {
   activeTab: Tab;
@@ -481,17 +484,17 @@ function PremiumHome({
 function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: (tab: PrimaryTab) => void }) {
   const items: Array<{ id: PrimaryTab; label: string; icon: LucideIcon }> = [
     { id: 'home', label: 'Start', icon: Home },
-    { id: 'prayer', label: 'Gebete', icon: SunMedium },
-    { id: 'calendar', label: 'Kalender', icon: CalendarDays },
-    { id: 'learn', label: 'Islam verstehen', icon: BookOpen },
-    { id: 'profile', label: 'Mehr', icon: Menu },
+    { id: 'prayer', label: 'Gebet', icon: Clock3 },
+    { id: 'quran', label: 'Quran', icon: BookOpen },
+    { id: 'learn', label: 'Lernen', icon: GraduationCap },
+    { id: 'profile', label: 'Mehr', icon: LayoutGrid },
   ];
 
   return (
     <nav className="bottom-nav" aria-label="Hauptnavigation">
       {items.map(({ id, label, icon: Icon }) => (
-        <button key={id} className={`${active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'}${id === 'learn' ? ' bottom-nav__item--learn' : ''}`} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
-          <span><Icon size={20} /></span><small>{id === 'learn' ? <><span>Islam</span>{' '}<span>verstehen</span></> : label}</small>
+        <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
+          <span><Icon size={20} /></span><small>{label}</small>
         </button>
       ))}
     </nav>
@@ -522,13 +525,13 @@ export default function App() {
   const latestNavigationSnapshotRef = useRef(currentNavigationSnapshot);
   const pendingBrowserRootRef = useRef<NavigationSnapshot | null>(null);
   latestNavigationSnapshotRef.current = currentNavigationSnapshot;
-  const primaryActive: PrimaryTab = activeTab === 'prayer'
+  const primaryActive: PrimaryTab = ['prayer', 'calendar', 'dhikr', 'qibla'].includes(activeTab)
     ? 'prayer'
-    : activeTab === 'calendar'
-      ? 'calendar'
-      : activeTab === 'learn'
+    : ['quran', 'reader', 'ayah'].includes(activeTab)
+      ? 'quran'
+      : ['learn', 'duas', 'names', 'assistant'].includes(activeTab)
         ? 'learn'
-        : ['profile', 'duas', 'names', 'mosques', 'collections', 'assistant', 'account', 'notes'].includes(activeTab)
+        : ['profile', 'mosques', 'collections', 'account', 'notes'].includes(activeTab)
           ? 'profile'
           : 'home';
 
