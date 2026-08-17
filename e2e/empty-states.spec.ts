@@ -76,7 +76,11 @@ test('Notizen: an empty list says so rather than showing a bare editor', async (
 
 test('Kalender: a day with no entries still renders its day view', async ({ page }) => {
   await openApp(page);
-  await page.getByRole('navigation').getByText('Kalender', { exact: true }).click();
+  // Calendar remains a first-class feature, but is no longer one of the five
+  // primary tabs. Reach it through the More hub just as a user now does.
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.waitForTimeout(300);
+  await page.getByRole('button').filter({ hasText: 'Kalender' }).first().click();
   await page.waitForTimeout(900);
 
   await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
