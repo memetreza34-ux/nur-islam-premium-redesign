@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('compact portrait keeps Home useful and Notes clear of its sticky header', async ({ page }) => {
+test('compact portrait keeps Home useful and Notes clear around its sticky header', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openApp(page);
@@ -21,7 +21,30 @@ test('compact portrait keeps Home useful and Notes clear of its sticky header', 
     return header && storage ? { headerBottom: header.bottom, storageTop: storage.top } : null;
   });
   expect(geometry).not.toBeNull();
-  expect(geometry!.storageTop - geometry!.headerBottom, 'Notes storage card must not sit under the sticky header').toBeGreaterThanOrEqual(6);
+  expect(geometry!.storageTop - geometry!.headerBottom, 'Notes storage card must start clear of the sticky header before editing').toBeGreaterThanOrEqual(6);
+
+  await page.getByRole('button', { name: 'Neue Notiz schreiben' }).click();
+  const editor = page.locator('.reference-note-editor');
+  await expect(editor).toBeVisible();
+  await editor.scrollIntoViewIfNeeded();
+  const titleInput = page.getByRole('textbox', { name: 'Titel der Notiz' });
+  await titleInput.focus();
+
+  const focusedState = await page.evaluate(() => {
+    const header = document.querySelector<HTMLElement>('.reference-notes-screen > .reference-screen-header');
+    const storage = document.querySelector<HTMLElement>('.reference-notes-storage');
+    if (!header || !storage) return null;
+    const backgroundImage = getComputedStyle(header).backgroundImage;
+    const translucentLayer = /rgba\([^)]*,\s*0?\.\d+\)/i.test(backgroundImage);
+    return {
+      backgroundImage,
+      translucentLayer,
+      headerBottom: header.getBoundingClientRect().bottom,
+      storageTop: storage.getBoundingClientRect().top,
+    };
+  });
+  expect(focusedState).not.toBeNull();
+  expect(focusedState!.translucentLayer, `focused Notes header must fully mask scrolled content: ${focusedState!.backgroundImage}`).toBe(false);
 });
 
 test('light calendar keeps navigation labels and day numbers comfortably readable', async ({ page }) => {

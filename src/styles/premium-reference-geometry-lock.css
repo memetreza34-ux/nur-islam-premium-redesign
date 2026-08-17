@@ -35,7 +35,7 @@ html:not([data-theme='light']) :where(
 .app-shell--detail .reference-screen-header {
   border-color: rgba(226, 191, 119, .14) !important;
   border-radius: 18px !important;
-  background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important;
+  background: linear-gradient(145deg, #001b16, #00120f) !important;
 }
 
 .reference-onboarding__visual {
@@ -217,7 +217,7 @@ html:not([data-theme='light']) :where(
 
 [data-theme='light'] .app-shell--detail .reference-screen-header {
   border-color: rgba(117, 87, 37, .16) !important;
-  background: rgba(255, 252, 243, .94) !important;
+  background: #fffcf3 !important;
 }
 [data-theme='light'] .bottom-nav {
   border-color: rgba(117, 87, 37, .15) !important;
