@@ -12,7 +12,6 @@ import '@fontsource/amiri/400.css';
 import App from './App';
 import { resolveAppPath, versionAppPath } from './appPaths';
 import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
-import { PremiumSystemLayer } from './PremiumSystemLayer';
 import { blockForeignFraming, isFramedByForeignSite } from './frameGuard';
 import { startCalendarReminderScheduler } from '../services/calendarReminderService';
 import { startFastingReminderMaintenance } from '../services/fastingReminderService';
@@ -26,6 +25,8 @@ import { initializeTheme } from '../services/themeService';
 import '../styles.css';
 import '../styles/premium-legacy-art-final.css';
 import '../styles/premium-local-features.css';
+
+const PremiumSystemLayer = React.lazy(() => import('./PremiumSystemLayer').then(({ PremiumSystemLayer }) => ({ default: PremiumSystemLayer })));
 
 const VISUAL_VERSION = '20260808-release-hardening';
 const PREVIEW_ASSETS = [
@@ -171,7 +172,9 @@ function BootRoot() {
         <motion.div key="app" className="app-entry" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: .28 }}>
           <AppErrorBoundary>
             <App />
-            <PremiumSystemLayer />
+            <React.Suspense fallback={null}>
+              <PremiumSystemLayer />
+            </React.Suspense>
             <NetworkStatus />
             <PrayerReminderBanner />
             <CalendarReminderBanner />
