@@ -55,19 +55,19 @@ function featureObject(source, id) {
 
 requireFragments(app, 'Primary navigation', [
   "{ id: 'home', label: 'Start', icon: Home }",
-  "{ id: 'prayer', label: 'Gebete', icon: SunMedium }",
-  "{ id: 'calendar', label: 'Kalender', icon: CalendarDays }",
-  "{ id: 'learn', label: 'Islam verstehen', icon: BookOpen }",
-  "{ id: 'profile', label: 'Mehr', icon: Menu }",
+  "{ id: 'prayer', label: 'Gebet', icon: Clock3 }",
+  "{ id: 'quran', label: 'Quran', icon: BookOpen }",
+  "{ id: 'learn', label: 'Lernen', icon: GraduationCap }",
+  "{ id: 'profile', label: 'Mehr', icon: LayoutGrid }",
   '<BellRing size={20} />',
   "onNavigate('prayer')",
   '<Menu size={20} />',
   "onNavigate('profile')",
 ]);
 
-// App keeps stable Nur* wrapper names during the release pass so navigation and
-// card data do not need structural churn. Their implementation is guarded below
-// and must remain real lucide-react components rather than custom SVG drawings.
+// App keeps stable Nur* wrapper names so navigation and card data do not need
+// structural churn. Their implementation is guarded below and must remain real
+// lucide-react components rather than custom SVG drawings or novelty AI glyphs.
 for (const [label, icon] of [
   ['Quran lesen', 'NurQuranIcon'],
   ['Beten lernen', 'NurMihrabIcon'],
@@ -85,23 +85,29 @@ for (const [label, icon] of [
 requireFragments(nurIcons, 'Lucide-backed Nur icons', [
   "from 'lucide-react'",
   'return <BookOpen {...sharedProps(props)} />;',
-  'return <GraduationCap {...sharedProps(props)} />;',
+  'return <BookOpenCheck {...sharedProps(props)} />;',
   'return <CircleDot {...sharedProps(props)} />;',
   'return <Compass {...sharedProps(props)} />;',
-  'return <HandHeart {...sharedProps(props)} />;',
-  'return <Sparkles {...sharedProps(props)} />;',
-  'return <MapPin {...sharedProps(props)} />;',
+  'return <Heart {...sharedProps(props)} />;',
+  'return <Star {...sharedProps(props)} />;',
+  'return <Landmark {...sharedProps(props)} />;',
   'return <CalendarDays {...sharedProps(props)} />;',
   'return <Bookmark {...sharedProps(props)} />;',
-  'return <SunMedium {...sharedProps(props)} />;',
-  'return <BrainCircuit {...sharedProps(props)} />;',
-  'return <MessageCircleQuestion {...sharedProps(props)} />;',
+  'return <Clock3 {...sharedProps(props)} />;',
+  'return <CircleHelp {...sharedProps(props)} />;',
+  'return <MessageSquare {...sharedProps(props)} />;',
   'strokeWidth: 1.75',
 ]);
 
 for (const forbidden of ['<svg', '<path', '<circle', '<rect', '<polygon', '<line']) {
   if (nurIcons.includes(forbidden)) {
     throw new Error(`Nur UI icons must use lucide-react; custom SVG primitive is forbidden: ${forbidden}`);
+  }
+}
+
+for (const forbiddenNovelty of ['BrainCircuit', 'Sparkles']) {
+  if (nurIcons.includes(forbiddenNovelty)) {
+    throw new Error(`Nur shortcut icons must avoid generic novelty/AI glyphs: ${forbiddenNovelty}`);
   }
 }
 
@@ -178,17 +184,17 @@ requireFragments(learn, 'Learning controls', [
 const legacyIconMap = {
   'hadith-library': 'Library',
   knowledge: 'BookOpenCheck',
-  prophets: 'Milestone',
-  quiz: 'BrainCircuit',
-  hajj: 'Mountain',
-  sunnah: 'Sparkles',
+  prophets: 'ScrollText',
+  quiz: 'CircleHelp',
+  hajj: 'Route',
+  sunnah: 'Bookmark',
   sins: 'ShieldCheck',
   fasting: 'MoonStar',
   ummah: 'Globe2',
   places: 'MapPinned',
   jumuah: 'CalendarHeart',
   zakat: 'BadgeDollarSign',
-  standby: 'Radio',
+  standby: 'Clock3',
 };
 for (const [id, icon] of Object.entries(legacyIconMap)) {
   const definition = featureObject(legacy, id);
@@ -218,4 +224,4 @@ if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
   throw new Error('The final 1.75 Lucide lock must remain the last stylesheet import.');
 }
 
-console.log('Reference icon map verified: UI actions use lucide-react only, custom SVG primitives are blocked, semantic mappings are fixed, and the final stylesheet enforces uniform 1.75 rounded Lucide strokes.');
+console.log('Reference icon map verified: primary navigation and shortcut hubs use calm semantic Lucide icons, custom SVG primitives and generic AI novelty glyphs are blocked, and the final stylesheet enforces uniform 1.75 rounded strokes.');
