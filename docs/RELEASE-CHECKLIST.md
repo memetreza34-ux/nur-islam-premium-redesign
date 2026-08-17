@@ -2,6 +2,12 @@
 
 **Ziel:** Diese Liste trennt automatisch prüfbare Punkte von Punkten, die reale Betreiberangaben, physische Geräte oder qualifizierte fachliche Freigabe benötigen.
 
+Ergänzende Arbeitsunterlagen:
+
+- [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md) – aktueller Nachweis zur Islamic-Network-/Al-Quran-Cloud-Nutzung und offener Hisn-al-Muslim-Audiolizenz.
+- [`REAL-DEVICE-QA.md`](./REAL-DEVICE-QA.md) – konkrete physische iPhone-/Android-Abnahmematrix.
+- [`RELEASE-OPERATIONS.md`](./RELEASE-OPERATIONS.md) – Beta-, Smoke-Test- und Rollback-Runbook.
+
 ## A. Technisch automatisch prüfbar
 
 Vor jedem Release-relevanten Merge müssen mindestens folgende Nachweise grün sein:
@@ -61,14 +67,23 @@ Automatisierte Quellen- und Content-Checks ersetzen diesen Fachreview nicht.
 
 ### Audio-/Nutzungsrechte
 
-- [ ] Mishary-Alafasy-/Islamic-Network-Nutzung abschließend geklärt **oder** betroffene Audiofunktion für Release deaktiviert
-- [ ] Hisn-al-Muslim-Audionutzung abschließend geklärt **oder** betroffene Audiofunktion für Release deaktiviert
+Aktueller Stand aus dem dokumentierten Rechte-Audit:
 
-Technische Abrufbarkeit gilt nicht als Rechtefreigabe.
+- Islamic Network / Al Quran Cloud veröffentlicht aktuelle Terms, die App-Integration und auch Einbindung in kommerzielle Produkte beschreiben; zugleich verbleiben Copyrights bei den Rezitatoren und ein Entfernungsverlangen bleibt möglich. Das ist eine dokumentierte Nutzungsgrundlage, aber keine unbeschränkte eigene Rechtefreigabe.
+- Für Hisn-al-Muslim-Audio wurde bei der aktuellen öffentlichen Prüfung keine eindeutige Audio-Nutzungslizenz gefunden.
+
+Daher offen:
+
+- [ ] Islamic-Network-/Alafasy-Nutzung im konkreten Release rechtlich final bestätigen **oder** betroffene Audiofunktion deaktivieren
+- [ ] Hisn-al-Muslim-Audionutzung belastbar klären **oder** betroffene Audiofunktion deaktivieren
+
+Technische Abrufbarkeit gilt nicht als Rechtefreigabe. Details: [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md).
 
 ### Physische Geräte
 
-Mindestens ein reales iPhone und ein reales Android-Gerät dokumentiert prüfen:
+Mindestens ein reales iPhone und ein reales Android-Gerät dokumentiert prüfen. Die vollständige Schrittfolge steht in [`REAL-DEVICE-QA.md`](./REAL-DEVICE-QA.md).
+
+P0-Mindestumfang:
 
 - [ ] PWA-Installation
 - [ ] Start / Neustart / Update
@@ -85,13 +100,14 @@ Browser-Simulation und WebKit-Render sind dafür kein Ersatz.
 
 ## D. P1 – Release-Betrieb
 
-Vor breiter Veröffentlichung:
+Das technische Vorgehen für Beta, Smoke-Test und Rollback ist in [`RELEASE-OPERATIONS.md`](./RELEASE-OPERATIONS.md) vorbereitet.
 
-- [ ] Support-/Korrekturweg festgelegt
-- [ ] Rollback-Commit bzw. letzte bekannte grüne Version dokumentiert
-- [ ] kleiner Beta-/Staged-Rollout festgelegt
-- [ ] Fehlerbeobachtung ohne religiöses Nutzungsverhalten zu tracken festgelegt
-- [ ] finaler Smoke-Test nach Deployment
+Noch releasebezogen auszufüllen/zu bestätigen:
+
+- [ ] echte Support-/Kontaktadresse sichtbar machen, sobald Betreiberangaben vorliegen
+- [ ] konkrete letzte bekannte grüne Produktions-SHA unmittelbar vor Release dokumentieren
+- [ ] kleiner Beta-/Staged-Rollout tatsächlich durchführen
+- [ ] finaler Smoke-Test nach Deployment durchführen
 
 ## E. Payment – bewusst letzter Produkt-Schritt
 
