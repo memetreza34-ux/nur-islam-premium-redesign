@@ -1,24 +1,27 @@
 # Nur Islam Premium – aktueller Release-Status
 
-**Stand:** 16. August 2026  
+**Stand:** 17. August 2026  
 **Repository:** `memetreza34-ux/nur-islam-premium-redesign`  
 **Release-Candidate-Branch:** `premium-design-finish`  
-**geprüfte Code-Basis vor diesem Dokumentations-Pass:** `9194deca692fea95204a04ceda624d0198b720b8`
+**Produktstand mit lokalem Premium-Paket:** Merge `2f258619ee46c95b11a15a3826b89c18d35c53b0`
 
-> Dieses Dokument ist die **Single Source of Truth für den aktuellen Projektstatus**. Langfristige Ideen, Zielbilder und Checklisten im Masterplan sind Planungsunterlagen und dürfen nicht als Aussage über den heutigen Implementierungsstand gelesen werden.
+> Dieses Dokument ist die **Single Source of Truth für den aktuellen Implementierungs- und Release-Status**. Langfristige Ideen und ältere Masterpläne dürfen nicht als Aussage über den heutigen Ist-Stand gelesen werden.
 
 ## 1. Aktuelles Ziel
 
-Die Feature-Entwicklung ist für den jetzigen Release-Pass **eingefroren**.
+Der Produktumfang ist nach dem bewusst ergänzten lokalen Premium-Komfortpaket wieder **eingefroren**. Bis zur Release-Freigabe werden keine weiteren großen Produktmodule ergänzt.
 
-Es werden keine neuen Produktfunktionen ergänzt. Die Arbeit bis V1 konzentriert sich auf:
+Die verbleibende Arbeit konzentriert sich auf:
 
-1. vorhandene Funktionen stabilisieren;
-2. Design-, Bild-, Icon- und Lesbarkeitsfehler beseitigen;
-3. echte Geräte-/Sensorpfade prüfen;
-4. religiöse Inhalte fachlich freigeben;
-5. Rechte, Datenschutz und Betreiberangaben abschließen;
-6. erst danach kontrolliert veröffentlichen.
+1. Release- und Legal-Härtung;
+2. echte Geräte-/Sensorprüfung;
+3. religiösen Fachreview;
+4. Audio-/Nutzungsrechte;
+5. echte Betreiberangaben;
+6. kontrollierten Beta-/Release-Pfad;
+7. **erst danach** echte Abo-Abrechnung und Premium-Entitlement.
+
+Die operative Checkliste steht in [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md).
 
 ## 2. Was technisch bereits steht
 
@@ -27,80 +30,69 @@ Es werden keine neuen Produktfunktionen ergänzt. Die Arbeit bis V1 konzentriert
 - Mobile-first PWA mit Dark- und Light-Theme.
 - Fünf Hauptbereiche plus zahlreiche Sekundärscreens.
 - Premium-Designsystem in Emerald/Gold/Cream.
-- UI-Funktionsicons sind auf ein konsistentes `lucide-react`-Vektorsystem vereinheitlicht.
-- Große thematische Illustrationen bleiben bewusst Illustrationen; sie werden nicht als kleine Bedienicons missbraucht.
-- Bekannte beschädigte Moschee-WebP-Dateien werden nicht mehr durch ein anderes Motiv ersetzt, sondern auf das intakte gleichartige Moschee-SVG aufgelöst.
-- Der zu kleine Kalender-Chip wird nicht mehr als vergrößertes Fasten-Hero-Artwork verwendet.
-- Light-Mode-Kontrast der Legacy-/Wissensscreens wurde für bessere Lesbarkeit korrigiert.
+- konsistentes `lucide-react`-Iconsystem für Bedien- und Kategorieicons.
+- absichtliche größere Illustrationen bleiben Illustrationen; beschädigte oder falsche Bild-Fallbacks werden nicht als Ersatzmotiv kaschiert.
+- bekannte Moschee-/Hero-/Light-Mode-Probleme des Design-Finalpasses sind korrigiert.
 
 ### Quran
 
 - Alle 114 Suren mit arabischem Uthmani-Text sind lokal/offline gebündelt.
-- Die deutsche Übersetzung Bubenheim & Elyas wird nicht als vollständiger Übersetzungsbestand mit der App ausgeliefert, sondern surenweise online geladen und lokal gecacht.
+- Die deutsche Übersetzung Bubenheim & Elyas wird surenweise online geladen und lokal gecacht.
 - Lesefortschritt, exakte Ayah-Navigation und Favoriten/Lesezeichen sind implementiert.
-- Die frühere falsche Zuordnung einer deutschen Übersetzung wurde im Quellen-Audit korrigiert.
 
 ### Gebetszeiten und Qibla
 
-- Gebetszeiten nutzen Live-Daten, Browser-Cache und einen ausdrücklich gekennzeichneten Offline-Fallback.
+- Gebetszeiten nutzen Live-Daten, Browser-Cache und gekennzeichneten Offline-Fallback.
 - Standortkoordinaten werden vor der externen Gebetszeitenabfrage gröber gerundet.
 - Berechnungsmethoden und Asr-Einstellung sind vorhanden.
-- Qibla besitzt Browser-/iOS-Orientierungspfade einschließlich des iOS-Berechtigungswegs.
-- **Noch offen:** reale physische Geräteprüfung für Standort, Kompassgenauigkeit, Kalibrierung, Zeitzonen/DST und lokale Methodenabgleiche.
+- Qibla besitzt Browser-/iOS-Orientation-Pfade einschließlich iOS-Berechtigungsweg.
+- **Noch offen:** physische Geräteprüfung für Standort, Kompass, Kalibrierung, Zeitzone/DST und lokale Methodenabgleiche.
 
 ### Accounts und Cloud
 
-- Ein optionaler Supabase-Accountpfad ist implementiert.
-- Registrierung, Login und Logout sind vorhanden.
-- Profil, explizites Cloud-Backup, Wiederherstellung und Cloud-Notizen sind implementiert.
-- Nutzer können ihre Nur-Islam-Cloud-Daten löschen.
-- Die Tabellen `nur_islam_profiles`, `nur_islam_user_state` und `nur_islam_notes` verwenden RLS.
-- Frontend-Zugriff ist auf authentifizierte CRUD-Rechte begrenzt; ein Service-Role-Key gehört nicht ins Frontend.
-- Die App bleibt ohne Account lokal nutzbar.
-- Cloud-Inhalte sind **nicht Ende-zu-Ende verschlüsselt**; das wird in der App transparent beschrieben.
+- optionaler Supabase-Accountpfad mit Registrierung, Login und Logout.
+- Profil, explizites Cloud-Backup, Restore und Cloud-Notizen.
+- Nutzer können ihre Nur-Islam-Cloud-Daten exportieren und löschen.
+- `nur_islam_profiles`, `nur_islam_user_state` und `nur_islam_notes` verwenden RLS.
+- Frontend verwendet nur öffentliche/publishable Client-Konfiguration; kein Service-Role-Key gehört in den Browser.
+- App bleibt ohne Account lokal nutzbar.
+- Cloud-Inhalte sind nicht Ende-zu-Ende verschlüsselt; dies wird transparent beschrieben.
+
+### Lokales Premium-Komfortpaket
+
+Implementiert sind:
+
+- persönlicher Quran-/Khatm-Plan;
+- eigene Routinen;
+- konfigurierbare In-App-Widgets;
+- Home-Personalisierung;
+- 7-/30-Tage-Statistiken;
+- Favoriten-Ordner;
+- privates lokales Journal;
+- eigene Erinnerungen;
+- Premium-Design-Akzente.
+
+Die Premium-Logik ist bewusst lokal und verursacht in diesem Stand keine KI- oder nutzungsabhängigen API-Kosten.
+
+Premium-Daten verwenden einen getrennten `local_nur_*`-Namensraum. Das generische Cloud-Backup akzeptiert nur `nur_*`/`premium_*`; dadurch werden insbesondere privates Journal, lokale Routinen, Quran-Plan, Premium-Erinnerungen, Premium-Ordner und Premium-Einstellungen nicht automatisch in die Cloud übertragen. Ein Regressionstest und der Legal-Guard sichern diese Grenze ab.
+
+**Noch nicht implementiert/aktiv:** echte Zahlung, Abo-Verlängerung und serverseitig bestätigtes Premium-Entitlement. Die Premium-Oberfläche ist daher momentan eine technisch testbare Produktfunktion und noch kein bezahltes Zugangsmodell.
 
 ### Nur Assistent
 
-- Der aktuelle Assistent ist **kein frei generierendes religiöses LLM**.
-- Er arbeitet als lokaler, quellengebundener Antwortmodus.
-- Unterstützte Inhalte zeigen Quellenbezug; nicht unterstützte religiöse Fragen werden abgelehnt statt erfunden beantwortet.
+- kein frei generierendes religiöses LLM.
+- lokaler, quellengebundener Antwortmodus.
+- nicht unterstützte religiöse Fragen werden abgelehnt statt erfunden beantwortet.
 
 ### PWA und Persistenz
 
-- Manifest, Service Worker, Offline-Shell und lokale Persistenz sind vorhanden.
-- Install- und Navigationspfade besitzen automatisierte Prüfungen.
-- **Noch offen:** abschließende reale Install-/Update-/Offline-/Recovery-Prüfung auf physischen iOS- und Android-Geräten.
+- Manifest, Service Worker, Offline-Shell und lokale Persistenz vorhanden.
+- Install- und Navigationspfade automatisiert geprüft.
+- **Noch offen:** reale Install-/Update-/Offline-/Recovery-Abnahme auf physischen iOS- und Android-Geräten.
 
-## 3. Design-Finalpass – Stand
+## 3. Automatisierte Qualitätssicherung
 
-Der aktuelle Design-Pass verfolgt ausdrücklich **keinen Redesign-Neustart** und keine neuen Features.
-
-Bereits korrigiert:
-
-- selbstgezeichnete Sonderglyphen in Funktionskacheln durch echte Lucide-Vektoricons ersetzt;
-- Home-Empfehlungen auf dieselbe Icon-Sprache vereinheitlicht;
-- beschädigte/falsch ersetzte Moschee-Grafik korrigiert;
-- ungeeignete kleinformatige Hero-Grafik beim Fasten-Assistenten ersetzt;
-- Light-Mode-Lesbarkeit der Legacy-Screens verbessert;
-- Bild-/Icon-Guardrails aktualisiert, damit die korrigierten Zuordnungen nicht zurückregressieren.
-
-Automatisierte visuelle QA wurde unter anderem für folgende Zielgrößen ausgeführt:
-
-- 390 × 844;
-- 340 × 740;
-- iPhone/WebKit 390 × 844;
-- Compact WebKit 375 × 667;
-- Dark Theme;
-- Light Theme;
-- Kern- und Legacy-Screens.
-
-Das ersetzt **nicht** die physische Geräteabnahme für Sensoren, PWA-Installation und Betriebssystembesonderheiten.
-
-## 4. Automatisierte Qualitätssicherung
-
-GitHub Actions ist aktiv und funktionsfähig.
-
-`npm run check` ist der zentrale technische Gate und umfasst unter anderem:
+`npm run check` ist das zentrale technische Gate und umfasst unter anderem:
 
 - Daten-/Content-Checks;
 - Navigation und funktionale Guardrails;
@@ -112,111 +104,128 @@ GitHub Actions ist aktiv und funktionsfähig.
 - Bundle-Budget;
 - Stylesheet-Debt-Grenzen.
 
-Der Release-Candidate-Stand wurde in diesem Finish-Pass wiederholt mit grünem `npm run check`, Playwright-E2E und Browser-Render-QA geprüft. Für den jeweils neuesten Lauf sind **GitHub Actions selbst** die maßgebliche Evidenz; dieses Statusdokument soll keine schnell veraltenden Run-IDs duplizieren.
+Für das lokale Premium-Paket wurden zusätzlich Browser-E2E-Flows für Öffnen, Statistik, Routinen und Persistenz nach Reload ergänzt. Nach dem Produkt-Merge liefen `npm run check`, Playwright-E2E und die Reference-Render-Matrix auf dem integrierten Stand grün.
 
-Aktueller CSS-Debt-Guard nach dem Lesbarkeits-Fix:
+Der jeweils neueste GitHub-Actions-Lauf ist die maßgebliche Evidenz. Dieses Dokument dupliziert bewusst keine schnell veraltenden Run-IDs oder CSS-Zähler.
 
-- 97 Stylesheets;
-- 33 `lock`/`parallel-pass`-Override-Dateien;
-- 2.285 `!important`-Deklarationen;
-- 733.678 Gesamtbytes Stylesheet-Budget.
-
-Diese Altlast wird vor V1 **nicht in einem riskanten Großumbau** refaktoriert. Neue Override-Schichten dürfen aber nicht weiter wachsen; konkrete Releasefehler werden möglichst in der besitzenden Regel behoben.
-
-## 5. Was einen öffentlichen Release noch blockiert
+## 4. Was einen öffentlichen Release noch blockiert
 
 ### P0 – Betreiber / Recht
 
-Die Betreiberangaben in `src/data/legalContent.ts` enthalten noch `<<BITTE AUSFÜLLEN>>`.
+`src/data/legalContent.ts` enthält bei Betreibername, Straße, Ort und E-Mail weiterhin `<<BITTE AUSFÜLLEN>>`.
 
-Vor öffentlicher Bereitstellung müssen echte, rechtlich geprüfte Betreiber-/Kontaktangaben eingetragen werden. Diese Daten dürfen nicht erfunden werden.
+Diese Angaben dürfen nicht erfunden werden. `NUR_RELEASE=true npm run check` muss solange fehlschlagen.
+
+Die Legal-Copy wurde zusätzlich gehärtet:
+
+- keine pauschale Behauptung zum deutschen Urheberrecht bei KI-generierten Bildern;
+- technische Abrufbarkeit von Audio wird ausdrücklich nicht als Rechtefreigabe behandelt;
+- lokale Premium-Daten und ihre Cloud-Backup-Grenze werden beschrieben;
+- der aktuelle Stand sagt ausdrücklich, dass **noch keine Zahlung** entgegengenommen wird und die Texte vor Aktivierung eines Zahlungswegs erneut angepasst/geprüft werden müssen.
+
+Eine qualifizierte rechtliche Endprüfung bleibt trotzdem erforderlich.
 
 ### P0 – religiöser Fachreview
 
-Die automatisierte Inhaltsprüfung ist umfangreich, ersetzt aber keinen qualifizierten islamischen Fachreview.
+Automatisierte Quellen-/Content-Prüfungen ersetzen keinen qualifizierten islamischen Fachreview.
 
-Besonders priorisiert werden müssen normative Inhalte, unter anderem:
+Priorisiert:
 
 - Salah / Gebetspraxis;
 - Sujud as-Sahw;
-- Reisegebet / Qasr / Zusammenlegen;
+- Reisegebet / Qasr / Jamʿ;
 - verpasste Gebete;
 - frauenspezifische Gebetsfragen;
-- Janazah- und Eid-Gebet;
+- Janazah und Eid;
 - Madhhab-Unterschiede;
 - Hajj und Umrah.
 
 ### P0 – Audio-/Nutzungsrechte
 
-Die App verwendet reale Quran-/Formel-Audioquellen. Die technische Quelle ist dokumentiert, aber die Nutzungsrechte für die öffentliche Bereitstellung müssen vor Release abschließend geklärt und dokumentiert werden.
+Noch nicht abschließend freigegeben:
 
-Bis diese Prüfung abgeschlossen ist, darf der Status nicht „Audio-Rechte freigegeben“ behaupten.
+- Mishary Alafasy über Islamic Network;
+- Hisn-al-Muslim-Aufnahmen.
+
+Vor Release müssen die Rechte dokumentiert geklärt **oder** die betroffenen Audiofunktionen deaktiviert/entfernt werden.
 
 ### P0 – reale Geräte
 
-Vor öffentlichem Release braucht es mindestens eine dokumentierte reale Prüfung auf iPhone und Android für:
+Mindestens ein reales iPhone und ein reales Android-Gerät müssen dokumentiert geprüft werden für:
 
-- Installation als PWA;
+- PWA-Installation;
 - Start/Update/Offline/Recovery;
-- Standortfreigabe;
-- Qibla-Kompass und Device Orientation;
-- Berechtigungsablehnung;
+- Standortfreigabe und -ablehnung;
+- Qibla-Kompass / Device Orientation;
 - Benachrichtigungen;
 - Tastatur/Modals/Scroll;
-- Wechsel online/offline;
-- Prayer-Time-Zeitzonen-/DST-Pfade.
+- Online-/Offline-Wechsel;
+- Prayer-Time-Zeitzone/DST.
+
+WebKit-/Browser-Simulation ersetzt diese physische Abnahme nicht.
 
 ### P1 – Release-Betrieb
 
-Vor breiter Veröffentlichung sollten außerdem Rollback, Fehlerbeobachtung, Support-/Korrekturweg und ein kontrollierter Beta-/Staged-Rollout festgelegt werden.
+Vor breiter Veröffentlichung:
 
-## 6. Nicht Teil dieses V1-Finish-Passes
+- Support-/Korrekturweg festlegen;
+- letzte bekannte grüne Version als Rollback-Ziel festhalten;
+- Beta-/Staged-Rollout nutzen;
+- finalen Smoke-Test nach Deployment durchführen.
 
-Folgende Punkte werden **nicht** jetzt als neue Features eingebaut:
+## 5. Payment / 0,99-€-Abo – bewusst letzter Schritt
 
-- native iOS-/Android-Neuentwicklung;
-- App-Store-/Play-Store-Paketierung;
-- In-App-Purchases oder Subscription-System;
-- Stripe/RevenueCat/sonstige Bezahlarchitektur;
-- frei generierender KI-/RAG-Assistent;
-- zusätzliche große Produktmodule.
+Das Produktpaket für Premium ist vorhanden, aber die Bezahlarchitektur wird bewusst **nicht vor den übrigen Release-Härtungen** eingebaut.
 
-Der heutige Produktstand ist eine PWA. Ein späterer Native-/Payment-Pfad wird erst nach einem stabilen V1 separat entschieden.
+Später erforderlich:
+
+1. konkreten Distributions-/Zahlungsweg festlegen;
+2. aktuelles Plattform-/Store-Regelwerk für diesen Weg prüfen;
+3. 0,99-€-Produkt konfigurieren;
+4. serverseitig bestätigtes Entitlement anbinden;
+5. Premium-Funktionen hinter dieses Entitlement sperren;
+6. Kauf, Wiederherstellung und Kündigungsstatus testen;
+7. Datenschutz-/Impressums-/Zahlungstexte an den tatsächlich eingesetzten Anbieter anpassen.
+
+Eine lokale `localStorage`-Flag darf niemals als vertrauenswürdiger Zahlungsnachweis dienen.
+
+## 6. Dependency-Upgrades
+
+Offene Dependabot-Vorschläge mit großen Versionssprüngen – darunter Vite 8, TypeScript 7, Motion 13 und Lucide 1.x – werden **nicht blind vor V1** übernommen. Sie sind kein aktueller Release-Blocker und würden unnötiges Regressionsrisiko in den stabilen RC bringen.
 
 ## 7. Deployment-Wahrheit
 
-`.github/workflows/deploy-pages.yml` veröffentlicht **nicht** automatisch `premium-design-finish`.
+`.github/workflows/deploy-pages.yml` veröffentlicht nicht automatisch `premium-design-finish`.
 
-Der Pages-Workflow läuft bei:
+Der Pages-Workflow läuft bei Push auf `main` oder manuell über `workflow_dispatch`. Vor dem Upload läuft `npm run check` mit `NUR_RELEASE=true`.
 
-- Push auf `main`;
-- manueller `workflow_dispatch`-Ausführung.
+Damit bleibt der öffentliche Release absichtlich blockiert, solange insbesondere Betreiberangaben fehlen.
 
-Vor dem Upload läuft `npm run check` mit `NUR_RELEASE=true`. Damit sollen unter anderem Legal-Platzhalter einen echten Release blockieren.
+## 8. Release-Reihenfolge
 
-Release-Reihenfolge:
+1. technische/Legal-Härtung ohne neue Produktmodule abschließen;
+2. Betreiberangaben eintragen und rechtlich prüfen lassen;
+3. religiösen P0-Fachreview abschließen;
+4. Audio-Rechte klären oder Audio deaktivieren;
+5. reale iPhone-/Android-Abnahme abschließen;
+6. Payment/Entitlement als letzten Produkt-Schritt integrieren und erneut rechtlich/technisch prüfen;
+7. `NUR_RELEASE=true npm run check`, E2E und Visual-QA grün bestätigen;
+8. kleinen Beta-/Staged-Rollout durchführen;
+9. erst danach kontrolliert nach `main` übernehmen und Produktion beobachten.
 
-1. `premium-design-finish` technisch und inhaltlich freigeben;
-2. offene P0-Blocker schließen;
-3. RC gegen die Release-Checkliste prüfen;
-4. erst dann kontrolliert nach `main` übernehmen;
-5. Pages-Release aus `main` beobachten und Smoke-Test durchführen;
-6. bei Problemen Rollback statt hektischer Feature-Änderungen.
+## 9. Definition „V1 fertig“
 
-## 8. Definition „V1 fertig“
-
-V1 ist erst fertig, wenn **alle** folgenden Aussagen belegt sind:
+V1 ist erst fertig, wenn alle relevanten Aussagen belegt sind:
 
 - keine bekannten P0-Produktfehler;
-- `npm run check` grün;
-- E2E grün;
-- Browser-Visual-QA grün;
+- automatisierte technische Gates grün;
 - reale iPhone-/Android-Prüfung dokumentiert;
-- Prayer/Qibla reale Prüfung bestanden;
-- Betreiber-/Datenschutz-/Rechtspaket ausgefüllt und geprüft;
-- Audio-Nutzungsrechte geklärt oder betroffene Audiofunktion vor Release entfernt/deaktiviert;
+- Prayer/Qibla real geprüft;
+- Betreiber-/Datenschutz-/Rechtspaket ausgefüllt und final geprüft;
+- Audio-Nutzungsrechte geklärt oder Audio deaktiviert;
 - priorisierter religiöser Fachreview abgeschlossen;
-- kein als „fertig“ markierter Punkt beruht nur auf einer Annahme;
-- kontrollierter Release-/Rollback-Pfad festgelegt.
+- falls Premium bezahlt startet: echtes, serverseitig bestätigtes Entitlement statt lokaler Scheinfreischaltung;
+- kontrollierter Release-/Rollback-Pfad festgelegt;
+- kein als „fertig“ markierter Punkt beruht nur auf einer Annahme.
 
 Bis dahin ist `premium-design-finish` ein **fortgeschrittener Release Candidate**, aber kein freigegebener öffentlicher Produktionsrelease.
