@@ -1,0 +1,37 @@
+name: Apply opaque header guard
+
+on:
+  push:
+    branches: [opaque-detail-header-polish]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    if: ${{ !startsWith(github.event.head_commit.message, '[opaque-guard-patch]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Update final surface guard for opaque headers
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('scripts/check-reference-system-surfaces.mjs')
+          source = path.read_text()
+          old = "  'background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important',"
+          new = "  'background: linear-gradient(145deg, #001b16, #00120f) !important',\n  'background: #fffcf3 !important',"
+          if source.count(old) != 1:
+              raise SystemExit(f'Expected exactly one old detail-header guard token, found {source.count(old)}')
+          source = source.replace(old, new)
+          path.write_text(source)
+          PY
+      - name: Commit guard update
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add scripts/check-reference-system-surfaces.mjs
+          git commit -m "[opaque-guard-patch] Guard opaque detail headers"
+          git push origin HEAD:opaque-detail-header-polish
