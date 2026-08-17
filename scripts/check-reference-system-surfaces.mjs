@@ -161,7 +161,8 @@ requireTokens(finalLock, 'Account/notes/assistant final utility material', [
 requireTokens(finalLock, 'Final shell/brand/navigation override', [
   '.reference-splash,',
   '.app-shell--detail .reference-screen-header',
-  'background: linear-gradient(145deg, rgba(0, 27, 22, .94), rgba(0, 18, 15, .96)) !important',
+  'background: linear-gradient(145deg, #001b16, #00120f) !important',
+  'background: #fffcf3 !important',
   '.bottom-nav {',
   'border-radius: 24px !important',
   'background: linear-gradient(150deg, rgba(5, 35, 27, .965), rgba(1, 20, 15, .975)) !important',
