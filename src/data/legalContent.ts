@@ -49,7 +49,7 @@ export const imprintSections: LegalSection[] = [
     heading: 'Verantwortlich für den Inhalt',
     paragraphs: [
       `${operator.name}, Anschrift wie oben.`,
-      'Nur Islam ist ein nichtkommerzielles Angebot. Es werden keine Zahlungen entgegengenommen und keine Werbung ausgeliefert.',
+      'In der aktuellen Release-Candidate-Version werden noch keine Zahlungen entgegengenommen und keine Werbung ausgeliefert. Eine spätere Bezahlfunktion muss vor ihrer Aktivierung in Impressum und Datenschutzerklärung berücksichtigt werden.',
     ],
   },
   {
@@ -100,7 +100,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Konto und Cloud-Sicherung',
     paragraphs: [
       'Mit einem Konto werden gespeichert: deine E-Mail-Adresse, ein Anzeigename, deine Darstellungseinstellungen sowie – wenn du die Sicherung ausdrücklich auslöst – dein Fortschritt und deine Cloud-Notizen.',
-      'Bewusst nicht gesichert werden: Standortkoordinaten, zwischengespeicherte Gebetszeiten, Moschee-Suchergebnisse, lokale Notizen sowie der Onboarding- und Installationsstatus.',
+      'Bewusst nicht gesichert werden: Standortkoordinaten, zwischengespeicherte Gebetszeiten, Moschee-Suchergebnisse, lokale Notizen sowie der Onboarding- und Installationsstatus. Das lokale Premium-Komfortpaket verwendet einen getrennten gerätegebundenen Speicher; insbesondere privates Journal, lokale Routinen, Quran-Plan, Premium-Erinnerungen, Premium-Ordner und Premium-Einstellungen werden nicht durch das generische Cloud-Backup übertragen.',
       'Der Zugriff ist datenbankseitig so abgesichert, dass ein angemeldetes Konto ausschließlich die eigenen Datensätze lesen und verändern kann.',
     ],
   },
@@ -146,8 +146,9 @@ export const licenseSections: LegalSection[] = [
   {
     heading: 'Illustrationen',
     paragraphs: [
-      'Die Bildobjekte und Illustrationen der App wurden mit ChatGPT (OpenAI) für dieses Projekt erzeugt. Es wurde kein Bildmaterial Dritter übernommen.',
-      'Rein maschinell erzeugte Bilder genießen nach deutschem Recht keinen eigenen Urheberrechtsschutz.',
+      'Die projektspezifischen Bildobjekte und Illustrationen der App wurden für dieses Projekt mit ChatGPT (OpenAI) erzeugt.',
+      'Nach den OpenAI-Nutzungsbedingungen stehen dem Nutzer im Verhältnis zu OpenAI und soweit rechtlich zulässig die Rechte am Output zu. Generative Outputs können anderen Outputs ähneln und sind nicht notwendigerweise einzigartig.',
+      'Ob und in welchem Umfang einzelne KI-generierte oder menschlich bearbeitete Elemente in Deutschland urheberrechtlichen Schutz genießen, wird hier nicht pauschal behauptet. Maßgeblich sind die gesetzlichen Voraussetzungen und die konkrete Entstehung des jeweiligen Elements.',
     ],
   },
   {
@@ -155,7 +156,7 @@ export const licenseSections: LegalSection[] = [
     paragraphs: [
       'Quran-Rezitation im Gebetskurs: Mishary Alafasy, bezogen über Islamic Network (cdn.islamic.network).',
       'Aufnahmen der überlieferten Gebetsformeln: Hisn al-Muslim (hisnmuslim.com).',
-      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Anbietern nicht abschließend geklärt.',
+      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Rechteinhabern bzw. Anbietern nicht abschließend geklärt. Die bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt.',
     ],
   },
   {

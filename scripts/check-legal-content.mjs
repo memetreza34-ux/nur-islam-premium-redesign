@@ -20,6 +20,7 @@ const prayer = await read('src/services/prayerTimesService.ts');
 const quran = await read('src/services/quranService.ts');
 const mosque = await read('src/services/mosqueService.ts');
 const backend = await read('src/services/nurBackend.ts');
+const premiumLocal = await read('src/services/premiumLocalService.ts');
 
 const RELEASE = process.env.NUR_RELEASE === 'true';
 
@@ -83,6 +84,52 @@ for (const tracker of trackers) {
 for (const promise of ['exportAccountData', 'deleteCloudData']) {
   if (!backend.includes(`export async function ${promise}`)) {
     throw new Error(`Privacy text promises a data right the backend no longer implements: ${promise}`);
+  }
+}
+
+// The local Premium package deliberately uses local_nur_* keys. Cloud backup
+// accepts only nur_* and premium_* keys, so the private journal and the other
+// Premium state stay device-bound unless a future explicit sync flow is built.
+if (!premiumLocal.includes("const JOURNAL_KEY = 'local_nur_premium_journal_v1'")) {
+  throw new Error('Premium journal no longer uses the device-only local_nur_ namespace. Review cloud-backup privacy before shipping.');
+}
+if (!backend.includes("key.startsWith('nur_') || key.startsWith('premium_')")) {
+  throw new Error('Cloud backup key policy changed. Re-audit whether local Premium data can now leave the device.');
+}
+if (!legal.includes('privates Journal') || !legal.includes('nicht durch das generische Cloud-Backup übertragen')) {
+  throw new Error('Privacy text no longer discloses the device-only Premium storage boundary.');
+}
+
+// Do not allow the earlier categorical German-copyright claim to return. The
+// legal status of generated output depends on the concrete creation process;
+// this project should describe that cautiously rather than state a blanket rule.
+const prohibitedLegalClaims = [
+  'Rein maschinell erzeugte Bilder genießen nach deutschem Recht keinen eigenen Urheberrechtsschutz.',
+];
+for (const claim of prohibitedLegalClaims) {
+  if (legal.includes(claim)) {
+    throw new Error(`Legal copy contains an over-broad copyright claim that must stay removed: ${claim}`);
+  }
+}
+for (const required of [
+  'nicht pauschal behauptet',
+  'Generative Outputs können anderen Outputs ähneln',
+  'bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt',
+]) {
+  if (!legal.includes(required)) {
+    throw new Error(`Hardened legal wording is missing required marker: ${required}`);
+  }
+}
+
+// Payment is intentionally deferred. Until a real provider is wired, the legal
+// copy must say that no payment is currently taken and must warn that the text
+// needs another review before payment is switched on.
+for (const required of [
+  'noch keine Zahlungen entgegengenommen',
+  'spätere Bezahlfunktion muss vor ihrer Aktivierung',
+]) {
+  if (!legal.includes(required)) {
+    throw new Error(`Current payment/legal status is no longer stated accurately: ${required}`);
   }
 }
 

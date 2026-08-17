@@ -4,15 +4,16 @@ Mobile-first PWA für Quran, Gebetszeiten, Qibla, Dhikr, Duas, Lernen und weiter
 
 ## Aktueller Projektmodus
 
-**Keine neuen Features im aktuellen Finish-Pass.**
+Der aktive Release-Candidate-Code liegt auf `premium-design-finish`.
 
-Der aktive Release-Candidate-Code liegt auf `premium-design-finish`. Ziel ist jetzt ausschließlich, die vorhandene App kontrolliert fertigzustellen: Stabilität, Designqualität, reale Geräteprüfung, religiöser Fachreview, Rechte/Datenschutz und Release-Härtung.
+Nach dem bewusst ergänzten **lokalen Premium-Komfortpaket** ist der Produktumfang wieder eingefroren. Bis V1 geht es jetzt um Stabilität, reale Geräteprüfung, religiösen Fachreview, Rechte/Datenschutz, Betreiberangaben und Release-Härtung. Die echte 0,99-€-Abo-Abrechnung wird bewusst erst am Ende angebunden.
 
 Die verbindliche Aussage zum aktuellen Stand steht in:
 
 - [`CURRENT-STATUS.md`](./CURRENT-STATUS.md) – Single Source of Truth für den heutigen Implementierungs- und Release-Status.
+- [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md) – operative Trennung zwischen automatisch prüfbaren Punkten und noch nötigen Betreiber-/Geräte-/Fachfreigaben.
 - [`docs/nur-islam-premium-masterplan/`](./docs/nur-islam-premium-masterplan/) – langfristige Anleitung, Prüfpfade und Zielbild; nicht automatisch der heutige Ist-Stand.
-- [`docs/DESIGN-FINAL-PASS.md`](./docs/DESIGN-FINAL-PASS.md) – Regeln und Ergebnis des aktuellen Design-Finish-Passes.
+- [`docs/DESIGN-FINAL-PASS.md`](./docs/DESIGN-FINAL-PASS.md) – Regeln und Ergebnis des Design-Finish-Passes.
 
 ## Technischer Stand in Kurzform
 
@@ -27,7 +28,12 @@ Der aktuelle RC enthält unter anderem:
 - Dhikr, Duas, Namen, Kalender, Lern- und Wissensbereiche;
 - optionalen Supabase-Account mit RLS, Backup/Restore und Cloud-Notizen;
 - lokalen quellengebundenen Nur-Assistenten ohne frei generierende religiöse Antworten;
+- lokales Premium-Komfortpaket mit Quran-Plan, Routinen, In-App-Widgets, Home-Personalisierung, Statistiken, Favoriten-Ordnern, privatem Journal, Erinnerungen und Design-Akzenten;
 - automatisierte Unit-/Integration-, E2E-, Release-, Asset-, Icon- und Browser-Render-Prüfungen.
+
+Das lokale Premium-Paket verursacht in diesem Stand keine KI- oder nutzungsabhängigen API-Kosten. Private Premium-Daten liegen in einem gerätegebundenen `local_nur_*`-Namensraum und werden nicht durch das generische Cloud-Backup übertragen.
+
+**Noch nicht aktiv:** echte Bezahlung und serverseitig bestätigtes Premium-Entitlement. Eine lokale Storage-Flag ist kein Zahlungsnachweis und darf dafür später nicht verwendet werden.
 
 Der RC ist **noch kein freigegebener öffentlicher Produktionsrelease**. Die verbleibenden P0-Blocker stehen in [`CURRENT-STATUS.md`](./CURRENT-STATUS.md).
 
@@ -100,13 +106,14 @@ Supabase-Ressourcen der App sind mit `nur_islam_*` namespaced. Zugriff auf die N
 
 ## Release-Reihenfolge
 
-1. `premium-design-finish` ohne neue Features stabilisieren.
-2. automatisierte QA grün halten.
+1. technische und rechtliche Härtung abschließen.
+2. echte Betreiberangaben eintragen und prüfen lassen.
 3. reale iPhone-/Android-Prüfung abschließen.
 4. religiösen P0-Fachreview abschließen.
-5. Audio-/Nutzungsrechte und Betreiber-/Datenschutzangaben klären.
-6. finale Release-Checkliste abzeichnen.
-7. erst danach RC kontrolliert nach `main` übernehmen.
-8. GitHub-Pages-Release beobachten und Smoke-Test durchführen.
+5. Audio-/Nutzungsrechte klären oder betroffene Audiofunktion deaktivieren.
+6. 0,99-€-Payment + serverseitiges Entitlement als letzten Produkt-Schritt integrieren und erneut prüfen.
+7. finale Release-Checkliste abzeichnen.
+8. erst danach RC kontrolliert nach `main` übernehmen.
+9. GitHub-Pages-Release beobachten und Smoke-Test durchführen.
 
-Details und offene Punkte: [`CURRENT-STATUS.md`](./CURRENT-STATUS.md).
+Details und offene Punkte: [`CURRENT-STATUS.md`](./CURRENT-STATUS.md) und [`docs/RELEASE-CHECKLIST.md`](./docs/RELEASE-CHECKLIST.md).
