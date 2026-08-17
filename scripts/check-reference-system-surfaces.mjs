@@ -26,13 +26,16 @@ function requireTokens(source, label, tokens) {
 }
 
 requireTokens(navigation, 'Bottom navigation', [
-  'background: rgba(0, 27, 22, 0.92)',
-  'color: rgba(246, 235, 214, 0.64)',
-  'color: #f2d79a',
-  'stroke-width: 1.75',
-  'border-radius: 26px',
-  'border-radius: 18px',
-  'border-radius: 13px',
+  'background: rgba(0, 27, 22, 0.94)',
+  'color: rgba(207, 220, 212, 0.66)',
+  'color: #f3d996',
+  'vector-effect: non-scaling-stroke',
+  'border-radius: 24px',
+  'border-radius: 16px',
+  'border-radius: 10px',
+  'white-space: nowrap',
+  'box-shadow: none !important',
+  '@media (max-height: 720px)',
 ]);
 
 requireTokens(referenceShell, 'Detail shell base', [
@@ -321,4 +324,4 @@ for (const staleProfile of [
   }
 }
 
-console.log('Reference system surfaces verified: Splash/entry brand, shell/navigation/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, 1.75 icon weight and protected 18/28/42 geometry with explicit light-theme preservation.');
+console.log('Reference system surfaces verified: Splash/entry brand, refreshed bottom navigation, shell/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, protected icon weight and mobile-safe geometry with explicit light-theme preservation.');
