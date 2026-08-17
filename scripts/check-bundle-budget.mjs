@@ -59,9 +59,16 @@ const BUDGETS_KB = {
   // drei Dhikr-Routinen, die fehlten — allen voran der Abend, der im Quran und
   // in der Überlieferung immer neben dem Morgen steht. Auch die Dhikr-Daten
   // liegen jetzt in einem eigenen Chunk statt im Entry.
-  js: 253,
+  //
+  // Premium adds nine local-first comfort features: Quran goals, routines,
+  // in-app widgets, Home personalization, statistics, reminders, favorite
+  // folders, a private journal and accent themes. The feature surface is split
+  // into its own ~9 KB gzip chunk so the startup entry stays below the separate
+  // 95 KB first-paint budget. The aggregate budget pays only for the requested
+  // product surface; there is no new runtime dependency or remote AI client.
+  js: 262,
   css: 105,
-  total: 349,
+  total: 363,
 };
 
 /**
