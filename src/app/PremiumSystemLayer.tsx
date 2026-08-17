@@ -95,11 +95,11 @@ const accentLabels: Record<PremiumAccent, string> = {
   sand: 'Sand',
 };
 
-function readDhikrToday() {
+function readDhikrToday(): number {
   try {
     const parsed = JSON.parse(localStorage.getItem('nur_dhikr_daily_v2') || '{}') as { date?: unknown; counts?: unknown };
     if (parsed.date !== getLocalDateKey() || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return 0;
-    return Object.values(parsed.counts as Record<string, unknown>).reduce((sum, value) => sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0), 0);
+    return Object.values(parsed.counts as Record<string, unknown>).reduce<number>((sum, value) => sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0), 0);
   } catch {
     return 0;
   }
