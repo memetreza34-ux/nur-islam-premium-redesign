@@ -98,7 +98,7 @@ requireTokens('navigation', [
   'border-radius: 10px',
   'white-space: nowrap',
   'color: #f3d996',
-  'box-shadow: none !important',
+  'box-shadow: none',
   '@media (max-height: 720px)',
 ]);
 
@@ -130,4 +130,4 @@ forbidTokens('moreControls', [
   '#0b4938', '#021a14', '#f3d99d', '#c79b50',
 ]);
 
-console.log('Core screen source verified: Home, Prayer, Calendar, Learning and More keep the approved reference geometry/palette, while bottom navigation uses the compact one-line 24/16/10 treatment without the old nested active-icon glow.');
+console.log('Core screen source verified: Home, Prayer, Calendar, Learning and More keep the approved reference geometry/palette, while bottom navigation uses the compact one-line 24/16/10 treatment without the old nested active-icon glow or new override debt.');
