@@ -5,6 +5,7 @@
 Ergänzende Arbeitsunterlagen:
 
 - [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md) – aktueller Nachweis zur Islamic-Network-/Al-Quran-Cloud-Nutzung und offener Hisn-al-Muslim-Audiolizenz.
+- [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md) – priorisierter Handoff für die qualifizierte islamische Inhaltsprüfung.
 - [`REAL-DEVICE-QA.md`](./REAL-DEVICE-QA.md) – konkrete physische iPhone-/Android-Abnahmematrix.
 - [`RELEASE-OPERATIONS.md`](./RELEASE-OPERATIONS.md) – Beta-, Smoke-Test- und Rollback-Runbook.
 
@@ -53,6 +54,8 @@ Diese Funktionen verursachen in der aktuellen Form keine KI- oder nutzungsabhän
 Solange `<<BITTE AUSFÜLLEN>>` in den Betreiberfeldern steht, muss `NUR_RELEASE=true npm run check` fehlschlagen.
 
 ### Religiöser Fachreview
+
+Der priorisierte Ablauf und das Beanstandungsformat stehen in [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md). Die vollständige automatisch erzeugte Liste steht in [`INHALTE-PRUEFUNG.md`](./INHALTE-PRUEFUNG.md).
 
 - [ ] Salah / Gebetspraxis geprüft
 - [ ] Sujud as-Sahw geprüft
