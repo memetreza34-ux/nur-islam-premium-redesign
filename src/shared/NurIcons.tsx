@@ -1,26 +1,26 @@
 import type { CSSProperties } from 'react';
 import {
   BookOpen,
-  BrainCircuit,
+  BookOpenCheck,
+  Bookmark,
   CalendarDays,
   CircleDot,
+  CircleHelp,
+  Clock3,
   Compass,
-  GraduationCap,
-  HandHeart,
-  MapPin,
-  MessageCircleQuestion,
-  Sparkles,
-  SunMedium,
-  Bookmark,
+  Heart,
+  Landmark,
+  MessageSquare,
+  Star,
 } from 'lucide-react';
 
 /**
  * Semantic shortcut icons used across the premium UI.
  *
- * Release rule: interactive UI uses one real vector icon system. These wrappers
- * intentionally keep the existing Nur* API so screens do not need risky
- * structural changes during the final release pass, while the actual glyphs
- * now come from lucide-react instead of hand-drawn app-specific SVG paths.
+ * The app keeps one coherent vector language, but deliberately avoids the
+ * stereotypical "AI" symbols (sparkles, brain/circuit glyphs, novelty marks)
+ * for ordinary navigation. Each symbol should explain the destination before
+ * decoration: book for Quran, clock for prayer, compass for Qibla, and so on.
  */
 
 type IconProps = {
@@ -34,7 +34,7 @@ function sharedProps({ size = 24, className = '', style }: IconProps) {
     size,
     className: `nur-icon ${className}`.trim(),
     style,
-    strokeWidth: 1.75,
+    strokeWidth: 1.9,
     'aria-hidden': true as const,
   };
 }
@@ -44,7 +44,7 @@ export function NurQuranIcon(props: IconProps) {
 }
 
 export function NurMihrabIcon(props: IconProps) {
-  return <GraduationCap {...sharedProps(props)} />;
+  return <BookOpenCheck {...sharedProps(props)} />;
 }
 
 export function NurTasbihIcon(props: IconProps) {
@@ -56,15 +56,15 @@ export function NurQiblaIcon(props: IconProps) {
 }
 
 export function NurDuaIcon(props: IconProps) {
-  return <HandHeart {...sharedProps(props)} />;
+  return <Heart {...sharedProps(props)} />;
 }
 
 export function NurRosetteIcon(props: IconProps) {
-  return <Sparkles {...sharedProps(props)} />;
+  return <Star {...sharedProps(props)} />;
 }
 
 export function NurMosqueIcon(props: IconProps) {
-  return <MapPin {...sharedProps(props)} />;
+  return <Landmark {...sharedProps(props)} />;
 }
 
 export function NurCalendarIcon(props: IconProps) {
@@ -76,15 +76,15 @@ export function NurBookmarkIcon(props: IconProps) {
 }
 
 export function NurPrayerTimesIcon(props: IconProps) {
-  return <SunMedium {...sharedProps(props)} />;
+  return <Clock3 {...sharedProps(props)} />;
 }
 
 export function NurQuizIcon(props: IconProps) {
-  return <BrainCircuit {...sharedProps(props)} />;
+  return <CircleHelp {...sharedProps(props)} />;
 }
 
 export function NurAssistantIcon(props: IconProps) {
-  return <MessageCircleQuestion {...sharedProps(props)} />;
+  return <MessageSquare {...sharedProps(props)} />;
 }
 
 export type NurIcon = (props: IconProps) => React.JSX.Element;
