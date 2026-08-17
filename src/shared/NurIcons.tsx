@@ -34,7 +34,7 @@ function sharedProps({ size = 24, className = '', style }: IconProps) {
     size,
     className: `nur-icon ${className}`.trim(),
     style,
-    strokeWidth: 1.9,
+    strokeWidth: 1.75,
     'aria-hidden': true as const,
   };
 }
