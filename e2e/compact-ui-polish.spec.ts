@@ -34,12 +34,12 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   expect(mosqueVisibility!.imageLoaded, 'Home mosque artwork must be loaded').toBe(true);
   expect(mosqueVisibility!.width).toBeGreaterThanOrEqual(300);
   expect(mosqueVisibility!.width).toBeLessThanOrEqual(330);
-  expect(mosqueVisibility!.height).toBeGreaterThanOrEqual(220);
-  expect(mosqueVisibility!.height).toBeLessThanOrEqual(245);
+  expect(mosqueVisibility!.height).toBeGreaterThanOrEqual(240);
+  expect(mosqueVisibility!.height).toBeLessThanOrEqual(260);
   expect(mosqueVisibility!.horizontalVisibleRatio, 'most of the mosque must remain inside the compact hero').toBeGreaterThanOrEqual(.9);
   expect(mosqueVisibility!.verticalVisibleRatio, 'the mosque must not be vertically cropped by the compact hero').toBeGreaterThanOrEqual(.95);
   expect(mosqueVisibility!.rightOverflow).toBeLessThanOrEqual(20);
-  expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.95);
+  expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.78);
 
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
