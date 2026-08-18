@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('compact portrait keeps Home useful and Notes clear of its sticky header', async ({ page }) => {
+test('compact portrait keeps Home useful and Notes clear, readable and balanced', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openApp(page);
@@ -15,13 +15,73 @@ test('compact portrait keeps Home useful and Notes clear of its sticky header', 
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
 
-  const geometry = await page.evaluate(() => {
+  const overview = await page.evaluate(() => {
     const header = document.querySelector('.reference-notes-screen > .reference-screen-header')?.getBoundingClientRect();
-    const storage = document.querySelector('.reference-notes-storage')?.getBoundingClientRect();
-    return header && storage ? { headerBottom: header.bottom, storageTop: storage.top } : null;
+    const storage = document.querySelector<HTMLElement>('.reference-notes-storage');
+    const storageBox = storage?.getBoundingClientRect();
+    const title = storage?.querySelector('strong');
+    const action = storage?.querySelector('button');
+    if (!header || !storage || !storageBox || !title || !action) return null;
+    return {
+      headerBottom: header.bottom,
+      storageTop: storageBox.top,
+      titleSize: parseFloat(getComputedStyle(title).fontSize),
+      actionSize: parseFloat(getComputedStyle(action).fontSize),
+      actionHeight: action.getBoundingClientRect().height,
+    };
   });
-  expect(geometry).not.toBeNull();
-  expect(geometry!.storageTop - geometry!.headerBottom, 'Notes storage card must not sit under the sticky header').toBeGreaterThanOrEqual(6);
+  expect(overview).not.toBeNull();
+  expect(overview!.storageTop - overview!.headerBottom, 'Notes storage card must not sit under the sticky header').toBeGreaterThanOrEqual(6);
+  expect(overview!.titleSize, 'Notes storage title should not be tiny').toBeGreaterThanOrEqual(11.5);
+  expect(overview!.actionSize, 'Notes cloud action should remain readable').toBeGreaterThanOrEqual(11);
+  expect(overview!.actionHeight, 'Notes cloud action needs a real touch target').toBeGreaterThanOrEqual(44);
+
+  await page.getByRole('button', { name: 'Neue Notiz', exact: true }).click();
+  await expect(page.locator('.reference-note-editor')).toBeVisible();
+
+  const editing = await page.evaluate(() => {
+    const header = document.querySelector('.reference-notes-screen > .reference-screen-header')?.getBoundingClientRect();
+    const storage = document.querySelector<HTMLElement>('.reference-notes-storage');
+    const editor = document.querySelector<HTMLElement>('.reference-note-editor');
+    const title = editor?.querySelector<HTMLInputElement>('input');
+    const textarea = editor?.querySelector<HTMLTextAreaElement>('textarea');
+    const close = editor?.querySelector<HTMLButtonElement>('.reference-note-editor__heading > button');
+    const save = editor?.querySelector<HTMLButtonElement>('.gold-button');
+    if (!header || !storage || !editor || !title || !textarea || !close || !save) return null;
+    const editorBox = editor.getBoundingClientRect();
+    const titleBox = title.getBoundingClientRect();
+    const textareaBox = textarea.getBoundingClientRect();
+    const closeBox = close.getBoundingClientRect();
+    return {
+      storageDisplay: getComputedStyle(storage).display,
+      headerBottom: header.bottom,
+      editorTop: editorBox.top,
+      editorHeight: editorBox.height,
+      titleHeight: titleBox.height,
+      titleSize: parseFloat(getComputedStyle(title).fontSize),
+      textareaHeight: textareaBox.height,
+      textareaSize: parseFloat(getComputedStyle(textarea).fontSize),
+      closeWidth: closeBox.width,
+      closeHeight: closeBox.height,
+      saveHeight: save.getBoundingClientRect().height,
+    };
+  });
+  expect(editing).not.toBeNull();
+  expect(editing!.storageDisplay, 'compact editing should not waste space on the cloud status card').toBe('none');
+  expect(editing!.editorTop - editing!.headerBottom, 'Notes editor must begin below the sticky header').toBeGreaterThanOrEqual(6);
+  expect(editing!.editorHeight).toBeGreaterThanOrEqual(300);
+  expect(editing!.editorHeight).toBeLessThanOrEqual(460);
+  expect(editing!.titleHeight).toBeGreaterThanOrEqual(44);
+  expect(editing!.titleHeight).toBeLessThanOrEqual(56);
+  expect(editing!.titleSize).toBeGreaterThanOrEqual(14);
+  expect(editing!.titleSize).toBeLessThanOrEqual(18);
+  expect(editing!.textareaHeight).toBeGreaterThanOrEqual(160);
+  expect(editing!.textareaHeight).toBeLessThanOrEqual(220);
+  expect(editing!.textareaSize).toBeGreaterThanOrEqual(14);
+  expect(editing!.textareaSize).toBeLessThanOrEqual(18);
+  expect(editing!.closeWidth).toBeGreaterThanOrEqual(44);
+  expect(editing!.closeHeight).toBeGreaterThanOrEqual(44);
+  expect(editing!.saveHeight).toBeGreaterThanOrEqual(44);
 });
 
 test('light calendar keeps navigation labels and day numbers comfortably readable', async ({ page }) => {
