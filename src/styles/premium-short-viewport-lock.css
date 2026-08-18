@@ -120,8 +120,8 @@
     margin-bottom: 10px;
   }
 
-  .reference-notes-storage {
-    min-height: 70px;
+  .reference-notes-screen--editing .reference-notes-storage {
+    display: none;
   }
 }
 
