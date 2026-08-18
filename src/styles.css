@@ -299,36 +299,57 @@
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.42) 25%, #000 54%, #000 100%);
 }
 
-/* Home uses the same approved mosque source but a calmer, larger atmospheric
-   composition. It sits on the free right side of the 42px hero, behind the
-   copy/date hierarchy, and fades before it can reduce text contrast. */
+/* Home uses the same approved mosque source. Keep it atmospheric, but visible
+   enough to read immediately as a mosque instead of disappearing into the
+   emerald background. */
 .premium-home--v2 .welcome-hero__visual {
   position: absolute !important;
   z-index: 1 !important;
-  right: -8px !important;
+  right: -4px !important;
   bottom: 74px !important;
-  width: 242px !important;
+  width: 280px !important;
   height: 286px !important;
-  opacity: .5 !important;
+  opacity: .72 !important;
   overflow: visible !important;
 }
 
 .premium-home--v2 .welcome-hero__visual > img {
-  transform: translate(30px, 4px) scale(1.72) !important;
+  transform: translate(16px, 2px) scale(1.5) !important;
   transform-origin: right bottom !important;
   filter:
-    drop-shadow(0 34px 30px rgba(0, 0, 0, .5))
-    brightness(1.14)
+    drop-shadow(0 32px 28px rgba(0, 0, 0, .48))
+    brightness(1.18)
     saturate(1.1)
     contrast(1.06) !important;
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
-  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.28) 24%, #000 58%, #000 100%) !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.5) 18%, #000 46%, #000 100%) !important;
+  mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.5) 18%, #000 46%, #000 100%) !important;
 }
 
 .premium-home--v2 .welcome-hero__copy,
 .premium-home--v2 .welcome-hero__date {
   position: relative;
   z-index: 3 !important;
+}
+
+@media (max-width: 430px) and (max-height: 720px) and (orientation: portrait) {
+  .premium-home--v2 .welcome-hero__visual {
+    right: -8px !important;
+    bottom: 74px !important;
+    width: 310px !important;
+    height: 248px !important;
+    opacity: .84 !important;
+  }
+
+  .premium-home--v2 .welcome-hero__visual > img {
+    transform: translate(12px, 2px) scale(1.38) !important;
+    filter:
+      drop-shadow(0 28px 25px rgba(0, 0, 0, .46))
+      brightness(1.2)
+      saturate(1.12)
+      contrast(1.06) !important;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 14%, #000 42%, #000 100%) !important;
+    mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.58) 14%, #000 42%, #000 100%) !important;
+  }
 }
 
 @media (max-width: 350px) {
@@ -351,14 +372,14 @@
   }
 
   .premium-home--v2 .welcome-hero__visual {
-    right: -20px !important;
+    right: -10px !important;
     bottom: 70px !important;
-    width: 214px !important;
+    width: 286px !important;
     height: 264px !important;
-    opacity: .43 !important;
+    opacity: .78 !important;
   }
 
   .premium-home--v2 .welcome-hero__visual > img {
-    transform: translate(28px, 4px) scale(1.62) !important;
+    transform: translate(12px, 2px) scale(1.38) !important;
   }
 }

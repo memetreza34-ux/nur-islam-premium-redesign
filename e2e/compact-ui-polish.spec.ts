@@ -11,6 +11,36 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   expect(heroBox).not.toBeNull();
   expect(heroBox!.height, 'compact Home hero should leave room for the next-prayer card').toBeLessThanOrEqual(390);
 
+  const mosqueVisibility = await page.evaluate(() => {
+    const hero = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero');
+    const visual = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero__visual');
+    const image = visual?.querySelector<HTMLImageElement>('img');
+    if (!hero || !visual || !image) return null;
+    const heroBox = hero.getBoundingClientRect();
+    const visualBox = visual.getBoundingClientRect();
+    const visibleWidth = Math.max(0, Math.min(heroBox.right, visualBox.right) - Math.max(heroBox.left, visualBox.left));
+    const visibleHeight = Math.max(0, Math.min(heroBox.bottom, visualBox.bottom) - Math.max(heroBox.top, visualBox.top));
+    return {
+      width: visualBox.width,
+      height: visualBox.height,
+      horizontalVisibleRatio: visibleWidth / visualBox.width,
+      verticalVisibleRatio: visibleHeight / visualBox.height,
+      rightOverflow: Math.max(0, visualBox.right - heroBox.right),
+      opacity: Number(getComputedStyle(visual).opacity),
+      imageLoaded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+    };
+  });
+  expect(mosqueVisibility).not.toBeNull();
+  expect(mosqueVisibility!.imageLoaded, 'Home mosque artwork must be loaded').toBe(true);
+  expect(mosqueVisibility!.width).toBeGreaterThanOrEqual(300);
+  expect(mosqueVisibility!.width).toBeLessThanOrEqual(330);
+  expect(mosqueVisibility!.height).toBeGreaterThanOrEqual(240);
+  expect(mosqueVisibility!.height).toBeLessThanOrEqual(260);
+  expect(mosqueVisibility!.horizontalVisibleRatio, 'most of the mosque must remain inside the compact hero').toBeGreaterThanOrEqual(.9);
+  expect(mosqueVisibility!.verticalVisibleRatio, 'the mosque must not be vertically cropped by the compact hero').toBeGreaterThanOrEqual(.95);
+  expect(mosqueVisibility!.rightOverflow).toBeLessThanOrEqual(20);
+  expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.78);
+
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
