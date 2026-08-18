@@ -222,7 +222,7 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
   };
 
   return (
-    <motion.main className="screen reference-notes-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
+    <motion.main className={`screen reference-notes-screen${editorOpen ? ' reference-notes-screen--editing' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Deine Gedanken</span><h1>Notizen</h1></div>
