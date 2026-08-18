@@ -14,6 +14,7 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
+  await expect(page.locator('.reference-notes-storage')).toBeVisible();
 
   const overview = await page.evaluate(() => {
     const header = document.querySelector('.reference-notes-screen > .reference-screen-header')?.getBoundingClientRect();
