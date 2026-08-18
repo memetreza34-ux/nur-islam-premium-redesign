@@ -25,6 +25,7 @@ import { initializeTheme } from '../services/themeService';
 import '../styles.css';
 import '../styles/premium-legacy-art-final.css';
 import '../styles/premium-local-features.css';
+import '../styles/premium-home-mosque-final.css';
 
 const PremiumSystemLayer = React.lazy(() => import('./PremiumSystemLayer').then(({ PremiumSystemLayer }) => ({ default: PremiumSystemLayer })));
 
