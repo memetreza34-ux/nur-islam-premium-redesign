@@ -85,6 +85,8 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   expect(editing!.closeHeight).toBeGreaterThanOrEqual(44);
   expect(editing!.saveHeight).toBeGreaterThanOrEqual(44);
 
+  await page.screenshot({ path: 'test-results/notes-final-375x667.png', fullPage: true });
+
   await editor.scrollIntoViewIfNeeded();
   const titleInput = page.getByRole('textbox', { name: 'Titel der Notiz' });
   await titleInput.focus();
