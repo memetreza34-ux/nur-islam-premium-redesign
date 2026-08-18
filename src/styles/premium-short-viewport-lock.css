@@ -97,15 +97,6 @@
     height: 372px;
   }
 
-  .premium-home--v2 .welcome-hero__visual {
-    right: -16px;
-    bottom: 70px;
-    width: 320px;
-    height: 232px;
-    opacity: 1;
-    filter: saturate(.98) brightness(1.1) contrast(1.03) drop-shadow(0 22px 26px rgba(0, 0, 0, .4));
-  }
-
   .premium-home--v2 .welcome-hero__copy {
     max-width: 78%;
     padding-top: 64px;
