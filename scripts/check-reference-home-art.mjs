@@ -55,12 +55,15 @@ requireTokens(homeHero, 'Home hero source', [
   'border-radius: 18px;',
 ]);
 
-requireTokens(homeContent, 'Hero-only Home contract', [
-  '.premium-home.premium-home--v2 > :not(.brand-bar):not(.welcome-hero)',
-  'display: none;',
-  '.premium-home.premium-home--v2 .welcome-hero__date',
-  'body:has(.premium-home.premium-home--v2) .bottom-nav',
-  'min-height: calc(100dvh - 96px)',
+requireTokens(homeContent, 'Home content source', [
+  'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
+  '.quick-card__icon {',
+  '.continue-card {',
+  'background: linear-gradient(135deg, rgba(226, 191, 119, 0.13), transparent), #07372b',
+  '.hadith-card { padding: 22px; border-radius: 28px; }',
+  'linear-gradient(145deg, #fff8ea, #f6ebd6)',
+  '.recommendation-card {',
+  'background: rgba(7, 55, 43, 0.65)',
 ]);
 
 requireTokens(homeExact, 'Home exact header source', [
@@ -79,13 +82,32 @@ requireTokens(atmosphere, 'Atmosphere and navigation source', [
 
 requireTokens(app, 'Home artwork map', [
   'mosque-gold-v2.webp" className="welcome-hero__visual"',
+  'quran-closed-v2.webp" fallback={<QuranObject />}',
+  'tasbih-v2.webp" fallback={<RosetteObject />}',
+  'qibla-compass-v2.webp" fallback={<QiblaObject />}',
+  'mihrab-arch-v2.webp" className="verse-card__art"',
 ]);
 
-requireTokens(app, 'Home header actions', [
+requireTokens(app, 'Home semantic actions and honest progress', [
   '<BellRing size={20} />',
   "onNavigate('prayer')",
   '<Menu size={20} />',
   "onNavigate('profile')",
+  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon",
+  "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon",
+  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: NurRosetteIcon",
+  "label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: NurQuizIcon",
+  "label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon",
+  "label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: NurAssistantIcon",
+  'hasProgress: boolean',
+  'surahNumber: 1',
+  "englishName: 'Al-Faatiha'",
+  'hasProgress: false',
+  'quranProgress.hasProgress && quranProgress.numberOfAyahs',
+  ": 0;",
+  "'Quran beginnen'",
+  "'Noch kein Lesestand'",
+  "'Noch kein gespeicherter Lesestand'",
 ]);
 
 for (const forbidden of [
@@ -98,11 +120,18 @@ for (const forbidden of [
 requireTokens(finalLock, 'Final Home reference lock', [
   '.welcome-hero,',
   'border-radius: 42px !important',
+  '.quick-card,',
+  '.verse-card,',
+  'border-radius: 28px !important',
   '.icon-button,',
+  '.gold-button,',
   'border-radius: 18px !important',
   '.premium-home--v2 .welcome-hero__visual > img,',
   'object-fit: contain !important',
   'object-position: right bottom !important',
+  '.verse-card__art > img,',
+  'object-fit: cover !important',
+  'object-position: center 42% !important',
   ':where(svg.lucide)',
   'stroke-width: 1.75 !important',
 ]);
@@ -110,6 +139,8 @@ requireTokens(finalLock, 'Final Home reference lock', [
 for (const requiredSelector of [
   '.premium-home--v2',
   '.welcome-hero',
+  '.quick-card',
+  '.verse-card',
 ]) {
   const homeSource = `${homeHero}\n${homeContent}\n${homeExact}\n${artDirection}\n${artComposition}\n${atmosphere}`;
   if (!homeSource.includes(requiredSelector)) throw new Error(`Home visual layers no longer style ${requiredSelector}.`);
@@ -139,4 +170,4 @@ if (homeLayers.includes('content: url(') || homeLayers.includes('content:url('))
   throw new Error('Home visual CSS must not swap React image sources via content:url(...).');
 }
 
-console.log('Home reference audit verified: Start is intentionally hero-only, the approved mosque artwork and header actions remain mapped, the date/lower Home content/bottom navigation stay hidden on Start, the emerald/gold reference palette and 42/18 geometry remain protected, and the final geometry lock is still last.');
+console.log('Home reference audit verified: Home uses honest Quran progress with an explicit zero-progress start state, Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the final geometry lock remains the last stylesheet import.');
