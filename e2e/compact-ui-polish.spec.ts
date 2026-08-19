@@ -1,47 +1,39 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('compact portrait keeps Home useful and Notes clear, readable and balanced', async ({ page }) => {
+test('compact portrait keeps the exact Home reference and Notes clear, readable and balanced', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openApp(page);
 
-  const hero = page.locator('.premium-home--v2 .welcome-hero');
-  const heroBox = await hero.boundingBox();
-  expect(heroBox).not.toBeNull();
-  expect(heroBox!.height, 'compact Home hero should leave room for the next-prayer card').toBeLessThanOrEqual(390);
-
-  const mosqueVisibility = await page.evaluate(() => {
-    const hero = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero');
-    const visual = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero__visual');
-    const image = visual?.querySelector<HTMLImageElement>('img');
-    if (!hero || !visual || !image) return null;
-    const heroBox = hero.getBoundingClientRect();
-    const visualBox = visual.getBoundingClientRect();
-    const visibleWidth = Math.max(0, Math.min(heroBox.right, visualBox.right) - Math.max(heroBox.left, visualBox.left));
-    const visibleHeight = Math.max(0, Math.min(heroBox.bottom, visualBox.bottom) - Math.max(heroBox.top, visualBox.top));
+  const homeReference = await page.evaluate(() => {
+    const home = document.querySelector<HTMLElement>('.premium-home--v2');
+    const nav = document.querySelector<HTMLElement>('.bottom-nav');
+    if (!home) return null;
+    const backgroundImage = getComputedStyle(home, '::before').backgroundImage;
+    const lowerChildren = Array.from(home.children).filter((child) => (
+      !child.classList.contains('brand-bar') && !child.classList.contains('welcome-hero')
+    ));
+    const referenceUrl = backgroundImage.match(/url\(["']?(.*?)["']?\)/)?.[1] ?? null;
     return {
-      width: visualBox.width,
-      height: visualBox.height,
-      horizontalVisibleRatio: visibleWidth / visualBox.width,
-      verticalVisibleRatio: visibleHeight / visualBox.height,
-      rightOverflow: Math.max(0, visualBox.right - heroBox.right),
-      opacity: Number(getComputedStyle(visual).opacity),
-      imageLoaded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+      backgroundImage,
+      referenceUrl,
+      lowerChildrenHidden: lowerChildren.every((child) => getComputedStyle(child).display === 'none'),
+      bottomNavigationDisplay: nav ? getComputedStyle(nav).display : 'missing',
+      homeHeight: home.getBoundingClientRect().height,
     };
   });
-  expect(mosqueVisibility).not.toBeNull();
-  expect(mosqueVisibility!.imageLoaded, 'Home mosque artwork must be loaded').toBe(true);
-  expect(mosqueVisibility!.width).toBeGreaterThanOrEqual(300);
-  expect(mosqueVisibility!.width).toBeLessThanOrEqual(330);
-  expect(mosqueVisibility!.height).toBeGreaterThanOrEqual(240);
-  expect(mosqueVisibility!.height).toBeLessThanOrEqual(260);
-  expect(mosqueVisibility!.horizontalVisibleRatio, 'most of the mosque must remain inside the compact hero').toBeGreaterThanOrEqual(.9);
-  expect(mosqueVisibility!.verticalVisibleRatio, 'the mosque must not be vertically cropped by the compact hero').toBeGreaterThanOrEqual(.95);
-  expect(mosqueVisibility!.rightOverflow).toBeLessThanOrEqual(20);
-  expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.78);
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  expect(homeReference).not.toBeNull();
+  expect(homeReference!.backgroundImage).toContain('home-reference-hero.webp');
+  expect(homeReference!.lowerChildrenHidden, 'Start must contain only the selected reference hero').toBe(true);
+  expect(homeReference!.bottomNavigationDisplay, 'Start must not show the old bottom navigation').toBe('none');
+  expect(homeReference!.homeHeight, 'reference-only Start should still fill a phone viewport').toBeGreaterThanOrEqual(650);
+  expect(homeReference!.referenceUrl).not.toBeNull();
+  const referenceResponse = await page.request.get(homeReference!.referenceUrl!);
+  expect(referenceResponse.ok(), 'selected Home reference artwork must load').toBe(true);
+
+  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
   await expect(page.locator('.reference-notes-storage')).toBeVisible();
@@ -139,7 +131,7 @@ test('light calendar keeps navigation labels and day numbers comfortably readabl
     document.documentElement.setAttribute('data-theme', 'light');
   });
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
   await page.getByRole('button').filter({ hasText: 'Kalender' }).first().click();
   await expect(page.getByRole('heading', { name: 'Kalender' })).toBeVisible();
 

@@ -1,26 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-/**
- * Switching tabs must never leave a blank screen.
- *
- * Every other spec in this suite runs with `reducedMotion: 'reduce'`, which
- * zeroes every animation duration — so none of them exercises the transition
- * at all. These deliberately leave motion on.
- *
- * Honest limitation: these do **not** reproduce the failure they were written
- * for. The transition frame used to fade its own opacity around every screen
- * change, and a tap inside that 120ms window left it stuck at opacity 0 with a
- * fully rendered screen inside — the app blank until the next tap. That was
- * observed and measured in a headed browser (frame opacity 0, screen opacity
- * 0.94, twice), but headless Chromium settles the animation differently and
- * passes either way; verified by running these against the unfixed code.
- *
- * They are kept as a smoke test that each tab ends up visible, not as a guard
- * against that specific race — which is now impossible by construction, since
- * the frame no longer animates.
- */
-const TABS = ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr'];
+const TABS = ['Gebet', 'Quran', 'Lernen', 'Mehr'];
 
 async function visibleState(page: import('@playwright/test').Page) {
   return page.evaluate(() => {
@@ -35,13 +16,13 @@ async function visibleState(page: import('@playwright/test').Page) {
   });
 }
 
-test('a screen stays visible when tabs are switched faster than the animation', async ({ page }) => {
+test('a screen stays visible when feature tabs are switched faster than the animation', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openApp(page);
 
-  // Dispatched straight at the DOM rather than through Playwright clicks:
-  // `locator.click()` waits for actionability between taps, which is long
-  // enough to miss the window entirely. This is what a fast thumb produces.
+  await page.getByRole('button', { name: 'Gebete und Erinnerungen öffnen' }).click();
+  await expect(page.getByRole('navigation')).toBeVisible();
+
   await page.evaluate(async (tabs: string[]) => {
     const wait = (ms: number) => new Promise((resolve) => { setTimeout(resolve, ms); });
     const tap = (label: string) => {
@@ -64,15 +45,22 @@ test('a screen stays visible when tabs are switched faster than the animation', 
   expect(state.mainOpacity, `screen stuck invisible (${state.mainClass})`).toBeGreaterThan(0.9);
 });
 
-test('every primary tab settles visible on its own', async ({ page }) => {
+test('Home and every feature tab settle visible on their own', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await openApp(page);
-  const nav = page.getByRole('navigation');
+
+  let state = await visibleState(page);
+  expect(state.frameOpacity, 'Start: frame invisible').toBeGreaterThan(0.9);
+  expect(state.mainOpacity, 'Start: screen invisible').toBeGreaterThan(0.9);
+  await expect(page.locator('.premium-home--v2')).toBeVisible();
+
+  await page.getByRole('button', { name: 'Gebete und Erinnerungen öffnen' }).click();
+  await page.waitForTimeout(900);
 
   for (const tab of TABS) {
-    await nav.getByText(tab, { exact: true }).click();
+    if (tab !== 'Gebet') await page.getByRole('navigation').getByText(tab, { exact: true }).click();
     await page.waitForTimeout(900);
-    const state = await visibleState(page);
+    state = await visibleState(page);
     expect(state.frameOpacity, `${tab}: frame invisible`).toBeGreaterThan(0.9);
     expect(state.mainOpacity, `${tab}: screen invisible`).toBeGreaterThan(0.9);
     expect(state.text, `${tab}: no text rendered`).toBeGreaterThan(0);

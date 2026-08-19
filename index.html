@@ -43,6 +43,133 @@
     <link rel="manifest" href="%BASE_URL%manifest.webmanifest" />
     <link rel="icon" href="%BASE_URL%nur-app-icon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png" />
+
+    <!-- Exact Home reference lock. The user-selected reference is deliberately
+         isolated to Start; every other screen keeps the existing app system. -->
+    <style id="home-reference-hero-lock">
+      .app-shell:has(.premium-home--v2) {
+        padding-bottom: 0 !important;
+      }
+
+      .app-shell:has(.premium-home--v2) .screen-transition-frame {
+        overflow: hidden !important;
+      }
+
+      .app-shell:has(.premium-home--v2) .bottom-nav,
+      body:has(.premium-home--v2) .reference-install-prompt,
+      body:has(.premium-home--v2) .background-orbit {
+        display: none !important;
+      }
+
+      .premium-home--v2 {
+        position: relative !important;
+        min-height: 100dvh !important;
+        width: 100% !important;
+        max-width: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        background: #001b16 !important;
+      }
+
+      .premium-home--v2::before {
+        content: '';
+        position: absolute;
+        z-index: 20;
+        top: 0;
+        left: 0;
+        width: 100%;
+        aspect-ratio: 537 / 476;
+        background: url('%BASE_URL%premium-assets/home-reference-hero.webp') top center / 100% 100% no-repeat;
+        pointer-events: none;
+      }
+
+      .premium-home--v2 > :not(.brand-bar):not(.welcome-hero) {
+        display: none !important;
+      }
+
+      .premium-home--v2 .welcome-hero {
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+
+      /* The reference already contains the visible logo, bell and menu. Keep
+         only the real button hit areas above those two visible circles. Their
+         positions are proportional to the exact 537x476 source reference. */
+      .premium-home--v2 .brand-bar {
+        position: absolute !important;
+        z-index: 30 !important;
+        top: 0 !important;
+        left: 50% !important;
+        width: min(100%, 537px) !important;
+        aspect-ratio: 537 / 476 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateX(-50%) !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
+        pointer-events: none !important;
+      }
+
+      .premium-home--v2 .brand-lockup {
+        display: none !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions {
+        position: absolute !important;
+        inset: 0 !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        pointer-events: none !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button {
+        position: absolute !important;
+        width: 11.55% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        top: 5.25% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        opacity: .001 !important;
+        pointer-events: auto !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:first-child {
+        left: 64.06% !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:last-child {
+        left: 77.28% !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button svg {
+        opacity: 0 !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:focus-visible {
+        opacity: 1 !important;
+        outline: 2px solid rgba(233, 191, 101, .9) !important;
+        outline-offset: 2px !important;
+      }
+
+      @media (min-width: 538px) {
+        .premium-home--v2::before {
+          left: 50%;
+          width: 537px;
+          transform: translateX(-50%);
+        }
+      }
+    </style>
     <title>Nur Islam</title>
   </head>
   <body>
