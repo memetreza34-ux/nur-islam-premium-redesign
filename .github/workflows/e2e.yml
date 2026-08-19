@@ -1,8 +1,7 @@
 name: End-to-end smoke
 
-# Kept out of the pre-push hook on purpose: it needs a browser and a built
-# server, which would add most of a minute to every local push. CI is the right
-# place for it.
+# Browser rendering is isolated in the official Playwright image so CI does not
+# spend each run reinstalling Chromium and system packages on ubuntu-latest.
 on:
   push:
     branches: [premium-design-finish, final-design-release-pass]
@@ -20,6 +19,7 @@ concurrency:
 jobs:
   smoke:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.62.1-noble
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v7
@@ -27,13 +27,13 @@ jobs:
         with:
           node-version: 22
       - run: npm ci --no-audit --no-fund
-      - run: npx playwright install --with-deps chromium
       - run: npm run e2e
-      - if: failure()
+      - if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-report
+          name: playwright-report-${{ github.run_attempt }}
           path: |
             playwright-report
             test-results
+          if-no-files-found: ignore
           retention-days: 7
