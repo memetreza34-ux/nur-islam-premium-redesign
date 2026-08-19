@@ -1,17 +1,10 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-/**
- * No screen may overflow its viewport or clip its own text.
- *
- * This is the pass that found the navigation bar standing 126px tall with its
- * label wrapped one character per line — green tests and a screenshot review
- * had both missed it, because it only appeared below a certain width.
- */
 const WIDTHS = [320, 375, 430];
 
 const SURFACES = [
-  { kind: 'tab', name: 'Start' },
+  { kind: 'home', name: 'Start' },
   { kind: 'tab', name: 'Gebet' },
   { kind: 'tab', name: 'Quran' },
   { kind: 'tab', name: 'Lernen' },
@@ -34,10 +27,20 @@ for (const width of WIDTHS) {
     const problems: string[] = [];
 
     for (const surface of SURFACES) {
-      if (surface.kind === 'tab') {
-        await page.getByRole('navigation').getByText(surface.name, { exact: true }).click();
+      if (surface.kind === 'home') {
+        await expect(page.locator('.premium-home--v2')).toBeVisible();
+      } else if (surface.kind === 'tab') {
+        if (surface.name === 'Gebet' && await page.locator('.premium-home--v2').isVisible().catch(() => false)) {
+          await page.getByRole('button', { name: 'Gebete und Erinnerungen öffnen' }).click();
+        } else {
+          await page.getByRole('navigation').getByText(surface.name, { exact: true }).click();
+        }
       } else {
-        await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+        if (await page.locator('.premium-home--v2').isVisible().catch(() => false)) {
+          await page.getByRole('button', { name: 'Mehr öffnen' }).click();
+        } else {
+          await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+        }
         await page.waitForTimeout(300);
         await page.getByRole('button').filter({ hasText: surface.name }).first().click();
       }
@@ -45,17 +48,10 @@ for (const width of WIDTHS) {
 
       const found = await page.evaluate(({ label, viewport }) => {
         const out: string[] = [];
-
-        // Nothing may push the page sideways. This is the one overflow signal
-        // that is unambiguous: a per-element right edge past the viewport is
-        // usually a hero image bleeding inside a clipping card, and everything
-        // lives inside a scroll container that clips horizontally anyway.
         if (document.documentElement.scrollWidth > viewport + 1) {
           out.push(`${label}: page scrolls horizontally (${document.documentElement.scrollWidth}px)`);
         }
 
-        // Text taller than the box holding it, with the overflow hidden and no
-        // way to scroll to it — the reader simply loses the rest of the line.
         for (const el of document.querySelectorAll('*')) {
           if (el.children.length > 0) continue;
           const text = (el.textContent ?? '').trim();
