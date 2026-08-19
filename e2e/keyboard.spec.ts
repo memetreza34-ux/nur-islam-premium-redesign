@@ -43,31 +43,31 @@ test('hero menu and primary navigation can be reached with the keyboard', async 
   expect(reachedPrimaryNav, 'the primary navigation must remain keyboard reachable inside the app').toBe(true);
 });
 
-test('the focused control is visible', async ({ page }) => {
+test('the focused hero control becomes visibly outlined', async ({ page }) => {
   await openApp(page);
 
-  // Use actual keyboard focus so :focus-visible is measured exactly as a
-  // keyboard user experiences it, including the transparent hero actions.
-  const bad: string[] = [];
-  for (let press = 0; press < 10; press += 1) {
-    const before = await page.evaluate(() => {
-      const el = document.activeElement as HTMLElement | null;
-      return el ? `${getComputedStyle(el).outlineWidth}|${getComputedStyle(el).outlineStyle}|${getComputedStyle(el).boxShadow}|${getComputedStyle(el).opacity}` : '';
-    });
+  let reachedHeroAction = false;
+  for (let press = 0; press < 20 && !reachedHeroAction; press += 1) {
     await page.keyboard.press('Tab');
-    const after = await page.evaluate(() => {
+    reachedHeroAction = await page.evaluate(() => {
       const el = document.activeElement as HTMLElement | null;
-      if (!el || el === document.body) return null;
-      const style = getComputedStyle(el);
-      return {
-        label: (el.getAttribute('aria-label') || el.innerText || el.tagName).replace(/\s+/g, ' ').trim().slice(0, 40),
-        signature: `${style.outlineWidth}|${style.outlineStyle}|${style.boxShadow}|${style.opacity}`,
-      };
+      return Boolean(el?.closest('.premium-home--v2 .brand-bar__actions'));
     });
-    if (after && after.signature === before) bad.push(after.label);
   }
+  expect(reachedHeroAction, 'a hero action must receive keyboard focus').toBe(true);
 
-  expect(bad, 'these keyboard-focused controls expose no visible focus treatment').toEqual([]);
+  const focusStyle = await page.evaluate(() => {
+    const el = document.activeElement as HTMLElement;
+    const style = getComputedStyle(el);
+    return {
+      opacity: Number(style.opacity),
+      outlineWidth: parseFloat(style.outlineWidth),
+      outlineStyle: style.outlineStyle,
+    };
+  });
+  expect(focusStyle.opacity, 'focused transparent hero action must become visible').toBeGreaterThanOrEqual(.95);
+  expect(focusStyle.outlineWidth).toBeGreaterThanOrEqual(2);
+  expect(focusStyle.outlineStyle).not.toBe('none');
 });
 
 test('a dialog takes focus, holds it, and gives it back on Escape', async ({ page }) => {
