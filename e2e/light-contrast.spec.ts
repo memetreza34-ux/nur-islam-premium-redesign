@@ -1,21 +1,20 @@
 /**
- * The light theme must not hide its own text.
- *
- * `--gold` is not redefined for the light theme, so gold text sat on cream at
- * 1.55:1, and one card kept a hardcoded dark fill while the text on it turned
- * dark with the theme. Both were invisible to a screenshot review and obvious
- * to a measurement.
+ * The light theme must not hide its own text. Home itself is now an exact
+ * selected reference image, so the measurable live-type audit starts when the
+ * user opens Prayer and continues through the remaining primary surfaces.
  */
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('no unreadable text in the light theme', async ({ page }) => {
+test('no unreadable live text in the light theme', async ({ page }) => {
   await openApp(page);
   await page.evaluate(() => { localStorage.setItem('nur_theme', 'light'); document.documentElement.setAttribute('data-theme', 'light'); });
-  const tabs = ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr'];
+
   const all: string[] = [];
-  for (const tab of tabs) {
-    await page.getByRole('navigation').getByText(tab, { exact: true }).click();
+  await page.getByRole('button', { name: 'Gebete und Erinnerungen öffnen' }).click();
+
+  for (const tab of ['Gebet', 'Quran', 'Lernen', 'Mehr']) {
+    if (tab !== 'Gebet') await page.getByRole('navigation').getByText(tab, { exact: true }).click();
     await page.waitForTimeout(800);
     const bad = await page.evaluate((tabName) => {
       const parse = (v: string) => (v.match(/\d+(\.\d+)?/g) ?? []).slice(0, 3).map(Number);
@@ -50,8 +49,6 @@ test('no unreadable text in the light theme', async ({ page }) => {
     }, tab);
     all.push(...bad);
   }
-  // A gradient-backed card has no backgroundColor to read, so those elements
-  // are skipped rather than measured against the page behind them — that
-  // mistake reported thirty false failures on the first run.
+
   expect([...new Set(all)], 'text below 3:1 in the light theme').toEqual([]);
 });
