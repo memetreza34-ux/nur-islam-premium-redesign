@@ -12,15 +12,24 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('opens Premium from Home and renders statistics without an update loop', async ({ page }) => {
-  await openApp(page);
-
-  const widgets = page.getByRole('region', { name: 'Premium Widgets' });
-  await expect(widgets).toBeVisible();
-  await widgets.getByRole('button', { name: 'Anpassen' }).click();
-
+async function openPremium(page: import('@playwright/test').Page) {
+  if (await page.locator('.premium-home--v2').isVisible().catch(() => false)) {
+    await page.getByRole('button', { name: 'Mehr öffnen' }).click();
+  } else {
+    await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  }
+  const launcher = page.getByRole('button', { name: /Nur Premium/ });
+  await expect(launcher).toBeVisible();
+  await launcher.click();
   const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
   await expect(premium).toBeVisible();
+  return premium;
+}
+
+test('opens Premium from More and renders statistics without an update loop', async ({ page }) => {
+  await openApp(page);
+
+  const premium = await openPremium(page);
   await premium.getByRole('button', { name: 'Statistik', exact: true }).click();
 
   await expect(premium.getByRole('heading', { name: 'Deine letzten Tage' })).toBeVisible();
@@ -33,8 +42,7 @@ test('opens Premium from Home and renders statistics without an update loop', as
 test('creates a local routine and persists its daily completion', async ({ page }) => {
   await openApp(page);
 
-  await page.getByRole('region', { name: 'Premium Widgets' }).getByRole('button', { name: 'Anpassen' }).click();
-  const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
+  let premium = await openPremium(page);
   await premium.getByRole('button', { name: 'Routinen', exact: true }).click();
 
   await premium.getByLabel('Name').fill('Morgenroutine');
@@ -44,18 +52,19 @@ test('creates a local routine and persists its daily completion', async ({ page 
   await expect(premium.getByRole('heading', { name: 'Morgenroutine' })).toBeVisible();
   await premium.getByRole('button', { name: 'Morgen-Adhkar' }).click();
   await expect(premium.getByText('1/2 heute erledigt')).toBeVisible();
-
   await premium.getByRole('button', { name: 'Premium schließen' }).click();
-  await expect(page.getByText('1/2 erledigt')).toBeVisible();
 
   await page.reload();
-  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
-  await expect(page.getByText('1/2 erledigt')).toBeVisible();
+  await expect(page.locator('.premium-home--v2')).toBeVisible({ timeout: 20_000 });
+  premium = await openPremium(page);
+  await premium.getByRole('button', { name: 'Routinen', exact: true }).click();
+  await expect(premium.getByRole('heading', { name: 'Morgenroutine' })).toBeVisible();
+  await expect(premium.getByText('1/2 heute erledigt')).toBeVisible();
 });
 
 test('Premium entry sits in the More screen flow without covering shortcuts', async ({ page }) => {
   await openApp(page);
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
 
   const launcher = page.getByRole('button', { name: /Nur Premium/ });
   await expect(launcher).toBeVisible();
