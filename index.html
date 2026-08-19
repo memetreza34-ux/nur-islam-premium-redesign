@@ -93,16 +93,73 @@
         pointer-events: none !important;
       }
 
+      /* The reference already contains the visible logo, bell and menu. Keep
+         only the real button hit areas above those two visible circles. Their
+         positions are proportional to the exact 537x476 source reference. */
       .premium-home--v2 .brand-bar {
-        position: relative !important;
+        position: absolute !important;
         z-index: 30 !important;
-        opacity: 0 !important;
+        top: 0 !important;
+        left: 50% !important;
+        width: min(100%, 537px) !important;
+        aspect-ratio: 537 / 476 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: translateX(-50%) !important;
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+        opacity: 1 !important;
         pointer-events: none !important;
       }
 
-      .premium-home--v2 .brand-bar__actions,
+      .premium-home--v2 .brand-lockup {
+        display: none !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions {
+        position: absolute !important;
+        inset: 0 !important;
+        display: block !important;
+        width: 100% !important;
+        height: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        pointer-events: none !important;
+      }
+
       .premium-home--v2 .brand-bar__actions .icon-button {
+        position: absolute !important;
+        width: 11.55% !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        top: 5.25% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        transform: none !important;
+        background: transparent !important;
+        border-color: transparent !important;
+        box-shadow: none !important;
+        opacity: .001 !important;
         pointer-events: auto !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:first-child {
+        left: 64.06% !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:last-child {
+        left: 77.28% !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button svg {
+        opacity: 0 !important;
+      }
+
+      .premium-home--v2 .brand-bar__actions .icon-button:focus-visible {
+        opacity: 1 !important;
+        outline: 2px solid rgba(233, 191, 101, .9) !important;
+        outline-offset: 2px !important;
       }
 
       @media (min-width: 538px) {
