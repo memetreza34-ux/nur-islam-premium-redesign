@@ -29,8 +29,10 @@ requireTokens(base, 'Base palette', [
   '--muted-green: #91a89e',
 ]);
 
-if (heroAsset.byteLength < 20000) {
-  throw new Error(`Approved Home hero asset looks incomplete: ${heroAsset.byteLength} bytes.`);
+const riff = heroAsset.subarray(0, 4).toString('ascii');
+const webp = heroAsset.subarray(8, 12).toString('ascii');
+if (riff !== 'RIFF' || webp !== 'WEBP' || heroAsset.byteLength < 5000) {
+  throw new Error(`Approved Home hero asset is not a complete WebP: ${heroAsset.byteLength} bytes, ${riff}/${webp}.`);
 }
 
 requireTokens(homeContent, 'Hero-only Home source', [
@@ -81,4 +83,4 @@ if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
   throw new Error('The final shared geometry lock is no longer the last stylesheet import.');
 }
 
-console.log(`Home hero-only audit verified: approved ${heroAsset.byteLength}-byte reference asset, no visible dashboard sections or bottom nav on Start, real prayer/menu actions remain reachable, and the new Home layer adds no !important debt.`);
+console.log(`Home hero-only audit verified: approved ${heroAsset.byteLength}-byte WebP reference asset, no visible dashboard sections or bottom nav on Start, real prayer/menu actions remain reachable, and the new Home layer adds no !important debt.`);
