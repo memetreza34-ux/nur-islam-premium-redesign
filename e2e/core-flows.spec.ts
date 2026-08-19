@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { openApp } from './appReady';
 
 /**
@@ -13,7 +13,7 @@ test.beforeEach(async ({ page }) => {
   await openApp(page);
 });
 
-async function openMoreFromHome(page: Parameters<typeof test>[0] extends never ? never : any) {
+async function openMoreFromHome(page: Page) {
   await page.getByRole('button', { name: 'Mehr öffnen' }).click();
   await expect(page.getByRole('heading', { name: 'Mehr' })).toBeVisible();
 }
