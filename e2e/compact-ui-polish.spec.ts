@@ -1,47 +1,59 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('compact portrait keeps Home useful and Notes clear, readable and balanced', async ({ page }) => {
+test('compact portrait keeps the approved hero-only Start and Notes clear, readable and balanced', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openApp(page);
 
-  const hero = page.locator('.premium-home--v2 .welcome-hero');
-  const heroBox = await hero.boundingBox();
-  expect(heroBox).not.toBeNull();
-  expect(heroBox!.height, 'compact Home hero should leave room for the next-prayer card').toBeLessThanOrEqual(390);
+  const home = page.locator('.premium-home--v2');
+  await expect(home).toBeVisible();
 
-  const mosqueVisibility = await page.evaluate(() => {
-    const hero = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero');
-    const visual = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero__visual');
-    const image = visual?.querySelector<HTMLImageElement>('img');
-    if (!hero || !visual || !image) return null;
-    const heroBox = hero.getBoundingClientRect();
-    const visualBox = visual.getBoundingClientRect();
-    const visibleWidth = Math.max(0, Math.min(heroBox.right, visualBox.right) - Math.max(heroBox.left, visualBox.left));
-    const visibleHeight = Math.max(0, Math.min(heroBox.bottom, visualBox.bottom) - Math.max(heroBox.top, visualBox.top));
+  const heroOnly = await page.evaluate(() => {
+    const home = document.querySelector<HTMLElement>('.premium-home--v2');
+    const bottomNav = document.querySelector<HTMLElement>('.bottom-nav');
+    const bell = document.querySelector<HTMLButtonElement>('.premium-home--v2 button[aria-label="Gebete und Erinnerungen öffnen"]');
+    const menu = document.querySelector<HTMLButtonElement>('.premium-home--v2 button[aria-label="Mehr öffnen"]');
+    if (!home || !bell || !menu) return null;
+    const before = getComputedStyle(home, '::before');
+    const oldSelectors = [
+      '.welcome-hero',
+      '.prayer-hero',
+      '.content-section',
+      '.continue-card',
+      '.inspiration-grid',
+      '.ai-preview',
+    ];
     return {
-      width: visualBox.width,
-      height: visualBox.height,
-      horizontalVisibleRatio: visibleWidth / visualBox.width,
-      verticalVisibleRatio: visibleHeight / visualBox.height,
-      rightOverflow: Math.max(0, visualBox.right - heroBox.right),
-      opacity: Number(getComputedStyle(visual).opacity),
-      imageLoaded: image.complete && image.naturalWidth > 0 && image.naturalHeight > 0,
+      backgroundImage: before.backgroundImage,
+      pseudoDisplay: before.display,
+      homeHeight: home.getBoundingClientRect().height,
+      bottomNavDisplay: bottomNav ? getComputedStyle(bottomNav).display : 'missing',
+      oldDisplays: oldSelectors.map((selector) => {
+        const element = home.querySelector<HTMLElement>(selector);
+        return element ? getComputedStyle(element).display : 'missing';
+      }),
+      bellWidth: bell.getBoundingClientRect().width,
+      bellHeight: bell.getBoundingClientRect().height,
+      menuWidth: menu.getBoundingClientRect().width,
+      menuHeight: menu.getBoundingClientRect().height,
     };
   });
-  expect(mosqueVisibility).not.toBeNull();
-  expect(mosqueVisibility!.imageLoaded, 'Home mosque artwork must be loaded').toBe(true);
-  expect(mosqueVisibility!.width).toBeGreaterThanOrEqual(300);
-  expect(mosqueVisibility!.width).toBeLessThanOrEqual(330);
-  expect(mosqueVisibility!.height).toBeGreaterThanOrEqual(240);
-  expect(mosqueVisibility!.height).toBeLessThanOrEqual(260);
-  expect(mosqueVisibility!.horizontalVisibleRatio, 'most of the mosque must remain inside the compact hero').toBeGreaterThanOrEqual(.9);
-  expect(mosqueVisibility!.verticalVisibleRatio, 'the mosque must not be vertically cropped by the compact hero').toBeGreaterThanOrEqual(.95);
-  expect(mosqueVisibility!.rightOverflow).toBeLessThanOrEqual(20);
-  expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.78);
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  expect(heroOnly).not.toBeNull();
+  expect(heroOnly!.backgroundImage).toContain('home-hero-reference.webp');
+  expect(heroOnly!.pseudoDisplay).not.toBe('none');
+  expect(heroOnly!.homeHeight).toBeGreaterThanOrEqual(650);
+  expect(heroOnly!.bottomNavDisplay, 'Start must not show the old bottom dashboard navigation').toBe('none');
+  for (const display of heroOnly!.oldDisplays) {
+    expect(display, 'old Home dashboard sections must be absent from the visible Start experience').toBe('none');
+  }
+  expect(heroOnly!.bellWidth).toBeGreaterThanOrEqual(44);
+  expect(heroOnly!.bellHeight).toBeGreaterThanOrEqual(44);
+  expect(heroOnly!.menuWidth).toBeGreaterThanOrEqual(44);
+  expect(heroOnly!.menuHeight).toBeGreaterThanOrEqual(44);
+
+  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
   await expect(page.locator('.reference-notes-storage')).toBeVisible();
@@ -139,7 +151,7 @@ test('light calendar keeps navigation labels and day numbers comfortably readabl
     document.documentElement.setAttribute('data-theme', 'light');
   });
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
   await page.getByRole('button').filter({ hasText: 'Kalender' }).first().click();
   await expect(page.getByRole('heading', { name: 'Kalender' })).toBeVisible();
 
