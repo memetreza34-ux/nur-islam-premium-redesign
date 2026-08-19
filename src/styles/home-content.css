@@ -69,6 +69,7 @@
   background: transparent;
   box-shadow: none;
   opacity: 0;
+  touch-action: manipulation;
 }
 
 .premium-home.premium-home--v2 > .brand-bar .icon-button:focus-visible {
