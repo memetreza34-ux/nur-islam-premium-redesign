@@ -60,6 +60,12 @@ jobs:
       - name: Install app dependencies
         run: npm ci
 
+      - name: Use stable Ubuntu archive mirror for Playwright dependencies
+        run: |
+          sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/apt-mirrors.txt 2>/dev/null || true
+          sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list 2>/dev/null || true
+          sudo sed -i 's|http://azure.archive.ubuntu.com/ubuntu|https://archive.ubuntu.com/ubuntu|g' /etc/apt/sources.list.d/ubuntu.sources 2>/dev/null || true
+
       - name: Install Chromium and WebKit for render QA
         run: npx playwright install --with-deps chromium webkit
 

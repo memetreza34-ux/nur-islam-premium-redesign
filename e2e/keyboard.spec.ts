@@ -1,13 +1,12 @@
 /**
  * The app has to be operable without a pointer.
  *
- * The light theme and reduced motion were measured; the keyboard was the one
- * accessibility promise still resting on the assumption that native buttons
- * take care of themselves. They do not take care of focus visibility, and they
- * do not take care of what Tab does once a dialog is open.
+ * Start is intentionally hero-only. Its bell and hamburger remain real focusable
+ * controls, and the normal bottom navigation becomes available after entering
+ * the app through the hamburger menu.
  */
 import { expect, test } from '@playwright/test';
-import { openApp } from './appReady';
+import { openApp, openMoreHub } from './appReady';
 
 /** Where focus currently is, in a form that is readable in a failure message. */
 async function focused(page: import('@playwright/test').Page) {
@@ -22,59 +21,58 @@ async function focused(page: import('@playwright/test').Page) {
   });
 }
 
-test('every primary tab can be reached and opened with the keyboard', async ({ page }) => {
+test('hero menu and primary navigation can be reached with the keyboard', async ({ page }) => {
   await openApp(page);
 
-  // Tab until focus lands in the navigation, rather than assuming a tab count:
-  // the number of controls above it differs per screen and per install state.
-  let reached = false;
-  for (let press = 0; press < 60 && !reached; press += 1) {
+  let reachedMenu = false;
+  for (let press = 0; press < 20 && !reachedMenu; press += 1) {
     await page.keyboard.press('Tab');
-    reached = await page.evaluate(() => Boolean(document.activeElement?.closest('nav, [role="navigation"]')));
+    reachedMenu = (await focused(page)).label === 'Mehr öffnen';
   }
-  expect(reached, 'the bottom navigation must be reachable with Tab alone').toBe(true);
+  expect(reachedMenu, 'the hero hamburger must be reachable with Tab alone').toBe(true);
 
-  const label = (await focused(page)).label;
   await page.keyboard.press('Enter');
-  await page.waitForTimeout(600);
-  await expect(page.getByRole('navigation'), `pressing Enter on "${label}" must not break the shell`).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Mehr', level: 1 })).toBeVisible();
+  await expect(page.getByRole('navigation')).toBeVisible();
+
+  let reachedPrimaryNav = false;
+  for (let press = 0; press < 80 && !reachedPrimaryNav; press += 1) {
+    await page.keyboard.press('Tab');
+    reachedPrimaryNav = await page.evaluate(() => Boolean(document.activeElement?.closest('nav, [role="navigation"]')));
+  }
+  expect(reachedPrimaryNav, 'the primary navigation must remain keyboard reachable inside the app').toBe(true);
 });
 
-test('the focused control is visible', async ({ page }) => {
+test('the focused hero control becomes visibly outlined', async ({ page }) => {
   await openApp(page);
 
-  // A focus ring the browser draws by default disappears the moment a
-  // stylesheet sets outline: none, which is exactly what a "premium" design
-  // tends to do. Measure that focus changes something visible.
-  const invisible = await page.evaluate(() => {
-    const controls = [...document.querySelectorAll('button, a[href], input, select, [tabindex]:not([tabindex="-1"])')]
-      .filter((el) => (el as HTMLElement).offsetParent !== null)
-      .slice(0, 12) as HTMLElement[];
-    const bad: string[] = [];
-    for (const control of controls) {
-      const before = getComputedStyle(control);
-      const resting = `${before.outlineWidth}|${before.outlineStyle}|${before.boxShadow}|${before.backgroundColor}|${before.borderColor}`;
-      control.focus();
-      const after = getComputedStyle(control);
-      const active = `${after.outlineWidth}|${after.outlineStyle}|${after.boxShadow}|${after.backgroundColor}|${after.borderColor}`;
-      if (resting === active) {
-        bad.push((control.getAttribute('aria-label') || control.innerText || control.tagName).replace(/\s+/g, ' ').trim().slice(0, 40));
-      }
-    }
-    return bad;
-  });
+  let reachedHeroAction = false;
+  for (let press = 0; press < 20 && !reachedHeroAction; press += 1) {
+    await page.keyboard.press('Tab');
+    reachedHeroAction = await page.evaluate(() => {
+      const el = document.activeElement as HTMLElement | null;
+      return Boolean(el?.closest('.premium-home--v2 .brand-bar__actions'));
+    });
+  }
+  expect(reachedHeroAction, 'a hero action must receive keyboard focus').toBe(true);
 
-  expect(invisible, 'these controls look identical focused and unfocused').toEqual([]);
+  const focusStyle = await page.evaluate(() => {
+    const el = document.activeElement as HTMLElement;
+    const style = getComputedStyle(el);
+    return {
+      opacity: Number(style.opacity),
+      outlineWidth: parseFloat(style.outlineWidth),
+      outlineStyle: style.outlineStyle,
+    };
+  });
+  expect(focusStyle.opacity, 'focused transparent hero action must become visible').toBeGreaterThanOrEqual(.95);
+  expect(focusStyle.outlineWidth).toBeGreaterThanOrEqual(2);
+  expect(focusStyle.outlineStyle).not.toBe('none');
 });
 
 test('a dialog takes focus, holds it, and gives it back on Escape', async ({ page }) => {
   await openApp(page);
-
-  // The 99 Names list opens a dialog per entry. Same route the empty-state
-  // tests take, including the waits — the screen transition animates, and a
-  // click during it lands on an element that is about to be replaced.
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(400);
+  await openMoreHub(page);
   await page.getByRole('button').filter({ hasText: '99 Namen' }).first().click();
   await page.waitForTimeout(700);
 
@@ -87,8 +85,6 @@ test('a dialog takes focus, holds it, and gives it back on Escape', async ({ pag
   await expect(dialog).toBeVisible();
   expect((await focused(page)).inDialog, 'opening a dialog must move focus into it').toBe(true);
 
-  // Tab all the way round. Focus must never land behind the overlay, or a
-  // keyboard user walks off into the page underneath with the dialog still up.
   for (let press = 0; press < 12; press += 1) {
     await page.keyboard.press('Tab');
     const where = await focused(page);

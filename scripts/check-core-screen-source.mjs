@@ -36,9 +36,11 @@ requireTokens('homeHero', [
   'border-radius: 18px',
 ]);
 requireTokens('homeContent', [
-  '.quick-card {',
-  'border-radius: 28px',
-  'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
+  '.premium-home.premium-home--v2::before',
+  "url('/premium-assets/home-hero-reference.webp')",
+  'aspect-ratio: 537 / 476',
+  '.app-shell:has(.premium-home.premium-home--v2) > .bottom-nav',
+  'width: clamp(44px, 11vw, 54px)',
 ]);
 requireTokens('prayer', [
   '.prayer-page-header{',
@@ -130,4 +132,4 @@ forbidTokens('moreControls', [
   '#0b4938', '#021a14', '#f3d99d', '#c79b50',
 ]);
 
-console.log('Core screen source verified: Home, Prayer, Calendar, Learning and More keep the approved reference geometry/palette, while bottom navigation uses the compact one-line 24/16/10 treatment without the old nested active-icon glow or new override debt.');
+console.log('Core screen source verified: Start uses the approved hero-only artwork and touch targets, Prayer, Calendar, Learning and More keep their reference geometry/palette, and bottom navigation remains compact on screens where it is shown.');

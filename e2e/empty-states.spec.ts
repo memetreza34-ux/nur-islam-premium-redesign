@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import { openApp } from './appReady';
+import { openApp, openMoreHub } from './appReady';
 
 /**
  * No screen may answer with a blank area.
@@ -17,8 +17,7 @@ const searchScreens = [
 for (const screen of searchScreens) {
   test(`${screen.label}: a search with no matches says so`, async ({ page }) => {
     await openApp(page);
-    await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-    await page.waitForTimeout(400);
+    await openMoreHub(page);
     await page.getByRole('button').filter({ hasText: screen.hub }).first().click();
     await page.waitForTimeout(700);
 
@@ -37,10 +36,9 @@ test('Sammlung: an untouched app says the collection is waiting', async ({ page 
     }
   });
   await page.reload();
-  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+  await expect(page.locator('.premium-home--v2')).toBeVisible({ timeout: 20_000 });
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(400);
+  await openMoreHub(page);
   await page.getByRole('button').filter({ hasText: 'Sammlung' }).first().click();
   await page.waitForTimeout(700);
 
@@ -51,8 +49,7 @@ test('Moscheen: offline reports the failure instead of an empty list', async ({ 
   await openApp(page);
   await context.setOffline(true);
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(400);
+  await openMoreHub(page);
   await page.getByRole('button').filter({ hasText: 'Moscheen' }).first().click();
   await page.waitForTimeout(1500);
 
@@ -65,8 +62,7 @@ test('Notizen: an empty list says so rather than showing a bare editor', async (
   await openApp(page);
   await page.evaluate(() => localStorage.removeItem('nur_local_notes_v1'));
 
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(400);
+  await openMoreHub(page);
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await page.waitForTimeout(800);
 
@@ -76,10 +72,7 @@ test('Notizen: an empty list says so rather than showing a bare editor', async (
 
 test('Kalender: a day with no entries still renders its day view', async ({ page }) => {
   await openApp(page);
-  // Calendar remains a first-class feature, but is no longer one of the five
-  // primary tabs. Reach it through the More hub just as a user now does.
-  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(300);
+  await openMoreHub(page);
   await page.getByRole('button').filter({ hasText: 'Kalender' }).first().click();
   await page.waitForTimeout(900);
 
