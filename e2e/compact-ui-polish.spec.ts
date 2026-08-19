@@ -1,7 +1,7 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
 
-test('compact portrait keeps hero-only Start and Notes clear, readable and balanced', async ({ page }) => {
+test('compact portrait keeps Home useful and Notes clear, readable and balanced', async ({ page }) => {
   await page.setViewportSize({ width: 375, height: 667 });
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await openApp(page);
@@ -9,11 +9,7 @@ test('compact portrait keeps hero-only Start and Notes clear, readable and balan
   const hero = page.locator('.premium-home--v2 .welcome-hero');
   const heroBox = await hero.boundingBox();
   expect(heroBox).not.toBeNull();
-  expect(heroBox!.height, 'hero-only Start should use most of the compact viewport').toBeGreaterThanOrEqual(560);
-  expect(heroBox!.height).toBeLessThanOrEqual(620);
-  await expect(page.locator('.premium-home--v2 .welcome-hero__date')).toBeHidden();
-  await expect(page.locator('.premium-home--v2 .prayer-hero')).toBeHidden();
-  await expect(page.locator('.bottom-nav')).toBeHidden();
+  expect(heroBox!.height, 'compact Home hero should leave room for the next-prayer card').toBeLessThanOrEqual(390);
 
   const mosqueVisibility = await page.evaluate(() => {
     const hero = document.querySelector<HTMLElement>('.premium-home--v2 .welcome-hero');
@@ -45,7 +41,7 @@ test('compact portrait keeps hero-only Start and Notes clear, readable and balan
   expect(mosqueVisibility!.rightOverflow).toBeLessThanOrEqual(20);
   expect(mosqueVisibility!.opacity, 'mosque should read as artwork rather than a faint background ghost').toBeGreaterThanOrEqual(.78);
 
-  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByRole('button').filter({ hasText: 'Notizen' }).first().click();
   await expect(page.getByRole('heading', { name: 'Notizen' })).toBeVisible();
   await expect(page.locator('.reference-notes-storage')).toBeVisible();
@@ -143,7 +139,7 @@ test('light calendar keeps navigation labels and day numbers comfortably readabl
     document.documentElement.setAttribute('data-theme', 'light');
   });
 
-  await page.getByRole('button', { name: 'Mehr öffnen' }).click();
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByRole('button').filter({ hasText: 'Kalender' }).first().click();
   await expect(page.getByRole('heading', { name: 'Kalender' })).toBeVisible();
 
