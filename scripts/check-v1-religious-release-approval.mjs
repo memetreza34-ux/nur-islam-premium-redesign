@@ -19,6 +19,8 @@ const requiredIds = [
   'beginner-next-steps',
   'names-of-allah',
   'dhikr-counter-steps',
+  'worship-guides',
+  'prayer-rakat-sequence',
 ];
 
 const recordPattern = /\{ contentId: '([^']+)', status: '(pending|approved)', reviewer: (null|'[^']+'), reviewedAt: (null|'[^']+'), evidence: (null|'[^']+') \}/g;
