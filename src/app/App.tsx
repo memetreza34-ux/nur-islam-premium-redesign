@@ -5,6 +5,7 @@ import {
   BookHeart,
   BookOpen,
   CalendarDays,
+  ChevronLeft,
   ChevronRight,
   HandHeart,
   Home,
@@ -13,6 +14,7 @@ import {
   MoonStar,
   Play,
   Quote,
+  ShieldCheck,
   Sparkles,
   SunDim,
   Sunrise,
@@ -39,6 +41,7 @@ import { LegalScreen } from '../screens/LegalScreen';
 // public v1 hubs expose only items explicitly marked release-ready.
 const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
+import { getLegacyFeature, isLegacyFeatureReleaseReady } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { MoreScreen } from '../screens/MoreScreen';
 import { NamesScreen } from '../screens/NamesScreen';
@@ -147,6 +150,11 @@ function isLegacyTab(tab: Tab): tab is LegacyTab {
 
 function getLegacyFeatureId(tab: LegacyTab) {
   return tab.slice('legacy:'.length) as LegacyFeatureId;
+}
+
+function isReleaseBlockedTab(tab: Tab) {
+  if (tab === 'assistant') return true;
+  return isLegacyTab(tab) && !isLegacyFeatureReleaseReady(getLegacyFeatureId(tab));
 }
 
 function getIslamicDate(date = new Date()) {
@@ -266,6 +274,28 @@ function isNavigationSnapshot(value: unknown): value is NavigationSnapshot {
     && (snapshot.selectedNameId === null || typeof snapshot.selectedNameId === 'string')
     && (snapshot.selectedCalendarDate === null || typeof snapshot.selectedCalendarDate === 'string')
     && (snapshot.selectedHadithId === null || typeof snapshot.selectedHadithId === 'string');
+}
+
+function ReleaseLockedScreen({ tab, onBack }: { tab: Tab; onBack: () => void }) {
+  const legacyFeature = isLegacyTab(tab) ? getLegacyFeature(getLegacyFeatureId(tab)) : null;
+  return (
+    <main className="screen reference-learning-course-screen">
+      <header className="reference-screen-header">
+        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+        <div><span className="overline">Release 1</span><h1>{legacyFeature?.title ?? 'Noch nicht freigegeben'}</h1></div>
+        <span className="icon-button" aria-hidden="true"><ShieldCheck size={20} /></span>
+      </header>
+      <section className="reference-learning-course-hero is-fiqh">
+        <div className="reference-learning-course-hero__glow" />
+        <div className="reference-learning-course-hero__copy">
+          <span className="hero-pill">Noch in Prüfung</span>
+          <h2>Dieser Bereich gehört noch nicht zum öffentlichen ersten Release.</h2>
+          <p>{legacyFeature?.releaseReason ?? 'Der Bereich wird erst freigeschaltet, wenn Quellen, Sicherheit und fachliche Prüfung vollständig abgeschlossen sind.'}</p>
+          <button className="gold-button" onClick={onBack}>Zurück zu den freigegebenen Bereichen <ChevronRight size={17} /></button>
+        </div>
+      </section>
+    </main>
+  );
 }
 
 function PremiumHome({
@@ -480,7 +510,7 @@ function PremiumHome({
         <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
           <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
           <div className="card-title-row"><span><Sparkles size={16} /> Ayah im Fokus</span><span><BookHeart size={18} /></span></div>
-          <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحٌ</p>
+          <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
         </button>
         <button className="hadith-card glass-card reference-daily-card-button" onClick={() => onNavigate('hadith')}>
@@ -809,62 +839,64 @@ export default function App() {
     );
   }
 
-  const screen = isLegacyTab(activeTab)
-    ? (
-      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-        <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
-      </Suspense>
-    )
-    : activeTab === 'home'
-      ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
-      : activeTab === 'quran'
-        ? <QuranScreen onBack={goBack} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
-        : activeTab === 'reader'
-          ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goBack} onOpenSurah={(number) => openReader(number, 1)} />
-          : activeTab === 'ayah'
-            ? <AyahDetailScreen onBack={goBack} />
-            : activeTab === 'hadith'
-              ? <DailyHadithScreen onBack={goBack} hadithId={selectedHadithId} />
-              : activeTab === 'wudu'
-                ? <WorshipGuideScreen initialMode="wudu" onBack={goBack} />
-                : activeTab === 'salah'
-                  ? <WorshipGuideScreen initialMode="salah" onBack={goBack} />
-                  : activeTab === 'legal'
-                    ? <LegalScreen onBack={goBack} />
-                    : activeTab === 'dhikr'
-                      ? <DhikrScreen onBack={goBack} />
-                      : activeTab === 'qibla'
-                        ? <QiblaScreen onBack={goBack} />
-                        : activeTab === 'profile'
-                          ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
-                          : activeTab === 'prayer'
-                            ? <PrayerScreen onBack={goBack} />
-                            : activeTab === 'calendar'
-                              ? <CalendarScreen onBack={goBack} initialDateKey={selectedCalendarDate} />
-                              : activeTab === 'learn'
-                                ? <LearnScreen onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} />
-                                : activeTab === 'duas'
-                                  ? <DuasScreen onBack={goBack} initialDuaId={selectedDuaId} />
-                                  : activeTab === 'names'
-                                    ? <NamesScreen onBack={goBack} initialNameId={selectedNameId} />
-                                    : activeTab === 'mosques'
-                                      ? <MosqueScreen onBack={goBack} />
-                                      : activeTab === 'collections'
-                                        ? <CollectionsScreen
-                                            onBack={goBack}
-                                            onOpenQuran={openQuran}
-                                            onOpenReader={openReader}
-                                            onOpenDua={openSavedDua}
-                                            onOpenName={openSavedName}
-                                            onOpenAyah={() => navigate('ayah')}
-                                            onOpenHadith={openSavedHadith}
-                                            onOpenCalendarDate={openSavedCalendarDate}
-                                          />
-                                        : (
-                                          <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-                                            <AssistantScreen onBack={goBack} />
-                                          </Suspense>
-                                        );
+  const screen = isReleaseBlockedTab(activeTab)
+    ? <ReleaseLockedScreen tab={activeTab} onBack={() => goBack('home')} />
+    : isLegacyTab(activeTab)
+      ? (
+        <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+          <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
+        </Suspense>
+      )
+      : activeTab === 'home'
+        ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
+        : activeTab === 'quran'
+          ? <QuranScreen onBack={goBack} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
+          : activeTab === 'reader'
+            ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goBack} onOpenSurah={(number) => openReader(number, 1)} />
+            : activeTab === 'ayah'
+              ? <AyahDetailScreen onBack={goBack} />
+              : activeTab === 'hadith'
+                ? <DailyHadithScreen onBack={goBack} hadithId={selectedHadithId} />
+                : activeTab === 'wudu'
+                  ? <WorshipGuideScreen initialMode="wudu" onBack={goBack} />
+                  : activeTab === 'salah'
+                    ? <WorshipGuideScreen initialMode="salah" onBack={goBack} />
+                    : activeTab === 'legal'
+                      ? <LegalScreen onBack={goBack} />
+                      : activeTab === 'dhikr'
+                        ? <DhikrScreen onBack={goBack} />
+                        : activeTab === 'qibla'
+                          ? <QiblaScreen onBack={goBack} />
+                          : activeTab === 'profile'
+                            ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
+                            : activeTab === 'prayer'
+                              ? <PrayerScreen onBack={goBack} />
+                              : activeTab === 'calendar'
+                                ? <CalendarScreen onBack={goBack} initialDateKey={selectedCalendarDate} />
+                                : activeTab === 'learn'
+                                  ? <LearnScreen onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} />
+                                  : activeTab === 'duas'
+                                    ? <DuasScreen onBack={goBack} initialDuaId={selectedDuaId} />
+                                    : activeTab === 'names'
+                                      ? <NamesScreen onBack={goBack} initialNameId={selectedNameId} />
+                                      : activeTab === 'mosques'
+                                        ? <MosqueScreen onBack={goBack} />
+                                        : activeTab === 'collections'
+                                          ? <CollectionsScreen
+                                              onBack={goBack}
+                                              onOpenQuran={openQuran}
+                                              onOpenReader={openReader}
+                                              onOpenDua={openSavedDua}
+                                              onOpenName={openSavedName}
+                                              onOpenAyah={() => navigate('ayah')}
+                                              onOpenHadith={openSavedHadith}
+                                              onOpenCalendarDate={openSavedCalendarDate}
+                                            />
+                                          : (
+                                            <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+                                              <AssistantScreen onBack={goBack} />
+                                            </Suspense>
+                                          );
 
   return (
     <div className="app-background app-background--v2">
