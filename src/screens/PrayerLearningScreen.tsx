@@ -107,10 +107,6 @@ export function PrayerLearningScreen({
     [selectedPrayerId],
   );
 
-  // The steps belong to one Rakʿah, not to the prayer as a whole: the first
-  // opens with the Takbir, the middle ones drop the second Surah, and only the
-  // last carries the Tashahhud and the Salam. Showing one generic list for all
-  // of them was the reason this screen could not teach the prayer.
   const rakats = PRAYER_RAKATS_BY_ID.get(selectedPrayerId)?.rakats ?? [];
   const currentRakat = rakats[Math.min(practiceRakah, rakats.length) - 1] ?? rakats[0];
   const steps = currentRakat?.steps ?? [];
@@ -148,7 +144,6 @@ export function PrayerLearningScreen({
     setPracticeRakah(Math.max(1, Math.min(prayer.rakahs, readNumber(`nur_prayer_lesson_${id}_rakah`, 1))));
   };
 
-  /** Moving between Rakʿah restarts the sequence — each one has its own steps. */
   const selectRakah = (value: number) => {
     setPracticeRakah(value);
     setActiveStep(0);
@@ -168,7 +163,6 @@ export function PrayerLearningScreen({
     navigator.vibrate?.([45, 35, 70]);
   };
 
-  /** Walks the whole prayer: past the last step of a Rakʿah comes the next one. */
   const goToNextStep = () => {
     if (!atLastStep) { setActiveStep(stepIndex + 1); return; }
     if (!isLastRakat) { selectRakah(practiceRakah + 1); return; }
@@ -206,8 +200,8 @@ export function PrayerLearningScreen({
       <section className="reference-prayer-course-hero">
         <div className="reference-prayer-course-hero__copy">
           <span className="hero-pill">Schritt für Schritt</span>
-          <h2>Lerne jedes Pflichtgebet sicher und in Ruhe.</h2>
-          <p>Wähle ein Gebet, übe den Ablauf und speichere deinen Fortschritt ausschließlich auf diesem Gerät.</p>
+          <h2>Lerne jedes Pflichtgebet in Ruhe.</h2>
+          <p>Wähle ein Gebet, übe den Ablauf und sieh bei den gesprochenen Kernschritten die verwendete Quran-/Hadith-Referenz direkt mit.</p>
           <div className="reference-prayer-course-hero__progress"><span><i style={{ width: `${courseProgress}%` }} /></span><strong>{completedLessons.size}/5 Gebete gelernt</strong></div>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" fallback={<QiblaObject />} />
@@ -250,6 +244,7 @@ export function PrayerLearningScreen({
               <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
               <p className="reference-rakah-wording__transliteration">{currentStep.transliteration}</p>
               <p className="reference-rakah-wording__translation">{currentStep.translation}</p>
+              {currentStep.source ? <p className="reference-rakah-wording__source"><ShieldCheck size={14} /> {currentStep.source}</p> : null}
             </div>
           ) : null}
           <div className="reference-prayer-course-navigation">
@@ -285,8 +280,6 @@ export function PrayerLearningScreen({
         <ul>{PRAYER_PRACTICE_TIPS.map((tip) => <li key={tip}>{tip}</li>)}</ul>
       </section>
 
-      {/* Below the sequence on purpose: the checklist is what you do once
-          before praying, the sequence is what this screen is for. */}
       <section className="reference-prayer-preparation">
         <div className="section-heading"><div><span className="overline">Vor dem Gebet</span><h2>Vorbereitung</h2></div><button className="text-button" onClick={onOpenPrayerTimes}><TimerReset size={15} /> Zeiten</button></div>
         <div>
@@ -298,7 +291,7 @@ export function PrayerLearningScreen({
         <button className="reference-qibla-shortcut" onClick={onOpenQibla}><MapPin size={17} /><span><strong>Qibla prüfen</strong><small>Richtung zur Kaaba mit Standort und Gerätesensor</small></span><ChevronRight size={17} /></button>
       </section>
 
-      <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.</small></span></section>
+      <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf zeigt eine verbreitete sunnitische Lernfolge. Handhaltungen, Formulierungsvarianten und einzelne Fiqh-Details können sich je nach Rechtsschule unterscheiden. Quellen pro Kernschritt ersetzen den fachlichen Endreview nicht.</small></span></section>
 
       {lessonComplete ? <button className="reference-prayer-course-restart" onClick={restartLesson}><RotateCcw size={16} /> Lektion neu beginnen</button> : null}
 
