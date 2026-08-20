@@ -14,6 +14,7 @@ import {
 import { motion, useReducedMotion } from 'motion/react';
 import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
 import type { BeginnerLearningLesson } from '../data/beginnerLearningContent';
+import { getBeginnerReviewRecord } from '../data/beginnerReview';
 import { BeginnerReferenceScreen } from './BeginnerReferenceScreen';
 import { BeginnerStarterPlanScreen } from './BeginnerStarterPlanScreen';
 import { PurityBasicsScreen } from './PurityBasicsScreen';
@@ -55,6 +56,7 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
     () => BEGINNER_LESSONS.find((lesson) => lesson.id === selectedLessonId) ?? BEGINNER_LESSONS[0],
     [selectedLessonId],
   );
+  const selectedReview = getBeginnerReviewRecord(selectedLesson.id);
   const lessonIndex = BEGINNER_LESSONS.findIndex((lesson) => lesson.id === selectedLesson.id);
   const progress = Math.round((completed.size / BEGINNER_LESSONS.length) * 100);
 
@@ -162,7 +164,11 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
             </article>
           ))}
         </div>
-        <p className="reference-learning-sources__notice">Redaktionsstatus: fachlicher Endreview vor öffentlichem Release erforderlich. Diese Einführung ersetzt keine individuelle Fatwa oder persönliche Beratung bei Sonderfällen.</p>
+        {selectedReview?.status === 'approved' ? (
+          <p className="reference-learning-sources__notice">Fachlich geprüft am {selectedReview.reviewedAt} durch {selectedReview.reviewer}. Freigabenachweis: {selectedReview.evidence}. Diese Einführung ersetzt keine individuelle Fatwa oder persönliche Beratung bei Sonderfällen.</p>
+        ) : (
+          <p className="reference-learning-sources__notice">Redaktionsstatus: fachlicher Endreview vor öffentlichem Release erforderlich. Diese Einführung ersetzt keine individuelle Fatwa oder persönliche Beratung bei Sonderfällen.</p>
+        )}
       </section>
 
       <section className="reference-learning-sources">
