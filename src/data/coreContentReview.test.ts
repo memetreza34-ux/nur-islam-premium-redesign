@@ -6,6 +6,8 @@ describe('core religious content review ledger', () => {
     expect(CORE_CONTENT_REVIEW_RECORDS.map((record) => record.contentId).sort()).toEqual([
       'dhikr-counter-steps',
       'names-of-allah',
+      'prayer-rakat-sequence',
+      'worship-guides',
     ]);
   });
 
