@@ -26,39 +26,39 @@ export function PurityBasicsScreen({ onBack }: { onBack: () => void }) {
       <article className="reference-learning-lesson-card">
         <header><span className="overline">Grundlage 1</span><h2>Wudu</h2><p>Wudu ist die rituelle Gebetswaschung und gehört zu den zentralen Vorbereitungen für das Gebet.</p></header>
         <section className="reference-learning-reading">
-          <p>Sure Al-Maida 5:6 nennt die grundlegenden Körperbereiche der Waschung vor dem Gebet. Die praktische Schrittfolge wird im bestehenden Wudu-Kurs der App separat erklärt.</p>
-          <p>Welche Ereignisse Wudu ungültig machen und wie Sonderfälle behandelt werden, soll die App nur mit geprüftem Fiqh-Kontext darstellen.</p>
+          <p>Sure Al-Maida 5:6 nennt Gesicht, Arme bis zu den Ellenbogen, das Streichen über den Kopf und die Füße bis zu den Knöcheln. Authentische Hadithe beschreiben darüber hinaus vollständige prophetische Wudu-Abläufe.</p>
+          <p>Welche Ereignisse Wudu aufheben und wie Sonderfälle behandelt werden, soll die App nur mit geprüftem Fiqh-Kontext darstellen.</p>
         </section>
       </article>
 
       <article className="reference-learning-lesson-card">
-        <header><span className="overline">Grundlage 2</span><h2>Ghusl</h2><p>Ghusl bezeichnet eine vollständige rituelle Waschung in Situationen, in denen die große rituelle Reinheit wiederhergestellt werden muss.</p></header>
+        <header><span className="overline">Grundlage 2</span><h2>Ghusl</h2><p>Ghusl bezeichnet die rituelle Ganzkörperreinigung in Situationen, in denen sie erforderlich ist.</p></header>
         <section className="reference-learning-reading">
-          <p>Sure Al-Maida 5:6 nennt den Zustand der Janabah und die Aufforderung zur vollständigen Reinigung. Für Anfänger genügt zunächst die Unterscheidung: Wudu ist nicht dasselbe wie Ghusl.</p>
+          <p>Sure Al-Maida 5:6 nennt Janabah und die Aufforderung zur vollständigen Reinigung. Für Anfänger genügt zunächst die klare Unterscheidung: Wudu und Ghusl sind nicht dasselbe.</p>
           <p>Auslöser, Mindestbestandteile und besondere Situationen — etwa Krankheit, Menstruation oder Wochenbett — dürfen nicht aus einer kurzen App-Zusammenfassung abgeleitet werden und benötigen einen fachlich geprüften Detailbereich.</p>
         </section>
       </article>
 
       <article className="reference-learning-lesson-card">
-        <header><span className="overline">Grundlage 3</span><h2>Tayammum</h2><p>Tayammum ist eine erlaubte Form ritueller Reinigung in bestimmten Situationen, wenn Wasser nicht verfügbar oder seine Nutzung nicht möglich ist.</p></header>
+        <header><span className="overline">Grundlage 3</span><h2>Tayammum</h2><p>Tayammum ist eine in Quran 5:6 genannte Form ritueller Reinigung für bestimmte Ausnahmebedingungen.</p></header>
         <section className="reference-learning-reading">
-          <p>Der Quran nennt Tayammum ebenfalls in Sure Al-Maida 5:6 und beschreibt dabei die Verwendung von sauberem Erdboden sowie das Bestreichen von Gesicht und Händen.</p>
-          <p>Tayammum ist keine frei wählbare Abkürzung. Voraussetzungen und Details müssen bei Krankheit, Reise oder anderen besonderen Umständen fachlich eingeordnet werden.</p>
+          <p>Sure Al-Maida 5:6 nennt unter anderem Krankheit, Reise und Situationen ohne gefundenes Wasser und beschreibt Tayammum mit sauberer Erde bzw. Erdboden sowie das Bestreichen von Gesicht und Händen.</p>
+          <p>Tayammum ist keine frei wählbare Abkürzung. Wie die genannten Voraussetzungen zusammenwirken und welches Material im Detail genügt, wird in den Rechtsschulen näher eingeordnet und gehört in den fachlichen Review.</p>
         </section>
       </article>
 
       <section className="reference-learning-key-points">
         <div className="section-heading"><div><span className="overline">Merken</span><h2>Die einfache Unterscheidung</h2></div><Sparkles size={21} /></div>
         <div>
-          <button type="button"><span>1</span><strong>Wudu: normale rituelle Gebetswaschung.</strong></button>
-          <button type="button"><span>2</span><strong>Ghusl: vollständige rituelle Waschung in bestimmten Situationen.</strong></button>
-          <button type="button"><span>3</span><strong>Tayammum: Ersatzform unter ihren Voraussetzungen, wenn Wasser nicht verfügbar oder nutzbar ist.</strong></button>
+          <button type="button"><span>1</span><strong>Wudu: rituelle Gebetswaschung.</strong></button>
+          <button type="button"><span>2</span><strong>Ghusl: rituelle Ganzkörperreinigung in bestimmten Situationen.</strong></button>
+          <button type="button"><span>3</span><strong>Tayammum: Ersatzreinigung nur unter ihren religiösen Voraussetzungen.</strong></button>
         </div>
       </section>
 
       <section className="reference-learning-sources">
         <div className="section-heading"><div><span className="overline">Quelle & Review</span><h2>Vor Release prüfen</h2></div><ShieldCheck size={21} /></div>
-        <div><article><span>Quran</span><strong>Sure Al-Maida 5:6</strong><p>Grundlegende Bezugstelle zu Wudu, vollständiger Reinigung und Tayammum.</p></article></div>
+        <div><article><span>Quran</span><strong>Sure Al-Maida 5:6</strong><p>Grundlegende Bezugstelle zu Wudu, Janabah/Reinigung und Tayammum.</p></article></div>
         <p className="reference-learning-sources__notice">Redaktionsstatus: fachlicher Endreview erforderlich. Die Seite vermittelt keine individuelle Rechtsentscheidung und vermeidet bewusst strittige Detailregeln.</p>
       </section>
     </motion.main>
