@@ -3,7 +3,7 @@ name: Premium redesign check
 on:
   workflow_dispatch:
   push:
-    branches: [premium-home-redesign, premium-design-finish]
+    branches: [premium-home-redesign, premium-design-finish, 'feat/**']
   pull_request:
     branches: [main, premium-home-redesign]
 
