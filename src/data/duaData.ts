@@ -49,7 +49,7 @@ export const DUAS: DuaEntry[] = [
     id: 'dua_sorrow_1', categoryId: 'depression_anxiety', title: 'Bei Kummer und Trauer',
     arabic: `اللَّهُمَّ إِنِّي عَبْدُكَ، وَابْنُ عَبْدِكَ، وَابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي`,
     transliteration: `Allahumma inni 'abduk, wabnu 'abdik, wabnu amatik, nasiyati biyadika, madhin fiyya hukmuk, 'adlun fiyya qada'uk, as'aluka bikulli ismin huwa lak, sammayta bihi nafsak, aw anzaltahu fi kitabik, aw 'allamtahu ahadan min khalqik, awista'tharta bihi fi 'ilmil-ghaybi 'indak, an taj'alal-Qur'ana rabi'a qalbi, wa nura sadri, wa jala'a huzni, wa dhahaba hammi.`,
-    translation: `O Allah, ich bin Dein Diener, der Sohn Deines Dieners, der Sohn Deiner Dienerin. Meine Stirnlocke ist in Deiner Hand. Dein Urteil über mich wird ausgeführt und Deine Bestimmung über mich ist gerecht. Ich bitte Dich mit jedem Namen, der Dir gehört, dass Du den Quran zum Frühling meines Herzens, zum Licht meiner Brust, zur Beseitigung meiner Trauer und zum Verschwinden meines Kummers machst.`,
+    translation: `O Allah, ich bin Dein Diener, der Sohn Deines Dieners und der Sohn Deiner Dienerin. Meine Stirnlocke ist in Deiner Hand. Dein Urteil über mich wird ausgeführt und Deine Bestimmung über mich ist gerecht. Ich bitte Dich bei jedem Namen, der Dir gehört, mit dem Du Dich selbst benannt hast, den Du in Deinem Buch offenbart, einem Deiner Geschöpfe gelehrt oder bei Dir im Wissen des Verborgenen bewahrt hast: Mache den Quran zum Frühling meines Herzens, zum Licht meiner Brust, zur Beseitigung meiner Trauer und zum Verschwinden meines Kummers.`,
     source: 'Ahmad 1/391 · Hisn al-Muslim 120 · dort als authentisch nach Al-Albani angegeben',
   },
   {
@@ -84,7 +84,7 @@ export const DUAS: DuaEntry[] = [
     id: 'dua_morning_1', categoryId: 'morning_evening', title: 'Der Meister der Vergebung',
     arabic: `اللَّهُمَّ أَنْتَ رَبِّي لا إِلَهَ إِلا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ، وَأَنَا عَلَى عَهْدِكَ وَوَعْدِكَ مَا اسْتَطَعْتُ، أَعُوذُ بِكَ مِنْ شَرِّ مَا صَنَعْتُ، أَبُوءُ لَكَ بِنِعْمَتِكَ عَلَيَّ، وَأَبُوءُ لَكَ بِذَنْبِي فَاغْفِرْ لِي، فَإِنَّهُ لا يَغْفِرُ الذُّنُوبَ إِلا أَنْتَ`,
     transliteration: `Allahumma anta Rabbi la ilaha illa anta, khalaqtani wa ana 'abduk, wa ana 'ala 'ahdika wa wa'dika mastata't, a'udhu bika min sharri ma sana't, abu'u laka bini'matika 'alayya, wa abu'u laka bidhanbi faghfir li, fa innahu la yaghfirudh-dhunuba illa ant.`,
-    translation: `O Allah, Du bist mein Herr. Es gibt keinen Gott außer Dir. Du hast mich erschaffen und ich bin Dein Diener. Ich halte mich an Deinen Bund und Dein Versprechen, so gut ich kann. Ich bekenne Deine Gnade und meine Sünde. Vergib mir, denn niemand vergibt Sünden außer Dir.`,
+    translation: `O Allah, Du bist mein Herr. Es gibt keinen Gott außer Dir. Du hast mich erschaffen und ich bin Dein Diener. Ich halte mich an Deinen Bund und Dein Versprechen, so gut ich kann. Ich suche Zuflucht bei Dir vor dem Übel dessen, was ich getan habe. Ich erkenne Deine Gnade an mir an und bekenne meine Sünde. Vergib mir, denn niemand vergibt Sünden außer Dir.`,
     source: 'Sahih al-Bukhari 6306',
   },
   {
@@ -224,15 +224,15 @@ export const DUAS: DuaEntry[] = [
     id: 'dua_eating_before', categoryId: 'daily_life', title: 'Vor dem Essen',
     arabic: `بِسْمِ اللَّهِ`,
     transliteration: `Bismillah.`,
-    translation: `Im Namen Allahs. Wenn es am Anfang vergessen wurde, ist in derselben Überlieferung eine zusätzliche Formel für das Nachholen überliefert.`,
-    source: 'Sunan Abi Dawud 3767',
+    translation: `Im Namen Allahs.`,
+    source: 'Sunan Abi Dawud 3767 · sahih (Al-Albani)',
   },
   {
     id: 'dua_eating_after', categoryId: 'daily_life', title: 'Nach dem Essen',
     arabic: `الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا وَرَزَقَنِيهِ مِنْ غَيْرِ حَوْلٍ مِنِّي وَلا قُوَّةٍ`,
     transliteration: `Alhamdulillahil-ladhi at'amani hadha wa razaqanihi min ghayri hawlin minni wa la quwwah.`,
     translation: `Alles Lob gebührt Allah, Der mich hiermit gespeist und es mir als Versorgung gegeben hat, ohne meine eigene Macht und Kraft.`,
-    source: 'Jami at-Tirmidhi 3458',
+    source: 'Jami at-Tirmidhi 3458 · hasan (Darussalam)',
   },
   {
     id: 'dua_bathroom_enter', categoryId: 'daily_life', title: 'Vor dem Betreten der Toilette',
