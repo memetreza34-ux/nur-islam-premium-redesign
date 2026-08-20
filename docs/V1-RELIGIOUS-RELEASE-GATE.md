@@ -2,7 +2,7 @@
 
 ## Zweck
 
-Religiöse P0-Inhalte dürfen für Release 1 nicht allein deshalb als freigegeben gelten, weil technisch Quellenfelder vorhanden sind. Der finale Merge nach `main` verlangt eine dokumentierte fachliche Freigabe.
+Religiöse Inhalte, die im ersten öffentlichen Release sichtbar sind, dürfen nicht allein deshalb als freigegeben gelten, weil technisch Quellenfelder vorhanden sind. Der finale Merge nach `main` verlangt eine dokumentierte fachliche Freigabe.
 
 Der technische Gate läuft über:
 
@@ -20,9 +20,9 @@ src/data/v1ReligiousReleaseScope.ts
 
 Damit existiert nur eine Quelle dafür, welche religiösen Inhalte Release 1 blockieren.
 
-## Aktueller P0-Prüfumfang
+## Aktueller Prüfumfang: 39 Inhaltsblöcke
 
-### Anfänger-Grundlagen
+### Anfänger-Grundlagen – 10
 
 1. `beginner-islam`
 2. `beginner-allah`
@@ -37,28 +37,75 @@ Damit existiert nur eine Quelle dafür, welche religiösen Inhalte Release 1 blo
 
 Statusdatei: `src/data/beginnerReview.ts`
 
-### Weitere religiöse P0-Inhalte
+### Sichtbare Vertiefungslektionen – 18
 
-11. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren.
-12. `quran-beginner-guide` – redaktionelle Quran-Einführung, Begriffe und Startempfehlungen prüfen.
-13. `beginner-reference` – Anfänger-FAQ und Islam-A–Z-Begriffe fachlich prüfen.
-14. `purity-basics` – Ghusl-/Tayammum-Grundlagen und Grenzen der Darstellung prüfen.
-15. `names-of-allah` – 99 Namen: Reihenfolge, arabische Schreibweise, Transliteration und deutsche Bedeutungsangaben prüfen.
-16. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
-17. `dhikr-routines` – Quellen, Zählungen, Bedeutungen und Varianten der Routinen prüfen.
-18. `duas` – arabische Texte, Transliteration, Bedeutungsangaben und konkrete Quellen des Dua-Bestands prüfen.
-19. `daily-hadith-rotation` – nur einen fachlich geprüften und konkret referenzierten Daily-Hadith-Pool für Home zulassen.
-20. `worship-guides` – Wudu-/Salah-Anleitungen, Pflichtteile, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
-21. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
+11. `aqidah-tawhid`
+12. `aqidah-iman`
+13. `aqidah-names`
+14. `fiqh-purity`
+15. `fiqh-prayer-time`
+16. `fiqh-asking`
+17. `tafsir-fatiha`
+18. `tafsir-ikhlas`
+19. `tafsir-method`
+20. `seerah-revelation`
+21. `seerah-hijra`
+22. `seerah-example`
+23. `hadith-basics`
+24. `hadith-intention`
+25. `hadith-verification`
+26. `akhlaq-sincerity`
+27. `akhlaq-patience`
+28. `akhlaq-mercy`
+
+Statusdatei: `src/data/learningContentReview.ts`
+
+Diese 18 Lektionen sind im Lern-Hub sichtbar. Deshalb dürfen sie nicht außerhalb des fachlichen Release-Gates bleiben, auch wenn sie nicht zum ersten 10-Lektionen-Anfängerpfad gehören.
+
+### Weitere religiöse Kerninhalte – 11
+
+29. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren.
+30. `quran-beginner-guide` – redaktionelle Quran-Einführung, Begriffe und Startempfehlungen prüfen.
+31. `beginner-reference` – Anfänger-FAQ und Islam-A–Z-Begriffe fachlich prüfen.
+32. `purity-basics` – Ghusl-/Tayammum-Grundlagen und Grenzen der Darstellung prüfen.
+33. `names-of-allah` – die vorhandene 99er-Lernliste darf nicht als einzig authentisch festgelegte vollständige Liste erscheinen; einzelne Namen, Schreibweisen, Bedeutungen und Belege prüfen.
+34. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
+35. `dhikr-routines` – Quellen, Zählungen, Bedeutungen und Varianten der Routinen prüfen.
+36. `duas` – arabische Texte, Transliteration, Bedeutungsangaben und konkrete Quellen des Dua-Bestands prüfen.
+37. `daily-hadith-rotation` – nur einen fachlich geprüften und konkret referenzierten Daily-Hadith-Pool für Home zulassen.
+38. `worship-guides` – Wudu-/Salah-Anleitungen, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
+39. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
 
 Statusdatei: `src/data/coreContentReview.ts`
 
+## Bereits erfolgte technische Quellen-Audits
+
+Ein Quellen-Audit ist nicht dasselbe wie eine fachliche Freigabe. Es reduziert jedoch konkrete Datenfehler vor dem menschlichen Endreview.
+
+### Dua-Bestand
+
+Alle 34 derzeit sichtbaren Duas besitzen inzwischen einen eigenen Quellen-Audit-Datensatz in:
+
+```text
+src/data/duaSourceAudit.ts
+```
+
+`src/data/duaSourceAudit.test.ts` erzwingt exakt einen Prüfdatensatz pro Dua. Dabei wurden unter anderem falsche oder unpräzise Referenzen, Bedeutungs-Auslassungen und nicht von der angegebenen Quelle getragene Zusätze korrigiert. Der globale Reviewstatus `duas` bleibt trotzdem `pending`, bis ein qualifizierter menschlicher Endreview stattgefunden hat.
+
+### Hadith des Tages
+
+Home rotiert nicht mehr durch die gesamte Legacy-Hadithbibliothek. `DAILY_HADITH_IDS` begrenzt die tägliche Auswahl auf konkret referenzierte Einträge. Das beseitigt die frühere technische Release-Lücke, ersetzt aber nicht die fachliche Endfreigabe des kuratierten Pools.
+
+### 99-Namen-Lernliste
+
+Die UI bezeichnet die vorhandene Liste ausdrücklich als verbreitete 99er-Lernliste und nicht als einzig authentisch festgelegte kanonische Reihenfolge. Die besondere Überlieferung zu 99 Namen wird von sahih Quellen getragen; die konkrete Altbestandsliste und Reihenfolge benötigen dennoch eine Einzelprüfung.
+
 ## Zusätzliche technische Bedingungen
 
-Ein Review-Datensatz allein reicht bei zwei besonders sensiblen Bereichen nicht aus:
+Ein Review-Datensatz allein reicht bei besonders sensiblen Bereichen nicht aus:
 
 - `quran-offline-bundle` kann nicht freigegeben werden, solange die lokale deutsche Ausgabe im Code nur als `übernommener deutscher Altbestand` bezeichnet wird. Vor Freigabe müssen Edition/Provenienz und Nutzungsgrundlage konkret benannt sein.
-- `daily-hadith-rotation` kann nicht freigegeben werden, solange Home keinen explizit kuratierten `DAILY_HADITH_IDS`-Pool nutzt. Die gesamte Legacy-Bibliothek darf nicht automatisch auf Home rotieren.
+- `daily-hadith-rotation` kann nur freigegeben werden, wenn ein explizit kuratierter `DAILY_HADITH_IDS`-Pool existiert. Diese technische Voraussetzung ist auf dem aktuellen Feature-Branch bereits umgesetzt; der fachliche Reviewstatus bleibt davon getrennt.
 
 Diese Bedingungen werden vom Release-Gate zusätzlich kontrolliert.
 
@@ -112,6 +159,8 @@ Vor einer Freigabe müssen mindestens geprüft werden:
 - Gebets-/Wudu-Schritte unterscheiden klar zwischen gemeinsamem Grundablauf, empfohlenen Handlungen und Punkten mit anerkannten Rechtsschul-Unterschieden
 - Quran-Editionen, Übersetzungsquelle und Nutzungsrechte sind nachvollziehbar dokumentiert
 - bei Zählungen oder festgelegten Wiederholungszahlen trägt die genannte Quelle tatsächlich die behauptete Anzahl
+- Seerah- und Tafsir-Zusammenfassungen behaupten nicht mehr, als die angegebenen Quellen tragen
+- eine gute Absicht wird nicht als pauschale Erlaubnis für ansonsten verbotene Handlungen dargestellt
 
 ## Änderung nach Freigabe
 
