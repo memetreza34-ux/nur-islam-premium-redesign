@@ -20,6 +20,10 @@ export type DhikrRoutine = {
  * Kleine, bewusst begrenzte Dhikr-Auswahl mit sichtbaren Quellenhinweisen.
  * Die deutschen Bedeutungen sind sinngemäße Formulierungen und keine
  * vorgetäuschten Originalübersetzungen der Hadith-Werke.
+ *
+ * Ein freier Zähler wird bewusst nicht mit einer künstlichen Zielzahl in diese
+ * Liste aufgenommen: Eine App-Zielzahl darf nicht wie eine religiös festgelegte
+ * Wiederholungszahl wirken.
  */
 export const DHIKR_ROUTINES: DhikrRoutine[] = [
   {
@@ -103,22 +107,6 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
         arabic: 'الْحَمْدُ لِلَّهِ',
         meaning: 'Alles Lob gebührt Allah.',
         target: 33,
-      },
-    ],
-  },
-  {
-    id: 'free-counter',
-    title: 'Freier Zähler',
-    shortTitle: 'Frei',
-    description: 'Ein neutraler Zähler für persönlichen Dhikr ohne vorgegebene religiöse Anzahl.',
-    source: 'Persönlicher Zähler · keine bestimmte Anzahl behauptet',
-    items: [
-      {
-        id: 'free-subhanallah',
-        latin: 'SubhanAllah',
-        arabic: 'سُبْحَانَ اللَّهِ',
-        meaning: 'Allah ist frei von jedem Mangel.',
-        target: 100,
       },
     ],
   },
