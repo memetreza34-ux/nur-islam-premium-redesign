@@ -41,7 +41,7 @@ test('personalizes Home for a beginner and opens the next unfinished lesson', as
   await expect(page.getByRole('heading', { name: 'Wer ist Allah?' })).toBeVisible();
 });
 
-test('keeps the general Home for experienced users', async ({ page }) => {
+test('keeps a focused core Home for experienced users', async ({ page }) => {
   await page.evaluate(() => {
     localStorage.setItem('nur_knowledge_level', 'experienced');
     localStorage.removeItem('nur_beginner_learning_completed');
@@ -50,8 +50,33 @@ test('keeps the general Home for experienced users', async ({ page }) => {
   await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
 
   await expect(page.getByText('Neu im Islam · Dein nächster Schritt', { exact: true })).toHaveCount(0);
-  await expect(page.getByText('Islam Quiz', { exact: true })).toBeVisible();
-  await expect(page.getByText('Nur Assistent', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Islam Quiz', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Nur Assistent', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Fasten-Assistent', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Ummah-Übersicht', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Quran lesen', { exact: true })).toBeVisible();
+  await expect(page.getByText('Meine Sammlung', { exact: true })).toBeVisible();
+});
+
+test('does not expose unreviewed legacy modules in public hubs', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'experienced');
+    localStorage.removeItem('nur_beginner_learning_completed');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
+  await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Islam lernen' })).toBeVisible();
+  for (const label of ['Islam-Quiz', 'Hajj & Umrah', 'Hadith-Sammlung', 'Propheten']) {
+    await expect(page.getByText(label, { exact: true })).toHaveCount(0);
+  }
+
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Mehr' })).toBeVisible();
+  for (const label of ['Fasten-Assistent', 'Ummah-Übersicht', 'Zakat-Rechner', 'Gebetsanzeige']) {
+    await expect(page.getByText(label, { exact: true })).toHaveCount(0);
+  }
 });
 
 test('stores beginner progress locally', async ({ page }) => {
