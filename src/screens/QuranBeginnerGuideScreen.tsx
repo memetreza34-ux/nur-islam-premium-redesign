@@ -17,7 +17,7 @@ const quranTerms = [
 ] as const;
 
 const starterSurahs = [
-  { number: 1, name: 'Al-Faatiha', note: '7 Ayat · zentral im Pflichtgebet' },
+  { number: 1, name: 'Al-Faatiha', note: '7 Ayat · zentral im Gebet' },
   { number: 112, name: 'Al-Ikhlaas', note: '4 Ayat · kurze Sure' },
   { number: 113, name: 'Al-Falaq', note: '5 Ayat · kurze Sure' },
   { number: 114, name: 'An-Naas', note: '6 Ayat · kurze Sure' },
@@ -55,11 +55,11 @@ export function QuranBeginnerGuideScreen({
         <header>
           <span className="overline">Grundlage</span>
           <h2>Was ist der Quran?</h2>
-          <p>Der Quran ist die islamische Offenbarung und dient Muslimen als Rechtleitung. Er wurde dem Propheten Muhammad ﷺ offenbart und ist in 114 Suren gegliedert.</p>
+          <p>Der Quran ist die Offenbarung Allahs an den Propheten Muhammad ﷺ und dient Muslimen als Rechtleitung. Er ist in 114 Suren gegliedert.</p>
         </header>
         <section className="reference-learning-reading">
-          <p>Zum Einstieg musst du weder alle Surennamen kennen noch Arabisch beherrschen. Beginne mit dem arabischen Text, einer transparent gekennzeichneten deutschen Bedeutungswiedergabe und kurzen, geprüften Erklärungen.</p>
-          <p>Die App trennt Qurantext, deutsche Bedeutung und Tafsir bewusst voneinander. Dadurch erkennst du, was Originaltext, Übersetzung und Erklärung ist.</p>
+          <p>Zum Einstieg musst du weder alle Surennamen kennen noch Arabisch beherrschen. Nutze den arabischen Qurantext zusammen mit einer transparent gekennzeichneten deutschen Bedeutungswiedergabe und geprüften Erklärungen, damit Originaltext und Verständnishilfe klar getrennt bleiben.</p>
+          <p>Die App trennt Qurantext, deutsche Bedeutung und Tafsir bewusst voneinander. Dadurch erkennst du, was Originaltext, Übersetzung beziehungsweise Bedeutungswiedergabe und Erklärung ist.</p>
         </section>
       </article>
 
@@ -69,7 +69,7 @@ export function QuranBeginnerGuideScreen({
           <button type="button"><span>1</span><strong>Der Quran besteht aus 114 Suren.</strong></button>
           <button type="button"><span>2</span><strong>Eine Sure besteht aus einzelnen Ayat.</strong></button>
           <button type="button"><span>3</span><strong>Juz sind Leseabschnitte, keine zusätzlichen Suren.</strong></button>
-          <button type="button"><span>4</span><strong>Übersetzung und Tafsir sind Hilfen zum Verstehen und werden getrennt vom arabischen Qurantext angezeigt.</strong></button>
+          <button type="button"><span>4</span><strong>Übersetzung/Bedeutungswiedergabe und Tafsir sind Hilfen zum Verstehen und werden getrennt vom arabischen Qurantext angezeigt.</strong></button>
         </div>
       </section>
 
@@ -83,7 +83,8 @@ export function QuranBeginnerGuideScreen({
       </section>
 
       <section className="reference-learning-key-points">
-        <div className="section-heading"><div><span className="overline">Einfach anfangen</span><h2>Vier gute Startpunkte in der App</h2></div><BookOpen size={21} /></div>
+        <div className="section-heading"><div><span className="overline">Einfach anfangen</span><h2>Vier einfache Startpunkte in der App</h2></div><BookOpen size={21} /></div>
+        <p className="reference-learning-sources__notice">Diese Auswahl ist eine praktische Lernempfehlung der App und keine religiöse Rangliste der Suren.</p>
         <div>
           {starterSurahs.map((surah, index) => (
             <button key={surah.number} type="button" onClick={() => onOpenReader(surah.number, 1)}>
@@ -100,6 +101,7 @@ export function QuranBeginnerGuideScreen({
         <div>
           <article><span>Quran</span><strong>Al-Baqara 2:185</strong><p>Beschreibt den Quran als Rechtleitung für die Menschen.</p></article>
           <article><span>Quran</span><strong>Al-Alaq 96:1–5</strong><p>Gehört zu den ersten offenbarten Versen und verbindet Offenbarung mit Lesen und Wissen.</p></article>
+          <article><span>Hadith</span><strong>Sahih al-Bukhari 756</strong><p>Belegt die zentrale Bedeutung von Al-Fatiha im Gebet; Detailfragen zur Rezitation im Gemeinschaftsgebet werden fiqhlich unterschiedlich eingeordnet.</p></article>
         </div>
         <p className="reference-learning-sources__notice">Die redaktionelle Einführung bleibt bis zum fachlichen Endreview als nicht final freigegeben markiert. Bei Tafsir und Detailfragen werden geprüfte Fachquellen benötigt.</p>
       </section>
