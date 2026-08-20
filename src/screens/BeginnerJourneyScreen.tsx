@@ -5,12 +5,16 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  CircleHelp,
+  Droplets,
   GraduationCap,
   ShieldCheck,
 } from 'lucide-react';
 import { motion, useReducedMotion } from 'motion/react';
 import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
 import type { BeginnerLearningLesson } from '../data/beginnerLearningContent';
+import { BeginnerReferenceScreen } from './BeginnerReferenceScreen';
+import { PurityBasicsScreen } from './PurityBasicsScreen';
 
 function readCompleted() {
   try {
@@ -38,6 +42,8 @@ function readLastLesson() {
 export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
   const [completed, setCompleted] = useState(readCompleted);
   const [selectedLessonId, setSelectedLessonId] = useState(readLastLesson);
+  const [referenceOpen, setReferenceOpen] = useState(false);
+  const [purityOpen, setPurityOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const selectedLesson = useMemo(
@@ -65,6 +71,9 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
     selectLesson(next);
   };
 
+  if (referenceOpen) return <BeginnerReferenceScreen onBack={() => setReferenceOpen(false)} />;
+  if (purityOpen) return <PurityBasicsScreen onBack={() => setPurityOpen(false)} />;
+
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
@@ -72,7 +81,7 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zu Islam lernen"><ChevronLeft size={20} /></button>
         <div><span className="overline">Geführter Einstieg</span><h1>Neu im Islam</h1></div>
-        <span className="icon-button" aria-hidden="true"><GraduationCap size={20} /></span>
+        <button className="icon-button" onClick={() => setReferenceOpen(true)} aria-label="Anfängerfragen und Begriffe öffnen"><CircleHelp size={20} /></button>
       </header>
 
       <section className="reference-learning-course-hero is-aqidah">
@@ -87,6 +96,11 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
           </div>
         </div>
         <span className="reference-learning-course-hero__icon"><GraduationCap size={54} /></span>
+      </section>
+
+      <section className="reference-prayer-learning-actions">
+        <button onClick={() => setReferenceOpen(true)}><span><CircleHelp size={22} /></span><span><strong>Fragen & Begriffe</strong><small>Anfänger-FAQ und Islam A–Z</small></span><ChevronRight size={17} /></button>
+        <button onClick={() => setPurityOpen(true)}><span><Droplets size={22} /></span><span><strong>Ghusl & Tayammum</strong><small>Reinheit einfach unterscheiden</small></span><ChevronRight size={17} /></button>
       </section>
 
       <section className="reference-learning-lesson-selector" aria-label="Grundlagen auswählen">
