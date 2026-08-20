@@ -33,6 +33,8 @@ Statusdatei: `src/data/beginnerReview.ts`
 
 11. `names-of-allah` – 99 Namen: Reihenfolge, arabische Schreibweise, Transliteration und deutsche Bedeutungsangaben prüfen.
 12. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
+13. `worship-guides` – Wudu-/Salah-Anleitungen, Pflichtteile, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
+14. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
 
 Statusdatei: `src/data/coreContentReview.ts`
 
@@ -83,6 +85,7 @@ Vor einer Freigabe müssen mindestens geprüft werden:
 - arabische Schreibweise und Transliteration sind konsistent
 - deutsche Bedeutungsangaben sind sachlich vertretbar
 - Anfängerformulierungen erzeugen keine falsche Gewissheit
+- Gebets-/Wudu-Schritte unterscheiden klar zwischen gemeinsamem Grundablauf, empfohlenen Handlungen und Punkten mit anerkannten Rechtsschul-Unterschieden
 
 ## Änderung nach Freigabe
 
