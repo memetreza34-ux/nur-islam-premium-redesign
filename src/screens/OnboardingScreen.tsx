@@ -2,10 +2,12 @@ import { useState, type ReactNode } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
+  BookOpen,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   Compass,
+  GraduationCap,
   LocateFixed,
   MoonStar,
   ShieldCheck,
@@ -33,6 +35,14 @@ type OnboardingSlide = {
   icon: LucideIcon;
   points: string[];
 };
+
+type KnowledgeLevel = 'beginner' | 'familiar' | 'experienced';
+
+const knowledgeLevels: Array<{ id: KnowledgeLevel; title: string; description: string; icon: LucideIcon }> = [
+  { id: 'beginner', title: 'Ich bin neu', description: 'Führe mich Schritt für Schritt durch die wichtigsten Grundlagen.', icon: GraduationCap },
+  { id: 'familiar', title: 'Ich kenne die Grundlagen', description: 'Gebet, Quran und Wissen strukturiert vertiefen.', icon: BookOpen },
+  { id: 'experienced', title: 'Ich praktiziere bereits', description: 'Alle Bereiche direkt nutzen und gezielt lernen.', icon: Sparkles },
+];
 
 const slides: OnboardingSlide[] = [
   {
@@ -68,6 +78,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   const [index, setIndex] = useState(0);
   const [locationReady, setLocationReady] = useState(false);
   const [notificationsReady, setNotificationsReady] = useState(false);
+  const [knowledgeLevel, setKnowledgeLevel] = useState<KnowledgeLevel | null>(null);
   const [status, setStatus] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
   const slide = slides[index];
@@ -75,6 +86,11 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   const isLast = index === slides.length - 1;
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
+
+  const selectKnowledgeLevel = (level: KnowledgeLevel) => {
+    setKnowledgeLevel(level);
+    try { localStorage.setItem('nur_knowledge_level', level); } catch { /* optional */ }
+  };
 
   const requestLocation = () => {
     if (!navigator.geolocation) {
@@ -121,7 +137,10 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
   };
 
   const finish = () => {
-    try { localStorage.setItem('nur_onboarding_complete', 'true'); } catch { /* optional */ }
+    try {
+      localStorage.setItem('nur_onboarding_complete', 'true');
+      if (!knowledgeLevel && !localStorage.getItem('nur_knowledge_level')) localStorage.setItem('nur_knowledge_level', 'beginner');
+    } catch { /* optional */ }
     onComplete();
   };
 
@@ -164,19 +183,36 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
           </div>
 
           {isLast ? (
-            <div className="reference-onboarding__permissions">
-              <button className={locationReady ? 'is-ready' : ''} onClick={requestLocation}>
-                <span><LocateFixed size={19} /></span>
-                <span><strong>Standort</strong><small>Für Gebetszeiten und Moscheen</small></span>
-                {locationReady ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
-              </button>
-              <button className={notificationsReady ? 'is-ready' : ''} onClick={requestNotifications}>
-                <span><BellRing size={19} /></span>
-                <span><strong>Gebetserinnerungen</strong><small>Für alle fünf Pflichtgebete</small></span>
-                {notificationsReady ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
-              </button>
-              <span className="reference-onboarding__privacy"><ShieldCheck size={15} /> Freigaben sind optional. Standortdaten werden für Live-Funktionen an die jeweils ausgewiesenen externen Dienste übermittelt.</span>
-            </div>
+            <>
+              <div className="reference-onboarding__copy">
+                <span className="overline">Dein Startpunkt</span>
+                <h2>Wie gut kennst du den Islam?</h2>
+                <p>Damit Nur dir zuerst die Inhalte zeigt, die zu deinem aktuellen Stand passen.</p>
+              </div>
+              <div className="reference-onboarding__permissions">
+                {knowledgeLevels.map(({ id, title, description, icon: Icon }) => (
+                  <button key={id} className={knowledgeLevel === id ? 'is-ready' : ''} onClick={() => selectKnowledgeLevel(id)}>
+                    <span><Icon size={19} /></span>
+                    <span><strong>{title}</strong><small>{description}</small></span>
+                    {knowledgeLevel === id ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
+                  </button>
+                ))}
+              </div>
+
+              <div className="reference-onboarding__permissions">
+                <button className={locationReady ? 'is-ready' : ''} onClick={requestLocation}>
+                  <span><LocateFixed size={19} /></span>
+                  <span><strong>Standort</strong><small>Für Gebetszeiten und Moscheen</small></span>
+                  {locationReady ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
+                </button>
+                <button className={notificationsReady ? 'is-ready' : ''} onClick={requestNotifications}>
+                  <span><BellRing size={19} /></span>
+                  <span><strong>Gebetserinnerungen</strong><small>Für alle fünf Pflichtgebete</small></span>
+                  {notificationsReady ? <CircleCheck size={18} /> : <ChevronRight size={18} />}
+                </button>
+                <span className="reference-onboarding__privacy"><ShieldCheck size={15} /> Freigaben sind optional. Standortdaten werden für Live-Funktionen an die jeweils ausgewiesenen externen Dienste übermittelt.</span>
+              </div>
+            </>
           ) : null}
         </motion.section>
       </AnimatePresence>
