@@ -26,3 +26,15 @@ jobs:
           cache: npm
       - run: npm ci --no-audit --no-fund
       - run: npm run check
+
+  beginner-content-release-gate:
+    if: github.event_name == 'pull_request' && github.base_ref == 'main'
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: node scripts/check-beginner-release-approval.mjs
