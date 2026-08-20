@@ -1,20 +1,12 @@
 /**
  * Der Ablauf des Pflichtgebets, Rakʿah für Rakʿah.
  *
- * Übernommen aus dem Altbestand `memetreza34-ux/nur-islam`
- * (`src/services/prayerLearningData.ts`), wo jeder Schritt bereits arabischen
- * Wortlaut, Umschrift und deutsche Bedeutung trug. Der Lernbereich hier führte
- * stattdessen sieben allgemeine Positionen ohne Wortlaut, gleich für alle fünf
- * Gebete — man konnte daraus nicht beten lernen, weil nirgends stand, was man
- * in welcher Rakʿah tatsächlich sagt.
- *
- * Arabischer Text, Umschrift und Bedeutung sind wortgleich übernommen und
- * stehen als solche auf der Prüfliste (`npm run review:write`). Die
- * Zusammensetzung der Rakʿah unterscheidet sich zwischen den Rechtsschulen in
- * Details; der Bildschirm weist darauf hin.
+ * Die Daten zeigen eine verbreitete sunnitische Lernfolge für das eigene Gebet.
+ * Sie sind bewusst kein Versuch, alle Rechtsschulen auf eine einzige Detailform
+ * festzulegen. Handpositionen, einzelne Eröffnungsformeln, die Einordnung
+ * bestimmter Rezitationen und Details beim Gemeinschaftsgebet können variieren.
  */
 
-/** Körperhaltung während des Schritts — bestimmt das Symbol in der Liste. */
 export type PrayerPosture = 'takbir' | 'qiyam' | 'ruku' | 'standing' | 'sujud' | 'sitting' | 'taslim';
 
 export type RakatStep = {
@@ -22,7 +14,6 @@ export type RakatStep = {
   title: string;
   description: string;
   posture: PrayerPosture;
-  /** Wortlaut, wo es einen festen gibt. Schritte ohne sind reine Bewegung. */
   arabic?: string;
   transliteration?: string;
   translation?: string;
@@ -44,7 +35,7 @@ export type RakatPrayer = {
 const TAKBIR: RakatStep = {
   id: 'takbir',
   title: 'Takbir al-Ihram',
-  description: 'Fasse die Absicht (Niyyah) im Herzen. Hebe die Hände zu den Ohren und beginne das Gebet.',
+  description: 'Fasse die Absicht (Niyyah) im Herzen, hebe die Hände und beginne das Gebet. Die genaue Höhe der Hände wird in verschiedenen überlieferten Formen beschrieben.',
   posture: 'takbir',
   arabic: 'اللَّهُ أَكْبَر',
   transliteration: 'Allahu Akbar',
@@ -53,8 +44,8 @@ const TAKBIR: RakatStep = {
 
 const SANA: RakatStep = {
   id: 'sana',
-  title: 'Eröffnungs-Bittgebet (Sana)',
-  description: 'Leise rezitieren nach dem ersten Takbir:',
+  title: 'Eröffnungs-Bittgebet (eine überlieferte Form)',
+  description: 'Nach dem ersten Takbir kann ein überliefertes Eröffnungs-Bittgebet leise gesprochen werden. Es wird hier nicht als für alle Rechtsschulen identische Pflicht dargestellt.',
   posture: 'qiyam',
   arabic: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ',
   transliteration: 'Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta’ala jadduka, wa la ilaha ghayruk',
@@ -64,7 +55,7 @@ const SANA: RakatStep = {
 const TA_AWWUDH_BASMALAH: RakatStep = {
   id: 'ta-awwudh-basmalah',
   title: 'Zuflucht suchen & Basmalah',
-  description: 'Vor der Rezitation des Korans:',
+  description: 'Vor der Quranrezitation werden Taʿawwudh und Basmalah in verbreiteten Lernformen gesprochen. Einzelheiten ihrer Wiederholung und Einordnung unterscheiden sich zwischen Rechtsschulen.',
   posture: 'qiyam',
   arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
   transliteration: 'A’udhu billahi minash-shaytanir-rajim\nBismillahir-Rahmanir-Rahim',
@@ -74,17 +65,17 @@ const TA_AWWUDH_BASMALAH: RakatStep = {
 const FATIHA: RakatStep = {
   id: 'fatiha',
   title: 'Sure Al-Fatihah',
-  description: 'Diese Sure muss in jeder Rakʿah rezitiert werden:',
+  description: 'Rezitiere Al-Fatihah. Für das Mitbeten hinter einem Imam bestehen bei einzelnen Details anerkannte Rechtsschul-Unterschiede.',
   posture: 'qiyam',
   arabic: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
-  transliteration: 'Alhamdu lillahi rabbil-’alamin\nAr-Rahmanir-Rahim\nMaliki yawmid-din\nIyyaka na’budu wa iyyaka nasta’in\nIhdinas-siratal-mustaqim\nSiratal-ladhina an’amta ’alayhim ghayril-maghdubi ’alayhim wa lad-dallin (Amin)',
+  transliteration: 'Alhamdu lillahi rabbil-’alamin\nAr-Rahmanir-Rahim\nMaliki yawmid-din\nIyyaka na’budu wa iyyaka nasta’in\nIhdinas-siratal-mustaqim\nSiratal-ladhina an’amta ’alayhim ghayril-maghdubi ’alayhim wa lad-dallin',
   translation: 'Alles Lob gehört Allah, dem Herrn der Welten, dem Allerbarmer, dem Barmherzigen, dem Herrscher am Tag des Gerichts. Dir allein dienen wir, und Dich allein bitten wir um Hilfe. Leite uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht den Weg derer, die Deinen Zorn erregt haben, und nicht den Weg der Irregehenden.',
 };
 
 const SHORT_SURAH: RakatStep = {
   id: 'short-surah',
-  title: 'Eine weitere Sure (z. B. Al-Ikhlas)',
-  description: 'Nach Al-Fatihah in den ersten beiden Rakʿah:',
+  title: 'Weitere Quranrezitation',
+  description: 'In den ersten beiden Rakʿah folgt in der verbreiteten Lernpraxis nach Al-Fatihah weitere Quranrezitation, zum Beispiel Al-Ikhlas.',
   posture: 'qiyam',
   arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ\nلَمْ يَلِدْ وَلَمْ يُولَدْ\nوَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
   transliteration: 'Qul huwallahu ahad\nAllahus-samad\nLam yalid wa lam yulad\nWa lam yakul-lahu kufuwan ahad',
@@ -94,17 +85,17 @@ const SHORT_SURAH: RakatStep = {
 const RUKU: RakatStep = {
   id: 'ruku',
   title: 'Ruku (Verbeugung)',
-  description: 'Sage „Allahu Akbar“, verbeuge dich mit geradem Rücken, Hände auf den Knien. Sage dreimal:',
+  description: 'Sage „Allahu Akbar“, verbeuge dich ruhig und sprich den überlieferten Tasbih. Eine bestimmte Wiederholungszahl wird hier nicht als allgemeine Pflicht dargestellt.',
   posture: 'ruku',
   arabic: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ',
   transliteration: 'Subhana Rabbiyal Adhim',
-  translation: 'Preis sei meinem Herrn, dem Allmächtigen.',
+  translation: 'Preis sei meinem Herrn, dem Gewaltigen.',
 };
 
 const RISING_RUKU: RakatStep = {
   id: 'rising-ruku',
   title: 'Aufrichten aus dem Ruku',
-  description: 'Richte dich wieder auf und sage beim Hochgehen „Sami Allahu liman hamidah“, im Stehen dann „Rabbana wa lakal hamd“.',
+  description: 'Richte dich vollständig auf. Beim eigenen Gebet wird „Sami Allahu liman hamidah“ gesprochen; anschließend „Rabbana wa lakal hamd“. Beim Gemeinschaftsgebet bestehen Detailunterschiede.',
   posture: 'standing',
   arabic: 'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ\nرَبَّنَا وَلَكَ الْحَمْدُ',
   transliteration: 'Sami Allahu liman hamidah\nRabbana wa lakal hamd',
@@ -114,7 +105,7 @@ const RISING_RUKU: RakatStep = {
 const SUJUD: RakatStep = {
   id: 'sujud',
   title: 'Sujud (Niederwerfung)',
-  description: 'Sage „Allahu Akbar“ und wirf dich nieder (Stirn, Nase, Hände, Knie und Zehen am Boden). Sage dreimal:',
+  description: 'Sage „Allahu Akbar“, vollziehe die Niederwerfung ruhig und sprich den überlieferten Tasbih. Eine feste Wiederholungszahl wird hier nicht als allgemeine Pflicht dargestellt.',
   posture: 'sujud',
   arabic: 'سُبْحَانَ رَبِّيَ الْأَعْلَى',
   transliteration: 'Subhana Rabbiyal A’la',
@@ -124,7 +115,7 @@ const SUJUD: RakatStep = {
 const SITTING_SUJUD: RakatStep = {
   id: 'sitting-sujud',
   title: 'Sitzen zwischen den Niederwerfungen',
-  description: 'Sage „Allahu Akbar“, setze dich aufrecht hin und sage:',
+  description: 'Sage „Allahu Akbar“, setze dich ruhig auf und sprich ein überliefertes Bittgebet, zum Beispiel:',
   posture: 'sitting',
   arabic: 'رَبِّ اغْفِرْ لِي',
   transliteration: 'Rabbighfir li',
@@ -135,7 +126,7 @@ const SUJUD_SECOND: RakatStep = {
   ...SUJUD,
   id: 'sujud-second',
   title: 'Zweite Niederwerfung',
-  description: 'Wirf dich erneut nieder und sage dreimal:',
+  description: 'Vollziehe die zweite Niederwerfung ruhig und sprich den überlieferten Tasbih.',
 };
 
 const TASHAHHUD: RakatStep = {
@@ -145,13 +136,13 @@ const TASHAHHUD: RakatStep = {
   posture: 'sitting',
   arabic: 'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
   transliteration: 'At-tahiyyatu lillahi was-salawatu wat-tayyibat, as-salamu ’alayka ayyuhan-Nabiyyu wa rahmatullahi wa barakatuh, as-salamu ’alayna wa ’ala ’ibadillahis-salihin. Ash-hadu an la ilaha illallah, wa ash-hadu anna Muhammadan ’abduhu wa rasuluh.',
-  translation: 'Alle Ehrerbietungen, Gebete und guten Taten gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Seine Segnungen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass es keinen Gott gibt außer Allah, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist.',
+  translation: 'Alle Ehrerbietungen, Gebete und guten Dinge gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Seine Segnungen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass niemand außer Allah anbetungswürdig ist, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist.',
 };
 
 const SALAWAT: RakatStep = {
   id: 'salawat',
   title: 'Salawat auf den Propheten ﷺ',
-  description: 'Im letzten Sitzen folgen nach dem Tashahhud die Segenswünsche (Salawat Ibrahimiyyah):',
+  description: 'Im letzten Sitzen werden nach dem Tashahhud die Segenswünsche gesprochen. Die juristische Einordnung einzelner Teile unterscheidet sich zwischen Rechtsschulen.',
   posture: 'sitting',
   arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
   transliteration: 'Allahumma salli ’ala Muhammadin wa ’ala ali Muhammadin, kama sallayta ’ala Ibrahima wa ’ala ali Ibrahima, innaka Hamidun Majid. Allahumma barik ’ala Muhammadin wa ’ala ali Muhammadin, kama barakta ’ala Ibrahima wa ’ala ali Ibrahima, innaka Hamidun Majid.',
@@ -160,8 +151,8 @@ const SALAWAT: RakatStep = {
 
 const DUA_BEFORE_SALAM: RakatStep = {
   id: 'dua-before-salam',
-  title: 'Bittgebet vor dem Salam (optional)',
-  description: 'Vor dem Beenden des Gebets kann ein Bittgebet gesprochen werden, zum Beispiel:',
+  title: 'Bittgebet vor dem Salam',
+  description: 'Vor dem Beenden des Gebets ist Bittgebet überliefert. Eine bekannte Form ist:',
   posture: 'sitting',
   arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ',
   transliteration: 'Allahumma inni a’udhu bika min ’adhabi jahannam, wa min ’adhabil-qabr, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal.',
@@ -171,35 +162,31 @@ const DUA_BEFORE_SALAM: RakatStep = {
 const TASLIM: RakatStep = {
   id: 'taslim',
   title: 'Taslim (Abschluss)',
-  description: 'Drehe den Kopf nach rechts, dann nach links und sage jeweils:',
+  description: 'Beende das Gebet mit dem Friedensgruß. Die verbreitete Lernform erfolgt nach rechts und anschließend nach links.',
   posture: 'taslim',
   arabic: 'السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ',
   transliteration: 'Assalamu Alaikum wa Rahmatullah',
   translation: 'Der Friede und die Barmherzigkeit Allahs seien mit euch.',
 };
 
-/** Der Kern jeder Rakʿah: Verbeugung, Aufrichten, zwei Niederwerfungen. */
 const BOWING_AND_PROSTRATION = [RUKU, RISING_RUKU, SUJUD, SITTING_SUJUD, SUJUD_SECOND] as const;
 
-/** Erste Rakʿah: als einzige mit Eröffnungstakbir und Sana. */
 const rakatOne = (): Rakat => ({
   number: 1,
   title: '1. Rakʿah',
   steps: [TAKBIR, SANA, TA_AWWUDH_BASMALAH, FATIHA, SHORT_SURAH, ...BOWING_AND_PROSTRATION],
 });
 
-/** Zweite Rakʿah im Gebet mit mehr als zwei Einheiten: endet im Sitzen. */
 const rakatTwoMiddle = (): Rakat => ({
   number: 2,
   title: '2. Rakʿah',
-  steps: [TA_AWWUDH_BASMALAH, FATIHA, SHORT_SURAH, ...BOWING_AND_PROSTRATION, TASHAHHUD],
+  steps: [FATIHA, SHORT_SURAH, ...BOWING_AND_PROSTRATION, TASHAHHUD],
 });
 
-/** In der dritten und vierten Einheit folgt nach Al-Fatihah keine weitere Sure. */
 const rakatMiddleShort = (number: number): Rakat => ({
   number,
   title: `${number}. Rakʿah`,
-  steps: [TA_AWWUDH_BASMALAH, FATIHA, ...BOWING_AND_PROSTRATION],
+  steps: [FATIHA, ...BOWING_AND_PROSTRATION],
 });
 
 const closingSteps = [TASHAHHUD, SALAWAT, DUA_BEFORE_SALAM, TASLIM] as const;
@@ -208,8 +195,8 @@ const rakatFinal = (number: number, withShortSurah: boolean): Rakat => ({
   number,
   title: `${number}. Rakʿah (Abschluss)`,
   steps: withShortSurah
-    ? [TA_AWWUDH_BASMALAH, FATIHA, SHORT_SURAH, ...BOWING_AND_PROSTRATION, ...closingSteps]
-    : [TA_AWWUDH_BASMALAH, FATIHA, ...BOWING_AND_PROSTRATION, ...closingSteps],
+    ? [FATIHA, SHORT_SURAH, ...BOWING_AND_PROSTRATION, ...closingSteps]
+    : [FATIHA, ...BOWING_AND_PROSTRATION, ...closingSteps],
 });
 
 const twoRakatPrayer = (id: RakatPrayerId): RakatPrayer => ({
@@ -240,7 +227,7 @@ export const PRAYER_RAKATS_BY_ID = new Map(PRAYER_RAKATS.map((prayer) => [prayer
 export const PRAYER_PRACTICE_TIPS: readonly string[] = [
   'Bete mit Ruhe und Konzentration (Khushuʿ).',
   'Bewege dich nicht zu schnell. Jede Position sollte ruhig eingenommen werden.',
-  'Schau während des Stehens auf die Stelle der Niederwerfung.',
-  'Fasse die Absicht (Niyyah) vor jedem Gebet im Herzen.',
-  'Achte auf die korrekten Zeiten der Gebete.',
+  'Fasse die Absicht (Niyyah) vor dem Gebet im Herzen.',
+  'Achte auf die korrekte Gebetszeit und Qibla.',
+  'Bei Gemeinschaftsgebet oder Rechtsschuldetails folge einer verlässlichen lokalen Lehrperson bzw. deiner Rechtsschule.',
 ];
