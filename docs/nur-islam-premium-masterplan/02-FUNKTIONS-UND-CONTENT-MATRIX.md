@@ -4,10 +4,11 @@ Diese Matrix trennt **sichtbare Funktion**, **technische Reife** und **inhaltlic
 
 ## Statuslegende
 
-- **Grün** – Kernfunktion vorhanden; Release-Härtung/Nachweis bleibt trotzdem nötig
-- **Gelb** – teilweise/experimentell; produktive Quelle, Review oder Infrastruktur fehlt
-- **Rot** – nicht produktiv oder nur UI/Platzhalter
-- **Später** – nicht nötig für v1
+- **Grün technisch** – Funktion ist implementiert und durch technische Checks abgesichert; fachliche oder reale Geräteabnahme kann trotzdem offen sein.
+- **Review offen** – technisch vorhanden, aber religiöser/redaktioneller Endreview fehlt. Für P0 ist das ein Release-Blocker.
+- **Gelb** – teilweise/experimentell; produktive Quelle, Geräteabnahme oder Infrastruktur fehlt.
+- **Rot** – nicht produktiv oder nur UI/Platzhalter.
+- **Später** – bewusst nicht für v1 vorgesehen.
 
 ## v1-Produktregel
 
@@ -15,65 +16,83 @@ Für den ersten öffentlichen Release gilt: **Anfängerführung und geprüfte Gr
 
 Ein Modul mit vielen Funktionen ist nicht releasebereit, wenn ein kompletter Anfänger nicht versteht, was es bedeutet, wann er es braucht oder welche Aussage fachlich geprüft wurde.
 
-## Kernmodule
+Für religiöse P0-Inhalte gilt zusätzlich der zentrale Freigabeumfang aus:
 
-| Modul | Repo-Stand | Content-/Datenstand | v1-Priorität | Nächster Schritt |
+```text
+src/data/v1ReligiousReleaseScope.ts
+```
+
+Der finale Merge nach `main` wird durch `scripts/check-v1-religious-release-approval.mjs` blockiert, solange ein dort definierter P0-Inhaltsblock noch nicht dokumentiert freigegeben ist. Der Prozess ist in `docs/V1-RELIGIOUS-RELEASE-GATE.md` beschrieben.
+
+## Kernmodule – aktueller Stand des v1-Branches
+
+| Modul | Technischer Stand | Content-/Datenstand | v1-Priorität | Release-Status / nächster Schritt |
 |---|---|---|---|---|
-| Home | Grün | Gebets-/Tagesdaten teilweise live | P0 | klare nächste Aktion + Anfängerstatus integrieren, echte Gerät-/Screenshot-Abnahme |
-| Onboarding | Grün | Standort/Notifications erklärt | P0 | Kenntnisstand „neu / Grundlagen / erfahren“ ergänzen und Permission-Flows real testen |
-| Neu-im-Islam-Pfad | Rot/neu | Grundlagen teilweise über andere Module verteilt | P0 | geführte Journey mit Reihenfolge, Fortschritt und geprüften Quellen bauen |
-| Was ist Islam? | Rot/neu | einzelne Aussagen verteilt | P0 | eigenständige Anfängerlektion mit Quelle/Review |
-| Shahada-Grundlage | Rot/neu | kein klarer Anfänger-Kernflow | P0 | Wortlaut, Bedeutung, Einordnung, Quelle und sensible Anfängerhinweise ergänzen |
-| Fünf Säulen | Teilweise | Wissen verteilt | P0 | zentrale Grundlagenlektion erstellen und mit bestehenden Modulen verknüpfen |
-| Sechs Glaubensgrundlagen | Grün/teilweise | Aqidah-Lektion vorhanden | P0 | als Anfänger-Grundlage im geführten Pfad sichtbar machen |
-| Prophet Muhammad ﷺ – Einführung | Teilweise | Seerah/Propheten vorhanden | P0 | kurze geprüfte Einführungslektion vor tiefer Seerah anbieten |
-| Islam-Lexikon / Begriffe | Rot/neu | Begriffe nur im Fließtext | P0 | zentrale Begriffe kontextuell und über Suche erklärbar machen |
-| Anfänger-FAQ | Rot/neu | Inhalte verteilt | P0 | häufige Einstiegsfragen mit Quellen-/Unsicherheitssystem erstellen |
-| Gebetszeiten | Gelb | AlAdhan live + Cache/Fallback | P0 | Methoden/Regionen/Datenschutz/Fachreview |
-| Gebetstracker | Grün | lokal | P0 | Tageswechsel, Recovery, Sync-Entscheidung |
-| Prayer Reminders | Gelb | nur zuverlässig bei aktiver Web/PWA | P0/P1 | native/push Strategie je Releasekanal |
+| Home | Grün technisch | Gebete, Quran-Fortschritt, Dhikr, tägliche Inhalte; Anfängerpersonalisierung | P0 | Anfänger sehen nächste Grundlage + 0–10-Fortschritt; reale Geräte-/Screenshot-Abnahme bleibt |
+| Onboarding | Grün technisch | Kenntnisstand `beginner / familiar / experienced`, Standort/Notifications | P0 | Knowledge-Level integriert; Permission-Flows auf echten Geräten testen |
+| Neu-im-Islam-Pfad | Grün technisch | 10 strukturierte Grundlagenlektionen | P0 | **Review offen** – alle 10 Lektionen stehen im Religious Release Gate |
+| Was ist Islam? | Grün technisch | eigene Lektion + Quellen | P0 | **Review offen** |
+| Wer ist Allah? | Grün technisch | eigene Lektion + Quellen | P0 | **Review offen** |
+| Shahada-Grundlage | Grün technisch | Bedeutung, Einordnung, Quellen, sensible Hinweise | P0 | **Review offen** |
+| Fünf Säulen | Grün technisch | eigene Grundlagenlektion | P0 | **Review offen** |
+| Sechs Glaubensgrundlagen | Grün technisch | eigene Grundlagenlektion + Hadith Jibril | P0 | **Review offen** |
+| Prophet Muhammad ﷺ – Einführung | Grün technisch | eigene Anfängerlektion | P0 | **Review offen** |
+| Islam-Lexikon / Begriffe | Grün technisch | durchsuchbares Islam A–Z | P0 | **Review offen** als `beginner-reference` |
+| Anfänger-FAQ | Grün technisch | typische Einstiegsfragen + Quellen-/Unsicherheitshinweise | P0 | **Review offen** als `beginner-reference` |
+| 7-Tage-Startplan | Grün technisch | bildet die 10 Grundlagen auf 7 Tage ab | P0/P1 | keine neuen Religionsregeln; nutzt denselben Fortschritt; „kein Zeitdruck“ abgesichert |
+| Gebetszeiten | Gelb/Grün | AlAdhan live + Cache/Fallback | P0 | Methoden/Regionen/Datenschutz/Fachreview und reale Zeitvergleiche |
+| Gebetstracker | Grün technisch | lokal | P0 | Tageswechsel, Recovery und reale Geräteabnahme |
+| Prayer Reminders | Gelb | PWA-/Browserabhängigkeit | P0/P1 | Zuverlässigkeit je Releasekanal real testen; native/push Strategie später |
 | Qibla | Gelb/Grün | Berechnung + Gerätesensorpfad | P0 | reale Sensor-/Permission-/Kalibrierungstests |
-| Quran-Katalog | Grün | 114 Metadaten | P0 | Quellen-/Lizenzregister |
-| Quran-Reader | Gelb/Grün | 4 offline, Rest online/cache | P0 | vollständige Editions-/Offline-Entscheidung |
-| Quran für Anfänger | Rot/neu | Reader vorhanden, Einführung fehlt | P0 | Sure/Ayah/Juz/Übersetzung/Tafsir erklären und Startempfehlungen verknüpfen |
-| Quran-Audio | Rot | keine produktive Quelle | P1 | geprüfte Rezitations-/Lizenzquelle |
-| Gebets-Aussprache-Audio | Rot/neu | Text/Transliteration vorhanden | P1 | lizenzierte/geprüfte Quelle für Al-Fatiha und zentrale Formulierungen definieren |
-| Dhikr | Grün | mehrere Quellen vorhanden | P0 | fachlicher Endreview |
-| Duas | Grün technisch | 34 Einträge | P0 | Einzelquellen/Fachreview vervollständigen |
-| 99 Namen | Grün technisch | 99 Einträge | P0 | stabile IDs + Bedeutungs-/Schreibweisenreview |
-| Kalender | Grün | Hijri-Berechnung + lokale Termine | P0 | regionale Abweichungen/Ereignisquelle |
-| Wudu | Grün technisch | Lerncontent | P0 | Fiqh-Varianten/Quelle prüfen |
-| Ghusl-Grundlagen | Rot/neu | kein klarer Anfängerpfad | P0 | geprüfte Grundlagenerklärung, Varianten/Sonderfälle sauber begrenzen |
-| Tayammum-Grundlagen | Teilweise/neu | in Fiqh erwähnt | P0 | eigenständige kurze Anfängerlektion + Quelle/Review |
-| Salah lernen | Grün technisch | Lerncontent | P0 | Fachreview, Madhhab-Hinweise, UX-Gerätetest |
-| Gebetsbegriffe & Voraussetzungen | Teilweise | über Gebetskurs verteilt | P0 | Rakʿah, Fard, Sunnah, Qibla, Zeit, Reinheit und Gebetsplatz direkt erklären |
-| Wissenskurse | Grün technisch | 6 Kurse/18 Lektionen laut PR | P1 | Quellenstatus pro Lektion und Anfängerreihenfolge |
-| Alltagssituationen-Hub | Rot/neu | Inhalte in Dua/Sunnah/Fasten verteilt | P1 | Situationen statt Kategorien bündeln: Schlaf, Reise, Moschee, Fasten, Fehler/Reue usw. |
-| Hadith-Sammlung | Gelb | Legacy-Inhalte/Quellen | P1 | vollständige geprüfte Datenbasis |
-| Propheten | Gelb | Lernstruktur | P1 | Quellen-/Redaktionsreview |
-| Seerah-Timeline | Rot/neu | Seerah-Lektionen vorhanden | P1 | chronologische Grundtimeline mit geprüften Kerndaten |
-| 7-/30-Tage-Grundlagenplan | Rot/neu | Lernfortschritt vorhanden | P1 | Tagesplan auf bestehende Anfängerlektionen abbilden |
+| Quran-Katalog | Grün technisch | 114 Suren-Metadaten | P0 | Quellen-/Lizenzregister vollständig dokumentieren |
+| Quran-Reader | Grün technisch / Review offen | **114 Suren paarweise offline**, Al Quran Cloud nur Fallback | P0 | **Release-blockiert:** Offline-Arabisch, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage konkret dokumentieren |
+| Quran für Anfänger | Grün technisch | Sure/Ayah/Juz/Tafsir/Übersetzung erklärt, 4 Start-Suren | P0 | **Review offen** als `quran-beginner-guide` |
+| Quran-Audio | Rot | keine produktive/lizenzierte Quelle | P1 | erst nach definierter Rezitations-/Lizenzquelle |
+| Gebets-Aussprache-Audio | Rot | Text/Transliteration vorhanden | P1 | lizenzierte/geprüfte Quelle für Al-Fatiha und zentrale Formulierungen definieren |
+| Dhikr-Routinen | Grün technisch | Routinen mit sichtbaren Quellen | P0 | **Review offen** – Quellen, Zählungen, Bedeutungen und Varianten prüfen |
+| Dhikr-Zählertexte | Grün technisch | arabische Texte/Bedeutungen vorhanden | P0 | **Review offen** – Einzelnachweise/Behauptungen prüfen |
+| Duas | Grün technisch | 34 Einträge mit Quellenfeldern | P0 | **Review offen** – arabischer Text, Transliteration, Bedeutung und Referenzen vollständig fachlich prüfen |
+| 99 Namen | Grün technisch | 99 Einträge, stabile IDs | P0 | **Release-blockiert:** Reihenfolge, arabische Schreibweise, Transliteration, Bedeutungen und Quellen-/Redaktionsstandard prüfen |
+| Hadith des Tages | Grün technisch / Review offen | sinngemäße Zusammenfassungen; Altbestand teils ohne konkrete Nummer | P0 sichtbar auf Home | **Release-blockiert:** vor Freigabe expliziten kuratierten `DAILY_HADITH_IDS`-Pool mit konkreten Referenzen verwenden |
+| Kalender | Grün technisch | Hijri-Berechnung + lokale Termine | P0 | regionale Abweichungen und Ereignisquellen prüfen |
+| Wudu | Grün technisch | ausführlicher Worship-Guide | P0 | **Review offen** als Teil `worship-guides`; gemeinsame Grundlagen vs. Fiqh-Varianten prüfen |
+| Ghusl-Grundlagen | Grün technisch | eigene Anfänger-Hilfeseite | P0 | **Review offen** als `purity-basics` |
+| Tayammum-Grundlagen | Grün technisch | eigene Anfänger-Hilfeseite | P0 | **Review offen** als `purity-basics` |
+| Salah lernen | Grün technisch | alle fünf Pflichtgebete, Rakʿah-für-Rakʿah, Arabisch/Umschrift/Bedeutung | P0 | **Review offen:** `worship-guides` + `prayer-rakat-sequence`; Madhhab-Hinweise und fachliche Ablaufabnahme |
+| Gebetsbegriffe & Voraussetzungen | Grün/teilweise | Rakʿah, Fard, Qibla, Reinheit usw. über Anfänger- und Gebetsbereich | P0 | durch P0-Reviewumfang mitprüfen |
+| Wissenskurse | Grün technisch | 6 Kurse/18 Lektionen | P1 | Quellenstatus pro Lektion und redaktioneller Review vor v1-Freischaltung bewerten |
+| Alltagssituationen-Hub | Rot/neu | Inhalte in Dua/Sunnah/Fasten verteilt | P1 | erst nach P0-Kernrelease bündeln |
+| Hadith-Sammlung | technisch vorhanden, öffentlich gesperrt | Legacy-Bestand teilweise ohne konkrete Nummern | P1 | vollständige Datenbasis prüfen; bis dahin nicht öffentlich in v1 |
+| Propheten | technisch vorhanden, öffentlich gesperrt | Quellen-/Redaktionsreview offen | P1 | nicht öffentlich in v1 |
+| Seerah-Timeline | Rot/neu | Seerah-Lektionen vorhanden | P1 | später chronologische Grundtimeline mit geprüften Kerndaten |
 | Moschee-Finder | Gelb/Grün | OSM/Overpass live | P1 | Attribution, SLA, Datenschutz, Edgecases |
 | Sammlungen | Grün technisch | lokale Favoriten | P1 | stabile IDs, Export, Cloud-Sync-Entscheidung |
-| Profil/Einstellungen | Grün | lokal | P0 | Kenntnisstand, Account/Privacy/Export/Löschung integrieren |
-| Quellen-/Reviewanzeige | Teilweise | Prüfdokument vorhanden, UI nicht überall konsistent | P0 | Status, Edition, Referenz und Varianten bei P0-Content sichtbar machen |
-| KI-Assistent | Rot produktiv | UI-Demo | P2 bis Safety fertig | Backend + RAG + Quellen + Eval |
+| Profil/Einstellungen | Grün technisch | lokal + optionales Konto/Cloud | P0 | Privacy/Export/Löschung und reale Auth-Flows abnehmen |
+| Quellen-/Reviewanzeige | Teilweise/Grün | Anfängerlektionen zeigen Reviewstatus; Gate-Ledger vorhanden | P0 | Reviewstatus künftig auf weitere P0-Inhaltsscreens vereinheitlichen |
+| KI-Assistent | öffentlich v1 gesperrt | UI/Quellenmodus technisch vorhanden, Safety nicht releasebereit | P2 | kein v1-Feature; erst Backend/RAG/Quellen/Eval/Safety |
 
-## Legacy-/Spezialmodule
+## Legacy-/Spezialmodule – v1-Grenze
 
-| Modul | Empfehlung |
+Die folgenden Alt-/Spezialmodule bleiben im Code erhalten, werden aber in v1 nicht als fertige öffentliche Inhalte angeboten, solange ihr Release-Status nicht ausdrücklich `ready` ist.
+
+| Modul | v1-Entscheidung |
 |---|---|
-| Islam-Quiz | v1 nur wenn Fragen fachlich geprüft und Score-Bug ausgeschlossen; nicht vor Anfängergrundlagen priorisieren |
-| Hajj & Umrah | P1/P2; als Lernhilfe, nicht als verbindliche individuelle Rechtsanweisung |
-| Sunnah im Alltag | P1; Quellen je Punkt, später in Alltagssituationen-Hub integrieren |
-| Fehler & Reue | P1; sensible Sprache, keine psychologische/therapeutische Behauptung |
-| Fasten-Assistent | P1; lokale Berechnungen + Quellen-/Fiqh-Hinweise |
-| Ummah-Weltkarte | Später, sofern keine echte Datenbasis |
-| Islamische Orte | P1 als redaktioneller Lernbereich |
-| Jumuah | P1; Quellen und regionale Praxis prüfen |
-| Zakat | P2; keine individuelle Steuer-/Finanz-/Fatwa-Funktion ohne Fachsystem |
-| Standby/Gebetsanzeige | P2; Wake Lock, Burn-in, Hintergrundverhalten testen |
-| Community/Social | Später; kein v1-Blocker |
+| Islam-Quiz | **gesperrt** – Fragen/Antworten/Erklärungen einzeln belegen und fachlich prüfen |
+| Hajj & Umrah | **gesperrt** – später als Lernhilfe, nicht als individuelle Rechtsanweisung |
+| Hadith-Sammlung | **gesperrt** – konkrete Referenzen und Review vervollständigen |
+| Propheten | **gesperrt** – Quellen-/Redaktionsreview |
+| Wissensbibliothek Legacy | **gesperrt** – Überschneidung mit neuen Lernkursen und Review klären |
+| Sunnah im Alltag | **gesperrt/P1** – Quellen je Punkt |
+| Fehler & Reue | **gesperrt/P1** – sensible Sprache und Fachreview |
+| Fasten-Assistent | **gesperrt/P1** – Quellen-/Fiqh-Hinweise und Reminder-Logik prüfen |
+| Ummah-Übersicht | **gesperrt/später** – belastbare, datierte Datenbasis erforderlich |
+| Islamische Orte | **gesperrt/P1** – redaktionelle Quellen |
+| Jumuah | **gesperrt/P1** – Quellen und regionale Praxis |
+| Zakat | **gesperrt/P2** – keine individuelle Finanz-/Fatwa-Funktion ohne Fachsystem |
+| Standby/Gebetsanzeige | **gesperrt/P2** – kein Kernbedarf für v1 |
+| Community/Social | **später** |
+
+Der Route-Guard verhindert zusätzlich, dass alte Browserzustände/Deep-Links gesperrte Legacy- oder KI-Bereiche als scheinbar fertige Inhalte öffnen.
 
 ## Anfängerpfad – verpflichtender v1-Mindestumfang
 
@@ -141,7 +160,8 @@ safety_or_variant_note
 - keine sinngemäße Eigenfassung als etablierte Übersetzung ausgeben;
 - Ayah-/Suren-Zuordnung automatisiert prüfen;
 - Änderungen versionieren;
-- Anfänger müssen verstehen, was Sure, Ayah, Juz, Übersetzung/Bedeutung und Tafsir sind.
+- Anfänger müssen verstehen, was Sure, Ayah, Juz, Übersetzung/Bedeutung und Tafsir sind;
+- Offline-Bestand darf nicht mit unbekannter Altbestands-Provenienz als öffentlich freigegeben gelten.
 
 ### Hadith
 
@@ -150,7 +170,8 @@ safety_or_variant_note
 - Authentizitäts-/Bewertungsinformation, soweit belastbar und relevant;
 - Original/Übersetzung sauber trennen;
 - Kontextwarnung bei verkürzten Aussagen;
-- keine frei generierten Hadith-Zitate.
+- keine frei generierten Hadith-Zitate;
+- Home/Daily-Pool nur aus konkret referenzierten und freigegebenen Einträgen.
 
 ### Dua/Dhikr
 
@@ -159,7 +180,8 @@ safety_or_variant_note
 - deutsche Bedeutung;
 - Quelle;
 - Häufigkeit/Zahl nur behaupten, wenn Quelle sie trägt;
-- Varianten sichtbar machen.
+- Varianten sichtbar machen;
+- Quellenpräsenz ersetzt nicht den fachlichen Release-Review.
 
 ### Fiqh/Lernen
 
@@ -195,7 +217,9 @@ Ein religiöser P0-Inhalt darf nicht als releasebereit markiert werden, wenn ein
 - eindeutige Trennung zwischen Original, Übersetzung und eigener Zusammenfassung;
 - Kennzeichnung relevanter Varianten/Meinungsunterschiede;
 - verständliche Sprache für Nutzer ohne Vorwissen;
-- keine erfundene Gewissheit bei ungeprüften oder individuellen Fragen.
+- keine erfundene Gewissheit bei ungeprüften oder individuellen Fragen;
+- bei Quran/Übersetzungen nachvollziehbare Edition/Provenienz und Nutzungsgrundlage;
+- bei Hadithen für öffentliche Daily-Flächen konkrete Referenz statt nur Sammlungsname.
 
 Offene P0-Reviewpunkte sind **Release-Blocker**, nicht bloß spätere Verbesserungen.
 
