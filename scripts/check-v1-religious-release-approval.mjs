@@ -19,6 +19,8 @@ const requiredIds = [
   'beginner-next-steps',
   'names-of-allah',
   'dhikr-counter-steps',
+  'dhikr-routines',
+  'duas',
   'worship-guides',
   'prayer-rakat-sequence',
 ];
