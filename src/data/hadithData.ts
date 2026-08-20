@@ -31,7 +31,7 @@ export const HADITH_LIBRARY: readonly HadithEntry[] = [
     id: 'mercy',
     title: 'Barmherzigkeit',
     summary: 'Sinngemäßer Inhalt: Wer anderen keine Barmherzigkeit zeigt, dem wird keine Barmherzigkeit gezeigt.',
-    source: 'Sahih al-Bukhari 6013; Sahih Muslim 2319',
+    source: 'Sahih al-Bukhari 6013; Sahih Muslim 2319a',
   },
   {
     id: 'good-word',
@@ -190,6 +190,26 @@ export const HADITH_LIBRARY: readonly HadithEntry[] = [
   },
 ] as const;
 
+/**
+ * Nur dieser kleine Pool darf automatisch auf Home rotieren. Jeder Eintrag
+ * besitzt eine konkrete Referenz in Sahih al-Bukhari und/oder Sahih Muslim.
+ * Der größere Legacy-Bestand bleibt für die spätere Einzelprüfung erhalten,
+ * wird aber nicht als täglicher Hadith ausgespielt.
+ */
+export const DAILY_HADITH_IDS = [
+  'intentions',
+  'mercy',
+  'good-word',
+  'anger',
+  'brother',
+  'ease',
+  'cleanliness',
+] as const;
+
+const DAILY_HADITH_POOL = DAILY_HADITH_IDS
+  .map((id) => HADITH_LIBRARY.find((entry) => entry.id === id))
+  .filter((entry): entry is HadithEntry => Boolean(entry));
+
 const SAVED_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved_ids';
 const LEGACY_DAILY_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved';
 const LEGACY_LIBRARY_FAVORITES_STORAGE_KEY = 'nur_hadith_library_favorites';
@@ -199,8 +219,9 @@ function localDayNumber(date: Date) {
 }
 
 export function getDailyHadith(date = new Date()) {
-  const index = ((localDayNumber(date) % HADITH_LIBRARY.length) + HADITH_LIBRARY.length) % HADITH_LIBRARY.length;
-  return HADITH_LIBRARY[index];
+  const pool = DAILY_HADITH_POOL.length ? DAILY_HADITH_POOL : [HADITH_LIBRARY[0]];
+  const index = ((localDayNumber(date) % pool.length) + pool.length) % pool.length;
+  return pool[index];
 }
 
 export function getHadithById(id: string | null | undefined) {
@@ -228,8 +249,6 @@ export function readSavedHadithIds() {
     addValidSavedValues(saved, localStorage.getItem(SAVED_HADITH_STORAGE_KEY), validIds);
     addValidSavedValues(saved, localStorage.getItem(LEGACY_LIBRARY_FAVORITES_STORAGE_KEY), validIds);
 
-    // The old daily implementation stored one boolean for the fixed intentions
-    // Hadith. Migrate it once so an existing bookmark is never silently lost.
     if (localStorage.getItem(LEGACY_DAILY_HADITH_STORAGE_KEY) === '1') {
       saved.add('intentions');
       localStorage.removeItem(LEGACY_DAILY_HADITH_STORAGE_KEY);
@@ -237,9 +256,6 @@ export function readSavedHadithIds() {
 
     const serialized = JSON.stringify([...saved]);
     localStorage.setItem(SAVED_HADITH_STORAGE_KEY, serialized);
-    // Keep the legacy library key mirrored until the old library screen has
-    // been fully migrated to the shared helper. This makes saving interoperable
-    // immediately in both directions instead of showing conflicting states.
     localStorage.setItem(LEGACY_LIBRARY_FAVORITES_STORAGE_KEY, serialized);
   } catch {
     // Storage is optional in restricted browser modes.
