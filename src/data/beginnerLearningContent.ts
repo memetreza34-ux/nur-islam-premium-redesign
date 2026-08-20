@@ -150,7 +150,7 @@ export const BEGINNER_LESSONS: BeginnerLearningLesson[] = [
     ],
     keyPoints: ['Shahada', 'Salah – die Pflichtgebete', 'Zakat', 'Fasten im Ramadan', 'Hajj für diejenigen, die dazu in der Lage sind'],
     sources: [
-      { label: 'Hadith', reference: 'Sahih al-Bukhari 8; Sahih Muslim 16', note: 'Bekannte Überlieferung über die fünf Säulen des Islam.' },
+      { label: 'Hadith', reference: 'Sahih al-Bukhari 8; Sahih Muslim 16c', note: 'Authentische Überlieferungen über die fünf Säulen des Islam.' },
     ],
     glossary: [
       { term: 'Salah', meaning: 'Das rituelle islamische Gebet.' },
@@ -189,7 +189,7 @@ export const BEGINNER_LESSONS: BeginnerLearningLesson[] = [
     summary: 'Rituelle Reinheit gehört zur Gebetsvorbereitung. Wudu ist die Gebetswaschung; Ghusl und Tayammum betreffen besondere Situationen.',
     paragraphs: [
       'Der Quran nennt in Sure Al-Maida 5:6 grundlegende Regeln zur Waschung vor dem Gebet und zum Tayammum. Die App erklärt Wudu zusätzlich praktisch Schritt für Schritt.',
-      'Ghusl ist eine vollständige rituelle Waschung in bestimmten Situationen. Tayammum ist eine erlaubte Form der rituellen Reinigung unter bestimmten Voraussetzungen, wenn Wasser nicht verfügbar oder seine Nutzung nicht möglich ist.',
+      'Ghusl ist eine vollständige rituelle Waschung in bestimmten Situationen. Tayammum ist keine frei wählbare Alternative zu Wudu, sondern gilt nur unter seinen Voraussetzungen; Sure Al-Maida 5:6 nennt unter anderem Situationen, in denen kein Wasser gefunden wird.',
       'Details zu Krankheit, Verletzung, Menstruation, Wochenbett oder anderen persönlichen Situationen gehören in fachlich geprüfte Sonderlektionen und sollten nicht aus einer kurzen Zusammenfassung abgeleitet werden.',
     ],
     keyPoints: ['Wudu gehört zu den zentralen Gebetsvorbereitungen.', 'Ghusl betrifft bestimmte Zustände, die eine vollständige Waschung erfordern.', 'Tayammum besitzt eigene Voraussetzungen und ist keine beliebige Alternative zu Wudu.'],
@@ -199,7 +199,7 @@ export const BEGINNER_LESSONS: BeginnerLearningLesson[] = [
     glossary: [
       { term: 'Wudu', meaning: 'Rituelle Gebetswaschung.' },
       { term: 'Ghusl', meaning: 'Rituelle Ganzkörperwaschung in bestimmten Situationen.' },
-      { term: 'Tayammum', meaning: 'Rituelle Reinigung mit sauberer Erde bzw. geeignetem Material unter ihren Voraussetzungen.' },
+      { term: 'Tayammum', meaning: 'Rituelle Ersatzreinigung unter ihren religiösen Voraussetzungen.' },
     ],
     reviewStatus: 'needs-expert-review',
   },
@@ -217,7 +217,8 @@ export const BEGINNER_LESSONS: BeginnerLearningLesson[] = [
     keyPoints: ['Es gibt fünf tägliche Pflichtgebete.', 'Gebete besitzen festgelegte Zeiträume.', 'Eine Rakʿah ist eine Gebetseinheit.', 'Qibla bezeichnet die Gebetsrichtung zur Kaaba in Makkah.'],
     sources: [
       { label: 'Quran', reference: 'Sure An-Nisa 4:103', note: 'Beschreibt das Gebet als zeitlich festgelegte Pflicht.' },
-      { label: 'Hadith', reference: 'Sahih al-Bukhari 528; Sahih Muslim 667', note: 'Überlieferungen zur Bedeutung der fünf täglichen Gebete.' },
+      { label: 'Hadith', reference: 'Sahih al-Bukhari 7372', note: 'Nennt ausdrücklich fünf verpflichtende Gebete in Tag und Nacht.' },
+      { label: 'Hadith', reference: 'Sahih al-Bukhari 528; Sahih Muslim 667', note: 'Beschreibt die Bedeutung der fünf täglichen Gebete.' },
     ],
     glossary: [
       { term: 'Rakʿah', meaning: 'Eine Einheit innerhalb des rituellen Gebets.' },
@@ -240,7 +241,7 @@ export const BEGINNER_LESSONS: BeginnerLearningLesson[] = [
     keyPoints: ['Regelmäßigkeit ist wichtiger als möglichst viele Inhalte auf einmal.', 'Gebet und Quran bilden einen starken täglichen Lernanker.', 'Komplexe persönliche Rechtsfragen brauchen qualifizierten Kontext.'],
     sources: [
       { label: 'Quran', reference: 'Sure Taha 20:114', note: 'Enthält die Bitte, im Wissen gemehrt zu werden.' },
-      { label: 'Hadith', reference: 'Sahih al-Bukhari 6465; Sahih Muslim 783', note: 'Bekannte Überlieferungen darüber, dass beständige Taten besonders geliebt sind.' },
+      { label: 'Hadith', reference: 'Sahih al-Bukhari 6465; Sahih Muslim 783b', note: 'Authentische Überlieferungen darüber, dass beständige Taten besonders geliebt sind.' },
     ],
     glossary: [
       { term: 'Aqidah', meaning: 'Islamische Glaubenslehre.' },
