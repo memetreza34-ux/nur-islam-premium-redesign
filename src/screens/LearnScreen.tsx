@@ -31,7 +31,7 @@ import type { LearningCategoryId } from '../data/islamicLearningContent';
 // the hub tiles.
 const LegacyFeatureScreen = lazy(() => import('./LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
-import { learningLegacyFeatures } from '../data/legacyFeatures';
+import { releaseReadyLearningLegacyFeatures } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
 import type { PrayerLessonId } from './PrayerLearningScreen';
@@ -237,20 +237,22 @@ export function LearnScreen({
         </div>
       </section>
 
-      <section className="reference-learning-section reference-expanded-learning">
-        <div className="section-heading"><div><span className="overline">Wissen & Alltag</span><h2>Weitere Funktionen</h2></div></div>
-        <div className="reference-expanded-learning-grid">
-          {learningLegacyFeatures.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-expanded-learning-grid__icon"><Icon size={22} /></span>
-                <span><small>{feature.subtitle}</small><strong>{feature.title}</strong><em>{feature.description}</em></span><ChevronRight size={18} />
-              </motion.button>
-            );
-          })}
-        </div>
-      </section>
+      {releaseReadyLearningLegacyFeatures.length ? (
+        <section className="reference-learning-section reference-expanded-learning">
+          <div className="section-heading"><div><span className="overline">Wissen & Alltag</span><h2>Weitere geprüfte Funktionen</h2></div></div>
+          <div className="reference-expanded-learning-grid">
+            {releaseReadyLearningLegacyFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
+                  <span className="reference-expanded-learning-grid__icon"><Icon size={22} /></span>
+                  <span><small>{feature.subtitle}</small><strong>{feature.title}</strong><em>{feature.description}</em></span><ChevronRight size={18} />
+                </motion.button>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
 
       <section className="reference-knowledge-quote">
         <span className="reference-knowledge-quote__mark"><Star size={18} /></span>
