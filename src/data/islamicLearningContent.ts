@@ -89,7 +89,7 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     summary: 'Tawhid bedeutet, Allah als einzigen Schöpfer, Herrn und allein Anbetungswürdigen anzuerkennen.',
     paragraphs: [
       'Der islamische Glaube beginnt mit der Überzeugung, dass Allah einzig ist und keinen Teilhaber hat. Alle Formen der Anbetung werden deshalb allein an Ihn gerichtet.',
-      'Diese Überzeugung betrifft nicht nur Worte. Sie prägt Vertrauen, Hoffnung, Dankbarkeit und die Entscheidung, Hilfe letztlich von Allah zu erwarten.',
+      'Diese Überzeugung betrifft nicht nur Worte. Sie prägt Vertrauen, Hoffnung und Dankbarkeit und richtet das Herz auf Allah als letztliche Quelle von Hilfe und Erfolg aus, ohne erlaubte Hilfe durch Menschen zu leugnen.',
       'Die Lektion ist eine Einführung. Detaillierte theologische Begriffe sollten mit verlässlichen Lehrpersonen und anerkannten Grundlagenwerken vertieft werden.',
     ],
     keyPoints: ['Allah ist einzig und ohne Teilhaber.', 'Anbetung wird allein an Allah gerichtet.', 'Tawhid wirkt sich auf Vertrauen und Alltag aus.'],
@@ -162,7 +162,7 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     paragraphs: [
       'Vor dem Pflichtgebet wird der Zustand der rituellen Reinheit geprüft. Der Quran nennt dabei die grundlegenden Körperbereiche der Gebetswaschung.',
       'Fiqh unterscheidet zwischen allgemeinen Grundlagen und Details, bei denen Rechtsschulen unterschiedliche Auffassungen vertreten können. Die App kennzeichnet solche Unterschiede, statt eine Einzelmeinung als einzige Möglichkeit darzustellen.',
-      'Bei Krankheit, Verletzung oder fehlendem Wasser gelten besondere Regeln. Solche Situationen benötigen eine verlässliche, individuell passende Auskunft.',
+      'Bei Krankheit, Verletzung oder fehlendem Wasser können besondere Regeln gelten. Solche Situationen benötigen eine verlässliche, individuell passende Auskunft.',
     ],
     keyPoints: ['Wudu ist eine zentrale Gebetsvorbereitung.', 'Rechtsschulen können Details unterschiedlich einordnen.', 'Sonderfälle sollten qualifiziert geklärt werden.'],
     sources: [
@@ -232,13 +232,14 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     duration: '8 Min.',
     summary: 'Al-Fatiha verbindet Lob Allahs, Barmherzigkeit, Verantwortung und die Bitte um den geraden Weg.',
     paragraphs: [
-      'Al-Fatiha eröffnet den Quran und gehört in jede Gebetseinheit. Ihre Themen führen vom Lob Allahs zur bewussten Anbetung und zur Bitte um Führung.',
+      'Al-Fatiha eröffnet den Quran und ist ein zentraler Bestandteil des rituellen Gebets. Wie ihre Rezitation für einzelne Betende im Gemeinschaftsgebet eingeordnet wird, wird im Fiqh unterschiedlich behandelt. Ihre Themen führen vom Lob Allahs zur bewussten Anbetung und zur Bitte um Führung.',
       'Die Sure erinnert an Allahs Barmherzigkeit und an den Tag der Abrechnung. Dadurch verbindet sie Hoffnung mit Verantwortung.',
       'Diese Lektion fasst zentrale Themen sinngemäß zusammen. Sie ersetzt keinen vollständigen Tafsir und keine sprachliche Analyse des arabischen Textes.',
     ],
     keyPoints: ['Al-Fatiha beginnt mit Lob Allahs.', 'Anbetung und Bitte um Hilfe werden verbunden.', 'Die Sure enthält die Bitte um Führung.'],
     sources: [
       { label: 'Quran', reference: 'Sure Al-Fatiha 1:1–7', note: 'Primärtext der Lektion.' },
+      { label: 'Hadith', reference: 'Sahih al-Bukhari 756', note: 'Belegt die zentrale Bedeutung von Al-Fatiha im Gebet; Detailfragen zum Gemeinschaftsgebet werden fiqhlich unterschiedlich eingeordnet.' },
       { label: 'Hinweis', reference: 'Sinngemäße Themenübersicht', note: 'Keine vollständige Übersetzung oder umfassende Tafsir-Auslegung.' },
     ],
     question: {
@@ -256,11 +257,11 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     duration: '6 Min.',
     summary: 'Die kurze Sure fasst zentrale Aussagen über Allahs Einzigkeit und Unvergleichbarkeit zusammen.',
     paragraphs: [
-      'Al-Ikhlas erklärt, dass Allah einer ist, vollkommen unabhängig und mit nichts vergleichbar. Sie weist Vorstellungen zurück, die Allah menschliche Abstammung zuschreiben.',
+      'Al-Ikhlas erklärt, dass Allah einer ist, nennt Ihn As-Samad und erklärt, dass Ihm nichts ebenbürtig ist. As-Samad wird in Erklärungen unter anderem mit Allahs vollkommener Unabhängigkeit und der Abhängigkeit der Schöpfung von Ihm verbunden. Die Sure weist Vorstellungen zurück, die Allah menschliche Abstammung zuschreiben.',
       'Die Sure ist kurz, enthält aber eine grundlegende Glaubensaussage. Deshalb sollte sie nicht nur auswendig gelernt, sondern auch in ihrer Bedeutung verstanden werden.',
       'Die deutsche Darstellung in der App wird als sinngemäße Bedeutung gekennzeichnet. Der arabische Qurantext bleibt der Offenbarungstext.',
     ],
-    keyPoints: ['Allah ist einzig.', 'Allah ist von der Schöpfung unabhängig.', 'Nichts ist Ihm ebenbürtig.'],
+    keyPoints: ['Allah ist einzig.', 'Allah wird in der Sure As-Samad genannt.', 'Nichts ist Ihm ebenbürtig.'],
     sources: [
       { label: 'Quran', reference: 'Sure Al-Ikhlas 112:1–4', note: 'Primärtext der Lektion.' },
       { label: 'App-Bereich', reference: 'Quran-Reader · Sure 112', note: 'Arabischer Text und gekennzeichnete sinngemäße Bedeutung.' },
@@ -305,13 +306,14 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     summary: 'Die ersten offenbarten Verse rufen zum Lesen im Namen Allahs auf und markieren den Beginn der Sendung.',
     paragraphs: [
       'Die prophetische Sendung begann in Mekka. Die ersten Verse der Sure Al-Alaq verbinden Lesen, Wissen und die Anerkennung Allahs als Schöpfer.',
-      'Die frühe Botschaft stellte Tawhid, Verantwortung und Schutz der Schwachen in den Mittelpunkt. Sie traf auf Widerstand, weil sie religiöse und gesellschaftliche Gewohnheiten herausforderte.',
+      'Andere mekkanische Quranstellen betonen zudem Verantwortung gegenüber Bedürftigen und Schwachen. Die frühe Verkündigung traf auf Widerstand; genaue historische Ursachen und Entwicklungen sollten aus belastbaren Seerah-Quellen gelernt werden.',
       'Seerah wird aus Quran, authentischen Hadithen und kritisch eingeordneten historischen Berichten gelernt. Nicht jede populäre Erzählung besitzt dieselbe Belegstärke.',
     ],
     keyPoints: ['Die Offenbarung begann in Mekka.', 'Die ersten Verse verbinden Wissen und Glauben.', 'Seerah-Berichte besitzen unterschiedliche Belegstärken.'],
     sources: [
       { label: 'Quran', reference: 'Sure Al-Alaq 96:1–5', note: 'Die bekannten ersten offenbarten Verse.' },
       { label: 'Hadith', reference: 'Sahih al-Bukhari 3', note: 'Bericht über den Beginn der Offenbarung.' },
+      { label: 'Quran', reference: 'Sure Al-Balad 90:12–17', note: 'Mekkanische Verse über Hilfe für Bedürftige, Glauben, Geduld und Barmherzigkeit.' },
     ],
     question: {
       prompt: 'Welches Thema erscheint in den ersten Versen der Offenbarung?',
@@ -330,7 +332,7 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     paragraphs: [
       'Nach zunehmender Verfolgung verließen der Prophet und die Muslime Mekka. Die Hijra nach Medina wurde zu einem Wendepunkt der islamischen Geschichte.',
       'Der Quran erinnert an Allahs Unterstützung während der Flucht. Gleichzeitig zeigt die Seerah sorgfältige Planung, Vertrauen und verantwortliches Handeln.',
-      'In Medina wurden Gemeinschaft, gegenseitige Pflichten und friedliches Zusammenleben weiter aufgebaut. Einzelne historische Vertragsdetails sollten aus geprüften Werken gelernt werden.',
+      'In Medina wurden Gemeinschaft, gegenseitige Pflichten und Regeln des Zusammenlebens weiter aufgebaut. Einzelne historische Vertragsdetails sollten aus geprüften Werken gelernt werden.',
     ],
     keyPoints: ['Die Hijra war ein Wendepunkt.', 'Vertrauen auf Allah schließt Planung nicht aus.', 'In Medina entstand eine neue Gemeinschaftsordnung.'],
     sources: [
@@ -401,19 +403,19 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     summary: 'Der bekannte Hadith über die Absicht zeigt, dass das innere Ziel einer Handlung religiöse Bedeutung besitzt.',
     paragraphs: [
       'Der Hadith wird sinngemäß so verstanden, dass Handlungen entsprechend den Absichten bewertet werden und jeder Mensch das erhält, was er beabsichtigt hat.',
-      'Absicht bedeutet nicht, schlechte Mittel durch ein gutes Ziel zu erlauben. Eine gute Absicht begleitet eine erlaubte und verantwortliche Handlung.',
+      'Eine gute Absicht allein macht eine ansonsten verbotene Handlung nicht automatisch erlaubt. Ob Mittel und Handlung erlaubt sind, muss unabhängig von der guten Absicht geprüft werden.',
       'Praktisch hilft eine kurze innere Prüfung: Warum tue ich das, und kann ich meine Absicht aufrichtig auf Allah ausrichten?',
     ],
-    keyPoints: ['Die Absicht gibt der Handlung Richtung.', 'Ein gutes Ziel macht Verbotenes nicht erlaubt.', 'Absichten können bewusst erneuert werden.'],
+    keyPoints: ['Die Absicht gibt der Handlung Richtung.', 'Eine gute Absicht macht Verbotenes nicht automatisch erlaubt.', 'Absichten können bewusst erneuert werden.'],
     sources: [
       { label: 'Hadith', reference: 'Sahih al-Bukhari 1', note: 'Bekannter Hadith über Handlungen und Absichten.' },
       { label: 'Hadith', reference: 'Sahih Muslim 1907', note: 'Parallele authentische Überlieferung zum Thema Absicht.' },
     ],
     question: {
       prompt: 'Was folgt aus dem Hadith über die Absicht?',
-      options: ['Die Absicht ist wichtig, aber erlaubt keine verbotenen Mittel', 'Eine gute Absicht macht jede Handlung erlaubt', 'Nur sichtbare Ergebnisse zählen'],
+      options: ['Die Absicht ist wichtig, macht aber nicht automatisch jede Handlung erlaubt', 'Eine gute Absicht macht jede Handlung erlaubt', 'Nur sichtbare Ergebnisse zählen'],
       correctIndex: 0,
-      explanation: 'Aufrichtigkeit ist zentral, bleibt aber an erlaubtes und verantwortliches Handeln gebunden.',
+      explanation: 'Aufrichtigkeit ist zentral; die Erlaubtheit einer Handlung muss dennoch eigenständig beurteilt werden.',
     },
   },
   {
@@ -450,12 +452,13 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     paragraphs: [
       'Aufrichtigkeit bedeutet, eine gute Tat nicht nur für Anerkennung, Status oder Lob auszuführen. Die Absicht wird auf Allah ausgerichtet.',
       'Menschen können gemischte Motive haben. Deshalb ist Aufrichtigkeit kein einmaliger Zustand, sondern eine regelmäßige innere Korrektur.',
-      'Praktisch kann man manche gute Taten bewusst verborgen halten und vor sowie nach einer Handlung die eigene Absicht prüfen.',
+      'Bei manchen guten Taten – etwa freiwilliger Wohltätigkeit – kann bewusstes Verbergen vor Selbstdarstellung schützen. Vor und nach einer Handlung kann außerdem die eigene Absicht geprüft werden.',
     ],
-    keyPoints: ['Gute Taten werden auf Allah ausgerichtet.', 'Absichten können gemischt sein und brauchen Korrektur.', 'Verborgene gute Taten können Aufrichtigkeit fördern.'],
+    keyPoints: ['Gute Taten werden auf Allah ausgerichtet.', 'Absichten können gemischt sein und brauchen Korrektur.', 'Verborgene gute Taten können in bestimmten Situationen Aufrichtigkeit fördern.'],
     sources: [
       { label: 'Quran', reference: 'Sure Al-Bayyina 98:5', note: 'Verbindet Gottesdienst mit aufrichtiger Hingabe.' },
       { label: 'Hadith', reference: 'Sahih al-Bukhari 1', note: 'Grundlage zur Bedeutung der Absicht.' },
+      { label: 'Quran', reference: 'Sure Al-Baqara 2:271', note: 'Nennt verborgen gegebene Almosen in diesem Zusammenhang als besser.' },
     ],
     question: {
       prompt: 'Welche Gewohnheit kann Aufrichtigkeit fördern?',
@@ -470,13 +473,13 @@ export const LEARNING_LESSONS: LearningLesson[] = [
     title: 'Geduld und Selbstkontrolle',
     eyebrow: 'Akhlaq · Charakter 2',
     duration: '6 Min.',
-    summary: 'Geduld umfasst Standhaftigkeit im Guten, Zurückhaltung gegenüber Verbotenem und Ruhe in Prüfungen.',
+    summary: 'Geduld zeigt sich unter anderem in Standhaftigkeit im Guten, Selbstkontrolle und Ruhe in Prüfungen.',
     paragraphs: [
-      'Sabr wird oft nur als passives Warten verstanden. Im islamischen Charakter bedeutet es auch, konsequent Gutes zu tun und sich bei Ärger zu kontrollieren.',
+      'Sabr wird oft nur als passives Warten verstanden. Im islamischen Charakter umfasst Geduld auch Standhaftigkeit und Selbstkontrolle.',
       'Geduld schließt angemessenes Handeln nicht aus. Man darf Hilfe suchen, Grenzen setzen und Ungerechtigkeit auf erlaubte Weise ansprechen.',
       'Eine praktische Übung ist die kurze Pause vor einer Reaktion: atmen, Worte prüfen und eine Antwort wählen, die nicht zusätzlich schadet.',
     ],
-    keyPoints: ['Geduld ist aktive Standhaftigkeit.', 'Hilfe suchen und Grenzen setzen bleiben erlaubt.', 'Selbstkontrolle schützt vor schädlichen Reaktionen.'],
+    keyPoints: ['Geduld ist mehr als passives Warten.', 'Hilfe suchen und Grenzen setzen können mit Geduld vereinbar sein.', 'Selbstkontrolle schützt vor schädlichen Reaktionen.'],
     sources: [
       { label: 'Quran', reference: 'Sure Al-Baqara 2:153', note: 'Verbindet Geduld, Gebet und Allahs Beistand.' },
       { label: 'Quran', reference: 'Sure Aal Imran 3:134', note: 'Lobt Menschen, die Zorn zurückhalten und vergeben.' },
@@ -485,7 +488,7 @@ export const LEARNING_LESSONS: LearningLesson[] = [
       prompt: 'Was bedeutet Geduld hier?',
       options: ['Standhaft bleiben und Reaktionen kontrollieren', 'Jede Ungerechtigkeit schweigend akzeptieren', 'Nie Hilfe suchen'],
       correctIndex: 0,
-      explanation: 'Geduld ist keine Pflicht zur Passivität, sondern kontrolliertes und erlaubtes Handeln.',
+      explanation: 'Geduld bedeutet nicht automatisch Passivität; sie schließt kontrolliertes und erlaubtes Handeln nicht aus.',
     },
   },
   {
