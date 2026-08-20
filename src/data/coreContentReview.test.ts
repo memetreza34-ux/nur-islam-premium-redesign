@@ -5,6 +5,8 @@ describe('core religious content review ledger', () => {
   it('tracks the remaining p0 source-review gaps', () => {
     expect(CORE_CONTENT_REVIEW_RECORDS.map((record) => record.contentId).sort()).toEqual([
       'dhikr-counter-steps',
+      'dhikr-routines',
+      'duas',
       'names-of-allah',
       'prayer-rakat-sequence',
       'worship-guides',
