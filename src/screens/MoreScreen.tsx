@@ -31,7 +31,7 @@ import { AccountScreen } from './AccountScreen';
 // the hub tiles.
 const LegacyFeatureScreen = lazy(() => import('./LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
-import { serviceLegacyFeatures } from '../data/legacyFeatures';
+import { releaseReadyServiceLegacyFeatures } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { NotesScreen } from './NotesScreen';
 import { getCachedSession, signOut, subscribeAuth } from '../services/nurBackend';
@@ -278,22 +278,24 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
       <section className="reference-profile-section"><span className="reference-profile-section__label">Deine Inhalte</span><ProfileList rows={journeyRows} onSelect={selectRow} /></section>
 
-      <section className="reference-profile-section reference-services-section">
-        <span className="reference-profile-section__label">Islamische Dienste</span>
-        <p className="reference-services-section__intro">Zusatzfunktionen aus dem bisherigen Funktionsumfang im gemeinsamen Premium-Aufbau.</p>
-        <div className="reference-services-grid">
-          {serviceLegacyFeatures.map((feature, index) => {
-            const Icon = feature.icon;
-            return (
-              <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-services-grid__icon"><Icon size={21} /></span>
-                <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
-                <ChevronRight size={17} />
-              </motion.button>
-            );
-          })}
-        </div>
-      </section>
+      {releaseReadyServiceLegacyFeatures.length ? (
+        <section className="reference-profile-section reference-services-section">
+          <span className="reference-profile-section__label">Geprüfte Zusatzdienste</span>
+          <p className="reference-services-section__intro">Nur Zusatzfunktionen, die für den öffentlichen Release ausdrücklich freigegeben wurden.</p>
+          <div className="reference-services-grid">
+            {releaseReadyServiceLegacyFeatures.map((feature, index) => {
+              const Icon = feature.icon;
+              return (
+                <motion.button key={feature.id} onClick={() => setLegacyFeature(feature.id)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
+                  <span className="reference-services-grid__icon"><Icon size={21} /></span>
+                  <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
+                  <ChevronRight size={17} />
+                </motion.button>
+              );
+            })}
+          </div>
+        </section>
+      ) : null}
 
       <section className="reference-profile-section"><span className="reference-profile-section__label">Personalisierung</span><ProfileList rows={preferenceRows} onSelect={selectRow} /></section>
       <section className="reference-profile-section"><span className="reference-profile-section__label">Informationen</span><ProfileList rows={supportRows} onSelect={selectRow} /></section>
