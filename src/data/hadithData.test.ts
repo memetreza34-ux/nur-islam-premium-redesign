@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
+  DAILY_HADITH_IDS,
   HADITH_LIBRARY,
   getDailyHadith,
   getHadithById,
@@ -23,9 +24,6 @@ describe('Hadith library', () => {
   beforeEach(() => localStorage.clear());
 
   it('keeps every entry unique and source-labelled', () => {
-    // No exact count: the library grows as entries are carried over, and a
-    // pinned number turns each addition into a failing test for no reason.
-    // check-hadith-data.mjs holds the floor and the sourcing rules.
     expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(25);
     expect(new Set(HADITH_LIBRARY.map((entry) => entry.id)).size).toBe(HADITH_LIBRARY.length);
     for (const entry of HADITH_LIBRARY) {
@@ -35,22 +33,33 @@ describe('Hadith library', () => {
     }
   });
 
+  it('uses a small explicit daily pool with concrete references', () => {
+    expect(DAILY_HADITH_IDS.length).toBeGreaterThanOrEqual(5);
+    expect(new Set(DAILY_HADITH_IDS).size).toBe(DAILY_HADITH_IDS.length);
+    for (const id of DAILY_HADITH_IDS) {
+      const entry = getHadithById(id);
+      expect(entry).not.toBeNull();
+      expect(entry?.source).toMatch(/\d/);
+    }
+  });
+
   it('returns the same daily Hadith throughout one local calendar day', () => {
     const morning = getDailyHadith(new Date(2026, 7, 10, 1, 5));
     const evening = getDailyHadith(new Date(2026, 7, 10, 23, 55));
     expect(evening.id).toBe(morning.id);
   });
 
-  it('rotates to the next library entry on the following local day', () => {
+  it('rotates through the curated daily pool on following local days', () => {
     const today = getDailyHadith(new Date(2026, 7, 10, 12));
     const tomorrow = getDailyHadith(new Date(2026, 7, 11, 12));
-    const currentIndex = HADITH_LIBRARY.findIndex((entry) => entry.id === today.id);
-    expect(tomorrow.id).toBe(HADITH_LIBRARY[(currentIndex + 1) % HADITH_LIBRARY.length].id);
+    const currentIndex = DAILY_HADITH_IDS.indexOf(today.id as (typeof DAILY_HADITH_IDS)[number]);
+    expect(currentIndex).toBeGreaterThanOrEqual(0);
+    expect(tomorrow.id).toBe(DAILY_HADITH_IDS[(currentIndex + 1) % DAILY_HADITH_IDS.length]);
   });
 
-  it('keeps pre-epoch dates inside the valid library range', () => {
+  it('keeps pre-epoch dates inside the curated daily pool', () => {
     const entry = getDailyHadith(new Date(1960, 0, 1, 12));
-    expect(HADITH_LIBRARY.some((candidate) => candidate.id === entry.id)).toBe(true);
+    expect(DAILY_HADITH_IDS).toContain(entry.id);
   });
 
   it('resolves valid ids and rejects missing ids', () => {
