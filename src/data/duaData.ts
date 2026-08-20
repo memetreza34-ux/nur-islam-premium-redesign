@@ -50,7 +50,7 @@ export const DUAS: DuaEntry[] = [
     arabic: `اللَّهُمَّ إِنِّي عَبْدُكَ، وَابْنُ عَبْدِكَ، وَابْنُ أَمَتِكَ، نَاصِيَتِي بِيَدِكَ، مَاضٍ فِيَّ حُكْمُكَ، عَدْلٌ فِيَّ قَضَاؤُكَ، أَسْأَلُكَ بِكُلِّ اسْمٍ هُوَ لَكَ، سَمَّيْتَ بِهِ نَفْسَكَ، أَوْ أَنْزَلْتَهُ فِي كِتَابِكَ، أَوْ عَلَّمْتَهُ أَحَدًا مِنْ خَلْقِكَ، أَوِ اسْتَأْثَرْتَ بِهِ فِي عِلْمِ الْغَيْبِ عِنْدَكَ، أَنْ تَجْعَلَ الْقُرْآنَ رَبِيعَ قَلْبِي، وَنُورَ صَدْرِي، وَجَلَاءَ حُزْنِي، وَذَهَابَ هَمِّي`,
     transliteration: `Allahumma inni 'abduk, wabnu 'abdik, wabnu amatik, nasiyati biyadika, madhin fiyya hukmuk, 'adlun fiyya qada'uk, as'aluka bikulli ismin huwa lak, sammayta bihi nafsak, aw anzaltahu fi kitabik, aw 'allamtahu ahadan min khalqik, awista'tharta bihi fi 'ilmil-ghaybi 'indak, an taj'alal-Qur'ana rabi'a qalbi, wa nura sadri, wa jala'a huzni, wa dhahaba hammi.`,
     translation: `O Allah, ich bin Dein Diener, der Sohn Deines Dieners, der Sohn Deiner Dienerin. Meine Stirnlocke ist in Deiner Hand. Dein Urteil über mich wird ausgeführt und Deine Bestimmung über mich ist gerecht. Ich bitte Dich mit jedem Namen, der Dir gehört, dass Du den Quran zum Frühling meines Herzens, zum Licht meiner Brust, zur Beseitigung meiner Trauer und zum Verschwinden meines Kummers machst.`,
-    source: 'Ahmad 1/391 · im Altbestand als sahih gekennzeichnet',
+    source: 'Ahmad 1/391 · Authentizitätsangabe aus dem Altbestand noch separat zu prüfen',
   },
   {
     id: 'dua_distress_2', categoryId: 'depression_anxiety', title: 'Bei schwerer Not',
@@ -71,14 +71,14 @@ export const DUAS: DuaEntry[] = [
     arabic: `اللَّهُمَّ لا سَهْلَ إِلاَّ ما جَعَلْتَهُ سَهْلاً، وأنْتَ تَجْعَلُ الحَزْنَ إِذَا شِئْتَ سَهْلاً`,
     transliteration: `Allahumma la sahla illa ma ja'altahu sahlan, wa anta taj'alul-hazna idha shi'ta sahlan.`,
     translation: `O Allah, nichts ist leicht außer dem, was Du leicht machst. Und Du machst das Schwere leicht, wenn Du willst.`,
-    source: 'Ibn Hibban 974 · im Altbestand als sahih gekennzeichnet',
+    source: 'Sahih Ibn Hibban 2427 · Referenz nach Hisn al-Muslim 139',
   },
   {
     id: 'dua_mercy_5', categoryId: 'depression_anxiety', title: 'Bitte um Barmherzigkeit',
     arabic: `يَا حَيُّ يَا قَيُّومُ بِرَحْمَتِكَ أَسْتَغِيثُ، أَصْلِحْ لِي شَأْنِي كُلَّهُ، وَلا تَكِلْنِي إِلَى نَفْسِي طَرْفَةَ عَيْنٍ`,
     transliteration: `Ya Hayyu ya Qayyum, birahmatika astaghith, aslih li sha'ni kullah, wa la takilni ila nafsi tarfata 'ayn.`,
     translation: `O Lebendiger, o Beständiger, durch Deine Barmherzigkeit suche ich Hilfe. Bringe alle meine Angelegenheiten in Ordnung und überlasse mich nicht mir selbst, auch nicht für einen Augenblick.`,
-    source: 'Al-Hakim 1/545 · im Altbestand als sahih gekennzeichnet',
+    source: 'Al-Hakim 1/545 · Authentizitätsangabe aus dem Altbestand noch separat zu prüfen',
   },
   {
     id: 'dua_morning_1', categoryId: 'morning_evening', title: 'Der Meister der Vergebung',
@@ -155,14 +155,14 @@ export const DUAS: DuaEntry[] = [
     arabic: `اللَّهُمَّ إِنِّي أَسْأَلُكَ عِلْمًا نَافِعًا، وَرِزْقًا طَيِّبًا، وَعَمَلًا مُتَقَبَّلًا`,
     transliteration: `Allahumma inni as'aluka 'ilman nafi'an, wa rizqan tayyiban, wa 'amalan mutaqabbalan.`,
     translation: `O Allah, ich bitte Dich um nützliches Wissen, gute Versorgung und angenommene Taten.`,
-    source: 'Ibn Majah 925 · im Altbestand als sahih gekennzeichnet',
+    source: 'Sunan Ibn Majah 925 · sahih (Darussalam)',
   },
   {
     id: 'dua_debt_1', categoryId: 'debt_wealth', title: 'Befreiung von Schulden',
     arabic: `اللَّهُمَّ اكْفِنِي بِحَلالِكَ عَنْ حَرَامِكَ، وَأَغْنِنِي بِفَضْلِكَ عَمَّنْ سِوَاكَ`,
     transliteration: `Allahummak-fini bihalalika 'an haramik, wa aghnini bifadlika 'amman siwak.`,
     translation: `O Allah, genüge mir mit dem, was Du erlaubt hast, damit ich nicht brauche, was Du verboten hast, und mache mich durch Deine Huld unabhängig von allen außer Dir.`,
-    source: 'At-Tirmidhi 3563 · im Altbestand als hasan gekennzeichnet',
+    source: 'At-Tirmidhi 3563 · Authentizitätsangabe aus dem Altbestand noch separat zu prüfen',
   },
   {
     id: 'dua_provision_1', categoryId: 'debt_wealth', title: 'Bitte um Versorgung',
@@ -224,7 +224,7 @@ export const DUAS: DuaEntry[] = [
     id: 'dua_eating_before', categoryId: 'daily_life', title: 'Vor dem Essen',
     arabic: `بِسْمِ اللَّهِ`,
     transliteration: `Bismillah.`,
-    translation: `Im Namen Allahs. Wenn es am Anfang vergessen wurde: Im Namen Allahs am Anfang und am Ende.`,
+    translation: `Im Namen Allahs. Wenn es am Anfang vergessen wurde, ist in derselben Überlieferung eine zusätzliche Formel für das Nachholen überliefert.`,
     source: 'Abu Dawud 3767',
   },
   {
@@ -236,9 +236,9 @@ export const DUAS: DuaEntry[] = [
   },
   {
     id: 'dua_bathroom_enter', categoryId: 'daily_life', title: 'Vor dem Betreten der Toilette',
-    arabic: `بِسْمِ اللَّهِ، اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ`,
-    transliteration: `Bismillahi, Allahumma inni a'udhu bika minal-khubuthi wal-khaba'ith.`,
-    translation: `Im Namen Allahs. O Allah, ich suche Zuflucht bei Dir vor den männlichen und weiblichen Teufeln.`,
+    arabic: `اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبُثِ وَالْخَبَائِثِ`,
+    transliteration: `Allahumma inni a'udhu bika minal-khubuthi wal-khaba'ith.`,
+    translation: `O Allah, ich suche Zuflucht bei Dir vor den männlichen und weiblichen Teufeln.`,
     source: 'Sahih al-Bukhari 142',
   },
   {
