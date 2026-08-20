@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
+import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
 // Split out with the legacy screens: the assistant indexes the knowledge
 // topics, lessons, Hadiths, Duas, prophets and guides, and pulling all six into
 // startup put 10 KB gzipped in front of the first render for a screen reached
@@ -97,6 +98,7 @@ import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
 type PrimaryTab = 'home' | 'prayer' | 'calendar' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
 type Tab = PrimaryTab | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | LegacyTab;
+type KnowledgeLevel = 'beginner' | 'familiar' | 'experienced';
 
 type NavigationSnapshot = {
   activeTab: Tab;
@@ -172,6 +174,25 @@ function getHomeGreeting(date: Date) {
 
 function getLocalDateKey(date = new Date()) {
   return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+}
+
+function readKnowledgeLevel(): KnowledgeLevel {
+  try {
+    const value = localStorage.getItem('nur_knowledge_level');
+    return value === 'familiar' || value === 'experienced' || value === 'beginner' ? value : 'beginner';
+  } catch {
+    return 'beginner';
+  }
+}
+
+function readBeginnerCompleted() {
+  try {
+    const raw = localStorage.getItem('nur_beginner_learning_completed');
+    const parsed = raw ? JSON.parse(raw) as unknown : [];
+    return new Set(Array.isArray(parsed) ? parsed.map(String) : []);
+  } catch {
+    return new Set<string>();
+  }
 }
 
 function readHomeQuranProgress(): HomeQuranProgress {
@@ -274,6 +295,8 @@ function PremiumHome({
   const [now, setNow] = useState(() => new Date());
   const [quranProgress, setQuranProgress] = useState(readHomeQuranProgress);
   const [dhikrTotal, setDhikrTotal] = useState(readDhikrTotalToday);
+  const [knowledgeLevel, setKnowledgeLevel] = useState(readKnowledgeLevel);
+  const [beginnerCompleted, setBeginnerCompleted] = useState(readBeginnerCompleted);
   const reduceMotion = useReducedMotion();
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
@@ -282,6 +305,13 @@ function PremiumHome({
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
     : 0;
+  const isBeginner = knowledgeLevel === 'beginner';
+  const beginnerProgress = Math.round((beginnerCompleted.size / BEGINNER_LESSONS.length) * 100);
+  const nextBeginnerLesson = getNextBeginnerLesson(beginnerCompleted);
+  const beginnerComplete = beginnerCompleted.size >= BEGINNER_LESSONS.length;
+  const visibleQuickActions = isBeginner
+    ? quickActions.filter((action) => action.label !== 'Islam Quiz' && action.label !== 'Nur Assistent')
+    : quickActions;
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .18, delay: reduceMotion ? 0 : Math.min(index * .025, .1), ease: [0.22, 1, 0.36, 1] as const });
 
@@ -289,6 +319,8 @@ function PremiumHome({
     const syncLocalProgress = () => {
       setQuranProgress(readHomeQuranProgress());
       setDhikrTotal(readDhikrTotalToday());
+      setKnowledgeLevel(readKnowledgeLevel());
+      setBeginnerCompleted(readBeginnerCompleted());
     };
     const timer = window.setInterval(() => {
       setNow(new Date());
@@ -331,6 +363,10 @@ function PremiumHome({
   }, []);
 
   const openLastRead = () => onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber);
+  const openBeginnerJourney = () => {
+    try { localStorage.setItem('nur_beginner_learning_last', nextBeginnerLesson.id); } catch { /* optional */ }
+    onNavigate('learn');
+  };
 
   return (
     <motion.main
@@ -366,6 +402,25 @@ function PremiumHome({
         </button>
       </section>
 
+      {isBeginner ? (
+        <section className="reference-prayer-learning-hub beginner-home-path" aria-label="Dein nächster Schritt">
+          <div className="reference-prayer-learning-hub__glow" />
+          <div className="reference-prayer-learning-hub__copy">
+            <span className="hero-pill">Neu im Islam · Dein nächster Schritt</span>
+            <h2>{beginnerComplete ? 'Grundlagen abgeschlossen' : nextBeginnerLesson.title}</h2>
+            <p>{beginnerComplete ? 'Du hast die zehn Einstiegsgrundlagen abgeschlossen. Jetzt kannst du Gebet, Quran und Wissen gezielt vertiefen.' : 'Nur zeigt dir zuerst die Grundlagen, die du als Nächstes brauchst — ohne dich mit allen Funktionen gleichzeitig zu überladen.'}</p>
+            <div className="reference-prayer-learning-hub__progress">
+              <span><i style={{ width: `${beginnerProgress}%` }} /></span>
+              <strong>{Math.min(beginnerCompleted.size, BEGINNER_LESSONS.length)}/{BEGINNER_LESSONS.length} Grundlagen abgeschlossen</strong>
+            </div>
+            <button className="gold-button" onClick={openBeginnerJourney}>
+              <BookOpen size={18} /> {beginnerComplete ? 'Lernen vertiefen' : 'Nächste Grundlage öffnen'} <ChevronRight size={17} />
+            </button>
+          </div>
+          <PremiumImage src="/premium-assets/high-res-objects/quran-open-v2.webp" fallback={<QuranObject />} />
+        </section>
+      ) : null}
+
       <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
         <div className="prayer-hero__content">
           <div className="hero-meta">
@@ -399,7 +454,7 @@ function PremiumHome({
       </section>
 
       <section className="content-section">
-        <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
+        <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>{isBeginner ? 'Deine wichtigsten Werkzeuge' : 'Spirituelle Werkzeuge'}</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
         <div className="journey-grid">
           <button className="journey-card journey-card--quran" onClick={openLastRead}>
             <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
@@ -417,9 +472,9 @@ function PremiumHome({
       </section>
 
       <section className="content-section">
-        <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Dein täglicher Begleiter</h2></div></div>
+        <div className="section-heading"><div><span className="overline">Entdecken</span><h2>{isBeginner ? 'Erst die wichtigen Bereiche' : 'Dein täglicher Begleiter'}</h2></div></div>
         <div className="quick-grid quick-grid--v2">
-          {quickActions.map(({ label, eyebrow, icon: Icon, accent, target }, index) => (
+          {visibleQuickActions.map(({ label, eyebrow, icon: Icon, accent, target }, index) => (
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
@@ -454,19 +509,32 @@ function PremiumHome({
         </button>
       </section>
 
-      <button className="ai-preview" onClick={() => onNavigate('assistant')}>
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="ai-preview__mark" fallback={<NurMark />} />
-        <span><small>Nur Assistent</small><strong>Lokaler Quellenmodus</strong><p>Antwortet nur auf unterstützte Themen mit sichtbarem Quellenhinweis – ohne erfundene religiöse Antworten.</p></span>
-        <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
-      </button>
+      {!isBeginner ? (
+        <button className="ai-preview" onClick={() => onNavigate('assistant')}>
+          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="ai-preview__mark" fallback={<NurMark />} />
+          <span><small>Nur Assistent</small><strong>Lokaler Quellenmodus</strong><p>Antwortet nur auf unterstützte Themen mit sichtbarem Quellenhinweis – ohne erfundene religiöse Antworten.</p></span>
+          <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
+        </button>
+      ) : null}
 
       <section className="content-section recommendations">
-        <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
+        <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>{isBeginner ? 'Als Nächstes sinnvoll' : 'Heute für dich'}</h2></div></div>
         <div className="recommendation-list">
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Übersicht</small><strong>Regionen und Gemeinschaften entdecken</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><MapPin size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
-          <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
+          {isBeginner ? (
+            <>
+              <button className="recommendation-card" onClick={openBeginnerJourney}><span className="recommendation-card__icon"><BookOpen size={22} /></span><span><small>Neu im Islam</small><strong>{beginnerComplete ? 'Grundlagen vertiefen' : `${nextBeginnerLesson.title} fortsetzen`}</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('learn')}><span className="recommendation-card__icon"><HandHeart size={22} /></span><span><small>Gebet lernen</small><strong>Wudu, Qibla und Salah Schritt für Schritt</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('quran')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Quran für Anfänger</small><strong>Begriffe verstehen und ruhig beginnen</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><MapPin size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
+            </>
+          ) : (
+            <>
+              <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><CrescentObject /></span><span><small>Fasten-Assistent</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Übersicht</small><strong>Regionen und Gemeinschaften entdecken</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><MapPin size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
+              <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
+            </>
+          )}
         </div>
       </section>
     </motion.main>
