@@ -1,49 +1,48 @@
 # Nur Islam Premium — Visual-System-Gehirn
 
 > **Stand:** 20.08.2026  
-> **Zweck:** Dauerhafter Projekt-Handoff für neue ChatGPT-Chats. Diese Datei beschreibt vollständig, was beim visuellen Redesign der App gewollt ist, welche Entscheidungen bereits gefallen sind, wie Bilder/Figuren/Icons aufgebaut werden sollen und in welcher Reihenfolge weitergearbeitet wird.
+> **Zweck:** Dauerhafter Projekt-Handoff für neue ChatGPT-/Claude-/Codex-Arbeit. Diese Datei ist die **Single Source of Truth** für das komplette Visual-Redesign: Zielbild, Bildsystem, Figuren, Icons, Komponenten, Asset-Migration, Screen-Reihenfolge, Referenzbilder und Qualitätsregeln.
 
 ---
 
 # 0. Startauftrag für jeden neuen Chat
 
-Ein neuer Chat soll **nicht wieder von vorne anfangen** und den Nutzer nicht dieselben Designfragen erneut stellen.
-
-Zuerst:
+Ein neuer Chat soll **nicht wieder von vorne anfangen** und keine bereits geklärten Designfragen erneut stellen.
 
 ```text
-Öffne mit dem GitHub-Connector das Repository `memetreza34-ux/nur-islam-premium-redesign`.
+Öffne das Repository `memetreza34-ux/nur-islam-premium-redesign`.
 Arbeite für dieses Redesign auf dem Branch `visual-system-redesign`.
-Lies `docs/VISUAL-SYSTEM-BRAIN.md` vollständig.
-Prüfe danach den aktuellen Branch-HEAD und den tatsächlichen aktuellen Code-/Asset-Stand erneut.
-Setze anschließend genau den hier beschriebenen Visual-Redesign-Prozess fort.
+Lies zuerst vollständig `docs/VISUAL-SYSTEM-BRAIN.md`.
+Prüfe danach den aktuellen Branch-HEAD sowie den tatsächlichen Code-, Asset- und CSS-Stand erneut.
+Setze anschließend genau den hier dokumentierten Redesign-Prozess fort.
 Nicht ein völlig neues fremdes App-Konzept bauen. Die bestehende Nur-Islam-App und ihre Funktionen bleiben die Basis.
+Neue Bilder und Screens müssen dem freigegebenen Visual-System folgen. Keine eigenen abweichenden Stilinterpretationen.
 Alte Bilder nicht vorschnell löschen. Zuerst neue Assets planen, erzeugen, einbauen und visuell prüfen; erst danach Altbestand entfernen.
 ```
 
-Das ältere `docs/CHATGPT-BRAIN-HANDOFF.md` enthält allgemeinen Projektkontext. Bei Design, Bildern und der aktuellen Visual-Redesign-Strategie ist **diese Datei maßgeblich**.
+Das ältere `docs/CHATGPT-BRAIN-HANDOFF.md` enthält allgemeinen Projektkontext. Für Design, Bilder, Figuren, Icons und die aktuelle Visual-Redesign-Strategie ist **diese Datei maßgeblich**.
 
 ---
 
 # 1. Oberstes Ziel
 
-Die App **Nur Islam Premium** soll visuell von einem bereits umfangreichen, aber teilweise uneinheitlichen Design zu einer **sehr hochwertigen, ruhigen und systematischen Premium-App** weiterentwickelt werden.
+Die App **Nur Islam Premium** soll visuell von einem bereits umfangreichen, aber teilweise uneinheitlichen Design zu einer **sehr hochwertigen, ruhigen, spirituellen und systematischen Premium-App** weiterentwickelt werden.
 
 Die App wird **nicht komplett neu erfunden**. Vorhandene Funktionen, Navigation und gute Grundentscheidungen bleiben die Basis.
 
-Das Ziel ist:
+Ziel:
 
 - ein klar erkennbares Nur-Islam-Designsystem,
 - ein zusammenhängender Bildstil,
 - ein zusammenhängender Figurenstil,
 - ein einheitlicher Iconstil,
-- ruhige visuelle Hierarchie,
-- bessere Bildkomposition statt aggressiver CSS-Korrekturen,
-- weniger visuelles Chaos,
+- klare Hero-/Feature-/Utility-Hierarchie,
+- ruhige visuelle Komposition,
 - weniger unnötiges Gold und Glow,
 - weniger Asset-Aliase und Duplikate,
-- langfristig eine saubere kanonische Asset-Struktur,
-- jeder Screen soll sich wie Teil **derselben App** anfühlen.
+- weniger CSS-Override-Schulden,
+- kanonische Assets mit klaren Rollen,
+- jeder Screen wirkt sichtbar wie Teil **derselben App**.
 
 Leitsatz:
 
@@ -51,9 +50,9 @@ Leitsatz:
 
 ---
 
-# 2. Was der Nutzer konkret will
+# 2. Feste Nutzerentscheidungen
 
-Diese Entscheidungen sind bereits getroffen und sollen nicht erneut abgefragt werden.
+Diese Punkte sind entschieden und sollen nicht erneut abgefragt werden.
 
 ## 2.1 Reale Dinge realistisch darstellen
 
@@ -73,7 +72,6 @@ Beispiele:
 - Kuppeln
 - Minarette
 - Gebetsräume
-- reale islamische Gegenstände
 
 Gewünschter Look:
 
@@ -83,30 +81,28 @@ Gewünschter Look:
 - glaubwürdige Materialien
 - warmes, kontrolliertes Licht
 - ruhige Komposition
-- nicht kitschig
-- keine billige typische KI-Bildoptik
+- edel statt kitschig
+- keine billige typische KI-Optik
 - nicht cartoonig
 
-Bestehende Bilder aus dem Repo dürfen als **Vorlage für Motiv, Rolle oder Komposition** dienen. Die neuen Assets sollen jedoch möglichst gezielt für Nur Islam neu aufgebaut werden.
-
----
+Bestehende Repo-Bilder dürfen als **Vorlage für Motiv, Rolle oder Komposition** dienen. Neue Hauptassets sollen möglichst gezielt und konsistent für Nur Islam erstellt werden.
 
 ## 2.2 Menschen niemals als echte Fotopersonen
 
-Wenn ein Screen einen menschlichen Begleiter oder eine Figur benötigt, soll **keine reale Fotoperson** verwendet werden.
+Wenn ein Screen einen menschlichen Begleiter braucht, wird **keine reale Fotoperson** verwendet.
 
 Stattdessen:
 
 - hochwertige stilisierte 3D-Animationsfigur
 - Pixar-artige Grundrichtung
 - freundlich
-- sympathisch
 - modern
+- sympathisch
 - weich modelliert
 - hochwertig
 - nicht albern
 - nicht zu kindlich
-- Kleidung und Farbgebung passend zur Nur-Islam-Marke
+- Kleidung/Farben passend zur Nur-Islam-Marke
 
 Geeignete Bereiche:
 
@@ -116,15 +112,12 @@ Geeignete Bereiche:
 - Erklärscreens
 - Empty States
 - Hilfesituationen
-- freundliche Guide-Szenen
 
-Nicht jeder Screen braucht eine Figur. Vor allem Home, Gebete, Quran usw. sollen primär ruhig und spirituell bleiben.
+Home, Gebete, Quran, Qibla, Dhikr usw. sollen primär ruhig und spirituell bleiben und nicht unnötig mit Figuren gefüllt werden.
 
----
+## 2.3 Kleine UI-Icons bleiben Vektoricons
 
-## 2.3 UI-Icons nicht als 3D-Pixar-Objekte
-
-Kleine Funktionsicons bleiben **saubere Vektoricons**.
+Navigation und Bedienhandlungen werden **nicht** als 3D-/Pixar-Objekte gebaut.
 
 Beispiele:
 
@@ -143,19 +136,15 @@ Beispiele:
 
 Richtung:
 
-- Lucide oder gleichartiger Outline-Stil
+- bevorzugt Lucide oder gleichartiger Outline-Stil
+- konsistente optische Größe
 - konsistente Strichstärke
-- konsistente Größen
 - klare aktive/inaktive Zustände
-- Cream / Gold / Muted Green nach Zustand
+- Cream / Gold / Muted Green je Zustand
 
-Keine 3D-Icons in kleinen Controls und keine Mischung aus mehreren Iconstilen.
+Keine Mischung mehrerer Iconstile.
 
----
-
-## 2.4 Die App soll nicht komplett anders werden
-
-Die bestehende Grundrichtung ist gut genug, um darauf aufzubauen.
+## 2.4 Die bestehende App bleibt die Basis
 
 Behalten:
 
@@ -165,8 +154,8 @@ Behalten:
 - Inter für UI
 - Cormorant Garamond für hochwertige Headlines
 - bestehende Hauptnavigation
-- starke Funktionsbreite
-- Quran-Reader darf eine eigene warme Papier-/Creme-Welt behalten
+- bestehende Funktionsbreite
+- warme Papier-/Creme-Welt des Quran Readers als bewusste Ausnahme
 
 Nicht behalten müssen:
 
@@ -174,14 +163,12 @@ Nicht behalten müssen:
 - doppelte Asset-Versionen
 - kaputte Fallback-Ketten
 - unnötige Glow-Flut
-- übermäßig viele verschiedene Card-Stile
-- zusätzliche CSS-Lock-Schichten als Dauerlösung
+- übermäßig viele Card-Stile
+- weitere CSS-Lock-Schichten als Dauerlösung
 
 ---
 
 # 3. Die drei visuellen Welten
-
-Die gesamte App soll aus **drei klar getrennten visuellen Kategorien** bestehen.
 
 ## A. Sacred Premium Realistic
 
@@ -211,15 +198,12 @@ Merkmale:
 - realistische Tiefe
 - subtile Atmosphäre
 - viel negativer Raum
-- kein billiges Compositing
-- keine übertriebene Sättigung
 - keine Glow-Flut
-
----
+- keine übertriebene Sättigung
 
 ## B. Friendly 3D Character
 
-Für menschlich erklärende Situationen ohne reale Personen.
+Für erklärende oder menschliche Situationen ohne reale Personen.
 
 Verwendung:
 
@@ -238,10 +222,7 @@ Merkmale:
 - weich
 - nicht fotorealistisch
 - nicht kindisch
-- Kleidung/Farben passend zur App
-- Hintergründe nicht zu bunt
-
----
+- Nur-Islam-Farben
 
 ## C. Clean UI Iconography
 
@@ -260,53 +241,35 @@ Merkmale:
 
 # 4. Brand-System
 
-## 4.1 Farben
-
-Grundidentität bleibt:
+## Farben
 
 - **Deep Emerald** = Haupt-Hintergrund
-- **Emerald Surface** = Karten und Panels
+- **Emerald Surface** = Karten/Panels
 - **Cream / Warm Ivory** = Haupttext und ausgewählte helle Flächen
 - **Gold** = kontrollierter Premium-Akzent
 - **Muted Green** = sekundäre Informationen
 
-Vorhandene Kernrichtung aus dem Repo darf als Basis dienen, insbesondere die dunkle Smaragd-/Gold-Welt.
+## Gold-Regel
 
-## 4.2 Gold-Regel
-
-Gold darf nicht gleichzeitig überall vorkommen als:
-
-- Rand
-- Text
-- Icon
-- Bild
-- Glow
-- Button
-- Progress
-- Ornament
-- Navigation
-
-Pro Bereich wenige gezielte Goldakzente.
+Gold nicht gleichzeitig überall als Rand, Text, Icon, Bild, Glow, Button, Progress, Ornament und Navigation verwenden.
 
 Faustregel:
 
-- Emerald/Creme tragen den Screen
-- Gold hebt Wichtiges hervor
-- Gold ist **nicht** die Standardfarbe für alles
+- Emerald/Creme tragen den Screen.
+- Gold hebt Wichtiges hervor.
+- Gold ist nicht Standardfarbe für alles.
 
-## 4.3 Typografie
-
-Beibehalten:
+## Typografie
 
 - **Inter** → UI, Body, Buttons, Labels
-- **Cormorant Garamond** → Hero-Titel, hochwertige Headlines
+- **Cormorant Garamond** → Hero-Titel und hochwertige Headlines
 
 Wichtig:
 
-- weniger verschiedene Schriftgrößen
+- wenige klare Schriftstufen
 - gute Zeilenhöhe
-- keine zu engen Hero-Headlines
-- gute Lesbarkeit auf kleinen Geräten
+- keine gequetschten Hero-Titel
+- kleine Geräte mitdenken
 
 ---
 
@@ -318,10 +281,9 @@ Jeder Hauptscreen soll im Kern nur drei visuelle Ebenen verwenden.
 
 - maximal eine dominante Hero-Fläche pro Hauptscreen
 - stärkstes Bild / stärkste Atmosphäre
-- große Headline
-- klarer Schwerpunkt
+- große Headline bzw. zentrale Funktion
 - viel Luft
-- nicht mit zu vielen Buttons und Badges überladen
+- keine Badge-/Button-Überladung
 
 ## 5.2 Feature Card
 
@@ -335,28 +297,152 @@ Jeder Hauptscreen soll im Kern nur drei visuelle Ebenen verwenden.
 - funktional
 - minimal dekoriert
 - meist Icon + Text + Status
-- kein großes Bild, wenn es keinen echten Mehrwert bringt
-
-Ziel: weniger konkurrierende Kartentypen und klarere Hierarchie.
+- kein großes Bild ohne echten Mehrwert
 
 ---
 
-# 6. Bildregeln
+# 6. Verbindliche Referenzbild-Strategie
 
-## 6.1 Ein Bild braucht eine klare Rolle
+Dieser Abschnitt ist **besonders wichtig**, weil die finalen Bilder später an Claude/Codex übergeben werden und dort als Designvorlage dienen.
+
+## 6.1 Nicht möglichst viele Bilder erzeugen
+
+Ziel ist **nicht**, viele Moodboards oder Übersichtsillustrationen zu sammeln.
+
+Ziel ist:
+
+> **wenige, gezielte, autoritative Referenzbilder, die untereinander vollständig einheitlich und widerspruchsfrei sind.**
+
+Viele ähnliche Varianten führen dazu, dass Claude/Codex unklar wird, welche Version verbindlich ist. Deshalb wird pro klarer Designentscheidung möglichst nur **eine freigegebene Referenz** behalten.
+
+## 6.2 Vier erlaubte Referenzbild-Rollen
+
+Jedes bewusst erzeugte Referenzbild muss genau eine Hauptrolle besitzen:
+
+### A. Hero-Referenzbild
+
+Für das zentrale visuelle Motiv eines Screens.
+
+Beispiele:
+
+- Home-Moschee
+- Prayer-Hero
+- Quran-Hero
+
+### B. Objekt-Referenzbild
+
+Für ein wichtiges wiederverwendbares Einzelobjekt.
+
+Beispiele:
+
+- Quran
+- Tasbih
+- Qibla-Kompass
+- Kaaba
+- Laterne
+- Gebetsteppich
+
+### C. Character-Referenzbild
+
+Für eine klar definierte 3D-Figur.
+
+Beispiele:
+
+- Nur-Assistent
+- Onboarding-Guide
+- Lernhilfe
+
+### D. UI-/Screen-Referenzbild
+
+Für den **konkreten Aufbau eines echten Screens oder einer klar abgegrenzten Komponente**.
+
+Es dient Claude/Codex als Umsetzungsreferenz für:
+
+- Layout
+- Hierarchie
+- Abstände
+- Bildposition
+- Karten
+- Buttons
+- Textzonen
+- visuelle Gewichtung
+
+Keine allgemeinen Übersichtsboards erzeugen, wenn ein konkreter Screen besser als Referenz dient.
+
+## 6.3 Single Source of Truth pro Bereich
+
+Für einen Screen soll später möglichst gelten:
+
+- 1 verbindliche Screen-/UI-Referenz
+- 1 verbindliches Hero-Asset, falls nötig
+- klar definierte wiederverwendbare Objektassets
+- 1 schriftliche Screen-Spezifikation
+
+Wenn Varianten während der Entwicklung getestet werden, werden sie **nicht alle gleichzeitig als finale Referenzen geführt**. Nach einer Entscheidung wird eine Version als `approved`/kanonisch behandelt; verworfene Varianten dürfen Claude/Codex nicht als gleichwertige Vorgabe präsentiert werden.
+
+## 6.4 Widerspruchsfreiheit zwischen Screens
+
+Home, Prayer, Quran, Qibla, Dhikr usw. müssen dieselbe visuelle Familie bilden.
+
+Nicht erlaubt:
+
+- Home stark fotorealistisch, Prayer plötzlich cartoonig
+- unterschiedliche Goldtöne ohne Grund
+- andere Materialqualität bei jedem Objekt
+- komplett andere Lichtlogik pro Screen
+- zufällig wechselnde Card-Radien
+- verschiedene Iconfamilien
+- Assistent sehr kindlich, Onboarding deutlich realistischer 3D-Stil
+
+Erlaubt sind unterschiedliche **Stimmungen innerhalb derselben Art-Direction**, z. B. Fajr-Licht auf Home und ruhigere Gebetsarchitektur auf Prayer.
+
+## 6.5 Referenzbilder sind Produktionsvorgaben
+
+Ein freigegebenes Bild ist nicht nur Inspiration, sondern soll Claude/Codex später als **Umsetzungsvorgabe** dienen.
+
+Deshalb muss vor jeder finalen Bildgenerierung feststehen:
+
+- Screen/Rolle
+- Motiv
+- Bildstil
+- Licht
+- Farbwelt
+- Perspektive
+- Crop
+- freie Textzone
+- Safe Zone
+- Seitenverhältnis
+- UI-Position des Motivs
+- was ausdrücklich nicht vorkommen darf
+
+## 6.6 Keine Übersichtsbild-Flut
+
+Moodboards/Designübersichten dürfen intern einmal zur Orientierung existieren, sind aber **nicht** die primären Umsetzungsreferenzen.
+
+Ab jetzt bevorzugt:
+
+1. Screen schriftlich definieren
+2. benötigte Bildrollen bestimmen
+3. genau ein gezieltes Referenzbild erzeugen
+4. dieses als verbindliche Version dokumentieren
+5. erst dann weiter zum nächsten Screen
+
+---
+
+# 7. Allgemeine Bildregeln
+
+## 7.1 Jedes Bild braucht eine klare Rolle
 
 Jedes Bild muss beantworten:
 
 - Auf welchem Screen wird es benutzt?
 - Ist es Hero, Objekt, Ornament oder Character?
 - Warum braucht dieser Bereich ein Bild?
-- Ist ein Vektoricon vielleicht besser?
+- Ist ein Vektoricon besser?
 
 Keine Bilder nur deshalb hinzufügen, weil eine Fläche leer ist.
 
-## 6.2 Bilder müssen für die UI komponiert werden
-
-Neue Hero-/Objektbilder sollen von Anfang an zur späteren UI passen.
+## 7.2 Bilder müssen für die UI komponiert werden
 
 Vor Erzeugung festlegen:
 
@@ -368,42 +454,33 @@ Vor Erzeugung festlegen:
 - Crop-Zone
 - sichere Zone für Mobilgeräte
 
-Dadurch soll später weniger nötig sein wie:
+Dadurch sollen spätere Korrekturen wie `scale(1.8)`, starke `translate()`, aggressive Masken oder extreme Filter weitgehend entfallen.
 
-- `scale(1.8)`
-- starke `translate()`-Korrekturen
-- aggressive Masken
-- extreme Filter
-- zufällige Opacity-Korrekturen
+## 7.3 Konsistente reale Objekte
 
-## 6.3 Konsistente reale Objekte
-
-Quran, Tasbih, Laterne, Kaaba usw. müssen wirken, als kämen sie aus derselben Art-Direction:
+Quran, Tasbih, Laterne, Kaaba usw. müssen aus derselben Art-Direction wirken:
 
 - ähnliche Lichtqualität
 - ähnliche Materialqualität
 - ähnliche Tiefenwirkung
 - ähnliche Farbstimmung
-- keine Mischung aus flachem SVG und fotorealistischem CGI als sichtbare Hauptmotive
+- keine sichtbare Mischung aus flachem SVG und fotorealistischem CGI als Hauptmotive
 
-## 6.4 Fallbacks
+## 7.4 Fallbacks
 
-Technische Fallbacks dürfen existieren, sollen aber stilistisch nicht plötzlich komplett anders aussehen.
+Technische Fallbacks dürfen existieren, aber nicht stilistisch komplett umspringen.
 
 Besser:
 
-- neutraler Marken-Fallback
-- Emerald-Fläche
+- neutraler Emerald-Marken-Fallback
 - dezentes Ornament
 - semantisches Icon
 
-statt eines völlig anderen flachen Illustrationsstils.
+statt eines völlig anderen Illustrationsstils.
 
 ---
 
-# 7. Ziel-Asset-Struktur
-
-Langfristiges Ziel:
+# 8. Ziel-Asset-Struktur
 
 ```text
 public/assets/
@@ -444,6 +521,13 @@ ornaments/
   ornament-rosette.svg
   ornament-geometric-pattern.svg
   ornament-divider.svg
+
+references/
+  screens/
+    home-approved.webp
+    prayer-approved.webp
+    quran-approved.webp
+  components/
 ```
 
 Regeln:
@@ -452,21 +536,19 @@ Regeln:
 - eine kanonische Datei pro Rolle
 - keine byte-identischen Duplikate unter mehreren Namen
 - Aliase nur während Migration
-- Asset-Namen beschreiben die Rolle, nicht die Entstehungsgeschichte
+- Referenzbilder klar als `approved` kennzeichnen, sobald die Entscheidung final ist
 
 ---
 
-# 8. Alte Bilder: Löschstrategie
+# 9. Alte Bilder: Löschstrategie
 
-Der ursprüngliche Gedanke war, alle Bilder zu löschen und komplett neu zu bauen. Die sichere Umsetzung ist jedoch bewusst anders:
-
-## Nicht sofort löschen
+Nicht sofort alles löschen.
 
 Richtige Reihenfolge:
 
 1. komplettes Bildinventar erfassen
 2. Screen-Zuordnung erfassen
-3. entscheiden: behalten / als Vorlage nutzen / ersetzen / löschen
+3. behalten / Vorlage / ersetzen / löschen entscheiden
 4. neues Zielasset definieren
 5. neues Bild erstellen
 6. im Code referenzieren
@@ -474,71 +556,29 @@ Richtige Reihenfolge:
 8. alte Referenzen entfernen
 9. unbenutztes Asset endgültig löschen
 
-Warum:
-
-- sonst brechen Pfade
-- Fallbacks können ausfallen
-- Screens können leer werden
-- Tests können unerwartet fehlschlagen
-
-Am Ende soll der Altbestand trotzdem konsequent bereinigt werden.
+Am Ende soll der alte Bestand trotzdem konsequent bereinigt werden.
 
 ---
 
-# 9. Bekannte Probleme des aktuellen Repos, die beim Redesign berücksichtigt werden müssen
+# 10. Bekannte aktuelle Design-/Asset-Schulden
 
-Aus der bisherigen A-Z-Analyse:
-
-## 9.1 Bild-/Asset-Schulden
-
-- mehrere Versionen desselben Motivs
+- mehrere Versionen derselben Motive
 - `.png`, `.webp`, `-v2`, SVG-Fallbacks und Aliase nebeneinander
-- mindestens einzelne doppelte Dateien unter verschiedenen Namen
-- semantisch unklare Asset-Pfade
-
-## 9.2 Home-Moschee
-
-Ein früheres Moschee-Rasterasset war beschädigt/trunkiert. Runtime-Logik hat deshalb zeitweise auf ein anderes intaktes Dome-Asset umgeleitet.
-
-Folge:
-
-- JSX-/Dokumentationsrolle und tatsächlich gerendertes Bild können auseinanderlaufen
-- genau solche Alias-Ketten sollen im neuen System verschwinden
-
-## 9.3 Unterschiedliche Fallback-Stile
-
-Ein realistisches WebP kann bei Fehler auf ein flaches SVG wechseln. Das ist technisch robust, aber visuell inkonsistent.
-
-## 9.4 Aggressive Bild-CSS-Regeln
-
-Aktuelle Bilder werden teilweise stark:
-
-- skaliert
-- verschoben
-- maskiert
-- gefiltert
-- in Opacity verändert
-
-Das ist ein Zeichen dafür, dass die Master-Assets nicht optimal für ihre Rolle komponiert wurden.
-
-## 9.5 CSS-Cascade-Schulden
-
-Das Repo besitzt sehr viele Stylesheets, Override-Layer und `!important`-Regeln.
+- einzelne doppelte/semantisch unklare Assets
+- frühere beschädigte/trunkierte Home-Moschee und Runtime-Umleitung auf ein anderes Dome-Asset
+- realistische WebPs und deutlich andersartige SVG-Fallbacks
+- Bilder werden teilweise stark skaliert, verschoben, maskiert, gefiltert oder in Opacity verändert
+- sehr viele Stylesheets, Override-Layer und `!important`-Regeln
 
 Deshalb:
 
-- keine neue `final-lock-v3.css`-Mentalität
-- nicht immer noch eine letzte Override-Schicht hinzufügen
+- keine neue `final-lock-vX.css`-Mentalität
 - Komponenten schrittweise in kanonische Styles zurückführen
-- CSS-Duplikate nicht blind automatisiert löschen; Reihenfolge kann renderrelevant sein
+- CSS-Duplikate nicht blind löschen; Cascade-Reihenfolge kann renderrelevant sein
 
 ---
 
-# 10. Reihenfolge des gesamten Redesigns
-
-Wir arbeiten **Screen für Screen**, nicht gleichzeitig an allem.
-
-## Hauptreihenfolge
+# 11. Reihenfolge des Redesigns
 
 1. Dashboard / Home
 2. Gebete / Prayer
@@ -557,22 +597,15 @@ Wir arbeiten **Screen für Screen**, nicht gleichzeitig an allem.
 15. Empty States / Fehler-/Systemzustände
 16. sekundäre Legacy-/Detail-Screens
 
-Ein Screen wird erst als abgeschlossen betrachtet, wenn:
-
-- Bildrollen geklärt sind
-- Assets passen
-- Icons konsistent sind
-- Card-Hierarchie stimmt
-- Responsive geprüft ist
-- keine sichtbaren falschen Fallbacks vorhanden sind
+Ein Screen wird erst als abgeschlossen betrachtet, wenn Bildrollen, Icons, Komponenten, Responsive-Verhalten und Referenzen konsistent sind.
 
 ---
 
-# 11. Dashboard / Home — bereits festgelegte Richtung
+# 12. Dashboard / Home — festgelegte Richtung
 
-Home ist der Referenzscreen für den Stil der gesamten App.
+Home ist der Referenzscreen für die visuelle Sprache der App.
 
-## 11.1 Zielgefühl
+## Zielgefühl
 
 - spirituell
 - ruhig
@@ -582,27 +615,24 @@ Home ist der Referenzscreen für den Stil der gesamten App.
 - warm
 - nicht überladen
 
-## 11.2 Home-Hero
+## Hero
 
-Geplanter kanonischer Dateiname:
+Kanonischer Zielname:
 
 `hero-home-mosque.webp`
 
 Richtung:
 
-- klassische Moschee
-- Kuppel und Minarette
+- klassische Moschee mit Kuppel und Minaretten
 - realistisch/cinematic
-- Fajr-/Morgenlicht als bevorzugte Grundstimmung
+- bevorzugt Fajr-/Morgenlicht
 - Deep-Emerald-Umgebung
 - dezente warme Goldlicht-Akzente
-- genug negativer Raum für Text
-- kein echter Mensch
+- genügend negativer Raum für Text
+- keine echte Person
 - keine 3D-Figur im Home-Hero
 
-## 11.3 Home-Nebenassets
-
-Mögliche kanonische Assets:
+## Mögliche Home-Objekte
 
 - `object-quran-book.webp`
 - `object-tasbih.webp`
@@ -610,80 +640,75 @@ Mögliche kanonische Assets:
 - `object-mihrab.webp`
 - `object-crescent.webp`
 
-Nicht alle gleichzeitig prominent verwenden. Erst Hierarchie entscheiden.
+Nicht alle gleichzeitig prominent einsetzen.
 
-## 11.4 Home-Struktur
+## Home-Struktur
 
 1. Top Bar: Nur-Brand + Erinnerung + Menü
 2. Hero: Begrüßung + Headline + Datum + Moschee
-3. Nächstes Gebet
+3. nächstes Gebet
 4. Quran / Dein Weg / Weiterlesen
 5. ausgewählte Quick Actions
 6. Tagesinspiration
 
-## 11.5 Home vermeiden
+Vermeiden:
 
-- 3D-Character als Hauptmotiv
-- mehrere große konkurrierende Bilder
+- Character im Hero
+- mehrere konkurrierende große Bilder
 - übermäßiges Gold
 - zu viele Card-Stile
-- zu viele Ornamente
-- zu langer Hero-Text
-- Glow auf jedem Element
+- Ornament-/Glow-Flut
 
 ---
 
-# 12. Gebete / Prayer — nächster konkreter Screen
+# 13. Gebete / Prayer — aktueller aktiver Arbeitsblock
 
-Nach Sicherung dieses Gehirns ist der nächste aktive Screen **Gebete / Prayer**.
+Der reale `PrayerScreen.tsx` wurde geprüft.
 
-Dort zunächst den tatsächlichen Repo-Stand lesen:
+Aktuell vorhandene Kernfunktionen:
 
-- `PrayerScreen.tsx`
-- alle zugehörigen CSS-Regeln
-- aktuelle Asset-Pfade
-- Fallbacks
-- Gebetslisten
-- Next-Prayer-Komponente
-- etwaige Prayer-Learning-Verknüpfungen
+- Header mit Hijri-Datum
+- Live-/Cache-/Fallback-Status
+- Standortkarte
+- optionaler Standort-Hinweis
+- großes Next-Prayer-Panel
+- Uhrzeit und Countdown
+- Gebet als erledigt markieren
+- Hinweiston testen
+- Tagesfortschritt 0–5
+- Liste aller Gebetszeiten
+- Erinnerung pro Pflichtgebet
+- Berechnungsmethode / Asr-Schule
+- Abschluss-/Celebration-Modal
 
-Danach festlegen:
+Diese Funktionen bleiben grundsätzlich erhalten.
 
-## 12.1 Hero-Frage
+## Aktuelles visuelles Problem
 
-Der Screen braucht wahrscheinlich einen ruhigen realistischen Prayer-Hero, zum Beispiel:
+Der Screen ist funktional stark, aber visuell überwiegend CSS-/Icon-getrieben. Das aktuelle Prayer-Hauptmotiv wird über CSS als schwach eingeblendetes `dome-v2.webp` in das Next-Prayer-Panel gelegt. Gleichzeitig existieren Glow, Kreisdeko, Verlauf, Progress, große Zeit und mehrere Controls in derselben Fläche.
+
+Das erzeugt viel visuelle Konkurrenz und kein klares, autoritatives Prayer-Hero-System.
+
+## Neue Prayer-Grundentscheidung
+
+Prayer soll **nicht** für Fajr, Dhuhr, Asr, Maghrib und Isha jeweils ein eigenes großes Bild bekommen.
+
+Stattdessen:
+
+- **ein einziges starkes realistisches Prayer-Hero-Motiv**
+- Gebetszeiten darunter als ruhige Utility Rows
+- Prayer-Zeit-Symbole weiterhin als saubere Vektoricons
+- keine Pixar-Figur auf diesem Screen
+
+Geplanter Hero-Zielname:
 
 `hero-prayer-dome.webp`
 
-Mögliche Richtung:
-
-- reale Moscheekuppel / Minarett / Gebetsarchitektur
-- ruhige Himmelsstimmung
-- nicht dieselbe Komposition wie Home
-- stärker funktional/spirituell, weniger Marketing-Hero
-
-## 12.2 Gebetszeiten selbst
-
-Fajr, Dhuhr, Asr, Maghrib, Isha sollen nicht jeweils eigene große Bilder bekommen.
-
-Besser:
-
-- klare Icons oder kleine symbolische Zustände
-- nächste Gebetszeit visuell hervorgehoben
-- restliche Zeiten ruhig und funktional
-
-## 12.3 Komponenten
-
-- Hero / Next Prayer
-- Prayer Times = Utility Rows
-- Lern-/Gebetsfeature = Feature Card
-- Settings/Methode/Ort = Utility
+Die genaue Prayer-Spezifikation wird separat in `docs/PRAYER-VISUAL-SPEC.md` geführt.
 
 ---
 
-# 13. Vorläufige Bildrollen für weitere Hauptscreens
-
-Diese Zuordnung ist ein Plan, kein unveränderbares Gesetz. Vor Umsetzung wird jeder echte Screen geprüft.
+# 14. Vorläufige Bildrollen weiterer Hauptscreens
 
 | Screen | Hauptvisual | Stil |
 |---|---|---|
@@ -692,47 +717,54 @@ Diese Zuordnung ist ein Plan, kein unveränderbares Gesetz. Vor Umsetzung wird j
 | Quran | hochwertiger Quran | realistisch |
 | Qibla | Qibla-Kompass + ggf. Kaaba | realistisch |
 | Dhikr | Tasbih | realistisch |
-| Duas | dezente Dua-Hand-/Lichtsymbolik | realistisch, respektvoll |
-| Kalender | islamischer Kalender/Crescent | realistisch oder premium Objekt |
+| Duas | dezente Dua-/Lichtsymbolik | realistisch, respektvoll |
+| Kalender | islamischer Kalender/Crescent | realistisches Premium-Objekt |
 | Lernen | Mihrab/Quran + punktuell 3D-Guide | gemischt |
 | Moscheen | Moschee | realistisch |
 | Sammlungen | Bookmark/Quran-Objekt | realistisch/minimal |
 | Profil/Mehr | Nur-Brand | clean UI |
-| Assistent | eigene 3D-Guide-Figur | 3D Character |
+| Assistent | definierte 3D-Guide-Figur | 3D Character |
 | Splash | Nur-Brand + hochwertige Atmosphäre | Brand/realistisch |
-| Onboarding | reale Objekte + 3D-Figur wo sinnvoll | gemischt |
-| Empty States | 3D-Guide oder neutrale Brand-Grafik | 3D/Brand |
+| Onboarding | reale Objekte + 3D-Figur, wenn sinnvoll | gemischt |
+| Empty States | 3D-Guide oder neutraler Brand-Fallback | 3D/Brand |
 
 ---
 
-# 14. Screen-Workflow — immer gleich vorgehen
+# 15. Workflow pro Screen
 
-## Schritt A — Ist-Zustand analysieren
-
-Für den jeweiligen Screen lesen:
+## A. Ist-Zustand analysieren
 
 - TSX/JSX
 - Datenabhängigkeiten
 - Styles
-- importierte Komponenten
+- Komponenten
 - Asset-Pfade
 - Runtime-Aliase
 - Fallbacks
 
-## Schritt B — Screen-Hierarchie definieren
+## B. Screen-Hierarchie definieren
 
-Festlegen:
+- Hero
+- wichtigstes Feature
+- Utility-Bereiche
+- nötige Bilder
+- reine Icons
+- Character ja/nein
 
-- Was ist der Hero?
-- Was ist wichtigstes Feature?
-- Welche Bereiche sind nur Utility?
-- Welches Bild ist nötig?
-- Wo reicht ein Icon?
-- Braucht der Screen wirklich eine 3D-Figur?
+## C. Schriftliche Screen-Spezifikation erstellen
 
-## Schritt C — Asset-Briefing schreiben
+Vor Bildgenerierung genau dokumentieren:
 
-Für jedes neue Asset exakt festlegen:
+- Aufbau
+- Komponenten
+- Informationshierarchie
+- Bildrolle
+- Farb-/Lichtstimmung
+- responsive Verhalten
+
+## D. Asset-Briefing
+
+Für jedes neue Bild exakt festlegen:
 
 - kanonischer Dateiname
 - Screen
@@ -745,30 +777,28 @@ Für jedes neue Asset exakt festlegen:
 - freie Textfläche
 - Seitenverhältnis
 - Crop-/Safe-Zone
-- Stil
-- Negativregeln: was ausdrücklich vermieden wird
+- Negativregeln
 
-## Schritt D — Neue Assets erzeugen
+## E. Genaues Referenzbild erzeugen
 
-Neue Bilder müssen den gemeinsamen Stil einhalten.
+- keine Variantenflut
+- gezielt auf schriftliche Spezifikation
+- erst nach Prüfung als `approved` behandeln
 
-Vorhandene Bilder dürfen als Referenz dienen, aber Ziel ist ein konsistentes neues Set.
-
-## Schritt E — Implementieren
+## F. Implementieren
 
 - neue Pfade einbauen
 - alte Aliase reduzieren
-- nur betroffene Komponenten anfassen
 - CSS konsolidieren statt neue Lock-Schicht
-- Fallbacks passend machen
+- Funktionen erhalten
 
-## Schritt F — visuell prüfen
+## G. Visuell prüfen
 
 Mindestens:
 
-- ca. 320 px Breite
+- 320 px
 - 375 px
-- 390 × 844 als zentrale Referenz
+- 390 × 844
 - 430 px
 
 Prüfen:
@@ -779,83 +809,64 @@ Prüfen:
 - Kontrast
 - Safe Area
 - Scroll
-- Taps
-- Focus
-- kein abgeschnittener Inhalt
+- Touch/Focus
 - keine falschen Fallbacks
 - Bild lädt wirklich
 
-## Schritt G — Altbestand entfernen
+## H. Altbestand entfernen
 
-Erst löschen, wenn:
-
-- keine Code-Referenz mehr existiert
-- kein Fallback es braucht
-- Screen geprüft wurde
-- neues Asset stabil ist
+Erst wenn neuer Screen stabil und referenzfrei vom Altasset ist.
 
 ---
 
-# 15. Icon-System
-
-Icons werden als eigenes System behandelt.
-
-## Regeln
+# 16. Icon-System
 
 - ein Outline-Stil
-- bevorzugt Lucide, sofern vorhandenes Icon passend ist
+- bevorzugt Lucide
 - gleiche optische Größe
 - gleiche Strichstärke
 - gleiche vertikale Ausrichtung
-- Active State klar, aber nicht grell
-- kein Gold auf jedem Icon gleichzeitig
+- Active State klar, aber zurückhaltend
+- nicht jedes Icon Gold
 
-## Bottom Navigation
-
-Bestehende Hauptlogik bleibt grundsätzlich erhalten.
-
-Navigation soll kurz, lesbar und auf kleinen Geräten stabil bleiben.
-
-Wenn lange Labels auf 320 px problematisch sind, kann ein kürzeres Label verwendet werden, ohne den eigentlichen Screen-Titel zu ändern.
+Bottom Navigation bleibt grundsätzlich erhalten. Lange Labels dürfen für schmale Geräte verkürzt werden, ohne den Screen-Titel zu ändern.
 
 ---
 
-# 16. Figuren-System
+# 17. Figuren-System
 
-Es soll später nicht zehn unterschiedlich aussehende Pixar-artige Personen geben.
+Nicht zehn unterschiedlich aussehende 3D-Personen erzeugen.
 
 Ziel:
 
-- möglichst ein Haupt-Guide bzw. eine kleine definierte Figurenfamilie
+- ein Haupt-Guide oder kleine definierte Figurenfamilie
 - gleiche Modellierungsqualität
-- gleiche Augen-/Gesichtsästhetik
+- gleiche Gesichts-/Augenästhetik
 - gleiche Materialwelt
 - gleiche Lichtqualität
 - passende Kleidung
-- zurückhaltende Emerald-/Cream-/Gold-Farbwelt
+- Emerald-/Cream-/Gold-Bezug
 
-Der Nur-Assistent eignet sich als stärkster Ort für eine charakteristische Hauptfigur.
+Der Nur-Assistent ist der stärkste Kandidat für eine charakteristische Hauptfigur.
 
 ---
 
-# 17. Light/Dark
+# 18. Dark / Light
 
 Priorität:
 
-1. Dark Theme zuerst visuell perfekt machen
+1. Dark Theme visuell perfektionieren
 2. Light Theme danach systematisch angleichen
 
-Das Light Theme soll nicht einfach Weiß + Gold sein, sondern warmes Ivory/Creme und klare Kontraste verwenden.
+Light Theme = warmes Ivory/Creme, nicht einfach Weiß + Gold.
 
-Quran Reader darf weiterhin eine besondere warme Papierwelt besitzen, solange sie zur App gehört.
+Quran Reader darf als bewusste Ausnahme seine warme Papierwelt behalten.
 
 ---
 
-# 18. Responsive & Accessibility
+# 19. Responsive & Accessibility
 
-Das visuelle Redesign darf vorhandene Stärken nicht verschlechtern.
-
-Weiterhin beachten:
+Vorhandene Stärken nicht verschlechtern:
 
 - Safe Areas
 - Focus Visible
@@ -866,56 +877,52 @@ Weiterhin beachten:
 - keine überstehenden Bilder
 - keine abgeschnittenen Texte
 
-Kernbreiten:
-
-- 320
-- 375
-- 390
-- 430
+Kernbreiten: 320 / 375 / 390 / 430.
 
 ---
 
-# 19. Religiöse Inhalte
+# 20. Religiöse Inhalte
 
-Designänderungen dürfen religiöse Inhalte **nicht beiläufig umschreiben**.
+Designänderungen dürfen religiöse Inhalte nicht beiläufig umschreiben.
 
-Bei Quran, Hadith, Gebetsregeln, Duas, islamischen Aussagen und Quellen gilt:
+Bei Quran, Hadith, Gebetsregeln, Duas, islamischen Aussagen und Quellen:
 
 - nicht aus Designgründen frei verändern
 - fachliche Korrektheit separat prüfen
 - bei Unsicherheit nicht als endgültig korrekt behaupten
 - vorhandene Review-/Prüfprozesse respektieren
 
-Design und religiöse Inhaltsprüfung sind zwei getrennte Ebenen.
-
 ---
 
-# 20. Was ausdrücklich nicht gemacht werden soll
+# 21. Was ausdrücklich nicht gemacht wird
 
 - nicht alle Bilder sofort löschen
 - nicht die komplette App neu erfinden
-- nicht jeden Screen in einer anderen Stilwelt bauen
-- nicht überall Pixar-3D verwenden
-- nicht reale Moschee/Kaaba/Quran als Cartoon darstellen
-- keine echten Menschen als Fotomotive einsetzen
+- nicht jeden Screen in anderer Stilwelt bauen
+- nicht überall Pixar-3D einsetzen
+- reale Moschee/Kaaba/Quran nicht als Cartoon darstellen
+- keine echten Menschenfotos
 - keine 3D-Pixar-Icons für Navigation
 - keine neue CSS-Override-Schicht für jedes Problem
 - nicht blind `!important`-Duplikate löschen
-- keine fünf Gold-/Glow-Effekte auf einer Karte
-- keine Assetnamen wie `final-v4-new2.webp`
-- keine Erfolgsaussage „pixel perfect“, wenn kein echter Render geprüft wurde
+- keine Gold-/Glow-Flut
+- keine unklaren Assetnamen
+- keine fünf gleichberechtigten Designvarianten als Vorgabe für Claude/Codex
+- keine Pixel-perfect-Behauptung ohne echten Rendervergleich
 
 ---
 
-# 21. Definition of Done für einen Screen
+# 22. Definition of Done — einzelner Screen
 
 Ein Screen ist erst fertig, wenn:
 
 - klare Hero-/Feature-/Utility-Hierarchie vorhanden ist
 - Hauptvisual zur gemeinsamen Bildwelt passt
+- nur nötige Bilder verwendet werden
 - Icons konsistent sind
-- keine unnötigen großen Bilder verwendet werden
-- alle Assets kanonisch benannt sind oder eine geplante Migration haben
+- schriftliche Screen-Spezifikation existiert
+- eine eindeutige freigegebene Referenz existiert, falls der Screen eine visuelle Referenz braucht
+- Assets kanonisch benannt sind oder eine dokumentierte Migration besitzen
 - keine sichtbaren kaputten Fallbacks vorhanden sind
 - responsive Kernbreiten geprüft sind
 - Dark Theme stimmig ist
@@ -924,31 +931,30 @@ Ein Screen ist erst fertig, wenn:
 
 ---
 
-# 22. Definition of Done für das gesamte Visual Redesign
+# 23. Definition of Done — gesamtes Visual Redesign
 
-Das Redesign ist erst abgeschlossen, wenn:
+Abgeschlossen erst wenn:
 
-1. alle Hauptscreens nach demselben System überarbeitet wurden
+1. alle Hauptscreens nach demselben System überarbeitet sind
 2. jedes Hauptbild eine klare Rolle besitzt
-3. reale Gegenstände in einer konsistenten realistischen Premium-Welt erscheinen
-4. Figuren in einer konsistenten hochwertigen 3D-Animationswelt erscheinen
+3. reale Gegenstände konsistent realistisch wirken
+4. Figuren konsistent als hochwertige 3D-Animationswelt auftreten
 5. UI-Icons einheitlich sind
-6. alte doppelte/kaputte/ungenutzte Assets entfernt wurden
+6. alte doppelte/kaputte/ungenutzte Assets entfernt sind
 7. Alias-Ketten weitgehend verschwunden sind
-8. CSS nicht mehr durch neue Lock-Layer weiter anwächst
-9. Home als Referenzscreen wirklich hochwertig wirkt
-10. Prayer, Quran, Qibla, Dhikr, Duas, Kalender, Lernen usw. sichtbar zur selben App gehören
+8. CSS nicht durch neue Lock-Layer weiter anwächst
+9. Home als Referenzscreen hochwertig wirkt
+10. Prayer, Quran, Qibla, Dhikr, Duas, Kalender, Lernen usw. sichtbar derselben App angehören
 11. Responsive geprüft ist
-12. keine echten Personenfotos gegen die Designentscheidung verwendet werden
-13. ein neuer Chat allein anhand dieser Datei versteht, wie weiterzuarbeiten ist
+12. Claude/Codex nur eindeutige, widerspruchsfreie `approved` Referenzen erhält
+13. ein neuer Chat allein anhand dieser Datei exakt weiterarbeiten kann
 
 ---
 
-# 23. Aktueller Arbeitsstand / nächster Schritt
+# 24. Aktueller Stand / nächster Schritt
 
-## Bereits festgelegt
+Bereits festgelegt:
 
-- grundlegende Visual-Strategie
 - drei visuelle Welten
 - realistische reale Objekte
 - 3D-Animationsfiguren statt echter Menschen
@@ -958,29 +964,29 @@ Das Redesign ist erst abgeschlossen, wenn:
 - Asset-Zielstruktur
 - sichere Löschstrategie
 - Screen-Reihenfolge
+- **neue autoritative Referenzbild-Strategie für Claude/Codex**
 
-## Jetzt weiterarbeiten
+Aktuell aktiv:
 
-1. bestehenden Prayer-Screen im Repo vollständig lesen
-2. seine aktuelle Bild-/Icon-/Komponentenstruktur dokumentieren
-3. neues Prayer-Layout und Asset-Briefing festlegen
-4. danach neue Assets/Komponenten umsetzen
-5. anschließend Quran nach demselben Verfahren
-
-Home bleibt der bereits definierte visuelle Referenzscreen. Wenn bei der tatsächlichen Umsetzung von Home neue Erkenntnisse entstehen, diese **in dieser Datei dokumentieren**, damit der nächste Chat den aktuellen Stand kennt.
+1. Prayer-Screen vollständig analysieren
+2. `docs/PRAYER-VISUAL-SPEC.md` erstellen
+3. daraus genau ein gezieltes Prayer-Referenzbild definieren
+4. Referenz auf Widersprüche zu Home/Brand prüfen
+5. erst dann Prayer im Code umsetzen
+6. danach Quran nach demselben Verfahren
 
 ---
 
-# 24. Pflege dieses Gehirns
+# 25. Pflege dieses Gehirns
 
-Nach jedem größeren abgeschlossenen Screen diese Datei aktualisieren:
+Nach jedem größeren Arbeitspaket aktualisieren:
 
-- was wurde beschlossen?
-- welche Assets wurden final erstellt?
-- welche Dateinamen sind kanonisch?
-- welche alten Assets wurden entfernt?
-- welcher Screen ist abgeschlossen?
-- welcher Screen ist als nächstes dran?
-- welche visuellen Regeln wurden geändert oder präzisiert?
+- neue Designentscheidung
+- freigegebene Referenzbilder
+- kanonische Assetnamen
+- entfernte Altassets
+- abgeschlossene Screens
+- nächster Screen
+- geänderte/präzisierte visuelle Regeln
 
-Diese Datei soll immer der **aktuelle Single Source of Truth für das Visual Redesign** bleiben.
+Diese Datei bleibt die **Single Source of Truth** für das Visual Redesign.
