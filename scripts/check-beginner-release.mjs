@@ -5,6 +5,7 @@ const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
 const content = await read('src/data/beginnerLearningContent.ts');
+const app = await read('src/app/App.tsx');
 const journey = await read('src/screens/BeginnerJourneyScreen.tsx');
 const starterPlan = await read('src/screens/BeginnerStarterPlanScreen.tsx');
 const reference = await read('src/screens/BeginnerReferenceScreen.tsx');
@@ -55,6 +56,27 @@ if (sourceReferences.some((referenceValue) => !referenceValue || referenceValue 
 }
 
 for (const required of [
+  'readKnowledgeLevel',
+  'nur_knowledge_level',
+  'readBeginnerCompleted',
+  'beginner-home-path',
+  'Neu im Islam · Dein nächster Schritt',
+  'Nächste Grundlage öffnen',
+  'visibleQuickActions',
+  "action.label !== 'Islam Quiz'",
+  "action.label !== 'Nur Assistent'",
+  'Als Nächstes sinnvoll',
+]) {
+  if (!app.includes(required)) throw new Error(`Personalized beginner Home is missing: ${required}`);
+}
+if (!app.includes("knowledgeLevel === 'beginner'")) {
+  throw new Error('Home does not branch on the stored beginner knowledge level.');
+}
+if (!app.includes("localStorage.setItem('nur_beginner_learning_last', nextBeginnerLesson.id)")) {
+  throw new Error('Home does not persist the next beginner lesson before opening learning.');
+}
+
+for (const required of [
   'nur_beginner_learning_completed',
   'fachlicher Endreview',
   'Quellen & Prüfung',
@@ -86,6 +108,12 @@ if (!onboarding.includes('nur_knowledge_level')) throw new Error('Onboarding doe
 if (!learn.includes('readKnowledgeLevel') || !learn.includes('Neu im Islam')) {
   throw new Error('Learning hub does not consume the beginner knowledge level.');
 }
+if (!learn.includes("useState(() => readKnowledgeLevel() === 'beginner'")) {
+  throw new Error('Incomplete beginners are not routed directly into the guided journey.');
+}
+if (!learn.includes("readStringSet('nur_beginner_learning_completed').size < BEGINNER_LESSONS.length")) {
+  throw new Error('Direct beginner routing does not stop after all ten foundations are complete.');
+}
 
 for (const required of ['Fragen & Begriffe', 'Islam A–Z', 'Anfängerhilfe durchsuchen']) {
   if (!reference.includes(required)) throw new Error(`Beginner reference UI missing: ${required}`);
@@ -105,4 +133,4 @@ for (const required of ['Quran-Lexikon', 'Sure', 'Ayah', 'Juz', 'Al-Baqara 2:185
   if (!quranGuide.includes(required)) throw new Error(`Quran beginner guide missing: ${required}`);
 }
 
-console.log('Beginner release guard verified: onboarding level, 10 sourced lessons, seven-day starter plan, review gate, FAQ/glossary, purity basics, and Quran orientation.');
+console.log('Beginner release guard verified: personalized Home, direct beginner routing, 10 sourced lessons, seven-day starter plan, review gate, FAQ/glossary, purity basics, and Quran orientation.');
