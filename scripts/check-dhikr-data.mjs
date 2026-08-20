@@ -18,8 +18,26 @@ if (dataSource.includes("id: 'free-counter'") || dataSource.includes("source: 'P
   throw new Error('A neutral/free counter must not reappear with an artificial religious target inside the sourced routine system.');
 }
 
-for (const source of ['Sahih Muslim 597a', 'Sahih Muslim 2726a', 'Sahih al-Bukhari 6318']) {
+for (const source of [
+  'Sahih Muslim 597a',
+  'Sahih Muslim 2726a',
+  'Sahih al-Bukhari 3113; Sahih al-Bukhari 5361',
+]) {
   if (!dataSource.includes(source)) throw new Error(`Dhikr source label is missing: ${source}`);
+}
+
+if (!dataSource.includes('33-mal SubhanAllah, 33-mal Alhamdulillah und 34-mal Allahu Akbar')) {
+  throw new Error('Bedtime Dhikr description must preserve the source-backed 33/33/34 form.');
+}
+if (!/id: 'sleep-allahu-akbar'[\s\S]*?target: 34/.test(dataSource)) {
+  throw new Error('Bedtime Takbir must remain 34 repetitions for the selected Bukhari 3113/5361 form.');
+}
+if (!/id: 'sleep-subhanallah'[\s\S]*?target: 33/.test(dataSource)
+  || !/id: 'sleep-alhamdulillah'[\s\S]*?target: 33/.test(dataSource)) {
+  throw new Error('Bedtime Tasbih/Tahmid must remain 33 repetitions for the selected Bukhari 3113/5361 form.');
+}
+if (!dataSource.includes('unterschiedlichen Wortlautvarianten') || !dataSource.includes('andere authentische Varianten nicht für ungültig')) {
+  throw new Error('Bedtime Dhikr must keep the authentic-variant notice instead of presenting one wording as the only valid form.');
 }
 
 const targetValues = [...dataSource.matchAll(/target: (\d+)/g)].map((match) => Number(match[1]));
@@ -56,4 +74,4 @@ for (const required of ['.reference-dhikr-stats-modal', '.reference-dhikr-stats-
   if (!hardeningStyles.includes(required)) throw new Error(`Dhikr statistics styling is missing: ${required}`);
 }
 
-console.log(`Dhikr verified: ${uniqueRoutineIds.size} sourced routines, ${targetValues.length} source-backed counter steps, valid capped persisted counts, midnight rollover, and no artificial free-counter target.`);
+console.log(`Dhikr verified: ${uniqueRoutineIds.size} sourced routines, source-backed repetition counts including bedtime 33/33/34, authentic-variant notice, valid capped persisted counts, and no artificial free-counter target.`);
