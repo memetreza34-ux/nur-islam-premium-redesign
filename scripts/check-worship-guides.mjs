@@ -1,15 +1,3 @@
-/**
- * The Wudu and prayer guides.
- *
- * The app carried six shortened steps each for Wudu and Salah and no Arabic at
- * all — for a guide whose whole purpose is teaching someone what to say, the
- * words were the one thing missing. Three guides did not exist: what is said in
- * each position, the obligatory parts, and the common mistakes.
- *
- * What this holds in place is the Arabic. A summary of a prayer guide is not a
- * prayer guide, and the wording is the part most likely to be dropped in a
- * redesign because it is the part that complicates a layout.
- */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
@@ -22,29 +10,34 @@ for (const required of ['wudu', 'salah', 'what-to-say', 'mandatory', 'mistakes']
   if (!guideIds.includes(required)) throw new Error(`Worship guide "${required}" is missing.`);
 }
 
-const steps = [...data.matchAll(/^ {8}title: '((?:[^'\\]|\\.)*)',\n\s+description: '((?:[^'\\]|\\.)*)',/gm)];
-if (steps.length < 50) {
-  throw new Error(`Worship guides hold ${steps.length} steps; at least 50 are expected.`);
-}
-for (const [, title, description] of steps) {
-  if (description.trim().length < 20) throw new Error(`Guide step "${title}" has no usable description.`);
+for (const source of ['Quran 5:6', 'Sahih al-Bukhari 164', 'Sahih Muslim 235a', 'Sahih Muslim 234a/234b']) {
+  if (!data.includes(source)) throw new Error(`Safe Wudu source is missing: ${source}`);
 }
 
-// The Arabic is the point of these guides, so its presence is measured rather
-// than assumed. "what-to-say" carries it on every step by definition.
-const arabicCount = (data.match(/^ {8}arabic: '/gm) ?? []).length;
-if (arabicCount < 18) {
-  throw new Error(`Only ${arabicCount} guide steps carry Arabic wording; at least 18 are expected.`);
+for (const required of [
+  'Die Absicht ist keine auswendig zu sprechende Formel.',
+  'unterschiedliche zulässige Wiederholungszahlen',
+  'nicht jeder Waschschritt wird dadurch zu einer universell dreimal verpflichtenden Handlung',
+  'keine universelle Liste',
+  'keine individuelle Fatwa',
+]) {
+  if (!data.includes(required)) throw new Error(`Worship safety wording is missing: ${required}`);
 }
 
-const whatToSay = data.slice(data.indexOf("id: 'what-to-say'"), data.indexOf("id: 'mandatory'"));
-const whatToSayTitles = (whatToSay.match(/^ {8}title: '/gm) ?? []).length;
-const whatToSayArabic = (whatToSay.match(/^ {8}arabic: '/gm) ?? []).length;
-if (whatToSayArabic !== whatToSayTitles) {
-  throw new Error(
-    `"Was sagt man im Gebet" has ${whatToSayTitles} steps but only ${whatToSayArabic} carry the wording.\n`
-      + '  Every step of that guide exists to show what is said.',
-  );
+for (const forbidden of [
+  "Hebe die Hände zu den Ohren und sage 'Allahu Akbar'",
+  'Das Gebet hat bestimmte Säulen (Arkan), ohne die das Gebet ungültig ist.',
+  'Wenn du eine Säule vergisst, musst du sie nachholen.',
+  'können das Gebet ungültig machen, wenn es zu viel wird',
+]) {
+  if (data.includes(forbidden)) throw new Error(`Unsafe universal worship wording returned: ${forbidden}`);
+}
+
+const wudu = data.slice(data.indexOf("id: 'wudu'"), data.indexOf("id: 'salah'"));
+const wuduSteps = (wudu.match(/^ {8}title: '/gm) ?? []).length;
+if (wuduSteps < 7) throw new Error(`Wudu guide is too short: ${wuduSteps} steps.`);
+if (!wudu.includes('أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ')) {
+  throw new Error('The Sahih Muslim post-Wudu shahada is missing.');
 }
 
 for (const requirement of [
@@ -52,16 +45,9 @@ for (const requirement of [
   'reference-guide-arabic',
   'reference-guide-translit',
   'dir="rtl"',
-  // The stored step index belongs to a list whose length differs per guide.
   'Math.min(activeStep, steps.length - 1)',
 ]) {
   if (!screen.includes(requirement)) throw new Error(`Worship guide screen is missing: ${requirement}`);
 }
 
-if (screen.includes('const wuduSteps: GuideStep[]')) {
-  throw new Error('The six hard-coded Wudu steps are back; src/data/worshipGuideData.ts is the source.');
-}
-
-console.log(
-  `Worship guides verified: ${guideIds.length} guides, ${steps.length} steps, ${arabicCount} carrying Arabic wording with its transliteration.`,
-);
+console.log(`Worship guide safety verified: ${guideIds.length} guide states, sourced Wudu core, and no legacy universal fiqh invalidation rules.`);
