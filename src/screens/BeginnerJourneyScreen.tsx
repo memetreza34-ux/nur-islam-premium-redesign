@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import {
   BookOpen,
+  CalendarDays,
   Check,
   ChevronLeft,
   ChevronRight,
@@ -14,6 +15,7 @@ import { motion, useReducedMotion } from 'motion/react';
 import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
 import type { BeginnerLearningLesson } from '../data/beginnerLearningContent';
 import { BeginnerReferenceScreen } from './BeginnerReferenceScreen';
+import { BeginnerStarterPlanScreen } from './BeginnerStarterPlanScreen';
 import { PurityBasicsScreen } from './PurityBasicsScreen';
 
 function readCompleted() {
@@ -44,6 +46,7 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
   const [selectedLessonId, setSelectedLessonId] = useState(readLastLesson);
   const [referenceOpen, setReferenceOpen] = useState(false);
   const [purityOpen, setPurityOpen] = useState(false);
+  const [starterPlanOpen, setStarterPlanOpen] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const selectedLesson = useMemo(
@@ -71,8 +74,16 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
     selectLesson(next);
   };
 
+  const openStarterLesson = (lessonId: string) => {
+    const lesson = BEGINNER_LESSONS.find((item) => item.id === lessonId);
+    if (!lesson) return;
+    setStarterPlanOpen(false);
+    selectLesson(lesson);
+  };
+
   if (referenceOpen) return <BeginnerReferenceScreen onBack={() => setReferenceOpen(false)} />;
   if (purityOpen) return <PurityBasicsScreen onBack={() => setPurityOpen(false)} />;
+  if (starterPlanOpen) return <BeginnerStarterPlanScreen onBack={() => setStarterPlanOpen(false)} onOpenLesson={openStarterLesson} completed={completed} />;
 
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
 
@@ -99,6 +110,7 @@ export function BeginnerJourneyScreen({ onBack }: { onBack: () => void }) {
       </section>
 
       <section className="reference-prayer-learning-actions">
+        <button onClick={() => setStarterPlanOpen(true)}><span><CalendarDays size={22} /></span><span><strong>Deine ersten 7 Tage</strong><small>Eine einfache Reihenfolge ohne Zeitdruck</small></span><ChevronRight size={17} /></button>
         <button onClick={() => setReferenceOpen(true)}><span><CircleHelp size={22} /></span><span><strong>Fragen & Begriffe</strong><small>Anfänger-FAQ und Islam A–Z</small></span><ChevronRight size={17} /></button>
         <button onClick={() => setPurityOpen(true)}><span><Droplets size={22} /></span><span><strong>Ghusl & Tayammum</strong><small>Reinheit einfach unterscheiden</small></span><ChevronRight size={17} /></button>
       </section>
