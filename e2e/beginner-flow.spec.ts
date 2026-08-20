@@ -45,6 +45,20 @@ test('opens beginner FAQ, glossary and purity basics', async ({ page }) => {
   await expect(page.getByText('Sure Al-Maida 5:6')).toBeVisible();
 });
 
+test('opens the seven day starter plan and routes into the matching lesson', async ({ page }) => {
+  await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
+  await page.getByRole('button').filter({ hasText: /Grundlagen starten|weiterlernen/ }).first().click();
+
+  await page.getByRole('button').filter({ hasText: 'Deine ersten 7 Tage' }).click();
+  await expect(page.getByRole('heading', { name: 'Deine ersten 7 Tage' })).toBeVisible();
+  await expect(page.getByText('Tag für Tag', { exact: true })).toBeVisible();
+  await expect(page.getByText('Kein Zeitdruck', { exact: true })).toBeVisible();
+
+  await page.getByRole('button').filter({ hasText: 'Islam und Allah kennenlernen' }).click();
+  await expect(page.getByRole('heading', { name: 'Neu im Islam' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Was ist Islam?' })).toBeVisible();
+});
+
 test('offers a Quran orientation before the full 114-surah catalogue', async ({ page }) => {
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByText('Quran', { exact: true }).first().click();
