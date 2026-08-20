@@ -84,7 +84,7 @@ export function LearnScreen({
   onOpenPrayer: () => void;
   onOpenQibla: () => void;
 }) {
-  const [beginnerOpen, setBeginnerOpen] = useState(false);
+  const [beginnerOpen, setBeginnerOpen] = useState(() => readKnowledgeLevel() === 'beginner' && readStringSet('nur_beginner_learning_completed').size < BEGINNER_LESSONS.length);
   const [wuduOpen, setWuduOpen] = useState(false);
   const [prayerLesson, setPrayerLesson] = useState<PrayerLessonId | null>(null);
   const [learningCategory, setLearningCategory] = useState<LearningCategoryId | null>(null);
