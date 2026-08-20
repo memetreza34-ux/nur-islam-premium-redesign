@@ -6,6 +6,8 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 
 const content = await read('src/data/beginnerLearningContent.ts');
 const app = await read('src/app/App.tsx');
+const legacy = await read('src/data/legacyFeatures.ts');
+const more = await read('src/screens/MoreScreen.tsx');
 const journey = await read('src/screens/BeginnerJourneyScreen.tsx');
 const starterPlan = await read('src/screens/BeginnerStarterPlanScreen.tsx');
 const reference = await read('src/screens/BeginnerReferenceScreen.tsx');
@@ -62,18 +64,51 @@ for (const required of [
   'beginner-home-path',
   'Neu im Islam · Dein nächster Schritt',
   'Nächste Grundlage öffnen',
-  'visibleQuickActions',
-  "action.label !== 'Islam Quiz'",
-  "action.label !== 'Nur Assistent'",
   'Als Nächstes sinnvoll',
+  'isReleaseBlockedTab',
+  'ReleaseLockedScreen',
+  'Noch in Prüfung',
+  'isLegacyFeatureReleaseReady',
 ]) {
-  if (!app.includes(required)) throw new Error(`Personalized beginner Home is missing: ${required}`);
+  if (!app.includes(required)) throw new Error(`Personalized or release-gated Home is missing: ${required}`);
 }
 if (!app.includes("knowledgeLevel === 'beginner'")) {
   throw new Error('Home does not branch on the stored beginner knowledge level.');
 }
 if (!app.includes("localStorage.setItem('nur_beginner_learning_last', nextBeginnerLesson.id)")) {
   throw new Error('Home does not persist the next beginner lesson before opening learning.');
+}
+
+for (const forbidden of [
+  "label: 'Islam Quiz'",
+  "label: 'Nur Assistent'",
+  "onNavigate('legacy:fasting')",
+  "onNavigate('legacy:ummah')",
+  'className="ai-preview"',
+]) {
+  if (app.includes(forbidden)) throw new Error(`Unreleased module is still promoted on public Home: ${forbidden}`);
+}
+if (!app.includes('قُلْ هُوَ ٱللَّهُ أَحَدٌ')) {
+  throw new Error('Home Quran focus text is missing the complete Al-Ikhlas 112:1 Arabic wording.');
+}
+
+for (const required of [
+  "export type LegacyReleaseStatus = 'ready' | 'review-required' | 'later'",
+  'releaseReadyLearningLegacyFeatures',
+  'releaseReadyServiceLegacyFeatures',
+  'isLegacyFeatureReleaseReady',
+]) {
+  if (!legacy.includes(required)) throw new Error(`Legacy release classification is missing: ${required}`);
+}
+for (const featureId of ['quiz', 'hajj', 'hadith-library', 'knowledge', 'prophets', 'fasting', 'ummah', 'zakat', 'standby']) {
+  const featureMatch = new RegExp(`id: '${featureId}'[^\n]+releaseStatus: '(review-required|later)'`).test(legacy);
+  if (!featureMatch) throw new Error(`Legacy feature must remain gated until reviewed: ${featureId}`);
+}
+if (!learn.includes('releaseReadyLearningLegacyFeatures')) {
+  throw new Error('Learning hub is not filtered to release-ready legacy modules.');
+}
+if (!more.includes('releaseReadyServiceLegacyFeatures')) {
+  throw new Error('More hub is not filtered to release-ready legacy services.');
 }
 
 for (const required of [
@@ -133,4 +168,4 @@ for (const required of ['Quran-Lexikon', 'Sure', 'Ayah', 'Juz', 'Al-Baqara 2:185
   if (!quranGuide.includes(required)) throw new Error(`Quran beginner guide missing: ${required}`);
 }
 
-console.log('Beginner release guard verified: personalized Home, direct beginner routing, 10 sourced lessons, seven-day starter plan, review gate, FAQ/glossary, purity basics, and Quran orientation.');
+console.log('Beginner release guard verified: personalized Home, direct beginner routing, public legacy/AI release boundary, 10 sourced lessons, seven-day starter plan, review gate, FAQ/glossary, purity basics, and Quran orientation.');
