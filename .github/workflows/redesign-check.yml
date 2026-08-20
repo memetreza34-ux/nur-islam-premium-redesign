@@ -27,7 +27,7 @@ jobs:
       - run: npm ci --no-audit --no-fund
       - run: npm run check
 
-  beginner-content-release-gate:
+  v1-religious-content-release-gate:
     if: github.event_name == 'pull_request' && github.base_ref == 'main'
     needs: validate
     runs-on: ubuntu-latest
@@ -37,4 +37,4 @@ jobs:
       - uses: actions/setup-node@v7
         with:
           node-version: 22
-      - run: node scripts/check-beginner-release-approval.mjs
+      - run: node scripts/check-v1-religious-release-approval.mjs
