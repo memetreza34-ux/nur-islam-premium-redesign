@@ -44,3 +44,21 @@ test('opens beginner FAQ, glossary and purity basics', async ({ page }) => {
   await expect(page.getByRole('heading', { name: 'Ghusl & Tayammum' })).toBeVisible();
   await expect(page.getByText('Sure Al-Maida 5:6')).toBeVisible();
 });
+
+test('offers a Quran orientation before the full 114-surah catalogue', async ({ page }) => {
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await page.getByText('Quran', { exact: true }).first().click();
+
+  await expect(page.getByText('Quran für Anfänger', { exact: true })).toBeVisible();
+  await expect(page.getByText('Kurze Startauswahl', { exact: true })).toBeVisible();
+
+  await page.getByRole('button').filter({ hasText: 'Quran für Anfänger' }).click();
+  await expect(page.getByRole('heading', { name: 'Quran für Anfänger' })).toBeVisible();
+  await expect(page.getByText('Quran-Lexikon', { exact: true })).toBeVisible();
+  await expect(page.getByText('Sure', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Ayah', { exact: true }).first()).toBeVisible();
+  await expect(page.getByText('Juz', { exact: true }).first()).toBeVisible();
+
+  await page.getByRole('button', { name: /Mit Al-Faatiha beginnen/ }).click();
+  await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
+});
