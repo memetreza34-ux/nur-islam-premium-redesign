@@ -83,6 +83,9 @@ export const serviceLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'standby', title: 'Gebetsanzeige', subtitle: 'Standby-Modus', description: 'Ruhige Live-Ansicht für das nächste Gebet mit optionalem Vollbild.', icon: Radio, art: '/premium-assets/high-res-objects/qibla-compass-v2.webp', releaseStatus: 'later', releaseReason: 'Nützliche Zusatzfunktion, aber nicht notwendig für den ersten Release.' },
 ];
 
+export const releaseReadyLearningLegacyFeatures = learningLegacyFeatures.filter((feature) => feature.releaseStatus === 'ready');
+export const releaseReadyServiceLegacyFeatures = serviceLegacyFeatures.filter((feature) => feature.releaseStatus === 'ready');
+
 export function getLegacyFeature(featureId: LegacyFeatureId) {
   return [...learningLegacyFeatures, ...serviceLegacyFeatures].find((item) => item.id === featureId) ?? null;
 }
