@@ -6,6 +6,7 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 
 const content = await read('src/data/beginnerLearningContent.ts');
 const journey = await read('src/screens/BeginnerJourneyScreen.tsx');
+const starterPlan = await read('src/screens/BeginnerStarterPlanScreen.tsx');
 const reference = await read('src/screens/BeginnerReferenceScreen.tsx');
 const purity = await read('src/screens/PurityBasicsScreen.tsx');
 const onboarding = await read('src/screens/OnboardingScreen.tsx');
@@ -58,8 +59,24 @@ for (const required of [
   'fachlicher Endreview',
   'Quellen & Prüfung',
   'Einfach erklärt',
+  'Deine ersten 7 Tage',
+  'BeginnerStarterPlanScreen',
 ]) {
   if (!journey.includes(required)) throw new Error(`Beginner journey is missing release-critical UI: ${required}`);
+}
+
+for (const required of [
+  'STARTER_DAYS',
+  'day: 1',
+  'day: 7',
+  'Kein Zeitdruck',
+  '7 Tage',
+  'onOpenLesson',
+]) {
+  if (!starterPlan.includes(required)) throw new Error(`Seven-day beginner starter plan is missing: ${required}`);
+}
+for (const id of requiredLessonIds) {
+  if (!starterPlan.includes(`'${id}'`)) throw new Error(`Seven-day starter plan does not reference beginner lesson: ${id}`);
 }
 
 for (const level of ['beginner', 'familiar', 'experienced']) {
@@ -88,4 +105,4 @@ for (const required of ['Quran-Lexikon', 'Sure', 'Ayah', 'Juz', 'Al-Baqara 2:185
   if (!quranGuide.includes(required)) throw new Error(`Quran beginner guide missing: ${required}`);
 }
 
-console.log('Beginner release guard verified: onboarding level, 10 sourced lessons, review gate, FAQ/glossary, purity basics, and Quran orientation.');
+console.log('Beginner release guard verified: onboarding level, 10 sourced lessons, seven-day starter plan, review gate, FAQ/glossary, purity basics, and Quran orientation.');
