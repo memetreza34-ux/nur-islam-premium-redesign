@@ -7,6 +7,8 @@ import type { BeginnerReviewRecord } from './beginnerReview';
 export const CORE_CONTENT_REVIEW_RECORDS: BeginnerReviewRecord[] = [
   { contentId: 'names-of-allah', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'dhikr-counter-steps', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
+  { contentId: 'dhikr-routines', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
+  { contentId: 'duas', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'worship-guides', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'prayer-rakat-sequence', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
 ];
