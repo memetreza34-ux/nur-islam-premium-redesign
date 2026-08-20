@@ -129,26 +129,26 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Asma’ul Husna</span><h1>99 Namen Allahs</h1></div>
+        <div><span className="overline">Asma’ul Husna</span><h1>Namen Allahs lernen</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Favoriten`); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
       </header>
 
       <section className="reference-names-hero">
         <span className="reference-names-hero__allah" dir="rtl">الله</span>
         <span className="hero-pill">Asma’ul Husna</span>
-        <h2>Alle 99 Namen<br />an einem Ort.</h2>
-        <p>Suche, favorisiere und markiere Namen, die du bereits gelernt hast.</p>
+        <h2>Eine verbreitete<br />99er-Lernliste.</h2>
+        <p>Nutze diese Zusammenstellung zum Lernen. Sie wird nicht als die einzige authentisch festgelegte vollständige Namensliste ausgegeben.</p>
       </section>
 
       <section className="reference-name-progress glass-card">
         <span className="reference-name-progress__icon"><BookmarkCheck size={22} /></span>
-        <span><small>Dein Lernfortschritt</small><strong>{learned.size} von 99 gelernt</strong><em>{progress} % abgeschlossen</em></span>
+        <span><small>Dein Lernfortschritt</small><strong>{learned.size} von 99 Einträgen gelernt</strong><em>{progress} % dieser Lernliste abgeschlossen</em></span>
         <div className="reference-name-progress__bar"><span style={{ width: `${progress}%` }} /></div>
       </section>
 
       <section className="reference-prototype-note">
         <ShieldCheck size={16} />
-        <span><strong>Vollständiger Altbestand migriert</strong><small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben benötigen vor Veröffentlichung eine fachliche und redaktionelle Endprüfung.</small></span>
+        <span><strong>Quellenstatus transparent</strong><small>Sahih al-Bukhari 7392 und Sahih Muslim 2677a bestätigen die besondere Überlieferung zu 99 Namen, schreiben dort aber keine konkrete 99er-Liste aus. Diese verbreitete Zusammenstellung aus dem Altbestand benötigt deshalb für jeden Eintrag und die Reihenfolge noch eine fachliche Quellenprüfung.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -158,7 +158,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       </label>
 
       <div className="reference-filter-tabs reference-name-filter-tabs">
-        <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Alle 99</button>
+        <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Lernliste · 99</button>
         <button className={filter === 'favorites' ? 'is-active' : ''} onClick={() => setFilter('favorites')}>Favoriten · {favorites.size}</button>
         <button className={filter === 'learned' ? 'is-active' : ''} onClick={() => setFilter('learned')}>Gelernt · {learned.size}</button>
       </div>
@@ -191,11 +191,11 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
             <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">Name {selected.id} von 99</span>
+              <span className="overline">Eintrag {selected.id} von 99 dieser Lernliste</span>
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
               <h2>{selected.latin}</h2>
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
-              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Deutsche Bedeutungsangabe aus dem Altbestand. Fachliche Endprüfung vor Veröffentlichung ausstehend.</span></div>
+              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Arabische Form, Transliteration, deutsche Bedeutung und Einordnung dieses Eintrags sind Teil des noch offenen fachlichen Endreviews. Diese Position in der 99er-Lernliste wird nicht als allein verbindliche kanonische Reihenfolge ausgegeben.</span></div>
               <div className="reference-name-modal__actions">
                 <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>
