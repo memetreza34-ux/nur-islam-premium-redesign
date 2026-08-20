@@ -5,6 +5,7 @@ import type { BeginnerReviewRecord } from './beginnerReview';
  * qualified release review before it may be treated as public v1 content.
  */
 export const CORE_CONTENT_REVIEW_RECORDS: BeginnerReviewRecord[] = [
+  { contentId: 'quran-offline-bundle', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'names-of-allah', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'dhikr-counter-steps', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'dhikr-routines', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
