@@ -19,6 +19,8 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
+import { BeginnerJourneyScreen } from './BeginnerJourneyScreen';
+import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
 import { LearningCourseScreen } from './LearningCourseScreen';
 import {
   getCategoryLessons,
@@ -64,6 +66,15 @@ function readStoredStep(key: string) {
   }
 }
 
+function readKnowledgeLevel() {
+  try {
+    const value = localStorage.getItem('nur_knowledge_level');
+    return value === 'experienced' || value === 'familiar' || value === 'beginner' ? value : 'beginner';
+  } catch {
+    return 'beginner';
+  }
+}
+
 export function LearnScreen({
   onBack,
   onOpenPrayer,
@@ -73,6 +84,7 @@ export function LearnScreen({
   onOpenPrayer: () => void;
   onOpenQibla: () => void;
 }) {
+  const [beginnerOpen, setBeginnerOpen] = useState(false);
   const [wuduOpen, setWuduOpen] = useState(false);
   const [prayerLesson, setPrayerLesson] = useState<PrayerLessonId | null>(null);
   const [learningCategory, setLearningCategory] = useState<LearningCategoryId | null>(null);
@@ -84,6 +96,10 @@ export function LearnScreen({
   const closeDialog = useCallback(() => { setLearningPlanOpen(false); }, []);
   const screenDialog = useDialog(learningPlanOpen, closeDialog, 'Lernplan');
 
+  const knowledgeLevel = readKnowledgeLevel();
+  const completedBeginnerLessons = readStringSet('nur_beginner_learning_completed');
+  const beginnerProgress = Math.round((completedBeginnerLessons.size / BEGINNER_LESSONS.length) * 100);
+  const nextBeginnerLesson = getNextBeginnerLesson(completedBeginnerLessons);
   const completedPrayerLessons = readStringSet('nur_prayer_learning_complete');
   const completedKnowledgeLessons = readStringSet('nur_learning_completed');
   const wuduFinished = readStoredStep('nur_guide_wudu_step') >= 5;
@@ -100,6 +116,10 @@ export function LearnScreen({
     setToast(message);
     window.setTimeout(() => setToast(null), 2200);
   };
+
+  if (beginnerOpen) {
+    return <BeginnerJourneyScreen onBack={() => setBeginnerOpen(false)} />;
+  }
 
   if (wuduOpen) {
     return <WorshipGuideScreen initialMode="wudu" onBack={() => setWuduOpen(false)} />;
@@ -139,12 +159,29 @@ export function LearnScreen({
       <section className="reference-prayer-learning-hub">
         <div className="reference-prayer-learning-hub__glow" />
         <div className="reference-prayer-learning-hub__copy">
-          <span className="hero-pill">Das A und O</span>
+          <span className="hero-pill">{knowledgeLevel === 'beginner' ? 'Für deinen Start' : 'Grundlagen auffrischen'}</span>
+          <h2>Neu im Islam</h2>
+          <p>Islam, Allah, Shahada, Prophet Muhammad ﷺ, Quran, Glaubensgrundlagen, Reinheit und Gebet — in einer festen Reihenfolge und ohne Vorwissen.</p>
+          <div className="reference-prayer-learning-hub__progress">
+            <span><i style={{ width: `${beginnerProgress}%` }} /></span>
+            <strong>{completedBeginnerLessons.size}/{BEGINNER_LESSONS.length} Grundlagen abgeschlossen</strong>
+          </div>
+          <button className="gold-button" onClick={() => setBeginnerOpen(true)}>
+            <GraduationCap size={18} /> {completedBeginnerLessons.size ? `${nextBeginnerLesson.title} weiterlernen` : 'Grundlagen starten'} <ChevronRight size={17} />
+          </button>
+        </div>
+        <PremiumImage src="/premium-assets/high-res-objects/quran-open-v2.webp" fallback={<MosqueScene />} />
+      </section>
+
+      <section className="reference-prayer-learning-hub">
+        <div className="reference-prayer-learning-hub__glow" />
+        <div className="reference-prayer-learning-hub__copy">
+          <span className="hero-pill">Das A und O der Praxis</span>
           <h2>Beten lernen</h2>
           <p>Vom Wudu über die Qibla bis zum vollständigen Ablauf aller fünf Pflichtgebete — Rakʿah für Rakʿah, mit arabischem Wortlaut und Bedeutung.</p>
           <div className="reference-prayer-learning-hub__progress">
             <span><i style={{ width: `${coreProgress}%` }} /></span>
-            <strong>{completedCoreLessons}/6 Grundlagen abgeschlossen</strong>
+            <strong>{completedCoreLessons}/6 Gebetsgrundlagen abgeschlossen</strong>
           </div>
           <button className="gold-button" onClick={() => setPrayerLesson(nextPrayer.id)}>
             <GraduationCap size={18} /> {completedPrayerLessons.size ? `${nextPrayer.label} weiterlernen` : 'Gebetskurs starten'} <ChevronRight size={17} />
@@ -155,9 +192,6 @@ export function LearnScreen({
 
       <section className="reference-prayer-learning-actions">
         <button onClick={() => setWuduOpen(true)}><span><Droplets size={22} /></span><span><strong>Wudu lernen</strong><small>Vorbereitung Schritt für Schritt</small></span><ChevronRight size={17} /></button>
-        {/* Was "Gebetszeiten", which belongs on the Gebete tab and only
-            duplicated it here. This screen is for learning, so the tile leads
-            to the sequence itself. */}
         <button onClick={() => setPrayerLesson(nextPrayer.id)}><span><BookOpen size={22} /></span><span><strong>Gebetsablauf</strong><small>Jede Rakʿah mit Wortlaut</small></span><ChevronRight size={17} /></button>
         <button onClick={onOpenQibla}><span><Compass size={22} /></span><span><strong>Qibla finden</strong><small>Standort und Live-Kompass</small></span><ChevronRight size={17} /></button>
       </section>
@@ -185,7 +219,7 @@ export function LearnScreen({
         </div>
         <div className="reference-knowledge-overview">
           <span><i style={{ width: `${knowledgeProgress}%` }} /></span>
-          <small>{knowledgeProgress}% des Grundlagenwissens abgeschlossen</small>
+          <small>{knowledgeProgress}% des Vertiefungswissens abgeschlossen</small>
         </div>
         <div className="reference-category-grid">
           {LEARNING_CATEGORIES.map((category, index) => {
@@ -228,14 +262,20 @@ export function LearnScreen({
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setLearningPlanOpen(false)}>
             <motion.section {...screenDialog.props} className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setLearningPlanOpen(false)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Erst das Gebet festigen</h2><p>Die Reihenfolge ist bewusst praktisch aufgebaut. Dein Fortschritt wird nur lokal gespeichert.</p>
+              <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Erst Grundlagen, dann Praxis, dann Vertiefung</h2><p>Die Reihenfolge ist bewusst anfängerfreundlich. Dein Fortschritt wird nur lokal gespeichert.</p>
               <div className="reference-learning-plan-list">
-                <span className={wuduFinished ? 'is-complete' : ''}><i>{wuduFinished ? <CircleCheck size={16} /> : 1}</i><strong>Wudu lernen</strong></span>
-                <span><i>2</i><strong>Qibla und Gebetszeiten verstehen</strong></span>
-                <span className={completedPrayerLessons.size === 5 ? 'is-complete' : ''}><i>{completedPrayerLessons.size === 5 ? <CircleCheck size={16} /> : 3}</i><strong>Alle fünf Pflichtgebete üben</strong></span>
-                <span className={completedKnowledgeLessons.size === totalKnowledgeLessons ? 'is-complete' : ''}><i>{completedKnowledgeLessons.size === totalKnowledgeLessons ? <CircleCheck size={16} /> : 4}</i><strong>Quran, Aqidah und Alltag vertiefen · {completedKnowledgeLessons.size}/{totalKnowledgeLessons}</strong></span>
+                <span className={completedBeginnerLessons.size === BEGINNER_LESSONS.length ? 'is-complete' : ''}><i>{completedBeginnerLessons.size === BEGINNER_LESSONS.length ? <CircleCheck size={16} /> : 1}</i><strong>Islam-Grundlagen · {completedBeginnerLessons.size}/{BEGINNER_LESSONS.length}</strong></span>
+                <span className={wuduFinished ? 'is-complete' : ''}><i>{wuduFinished ? <CircleCheck size={16} /> : 2}</i><strong>Wudu praktisch lernen</strong></span>
+                <span><i>3</i><strong>Qibla und Gebetszeiten verstehen</strong></span>
+                <span className={completedPrayerLessons.size === 5 ? 'is-complete' : ''}><i>{completedPrayerLessons.size === 5 ? <CircleCheck size={16} /> : 4}</i><strong>Alle fünf Pflichtgebete üben</strong></span>
+                <span className={completedKnowledgeLessons.size === totalKnowledgeLessons ? 'is-complete' : ''}><i>{completedKnowledgeLessons.size === totalKnowledgeLessons ? <CircleCheck size={16} /> : 5}</i><strong>Aqidah, Quran und Alltag vertiefen · {completedKnowledgeLessons.size}/{totalKnowledgeLessons}</strong></span>
               </div>
-              <button className="gold-button" onClick={() => { setLearningPlanOpen(false); completedPrayerLessons.size < 5 ? setPrayerLesson(nextPrayer.id) : setLearningCategory('aqidah'); }}>Jetzt weiterlernen <ChevronRight size={17} /></button>
+              <button className="gold-button" onClick={() => {
+                setLearningPlanOpen(false);
+                if (completedBeginnerLessons.size < BEGINNER_LESSONS.length) setBeginnerOpen(true);
+                else if (completedPrayerLessons.size < 5) setPrayerLesson(nextPrayer.id);
+                else setLearningCategory('aqidah');
+              }}>Jetzt weiterlernen <ChevronRight size={17} /></button>
             </motion.section>
           </motion.div>
         ) : null}
