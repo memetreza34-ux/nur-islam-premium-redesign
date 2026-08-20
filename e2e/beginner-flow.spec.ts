@@ -5,23 +5,65 @@ test.beforeEach(async ({ page }) => {
   await openApp(page);
 });
 
-test('opens the guided beginner journey from the learning tab', async ({ page }) => {
+test('opens the guided beginner journey directly from the learning tab', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'beginner');
+    localStorage.removeItem('nur_beginner_learning_completed');
+    localStorage.removeItem('nur_beginner_learning_last');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
   await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
-
-  await expect(page.getByRole('heading', { name: 'Islam lernen' })).toBeVisible();
-  await expect(page.getByRole('heading', { name: 'Neu im Islam' })).toBeVisible();
-
-  await page.getByRole('button').filter({ hasText: /Grundlagen starten|weiterlernen/ }).first().click();
 
   await expect(page.getByRole('heading', { name: 'Neu im Islam' })).toBeVisible();
   await expect(page.getByText('Was ist Islam?', { exact: true }).first()).toBeVisible();
   await expect(page.getByText('Quellen & Prüfung', { exact: true })).toBeVisible();
 });
 
-test('stores beginner progress locally', async ({ page }) => {
-  await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
-  await page.getByRole('button').filter({ hasText: /Grundlagen starten|weiterlernen/ }).first().click();
+test('personalizes Home for a beginner and opens the next unfinished lesson', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'beginner');
+    localStorage.setItem('nur_beginner_learning_completed', JSON.stringify(['beginner-islam']));
+    localStorage.removeItem('nur_beginner_learning_last');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
 
+  await expect(page.getByText('Neu im Islam · Dein nächster Schritt', { exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Wer ist Allah?' })).toBeVisible();
+  await expect(page.getByText('1/10 Grundlagen abgeschlossen', { exact: true })).toBeVisible();
+  await expect(page.getByText('Islam Quiz', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Nur Assistent', { exact: true })).toHaveCount(0);
+
+  await page.getByRole('button', { name: /Nächste Grundlage öffnen/ }).click();
+  await expect(page.getByRole('heading', { name: 'Neu im Islam' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Wer ist Allah?' })).toBeVisible();
+});
+
+test('keeps the general Home for experienced users', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'experienced');
+    localStorage.removeItem('nur_beginner_learning_completed');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
+  await expect(page.getByText('Neu im Islam · Dein nächster Schritt', { exact: true })).toHaveCount(0);
+  await expect(page.getByText('Islam Quiz', { exact: true })).toBeVisible();
+  await expect(page.getByText('Nur Assistent', { exact: true }).first()).toBeVisible();
+});
+
+test('stores beginner progress locally', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'beginner');
+    localStorage.removeItem('nur_beginner_learning_completed');
+    localStorage.removeItem('nur_beginner_learning_last');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
+  await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
   await page.getByRole('button', { name: /Als verstanden markieren/ }).click();
 
   const completed = await page.evaluate(() => JSON.parse(localStorage.getItem('nur_beginner_learning_completed') || '[]') as string[]);
@@ -30,8 +72,14 @@ test('stores beginner progress locally', async ({ page }) => {
 });
 
 test('opens beginner FAQ, glossary and purity basics', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'beginner');
+    localStorage.removeItem('nur_beginner_learning_completed');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
   await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
-  await page.getByRole('button').filter({ hasText: /Grundlagen starten|weiterlernen/ }).first().click();
 
   await page.getByRole('button').filter({ hasText: 'Fragen & Begriffe' }).click();
   await expect(page.getByRole('heading', { name: 'Fragen & Begriffe' })).toBeVisible();
@@ -46,8 +94,14 @@ test('opens beginner FAQ, glossary and purity basics', async ({ page }) => {
 });
 
 test('opens the seven day starter plan and routes into the matching lesson', async ({ page }) => {
+  await page.evaluate(() => {
+    localStorage.setItem('nur_knowledge_level', 'beginner');
+    localStorage.removeItem('nur_beginner_learning_completed');
+  });
+  await page.reload();
+  await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+
   await page.getByRole('navigation').getByText('Islam verstehen', { exact: true }).click();
-  await page.getByRole('button').filter({ hasText: /Grundlagen starten|weiterlernen/ }).first().click();
 
   await page.getByRole('button').filter({ hasText: 'Deine ersten 7 Tage' }).click();
   await expect(page.getByRole('heading', { name: 'Deine ersten 7 Tage' })).toBeVisible();
