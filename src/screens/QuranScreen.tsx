@@ -25,6 +25,7 @@ import {
   OFFLINE_QURAN_SURAHS,
 } from '../services/quranService';
 import type { Surah } from '../services/quranService';
+import { QuranBeginnerGuideScreen } from './QuranBeginnerGuideScreen';
 
 type QuranFilter = 'all' | 'offline' | 'favorites' | 'Meccan' | 'Medinan';
 
@@ -33,6 +34,13 @@ type LastRead = {
   ayahNumber: number;
   updatedAt: string;
 };
+
+const beginnerSurahs = [
+  { number: 1, label: 'Al-Faatiha' },
+  { number: 112, label: 'Al-Ikhlaas' },
+  { number: 113, label: 'Al-Falaq' },
+  { number: 114, label: 'An-Naas' },
+] as const;
 
 function readNumberSet(key: string) {
   try {
@@ -90,6 +98,7 @@ export function QuranScreen({
   const [filter, setFilter] = useState<QuranFilter>('all');
   const [favorites, setFavorites] = useState(() => readNumberSet('nur_quran_surah_favorites'));
   const [lastRead] = useState(readLastRead);
+  const [beginnerOpen, setBeginnerOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
@@ -160,6 +169,10 @@ export function QuranScreen({
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const toastTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
 
+  if (beginnerOpen) {
+    return <QuranBeginnerGuideScreen onBack={() => setBeginnerOpen(false)} onOpenReader={onOpenReader} />;
+  }
+
   return (
     <motion.main
       className="screen reference-quran-screen reference-quran-screen--complete"
@@ -182,6 +195,23 @@ export function QuranScreen({
           <button className="reference-inline-button" onClick={() => onOpenReader(readerSurahNumber, lastAyah)}>{lastRead ? 'Weiterlesen' : 'Lesen beginnen'} <ChevronRight size={16} /></button>
         </div>
         <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="reference-quran-continue__book" fallback={<QuranObject />} />
+      </section>
+
+      <button className="reference-quran-library-status glass-card" onClick={() => setBeginnerOpen(true)}>
+        <span><Sparkles size={21} /></span>
+        <div><small>Neu beim Quran?</small><strong>Quran für Anfänger</strong><em>Sure, Ayah, Juz, Tafsir und einen einfachen Start in wenigen Minuten verstehen</em></div>
+        <ChevronRight size={20} />
+      </button>
+
+      <section className="reference-learning-key-points">
+        <div className="section-heading"><div><span className="overline">Einfach anfangen</span><h2>Kurze Startauswahl</h2></div><BookOpen size={21} /></div>
+        <div>
+          {beginnerSurahs.map((surah, index) => (
+            <button key={surah.number} type="button" onClick={() => onOpenReader(surah.number, 1)}>
+              <span>{index + 1}</span><strong>{surah.label}</strong><ChevronRight size={17} />
+            </button>
+          ))}
+        </div>
       </section>
 
       <section className="reference-quran-library-status glass-card">
