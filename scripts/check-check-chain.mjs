@@ -16,6 +16,7 @@ const requiredChecks = [
   'core-source:check',
   'progress-persistence:check',
   'system-surfaces:check',
+  'beginner:check',
   'content-sources:check',
   'navigation:check',
   'pending-navigation:check',
@@ -57,4 +58,4 @@ if (lintIndex < 0 || buildIndex < 0 || lintIndex > buildIndex) {
   throw new Error('npm run check must finish with TypeScript lint before the production build.');
 }
 
-console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired, reference image/icon/art-palette/Home/core-source/progress-persistence/system-surface and content-source gates are critical, and lint/build remain final.`);
+console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired, beginner safety plus reference image/icon/art-palette/Home/core-source/progress-persistence/system-surface and content-source gates are critical, and lint/build remain final.`);
