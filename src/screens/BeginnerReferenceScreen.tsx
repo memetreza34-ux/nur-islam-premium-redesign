@@ -12,10 +12,10 @@ const glossary = [
   ['Rakʿah', 'Eine Gebetseinheit innerhalb der Salah.'],
   ['Wudu', 'Die rituelle Gebetswaschung.'],
   ['Ghusl', 'Eine vollständige rituelle Waschung in bestimmten Situationen.'],
-  ['Tayammum', 'Eine Form ritueller Reinigung mit sauberem Erdboden unter bestimmten Voraussetzungen.'],
+  ['Tayammum', 'Eine Form ritueller Reinigung unter bestimmten Voraussetzungen; Quran 5:6 nennt dafür sauberen Erdboden und das Bestreichen von Gesicht und Händen.'],
   ['Qibla', 'Die Gebetsrichtung zur Kaaba in Makkah.'],
-  ['Dua', 'Bittgebet bzw. persönliche Anrufung Allahs.'],
-  ['Dhikr', 'Gedenken Allahs durch überlieferte oder allgemeine Formen des Erinnerns.'],
+  ['Dua', 'Bittgebet bzw. Anrufung Allahs.'],
+  ['Dhikr', 'Gedenken Allahs, unter anderem durch überlieferte Formulierungen und andere Formen des Erinnerns.'],
   ['Quran', 'Die Offenbarung Allahs an den Propheten Muhammad ﷺ.'],
   ['Sure', 'Ein Kapitel des Quran.'],
   ['Ayah', 'Ein Vers bzw. Zeichen innerhalb einer Sure.'],
@@ -27,7 +27,7 @@ const glossary = [
   ['Fiqh', 'Islamische Rechts- und Praxislehre.'],
   ['Akhlaq', 'Charakter und gutes Verhalten.'],
   ['Fard', 'Eine verpflichtende Handlung im religiösen Kontext.'],
-  ['Sunnah-Handlung', 'Eine Handlung, die auf die prophetische Praxis zurückgeführt wird; ihre rechtliche Einordnung kann je nach Kontext genauer unterschieden werden.'],
+  ['Sunnah-Handlung', 'Eine Handlung, die auf die prophetische Praxis zurückgeführt wird; ihre genaue rechtliche Einordnung kann je nach Handlung und Fiqh-Kontext weiter unterschieden werden.'],
   ['Halal', 'Erlaubt bzw. zulässig im religiösen Kontext.'],
   ['Haram', 'Religiös verboten; solche Urteile sollen nicht ohne belastbare Grundlage ausgesprochen werden.'],
 ] as const;
@@ -35,13 +35,13 @@ const glossary = [
 const faqs = [
   {
     question: 'Ich kenne fast nichts über Islam. Wo soll ich anfangen?',
-    answer: 'Beginne mit Allahs Einzigkeit, der Shahada, den fünf Säulen und den sechs Glaubensgrundlagen. Danach sind Reinheit und Gebet die wichtigsten praktischen Grundlagen. Der Bereich „Neu im Islam“ führt genau in dieser Reihenfolge durch die Themen.',
-    source: 'Sahih Muslim 8a – Hadith Jibril',
+    answer: 'Beginne mit gemeinsamen Grundlagen wie Allahs Einzigkeit, Shahada, den fünf Säulen und den sechs Glaubensgrundlagen. Diese App führt danach als praktische Einführung zu Reinheit und Gebet. Diese Reihenfolge ist eine Lernstruktur der App und keine Behauptung, dass jeder Mensch alle Themen ausschließlich in genau dieser Reihenfolge lernen muss.',
+    source: 'Sahih Muslim 8a – Hadith Jibril; Reihenfolge danach: Lernstruktur der App',
   },
   {
     question: 'Muss ich alles sofort wissen oder auswendig können?',
-    answer: 'Nein. Grundlagen werden Schritt für Schritt gelernt. Für den Lernalltag ist ein kleiner, regelmäßiger Fortschritt sinnvoller als möglichst viel auf einmal zu beginnen.',
-    source: 'Sahih al-Bukhari 6465 – beständige Taten, auch wenn sie klein sind',
+    answer: 'Nein. Die App teilt Grundlagen bewusst in kleine Schritte. Sahih al-Bukhari 6465 betont allgemein die Bedeutung beständiger Taten, auch wenn sie klein sind; daraus wird hier keine spezielle religiöse Pflicht zu einer bestimmten Lernmethode abgeleitet.',
+    source: 'Sahih al-Bukhari 6465 – allgemeiner Hinweis auf beständige Taten; Lernstruktur ist redaktionell',
   },
   {
     question: 'Was ist die Qibla?',
@@ -60,12 +60,12 @@ const faqs = [
   },
   {
     question: 'Was ist der Unterschied zwischen Quran, Übersetzung und Tafsir?',
-    answer: 'Der arabische Quran-Wortlaut wird vom übersetzten Bedeutungsinhalt getrennt dargestellt. Eine Übersetzung hilft beim Verstehen; Tafsir erklärt Verse ausführlicher und berücksichtigt zusätzlichen Kontext.',
+    answer: 'Der arabische Quran-Wortlaut wird von einer Übersetzung beziehungsweise Bedeutungswiedergabe getrennt dargestellt. Diese hilft beim Verstehen, ist aber nicht mit dem arabischen Offenbarungstext identisch. Tafsir erklärt Verse ausführlicher und berücksichtigt zusätzlichen sprachlichen, überlieferungsbezogenen und historischen Kontext.',
     source: 'Redaktionsstandard der App; Quran-Inhalte benötigen definierte Edition und Übersetzungsquelle',
   },
   {
     question: 'Was ist der Unterschied zwischen Sunnah und Hadith?',
-    answer: 'Sunnah bezeichnet den überlieferten prophetischen Weg und seine Lehre. Hadithe sind einzelne Überlieferungen, durch die Aussagen, Handlungen oder Bestätigungen berichtet werden. Hadithe benötigen Quellen und Einordnung.',
+    answer: 'Sunnah bezeichnet den überlieferten prophetischen Weg und seine Lehre. Hadithe sind einzelne Überlieferungen, durch die Aussagen, Handlungen oder Bestätigungen berichtet werden. Hadithe benötigen nachvollziehbare Quellen und Einordnung.',
     source: 'Quran 16:44; App-Hadithstandard mit Sammlung und Referenz',
   },
   {
@@ -75,12 +75,12 @@ const faqs = [
   },
   {
     question: 'Was ist Dua?',
-    answer: 'Dua ist die Anrufung Allahs mit Bitten, Dank, Hoffnung und persönlichen Anliegen. In der App werden überlieferte Duas mit Quelle, arabischem Text und Bedeutung getrennt dargestellt.',
-    source: 'Quran 2:186',
+    answer: 'Dua ist die Anrufung Allahs mit Bitten und persönlichen Anliegen. In der App werden überlieferte Duas mit Quelle, arabischem Text und sinngemäßer deutscher Bedeutung getrennt dargestellt.',
+    source: 'Quran 2:186; Quellenstandard der App',
   },
   {
     question: 'Was ist Dhikr?',
-    answer: 'Dhikr bedeutet Gedenken Allahs. Dazu gehören überlieferte Formulierungen und andere erlaubte Formen des Erinnerns. Behauptete Wiederholungszahlen werden in der App nur verwendet, wenn eine Quelle sie trägt.',
+    answer: 'Dhikr bedeutet Gedenken Allahs. Dazu gehören überlieferte Formulierungen und weitere Formen des Erinnerns. Wenn die App eine bestimmte Wiederholungszahl als überliefert darstellt, muss die angegebene Quelle genau diese Zahl tragen.',
     source: 'Quran 13:28; App-Contentstandard für Dhikr',
   },
   {
