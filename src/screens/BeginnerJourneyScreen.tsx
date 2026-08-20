@@ -33,11 +33,13 @@ function writeCompleted(value: Set<string>) {
 }
 
 function readLastLesson() {
+  const completed = readCompleted();
   try {
     const stored = localStorage.getItem('nur_beginner_learning_last');
-    return BEGINNER_LESSONS.some((lesson) => lesson.id === stored) ? stored as string : BEGINNER_LESSONS[0].id;
+    if (BEGINNER_LESSONS.some((lesson) => lesson.id === stored) && stored && !completed.has(stored)) return stored;
+    return getNextBeginnerLesson(completed).id;
   } catch {
-    return BEGINNER_LESSONS[0].id;
+    return getNextBeginnerLesson(completed).id;
   }
 }
 
