@@ -12,6 +12,14 @@ node scripts/check-v1-religious-release-approval.mjs
 
 Im GitHub-Workflow `Premium redesign check` wird dieser Gate automatisch bei Pull Requests nach `main` ausgeführt.
 
+Die verbindliche Liste der prüfpflichtigen Blöcke liegt in:
+
+```text
+src/data/v1ReligiousReleaseScope.ts
+```
+
+Damit existiert nur eine Quelle dafür, welche religiösen Inhalte Release 1 blockieren.
+
 ## Aktueller P0-Prüfumfang
 
 ### Anfänger-Grundlagen
@@ -31,12 +39,28 @@ Statusdatei: `src/data/beginnerReview.ts`
 
 ### Weitere religiöse P0-Inhalte
 
-11. `names-of-allah` – 99 Namen: Reihenfolge, arabische Schreibweise, Transliteration und deutsche Bedeutungsangaben prüfen.
-12. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
-13. `worship-guides` – Wudu-/Salah-Anleitungen, Pflichtteile, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
-14. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
+11. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren.
+12. `quran-beginner-guide` – redaktionelle Quran-Einführung, Begriffe und Startempfehlungen prüfen.
+13. `beginner-reference` – Anfänger-FAQ und Islam-A–Z-Begriffe fachlich prüfen.
+14. `purity-basics` – Ghusl-/Tayammum-Grundlagen und Grenzen der Darstellung prüfen.
+15. `names-of-allah` – 99 Namen: Reihenfolge, arabische Schreibweise, Transliteration und deutsche Bedeutungsangaben prüfen.
+16. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
+17. `dhikr-routines` – Quellen, Zählungen, Bedeutungen und Varianten der Routinen prüfen.
+18. `duas` – arabische Texte, Transliteration, Bedeutungsangaben und konkrete Quellen des Dua-Bestands prüfen.
+19. `daily-hadith-rotation` – nur einen fachlich geprüften und konkret referenzierten Daily-Hadith-Pool für Home zulassen.
+20. `worship-guides` – Wudu-/Salah-Anleitungen, Pflichtteile, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
+21. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
 
 Statusdatei: `src/data/coreContentReview.ts`
+
+## Zusätzliche technische Bedingungen
+
+Ein Review-Datensatz allein reicht bei zwei besonders sensiblen Bereichen nicht aus:
+
+- `quran-offline-bundle` kann nicht freigegeben werden, solange die lokale deutsche Ausgabe im Code nur als `übernommener deutscher Altbestand` bezeichnet wird. Vor Freigabe müssen Edition/Provenienz und Nutzungsgrundlage konkret benannt sein.
+- `daily-hadith-rotation` kann nicht freigegeben werden, solange Home keinen explizit kuratierten `DAILY_HADITH_IDS`-Pool nutzt. Die gesamte Legacy-Bibliothek darf nicht automatisch auf Home rotieren.
+
+Diese Bedingungen werden vom Release-Gate zusätzlich kontrolliert.
 
 ## Statusmodell
 
@@ -86,6 +110,8 @@ Vor einer Freigabe müssen mindestens geprüft werden:
 - deutsche Bedeutungsangaben sind sachlich vertretbar
 - Anfängerformulierungen erzeugen keine falsche Gewissheit
 - Gebets-/Wudu-Schritte unterscheiden klar zwischen gemeinsamem Grundablauf, empfohlenen Handlungen und Punkten mit anerkannten Rechtsschul-Unterschieden
+- Quran-Editionen, Übersetzungsquelle und Nutzungsrechte sind nachvollziehbar dokumentiert
+- bei Zählungen oder festgelegten Wiederholungszahlen trägt die genannte Quelle tatsächlich die behauptete Anzahl
 
 ## Änderung nach Freigabe
 
