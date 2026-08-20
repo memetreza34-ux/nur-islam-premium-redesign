@@ -4,10 +4,11 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const reviewFiles = [
   'src/data/beginnerReview.ts',
+  'src/data/learningContentReview.ts',
   'src/data/coreContentReview.ts',
 ];
 const scopeSource = await readFile(resolve(root, 'src/data/v1ReligiousReleaseScope.ts'), 'utf8');
-const requiredIds = [...scopeSource.matchAll(/\{ contentId: '([^']+)', group: '(?:beginner|core)', label: '[^']+' \}/g)]
+const requiredIds = [...scopeSource.matchAll(/\{ contentId: '([^']+)', group: '(?:beginner|learning|core)', label: '[^']+' \}/g)]
   .map((match) => match[1]);
 
 if (requiredIds.length === 0) throw new Error('V1 religious release scope is empty or no longer parseable.');
@@ -74,9 +75,9 @@ if (byId.get('daily-hadith-rotation')?.status === 'approved') {
 }
 
 if (pending.length) {
-  console.error(`V1 religious release blocked: ${pending.length}/${requiredIds.length} P0 review records are still pending.`);
+  console.error(`V1 religious release blocked: ${pending.length}/${requiredIds.length} review records are still pending.`);
   for (const id of pending) console.error(`- ${id}`);
   process.exit(1);
 }
 
-console.log(`V1 religious release approval verified: ${requiredIds.length}/${requiredIds.length} P0 records approved with reviewer metadata.`);
+console.log(`V1 religious release approval verified: ${requiredIds.length}/${requiredIds.length} records approved with reviewer metadata.`);
