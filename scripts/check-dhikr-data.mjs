@@ -7,11 +7,15 @@ const screenSource = await readFile(resolve(root, 'src/screens/DhikrScreen.tsx')
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const hardeningStyles = await readFile(resolve(root, 'src/styles/functional-hardening.css'), 'utf8');
 
-const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|before-sleep|free-counter)'/g)].map((match) => match[1]);
+const routineIds = [...dataSource.matchAll(/\n\s+id: '(after-prayer|morning-weighted|before-sleep)'/g)].map((match) => match[1]);
 const uniqueRoutineIds = new Set(routineIds);
 
-for (const required of ['after-prayer', 'morning-weighted', 'before-sleep', 'free-counter']) {
+for (const required of ['after-prayer', 'morning-weighted', 'before-sleep']) {
   if (!uniqueRoutineIds.has(required)) throw new Error(`Dhikr routine is missing: ${required}`);
+}
+
+if (dataSource.includes("id: 'free-counter'") || dataSource.includes("source: 'Persönlicher Zähler · keine bestimmte Anzahl behauptet'")) {
+  throw new Error('A neutral/free counter must not reappear with an artificial religious target inside the sourced routine system.');
 }
 
 for (const source of ['Sahih Muslim 597a', 'Sahih Muslim 2726a', 'Sahih al-Bukhari 6318']) {
@@ -19,8 +23,8 @@ for (const source of ['Sahih Muslim 597a', 'Sahih Muslim 2726a', 'Sahih al-Bukha
 }
 
 const targetValues = [...dataSource.matchAll(/target: (\d+)/g)].map((match) => Number(match[1]));
-if (targetValues.length < 9 || targetValues.some((value) => !Number.isInteger(value) || value < 1)) {
-  throw new Error('Dhikr targets are incomplete or invalid.');
+if (targetValues.length < 8 || targetValues.some((value) => !Number.isInteger(value) || value < 1)) {
+  throw new Error('Sourced Dhikr targets are incomplete or invalid.');
 }
 
 for (const required of [
@@ -52,4 +56,4 @@ for (const required of ['.reference-dhikr-stats-modal', '.reference-dhikr-stats-
   if (!hardeningStyles.includes(required)) throw new Error(`Dhikr statistics styling is missing: ${required}`);
 }
 
-console.log(`Dhikr verified: ${uniqueRoutineIds.size} routines, ${targetValues.length} sourced or neutral counter steps, valid capped persisted counts, midnight rollover, and a real daily statistics modal.`);
+console.log(`Dhikr verified: ${uniqueRoutineIds.size} sourced routines, ${targetValues.length} source-backed counter steps, valid capped persisted counts, midnight rollover, and no artificial free-counter target.`);
