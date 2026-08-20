@@ -2,32 +2,20 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
-const files = [
+const reviewFiles = [
   'src/data/beginnerReview.ts',
   'src/data/coreContentReview.ts',
 ];
-const requiredIds = [
-  'beginner-islam',
-  'beginner-allah',
-  'beginner-shahada',
-  'beginner-prophet',
-  'beginner-quran-sunnah',
-  'beginner-five-pillars',
-  'beginner-six-beliefs',
-  'beginner-purity',
-  'beginner-prayer',
-  'beginner-next-steps',
-  'names-of-allah',
-  'dhikr-counter-steps',
-  'dhikr-routines',
-  'duas',
-  'worship-guides',
-  'prayer-rakat-sequence',
-];
+const scopeSource = await readFile(resolve(root, 'src/data/v1ReligiousReleaseScope.ts'), 'utf8');
+const requiredIds = [...scopeSource.matchAll(/\{ contentId: '([^']+)', group: '(?:beginner|core)', label: '[^']+' \}/g)]
+  .map((match) => match[1]);
+
+if (requiredIds.length === 0) throw new Error('V1 religious release scope is empty or no longer parseable.');
+if (new Set(requiredIds).size !== requiredIds.length) throw new Error('V1 religious release scope contains duplicate content IDs.');
 
 const recordPattern = /\{ contentId: '([^']+)', status: '(pending|approved)', reviewer: (null|'[^']+'), reviewedAt: (null|'[^']+'), evidence: (null|'[^']+') \}/g;
 const records = [];
-for (const file of files) {
+for (const file of reviewFiles) {
   const source = await readFile(resolve(root, file), 'utf8');
   for (const match of source.matchAll(recordPattern)) {
     records.push({
@@ -48,6 +36,9 @@ if (new Set(ids).size !== ids.length) throw new Error('V1 religious review conte
 for (const id of requiredIds) {
   if (!ids.includes(id)) throw new Error(`Missing v1 religious review record: ${id}`);
 }
+for (const id of ids) {
+  if (!requiredIds.includes(id)) throw new Error(`Review record is outside the v1 release scope: ${id}`);
+}
 
 const pending = [];
 for (const record of records) {
@@ -64,6 +55,22 @@ for (const record of records) {
     throw new Error(`Approved review ${record.contentId} needs reviewedAt in YYYY-MM-DD format.`);
   }
   if (!record.evidence?.trim()) throw new Error(`Approved review ${record.contentId} is missing evidence/reference.`);
+}
+
+const byId = new Map(records.map((record) => [record.contentId, record]));
+
+if (byId.get('quran-offline-bundle')?.status === 'approved') {
+  const quranService = await readFile(resolve(root, 'src/services/quranService.ts'), 'utf8');
+  if (quranService.includes("translationLabel: 'übernommener deutscher Altbestand'")) {
+    throw new Error('Offline Quran cannot be approved while the German translation provenance is still labelled only as inherited legacy content.');
+  }
+}
+
+if (byId.get('daily-hadith-rotation')?.status === 'approved') {
+  const hadithData = await readFile(resolve(root, 'src/data/hadithData.ts'), 'utf8');
+  if (!hadithData.includes('export const DAILY_HADITH_IDS')) {
+    throw new Error('Daily Hadith cannot be approved until Home uses an explicit curated DAILY_HADITH_IDS pool.');
+  }
 }
 
 if (pending.length) {
