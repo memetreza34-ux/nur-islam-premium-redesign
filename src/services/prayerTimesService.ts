@@ -26,6 +26,10 @@ export type PrayerTimesSnapshot = {
   source: 'live' | 'cache' | 'fallback';
 };
 
+/**
+ * Internal placeholder only. These coordinates must never be used as if they
+ * were the user's location. Live prayer times require a device-backed location.
+ */
 export const DEFAULT_PRAYER_LOCATION: PrayerLocation = {
   latitude: 52.52,
   longitude: 13.405,
@@ -115,14 +119,17 @@ function fallbackSchedule() {
 }
 
 function fallbackMeta(location = DEFAULT_PRAYER_LOCATION, preferences = DEFAULT_PRAYER_PREFERENCES): PrayerScheduleMeta {
+  const hasDeviceLocation = location.source === 'device';
   return {
     ...FALLBACK_PRAYER_META,
-    city: location.label,
-    locationLabel: location.label,
+    city: hasDeviceLocation ? location.label : 'Standort erforderlich',
+    locationLabel: hasDeviceLocation ? location.label : 'Standort nicht festgelegt',
     sourceLabel: 'Offline-Ersatzzeitplan',
     methodLabel: methodLabel(preferences),
     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || 'lokal',
-    calculationNotice: 'Offline-Fallback: Die angezeigten Zeiten sind nur ein Ersatz. Bitte vor dem Gebet mit einer verlässlichen örtlichen Quelle prüfen.',
+    calculationNotice: hasDeviceLocation
+      ? 'Keine aktuellen Gebetszeiten verfügbar. Bitte Live-Daten laden oder mit einer örtlichen Moschee bzw. einem verlässlichen Tageskalender abgleichen.'
+      : 'Kein persönlicher Standort festgelegt. Bitte Standort freigeben, bevor Gebetszeiten als für dich passend verwendet werden.',
   };
 }
 
@@ -176,9 +183,9 @@ export function savePrayerPreferences(preferences: PrayerTimesPreferences) {
 export function loadCachedPrayerTimes(date = new Date()) {
   const cached = readJson<PrayerTimesSnapshot>(SNAPSHOT_STORAGE_KEY);
   if (!cached || cached.dateKey !== getPrayerDateKey(date) || !Array.isArray(cached.schedule) || cached.schedule.length !== FALLBACK_PRAYER_SCHEDULE.length) return null;
-  // The times are today's and came from AlAdhan, but nothing was requested just
-  // now. Returning them still labelled "live" told an offline user the app had
-  // just reached the server. The mosque cache already marks itself this way.
+  // Old builds could cache a live AlAdhan response calculated for the generic
+  // Berlin placeholder. Never revive such a cache as personal current-day data.
+  if (cached.location?.source !== 'device') return null;
   return {
     ...cached,
     source: 'cache' as const,
@@ -207,6 +214,10 @@ export async function fetchPrayerTimes(
   preferences = loadPrayerPreferences(),
   date = new Date(),
 ): Promise<PrayerTimesSnapshot> {
+  if (location.source !== 'device') {
+    throw new Error('Für persönliche Gebetszeiten muss zuerst ein Gerätestandort freigegeben werden.');
+  }
+
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 9000);
   const apiDate = getApiDate(date);
@@ -282,10 +293,20 @@ export function applyPrayerSnapshotToSharedSchedule(snapshot: PrayerTimesSnapsho
 }
 
 export async function bootstrapSharedPrayerTimes() {
+  const location = loadPrayerLocation();
   const cached = loadCachedPrayerTimes();
   if (cached) applyPrayerSnapshotToSharedSchedule(cached);
+
+  // Never calculate Berlin (or another generic placeholder) as if it were the
+  // user's live prayer schedule. A personal live schedule requires device data.
+  if (location.source !== 'device') {
+    const fallback = getFallbackPrayerTimesSnapshot();
+    applyPrayerSnapshotToSharedSchedule(fallback);
+    return fallback;
+  }
+
   try {
-    const live = await fetchPrayerTimes(loadPrayerLocation(), loadPrayerPreferences());
+    const live = await fetchPrayerTimes(location, loadPrayerPreferences());
     applyPrayerSnapshotToSharedSchedule(live);
     return live;
   } catch {
