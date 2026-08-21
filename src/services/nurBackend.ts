@@ -294,6 +294,14 @@ export async function restoreCloudState() {
   const rows = await response.json() as Array<{ schema_version: number; payload: unknown; updated_at: string }>;
   const cloud = rows[0];
   if (!cloud || !cloud.payload || typeof cloud.payload !== 'object' || Array.isArray(cloud.payload)) return null;
+
+  // Never replay an unknown storage contract into localStorage. A future schema
+  // must get an explicit migration path first; failing before the first write is
+  // safer than partially restoring keys with changed meanings or formats.
+  if (cloud.schema_version !== STORAGE_SCHEMA_VERSION) {
+    throw new Error(`Cloud-Sicherung hat die nicht unterstützte Datenversion ${String(cloud.schema_version)}. Bitte aktualisiere die App oder erstelle eine neue Sicherung.`);
+  }
+
   const payload = cloud.payload as Record<string, unknown>;
   Object.entries(payload).forEach(([key, value]) => {
     if (!shouldBackUpKey(key) || typeof value !== 'string') return;
