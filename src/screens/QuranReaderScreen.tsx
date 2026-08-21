@@ -271,7 +271,7 @@ export function QuranReaderScreen({
       </header>
 
       {loading ? (
-        <div className="reference-reader-loading"><LoaderCircle size={28} className="is-spinning" /><strong>Qurantext wird geladen</strong><small>Lokale Dateien werden bevorzugt; andere Suren werden geprüft online geladen.</small></div>
+        <div className="reference-reader-loading"><LoaderCircle size={28} className="is-spinning" /><strong>Qurantext wird geladen</strong><small>Der lokale Offline-Bestand wird zuerst geladen; Al Quran Cloud dient nur als technischer Fallback, falls die lokale Datei fehlt oder nicht lesbar ist.</small></div>
       ) : error || !bundle ? (
         <section className="reference-reader-unavailable">
           <WifiOff size={34} />
