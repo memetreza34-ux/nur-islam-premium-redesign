@@ -11,7 +11,7 @@ import {
 import { motion, useReducedMotion } from 'motion/react';
 import { DUA_BY_ID } from '../data/duaData';
 import { getHadithById, readSavedHadithIds } from '../data/hadithData';
-import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
+import { VERIFIED_NAMES_OF_ALLAH } from '../data/verifiedNamesOfAllahData';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 
 const knownSurahLabels: Record<number, string> = {
@@ -80,18 +80,26 @@ export function readDuaFavoriteSet() {
   return migrated;
 }
 
+/**
+ * Only favorites that map to the individually sourced public Names set survive
+ * migration. An old favorite from the quarantined fixed 99-list is not proof
+ * that the row is safe to expose as v1 religious content.
+ */
 export function readNameFavoriteSet() {
   const migrated = new Set<string>();
   readUnknownArray('nur_name_favorites').forEach((value) => {
     const candidate = String(value);
-    const byId = NAMES_OF_ALLAH.find((entry) => String(entry.id) === candidate);
-    if (byId) {
-      migrated.add(String(byId.id));
+    const direct = VERIFIED_NAMES_OF_ALLAH.find((entry) => entry.key === candidate);
+    if (direct) {
+      migrated.add(direct.key);
       return;
     }
 
-    const legacy = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
-    if (legacy) migrated.add(String(legacy.id));
+    const legacyId = /^\d+$/.test(candidate) ? Number(candidate) : null;
+    const legacyMapped = VERIFIED_NAMES_OF_ALLAH.find((entry) =>
+      (legacyId !== null && entry.legacyId === legacyId) || entry.latin === candidate,
+    );
+    if (legacyMapped) migrated.add(legacyMapped.key);
   });
   writeStringSet('nur_name_favorites', migrated);
   return migrated;
@@ -233,14 +241,14 @@ export function CollectionsScreen({
 
       {showNames && nameFavorites.size > 0 ? (
         <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Asma’ul Husna</span><h2>Lieblingsnamen</h2></div></div>
+          <div className="section-heading"><div><span className="overline">Asma’ul Husna</span><h2>Belegte Lieblingsnamen</h2></div></div>
           <div className="reference-collection-rows">
             {[...nameFavorites].map((id) => {
-              const name = NAMES_OF_ALLAH.find((entry) => String(entry.id) === id);
+              const name = VERIFIED_NAMES_OF_ALLAH.find((entry) => entry.key === id);
               if (!name) return null;
               return (
                 <button key={id} onClick={() => onOpenName(id)} aria-label={`${name.latin} direkt öffnen`}>
-                  <span><Sparkles size={18} /></span><span><strong>{name.latin}</strong><small>{name.meaning}</small></span><ChevronRight size={17} />
+                  <span><Sparkles size={18} /></span><span><strong>{name.latin}</strong><small>{name.meaning} · {name.source}</small></span><ChevronRight size={17} />
                 </button>
               );
             })}
@@ -285,7 +293,7 @@ export function CollectionsScreen({
         <div className="reference-empty-result">
           <Bookmark size={25} />
           <strong>{filter === 'Alle' ? 'Deine Sammlung wartet.' : `Noch keine ${filter}-Favoriten`}</strong>
-          <small>{filter === 'Alle' ? 'Speichere Ayahs, Duas, Allahs Namen, Hadithe oder besondere Tage. Alles erscheint hier automatisch.' : 'Markiere Inhalte im jeweiligen Bereich mit Herz oder Lesezeichen. Sie erscheinen anschließend genau hier.'}</small>
+          <small>{filter === 'Alle' ? 'Speichere Ayahs, Duas, belegte Namen Allahs, Hadithe oder besondere Tage. Alles erscheint hier automatisch.' : 'Markiere Inhalte im jeweiligen Bereich mit Herz oder Lesezeichen. Sie erscheinen anschließend genau hier.'}</small>
           {(filter === 'Alle' || filter === 'Quran') ? (
             <button className="reference-inline-button" onClick={onOpenQuran}>
               <BookOpen size={16} /> Im Quran entdecken
