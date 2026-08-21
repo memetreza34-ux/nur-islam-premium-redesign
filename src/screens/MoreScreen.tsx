@@ -37,6 +37,7 @@ import { NotesScreen } from './NotesScreen';
 import { getCachedSession, signOut, subscribeAuth } from '../services/nurBackend';
 import type { NurSession } from '../services/nurBackend';
 import { OBLIGATORY_PRAYER_IDS } from '../services/prayerSchedule';
+import { hasReliableSharedPrayerTimes } from '../services/prayerReminderService';
 import type { NurIcon } from '../shared/NurIcons';
 import {
   NurBookmarkIcon,
@@ -156,6 +157,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   const [legacyFeature, setLegacyFeature] = useState<LegacyFeatureId | null>(null);
   const [theme, setThemeState] = useState<NurTheme>(() => getTheme());
   const [notifications, setNotifications] = useState(readReminderEnabled);
+  const [prayerTimesReliable, setPrayerTimesReliable] = useState(hasReliableSharedPrayerTimes);
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [toast, setToast] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
@@ -168,6 +170,12 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   const userName = readUserName(session);
 
   useEffect(() => subscribeAuth(setSession), []);
+  useEffect(() => {
+    const syncReliability = () => setPrayerTimesReliable(hasReliableSharedPrayerTimes());
+    window.addEventListener('nur:prayer-times-updated', syncReliability);
+    syncReliability();
+    return () => window.removeEventListener('nur:prayer-times-updated', syncReliability);
+  }, []);
 
   const initials = useMemo(() => {
     const clean = userName.trim();
@@ -196,6 +204,11 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       try { localStorage.setItem('nur_prayer_notifications', '[]'); } catch { /* optional */ }
       setNotifications(false);
       flash('Gebetserinnerungen ausgeschaltet');
+      return;
+    }
+
+    if (!prayerTimesReliable) {
+      flash('Aktuelle Gebetszeiten fehlen. Öffne zuerst „Gebete“ und lade Zeiten für deinen Standort.');
       return;
     }
 
@@ -332,7 +345,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
                 <>
                   <span className="reference-profile-modal__icon"><Settings2 size={28} /></span><span className="overline">App-Einstellungen</span><h2>Einstellungen</h2><p>Diese Schalter sind direkt mit den aktiven Funktionen verbunden.</p>
                   <div className="reference-settings-toggles">
-                    <button onClick={() => void toggleNotifications()}><span><BellRing size={19} /><span><strong>Gebetserinnerungen</strong><small>{notifications ? 'Mindestens ein Gebet ist aktiv' : 'Keine Gebetserinnerungen aktiv'}</small></span></span><em className={notifications ? 'is-on' : ''}><i /></em></button>
+                    <button onClick={() => void toggleNotifications()}><span><BellRing size={19} /><span><strong>Gebetserinnerungen</strong><small>{notifications ? prayerTimesReliable ? 'Mindestens ein Gebet ist aktiv' : 'Gespeichert · pausiert bis aktuelle Zeiten verfügbar sind' : prayerTimesReliable ? 'Keine Gebetserinnerungen aktiv' : 'Aktuelle Gebetszeiten zuerst laden'}</small></span></span><em className={notifications && prayerTimesReliable ? 'is-on' : ''}><i /></em></button>
                     <button onClick={() => { setModal(null); setSubscreen('account'); }}><span><Cloud size={19} /><span><strong>Cloud-Synchronisierung</strong><small>{session ? 'Konto verbunden · Backup verwalten' : 'Konto erforderlich'}</small></span></span><ChevronRight size={18} /></button>
                   </div>
                 </>
