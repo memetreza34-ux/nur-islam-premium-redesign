@@ -178,18 +178,19 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
             : 'Moscheen werden gesucht …';
 
   const resultCount = snapshot?.results.length ?? 0;
+  const usingDeviceOrigin = origin.source === 'device';
 
   return (
     <motion.main className="screen reference-mosque-screen reference-mosque-screen--live" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">In deiner Nähe</span><h1>Moschee-Finder</h1></div>
+        <div><span className="overline">{usingDeviceOrigin ? 'In deiner Nähe' : 'Standardort · Berlin'}</span><h1>Moschee-Finder</h1></div>
         <button className="icon-button" onClick={() => void loadMosques(origin, true)} aria-label="Moscheen aktualisieren" disabled={status === 'loading'}><RefreshCw size={20} className={status === 'loading' ? 'is-spinning' : ''} /></button>
       </header>
 
       <section className="reference-mosque-hero">
         <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" fallback={<MosqueScene />} priority />
-        <div><span className="hero-pill">{origin.label}</span><h2>Finde einen Ort<br />für dein Gebet.</h2><p>Echte Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern.</p><button className="reference-mosque-location-button" onClick={() => void useDeviceLocation()} disabled={status === 'loading'}><LocateFixed size={16} /> Eigenen Standort verwenden</button></div>
+        <div><span className="hero-pill">{origin.label}</span><h2>Finde einen Ort<br />für dein Gebet.</h2><p>{usingDeviceOrigin ? 'Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern um deinen Gerätestandort.' : 'Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern um den angezeigten Standardort.'}</p><button className="reference-mosque-location-button" onClick={() => void useDeviceLocation()} disabled={status === 'loading'}><LocateFixed size={16} /> Eigenen Standort verwenden</button></div>
       </section>
 
       <section className={`reference-mosque-live-status is-${status}`} aria-live="polite">
@@ -202,7 +203,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
 
       <label className="reference-input-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Name, Adresse oder Konfession suchen …" /><Filter size={17} /></label>
 
-      <div className="reference-nearby-label"><span><Navigation size={15} /> Nach Entfernung sortiert · 10 km</span><button onClick={() => openExternal(getOriginMapUrl(origin))}><Map size={16} /> Karte</button></div>
+      <div className="reference-nearby-label"><span><Navigation size={15} /> Nach Entfernung von {origin.label} sortiert · 10 km</span><button onClick={() => openExternal(getOriginMapUrl(origin))}><Map size={16} /> Karte</button></div>
 
       {status === 'loading' && !snapshot ? (
         <div className="reference-mosque-loading"><LoaderCircle size={28} className="is-spinning" /><strong>Moscheen werden gesucht</strong><small>Gebäude, Gebetsräume und Musallas werden aus OpenStreetMap geladen.</small></div>
@@ -229,7 +230,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
             <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition}>
               <header>
                 <span className="reference-mosque-detail-modal__pin"><MapPin size={22} /></span>
-                <div><span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
+                <div><span className="overline">{formatDistance(selected.distanceKm)} vom Suchort entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
                 <button className="reference-mosque-detail-modal__close" onClick={closeDialog} aria-label="Schließen"><X size={20} /></button>
               </header>
 
