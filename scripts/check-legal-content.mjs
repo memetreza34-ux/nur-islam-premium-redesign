@@ -38,6 +38,29 @@ for (const [host, source] of contacted) {
   }
 }
 
+// These are factual product claims that previously drifted away from the code.
+// Keep them pinned so privacy/help text cannot quietly reintroduce a default
+// Berlin location as personal data or describe a full offline Quran as a
+// four-surah bundle.
+for (const required of [
+  'Der Gerätestandort wird nur nach ausdrücklicher Freigabe durch dich abgefragt.',
+  'lokal für die persönliche Qibla-Richtung verwendet',
+  'keine persönliche Qibla-Richtung und keine persönlichen Live-Gebetszeiten',
+  'technischer Quran-Fallback, falls eine lokale Quran-Datei fehlt oder nicht lesbar ist',
+  'Lokaler Offline-Quran: Herkunft, konkrete arabische Ausgabe, deutsche Wiedergabe und Nutzungsrechte des übernommenen Bestands sind noch nicht abschließend dokumentiert.',
+  'Diese Angaben beziehen sich ausschließlich auf den Online-Fallback und nicht automatisch auf den lokalen Offline-Bestand.',
+]) {
+  if (!legal.includes(required)) throw new Error(`Privacy/license truthfulness wording is missing: ${required}`);
+}
+for (const stale of [
+  'Nachladen von Suren, die nicht fest in der App enthalten sind',
+  'Verweigerst du die Freigabe, nutzt die App einen voreingestellten Ort und bleibt vollständig bedienbar.',
+  'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
+  'Deutsche Quran-Wiedergabe: Bubenheim & Elyas über Al Quran Cloud.',
+]) {
+  if (legal.includes(stale)) throw new Error(`Privacy/license text contains a stale claim: ${stale}`);
+}
+
 // The Content Security Policy is the enforced version of the privacy notice.
 // Code, policy and text have to name the same hosts, or one of the three is
 // lying: a host missing from connect-src breaks at runtime, and a host missing
