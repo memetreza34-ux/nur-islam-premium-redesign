@@ -23,12 +23,23 @@ for (const requirement of [
   'writeCalendarEntries(next)',
   "window.addEventListener('focus', sync)",
   "document.addEventListener('visibilitychange', handleVisibility)",
+  "import { isFastingForbidden } from '../data/islamicEventsData';",
+  "import { getHijriDay, getHijriMonth } from './hijriCalendar';",
+  'getHijriMonth(fastingDate)',
+  'getHijriDay(fastingDate)',
+  'isFastingForbidden(hijriMonth, hijriDay)',
 ]) {
   if (!service.includes(requirement)) throw new Error(`Rolling fasting reminder service is missing: ${requirement}`);
 }
 
 if (service.includes('MAINTENANCE_INTERVAL_MS = 15_000')) {
   throw new Error('Fasting reminder maintenance regressed to an unnecessarily frequent 15-second loop.');
+}
+
+const forbiddenCheckIndex = service.indexOf('if (isFastingForbidden(hijriMonth, hijriDay)) continue;');
+const mondayIndex = service.indexOf('const monday = weekday === 1;');
+if (forbiddenCheckIndex < 0 || mondayIndex < 0 || forbiddenCheckIndex > mondayIndex) {
+  throw new Error('No-fasting days must be excluded before Monday, Thursday or white-day reminder generation.');
 }
 
 for (const requirement of [
@@ -71,4 +82,4 @@ for (const requirement of [
   if (!calendarService.includes(requirement)) throw new Error(`Shared calendar reminder engine is missing: ${requirement}`);
 }
 
-console.log('Fasting reminders verified: the assistant writes only preferences and immediately delegates to the single 45-day rolling scheduler; no duplicate screen-local calendar planning remains, and delivery uses the shared calendar reminder engine.');
+console.log('Fasting reminders verified: Eid and general Tashriq no-fasting days are excluded before Monday, Thursday or white-day suggestions, and delivery still uses the shared calendar reminder engine.');
