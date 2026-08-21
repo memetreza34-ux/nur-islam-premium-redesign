@@ -94,15 +94,13 @@ function getMonthData(offset: number) {
   return { first, year, month, daysInMonth, cells };
 }
 
-const HIJRI_SOURCE_NOTE = 'Der Termin ist aus dem Hijri-Kalender des Geräts berechnet. Die örtliche Mondsichtung kann um einen Tag abweichen.';
+const HIJRI_SOURCE_NOTE = 'Das Hijri-Datum ist berechnet. Der tatsächliche Monatsbeginn kann je nach örtlicher Mondsichtung oder zuständiger Stelle abweichen.';
 
 /**
  * What falls on this day, most significant first.
  *
  * The order matters: Eid outranks the white days it can collide with, and a
- * named occasion outranks the weekly voluntary fast. Before this, the calendar
- * knew only the white days and Monday/Thursday — Ramadan, both Eids, Arafah and
- * Laylat al-Qadr were nowhere in a screen that exists to show them.
+ * named occasion outranks the weekly voluntary fast.
  */
 function getCalendarEvent(date: Date): CalendarEvent | null {
   const hijriDay = getHijriDay(date);
@@ -117,7 +115,7 @@ function getCalendarEvent(date: Date): CalendarEvent | null {
       meaning: named.meaning,
       practice: named.practice,
       fasting: named.fasting && !fastingForbidden,
-      sourceNote: HIJRI_SOURCE_NOTE,
+      sourceNote: `${named.source} · ${HIJRI_SOURCE_NOTE}`,
     };
   }
 
@@ -128,7 +126,7 @@ function getCalendarEvent(date: Date): CalendarEvent | null {
       meaning: WHITE_DAYS_EVENT.meaning,
       practice: WHITE_DAYS_EVENT.practice,
       fasting: !fastingForbidden,
-      sourceNote: HIJRI_SOURCE_NOTE,
+      sourceNote: `${WHITE_DAYS_EVENT.source} · ${HIJRI_SOURCE_NOTE}`,
     };
   }
 
@@ -140,7 +138,7 @@ function getCalendarEvent(date: Date): CalendarEvent | null {
       meaning: WEEKLY_FAST_EVENT.meaning,
       practice: WEEKLY_FAST_EVENT.practice,
       fasting: !fastingForbidden,
-      sourceNote: 'Dieser Hinweis basiert ausschließlich auf dem lokalen Wochentag.',
+      sourceNote: `${WEEKLY_FAST_EVENT.source} · Der Wochentag wird lokal auf dem Gerät bestimmt.`,
     };
   }
   return null;
@@ -256,18 +254,12 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             const cellDate = new Date(monthData.year, monthData.month, day);
             const dateKey = getDateKey(cellDate);
             const event = getCalendarEvent(cellDate);
-            // A named occasion — Ramadan, Eid, Arafah — is worth more than the
-            // recurring voluntary fast, so it gets its own mark rather than
-            // sharing one dot with every Monday.
             const named = Boolean(event && findIslamicEvents(getHijriMonth(cellDate), getHijriDay(cellDate)).length > 0);
             const personal = entries.some((entry) => entry.date === dateKey);
             const selected = day === selectedDay;
             const isToday = dateKey === getDateKey(new Date());
             return (
               <button key={day} className={`calendar-day${selected ? ' calendar-day--selected' : ''}${isToday ? ' calendar-day--today' : ''}`} onClick={() => setSelectedDay(day)} aria-label={event ? `${day}. — ${event.title}` : undefined}>
-                {/* One number, the one people navigate by. The Hijri date stays
-                    in the month header and on the selected day, where there is
-                    room to label it as calculated. */}
                 <strong>{day}</strong>
                 <span className="calendar-day__dots">{named ? <i className="calendar-dot calendar-dot--named" /> : event ? <i className="calendar-dot calendar-dot--event" /> : null}{personal ? <i className="calendar-dot calendar-dot--personal" /> : null}</span>
               </button>
