@@ -83,7 +83,7 @@ const coreShortcuts: CoreShortcut[] = [
   { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: NurTasbihIcon },
   { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: NurQiblaIcon },
   { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: NurDuaIcon },
-  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', icon: NurRosetteIcon },
+  { destination: 'names', title: 'Namen Allahs', description: 'Einzeln belegt', icon: NurRosetteIcon },
   { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: NurMosqueIcon },
   { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: NurCalendarIcon },
   { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: NurBookmarkIcon },
