@@ -65,10 +65,6 @@ export function buildRollingFastingReminders(now = new Date()) {
     const hijriMonth = hijri?.month ?? 0;
     const hijriDay = hijri?.day ?? 0;
 
-    // Never create a voluntary-fasting reminder for a day on which the shared
-    // Islamic calendar explicitly suppresses fasting (Eid al-Fitr, Eid al-Adha
-    // and the general Tashriq days). This check takes precedence over weekday
-    // and white-day suggestions.
     if (isFastingForbidden(hijriMonth, hijriDay)) continue;
 
     const monday = weekday === 1;
