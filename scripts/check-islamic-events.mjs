@@ -92,6 +92,14 @@ if (!screen.includes('isFastingForbidden')) {
 if (!source.includes("source: 'Jamiʿ at-Tirmidhi 761 · Hasan'")) throw new Error('White-days source is missing.');
 if (!source.includes("source: 'Jamiʿ at-Tirmidhi 747 · Hasan · Sunan Abi Dawud 2436'")) throw new Error('Monday/Thursday source is missing.');
 
+for (const renderedSource of [
+  '`${named.source} · ${HIJRI_SOURCE_NOTE}`',
+  '`${WHITE_DAYS_EVENT.source} · ${HIJRI_SOURCE_NOTE}`',
+  '`${WEEKLY_FAST_EVENT.source} · Der Wochentag wird lokal auf dem Gerät bestimmt.`',
+]) {
+  if (!screen.includes(renderedSource)) throw new Error(`Calendar does not surface source evidence: ${renderedSource}`);
+}
+
 if (/<strong>\{day\}<\/strong><em>/.test(screen)) {
   throw new Error('Calendar cells show two numbers again; the Hijri day belongs in the header.');
 }
@@ -99,4 +107,4 @@ if (!screen.includes('Berechnetes Hijri-Datum') || !screen.includes('Mondsichtun
   throw new Error('Calendar no longer discloses that calculated Hijri dates can differ from local moon sighting.');
 }
 
-console.log(`Islamic calendar verified: ${events.length} sourced public occasions, disputed fixed dates quarantined, Qadr shown across odd last-ten nights, Ramadan not mislabeled voluntary, fasting suppressed on Eid/Tashriq, and calculated Hijri dates explicitly disclosed.`);
+console.log(`Islamic calendar verified: ${events.length} sourced public occasions, primary references are visible in the UI, disputed fixed dates are quarantined, Qadr is shown across odd last-ten nights, Ramadan is not mislabeled voluntary, and calculated Hijri dates are explicitly disclosed.`);
