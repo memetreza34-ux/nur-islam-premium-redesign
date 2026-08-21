@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  applyPrayerSnapshotToSharedSchedule,
   fetchPrayerTimes,
   getFallbackPrayerTimesSnapshot,
   loadCachedPrayerTimes,
@@ -61,6 +62,7 @@ export function usePrayerTimes() {
       const live = await fetchPrayerTimes(location, preferences);
       if (requestCounter.current !== requestId) return 'ignored' as const;
       setSnapshot(live);
+      applyPrayerSnapshotToSharedSchedule(live);
       setStatus('live');
       return 'live' as const;
     } catch (reason) {
@@ -69,9 +71,12 @@ export function usePrayerTimes() {
       const stored = loadCachedPrayerTimes();
       if (stored) {
         setSnapshot(stored);
+        applyPrayerSnapshotToSharedSchedule(stored);
         setStatus('cache');
       } else {
-        setSnapshot(getFallbackPrayerTimesSnapshot());
+        const nextFallback = getFallbackPrayerTimesSnapshot();
+        setSnapshot(nextFallback);
+        applyPrayerSnapshotToSharedSchedule(nextFallback);
         setStatus('fallback');
       }
       setError(message);
