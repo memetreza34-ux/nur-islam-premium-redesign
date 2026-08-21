@@ -64,11 +64,11 @@ Diese 18 Lektionen sind im Lern-Hub sichtbar. Deshalb dürfen sie nicht außerha
 
 ### Weitere religiöse Kerninhalte – 14
 
-29. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren.
+29. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren; zusätzlich den tatsächlichen Offline-Wortlaut gegen eine bekannte Referenz bzw. nachvollziehbare Prüfsummen verifizieren.
 30. `quran-beginner-guide` – redaktionelle Quran-Einführung, Begriffe und Startempfehlungen prüfen.
-31. `beginner-reference` – Anfänger-FAQ und Islam-A–Z-Begriffe fachlich prüfen.
+31. `beginner-reference` – Anfänger-FAQ und Islam A–Z-Begriffe fachlich prüfen.
 32. `purity-basics` – Ghusl-/Tayammum-Grundlagen und Grenzen der Darstellung prüfen.
-33. `names-of-allah` – das öffentliche v1-Lernset besteht nur aus einzeln belegten Namen; Schreibweisen, Bedeutungs-Kurzfassungen und jeweilige Belegzuordnung fachlich endprüfen.
+33. `names-of-allah` – die vollständige öffentliche 99er-Lernliste bleibt erhalten; Schreibweisen, Bedeutungs-Kurzfassungen und die individuelle Beleglage aller 99 Einträge fachlich endprüfen.
 34. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
 35. `dhikr-routines` – Quellen, Zählungen, Bedeutungen und Varianten der Routinen prüfen.
 36. `duas` – arabische Texte, Transliteration, Bedeutungsangaben und konkrete Quellen des Dua-Bestands prüfen.
@@ -77,7 +77,7 @@ Diese 18 Lektionen sind im Lern-Hub sichtbar. Deshalb dürfen sie nicht außerha
 39. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
 40. `prayer-time-methodology` – AlAdhan-Methode, Asr-Auswahl, lokale Abweichungen, Cache/Fallback und Reminder-Sicherheit prüfen.
 41. `qibla-guidance` – Kaaba-Koordinaten, Bearing-Berechnung, Standortvoraussetzung, absolute Sensororientierung und Genauigkeitshinweise prüfen.
-42. `islamic-calendar-content` – öffentliche Termine, Fastenhinweise, Quellen, berechnete Hijri-Daten und quarantänisierte unsichere Datierungen prüfen.
+42. `islamic-calendar-content` – öffentliche Termine, Fastenhinweise, Quellen, berechnete Hijri-Daten, Tagesgrenze ab Maghrib und quarantänisierte unsichere Datierungen prüfen.
 
 Statusdatei: `src/data/coreContentReview.ts`
 
@@ -101,11 +101,11 @@ Home rotiert nicht mehr durch die gesamte Legacy-Hadithbibliothek. `DAILY_HADITH
 
 ### Namen Allahs
 
-Die öffentliche Names-Seite verwendet nicht mehr die alte feste 99er-Liste. `src/data/verifiedNamesOfAllahData.ts` enthält aktuell 32 einzeln mit Quranstellen belegte Namen/Bezeichnungen. Für jeden öffentlichen Eintrag werden Quelle und Quellenhinweis direkt angezeigt.
+Die öffentliche Names-Seite behält die vollständige 99er-Lernliste. `src/data/verifiedNamesOfAllahData.ts` enthält zusätzlich eine bereits einzeln mit Quranstellen belegte Teilmenge, die bei den entsprechenden Einträgen als Audit-Hilfe und direkte Quellenanzeige verwendet wird.
 
-Der frühere 99er-Altbestand bleibt nur für Migration und Audit erhalten. `src/data/legacyNamesAudit.ts` ordnet 31 alte Zeilen dem neuen belegten Set zu; 68 weitere Altzeilen sind `legacy-quarantined`. Das bedeutet nicht automatisch „falsch“, sondern: noch nicht ausreichend einzeln belegt und fachlich geprüft für den öffentlichen v1-Inhalt.
+Die noch nicht einzeln belegten Einträge werden dadurch nicht automatisch als falsch bewertet. Für Release 1 bleibt jedoch die individuelle Prüfung von Schreibweise, kurzer deutscher Bedeutungsangabe und Beleglage aller 99 Einträge offen. Ein vorhandener Alt-Auditstatus wie `legacy-quarantined` ist deshalb als offener Quellen-/Reviewstatus zu verstehen und nicht als Regel, den Namen aus der öffentlichen 99er-Funktion zu entfernen.
 
-Auch `Meine Sammlung` darf nur Favoriten zeigen, die auf das belegte öffentliche Set gemappt werden können.
+`Meine Sammlung`, Suche und Lernfortschritt dürfen die vollständige 99er-Liste weiterhin verwenden. Der technische Names-Guard schützt ausdrücklich davor, dass die 99 Namen versehentlich reduziert werden.
 
 ### Gebetszeiten
 
@@ -114,6 +114,8 @@ Der frühere feste Berlin-Ersatzplan wurde entfernt. Der Offline-Fallback enthä
 - zeigt Home keine scheinbar aktuelle nächste Gebetszeit;
 - werden keine statischen Ersatzzeiten als Gebetsentscheidung ausgegeben;
 - dürfen Gebetserinnerungen nicht auf Fallback-Uhrzeiten feuern.
+
+Live-Gebetszeiten werden außerdem nur mit einem tatsächlich gespeicherten Gerätestandort geladen; der interne Berlin-Standard darf nicht als persönlicher Live-Standort verwendet werden.
 
 Die Berechnungsmethode bleibt als berechnete Hilfe gekennzeichnet; lokaler Moschee-/Behördenabgleich bleibt relevant.
 
@@ -134,18 +136,20 @@ Der öffentliche Kalender wurde auf einen konservativen, einzeln belegten Kern r
 - Quran-/Hadith-Quellen werden direkt am sichtbaren Kalenderhinweis angezeigt;
 - das Hijri-Datum bleibt ausdrücklich als berechnet gekennzeichnet, da lokale Mondsichtung abweichen kann.
 
+Offen bleibt die technische Tagesgrenze: Die App muss vor Release sicherstellen, dass religiöse Abend-/Nachtanzeigen nicht so behandelt werden, als beginne ein Hijri-Tag erst um 00:00 Uhr.
+
 ## Zusätzliche technische Bedingungen
 
 Ein Review-Datensatz allein reicht bei besonders sensiblen Bereichen nicht aus:
 
-- `quran-offline-bundle` kann nicht freigegeben werden, solange die lokale deutsche Ausgabe im Code nur als `übernommener deutscher Altbestand` bezeichnet wird. Vor Freigabe müssen Edition/Provenienz und Nutzungsgrundlage konkret benannt sein.
+- `quran-offline-bundle` kann nicht freigegeben werden, solange die lokale deutsche Ausgabe im Code nur als `übernommener deutscher Altbestand` bezeichnet wird. Vor Freigabe müssen Edition/Provenienz und Nutzungsgrundlage konkret benannt sein. Zusätzlich muss der tatsächliche arabische und deutsche Offline-Wortlaut gegen eine dokumentierte Referenz oder nachvollziehbare Prüfsummen geprüft werden; reine Anzahl-/Strukturtests reichen dafür nicht aus.
 - `daily-hadith-rotation` kann nur freigegeben werden, wenn ein explizit kuratierter `DAILY_HADITH_IDS`-Pool existiert. Diese technische Voraussetzung ist auf dem aktuellen Feature-Branch bereits umgesetzt; der fachliche Reviewstatus bleibt davon getrennt.
-- `names-of-allah` darf nicht wieder auf die alte feste 99er-Liste als öffentlichen Datenbestand zurückfallen. Der v1-Screen und Sammlungen verwenden nur den einzeln belegten öffentlichen Satz.
-- `prayer-time-methodology` darf keine fest codierten Uhrzeiten als aktuellen religiösen Zeitplan verwenden. Reminder müssen bei unzuverlässigem Fallback blockiert bleiben.
+- `names-of-allah` muss die vollständige 99er-Lernfunktion erhalten. Eine Freigabe setzt trotzdem voraus, dass die Schreibweisen, Bedeutungs-Kurzfassungen und Beleglage aller 99 Einträge einzeln fachlich geprüft wurden.
+- `prayer-time-methodology` darf keine fest codierten Uhrzeiten als aktuellen religiösen Zeitplan verwenden. Reminder müssen bei unzuverlässigem Fallback blockiert bleiben, und Live-Zeiten dürfen nicht aus einem internen Standardort als persönliche Nutzerzeiten erscheinen.
 - `qibla-guidance` darf ohne persönlichen Gerätestandort und absoluten Nordbezug keine scheinbar exakte persönliche Kompassführung vortäuschen.
-- `islamic-calendar-content` darf quarantänisierte Datierungen nicht als sichere öffentliche religiöse Termine ausgeben.
+- `islamic-calendar-content` darf quarantänisierte Datierungen nicht als sichere öffentliche religiöse Termine ausgeben und muss die religiöse Tagesgrenze ab Maghrib korrekt berücksichtigen.
 
-Diese Bedingungen werden durch spezialisierte Repo-Checks zusätzlich abgesichert.
+Diese Bedingungen werden durch spezialisierte Repo-Checks zusätzlich abgesichert, soweit sie technisch prüfbar sind. Fachliche Richtigkeit bleibt davon getrennt.
 
 ## Statusmodell
 
@@ -196,12 +200,13 @@ Vor einer Freigabe müssen mindestens geprüft werden:
 - Anfängerformulierungen erzeugen keine falsche Gewissheit
 - Gebets-/Wudu-Schritte unterscheiden klar zwischen gemeinsamem Grundablauf, empfohlenen Handlungen und Punkten mit anerkannten Rechtsschul-Unterschieden
 - Quran-Editionen, Übersetzungsquelle und Nutzungsrechte sind nachvollziehbar dokumentiert
+- der tatsächliche Quran-Wortlaut ist gegen eine dokumentierte Referenz geprüft und nicht nur strukturell gezählt
 - bei Zählungen oder festgelegten Wiederholungszahlen trägt die genannte Quelle tatsächlich die behauptete Anzahl
 - Seerah- und Tafsir-Zusammenfassungen behaupten nicht mehr, als die angegebenen Quellen tragen
 - eine gute Absicht wird nicht als pauschale Erlaubnis für ansonsten verbotene Handlungen dargestellt
 - berechnete Gebetszeiten werden nicht mit lokaler verbindlicher Festlegung verwechselt
 - Sensor-/Standortdaten der Qibla werden nicht genauer dargestellt, als das Gerät sie tatsächlich liefert
-- berechnete Hijri-Daten und historisch unsichere Datierungen werden transparent gekennzeichnet
+- berechnete Hijri-Daten, Tagesgrenze ab Maghrib und historisch unsichere Datierungen werden transparent und korrekt behandelt
 
 ## Änderung nach Freigabe
 
