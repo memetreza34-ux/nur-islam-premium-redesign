@@ -83,7 +83,7 @@ const coreShortcuts: CoreShortcut[] = [
   { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: NurTasbihIcon },
   { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: NurQiblaIcon },
   { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: NurDuaIcon },
-  { destination: 'names', title: 'Namen Allahs', description: 'Einzeln belegt', icon: NurRosetteIcon },
+  { destination: 'names', title: 'Namen Allahs', description: 'Alle 99 Namen', icon: NurRosetteIcon },
   { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: NurMosqueIcon },
   { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: NurCalendarIcon },
   { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: NurBookmarkIcon },
@@ -348,7 +348,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
               {modal === 'support' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung werden Koordinaten für Gebetszeiten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen. Quran-Suren außerhalb des festen Offline-Bestands werden bei Bedarf von Al Quran Cloud geladen.</p>
+                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung wird der Gerätestandort für die persönliche Qibla und als gemeinsamer Gebetsstandort gespeichert; für Live-Gebetszeiten können die Koordinaten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen werden. Alle 114 Quran-Suren liegen offline vor; Al Quran Cloud dient nur als technischer Fallback, falls eine lokale Quran-Datei fehlt oder nicht lesbar ist.</p>
                   <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Cloud nur nach Anmeldung und bewusster Sicherung</span><span><CircleCheck size={16} /> Keine Werbe-Tracker im App-Code</span><span><CircleCheck size={16} /> Religiöse Hinweise ersetzen keine Fatwa</span></div>
                 </>
               ) : null}
