@@ -11,7 +11,7 @@ import {
 import { motion, useReducedMotion } from 'motion/react';
 import { DUA_BY_ID } from '../data/duaData';
 import { getHadithById, readSavedHadithIds } from '../data/hadithData';
-import { VERIFIED_NAMES_OF_ALLAH } from '../data/verifiedNamesOfAllahData';
+import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 
 const knownSurahLabels: Record<number, string> = {
@@ -80,26 +80,18 @@ export function readDuaFavoriteSet() {
   return migrated;
 }
 
-/**
- * Only favorites that map to the individually sourced public Names set survive
- * migration. An old favorite from the quarantined fixed 99-list is not proof
- * that the row is safe to expose as v1 religious content.
- */
 export function readNameFavoriteSet() {
   const migrated = new Set<string>();
   readUnknownArray('nur_name_favorites').forEach((value) => {
     const candidate = String(value);
-    const direct = VERIFIED_NAMES_OF_ALLAH.find((entry) => entry.key === candidate);
-    if (direct) {
-      migrated.add(direct.key);
+    const byId = NAMES_OF_ALLAH.find((entry) => String(entry.id) === candidate);
+    if (byId) {
+      migrated.add(String(byId.id));
       return;
     }
 
-    const legacyId = /^\d+$/.test(candidate) ? Number(candidate) : null;
-    const legacyMapped = VERIFIED_NAMES_OF_ALLAH.find((entry) =>
-      (legacyId !== null && entry.legacyId === legacyId) || entry.latin === candidate,
-    );
-    if (legacyMapped) migrated.add(legacyMapped.key);
+    const legacy = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
+    if (legacy) migrated.add(String(legacy.id));
   });
   writeStringSet('nur_name_favorites', migrated);
   return migrated;
@@ -174,133 +166,33 @@ export function CollectionsScreen({
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
         <div><span className="overline">Gespeichert</span><h1>Meine Sammlung</h1></div>
-        <button
-          className="icon-button"
-          onClick={() => setFilter('Alle')}
-          aria-label="Sammlungsfilter zurücksetzen"
-          title="Filter zurücksetzen"
-          disabled={filter === 'Alle'}
-        >
-          <RotateCcw size={20} />
-        </button>
+        <button className="icon-button" onClick={() => setFilter('Alle')} aria-label="Sammlungsfilter zurücksetzen" title="Filter zurücksetzen" disabled={filter === 'Alle'}><RotateCcw size={20} /></button>
       </header>
 
       <div className="reference-filter-tabs reference-filter-tabs--wide">
-        {['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine'].map((item) => (
-          <button key={item} className={filter === item ? 'is-active' : ''} onClick={() => setFilter(item)}>{item}</button>
-        ))}
+        {['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine'].map((item) => <button key={item} className={filter === item ? 'is-active' : ''} onClick={() => setFilter(item)}>{item}</button>)}
       </div>
 
       {showQuran && hasQuran ? (
         <section className="reference-collection-section">
           <div className="section-heading"><div><span className="overline">Quran</span><h2>Lesezeichen & Suren</h2></div></div>
-          <div className="reference-collection-grid">
-            <button onClick={onOpenQuran} aria-label="Quran-Sammlung öffnen">
-              <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
-              <span><strong>{quranBookmarkGroups.reduce((sum, group) => sum + group.bookmarks.size, 0)} Ayah-Lesezeichen</strong><small>{quranSurahFavorites.size} Lieblingssuren</small></span>
-              <Bookmark size={17} />
-            </button>
-          </div>
+          <div className="reference-collection-grid"><button onClick={onOpenQuran} aria-label="Quran-Sammlung öffnen"><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /><span><strong>{quranBookmarkGroups.reduce((sum, group) => sum + group.bookmarks.size, 0)} Ayah-Lesezeichen</strong><small>{quranSurahFavorites.size} Lieblingssuren</small></span><Bookmark size={17} /></button></div>
           <div className="reference-collection-rows">
-            {quranBookmarkGroups.flatMap((group) => [...group.bookmarks]
-              .sort((a, b) => a - b)
-              .map((ayahNumber) => (
-                <button key={`bookmark-${group.surahNumber}-${ayahNumber}`} onClick={() => onOpenReader(group.surahNumber, ayahNumber)} aria-label={`${group.label} Ayah ${ayahNumber} direkt öffnen`}>
-                  <span><BookOpen size={18} /></span>
-                  <span><strong>{group.label} · Ayah {ayahNumber}</strong><small>Sure {group.surahNumber}:{ayahNumber} · gespeichertes Lesezeichen</small></span>
-                  <ChevronRight size={17} />
-                </button>
-              )))}
-            {[...quranSurahFavorites].sort((a, b) => a - b).map((surahNumber) => (
-              <button key={`favorite-${surahNumber}`} onClick={() => onOpenReader(surahNumber, 1)}>
-                <span><Sparkles size={18} /></span>
-                <span><strong>{knownSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span>
-                <ChevronRight size={17} />
-              </button>
-            ))}
+            {quranBookmarkGroups.flatMap((group) => [...group.bookmarks].sort((a, b) => a - b).map((ayahNumber) => <button key={`bookmark-${group.surahNumber}-${ayahNumber}`} onClick={() => onOpenReader(group.surahNumber, ayahNumber)} aria-label={`${group.label} Ayah ${ayahNumber} direkt öffnen`}><span><BookOpen size={18} /></span><span><strong>{group.label} · Ayah {ayahNumber}</strong><small>Sure {group.surahNumber}:{ayahNumber} · gespeichertes Lesezeichen</small></span><ChevronRight size={17} /></button>))}
+            {[...quranSurahFavorites].sort((a, b) => a - b).map((surahNumber) => <button key={`favorite-${surahNumber}`} onClick={() => onOpenReader(surahNumber, 1)}><span><Sparkles size={18} /></span><span><strong>{knownSurahLabels[surahNumber] ?? `Sure ${surahNumber}`}</strong><small>Lieblingssure · Nummer {surahNumber}</small></span><ChevronRight size={17} /></button>)}
           </div>
         </section>
       ) : null}
 
-      {showDuas && duaFavorites.size > 0 ? (
-        <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Duas</span><h2>Favoriten</h2></div></div>
-          <div className="reference-collection-rows">
-            {[...duaFavorites].map((id) => {
-              const dua = DUA_BY_ID.get(id);
-              if (!dua) return null;
-              return (
-                <button key={id} onClick={() => onOpenDua(id)} aria-label={`${dua.title} direkt öffnen`}>
-                  <span><Sparkles size={18} /></span><span><strong>{dua.title}</strong><small>{dua.source}</small></span><ChevronRight size={17} />
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
+      {showDuas && duaFavorites.size > 0 ? <section className="reference-collection-section"><div className="section-heading"><div><span className="overline">Duas</span><h2>Favoriten</h2></div></div><div className="reference-collection-rows">{[...duaFavorites].map((id) => { const dua = DUA_BY_ID.get(id); if (!dua) return null; return <button key={id} onClick={() => onOpenDua(id)} aria-label={`${dua.title} direkt öffnen`}><span><Sparkles size={18} /></span><span><strong>{dua.title}</strong><small>{dua.source}</small></span><ChevronRight size={17} /></button>; })}</div></section> : null}
 
-      {showNames && nameFavorites.size > 0 ? (
-        <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Asma’ul Husna</span><h2>Belegte Lieblingsnamen</h2></div></div>
-          <div className="reference-collection-rows">
-            {[...nameFavorites].map((id) => {
-              const name = VERIFIED_NAMES_OF_ALLAH.find((entry) => entry.key === id);
-              if (!name) return null;
-              return (
-                <button key={id} onClick={() => onOpenName(id)} aria-label={`${name.latin} direkt öffnen`}>
-                  <span><Sparkles size={18} /></span><span><strong>{name.latin}</strong><small>{name.meaning} · {name.source}</small></span><ChevronRight size={17} />
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
+      {showNames && nameFavorites.size > 0 ? <section className="reference-collection-section"><div className="section-heading"><div><span className="overline">Asma’ul Husna</span><h2>Lieblingsnamen</h2></div></div><div className="reference-collection-rows">{[...nameFavorites].map((id) => { const name = NAMES_OF_ALLAH.find((entry) => String(entry.id) === id); if (!name) return null; return <button key={id} onClick={() => onOpenName(id)} aria-label={`${name.latin} direkt öffnen`}><span><Sparkles size={18} /></span><span><strong>{name.latin}</strong><small>{name.meaning}</small></span><ChevronRight size={17} /></button>; })}</div></section> : null}
 
-      {showHighlights && (ayahSaved || hadithFavorites.size > 0) ? (
-        <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Gespeicherte Impulse</span><h2>Ayah & Hadithe</h2></div></div>
-          <div className="reference-collection-rows">
-            {ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Ayah im Fokus · gespeichert</small></span><ChevronRight size={17} /></button> : null}
-            {[...hadithFavorites].map((id) => {
-              const hadith = getHadithById(id);
-              if (!hadith) return null;
-              return (
-                <button key={`hadith-${id}`} onClick={() => onOpenHadith(id)} aria-label={`${hadith.title} direkt öffnen`}>
-                  <span><BookOpen size={18} /></span><span><strong>{hadith.title}</strong><small>{hadith.source}</small></span><ChevronRight size={17} />
-                </button>
-              );
-            })}
-          </div>
-        </section>
-      ) : null}
+      {showHighlights && (ayahSaved || hadithFavorites.size > 0) ? <section className="reference-collection-section"><div className="section-heading"><div><span className="overline">Gespeicherte Impulse</span><h2>Ayah & Hadithe</h2></div></div><div className="reference-collection-rows">{ayahSaved ? <button onClick={onOpenAyah}><span><BookOpen size={18} /></span><span><strong>Al-Ikhlas 112:1</strong><small>Ayah im Fokus · gespeichert</small></span><ChevronRight size={17} /></button> : null}{[...hadithFavorites].map((id) => { const hadith = getHadithById(id); if (!hadith) return null; return <button key={`hadith-${id}`} onClick={() => onOpenHadith(id)} aria-label={`${hadith.title} direkt öffnen`}><span><BookOpen size={18} /></span><span><strong>{hadith.title}</strong><small>{hadith.source}</small></span><ChevronRight size={17} /></button>; })}</div></section> : null}
 
-      {showDates && calendarFavorites.size > 0 ? (
-        <section className="reference-collection-section">
-          <div className="section-heading"><div><span className="overline">Kalender</span><h2>Gespeicherte Tage</h2></div></div>
-          <div className="reference-collection-rows">
-            {[...calendarFavorites].sort().map((date) => (
-              <button key={date} onClick={() => onOpenCalendarDate(date)}>
-                <span><CalendarDays size={18} /></span>
-                <span><strong>{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${date}T12:00:00`))}</strong><small>Islamischer Kalenderhinweis</small></span>
-                <ChevronRight size={17} />
-              </button>
-            ))}
-          </div>
-        </section>
-      ) : null}
+      {showDates && calendarFavorites.size > 0 ? <section className="reference-collection-section"><div className="section-heading"><div><span className="overline">Kalender</span><h2>Gespeicherte Tage</h2></div></div><div className="reference-collection-rows">{[...calendarFavorites].sort().map((date) => <button key={date} onClick={() => onOpenCalendarDate(date)}><span><CalendarDays size={18} /></span><span><strong>{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(`${date}T12:00:00`))}</strong><small>Islamischer Kalenderhinweis</small></span><ChevronRight size={17} /></button>)}</div></section> : null}
 
-      {emptyForFilter ? (
-        <div className="reference-empty-result">
-          <Bookmark size={25} />
-          <strong>{filter === 'Alle' ? 'Deine Sammlung wartet.' : `Noch keine ${filter}-Favoriten`}</strong>
-          <small>{filter === 'Alle' ? 'Speichere Ayahs, Duas, belegte Namen Allahs, Hadithe oder besondere Tage. Alles erscheint hier automatisch.' : 'Markiere Inhalte im jeweiligen Bereich mit Herz oder Lesezeichen. Sie erscheinen anschließend genau hier.'}</small>
-          {(filter === 'Alle' || filter === 'Quran') ? (
-            <button className="reference-inline-button" onClick={onOpenQuran}>
-              <BookOpen size={16} /> Im Quran entdecken
-            </button>
-          ) : null}
-        </div>
-      ) : null}
+      {emptyForFilter ? <div className="reference-empty-result"><Bookmark size={25} /><strong>{filter === 'Alle' ? 'Deine Sammlung wartet.' : `Noch keine ${filter}-Favoriten`}</strong><small>{filter === 'Alle' ? 'Speichere Ayahs, Duas, Allahs Namen, Hadithe oder besondere Tage. Alles erscheint hier automatisch.' : 'Markiere Inhalte im jeweiligen Bereich mit Herz oder Lesezeichen. Sie erscheinen anschließend genau hier.'}</small>{(filter === 'Alle' || filter === 'Quran') ? <button className="reference-inline-button" onClick={onOpenQuran}><BookOpen size={16} /> Im Quran entdecken</button> : null}</div> : null}
     </motion.main>
   );
 }
