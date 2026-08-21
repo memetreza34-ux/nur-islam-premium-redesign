@@ -5,6 +5,7 @@ const root = process.cwd();
 const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
 const service = await readFile(resolve(root, 'src/services/prayerTimesService.ts'), 'utf8');
+const hook = await readFile(resolve(root, 'src/shared/usePrayerTimes.ts'), 'utf8');
 
 const mainRequirements = [
   "import { bootstrapSharedPrayerTimes, getPrayerDateKey } from '../services/prayerTimesService';",
@@ -45,6 +46,19 @@ for (const path of ['cached', 'live', 'fallback']) {
   }
 }
 
+// PrayerScreen uses this hook after location or calculation-setting changes.
+// Those updates must be mirrored to the shared schedule immediately; otherwise
+// PrayerScreen can show one timetable while Home and the reminder scheduler
+// still operate on an older fallback/cache snapshot.
+if (!hook.includes('applyPrayerSnapshotToSharedSchedule')) {
+  throw new Error('usePrayerTimes no longer imports shared prayer-time synchronization.');
+}
+for (const snapshot of ['live', 'stored', 'nextFallback']) {
+  if (!hook.includes(`applyPrayerSnapshotToSharedSchedule(${snapshot})`)) {
+    throw new Error(`usePrayerTimes does not mirror its ${snapshot} result into the shared prayer schedule.`);
+  }
+}
+
 const homeRequirements = [
   'getNextPrayer(now)',
   'PRAYER_SCHEDULE.map((prayer)',
@@ -61,4 +75,4 @@ for (const requirement of homeRequirements) {
   if (!app.includes(requirement)) throw new Error(`Home prayer safety/sync is missing: ${requirement}`);
 }
 
-console.log('Home prayer synchronization verified: live/current-day cache updates remain shared, day rollover is handled, and clock-free fallback state is shown as unavailable rather than as a prayer-time decision.');
+console.log('Home prayer synchronization verified: bootstrap and PrayerScreen hook updates share live/cache/fallback state, day rollover is handled, and clock-free fallback is shown as unavailable.');
