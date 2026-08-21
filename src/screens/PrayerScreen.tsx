@@ -35,6 +35,7 @@ import {
   PRAYER_METHOD_OPTIONS,
 } from '../services/prayerTimesService';
 import type { AsrSchool, PrayerCalculationMethod } from '../services/prayerTimesService';
+import { getHijriLabel } from '../services/hijriCalendar';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
 
 const obligatoryIds = OBLIGATORY_PRAYER_IDS;
@@ -93,14 +94,6 @@ function getGregorianDate(date = new Date()) {
   return new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
-function getHijriDate(date = new Date()) {
-  try {
-    return new Intl.DateTimeFormat('de-DE-u-ca-islamic', { day: 'numeric', month: 'long', year: 'numeric' }).format(date);
-  } catch {
-    return 'Islamisches Datum';
-  }
-}
-
 function PrayerIcon({ prayer, size = 21 }: { prayer: PrayerScheduleItem; size?: number }) {
   if (prayer.visual === 'moon') return <MoonStar size={size} />;
   if (prayer.visual === 'sunrise') return <Sunrise size={size} />;
@@ -151,6 +144,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
     schedule: prayerTimes,
     meta,
     preferences,
+    source,
     status,
     refreshing,
     error,
@@ -166,8 +160,9 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const celebrationDialog = useDialog(celebrationOpen, closeCelebration, 'Alle Pflichtgebete abgeschlossen');
 
   const dateLabel = useMemo(() => getGregorianDate(now), [now]);
-  const hijriLabel = useMemo(() => getHijriDate(now), [now]);
+  const hijriLabel = useMemo(() => getHijriLabel(now), [now]);
   const nextPrayer = useMemo(() => getNextPrayer(now, prayerTimes), [now, prayerTimes]);
+  const prayerTimesReliable = source !== 'fallback';
   const completedCount = obligatoryIds.filter((id) => completed.has(id)).length;
   const previousCompletedCount = useRef(completedCount);
 
@@ -235,6 +230,11 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
     }
 
     const enabling = !notifications.has(id);
+    if (enabling && !prayerTimesReliable) {
+      flash('Aktuelle Gebetszeiten fehlen. Lade zuerst Zeiten für deinen Standort.');
+      return;
+    }
+
     let systemNotificationAvailable = 'Notification' in window && Notification.permission === 'granted';
     if (enabling && 'Notification' in window && Notification.permission === 'default') {
       const permission = await Notification.requestPermission();
@@ -259,7 +259,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const handleRefresh = async () => {
     setNow(new Date());
     const result = await refresh();
-    flash(result === 'live' ? 'Live-Gebetszeiten aktualisiert' : 'Offline-Zeitplan wird weiter verwendet');
+    flash(result === 'live' ? 'Live-Gebetszeiten aktualisiert' : 'Keine aktuellen Live-Zeiten verfügbar');
   };
 
   const handleLocation = async () => {
@@ -270,7 +270,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const applyPreferences = async () => {
     const result = await updatePreferences({ method: draftMethod, school: draftSchool });
     setSettingsOpen(false);
-    flash(result === 'live' ? 'Berechnungseinstellung übernommen' : 'Einstellung gespeichert – Offline-Fallback aktiv');
+    flash(result === 'live' ? 'Berechnungseinstellung übernommen' : 'Einstellung gespeichert – aktuell keine Live-Zeiten');
   };
 
   const testTone = async () => {
@@ -294,8 +294,8 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
     }
   };
 
-  const nextDone = completed.has(nextPrayer.prayer.id);
-  const nextTrackable = Boolean(nextPrayer.prayer.obligatory);
+  const nextDone = prayerTimesReliable && completed.has(nextPrayer.prayer.id);
+  const nextTrackable = prayerTimesReliable && Boolean(nextPrayer.prayer.obligatory);
   const statusLabel = status === 'live'
     ? 'Live berechnet'
     : status === 'loading'
@@ -329,22 +329,35 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
         <button onClick={handleLocation} disabled={refreshing} className={refreshing ? 'is-loading' : ''}><LocateFixed size={16} /> {refreshing ? 'Lädt' : 'Standort'}</button>
       </section>
       <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>
+      {notifications.size > 0 && !prayerTimesReliable ? <p className="reference-prayer-location-privacy">Deine Gebetserinnerungen bleiben gespeichert, sind aber pausiert, bis aktuelle Tageszeiten verfügbar sind.</p> : null}
 
-      <section className="next-prayer-panel reference-next-prayer">
-        <div className="next-prayer-panel__glow" />
-        <div className="next-prayer-panel__topline"><span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}</span><span><MapPin size={14} /> {meta.city}</span></div>
-        <div className="next-prayer-panel__main">
-          <div><span className="arabic-label">{nextPrayer.prayer.arabic}</span><h2>{nextPrayer.prayer.label}</h2><p>{nextPrayer.prayer.description}</p></div>
-          <div className="next-prayer-panel__time"><span className="reference-next-prayer__icon"><PrayerIcon prayer={nextPrayer.prayer} size={23} /></span><strong>{nextPrayer.prayer.time}</strong><span><Clock3 size={15} /> noch {formatPrayerRemaining(nextPrayer.remaining)}</span></div>
-        </div>
-        <div className="next-prayer-panel__progress"><span style={{ width: `${nextPrayer.progress}%` }} /></div>
-        <div className="next-prayer-panel__actions">
-          <button className="gold-button" onClick={() => toggleCompleted(nextPrayer.prayer.id)} disabled={!nextTrackable}>
-            {nextDone ? <CircleCheck size={18} /> : <Check size={18} />}{nextTrackable ? nextDone ? 'Als gebetet markiert' : 'Als gebetet markieren' : 'Kein Pflichtgebet'}
-          </button>
-          <button className={tonePlaying ? 'adhan-button adhan-button--active' : 'adhan-button'} onClick={testTone} disabled={tonePlaying} aria-label="Hinweiston testen"><Volume2 size={19} /></button>
-        </div>
-      </section>
+      {prayerTimesReliable ? (
+        <section className="next-prayer-panel reference-next-prayer">
+          <div className="next-prayer-panel__glow" />
+          <div className="next-prayer-panel__topline"><span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}</span><span><MapPin size={14} /> {meta.city}</span></div>
+          <div className="next-prayer-panel__main">
+            <div><span className="arabic-label">{nextPrayer.prayer.arabic}</span><h2>{nextPrayer.prayer.label}</h2><p>{nextPrayer.prayer.description}</p></div>
+            <div className="next-prayer-panel__time"><span className="reference-next-prayer__icon"><PrayerIcon prayer={nextPrayer.prayer} size={23} /></span><strong>{nextPrayer.prayer.time}</strong><span><Clock3 size={15} /> noch {formatPrayerRemaining(nextPrayer.remaining)}</span></div>
+          </div>
+          <div className="next-prayer-panel__progress"><span style={{ width: `${nextPrayer.progress}%` }} /></div>
+          <div className="next-prayer-panel__actions">
+            <button className="gold-button" onClick={() => toggleCompleted(nextPrayer.prayer.id)} disabled={!nextTrackable}>
+              {nextDone ? <CircleCheck size={18} /> : <Check size={18} />}{nextDone ? 'Als gebetet markiert' : 'Als gebetet markieren'}
+            </button>
+            <button className={tonePlaying ? 'adhan-button adhan-button--active' : 'adhan-button'} onClick={testTone} disabled={tonePlaying} aria-label="Hinweiston testen"><Volume2 size={19} /></button>
+          </div>
+        </section>
+      ) : (
+        <section className="next-prayer-panel reference-next-prayer" aria-label="Keine aktuellen Gebetszeiten">
+          <div className="next-prayer-panel__glow" />
+          <div className="next-prayer-panel__topline"><span className="hero-pill">Gebetszeiten nicht aktuell</span><span><MapPin size={14} /> Standort erforderlich</span></div>
+          <div className="next-prayer-panel__main">
+            <div><span className="arabic-label">الصلاة</span><h2>Aktuelle Zeiten laden</h2><p>Ohne gültige Tageszeiten bestimmt die App bewusst kein „nächstes Gebet“.</p></div>
+            <div className="next-prayer-panel__time"><span className="reference-next-prayer__icon"><Clock3 size={23} /></span><strong>—:—</strong><span>nicht verfügbar</span></div>
+          </div>
+          <div className="next-prayer-panel__actions"><button className="gold-button" onClick={handleLocation} disabled={refreshing}><LocateFixed size={18} /> Standort & Zeiten laden</button></div>
+        </section>
+      )}
 
       <section className={completedCount === 5 ? 'daily-prayer-progress glass-card reference-prayer-progress is-complete' : 'daily-prayer-progress glass-card reference-prayer-progress'}>
         <div className="daily-prayer-progress__ring" style={{ '--progress': `${completedCount * 20}%` } as CSSProperties}><span><strong>{completedCount}</strong>/5</span></div>
@@ -356,13 +369,13 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
         <div className="section-heading"><div><span className="overline">Tagesübersicht</span><h2>Alle Gebetszeiten</h2></div><button className="text-button" onClick={() => setSettingsOpen(true)}><Settings2 size={15} /> Berechnung</button></div>
         <div className="prayer-schedule-list">
           {prayerTimes.map((prayer, index) => {
-            const isNext = prayer.id === nextPrayer.prayer.id;
+            const isNext = prayerTimesReliable && prayer.id === nextPrayer.prayer.id;
             const done = completed.has(prayer.id);
             const notificationOn = prayer.obligatory && notifications.has(prayer.id);
             return (
               <motion.article key={prayer.id} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : index * 0.025, ease: [0.22, 1, 0.36, 1] }}>
                 <span className="prayer-time-row__icon"><PrayerIcon prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
-                {prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}
+                {prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={notificationOn && !prayerTimesReliable ? `Erinnerung für ${prayer.label} gespeichert und pausiert` : `Erinnerung für ${prayer.label}`} aria-pressed={notificationOn} title={notificationOn && !prayerTimesReliable ? 'Gespeichert, aber pausiert bis aktuelle Tageszeiten verfügbar sind' : undefined}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}
                 {prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}
               </motion.article>
             );
