@@ -1,11 +1,10 @@
 /**
- * Every event in the calendar has to actually fall on a day.
+ * Religious calendar safety guard.
  *
- * A wrong month number or a day outside the Hijri range does not throw — the
- * event simply never matches, and the calendar looks finished while Ramadan
- * silently never arrives. So rather than checking the shape of the data, this
- * walks two real years of dates through the same Umm al-Qura calendar the app
- * uses and requires every event to be reached.
+ * Public events must fall on real calculated Hijri dates, must carry an
+ * explicit source, and must not turn disputed/traditional dates into fixed v1
+ * religious observances. The calculated Umm al-Qura date remains a planning
+ * aid; local moon sighting can differ.
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -15,32 +14,46 @@ const source = await readFile(resolve(root, 'src/data/islamicEventsData.ts'), 'u
 const screen = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'), 'utf8');
 
 const events = [];
-const block = source.slice(source.indexOf('ISLAMIC_EVENTS'), source.indexOf('export const WHITE_DAYS'));
-for (const match of block.matchAll(/id: '([a-z0-9-]+)',\s*title: '([^']+)',\s*month: (\d+),\s*days: \[([0-9, ]+)\]/g)) {
+const block = source.slice(source.indexOf('ISLAMIC_EVENTS'), source.indexOf('/**\n * Historisch'));
+for (const match of block.matchAll(/id: '([a-z0-9-]+)',\s*title: '([^']+)',\s*month: (\d+),\s*days: \[([0-9, ]+)\][\s\S]*?fasting: (true|false),\s*source: '([^']+)'/g)) {
   events.push({
     id: match[1],
     title: match[2],
     month: Number(match[3]),
     days: match[4].split(',').map((value) => Number(value.trim())),
+    fasting: match[5] === 'true',
+    source: match[6],
   });
 }
 
-if (events.length < 15) throw new Error(`Expected at least 15 Islamic events, found ${events.length}.`);
+if (events.length !== 11) throw new Error(`Expected 11 conservative public Islamic calendar events, found ${events.length}.`);
 
 for (const event of events) {
   if (event.month < 1 || event.month > 12) throw new Error(`${event.id} has an impossible Hijri month: ${event.month}`);
+  if (!event.source.trim()) throw new Error(`${event.id} has no traceable source.`);
   for (const day of event.days) {
     if (day < 1 || day > 30) throw new Error(`${event.id} has an impossible Hijri day: ${day}`);
   }
 }
 
-// The occasions the calendar exists for. Losing one of these to a refactor is
-// the failure this list is here to make loud.
-for (const required of ['ramadan', 'eid-al-fitr', 'eid-al-adha', 'arafah', 'ashura', 'laylat-al-qadr']) {
+for (const required of ['ramadan', 'eid-al-fitr', 'eid-al-adha', 'arafah', 'ashura', 'laylat-al-qadr', 'tashriq']) {
   if (!events.some((event) => event.id === required)) {
-    throw new Error(`The calendar no longer knows a major occasion: ${required}`);
+    throw new Error(`The public calendar no longer knows a major supported occasion: ${required}`);
   }
 }
+
+const ramadan = events.find((event) => event.id === 'ramadan');
+const qadr = events.find((event) => event.id === 'laylat-al-qadr');
+const lastTen = events.find((event) => event.id === 'last-ten-ramadan');
+if (ramadan?.fasting !== false) throw new Error('Ramadan must never produce the UI label "Freiwilliges Fasten".');
+if (qadr?.days.join(',') !== '21,23,25,27,29') throw new Error('Laylat al-Qadr must be shown as a search across the odd nights, not fixed to the 27th.');
+if (lastTen?.days.join(',') !== '21,22,23,24,25,26,27,28,29,30') throw new Error('The last-ten-Ramadan event must cover all possible final ten nights, including the 27th.');
+
+for (const quarantined of ['mawlid-12-rabi-al-awwal', 'isra-miraj-27-rajab', 'mid-shaban-15']) {
+  if (!source.includes(`id: '${quarantined}'`)) throw new Error(`Calendar quarantine record is missing: ${quarantined}`);
+  if (events.some((event) => event.id === quarantined)) throw new Error(`Disputed/traditional date leaked into the public calendar: ${quarantined}`);
+}
+if (!source.includes('QUARANTINED_CALENDAR_NOTICES')) throw new Error('Calendar has no explicit quarantine for disputed/traditional dates.');
 
 const formatter = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura', { day: 'numeric', month: 'numeric' });
 const hijriOf = (date) => {
@@ -65,23 +78,25 @@ for (let offset = 0; offset < 740; offset += 1) {
 const missed = events.filter((event) => !reached.has(event.id));
 if (missed.length > 0) {
   throw new Error(
-    `These events never fall on a day in two years of real dates, so they can never appear:\n  ${
+    `These public events never fall on a day in two years of real dates:\n  ${
       missed.map((event) => `${event.id} (${event.month}. Monat, Tag ${event.days.join('/')})`).join('\n  ')}`,
   );
 }
 
-// Fasting must not be suggested on the days it is forbidden.
 if (!source.includes('NO_FASTING_DAYS') || !source.includes('isFastingForbidden')) {
-  throw new Error('The calendar no longer suppresses fasting hints on Eid and the Tashriq days.');
+  throw new Error('The calendar no longer suppresses voluntary fasting hints on Eid and Tashriq.');
 }
 if (!screen.includes('isFastingForbidden')) {
   throw new Error('The calendar screen does not apply the fasting-forbidden rule.');
 }
+if (!source.includes("source: 'Jamiʿ at-Tirmidhi 761 · Hasan'")) throw new Error('White-days source is missing.');
+if (!source.includes("source: 'Jamiʿ at-Tirmidhi 747 · Hasan · Sunan Abi Dawud 2436'")) throw new Error('Monday/Thursday source is missing.');
 
-// One number per cell was the point of the redesign: the Hijri date belongs in
-// the header and on the selected day, not stacked under every date.
 if (/<strong>\{day\}<\/strong><em>/.test(screen)) {
   throw new Error('Calendar cells show two numbers again; the Hijri day belongs in the header.');
 }
+if (!screen.includes('Berechnetes Hijri-Datum') || !screen.includes('Mondsichtung')) {
+  throw new Error('Calendar no longer discloses that calculated Hijri dates can differ from local moon sighting.');
+}
 
-console.log(`Islamic calendar verified: ${events.length} occasions, every one reached within two years of real Umm al-Qura dates, fasting suppressed on Eid and Tashriq, and one number per cell.`);
+console.log(`Islamic calendar verified: ${events.length} sourced public occasions, disputed fixed dates quarantined, Qadr shown across odd last-ten nights, Ramadan not mislabeled voluntary, fasting suppressed on Eid/Tashriq, and calculated Hijri dates explicitly disclosed.`);
