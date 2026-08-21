@@ -124,7 +124,7 @@ type HomeQuranProgress = {
 const quickActions: QuickAction[] = [
   { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon, accent: 'gold', target: 'reader' },
   { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon, accent: 'cream', target: 'learn' },
-  { label: 'Namen Allahs', eyebrow: 'Einzeln belegt', icon: NurRosetteIcon, accent: 'emerald', target: 'names' },
+  { label: 'Namen Allahs', eyebrow: 'Alle 99 Namen', icon: NurRosetteIcon, accent: 'emerald', target: 'names' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon, accent: 'cream', target: 'duas' },
 ];
 
