@@ -34,16 +34,25 @@ export const PRAYER_SCHEDULE_META: PrayerScheduleMeta = {
   sourceLabel: 'Offline-Ersatzzeitplan',
   methodLabel: 'Diyanet (experimentell) · Standard-Asr',
   timezone: 'Europe/Berlin',
-  calculationNotice: 'Offline-Ersatzzeitplan – vor dem Gebet mit einer örtlichen Moschee oder einem verlässlichen Kalender abgleichen.',
+  calculationNotice: 'Keine aktuellen Gebetszeiten verfügbar. Bitte Live-Daten laden oder mit einer örtlichen Moschee bzw. einem verlässlichen Tageskalender abgleichen.',
 };
 
+/**
+ * Shape-only fallback used while live/current cached timings are unavailable.
+ *
+ * IMPORTANT: These rows deliberately contain NO clock values. Older builds
+ * bundled one fixed Berlin timetable and could therefore present stale times
+ * on the wrong date or at the wrong location. Live/current cached data from
+ * prayerTimesService replaces these placeholders before they may be treated as
+ * prayer times.
+ */
 export const PRAYER_SCHEDULE: PrayerScheduleItem[] = [
-  { id: 'fajr', label: 'Fajr', compactLabel: 'Fajr', arabic: 'الفجر', time: '04:18', description: 'Morgengebet', obligatory: true, visual: 'moon' },
-  { id: 'sunrise', label: 'Sonnenaufgang', compactLabel: 'Sonne', arabic: 'الشروق', time: '05:54', description: 'Shuruq', obligatory: false, visual: 'sunrise' },
-  { id: 'dhuhr', label: 'Dhuhr', compactLabel: 'Dhuhr', arabic: 'الظهر', time: '12:45', description: 'Mittagsgebet', obligatory: true, visual: 'sun' },
-  { id: 'asr', label: 'Asr', compactLabel: 'Asr', arabic: 'العصر', time: '16:42', description: 'Nachmittagsgebet', obligatory: true, visual: 'afternoon' },
-  { id: 'maghrib', label: 'Maghrib', compactLabel: 'Maghrib', arabic: 'المغرب', time: '19:36', description: 'Abendgebet', obligatory: true, visual: 'sunset' },
-  { id: 'isha', label: 'Isha', compactLabel: 'Isha', arabic: 'العشاء', time: '21:07', description: 'Nachtgebet', obligatory: true, visual: 'moon' },
+  { id: 'fajr', label: 'Fajr', compactLabel: 'Fajr', arabic: 'الفجر', time: '—:—', description: 'Morgengebet', obligatory: true, visual: 'moon' },
+  { id: 'sunrise', label: 'Sonnenaufgang', compactLabel: 'Sonne', arabic: 'الشروق', time: '—:—', description: 'Shuruq', obligatory: false, visual: 'sunrise' },
+  { id: 'dhuhr', label: 'Dhuhr', compactLabel: 'Dhuhr', arabic: 'الظهر', time: '—:—', description: 'Mittagsgebet', obligatory: true, visual: 'sun' },
+  { id: 'asr', label: 'Asr', compactLabel: 'Asr', arabic: 'العصر', time: '—:—', description: 'Nachmittagsgebet', obligatory: true, visual: 'afternoon' },
+  { id: 'maghrib', label: 'Maghrib', compactLabel: 'Maghrib', arabic: 'المغرب', time: '—:—', description: 'Abendgebet', obligatory: true, visual: 'sunset' },
+  { id: 'isha', label: 'Isha', compactLabel: 'Isha', arabic: 'العشاء', time: '—:—', description: 'Nachtgebet', obligatory: true, visual: 'moon' },
 ];
 
 export const OBLIGATORY_PRAYER_IDS = PRAYER_SCHEDULE
@@ -58,11 +67,16 @@ export type NextPrayer = {
 };
 
 export function prayerTimeToMinutes(time: string) {
-  const [hours, minutes] = time.split(':').map(Number);
+  const match = time.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return Number.NaN;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (!Number.isInteger(hours) || !Number.isInteger(minutes) || hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return Number.NaN;
   return hours * 60 + minutes;
 }
 
 export function formatPrayerRemaining(totalMinutes: number) {
+  if (!Number.isFinite(totalMinutes)) return 'nicht verfügbar';
   const safe = Math.max(0, Math.round(totalMinutes));
   const hours = Math.floor(safe / 60);
   const minutes = safe % 60;
@@ -74,12 +88,22 @@ export function getNextPrayer(now = new Date(), schedule: PrayerScheduleItem[] =
   const obligatoryPrayers = schedule.filter((item) => item.obligatory);
   if (!obligatoryPrayers.length) throw new Error('Der Gebetszeitplan enthält keine Pflichtgebete.');
 
+  const timedPrayers = obligatoryPrayers.filter((prayer) => Number.isFinite(prayerTimeToMinutes(prayer.time)));
+  if (!timedPrayers.length) {
+    return {
+      prayer: obligatoryPrayers[0],
+      remaining: Number.NaN,
+      progress: 0,
+      tomorrow: false,
+    };
+  }
+
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
-  const nextToday = obligatoryPrayers.find((prayer) => prayerTimeToMinutes(prayer.time) > currentMinutes);
+  const nextToday = timedPrayers.find((prayer) => prayerTimeToMinutes(prayer.time) > currentMinutes);
 
   if (nextToday) {
-    const index = obligatoryPrayers.findIndex((prayer) => prayer.id === nextToday.id);
-    const previous = index > 0 ? obligatoryPrayers[index - 1] : obligatoryPrayers[obligatoryPrayers.length - 1];
+    const index = timedPrayers.findIndex((prayer) => prayer.id === nextToday.id);
+    const previous = index > 0 ? timedPrayers[index - 1] : timedPrayers[timedPrayers.length - 1];
     const nextMinutes = prayerTimeToMinutes(nextToday.time);
     const previousMinutes = index > 0
       ? prayerTimeToMinutes(previous.time)
@@ -95,8 +119,8 @@ export function getNextPrayer(now = new Date(), schedule: PrayerScheduleItem[] =
     };
   }
 
-  const fajr = obligatoryPrayers[0];
-  const isha = obligatoryPrayers[obligatoryPrayers.length - 1];
+  const fajr = timedPrayers[0];
+  const isha = timedPrayers[timedPrayers.length - 1];
   const nextMinutes = prayerTimeToMinutes(fajr.time) + 1440;
   const previousMinutes = prayerTimeToMinutes(isha.time);
   const interval = Math.max(1, nextMinutes - previousMinutes);
