@@ -104,7 +104,7 @@ export function DailyHadithScreen({
 
       <section className="reference-reflection-card">
         <span className="reference-reflection-card__icon"><Sparkles size={20} /></span>
-        <span><small>Quellenmodus</small><h2>{entry.title}</h2><p>Die Tagesauswahl wechselt automatisch. Für den vollständigen Wortlaut und den Kontext ist die angegebene Primärquelle maßgeblich.</p></span>
+        <span><small>Quellenmodus</small><h2>{entry.title}</h2><p>{isDaily ? 'Die Tagesauswahl wechselt automatisch. ' : 'Dies ist ein fest gespeicherter Eintrag aus deiner Sammlung. '}Für den vollständigen Wortlaut und den Kontext ist die angegebene Quellenangabe maßgeblich.</p></span>
       </section>
 
       <div className="reference-detail-actions">
