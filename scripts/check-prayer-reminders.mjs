@@ -30,6 +30,10 @@ const schedulerFeatures = [
   'nur-app-icon-192.png',
   'not a remote Web Push service',
   'must not promise guaranteed closed-app delivery',
+  'PRAYER_SCHEDULE_META',
+  'hasReliableSharedPrayerTimes',
+  "PRAYER_SCHEDULE_META.sourceLabel !== 'Offline-Ersatzzeitplan'",
+  'if (!hasReliableSharedPrayerTimes()) return',
 ];
 for (const feature of schedulerFeatures) {
   if (!scheduler.includes(feature)) throw new Error(`Prayer reminder scheduler is missing: ${feature}`);
@@ -102,4 +106,4 @@ if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 
-console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, live/fallback bootstrap precedes the scheduler, the page/PWA lifecycle has one focus listener with catch-up, notification artwork uses the raster app icon, and closed/live notification clicks are safely queued to the prayer tracker without claiming guaranteed closed-app wakeups.');
+console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, the scheduler waits for shared prayer-time bootstrap and refuses clock-free/static fallback data, notification artwork uses the raster app icon, and closed/live notification clicks route safely without promising guaranteed closed-app wakeups.');
