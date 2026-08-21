@@ -20,7 +20,7 @@ src/data/v1ReligiousReleaseScope.ts
 
 Damit existiert nur eine Quelle dafür, welche religiösen Inhalte Release 1 blockieren.
 
-## Aktueller Prüfumfang: 39 Inhaltsblöcke
+## Aktueller Prüfumfang: 42 Inhaltsblöcke
 
 ### Anfänger-Grundlagen – 10
 
@@ -62,19 +62,22 @@ Statusdatei: `src/data/learningContentReview.ts`
 
 Diese 18 Lektionen sind im Lern-Hub sichtbar. Deshalb dürfen sie nicht außerhalb des fachlichen Release-Gates bleiben, auch wenn sie nicht zum ersten 10-Lektionen-Anfängerpfad gehören.
 
-### Weitere religiöse Kerninhalte – 11
+### Weitere religiöse Kerninhalte – 14
 
 29. `quran-offline-bundle` – arabische Textquelle, deutsche Übersetzungsedition, Provenienz und Nutzungs-/Lizenzgrundlage des Offline-Bestands dokumentieren.
 30. `quran-beginner-guide` – redaktionelle Quran-Einführung, Begriffe und Startempfehlungen prüfen.
 31. `beginner-reference` – Anfänger-FAQ und Islam-A–Z-Begriffe fachlich prüfen.
 32. `purity-basics` – Ghusl-/Tayammum-Grundlagen und Grenzen der Darstellung prüfen.
-33. `names-of-allah` – die vorhandene 99er-Lernliste darf nicht als einzig authentisch festgelegte vollständige Liste erscheinen; einzelne Namen, Schreibweisen, Bedeutungen und Belege prüfen.
+33. `names-of-allah` – das öffentliche v1-Lernset besteht nur aus einzeln belegten Namen; Schreibweisen, Bedeutungs-Kurzfassungen und jeweilige Belegzuordnung fachlich endprüfen.
 34. `dhikr-counter-steps` – einzelne Dhikr-Zählertexte und deren Einzelnachweise prüfen.
 35. `dhikr-routines` – Quellen, Zählungen, Bedeutungen und Varianten der Routinen prüfen.
 36. `duas` – arabische Texte, Transliteration, Bedeutungsangaben und konkrete Quellen des Dua-Bestands prüfen.
 37. `daily-hadith-rotation` – nur einen fachlich geprüften und konkret referenzierten Daily-Hadith-Pool für Home zulassen.
 38. `worship-guides` – Wudu-/Salah-Anleitungen, gesprochene Texte und Hinweise zu Rechtsschul-Unterschieden prüfen.
 39. `prayer-rakat-sequence` – Rakʿah-für-Rakʿah-Ablauf, arabischer Wortlaut, Umschrift, Bedeutungen und Varianten prüfen.
+40. `prayer-time-methodology` – AlAdhan-Methode, Asr-Auswahl, lokale Abweichungen, Cache/Fallback und Reminder-Sicherheit prüfen.
+41. `qibla-guidance` – Kaaba-Koordinaten, Bearing-Berechnung, Standortvoraussetzung, absolute Sensororientierung und Genauigkeitshinweise prüfen.
+42. `islamic-calendar-content` – öffentliche Termine, Fastenhinweise, Quellen, berechnete Hijri-Daten und quarantänisierte unsichere Datierungen prüfen.
 
 Statusdatei: `src/data/coreContentReview.ts`
 
@@ -96,9 +99,40 @@ src/data/duaSourceAudit.ts
 
 Home rotiert nicht mehr durch die gesamte Legacy-Hadithbibliothek. `DAILY_HADITH_IDS` begrenzt die tägliche Auswahl auf konkret referenzierte Einträge. Das beseitigt die frühere technische Release-Lücke, ersetzt aber nicht die fachliche Endfreigabe des kuratierten Pools.
 
-### 99-Namen-Lernliste
+### Namen Allahs
 
-Die UI bezeichnet die vorhandene Liste ausdrücklich als verbreitete 99er-Lernliste und nicht als einzig authentisch festgelegte kanonische Reihenfolge. Die besondere Überlieferung zu 99 Namen wird von sahih Quellen getragen; die konkrete Altbestandsliste und Reihenfolge benötigen dennoch eine Einzelprüfung.
+Die öffentliche Names-Seite verwendet nicht mehr die alte feste 99er-Liste. `src/data/verifiedNamesOfAllahData.ts` enthält aktuell 32 einzeln mit Quranstellen belegte Namen/Bezeichnungen. Für jeden öffentlichen Eintrag werden Quelle und Quellenhinweis direkt angezeigt.
+
+Der frühere 99er-Altbestand bleibt nur für Migration und Audit erhalten. `src/data/legacyNamesAudit.ts` ordnet 31 alte Zeilen dem neuen belegten Set zu; 68 weitere Altzeilen sind `legacy-quarantined`. Das bedeutet nicht automatisch „falsch“, sondern: noch nicht ausreichend einzeln belegt und fachlich geprüft für den öffentlichen v1-Inhalt.
+
+Auch `Meine Sammlung` darf nur Favoriten zeigen, die auf das belegte öffentliche Set gemappt werden können.
+
+### Gebetszeiten
+
+Der frühere feste Berlin-Ersatzplan wurde entfernt. Der Offline-Fallback enthält keine Uhrzeiten mehr (`—:—`). Ohne Live-Daten oder einen passenden aktuellen Cache:
+
+- zeigt Home keine scheinbar aktuelle nächste Gebetszeit;
+- werden keine statischen Ersatzzeiten als Gebetsentscheidung ausgegeben;
+- dürfen Gebetserinnerungen nicht auf Fallback-Uhrzeiten feuern.
+
+Die Berechnungsmethode bleibt als berechnete Hilfe gekennzeichnet; lokaler Moschee-/Behördenabgleich bleibt relevant.
+
+### Qibla
+
+Die öffentliche Qibla-Seite gibt ohne echten gespeicherten Gerätestandort keine persönliche Gradzahl mehr aus. Relative `deviceorientation`-Werte werden nicht als Nordreferenz akzeptiert; für den Kompass wird absolute Orientierung angefordert, soweit der Browser dies unterstützt. Unbekannte oder große Sensorabweichungen werden sichtbar gewarnt.
+
+Zusätzlich prüfen mathematische Tests bekannte Bearing-/Distanzfälle für mehrere Städte.
+
+### Islamischer Kalender
+
+Der öffentliche Kalender wurde auf einen konservativen, einzeln belegten Kern reduziert. Unter anderem:
+
+- Ramadan wird nicht als „freiwilliges Fasten“ bezeichnet;
+- Laylat al-Qadr wird nicht fest auf den 27. Ramadan gesetzt, sondern in den ungeraden Nächten der letzten zehn gesucht;
+- die letzten zehn Nächte enthalten auch die 27. Nacht;
+- traditionelle/unsichere Festdatierungen wie 12. Rabi al-Awwal als fixes Mawlid-Datum, 27. Rajab als fixes Isra-/Miʿraj-Datum und eine pauschale Sonderpraxis am 15. Shaʿban sind für v1 quarantänisiert;
+- Quran-/Hadith-Quellen werden direkt am sichtbaren Kalenderhinweis angezeigt;
+- das Hijri-Datum bleibt ausdrücklich als berechnet gekennzeichnet, da lokale Mondsichtung abweichen kann.
 
 ## Zusätzliche technische Bedingungen
 
@@ -106,8 +140,12 @@ Ein Review-Datensatz allein reicht bei besonders sensiblen Bereichen nicht aus:
 
 - `quran-offline-bundle` kann nicht freigegeben werden, solange die lokale deutsche Ausgabe im Code nur als `übernommener deutscher Altbestand` bezeichnet wird. Vor Freigabe müssen Edition/Provenienz und Nutzungsgrundlage konkret benannt sein.
 - `daily-hadith-rotation` kann nur freigegeben werden, wenn ein explizit kuratierter `DAILY_HADITH_IDS`-Pool existiert. Diese technische Voraussetzung ist auf dem aktuellen Feature-Branch bereits umgesetzt; der fachliche Reviewstatus bleibt davon getrennt.
+- `names-of-allah` darf nicht wieder auf die alte feste 99er-Liste als öffentlichen Datenbestand zurückfallen. Der v1-Screen und Sammlungen verwenden nur den einzeln belegten öffentlichen Satz.
+- `prayer-time-methodology` darf keine fest codierten Uhrzeiten als aktuellen religiösen Zeitplan verwenden. Reminder müssen bei unzuverlässigem Fallback blockiert bleiben.
+- `qibla-guidance` darf ohne persönlichen Gerätestandort und absoluten Nordbezug keine scheinbar exakte persönliche Kompassführung vortäuschen.
+- `islamic-calendar-content` darf quarantänisierte Datierungen nicht als sichere öffentliche religiöse Termine ausgeben.
 
-Diese Bedingungen werden vom Release-Gate zusätzlich kontrolliert.
+Diese Bedingungen werden durch spezialisierte Repo-Checks zusätzlich abgesichert.
 
 ## Statusmodell
 
@@ -161,6 +199,9 @@ Vor einer Freigabe müssen mindestens geprüft werden:
 - bei Zählungen oder festgelegten Wiederholungszahlen trägt die genannte Quelle tatsächlich die behauptete Anzahl
 - Seerah- und Tafsir-Zusammenfassungen behaupten nicht mehr, als die angegebenen Quellen tragen
 - eine gute Absicht wird nicht als pauschale Erlaubnis für ansonsten verbotene Handlungen dargestellt
+- berechnete Gebetszeiten werden nicht mit lokaler verbindlicher Festlegung verwechselt
+- Sensor-/Standortdaten der Qibla werden nicht genauer dargestellt, als das Gerät sie tatsächlich liefert
+- berechnete Hijri-Daten und historisch unsichere Datierungen werden transparent gekennzeichnet
 
 ## Änderung nach Freigabe
 
