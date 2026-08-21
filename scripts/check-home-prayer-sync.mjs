@@ -14,7 +14,7 @@ const mainRequirements = [
   "document.removeEventListener('visibilitychange', handleVisibilityChange)",
   'window.setInterval(refreshAfterDayChange, 60000)',
   'window.clearInterval(dayChangeTimer)',
-  'document.visibilityState === \'visible\'',
+  "document.visibilityState === 'visible'",
   'prayerDateKeyRef.current = currentDateKey',
   'void bootstrapSharedPrayerTimes()',
 ];
@@ -34,8 +34,9 @@ for (const requirement of serviceRequirements) {
   if (!service.includes(requirement)) throw new Error(`Prayer-time service integration is missing: ${requirement}`);
 }
 
-// The shared schedule has to be refreshed on every bootstrap outcome, otherwise
-// one path silently leaves the home hero on stale times.
+// Shared state still receives every bootstrap outcome so all surfaces agree on
+// whether times are available. The fallback itself is clock-free and must be
+// rendered as unavailable, never as a current timetable.
 const bootstrapBody = service.slice(service.indexOf('export async function bootstrapSharedPrayerTimes'));
 const appliedSnapshots = [...bootstrapBody.matchAll(/applyPrayerSnapshotToSharedSchedule\((\w+)\)/g)].map((match) => match[1]);
 for (const path of ['cached', 'live', 'fallback']) {
@@ -49,10 +50,15 @@ const homeRequirements = [
   'PRAYER_SCHEDULE.map((prayer)',
   'PRAYER_SCHEDULE_META.sourceLabel',
   'PRAYER_SCHEDULE_META.methodLabel',
+  "const prayerTimesUnavailable = PRAYER_SCHEDULE_META.sourceLabel === 'Offline-Ersatzzeitplan'",
+  'Gebetszeiten nicht aktuell',
+  'Keine Ersatzzeit als Gebetsentscheidung verwenden',
+  '<strong>—:—</strong>',
+  'Live-Daten oder ein heutiger gespeicherter Tagesstand fehlen',
 ];
 
 for (const requirement of homeRequirements) {
-  if (!app.includes(requirement)) throw new Error(`Home prayer hero no longer consumes the shared schedule: ${requirement}`);
+  if (!app.includes(requirement)) throw new Error(`Home prayer safety/sync is missing: ${requirement}`);
 }
 
-console.log('Home prayer synchronization verified: live updates, day rollover, visibility refresh, shared schedule rendering, and cleanup.');
+console.log('Home prayer synchronization verified: live/current-day cache updates remain shared, day rollover is handled, and clock-free fallback state is shown as unavailable rather than as a prayer-time decision.');
