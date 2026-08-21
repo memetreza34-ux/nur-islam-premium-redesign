@@ -1,6 +1,7 @@
+import { isFastingForbidden } from '../data/islamicEventsData';
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
-import { getHijriDay } from './hijriCalendar';
+import { getHijriParts } from './hijriCalendar';
 
 const FASTING_ENABLED_KEY = 'nur_fasting_reminders';
 const FASTING_TIME_KEY = 'nur_fasting_reminder_time';
@@ -60,7 +61,16 @@ export function buildRollingFastingReminders(now = new Date()) {
     const fastingDate = new Date(today);
     fastingDate.setDate(today.getDate() + offset);
     const weekday = fastingDate.getDay();
-    const hijriDay = getHijriDay(fastingDate);
+    const hijri = getHijriParts(fastingDate);
+    const hijriMonth = hijri?.month ?? 0;
+    const hijriDay = hijri?.day ?? 0;
+
+    // Never create a voluntary-fasting reminder for a day on which the shared
+    // Islamic calendar explicitly suppresses fasting (Eid al-Fitr, Eid al-Adha
+    // and the general Tashriq days). This check takes precedence over weekday
+    // and white-day suggestions.
+    if (isFastingForbidden(hijriMonth, hijriDay)) continue;
+
     const monday = weekday === 1;
     const thursday = weekday === 4;
     const whiteDay = hijriDay >= 13 && hijriDay <= 15;
