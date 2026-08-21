@@ -216,13 +216,13 @@ export function QuranScreen({
 
       <section className="reference-quran-library-status glass-card">
         <span><BookOpen size={21} /></span>
-        <div><small>Quran-Verzeichnis</small><strong>Alle 114 Suren lesbar</strong><em>{OFFLINE_QURAN_SURAHS.length} Suren fest offline · weitere Suren online mit Browser-Cache</em></div>
+        <div><small>Quran-Verzeichnis</small><strong>Alle 114 Suren lesbar</strong><em>{OFFLINE_QURAN_SURAHS.length} Suren fest offline · Online-Fallback nur bei fehlender oder beschädigter lokaler Datei</em></div>
         <span className="reference-quran-library-status__count">114</span>
       </section>
 
       <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Offline zuerst, online nur bei Bedarf</strong><small>Die vier lokalen Suren werden ohne externe Anfrage geladen. Weitere Suren kommen aus Al Quran Cloud mit arabischem Uthmani-Text und deutscher Bubenheim-&-Elyas-Übersetzung und werden anschließend im Browser zwischengespeichert.</small></span>
+        <span><strong>Alle 114 Suren offline · Online nur als Fallback</strong><small>Der vollständige Quran-Bestand liegt lokal in der App. Falls eine lokale Datei fehlt oder nicht lesbar ist, kann Al Quran Cloud als technischer Fallback mit arabischem Uthmani-Text und deutscher Bubenheim-&-Elyas-Übersetzung geladen und im Browser zwischengespeichert werden.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -270,7 +270,7 @@ export function QuranScreen({
 
       <button className="reference-quran-verse reference-quran-verse--button" onClick={onOpenAyah}>
         <div className="reference-quran-verse__shade" />
-        <span className="overline">Ayah des Tages</span>
+        <span className="overline">Ayah im Fokus</span>
         <p dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
         <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote>
         <small>Al-Ikhlas · 112:1</small>
