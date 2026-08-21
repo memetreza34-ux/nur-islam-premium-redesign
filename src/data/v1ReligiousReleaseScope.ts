@@ -45,7 +45,7 @@ export const V1_RELIGIOUS_RELEASE_SCOPE: readonly V1ReligiousReleaseScopeItem[] 
   { contentId: 'quran-beginner-guide', group: 'core', label: 'Quran für Anfänger' },
   { contentId: 'beginner-reference', group: 'core', label: 'Anfänger-FAQ und Islam A–Z' },
   { contentId: 'purity-basics', group: 'core', label: 'Ghusl & Tayammum Grundlagen' },
-  { contentId: 'names-of-allah', group: 'core', label: 'Namen Allahs · einzeln belegtes öffentliches Lernset' },
+  { contentId: 'names-of-allah', group: 'core', label: 'Namen Allahs · vollständige 99er-Lernliste mit laufender Einzelbeleg-Prüfung' },
   { contentId: 'dhikr-counter-steps', group: 'core', label: 'Dhikr-Zählertexte' },
   { contentId: 'dhikr-routines', group: 'core', label: 'Dhikr-Routinen' },
   { contentId: 'duas', group: 'core', label: 'Dua-Bestand' },
