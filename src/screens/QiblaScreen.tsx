@@ -26,7 +26,7 @@ type CompassOrientationEvent = DeviceOrientationEvent & {
 };
 
 type DeviceOrientationEventConstructorWithPermission = typeof DeviceOrientationEvent & {
-  requestPermission?: () => Promise<'granted' | 'denied'>;
+  requestPermission?: (absolute?: boolean) => Promise<'granted' | 'denied'>;
 };
 
 export const KAABA: Coordinates = { latitude: 21.4225, longitude: 39.8262 };
@@ -96,7 +96,10 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const direction = useMemo(() => calculateBearing(coordinates, KAABA), [coordinates]);
   const distance = useMemo(() => calculateDistance(coordinates, KAABA), [coordinates]);
   const roundedDirection = Math.round(direction);
-  const needleRotation = heading === null ? direction : normalizeDegrees(direction - heading);
+  const needleRotation = usingLiveLocation
+    ? heading === null ? direction : normalizeDegrees(direction - heading)
+    : 0;
+  const sensorAccuracyNeedsCheck = sensorStatus === 'active' && (sensorAccuracy === null || sensorAccuracy > 20);
 
   if (previousNeedleRotationRef.current === null) {
     previousNeedleRotationRef.current = needleRotation;
@@ -126,12 +129,17 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     const event = rawEvent as CompassOrientationEvent;
     let nextHeading: number | null = null;
 
+    // Safari/iOS exposes a north-referenced WebKit heading directly.
     if (typeof event.webkitCompassHeading === 'number' && Number.isFinite(event.webkitCompassHeading)) {
       nextHeading = event.webkitCompassHeading;
       if (typeof event.webkitCompassAccuracy === 'number' && Number.isFinite(event.webkitCompassAccuracy)) {
         setSensorAccuracy(Math.max(0, event.webkitCompassAccuracy));
+      } else {
+        setSensorAccuracy(null);
       }
-    } else if (typeof event.alpha === 'number' && Number.isFinite(event.alpha)) {
+    // Standard alpha is only a compass heading when it is Earth-referenced.
+    // Relative deviceorientation alpha must never be treated as north.
+    } else if (event.absolute === true && typeof event.alpha === 'number' && Number.isFinite(event.alpha)) {
       nextHeading = 360 - event.alpha;
       setSensorAccuracy(null);
     }
@@ -159,6 +167,11 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   }, [clearSensorTimeout, handleOrientation]);
 
   const startCompass = async () => {
+    if (!usingLiveLocation) {
+      flash('Für deine persönliche Qibla zuerst den Standort freigeben');
+      return;
+    }
+
     if (sensorStatus === 'active') {
       stopCompass();
       flash('Gerätekompass gestoppt');
@@ -176,7 +189,8 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     setSensorStatus('requesting');
     try {
       if (typeof OrientationEvent.requestPermission === 'function') {
-        const permission = await OrientationEvent.requestPermission();
+        // Absolute orientation requests magnetometer access where supported.
+        const permission = await OrientationEvent.requestPermission(true);
         if (permission !== 'granted') {
           setSensorStatus('denied');
           flash('Kompasszugriff wurde nicht freigegeben');
@@ -187,6 +201,8 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
       window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
       window.addEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
+      // Kept for Safari's webkitCompassHeading. Relative alpha is rejected in
+      // handleOrientation unless event.absolute is explicitly true.
       window.addEventListener('deviceorientation', handleOrientation as EventListener, true);
 
       sensorTimeoutRef.current = window.setTimeout(() => {
@@ -197,7 +213,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         setSensorAccuracy(null);
         setSensorStatus((current) => {
           if (current === 'active') return current;
-          flash('Kein Kompasssignal empfangen – Gerät bewegen oder Browserberechtigung prüfen');
+          flash('Kein absoluter Kompasswert empfangen – Gerät bewegen oder Browserberechtigung prüfen');
           return 'unsupported';
         });
       }, 2500);
@@ -232,7 +248,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       },
       () => {
         setLocating(false);
-        flash('Standort nicht freigegeben – der gespeicherte Standort bleibt aktiv');
+        flash('Standort nicht freigegeben – keine persönliche Qibla-Richtung wird ausgegeben');
       },
       { enableHighAccuracy: true, timeout: 8000, maximumAge: 300000 },
     );
@@ -249,14 +265,24 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   };
 
   const sensorLabel = sensorStatus === 'active'
-    ? 'Live-Kompass aktiv'
+    ? sensorAccuracyNeedsCheck ? 'Live-Kompass · Genauigkeit prüfen' : 'Live-Kompass aktiv'
     : sensorStatus === 'requesting'
       ? 'Kompass wird gestartet …'
       : sensorStatus === 'denied'
         ? 'Kompasszugriff verweigert'
         : sensorStatus === 'unsupported'
-          ? 'Kein Sensorsignal'
+          ? 'Kein absolutes Kompasssignal'
           : 'Kompass noch nicht gestartet';
+
+  const sensorExplanation = sensorStatus === 'active'
+    ? sensorAccuracy === null
+      ? 'Die Nadel reagiert auf einen absoluten Nordbezug. Der Browser liefert aber keine Genauigkeitsangabe – kalibriere das Gerät und gleiche die Richtung bei Unsicherheit zusätzlich ab.'
+      : sensorAccuracy > 20
+        ? `Die Nadel reagiert live, aber die gemeldete mögliche Abweichung liegt bei etwa ±${Math.round(sensorAccuracy)}°. Bitte kalibrieren und nicht ungeprüft verwenden.`
+        : `Die Nadel reagiert live · gemeldete mögliche Abweichung etwa ±${Math.round(sensorAccuracy)}°.`
+    : usingLiveLocation
+      ? 'Halte das Gerät flach und bewege es vor dem Start kurz in einer liegenden Acht.'
+      : 'Gib zuerst deinen Standort frei. Der Standardstandort Berlin wird nicht als deine persönliche Qibla verwendet.';
 
   return (
     <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
@@ -269,23 +295,29 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       <section className="reference-qibla-stage">
         <div className="reference-qibla-stage__halo" />
         <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" className="reference-qibla-stage__compass" fallback={<QiblaObject />} />
-        <span
-          className="reference-qibla-stage__needle"
-          style={{
-            transform: `translateX(-50%) rotate(${displayedNeedleRotation}deg)`,
-            transition: reduceMotion ? 'none' : 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
-          }}
-        ><Navigation size={29} fill="currentColor" /></span>
+        {usingLiveLocation ? (
+          <span
+            className="reference-qibla-stage__needle"
+            style={{
+              transform: `translateX(-50%) rotate(${displayedNeedleRotation}deg)`,
+              transition: reduceMotion ? 'none' : 'transform 180ms cubic-bezier(0.22, 1, 0.36, 1)',
+            }}
+          ><Navigation size={29} fill="currentColor" /></span>
+        ) : null}
         <div className="reference-qibla-stage__copy">
           <span className="overline">Richtung zur Kaaba</span>
-          <h2>{roundedDirection}° {getDirectionLabel(direction)}</h2>
-          <p>{heading === null ? `Entfernung ungefähr ${Math.round(distance).toLocaleString('de-DE')} km.` : `Geräteausrichtung ${Math.round(heading)}° · Entfernung ${Math.round(distance).toLocaleString('de-DE')} km.`}</p>
+          <h2>{usingLiveLocation ? `${roundedDirection}° ${getDirectionLabel(direction)}` : 'Standort erforderlich'}</h2>
+          <p>{usingLiveLocation
+            ? heading === null
+              ? `Aus deinem gespeicherten Gerätestandort berechnet · Entfernung ungefähr ${Math.round(distance).toLocaleString('de-DE')} km.`
+              : `Geräteausrichtung ${Math.round(heading)}° · Entfernung ungefähr ${Math.round(distance).toLocaleString('de-DE')} km.`
+            : 'Der App-Standardstandort Berlin ist nur ein technischer Fallback und wird nicht als deine persönliche Qibla-Richtung ausgegeben.'}</p>
         </div>
       </section>
 
       <section className="reference-qibla-location">
         <span className="reference-qibla-location__icon"><MapPin size={20} /></span>
-        <span><small>{usingLiveLocation ? 'Gespeicherter Gerätestandort' : 'Standardstandort'}</small><strong>{locationLabel}</strong><em>{usingLiveLocation ? 'Wird auch für gemeinsame Gebetszeiten verwendet' : 'Standort noch nicht freigegeben'}</em></span>
+        <span><small>{usingLiveLocation ? 'Gespeicherter Gerätestandort' : 'Standardstandort · nicht deine Position'}</small><strong>{locationLabel}</strong><em>{usingLiveLocation ? 'Wird auch für gemeinsame Gebetszeiten verwendet' : 'Für persönliche Qibla zuerst Standort freigeben'}</em></span>
         <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label="Standort aktualisieren" disabled={locating}><LocateFixed size={18} /></button>
       </section>
 
@@ -293,21 +325,21 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         <div>
           <span className="overline">Gerätekompass</span>
           <h3>{sensorLabel}</h3>
-          <p>{sensorStatus === 'active' ? `Die Nadel reagiert live auf die Gerätebewegung${sensorAccuracy === null ? '.' : ` · gemeldete Genauigkeit etwa ${Math.round(sensorAccuracy)}°.`}` : 'Halte das Gerät flach und bewege es vor dem Start kurz in einer liegenden Acht.'}</p>
+          <p>{sensorExplanation}</p>
         </div>
         <button
-          className={sensorStatus === 'active' ? 'reference-calibration-button is-done' : 'reference-calibration-button'}
+          className={sensorStatus === 'active' && !sensorAccuracyNeedsCheck ? 'reference-calibration-button is-done' : 'reference-calibration-button'}
           onClick={startCompass}
           disabled={sensorStatus === 'requesting'}
         >
-          {sensorStatus === 'active' ? <CircleCheck size={17} /> : sensorStatus === 'denied' || sensorStatus === 'unsupported' ? <TriangleAlert size={17} /> : <Compass size={17} />}
+          {sensorStatus === 'active' && !sensorAccuracyNeedsCheck ? <CircleCheck size={17} /> : sensorStatus === 'denied' || sensorStatus === 'unsupported' || sensorAccuracyNeedsCheck ? <TriangleAlert size={17} /> : <Compass size={17} />}
           {sensorStatus === 'active' ? 'Stoppen' : sensorStatus === 'requesting' ? 'Startet …' : 'Kompass starten'}
         </button>
       </section>
 
       <section className="reference-qibla-tip">
         <Compass size={20} />
-        <span><strong>Für ein genaues Ergebnis</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Die Qibla-Berechnung selbst bleibt lokal; der gespeicherte Standort wird nur von den ausdrücklich ausgewiesenen Live-Diensten verwendet.</small></span>
+        <span><strong>Sensorwerte sind nicht automatisch exakt</strong><small>Halte das Gerät flach und fern von Magneten, Metallhüllen und Lautsprechern. Nutze die Kompassnadel nur mit deinem eigenen Standort und einem absoluten Nordbezug. Bei fehlender Genauigkeitsangabe oder großer Abweichung zusätzlich gegenprüfen. Die Qibla-Berechnung selbst bleibt lokal; der gespeicherte Standort wird nur von den ausdrücklich ausgewiesenen Live-Diensten verwendet.</small></span>
       </section>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: 12, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 8, scale: 0.985 }} transition={{ duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] }}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
