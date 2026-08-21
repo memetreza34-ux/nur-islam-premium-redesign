@@ -12,14 +12,20 @@ import {
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
+import type { NameOfAllah } from '../data/namesOfAllahData';
 import { VERIFIED_NAMES_OF_ALLAH } from '../data/verifiedNamesOfAllahData';
-import type { VerifiedNameOfAllah } from '../data/verifiedNamesOfAllahData';
 import { useDialog } from '../shared/useDialog';
 
 type NameFilter = 'all' | 'favorites' | 'learned';
 
-const nameId = (name: VerifiedNameOfAllah) => name.key;
-const validIds = new Set(VERIFIED_NAMES_OF_ALLAH.map(nameId));
+const nameId = (name: NameOfAllah) => String(name.id);
+const validIds = new Set(NAMES_OF_ALLAH.map(nameId));
+const verifiedByLegacyId = new Map(
+  VERIFIED_NAMES_OF_ALLAH
+    .filter((entry) => entry.legacyId !== null)
+    .map((entry) => [entry.legacyId as number, entry]),
+);
 
 function migrateNameSet(key: string, fallback: string[] = []) {
   try {
@@ -35,9 +41,7 @@ function migrateNameSet(key: string, fallback: string[] = []) {
         return;
       }
 
-      const legacyMatch = VERIFIED_NAMES_OF_ALLAH.find((entry) =>
-        String(entry.legacyId) === candidate || entry.latin === candidate,
-      );
+      const legacyMatch = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
       if (legacyMatch) migrated.add(nameId(legacyMatch));
     });
 
@@ -57,14 +61,12 @@ function writeSet(key: string, value: Set<string>) {
 }
 
 export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => void; initialNameId?: string | null }) {
-  const initialName = initialNameId
-    ? VERIFIED_NAMES_OF_ALLAH.find((entry) => entry.key === initialNameId || String(entry.legacyId) === initialNameId) ?? null
-    : null;
+  const initialName = initialNameId ? NAMES_OF_ALLAH.find((entry) => String(entry.id) === initialNameId) ?? null : null;
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState<NameFilter>('all');
   const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites'));
   const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
-  const [selected, setSelected] = useState<VerifiedNameOfAllah | null>(initialName);
+  const [selected, setSelected] = useState<NameOfAllah | null>(initialName);
   const closeName = useCallback(() => setSelected(null), []);
   const nameDialog = useDialog(Boolean(selected), closeName, selected?.latin);
   const [toast, setToast] = useState<string | null>(null);
@@ -79,18 +81,19 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
 
   const visible = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('de-DE');
-    return VERIFIED_NAMES_OF_ALLAH.filter((name) => {
+    return NAMES_OF_ALLAH.filter((name) => {
       const id = nameId(name);
       if (filter === 'favorites' && !favorites.has(id)) return false;
       if (filter === 'learned' && !learned.has(id)) return false;
       if (!normalized) return true;
-      return `${name.latin} ${name.arabic} ${name.meaning} ${name.source}`
+      const verified = verifiedByLegacyId.get(name.id);
+      return `${name.id} ${name.latin} ${name.arabic} ${name.meaning} ${verified?.source ?? ''}`
         .toLocaleLowerCase('de-DE')
         .includes(normalized);
     });
   }, [favorites, filter, learned, query]);
 
-  const progress = Math.round((learned.size / VERIFIED_NAMES_OF_ALLAH.length) * 100);
+  const progress = Math.round((learned.size / NAMES_OF_ALLAH.length) * 100);
 
   const flash = (message: string) => {
     if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
@@ -101,7 +104,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
     }, 2100);
   };
 
-  const toggleFavorite = (name: VerifiedNameOfAllah) => {
+  const toggleFavorite = (name: NameOfAllah) => {
     const id = nameId(name);
     setFavorites((current) => {
       const next = new Set(current);
@@ -111,7 +114,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
     });
   };
 
-  const toggleLearned = (name: VerifiedNameOfAllah) => {
+  const toggleLearned = (name: NameOfAllah) => {
     const id = nameId(name);
     setLearned((current) => {
       const next = new Set(current);
@@ -123,6 +126,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
 
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const overlayTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
+  const selectedVerified = selected ? verifiedByLegacyId.get(selected.id) ?? null : null;
 
   return (
     <motion.main
@@ -133,26 +137,26 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
     >
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Asma’ul Husna</span><h1>Namen Allahs lernen</h1></div>
+        <div><span className="overline">Asma’ul Husna</span><h1>99 Namen Allahs</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Favoriten`); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
       </header>
 
       <section className="reference-names-hero">
         <span className="reference-names-hero__allah" dir="rtl">الله</span>
-        <span className="hero-pill">Einzeln belegt</span>
-        <h2>Mit sicheren<br />Quellen lernen.</h2>
-        <p>Hier zeigt Nur Islam nur Namen, die in den angegebenen Quranstellen ausdrücklich für Allah genannt werden. Die alte feste 99er-Liste wird nicht als kanonisch ausgegeben.</p>
+        <span className="hero-pill">99er-Lernliste</span>
+        <h2>Alle 99 Namen<br />bleiben erhalten.</h2>
+        <p>Du kannst weiterhin alle 99 Namen suchen, favorisieren und lernen. Die konkrete verbreitete 99er-Zusammenstellung wird parallel Name für Name fachlich und quellenbezogen geprüft.</p>
       </section>
 
       <section className="reference-name-progress glass-card">
         <span className="reference-name-progress__icon"><BookmarkCheck size={22} /></span>
-        <span><small>Dein Lernfortschritt</small><strong>{learned.size} von {VERIFIED_NAMES_OF_ALLAH.length} belegten Namen gelernt</strong><em>{progress} % dieses geprüften Lernsets abgeschlossen</em></span>
+        <span><small>Dein Lernfortschritt</small><strong>{learned.size} von 99 gelernt</strong><em>{progress} % abgeschlossen</em></span>
         <div className="reference-name-progress__bar"><span style={{ width: `${progress}%` }} /></div>
       </section>
 
       <section className="reference-prototype-note">
         <ShieldCheck size={16} />
-        <span><strong>Warum nicht einfach eine feste 99er-Liste?</strong><small>Sahih al-Bukhari 7392 und Sahih Muslim 2677a bestätigen die besondere Überlieferung zu 99 Namen, schreiben dort aber keine konkrete vollständige Liste aus. Deshalb zeigt diese v1-Ansicht nur einzeln belegte Namen und erweitert den Bestand erst nach Quellenprüfung.</small></span>
+        <span><strong>Transparenter Quellenstatus</strong><small>Sahih al-Bukhari 7392 und Sahih Muslim 2677a bestätigen die Überlieferung über 99 Namen, zählen dort aber keine feste vollständige Liste auf. Deshalb bleiben alle 99 Lernnamen sichtbar, während Einzelbelege, Schreibweisen, Reihenfolge und Bedeutungen vor Release weiter geprüft werden.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -162,7 +166,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       </label>
 
       <div className="reference-filter-tabs reference-name-filter-tabs">
-        <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Belegt · {VERIFIED_NAMES_OF_ALLAH.length}</button>
+        <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Alle 99</button>
         <button className={filter === 'favorites' ? 'is-active' : ''} onClick={() => setFilter('favorites')}>Favoriten · {favorites.size}</button>
         <button className={filter === 'learned' ? 'is-active' : ''} onClick={() => setFilter('learned')}>Gelernt · {learned.size}</button>
       </div>
@@ -176,7 +180,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
             return (
               <motion.article key={id} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .009, .14), ease: [0.22, 1, 0.36, 1] }}>
                 <button className="reference-name-list__main" onClick={() => setSelected(name)}>
-                  <span className="reference-name-list__number">{String(index + 1).padStart(2, '0')}</span>
+                  <span className="reference-name-list__number">{String(name.id).padStart(2, '0')}</span>
                   <span className="reference-name-list__arabic" dir="rtl">{name.arabic}</span>
                   <span className="reference-name-list__copy"><strong>{name.latin}</strong><small>{name.meaning}</small></span>
                 </button>
@@ -195,11 +199,11 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
             <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">Einzeln belegter Name</span>
+              <span className="overline">Name {selected.id} von 99</span>
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
               <h2>{selected.latin}</h2>
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
-              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span><strong>{selected.source}</strong><br />{selected.sourceNote}<br />Die deutsche Bedeutung ist eine kurze Lernhilfe und keine vollständige theologische Definition.</span></div>
+              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>{selectedVerified ? <><strong>{selectedVerified.source}</strong><br />{selectedVerified.sourceNote}<br /></> : null}{selectedVerified ? 'Dieser Name hat bereits einen direkten Einzelbeleg im laufenden Audit.' : 'Einzelbeleg und deutsche Bedeutungsangabe dieses Lernlisten-Eintrags sind noch im fachlichen Endreview.'}</span></div>
               <div className="reference-name-modal__actions">
                 <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>
