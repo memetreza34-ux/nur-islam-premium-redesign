@@ -64,6 +64,22 @@ if (!schedule.includes('schedule: PrayerScheduleItem[] = PRAYER_SCHEDULE')) {
   throw new Error('getNextPrayer does not accept a dynamic schedule.');
 }
 
+// The bundled fallback is a shape-only placeholder. Fixed clock values can be
+// wrong tomorrow or at another location and must never re-enter the app.
+for (const forbidden of ['04:18', '05:54', '12:45', '16:42', '19:36', '21:07']) {
+  if (schedule.includes(forbidden)) throw new Error(`Static prayer fallback clock value must not be bundled: ${forbidden}`);
+}
+const placeholderCount = [...schedule.matchAll(/time: '—:—'/g)].length;
+if (placeholderCount !== 6) throw new Error(`Expected six clock-free fallback rows, found ${placeholderCount}.`);
+for (const required of [
+  "sourceLabel: 'Offline-Ersatzzeitplan'",
+  'Keine aktuellen Gebetszeiten verfügbar',
+  "if (!Number.isFinite(totalMinutes)) return 'nicht verfügbar'",
+  'const timedPrayers = obligatoryPrayers.filter',
+]) {
+  if (!schedule.includes(required)) throw new Error(`Prayer fallback safety is missing: ${required}`);
+}
+
 const screenRequirements = [
   'usePrayerTimes()',
   'requestLocation',
@@ -105,4 +121,4 @@ if (!styleIndex.includes('reference-live-prayer-times.css')) {
   throw new Error('Live prayer time stylesheet is not loaded.');
 }
 
-console.log('Live prayer times verified: aligned service/hook API, location persistence and disclosure, AlAdhan fetch, cache/fallback, experimental Diyanet label, dynamic calculation settings, midnight rollover, shared home schedule, and reminder tone.');
+console.log('Live prayer times verified: AlAdhan live/current-day cache, method and Asr controls, location disclosure, midnight refresh, and a clock-free fallback that cannot masquerade as a current timetable.');
