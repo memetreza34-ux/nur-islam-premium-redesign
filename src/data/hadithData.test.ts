@@ -23,14 +23,49 @@ function stored(key: string) {
 describe('Hadith library', () => {
   beforeEach(() => localStorage.clear());
 
-  it('keeps every entry unique and source-labelled', () => {
+  it('keeps every entry unique, source-labelled and concretely numbered', () => {
     expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(25);
     expect(new Set(HADITH_LIBRARY.map((entry) => entry.id)).size).toBe(HADITH_LIBRARY.length);
     for (const entry of HADITH_LIBRARY) {
       expect(entry.title.trim()).not.toBe('');
       expect(entry.source.trim()).not.toBe('');
+      expect(entry.source).toMatch(/\d/);
       expect(entry.summary.startsWith('Sinngemäßer Inhalt:')).toBe(true);
     }
+  });
+
+  it('locks the exact references added by the legacy source audit', () => {
+    const expected: Record<string, string[]> = {
+      'die-taten-sind-entsprechend': ['Sahih al-Bukhari 1', 'Sahih Muslim 1907a'],
+      'der-beste-unter-euch': ['Sahih al-Bukhari 5027'],
+      'ein-muslim-ist-derjenige': ['Sahih al-Bukhari 10'],
+      'wer-an-allah-und': ['Sahih al-Bukhari 6018', 'Sahih Muslim 47b'],
+      'allah-ist-barmherzig-gegenuber': ['Jami at-Tirmidhi 1924'],
+      'der-islam-ist-auf': ['Sahih al-Bukhari 8', 'Sahih Muslim 16c'],
+      'keiner-von-euch-glaubt': ['Sahih al-Bukhari 13', 'Sahih Muslim 45a'],
+      'die-religion-ist-aufrichtiger': ['Sahih Muslim 55a'],
+      'die-reinheit-ist-die': ['Sahih Muslim 223'],
+      'erleichtert-und-erschwert-nicht': ['Sahih al-Bukhari 69', 'Sahih Muslim 1734'],
+      'der-starke-glaubige-ist': ['Sahih Muslim 2664'],
+      'furchte-allah-wo-immer': ['Jami at-Tirmidhi 1987', 'Hasan'],
+      'die-allah-liebsten-taten': ['Sahih al-Bukhari 6465', 'Sahih Muslim 783b'],
+      'wer-einen-weg-beschreitet': ['Sahih Muslim 2699a'],
+      'dein-lacheln-deinem-bruder': ['Jami at-Tirmidhi 1956', 'Hasan'],
+      'der-beste-von-euch': ['Jami at-Tirmidhi 3895', 'Sahih'],
+    };
+
+    for (const [id, parts] of Object.entries(expected)) {
+      const entry = getHadithById(id);
+      expect(entry).not.toBeNull();
+      for (const part of parts) expect(entry?.source).toContain(part);
+    }
+  });
+
+  it('keeps Tirmidhi 2317 explicit about the displayed weak grading and open review', () => {
+    const entry = getHadithById('es-gehort-zum-guten');
+    expect(entry?.source).toContain('Jami at-Tirmidhi 2317');
+    expect(entry?.source).toContain('Da’if');
+    expect(entry?.context).toContain('fachliche Hadith-Einordnung bleibt deshalb vor Veröffentlichung ausdrücklich offen');
   });
 
   it('uses a small explicit daily pool with concrete references', () => {
