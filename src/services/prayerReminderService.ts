@@ -1,4 +1,4 @@
-import { OBLIGATORY_PRAYER_IDS, PRAYER_SCHEDULE } from './prayerSchedule';
+import { OBLIGATORY_PRAYER_IDS, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META } from './prayerSchedule';
 import type { PrayerScheduleItem } from './prayerSchedule';
 
 export type PrayerReminderDetail = {
@@ -56,6 +56,16 @@ function firedStorageKey(date = new Date()) {
   return `nur_prayer_reminders_fired_${dateKey(date)}`;
 }
 
+/**
+ * The bundled fallback clock values are UI/emergency placeholders only. They
+ * are not today's verified prayer times and must never trigger a religious
+ * reminder. Live or same-day cached AlAdhan data replace this metadata through
+ * applyPrayerSnapshotToSharedSchedule before reminders are allowed to fire.
+ */
+export function hasReliableSharedPrayerTimes() {
+  return PRAYER_SCHEDULE_META.sourceLabel !== 'Offline-Ersatzzeitplan';
+}
+
 async function showPrayerNotification(prayer: PrayerScheduleItem) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return false;
 
@@ -96,6 +106,9 @@ function emitInAppReminder(prayer: PrayerScheduleItem) {
 }
 
 async function checkPrayerReminders(now = new Date()) {
+  // Never let bundled fallback clock values become religious reminders.
+  if (!hasReliableSharedPrayerTimes()) return;
+
   const enabled = readEnabledReminderSet();
   if (!enabled.size) return;
 
