@@ -143,6 +143,29 @@ describe('backup and restore round trip', () => {
     expect(localStorage.getItem('nur_dua_favorites')).toBe('["dua-9"]');
   });
 
+  it('rejects an incompatible schema before changing any local progress', async () => {
+    signIn();
+    localStorage.setItem('nur_dua_favorites', '["local"]');
+    const seen: string[] = [];
+    window.addEventListener('nur:cloud-restored', (event) => seen.push(String((event as CustomEvent).detail)));
+    vi.stubGlobal('fetch', vi.fn(async () => ({
+      ok: true,
+      json: async () => [{
+        schema_version: 2,
+        updated_at: '2026-08-08T12:30:00Z',
+        payload: {
+          nur_dua_favorites: '["future-format"]',
+          nur_name_favorites: '["99"]',
+        },
+      }],
+    } as unknown as Response)));
+
+    await expect(restoreCloudState()).rejects.toThrow('nicht unterstützte Datenversion 2');
+    expect(localStorage.getItem('nur_dua_favorites')).toBe('["local"]');
+    expect(localStorage.getItem('nur_name_favorites')).toBeNull();
+    expect(seen).toEqual([]);
+  });
+
   it('skips non-string payload values instead of writing "[object Object]"', async () => {
     signIn();
     vi.stubGlobal('fetch', vi.fn(async () => ({
