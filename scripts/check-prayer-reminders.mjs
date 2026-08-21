@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const scheduler = await readFile(resolve(root, 'src/services/prayerReminderService.ts'), 'utf8');
 const prayerScreen = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
+const moreScreen = await readFile(resolve(root, 'src/screens/MoreScreen.tsx'), 'utf8');
 const systemLayer = await readFile(resolve(root, 'src/app/AppSystemLayer.tsx'), 'utf8');
 const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
@@ -51,11 +52,28 @@ for (const feature of [
   'prayer.obligatory && notifications.has(prayer.id)',
   'prayer-alert--disabled',
   'In-App-Erinnerung aktiviert; Systembenachrichtigungen sind nicht verfügbar',
+  "const prayerTimesReliable = source !== 'fallback'",
+  'if (enabling && !prayerTimesReliable)',
+  'Aktuelle Gebetszeiten fehlen. Lade zuerst Zeiten für deinen Standort.',
+  'Deine Gebetserinnerungen bleiben gespeichert, sind aber pausiert',
+  'Ohne gültige Tageszeiten bestimmt die App bewusst kein „nächstes Gebet“.',
 ]) {
-  if (!prayerScreen.includes(feature)) throw new Error(`Prayer reminder control is missing: ${feature}`);
+  if (!prayerScreen.includes(feature)) throw new Error(`Prayer reminder/current-time safety control is missing: ${feature}`);
 }
 if (prayerScreen.includes("readSet('nur_prayer_notifications', ['fajr'")) {
   throw new Error('Prayer screen still silently enables reminder defaults.');
+}
+
+for (const feature of [
+  "import { hasReliableSharedPrayerTimes } from '../services/prayerReminderService';",
+  'useState(hasReliableSharedPrayerTimes)',
+  "window.addEventListener('nur:prayer-times-updated', syncReliability)",
+  "window.removeEventListener('nur:prayer-times-updated', syncReliability)",
+  'if (!prayerTimesReliable)',
+  'Aktuelle Gebetszeiten fehlen. Öffne zuerst „Gebete“ und lade Zeiten für deinen Standort.',
+  'Gespeichert · pausiert bis aktuelle Zeiten verfügbar sind',
+]) {
+  if (!moreScreen.includes(feature)) throw new Error(`More-screen prayer reminder safety is missing: ${feature}`);
 }
 
 if (!main.includes('startPrayerReminderScheduler') || !main.includes('<PrayerReminderBanner />')) {
@@ -106,4 +124,4 @@ if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 
-console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, the scheduler waits for shared prayer-time bootstrap and refuses clock-free/static fallback data, notification artwork uses the raster app icon, and closed/live notification clicks route safely without promising guaranteed closed-app wakeups.');
+console.log('Prayer reminders verified: no silent defaults, only obligatory prayers can be enabled, both UI entry points refuse activation without reliable daily times, stored reminders pause on fallback, and the scheduler independently blocks unreliable fallback data.');
