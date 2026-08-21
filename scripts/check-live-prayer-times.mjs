@@ -24,9 +24,20 @@ const serviceRequirements = [
   'Berechnete Gebetszeiten können je nach örtlicher Moschee',
   "label: 'Diyanet İşleri Başkanlığı · API experimentell'",
   "shortLabel: 'Diyanet (experimentell)'",
+  "if (cached.location?.source !== 'device') return null;",
+  "if (location.source !== 'device') {",
+  'Für persönliche Gebetszeiten muss zuerst ein Gerätestandort freigegeben werden.',
+  "city: hasDeviceLocation ? location.label : 'Standort erforderlich'",
+  "locationLabel: hasDeviceLocation ? location.label : 'Standort nicht festgelegt'",
 ];
 for (const requirement of serviceRequirements) {
   if (!service.includes(requirement)) throw new Error(`Live prayer times service is missing: ${requirement}`);
+}
+
+const bootstrapDeviceGate = service.indexOf("if (location.source !== 'device') {");
+const bootstrapLiveFetch = service.lastIndexOf('const live = await fetchPrayerTimes(location, loadPrayerPreferences());');
+if (bootstrapDeviceGate < 0 || bootstrapLiveFetch < 0 || bootstrapDeviceGate > bootstrapLiveFetch) {
+  throw new Error('Shared prayer bootstrap must reject the generic default location before attempting a live request.');
 }
 
 for (const method of ['id: 13', 'id: 3']) {
@@ -38,6 +49,7 @@ for (const school of ['id: 0', 'id: 1']) {
 
 const hookRequirements = [
   'navigator.geolocation.getCurrentPosition',
+  "source: 'device'",
   "PrayerTimesStatus = 'loading' | 'live' | 'cache' | 'fallback' | 'location-denied'",
   'requestLocation',
   'updatePreferences',
@@ -121,4 +133,4 @@ if (!styleIndex.includes('reference-live-prayer-times.css')) {
   throw new Error('Live prayer time stylesheet is not loaded.');
 }
 
-console.log('Live prayer times verified: AlAdhan live/current-day cache, method and Asr controls, location disclosure, midnight refresh, and a clock-free fallback that cannot masquerade as a current timetable.');
+console.log('Live prayer times verified: AlAdhan is used only with a device-backed location, generic Berlin/default caches are rejected, method and Asr controls remain available, and the clock-free fallback cannot masquerade as a personal timetable.');
