@@ -16,4 +16,7 @@ export const CORE_CONTENT_REVIEW_RECORDS: BeginnerReviewRecord[] = [
   { contentId: 'daily-hadith-rotation', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'worship-guides', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
   { contentId: 'prayer-rakat-sequence', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
+  { contentId: 'prayer-time-methodology', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
+  { contentId: 'qibla-guidance', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
+  { contentId: 'islamic-calendar-content', status: 'pending', reviewer: null, reviewedAt: null, evidence: null },
 ];
