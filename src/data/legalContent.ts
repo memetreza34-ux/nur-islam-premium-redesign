@@ -72,24 +72,24 @@ export const privacySections: LegalSection[] = [
   {
     heading: 'Grundsatz: die App funktioniert ohne Konto',
     paragraphs: [
-      'Ohne Anmeldung verlassen deine Inhalte das Gerät nicht. Gebets-Tracker, Dhikr-Zähler, Lesezeichen, Favoriten, Kalendereinträge, Notizen, Lernfortschritt und Einstellungen liegen ausschließlich im lokalen Speicher deines Browsers.',
+      'Ein Konto ist für die lokale Nutzung nicht erforderlich. Gebets-Tracker, Dhikr-Zähler, Lesezeichen, Favoriten, Kalendereinträge, Notizen, Lernfortschritt und Einstellungen werden standardmäßig im lokalen Speicher deines Browsers gehalten. Freiwillig genutzte Online-Funktionen wie Live-Gebetszeiten, Moschee-Suche oder ein Quran-Fallback können unabhängig von einer Anmeldung die jeweils unten beschriebenen technischen Daten an externe Dienste übertragen.',
       'Ein Konto ist ausschließlich für die freiwillige Cloud-Sicherung und Cloud-Notizen nötig.',
     ],
   },
   {
     heading: 'Standortdaten',
     paragraphs: [
-      'Der Standort wird nur nach ausdrücklicher Freigabe durch dich abgefragt und dient zwei Zwecken: der Berechnung der Gebetszeiten und der Suche nach Moscheen im Umkreis.',
-      'Die Koordinaten werden dafür an die jeweils genannten Dienste übertragen. Sie werden nicht in die Cloud-Sicherung aufgenommen und verlassen dein Gerät ausschließlich für diese beiden Abfragen.',
-      'Verweigerst du die Freigabe, nutzt die App einen voreingestellten Ort und bleibt vollständig bedienbar.',
+      'Der Gerätestandort wird nur nach ausdrücklicher Freigabe durch dich abgefragt. Er wird lokal für die persönliche Qibla-Richtung verwendet und als gemeinsamer Gebetsstandort gespeichert. Für Live-Gebetszeiten können die Koordinaten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen werden.',
+      'Standortkoordinaten werden nicht in die Cloud-Sicherung aufgenommen. Die persönliche Qibla-Berechnung erfolgt in der App; externe Übertragungen finden nur für die jeweils genannten Online-Abfragen statt.',
+      'Verweigerst du die Standortfreigabe, gibt die App keine persönliche Qibla-Richtung und keine persönlichen Live-Gebetszeiten aus. Andere lokale App-Bereiche bleiben nutzbar; die Moschee-Suche kann einen ausdrücklich gekennzeichneten Standardort verwenden.',
     ],
   },
   {
     heading: 'Eingesetzte Dienste und was an sie übermittelt wird',
     paragraphs: [
-      'AlAdhan (api.aladhan.com) – Gebetszeiten. Übermittelt werden Breiten- und Längengrad, Datum, Berechnungsmethode und Asr-Schule.',
-      'Al Quran Cloud (api.alquran.cloud) – Nachladen von Suren, die nicht fest in der App enthalten sind. Übermittelt werden Surennummer und Ausgabenkennung, keine personenbezogenen Daten.',
-      'OpenStreetMap über die öffentlichen Overpass-Dienste overpass-api.de und overpass.kumi.systems – Moschee-Suche. Übermittelt werden Breiten- und Längengrad sowie der Suchradius. Kartendaten stammen von OpenStreetMap-Mitwirkenden und stehen unter der Open Database License.',
+      'AlAdhan (api.aladhan.com) – Live-Gebetszeiten. Nach freiwilliger Standortfreigabe werden Breiten- und Längengrad, Datum, Berechnungsmethode und Asr-Schule übermittelt.',
+      'Al Quran Cloud (api.alquran.cloud) – technischer Quran-Fallback, falls eine lokale Quran-Datei fehlt oder nicht lesbar ist. Übermittelt werden Surennummer und Ausgabenkennung, keine personenbezogenen Daten.',
+      'OpenStreetMap über die öffentlichen Overpass-Dienste overpass-api.de und overpass.kumi.systems – Moschee-Suche. Bei Nutzung des Gerätestandorts werden Breiten- und Längengrad sowie der Suchradius übermittelt. Kartendaten stammen von OpenStreetMap-Mitwirkenden und stehen unter der Open Database License.',
       'Supabase (jmswsgwnvmvsfayeodcd.supabase.co) – nur bei angelegtem Konto: Anmeldung, Profil, Cloud-Sicherung und Cloud-Notizen. Das genutzte Projekt liegt in der Region EU-Nord (Stockholm).',
       'GitHub Pages – Auslieferung der App. Beim Abruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie deine IP-Adresse.',
     ],
@@ -106,7 +106,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Speicherdauer',
     paragraphs: [
       'Lokale Daten bleiben so lange auf dem Gerät, bis du sie in der App zurücksetzt oder die Browserdaten löschst.',
-      'Cloud-Daten bleiben gespeichert, bis du sie löschst. Unter „Konto & Sicherung“ kannst du deine Cloud-Daten jederzeit vollständig entfernen; die Anmeldung selbst bleibt dabei bestehen.',
+      'Cloud-Daten bleiben gespeichert, bis du sie löschst. Unter „Konto & Sicherung“ kannst du deine Cloud-Daten jederzeit vollständig entfernen; das zugrunde liegende Login-Konto wird dadurch nicht gelöscht.',
     ],
   },
   {
@@ -144,9 +144,9 @@ export const licenseSections: LegalSection[] = [
   {
     heading: 'Textquellen',
     paragraphs: [
-      'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
-      'Deutsche Quran-Wiedergabe: Bubenheim & Elyas über Al Quran Cloud.',
-      'Herkunft und Nutzungsrechte der einzelnen Textbestände werden fortlaufend dokumentiert. Inhalte ohne belegte Quelle sind in der App als solche gekennzeichnet.',
+      'Lokaler Offline-Quran: Herkunft, konkrete arabische Ausgabe, deutsche Wiedergabe und Nutzungsrechte des übernommenen Bestands sind noch nicht abschließend dokumentiert. Dieser Punkt blockiert die Freigabe des Quran-Bestands für den öffentlichen Release.',
+      'Online-Fallback über Al Quran Cloud: arabische Ausgabe quran-uthmani; deutsche Ausgabe de.bubenheim (Bubenheim & Elyas). Diese Angaben beziehen sich ausschließlich auf den Online-Fallback und nicht automatisch auf den lokalen Offline-Bestand.',
+      'Herkunft und Nutzungsrechte der einzelnen Textbestände werden vor Veröffentlichung dokumentiert. Ungeklärte Provenienz wird nicht als bereits verifizierte Ausgabe ausgegeben.',
     ],
   },
 ];
