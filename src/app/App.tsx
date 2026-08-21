@@ -124,7 +124,7 @@ type HomeQuranProgress = {
 const quickActions: QuickAction[] = [
   { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon, accent: 'gold', target: 'reader' },
   { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon, accent: 'cream', target: 'learn' },
-  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: NurRosetteIcon, accent: 'emerald', target: 'names' },
+  { label: 'Namen Allahs', eyebrow: 'Einzeln belegt', icon: NurRosetteIcon, accent: 'emerald', target: 'names' },
   { label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon, accent: 'cream', target: 'duas' },
 ];
 
@@ -313,6 +313,7 @@ function PremiumHome({
   const reduceMotion = useReducedMotion();
   const islamicDate = getIslamicDate(now);
   const nextPrayer = getNextPrayer(now);
+  const prayerTimesUnavailable = PRAYER_SCHEDULE_META.sourceLabel === 'Offline-Ersatzzeitplan';
   const greeting = getHomeGreeting(now);
   const dailyHadith = getDailyHadith(now);
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
@@ -431,37 +432,62 @@ function PremiumHome({
         </section>
       ) : null}
 
-      <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
-        <div className="prayer-hero__content">
-          <div className="hero-meta">
-            <span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
-            <span className="location"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
-          </div>
-          <div className="hero-main">
-            <div>
-              <span className="arabic-label">{nextPrayer.prayer.arabic}</span>
-              <h2>{nextPrayer.prayer.label}</h2>
-              <div className="countdown">{nextPrayer.tomorrow ? 'morgen in ' : 'in '}{formatPrayerRemaining(nextPrayer.remaining)}</div>
+      {prayerTimesUnavailable ? (
+        <section className="prayer-hero prayer-hero--v2" aria-label="Gebetszeiten nicht aktuell">
+          <div className="prayer-hero__content">
+            <div className="hero-meta">
+              <span className="hero-pill">Gebetszeiten nicht aktuell</span>
+              <span className="location"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
             </div>
-            <div className="hero-orb">
-              <span className="hero-orb__ring" />
-              <PrayerVisual visual={nextPrayer.prayer.visual} size={31} />
-              <strong>{nextPrayer.prayer.time}</strong>
+            <div className="hero-main">
+              <div>
+                <span className="arabic-label">الصلاة</span>
+                <h2>Aktuelle Zeiten prüfen</h2>
+                <div className="countdown">Keine Ersatzzeit als Gebetsentscheidung verwenden</div>
+              </div>
+              <div className="hero-orb">
+                <span className="hero-orb__ring" />
+                <SunMedium size={31} />
+                <strong>—:—</strong>
+              </div>
             </div>
+            <span className="prayer-source-note">Live-Daten oder ein heutiger gespeicherter Tagesstand fehlen. Öffne die Gebetszeiten und aktualisiere die Daten; lokale Moscheen können zusätzlich abweichen.</span>
+            <button className="gold-button" onClick={() => onNavigate('prayer')}>Gebetszeiten prüfen <ChevronRight size={18} /></button>
           </div>
-          <div className="prayer-mini-times">
-            {PRAYER_SCHEDULE.map((prayer) => (
-              <span className={prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
-                <PrayerVisual visual={prayer.visual} />
-                <small>{prayer.compactLabel}</small>
-                <strong>{prayer.time}</strong>
-              </span>
-            ))}
+        </section>
+      ) : (
+        <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
+          <div className="prayer-hero__content">
+            <div className="hero-meta">
+              <span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
+              <span className="location"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
+            </div>
+            <div className="hero-main">
+              <div>
+                <span className="arabic-label">{nextPrayer.prayer.arabic}</span>
+                <h2>{nextPrayer.prayer.label}</h2>
+                <div className="countdown">{nextPrayer.tomorrow ? 'morgen in ' : 'in '}{formatPrayerRemaining(nextPrayer.remaining)}</div>
+              </div>
+              <div className="hero-orb">
+                <span className="hero-orb__ring" />
+                <PrayerVisual visual={nextPrayer.prayer.visual} size={31} />
+                <strong>{nextPrayer.prayer.time}</strong>
+              </div>
+            </div>
+            <div className="prayer-mini-times">
+              {PRAYER_SCHEDULE.map((prayer) => (
+                <span className={prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
+                  <PrayerVisual visual={prayer.visual} />
+                  <small>{prayer.compactLabel}</small>
+                  <strong>{prayer.time}</strong>
+                </span>
+              ))}
+            </div>
+            <span className="prayer-source-note">{PRAYER_SCHEDULE_META.sourceLabel} · {PRAYER_SCHEDULE_META.methodLabel}</span>
+            <button className="gold-button" onClick={() => onNavigate('prayer')}>Alle Gebetszeiten <ChevronRight size={18} /></button>
           </div>
-          <span className="prayer-source-note">{PRAYER_SCHEDULE_META.sourceLabel} · {PRAYER_SCHEDULE_META.methodLabel}</span>
-          <button className="gold-button" onClick={() => onNavigate('prayer')}>Alle Gebetszeiten <ChevronRight size={18} /></button>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>{isBeginner ? 'Deine wichtigsten Werkzeuge' : 'Spirituelle Werkzeuge'}</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
