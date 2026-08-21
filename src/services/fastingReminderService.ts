@@ -1,7 +1,7 @@
 import { isFastingForbidden } from '../data/islamicEventsData';
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
-import { getHijriParts } from './hijriCalendar';
+import { getHijriDay, getHijriMonth } from './hijriCalendar';
 
 const FASTING_ENABLED_KEY = 'nur_fasting_reminders';
 const FASTING_TIME_KEY = 'nur_fasting_reminder_time';
@@ -61,10 +61,12 @@ export function buildRollingFastingReminders(now = new Date()) {
     const fastingDate = new Date(today);
     fastingDate.setDate(today.getDate() + offset);
     const weekday = fastingDate.getDay();
-    const hijri = getHijriParts(fastingDate);
-    const hijriMonth = hijri?.month ?? 0;
-    const hijriDay = hijri?.day ?? 0;
+    const hijriMonth = getHijriMonth(fastingDate);
+    const hijriDay = getHijriDay(fastingDate);
 
+    // The no-fasting rule takes precedence over Monday, Thursday and white-day
+    // suggestions. This prevents reminders on Eid al-Fitr, Eid al-Adha and the
+    // general Tashriq days, including 13 Dhu al-Hijjah.
     if (isFastingForbidden(hijriMonth, hijriDay)) continue;
 
     const monday = weekday === 1;
