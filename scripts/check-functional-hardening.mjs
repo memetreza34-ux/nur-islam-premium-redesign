@@ -284,7 +284,10 @@ requireText(dailyHadith, [
   'shareOrCopy',
   'Hadith des Tages',
   'Gespeicherter Hadith',
-  'Primärquelle',
+  // The wording moved from "Primärquelle" to "Quellenangabe" when the screen
+  // started distinguishing the daily rotation from a saved entry; the point of
+  // the assertion is that the screen still defers to the cited source.
+  'ist die angegebene Quellenangabe maßgeblich',
 ], 'Rotating daily Hadith actions');
 forbidText(dailyHadith, [
   "localStorage.setItem('nur_daily_hadith_saved'",

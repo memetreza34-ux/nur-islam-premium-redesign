@@ -47,23 +47,23 @@ Jeder Eintrag ist ausdrücklich als sinngemäße Inhaltsangabe gekennzeichnet, n
 | 6 | Erleichtern | Sahih al-Bukhari 69; Sahih Muslim 1734 | übernommen | ☐ |
 | 7 | Reinheit | Sahih Muslim 223 | übernommen | ☐ |
 | 8 | Freundlichkeit | Jami at-Tirmidhi 1956 | übernommen | ☐ |
-| 9 | Absicht der Taten | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 10 | Quran lernen und lehren | Sahih al-Bukhari | übernommen | ☐ |
-| 11 | Zunge und Hand | Sahih al-Bukhari | übernommen | ☐ |
-| 12 | Gutes sprechen oder schweigen | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 13 | Barmherzigkeit auf der Erde | Sunan at-Tirmidhi | übernommen | ☐ |
-| 14 | Die fünf Säulen | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 15 | Für den Bruder wünschen | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 16 | Aufrichtiger Rat | Sahih Muslim | übernommen | ☐ |
-| 17 | Was einen nichts angeht | Sunan at-Tirmidhi | übernommen | ☐ |
-| 18 | Reinheit | Sahih Muslim | übernommen | ☐ |
-| 19 | Erleichtern statt erschweren | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 20 | Der starke Gläubige | Sahih Muslim | übernommen | ☐ |
-| 21 | Gottesfurcht im Alltag | Sunan at-Tirmidhi | übernommen | ☐ |
-| 22 | Beständigkeit | Sahih al-Bukhari & Sahih Muslim | übernommen | ☐ |
-| 23 | Wissen suchen | Sahih Muslim | übernommen | ☐ |
-| 24 | Das Lächeln als Sadaqa | Sunan at-Tirmidhi | übernommen | ☐ |
-| 25 | Umgang mit der Familie | Sunan at-Tirmidhi | übernommen | ☐ |
+| 9 | Absicht der Taten | Sahih al-Bukhari 1; Sahih Muslim 1907a | übernommen | ☐ |
+| 10 | Quran lernen und lehren | Sahih al-Bukhari 5027 | übernommen | ☐ |
+| 11 | Zunge und Hand | Sahih al-Bukhari 10 | übernommen | ☐ |
+| 12 | Gutes sprechen oder schweigen | Sahih al-Bukhari 6018; Sahih Muslim 47b | übernommen | ☐ |
+| 13 | Barmherzigkeit auf der Erde | Jami at-Tirmidhi 1924 | übernommen | ☐ |
+| 14 | Die fünf Säulen | Sahih al-Bukhari 8; Sahih Muslim 16c | übernommen | ☐ |
+| 15 | Für den Bruder wünschen | Sahih al-Bukhari 13; Sahih Muslim 45a | übernommen | ☐ |
+| 16 | Aufrichtiger Rat | Sahih Muslim 55a | übernommen | ☐ |
+| 17 | Was einen nichts angeht | Jami at-Tirmidhi 2317 · auf Sunnah.com/Darussalam als Da’if eingestuft | übernommen | ☐ |
+| 18 | Reinheit | Sahih Muslim 223 | übernommen | ☐ |
+| 19 | Erleichtern statt erschweren | Sahih al-Bukhari 69; Sahih Muslim 1734 | übernommen | ☐ |
+| 20 | Der starke Gläubige | Sahih Muslim 2664 | übernommen | ☐ |
+| 21 | Gottesfurcht im Alltag | Jami at-Tirmidhi 1987 · Hasan (Darussalam) | übernommen | ☐ |
+| 22 | Beständigkeit | Sahih al-Bukhari 6465; Sahih Muslim 783b | übernommen | ☐ |
+| 23 | Wissen suchen | Sahih Muslim 2699a | übernommen | ☐ |
+| 24 | Das Lächeln als Sadaqa | Jami at-Tirmidhi 1956 · Hasan (Darussalam) | übernommen | ☐ |
+| 25 | Umgang mit der Familie | Jami at-Tirmidhi 3895 · Sahih (Darussalam) | übernommen | ☐ |
 
 ## Duas
 

@@ -34,10 +34,16 @@ for (const feature of serviceFeatures) {
 }
 
 const screenFeatures = [
-  'Echte Moschee- und Gebetsraumdaten',
+  // The copy no longer calls the results "echte" data as a blanket claim: it
+  // now says whether the radius is around the device location or around the
+  // default one, which is the part a user cannot otherwise tell.
+  'Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern um deinen Gerätestandort',
+  'Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern um den angezeigten Standardort',
+  'usingDeviceOrigin',
   'OpenStreetMap-Mitwirkende',
   'Eigenen Standort verwenden',
-  'Nach Entfernung sortiert · 10 km',
+  // Names the origin the distances are measured from, not only the radius.
+  'Nach Entfernung von {origin.label} sortiert · 10 km',
   'requestMosqueLocation',
   'getOpenStreetMapDirectionsUrl',
   'reference-mosque-detail-modal',
