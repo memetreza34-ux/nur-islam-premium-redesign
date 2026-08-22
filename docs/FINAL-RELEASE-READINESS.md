@@ -195,11 +195,25 @@ ob die App auf echten Geräten das tut, was hier steht.
 | **Religiöser Gate am Deployment** | **greift, Umgehung schlägt fehl** | nein |
 | **E2E vor der Veröffentlichung** | **greift** | nein |
 | Strikte Release-Prüfung (`NUR_RELEASE=true`) | greift | nein |
-| **Branch-Protection auf `main`** | **nicht eingerichtet** | nein |
+| Schutz von `main` gegen Force-Push und Löschen | eingerichtet (Ruleset „main safety") | nein |
+| PR-Zwang auf `main` | **bewusst nicht eingerichtet** | nein |
 | CI grün | **ja, beide Workflows** | nein |
 
-Branch-Protection ist die einzige Einstellung, die dieses Repository nicht über
-sich selbst erzwingen kann.
+Der Schutz von `main` ist die einzige Einstellung, die dieses Repository nicht
+über sich selbst erzwingen kann. Eingerichtet sind die zwei Unfallbremsen:
+`main` lässt sich nicht löschen und nicht mit Force überschreiben.
+
+Ein **PR-Zwang mit Pflicht-Checks wurde bewusst nicht gesetzt.** Das Repository
+hat einen Betreiber, der seinen eigenen Pull Request nicht freigeben kann, und
+die Veröffentlichung ist ohnehin gesperrt: Der Pages-Workflow führt den
+religiösen Gate, die strikte Release-Prüfung und die Browser-Tests selbst aus,
+und der `deploy`-Job hängt an allen dreien. Ein versehentlicher Direkt-Push auf
+`main` würde also nicht veröffentlicht — er würde den Deployment-Lauf zum
+Fehlschlagen bringen und `main` so lange defekt lassen, bis jemand es bemerkt.
+
+Das ist der bekannte und akzeptierte Restpunkt, keine offene Aufgabe. Wer das
+später enger ziehen will, findet den passenden Aufruf in
+[RELEASE-OPERATIONS.md](RELEASE-OPERATIONS.md).
 
 ## OPERATIONS
 
@@ -246,9 +260,8 @@ Punkt 3 ist der kleinste und der einzige, der die App heute daran hindert,
 
 1. Gerätetests: Qibla, Benachrichtigungen, installierte PWA.
 2. Gebetszeitenabgleich mit örtlichen Referenzen.
-3. Branch-Protection auf `main`.
-4. Versionsanzeige und Support-Kontakt in der App.
-5. Lighthouse-Messung.
+3. Versionsanzeige und Support-Kontakt in der App.
+4. Lighthouse-Messung.
 
 ## Was technisch fertig ist
 

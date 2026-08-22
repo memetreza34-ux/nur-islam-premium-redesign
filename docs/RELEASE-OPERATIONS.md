@@ -94,6 +94,52 @@ auf dem alten Stand. Ein Rollback wirkt also nicht sofort für alle.
 - [ ] Prüfen, ob für einen schweren Fehler ein erzwungener Update-Pfad nötig ist
       (Cache-Version erhöhen, damit der alte Cache verworfen wird).
 
+### Schutz von `main`
+
+Ein Ruleset namens `main safety` verhindert Force-Push und Löschen des Branches.
+Mehr ist bewusst nicht gesetzt: Ein PR-Zwang bringt einem Ein-Personen-Repo
+wenig — der eigene Pull Request lässt sich nicht selbst freigeben — und die
+Veröffentlichung hängt ohnehin am Workflow.
+
+Falls das später enger werden soll, etwa weil jemand mitarbeitet:
+
+```bash
+gh api --method POST repos/memetreza34-ux/nur-islam-premium-redesign/rulesets --input - <<'EOF'
+{
+  "name": "main release protection",
+  "target": "branch",
+  "enforcement": "active",
+  "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
+  "rules": [
+    { "type": "deletion" },
+    { "type": "non_fast_forward" },
+    { "type": "pull_request", "parameters": {
+        "required_approving_review_count": 0,
+        "dismiss_stale_reviews_on_push": true,
+        "require_code_owner_review": false,
+        "require_last_push_approval": false,
+        "required_review_thread_resolution": false,
+        "allowed_merge_methods": ["merge", "squash", "rebase"] } },
+    { "type": "required_status_checks", "parameters": {
+        "strict_required_status_checks_policy": true,
+        "required_status_checks": [
+          { "context": "validate" },
+          { "context": "smoke" } ] } }
+  ]
+}
+EOF
+```
+
+Das vorhandene `main safety`-Ruleset vorher entfernen, sonst gelten beide.
+
+`v1-religious-content-release-gate` ist hier absichtlich **nicht** als
+Pflicht-Check aufgeführt. Als solcher würde er jeden Merge nach `main` sperren,
+bis alle 42 Inhaltsblöcke freigegeben sind — auch einen reinen Technik-Hotfix.
+Die Veröffentlichung sperrt er ohnehin, weil der Pages-Workflow ihn ausführt.
+Wer das trotzdem will, hängt die Zeile an die Liste an.
+
+---
+
 **Nicht rückgängig zu machen:** eine Änderung an der Cloud-Datenstruktur. Ein
 Restore mit einer nicht unterstützten `schema_version` wird abgelehnt — das ist
 richtig, heißt aber, dass ein Schema-Rückschritt Nutzerdaten unlesbar machen
