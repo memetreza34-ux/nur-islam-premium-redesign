@@ -379,7 +379,7 @@ function PremiumHome({
             progress={nextPrayer.progress}
             height={214}
             sky
-            footer={<PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" className="ds-arch__silhouette" fallback={<MosqueScene />} />}
+            footer={<PremiumImage src="/premium-assets/high-res-objects/dome-v2.webp" className="ds-arch__silhouette" fallback={<MosqueScene />} />}
           />
           <div className="prayer-mini-times">
             {PRAYER_SCHEDULE.map((prayer) => (

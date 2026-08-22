@@ -107,6 +107,12 @@
   padding: var(--ds-space-4) var(--ds-space-3) var(--ds-space-3);
 }
 
+/* With artwork at the base, the text stacks above it instead of over it. */
+.ds-arch:has(.ds-arch__footer) .ds-arch__content {
+  justify-content: flex-start;
+  padding-top: var(--ds-space-3);
+}
+
 /* The silhouette closes the arch at its base and carries the ground line.
    Masked away toward the top so it never reaches the text. */
 .ds-arch__footer {
@@ -115,7 +121,7 @@
   right: 0;
   bottom: 0;
   left: 0;
-  height: 58%;
+  height: 42%;
   overflow: hidden;
   pointer-events: none;
 }
@@ -126,7 +132,7 @@
   inset: auto 0 0 0 !important;
   width: 100% !important;
   height: 100% !important;
-  opacity: 0.28;
+  opacity: 0.72;
 }
 
 .ds-arch__footer img,
@@ -135,8 +141,10 @@
   height: 100%;
   object-fit: contain;
   object-position: bottom center;
-  mask-image: linear-gradient(180deg, transparent 0%, #000 58%);
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 58%);
+  /* Only the top edge fades, so the modelling and gold stay visible where the
+     text is not. The value block above it is what the fade protects. */
+  mask-image: linear-gradient(180deg, transparent 0%, #000 34%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%);
 }
 
 .ds-arch__track {

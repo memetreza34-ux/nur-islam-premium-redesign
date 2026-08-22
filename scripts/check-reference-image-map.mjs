@@ -91,7 +91,7 @@ function requireCssFit(source, label, selector, declarations) {
 }
 
 requireFragments(app, 'Home', [
-  'mosque-gold-v2.webp" className="ds-arch__silhouette"',
+  'dome-v2.webp" className="ds-arch__silhouette"',
   'quran-closed-v2.webp" fallback={<QuranObject />}',
   'tasbih-v2.webp" fallback={<RosetteObject />}',
   'qibla-compass-v2.webp" fallback={<QiblaObject />}',
