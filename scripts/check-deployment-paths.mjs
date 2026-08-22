@@ -63,11 +63,38 @@ for (const requirement of [
   'run: npm run check',
   'actions/upload-pages-artifact@v5',
   'actions/deploy-pages@v5',
+  // The religious approval gate is not part of `npm run check`, because a
+  // pending review is the normal state of unfinished work and would block every
+  // push. Publishing is the moment it has to hold, so the Pages workflow runs
+  // it directly — a pull request into main is not the only route to the public
+  // URL, and used not to be covered.
+  'node scripts/check-v1-religious-release-approval.mjs',
+  'npm run e2e',
 ]) {
   if (!pagesWorkflow.includes(requirement)) throw new Error(`Pages workflow is missing release safety: ${requirement}`);
 }
 if (pagesWorkflow.includes('branches: [premium-design-finish]')) {
   throw new Error('Pages workflow must not automatically deploy the draft premium-design-finish branch.');
+}
+
+// Naming the gates is not enough: the job that publishes has to depend on them.
+// Without this, moving a gate into a job nothing waits for would still read as
+// a gated workflow while deploying past it.
+const pagesJobs = pagesWorkflow.split(/\n  (?=[a-z][a-z0-9-]*:\n)/);
+const jobBlock = (name) => pagesJobs.find((block) => block.startsWith(`${name}:`) || block.includes(`\n  ${name}:\n`));
+const deployJob = jobBlock('deploy');
+const buildJob = jobBlock('build');
+if (!deployJob || !buildJob) {
+  throw new Error('Pages workflow no longer has separate build and deploy jobs; the publish gate cannot be verified.');
+}
+if (!deployJob.includes('actions/deploy-pages@v5')) {
+  throw new Error('The Pages deploy job is not the job that publishes; the dependency check below would prove nothing.');
+}
+if (!/needs: \[build, end-to-end\]/.test(deployJob)) {
+  throw new Error('Pages deploy job must wait for both the build/release checks and the end-to-end suite.');
+}
+if (!/needs: religious-release-gate/.test(buildJob)) {
+  throw new Error('Pages build job must wait for the religious release gate.');
 }
 
 for (const requirement of [

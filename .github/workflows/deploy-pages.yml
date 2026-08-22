@@ -15,7 +15,48 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Pages is the public release surface, so every gate that guards a release
+  # runs here — not only on the pull request that led to it. A direct push to
+  # main, or a manual dispatch, has to clear the same bar.
+  religious-release-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      # Deliberately not part of `npm run check`: that chain runs on every push
+      # and every local pre-push hook, where a pending review is the normal
+      # state of the work rather than a failure. Publishing is where it must
+      # hold.
+      - name: Require a documented approval for every religious content block
+        run: node scripts/check-v1-religious-release-approval.mjs
+
+  end-to-end:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 22
+      - run: npm ci --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      # Runs in its own job on purpose: the browser tests build with a root
+      # base path, which would overwrite the artifact the build job uploads.
+      - run: npm run e2e
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: playwright-report
+          path: |
+            playwright-report
+            test-results
+          retention-days: 7
+
   build:
+    needs: religious-release-gate
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -38,8 +79,11 @@ jobs:
         with:
           path: dist
 
+  # Nothing reaches the public URL unless the release gate, the full check
+  # chain and the browser tests have all passed. Uploading an artifact is not
+  # publishing; this job is.
   deploy:
-    needs: build
+    needs: [build, end-to-end]
     runs-on: ubuntu-latest
     environment:
       name: github-pages
