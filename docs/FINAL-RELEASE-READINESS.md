@@ -195,25 +195,27 @@ ob die App auf echten Geräten das tut, was hier steht.
 | **Religiöser Gate am Deployment** | **greift, Umgehung schlägt fehl** | nein |
 | **E2E vor der Veröffentlichung** | **greift** | nein |
 | Strikte Release-Prüfung (`NUR_RELEASE=true`) | greift | nein |
-| Schutz von `main` gegen Force-Push und Löschen | eingerichtet (Ruleset „main safety") | nein |
-| PR-Zwang auf `main` | **bewusst nicht eingerichtet** | nein |
+| **Schutz von `main`** | **eingerichtet: PR-Zwang, Pflicht-Checks, kein Force-Push, kein Löschen** | nein |
+| Umgehung durch Admins | nicht möglich (`current_user_can_bypass: never`) | nein |
+| Lokale Bremse gegen Direkt-Push | Pre-Push-Hook | nein |
 | CI grün | **ja, beide Workflows** | nein |
 
-Der Schutz von `main` ist die einzige Einstellung, die dieses Repository nicht
-über sich selbst erzwingen kann. Eingerichtet sind die zwei Unfallbremsen:
-`main` lässt sich nicht löschen und nicht mit Force überschreiben.
+Damit gibt es keinen Weg mehr, der an den Prüfungen vorbeiführt:
 
-Ein **PR-Zwang mit Pflicht-Checks wurde bewusst nicht gesetzt.** Das Repository
-hat einen Betreiber, der seinen eigenen Pull Request nicht freigeben kann, und
-die Veröffentlichung ist ohnehin gesperrt: Der Pages-Workflow führt den
-religiösen Gate, die strikte Release-Prüfung und die Browser-Tests selbst aus,
-und der `deploy`-Job hängt an allen dreien. Ein versehentlicher Direkt-Push auf
-`main` würde also nicht veröffentlicht — er würde den Deployment-Lauf zum
-Fehlschlagen bringen und `main` so lange defekt lassen, bis jemand es bemerkt.
+* **Veröffentlichen** ist gesperrt, weil der `deploy`-Job am religiösen Gate,
+  an der strikten Release-Prüfung und an den Browser-Tests hängt.
+* **Nach `main` mergen** verlangt einen Pull Request, in dem `validate` und
+  `smoke` grün sein müssen.
+* **Direkt pushen** lehnt GitHub ab, und schon vorher der Pre-Push-Hook.
+* **Historie überschreiben oder löschen** ist ausgeschlossen.
 
-Das ist der bekannte und akzeptierte Restpunkt, keine offene Aufgabe. Wer das
-später enger ziehen will, findet den passenden Aufruf in
-[RELEASE-OPERATIONS.md](RELEASE-OPERATIONS.md).
+Eine freigebende Review ist nicht verlangt (`required_approving_review_count: 0`),
+damit ein einzelner Betreiber seinen eigenen Pull Request mergen kann.
+
+Der religiöse Gate ist absichtlich **kein** Pflicht-Check für das Mergen. Als
+solcher würde er jeden Pull Request nach `main` sperren, bis alle 42 Blöcke
+freigegeben sind — auch einen reinen Technik-Hotfix. Die Veröffentlichung
+sperrt er ohnehin.
 
 ## OPERATIONS
 

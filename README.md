@@ -110,13 +110,11 @@ Uploading an artifact is not publishing.
 ### Manual repository settings
 
 - **Settings → Pages → Source: GitHub Actions**, once.
-- **Protection on `main`** — a ruleset named `main safety` blocks force pushes
-  and deletion. A pull-request requirement is deliberately *not* set: this
-  repository has one maintainer, who cannot approve their own pull request, and
-  publishing is gated by the workflow regardless. A stray direct push to `main`
-  therefore fails the deploy run rather than reaching the public URL — but it
-  does land, and leaves `main` broken until someone notices. See
-  docs/RELEASE-OPERATIONS.md to tighten this later.
+- **Protection on `main`** — configured. The ruleset `main safety` requires a
+  pull request, requires the `validate` and `smoke` checks to pass, and blocks
+  force pushes and deletion. Nobody can bypass it, including repository admins.
+  No approving review is required, so a single maintainer can still merge their
+  own pull request. See docs/RELEASE-OPERATIONS.md.
 - Optional: `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as Actions
   **variables**. Both are public client config, not secrets — the publishable
   key is meant to be readable in a browser bundle and is scoped by row-level

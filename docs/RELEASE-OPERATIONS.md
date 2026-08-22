@@ -96,60 +96,56 @@ auf dem alten Stand. Ein Rollback wirkt also nicht sofort für alle.
 
 ### Schutz von `main`
 
-Zwei Ebenen, absichtlich getrennt:
+Drei Ebenen, absichtlich getrennt.
 
-**Auf GitHub** verhindert ein Ruleset namens `main safety` Force-Push und
-Löschen des Branches. Das schützt die Historie.
+**Serverseitig** gilt das Ruleset `main safety` für den Standard-Branch:
 
-**Lokal** lehnt der Pre-Push-Hook einen Push auf `main` ab. Das fängt den
-tatsächlich wahrscheinlichen Unfall: ein `git push` aus dem falschen Branch.
+| Regel | Wirkung |
+| --- | --- |
+| `pull_request` | Direkt-Push abgelehnt; Änderungen laufen über einen PR |
+| `required_status_checks` | `validate` und `smoke` müssen grün sein, Branch muss aktuell sein |
+| `non_fast_forward` | kein Force-Push |
+| `deletion` | `main` lässt sich nicht löschen |
 
-Der Hook wirkt nur auf Rechnern, auf denen `npm install` gelaufen ist, und ist
-mit `git push --no-verify` umgehbar — das ist beabsichtigt, weil ein bewusster
-Direkt-Push dann eine bewusste Handlung bleibt und kein Versehen.
+Ohne Bypass — auch Repository-Admins nicht (`current_user_can_bypass: never`).
+Eine freigebende Review ist nicht verlangt, damit ein einzelner Betreiber
+seinen eigenen Pull Request mergen kann.
 
-Serverseitig fehlt damit nur noch der PR-Zwang. Der würde den Direkt-Push
-endgültig unmöglich machen, auch von einem fremden Rechner oder über die
-Weboberfläche. Kosten: jede Änderung an `main` läuft über einen Pull Request.
-Freigeben musst du ihn nicht selbst — mit `required_approving_review_count: 0`
-ist der PR ein Pflichtschritt, keine Freigabepflicht.
+**Lokal** lehnt der Pre-Push-Hook einen Push auf `main` bereits ab, bevor er
+das Gerät verlässt. Er ist mit `git push --no-verify` umgehbar — das Ruleset
+danach nicht.
 
-Falls das später enger werden soll, etwa weil jemand mitarbeitet:
+**Im Deployment** hängt der `deploy`-Job am religiösen Gate, an
+`NUR_RELEASE=true npm run check` und an den Browser-Tests.
+
+`v1-religious-content-release-gate` ist absichtlich **kein** Pflicht-Check für
+das Mergen. Als solcher würde er jeden Pull Request nach `main` sperren, bis
+alle 42 Inhaltsblöcke freigegeben sind — auch einen reinen Technik-Hotfix. Die
+Veröffentlichung sperrt er ohnehin, weil der Pages-Workflow ihn ausführt.
+
+### Ablauf für eine Änderung an `main`
 
 ```bash
-gh api --method POST repos/memetreza34-ux/nur-islam-premium-redesign/rulesets --input - <<'EOF'
-{
-  "name": "main release protection",
-  "target": "branch",
-  "enforcement": "active",
-  "conditions": { "ref_name": { "include": ["~DEFAULT_BRANCH"], "exclude": [] } },
-  "rules": [
-    { "type": "deletion" },
-    { "type": "non_fast_forward" },
-    { "type": "pull_request", "parameters": {
-        "required_approving_review_count": 0,
-        "dismiss_stale_reviews_on_push": true,
-        "require_code_owner_review": false,
-        "require_last_push_approval": false,
-        "required_review_thread_resolution": false,
-        "allowed_merge_methods": ["merge", "squash", "rebase"] } },
-    { "type": "required_status_checks", "parameters": {
-        "strict_required_status_checks_policy": true,
-        "required_status_checks": [
-          { "context": "validate" },
-          { "context": "smoke" } ] } }
-  ]
-}
-EOF
+git switch -c fix/kurzer-name
+# arbeiten, committen
+git push -u origin fix/kurzer-name
+gh pr create --base main
 ```
 
-Das vorhandene `main safety`-Ruleset vorher entfernen, sonst gelten beide.
+Sobald `validate` und `smoke` grün sind, lässt sich der PR mergen. Verlangt
+GitHub vorher ein Update, weil `main` weitergelaufen ist:
 
-`v1-religious-content-release-gate` ist hier absichtlich **nicht** als
-Pflicht-Check aufgeführt. Als solcher würde er jeden Merge nach `main` sperren,
-bis alle 42 Inhaltsblöcke freigegeben sind — auch einen reinen Technik-Hotfix.
-Die Veröffentlichung sperrt er ohnehin, weil der Pages-Workflow ihn ausführt.
-Wer das trotzdem will, hängt die Zeile an die Liste an.
+```bash
+git fetch origin && git rebase origin/main && git push --force-with-lease
+```
+
+### Regeln ansehen oder ändern
+
+```bash
+gh api repos/memetreza34-ux/nur-islam-premium-redesign/rules/branches/main --jq '.[].type'
+```
+
+Bearbeiten im Browser unter Settings → Rules → Rulesets → `main safety`.
 
 ---
 
