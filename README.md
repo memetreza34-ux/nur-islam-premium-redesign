@@ -1,72 +1,128 @@
 # Nur Islam Premium Redesign
 
-Premium redesign and functional hardening branch for the Nur Islam app.
+Progressive web app for the Nur Islam project: prayer times, Qibla, the full
+Quran offline, Dhikr, Duas, an Islamic calendar and a guided path for people who
+are new to Islam.
 
-## Active development branch
+## Branches
 
-The complete application lives on `premium-home-redesign`. The current design + functionality stabilization work is developed on `premium-design-finish` and reviewed through PR #2 before it is merged back.
+| Branch | Role |
+| --- | --- |
+| `main` | What GitHub Pages publishes. Nothing else deploys. |
+| `feat/v1-beginner-release-plan` | Current working branch for the v1 release. |
 
-## Current priorities
+Older branches (`premium-home-redesign`, `premium-design-finish`) are historical.
+They no longer deploy anything and are not where work happens.
 
-1. Premium, consistent mobile-first design across all core screens.
-2. Every visible control should either perform a real action or clearly be presented as informational.
-3. Persisted user progress must be reflected consistently on Home, Quran, Dhikr, collections and learning screens.
-4. Prayer times, reminders and direct PWA navigation must share the same current schedule.
-5. Account, cloud backup and cloud notes use the isolated `nur_islam_*` Supabase tables with RLS and least-privilege CRUD grants.
-6. Religious content that has not completed an independent scholarly/editorial review remains visibly marked and must not be presented as release-certified.
+## What "done" means here
 
-## Functional hardening completed on `premium-design-finish`
+The app is functionally far along. What stands between it and a public release
+is mostly **not** code — see [docs/V1-RELIGIOUS-RELEASE-GATE.md](docs/V1-RELIGIOUS-RELEASE-GATE.md)
+and the status table below.
 
-- Home resumes the real last-read Quran Surah and Ayah and shows actual Dhikr totals.
-- Quran bookmarks are detected across all 114 Surahs and deep-link to the exact saved Ayah.
-- Saved Duas, Names and calendar dates open their exact saved content.
-- Quran reader controls shown to users are functional; the old fake audio placeholder was removed.
-- Daily Ayah/Hadith copy and share actions use browser APIs instead of toast-only demo actions.
-- The Nur Assistant answers only supported local source-backed topics and refuses to invent unsupported religious answers.
-- Fasting reminders are connected to the shared calendar reminder scheduler.
-- Standby mode displays live next-prayer data and uses the browser Fullscreen API.
-- The Zakat screen provides a transparent 2.5% planning calculation without pretending to decide religious obligation.
-- Prayer reminders start only after the initial shared prayer-time bootstrap, avoiding a fallback/live timing race.
-- Wudu/Salah guide completion is persisted.
-- Supabase `authenticated` access to Nur Islam tables is limited to SELECT/INSERT/UPDATE/DELETE and scoped by RLS.
-- Static regression checks were updated to match the current centralized navigation and reminder architecture.
+| Area | State |
+| --- | --- |
+| Check chain, unit tests, browser tests | green locally (see *Validation*) |
+| Religious content review | **42 blocks, all `pending`** — needs a qualified human reviewer |
+| Quran text | wording verified, **licence unresolved** — see [docs/QURAN-PROVENANCE.md](docs/QURAN-PROVENANCE.md) |
+| Imprint / privacy | operator details still a placeholder; release build refuses to pass without them |
+| Real device QA | not done — Qibla, notifications and prayer times need physical devices |
+
+## Content honesty rules
+
+These are enforced by checks, not conventions, because each of them was a real
+defect at some point:
+
+1. Religious content that has not passed an independent review stays visibly
+   marked and cannot be presented as release-certified.
+2. Without a device location the app shows **no** personal prayer times and
+   **no** personal Qibla bearing. The bundled fallback schedule deliberately
+   contains no clock values, and prayer reminders will not fire on it.
+3. The Islamic day turns at Maghrib. When no trusted Maghrib time is available,
+   the app says so rather than silently using midnight — see
+   `src/services/islamicDay.ts`.
+4. Legacy features that have not been reviewed stay out of public navigation,
+   however finished their code looks (`src/data/legacyFeatures.ts`).
+5. Every visible control performs a real action or is clearly presented as
+   informational.
+6. The bundled Quran is pinned by sha256 digest; a single altered ayah fails the
+   build.
 
 ## Validation
-
-The intended full validation command is:
 
 ```bash
 npm run check
 ```
 
-It covers content/data checks, navigation and interaction checks, release and functional-hardening checks, unit tests (`vitest run`), TypeScript (`tsc --noEmit`) and the Vite production build.
+57 source and data checks, then `vitest run` (228 tests), `tsc --noEmit`, the
+Vite production build and the bundle budget. Takes about a minute.
+
+```bash
+npm run e2e
+```
+
+Playwright against the production build at a phone viewport: 10 spec files
+covering the core flows, the beginner path, offline behaviour, empty states,
+layout, light-theme contrast and reduced motion. Two capture specs are skipped
+unless `SHOT_DIR` or `SNAP` is set.
+
+```bash
+npm run quran:verify
+```
+
+Compares every bundled ayah against the published edition at Al Quran Cloud.
+Network-bound, so deliberately not part of `npm run check`. Run it whenever the
+Quran bundle is touched and record the result in `docs/QURAN-PROVENANCE.md`.
 
 ### Pre-push hook
 
-While Actions cannot run, a local hook is the only automated gate before the shared branch, and red commits have reached it more than once. `npm install` enables it automatically, so there is nothing to remember.
-
-It runs `npm run check` and refuses the push when it fails, which costs about a minute per push. Bypass deliberately with `git push --no-verify`.
-
-If it ever needs enabling by hand:
+`npm install` enables it. It runs `npm run check` and refuses a failing push.
+Bypass deliberately with `git push --no-verify`. To enable by hand:
 
 ```bash
 git config core.hooksPath .githooks
 ```
 
-GitHub Actions is configured for `premium-design-finish`, but at the time of this branch update GitHub is refusing to start runner steps because of an account billing/spending-limit issue. Therefore the complete `npm run check`, TypeScript build validation and real browser/device QA have **not** yet been certified for this branch. The source-level regression suite has been updated to represent the intended behavior, but it still needs an executable runner before release.
-
 ## Deployment
 
-`.github/workflows/deploy-pages.yml` builds the app and publishes `dist/` to GitHub Pages on every push to `premium-design-finish`. The build already targets `/nur-islam-premium-redesign/` as its base path, which matches the default GitHub Pages project URL, so no further routing changes are needed.
+`.github/workflows/deploy-pages.yml` publishes `dist/` to GitHub Pages on push
+to `main`. The build targets `/nur-islam-premium-redesign/`, which matches the
+default project URL.
 
-One manual, one-time step, in the repository's **Settings → Pages**: set **Source** to **GitHub Actions**. Until that is done, the workflow runs but has nowhere to publish to.
+Publishing waits on three separate jobs, so there is no path to the public URL
+that skips a gate:
 
-This also needs the same GitHub Actions billing fix as the check workflow above — neither can run while that is blocked.
+1. `religious-release-gate` — every religious content block needs a documented
+   approval. This is not part of `npm run check`, because a pending review is
+   the normal state of unfinished work and would block every push; publishing is
+   where it has to hold.
+2. `build` — `NUR_RELEASE=true npm run check`, which fails on legal placeholders
+   and every other guarded regression, then uploads the artifact.
+3. `end-to-end` — the Playwright suite. Separate from `build` because the
+   browser tests build with a root base path, which would overwrite the artifact
+   with one that cannot work under the Pages sub-path.
 
-Optional: set `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as repository Actions **variables** (Settings → Secrets and variables → Actions → Variables) to build against a specific Supabase project. Both are the public client key and project URL — not secrets, since the publishable key is meant to be readable in a browser bundle and is scoped by row-level security. Leaving them unset builds against the same public default the code already falls back to locally.
+`deploy` depends on `build` and `end-to-end`; `build` depends on the gate.
+Uploading an artifact is not publishing.
+
+### Manual repository settings
+
+- **Settings → Pages → Source: GitHub Actions**, once.
+- **Branch protection on `main`** — currently **not configured**. Without it a
+  direct push still bypasses pull-request review; the workflow gates hold, but
+  the review does not. Require a pull request, plus the `Premium redesign
+  check`, `End-to-end smoke` and religious-gate checks.
+- Optional: `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY` as Actions
+  **variables**. Both are public client config, not secrets — the publishable
+  key is meant to be readable in a browser bundle and is scoped by row-level
+  security. Unset builds against the same public default the code falls back to.
 
 ## Backend
 
-Supabase resources are intentionally namespaced with `nur_islam_*` so this app does not overwrite tables belonging to other projects in the shared Supabase project.
+Supabase resources are namespaced `nur_islam_*` so this app cannot overwrite
+tables belonging to other projects in a shared Supabase project. Access for the
+`authenticated` role is limited to SELECT/INSERT/UPDATE/DELETE and scoped by
+row-level security on `auth.uid() = user_id`.
 
-Never place a Supabase service-role key in the frontend. Only the public/publishable client key belongs in a browser build.
+Never put a Supabase service-role key in the frontend. Only the
+public/publishable client key belongs in a browser build.
