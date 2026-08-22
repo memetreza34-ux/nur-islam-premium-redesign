@@ -36,9 +36,21 @@ const BUDGET = {
   // Premium adds one deliberately isolated stylesheet for a genuinely new
   // product surface (plans, routines, widgets, statistics and local settings),
   // rather than another lock/parallel override layer. It adds no `!important`.
-  files: 98,
+  // The design system adds the 99th file, and it is the one file here that
+  // exists to make the others unnecessary: a single scale per decision
+  // (colour, type, space, radius, shadow) plus the mihrab arch that carries
+  // the focus on every screen. It is not a 34th override layer — it is the
+  // layer the overrides were standing in for.
+  //
+  // `!important` drops rather than grows, because the navigation moved back
+  // into navigation.css and the 36 rules that were fighting it across ten
+  // other stylesheets went with it — 27 of them `!important`. The bar is now
+  // 68px in the document flow instead of a 96px fixed strip over the content,
+  // and the active tab is marked by an arch cap rather than a pill that
+  // clipped its own label.
+  files: 99,
   overrideFiles: 33,
-  importantRules: 2285,
+  importantRules: 2278,
   // Raised three times now, each for surface that did not exist: the prayer
   // sequence (Arabic wording, transliteration and German meaning for every
   // spoken step), the calendar's occasions, which now explain what a day is and
@@ -94,7 +106,9 @@ const BUDGET = {
   // budget is meant to allow; dynamic-classes:check now fails before such a
   // removal can land again.
   // Premium's new isolated surface adds exactly 21,161 bytes and no lock layer.
-  totalBytes: 754_839,
+  // The design system costs ~5.4 KB and takes ~4.7 KB of dead navigation rules
+  // out of ten other files in the same commit, so the net is under 1 KB.
+  totalBytes: 755_519,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

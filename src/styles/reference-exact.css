@@ -316,45 +316,19 @@ body {
   background: linear-gradient(145deg, rgba(16, 55, 43, .78), rgba(4, 25, 20, .91));
 }
 
-.bottom-nav {
-  bottom: max(9px, env(safe-area-inset-bottom));
-  width: min(calc(100% - 22px), 408px);
-  min-height: 67px;
-  padding: 7px 8px;
-  border-color: rgba(212, 175, 55, .24);
-  border-radius: 22px;
-  background: rgba(4, 20, 16, .94);
-  box-shadow: 0 17px 42px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .035);
-  backdrop-filter: blur(22px);
-}
 
-.bottom-nav__item {
-  gap: 3px;
-  min-height: 51px;
-  border-radius: 14px;
-  color: rgba(154, 168, 155, .78);
-}
 
-.bottom-nav__item > span {
-  width: 29px;
-  height: 29px;
-  border-radius: 10px;
-}
+
+
+
 
 .bottom-nav__item small {
   font-size: .5rem;
 }
 
-.bottom-nav__item--active {
-  color: var(--gold-soft);
-  background: rgba(212, 175, 55, .055);
-}
 
-.bottom-nav__item--active > span {
-  color: #f2d79b;
-  background: rgba(212, 175, 55, .1);
-  box-shadow: none;
-}
+
+
 
 .prayer-page-header,
 .calendar-page-header{

@@ -104,6 +104,9 @@
 @import './styles/premium-readable-type-lock.css';
 @import './styles/premium-reference-geometry-lock.css';
 
+/* Design system: one scale per decision. Loaded last so it settles the layers above. */
+@import './styles/nur-design-system.css';
+
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
   position: static;

@@ -90,17 +90,16 @@ requireTokens('moreControls', [
   'border-radius:28px',
   'linear-gradient(160deg,#0d5743,#00120f)',
 ]);
+// 68px in the flow, arch cap as the active marker, no pill and no radius.
 requireTokens('navigation', [
-  'border-radius: 24px',
   '.bottom-nav__item {',
-  'border-radius: 16px',
-  '.bottom-nav__item > span {',
-  'border-radius: 10px',
+  '.bottom-nav__item--active::before',
+  'border-top: 1px solid rgba(226, 191, 119, 0.14)',
   'white-space: nowrap',
-  'color: #f3d996',
-  'box-shadow: none',
-  '@media (max-height: 720px)',
+  'color: #f2d79a',
+  'env(safe-area-inset-bottom)',
 ]);
+forbidTokens('navigation', ['position: fixed', 'border-radius: 24px', 'border-radius: 16px']);
 
 forbidTokens('prayer', [
   'border-radius:24px', 'border-radius:22px', 'border-radius:32px', 'border-radius:15px', 'border-radius:16px',

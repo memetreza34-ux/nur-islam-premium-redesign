@@ -72,16 +72,15 @@ requireTokens(homeExact, 'Home exact header source', [
   'background: rgba(0, 27, 22, .72)',
 ]);
 
-requireTokens(atmosphere, 'Atmosphere and navigation source', [
+// Navigation styling moved out of this layer into navigation.css; what stays
+// here is the screen atmosphere itself.
+requireTokens(atmosphere, 'Atmosphere source', [
   'linear-gradient(180deg, #001b16 0%, #00120f 55%, #000b09 100%)',
-  'rgba(0, 27, 22, .92)',
-  'background: linear-gradient(90deg, transparent, #e2bf77, transparent)',
   'caret-color: #e2bf77',
-  'border-radius: 26px !important',
 ]);
 
 requireTokens(app, 'Home artwork map', [
-  'mosque-gold-v2.webp" className="welcome-hero__visual"',
+  'mosque-gold-v2.webp" className="ds-arch__silhouette"',
   'quran-closed-v2.webp" fallback={<QuranObject />}',
   'tasbih-v2.webp" fallback={<RosetteObject />}',
   'qibla-compass-v2.webp" fallback={<QiblaObject />}',
@@ -161,8 +160,11 @@ for (const [file, source, forbidden] of forbiddenHomeSourceTokens) {
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('Home reference geometry/crop protection is unsafe because the final lock is not the last stylesheet import.');
+if (importedLayers.at(-1) !== 'nur-design-system.css') {
+  throw new Error('Home reference geometry/crop protection is unsafe because the design system is not the last stylesheet import.');
+}
+if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
+  throw new Error('Home reference geometry/crop protection is unsafe because the final lock does not load directly before the design system.');
 }
 
 const homeLayers = `${homeHero}\n${homeContent}\n${homeExact}\n${artDirection}\n${artComposition}\n${atmosphere}`;
@@ -170,4 +172,4 @@ if (homeLayers.includes('content: url(') || homeLayers.includes('content:url('))
   throw new Error('Home visual CSS must not swap React image sources via content:url(...).');
 }
 
-console.log('Home reference audit verified: Home uses honest Quran progress with an explicit zero-progress start state, Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the final geometry lock remains the last stylesheet import.');
+console.log('Home reference audit verified: Home uses honest Quran progress with an explicit zero-progress start state, Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the design system remains the last stylesheet import, directly after the geometry lock.');

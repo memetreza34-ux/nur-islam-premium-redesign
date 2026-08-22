@@ -67,12 +67,14 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 .background-orbit--two { width: 340px; height: 340px; left: -230px; top: 42vh; }
 
 .app-shell {
+  --shell-pad: 16px;
   position: relative;
   width: min(100%, 470px);
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: max(18px, env(safe-area-inset-top)) 18px calc(110px + env(safe-area-inset-bottom));
+  /* No bottom reserve: the navigation sits in the flow at the end of the column. */
+  padding: max(18px, env(safe-area-inset-top)) var(--shell-pad) 0;
 }
 
 .screen { display: grid; gap: 22px; }
@@ -149,10 +151,10 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
 }
 
 @media (max-width: 380px) {
-  .app-shell { padding-inline: 13px; }}
+  .app-shell { --shell-pad: 13px; }}
 
 @media (min-width: 760px) {
-  .app-shell { width: min(100%, 520px); padding-inline: 24px; }}
+  .app-shell { width: min(100%, 520px); --shell-pad: 24px; }}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

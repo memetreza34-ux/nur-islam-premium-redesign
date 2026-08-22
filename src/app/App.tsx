@@ -41,6 +41,7 @@ import { DhikrScreen } from '../screens/DhikrScreen';
 import { MosqueScreen } from '../screens/DiscoveryScreens';
 import { DuasScreen } from '../screens/DuasScreen';
 import { InstallAppPrompt } from '../shared/InstallAppPrompt';
+import { MihrabArch } from '../shared/MihrabArch';
 import { LearnScreen } from '../screens/LearnScreen';
 import { LegalScreen } from '../screens/LegalScreen';
 // Split out of the initial bundle: these thirteen screens carry the quiz
@@ -359,45 +360,32 @@ function PremiumHome({
         </div>
       </header>
 
-      <section className="welcome-hero">
-        <div className="welcome-hero__shade" />
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" className="welcome-hero__visual" fallback={<MosqueScene />} />
-        <div className="welcome-hero__copy">
-          <span className="overline">Assalamu Alaikum</span>
-          <h1>{greeting}</h1>
-          <p>Möge Allah deinen Tag segnen, dir Frieden schenken und dich im Guten bestärken.</p>
-        </div>
-        <button className="welcome-hero__date" onClick={() => onNavigate('calendar')}>
-          <span className="welcome-hero__date-day">{now.getDate()}</span>
-          <span><strong>{islamicDate}</strong><small>Islamischer Kalender</small></span>
-          <CalendarDays size={20} />
+      <section className="home-standfirst" aria-label="Ort und Datum">
+        <span className="home-standfirst__place"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
+        <button className="home-standfirst__date" onClick={() => onNavigate('calendar')}>
+          <CalendarDays size={15} />
+          <span>{islamicDate}</span>
         </button>
       </section>
 
       <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
         <div className="prayer-hero__content">
-          <div className="hero-meta">
-            <span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
-            <span className="location"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
-          </div>
-          <div className="hero-main">
-            <div>
-              <span className="arabic-label">{nextPrayer.prayer.arabic}</span>
-              <h2>{nextPrayer.prayer.label}</h2>
-              <div className="countdown">{nextPrayer.tomorrow ? 'morgen in ' : 'in '}{formatPrayerRemaining(nextPrayer.remaining)}</div>
-            </div>
-            <div className="hero-orb">
-              <span className="hero-orb__ring" />
-              <PrayerVisual visual={nextPrayer.prayer.visual} size={31} />
-              <strong>{nextPrayer.prayer.time}</strong>
-            </div>
-          </div>
+          <MihrabArch
+            overline={nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}
+            title={nextPrayer.prayer.label}
+            titleArabic={nextPrayer.prayer.arabic}
+            value={nextPrayer.prayer.time}
+            meta={`${nextPrayer.tomorrow ? 'morgen in ' : 'in '}${formatPrayerRemaining(nextPrayer.remaining)}`}
+            progress={nextPrayer.progress}
+            height={214}
+            footer={<PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" className="ds-arch__silhouette" fallback={<MosqueScene />} />}
+          />
           <div className="prayer-mini-times">
             {PRAYER_SCHEDULE.map((prayer) => (
               <span className={prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
                 <PrayerVisual visual={prayer.visual} />
                 <small>{prayer.compactLabel}</small>
-                <strong>{prayer.time}</strong>
+                <strong className="ds-num">{prayer.time}</strong>
               </span>
             ))}
           </div>

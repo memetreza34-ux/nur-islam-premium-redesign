@@ -1,8 +1,4 @@
-/* Mobile keyboard focus guardrail. Presentation only. */
 
-.bottom-nav {
-  transition: opacity .18s ease, visibility .18s ease, border-color .18s ease, background .18s ease;
-}
 
 @supports selector(body:has(input:focus)) {
   @media (pointer: coarse) {
@@ -21,6 +17,4 @@
     }}}
 
 @media (prefers-reduced-motion: reduce) {
-  .bottom-nav {
-    transition: none !important;
-  }}
+  }

@@ -198,22 +198,10 @@ html:not([data-theme='light']) :where(
   background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
 }
 
-/* One calm active surface replaces the former nested glowing icon box. */
-.bottom-nav {
-  border-radius: 24px !important;
-  background: linear-gradient(150deg, rgba(5, 35, 27, .965), rgba(1, 20, 15, .975)) !important;
-}
-.bottom-nav__item { border-radius: 16px !important; }
-.bottom-nav__item > span {
-  border: 0 !important;
-  border-radius: 10px !important;
-  background: transparent !important;
-  box-shadow: none !important;
-}
-.bottom-nav__item--active {
-  color: #f3d996 !important;
-  background: linear-gradient(145deg, rgba(226, 191, 119, .14), rgba(226, 191, 119, .045)) !important;
-}
+
+
+
+
 
 [data-theme='light'] .app-shell--detail .reference-screen-header {
   border-color: rgba(117, 87, 37, .16) !important;

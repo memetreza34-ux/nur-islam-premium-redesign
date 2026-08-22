@@ -34,49 +34,6 @@
   backdrop-filter: blur(22px) saturate(1.06) !important;
 }
 
-/* ---------- Bottom navigation ---------- */
-.bottom-nav {
-  border-color: rgba(226, 191, 119, .22) !important;
-  background:
-    radial-gradient(circle at 50% 0%, rgba(226, 191, 119, .045), transparent 11rem),
-    rgba(0, 27, 22, .92) !important;
-  box-shadow:
-    0 24px 58px rgba(0, 0, 0, .48),
-    inset 0 1px 0 rgba(255, 255, 255, .035) !important;
-  -webkit-backdrop-filter: blur(28px) saturate(1.08) !important;
-  backdrop-filter: blur(28px) saturate(1.08) !important;
-}
-
-.bottom-nav__item {
-  transition: color .2s ease, background .2s ease;
-}
-
-.bottom-nav__item > span {
-  position: relative;
-  transition: border-color .2s ease, background .2s ease, box-shadow .22s ease, translate .22s ease;
-}
-
-.bottom-nav__item--active > span {
-  border-color: rgba(242, 215, 154, .28) !important;
-  background:
-    radial-gradient(circle, rgba(242, 215, 154, .13), rgba(226, 191, 119, .06) 64%, transparent 65%) !important;
-  box-shadow:
-    0 0 19px rgba(226, 191, 119, .09),
-    inset 0 1px 0 rgba(255, 255, 255, .045) !important;
-}
-
-.bottom-nav__item--active > span::after {
-  content: '';
-  position: absolute;
-  right: 8px;
-  bottom: -5px;
-  left: 8px;
-  height: 2px;
-  border-radius: 999px;
-  background: linear-gradient(90deg, transparent, #e2bf77, transparent);
-  box-shadow: 0 0 9px rgba(226, 191, 119, .28);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .bottom-nav__item:hover > span {
     translate: 0 -1px;
@@ -225,20 +182,9 @@ button:active:not(:disabled) {
 }
 
 @media (max-width: 350px) {
-  .bottom-nav {
-    width: min(calc(100% - 16px), 440px) !important;
-    padding: 6px !important;
-    border-radius: 26px !important;
+  
+
   }
 
-  .bottom-nav__item > span {
-    width: 34px;
-    height: 34px;
-  }}
-
 @media (prefers-reduced-motion: reduce) {
-  .bottom-nav__item,
-  .bottom-nav__item > span {
-    transition: none !important;
-    translate: none !important;
-  }}
+  }

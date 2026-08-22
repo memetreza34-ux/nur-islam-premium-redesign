@@ -140,23 +140,11 @@ textarea:focus-visible {
   stroke-width: var(--icon-stroke);
 }
 
-.bottom-nav {
-  min-height: 72px;
-  padding: 7px 8px;
-  border-radius: 26px;
-}
 
-.bottom-nav__item {
-  min-height: 56px;
-  gap: 4px;
-  border-radius: 18px;
-}
 
-.bottom-nav__item > span {
-  width: 37px;
-  height: 37px;
-  border-radius: 13px;
-}
+
+
+
 
 .bottom-nav__item small {
   font-size: .58rem;

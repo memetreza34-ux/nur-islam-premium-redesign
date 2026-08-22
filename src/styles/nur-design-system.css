@@ -1,0 +1,369 @@
+/* Nur Islam design system — one scale per decision.
+   Loaded last so it wins over the historical layered stylesheets. */
+
+:root {
+  --ds-ink-900: #00120f;
+  --ds-ink-800: #001b16;
+  --ds-ink-700: #04241d;
+  --ds-ink-600: #0a3629;
+  --ds-gold: #e2bf77;
+  --ds-gold-lt: #f2d79a;
+  --ds-gold-dk: #8d6d39;
+  --ds-cream-hi: #fff8ea;
+  --ds-cream: #f6ebd6;
+  --ds-muted: #b9b09f;
+
+  --ds-space-1: 4px;
+  --ds-space-2: 8px;
+  --ds-space-3: 12px;
+  --ds-space-4: 16px;
+  --ds-space-6: 24px;
+  --ds-space-8: 32px;
+  --ds-screen-edge: 16px;
+  --ds-block-gap: 12px;
+  --ds-row-height: 46px;
+  --ds-tap-min: 44px;
+
+  --ds-radius-1: 6px;
+  --ds-radius-2: 10px;
+  --ds-radius-3: 14px;
+  --ds-radius-4: 20px;
+  --ds-radius-pill: 999px;
+
+  --ds-sh-1: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --ds-sh-2: 0 4px 12px rgba(0, 0, 0, 0.32);
+  --ds-sh-3: 0 12px 32px rgba(0, 0, 0, 0.4);
+  --ds-glow: 0 0 22px rgba(226, 191, 119, 0.22);
+
+  --ds-nav-height: 68px;
+  --ds-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Numbers are not text: tabular figures everywhere a value is read in a column. */
+.ds-num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+/* ---------- Signature: the mihrab arch ---------- */
+
+.ds-arch {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.ds-arch__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.ds-arch__content {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: var(--ds-space-6);
+}
+
+/* The silhouette closes the arch at its base and carries the ground line.
+   Masked away toward the top so it never reaches the text. */
+.ds-arch__footer {
+  position: absolute;
+  z-index: 1;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 58%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.ds-arch__silhouette,
+.ds-arch__footer > * {
+  position: absolute !important;
+  inset: auto 0 0 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0.28;
+}
+
+.ds-arch__footer img,
+.ds-arch__footer svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: bottom center;
+  mask-image: linear-gradient(180deg, transparent 0%, #000 58%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 58%);
+}
+
+.ds-arch__track {
+  fill: none;
+  stroke: rgba(226, 191, 119, 0.18);
+  stroke-width: 3;
+}
+
+.ds-arch__progress {
+  fill: none;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transition: stroke-dasharray 700ms var(--ds-ease);
+}
+
+.ds-arch__overline {
+  font: 700 9.5px/1 Inter, system-ui, sans-serif;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ds-gold);
+}
+
+.ds-arch__name {
+  margin-top: 7px;
+  font: 600 19px/1.1 'Cormorant Garamond', Georgia, serif;
+  color: var(--ds-cream);
+}
+
+.ds-arch__name-arabic {
+  font-family: Amiri, serif;
+  font-size: 15px;
+  color: var(--ds-gold);
+}
+
+.ds-arch__value {
+  margin-top: 2px;
+  font: 600 52px/1 Inter, system-ui, sans-serif;
+  letter-spacing: -0.035em;
+  color: var(--ds-cream-hi);
+}
+
+.ds-arch__meta {
+  margin-top: 9px;
+  padding: 5px 12px;
+  border: 1px solid rgba(226, 191, 119, 0.34);
+  border-radius: var(--ds-radius-pill);
+  font: 600 11.5px/1 Inter, system-ui, sans-serif;
+  color: var(--ds-gold-lt);
+  background: rgba(226, 191, 119, 0.1);
+}
+
+/* ---------- Start: place and date replace the welcome hero ----------
+   The greeting block cost 300+ px to say nothing actionable. The brand bar
+   was absolutely positioned into that block's padding; with the block gone
+   it belongs in the flow like everything else. */
+
+.premium-home--v2 .brand-bar,
+.brand-bar {
+  position: static !important;
+  inset: auto !important;
+  margin-bottom: var(--ds-space-2) !important;
+}
+
+.home-standfirst {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-3);
+  min-height: 56px;
+}
+
+.home-standfirst__place {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font: 600 11.5px/1.3 Inter, system-ui, sans-serif;
+  color: var(--ds-muted);
+}
+
+.home-standfirst__place svg { color: var(--ds-gold); }
+
+.home-standfirst__date {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: var(--ds-tap-min);
+  padding: 0 var(--ds-space-3);
+  border: 1px solid rgba(226, 191, 119, 0.22);
+  border-radius: var(--ds-radius-2);
+  font: 600 11.5px/1.3 Inter, system-ui, sans-serif;
+  color: var(--ds-cream);
+  background: rgba(255, 255, 255, 0.035);
+  cursor: pointer;
+  transition: transform 140ms var(--ds-ease), border-color 140ms var(--ds-ease);
+}
+
+.home-standfirst__date svg { color: var(--ds-gold); }
+.home-standfirst__date:active { transform: scale(0.965); }
+
+/* One block gap for the whole screen, instead of 22px between everything. */
+.premium-home--v2.screen,
+.premium-home--v2 { gap: var(--ds-block-gap) !important; }
+
+/* The arch carries the focus, so the panel around it stops adding its own. */
+.prayer-hero--v2 {
+  padding: var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-4) !important;
+}
+
+.prayer-hero--v2 .prayer-hero__content { gap: var(--ds-space-3) !important; }
+
+/* Six times on one row: a glance, not a second card. */
+.premium-home--v2 .prayer-mini-times {
+  display: grid !important;
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: var(--ds-space-1) !important;
+  padding: var(--ds-space-2) var(--ds-space-1) !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.premium-home--v2 .prayer-mini-times > span {
+  gap: 3px !important;
+  padding: 5px 2px !important;
+  border-radius: var(--ds-radius-1) !important;
+}
+
+.premium-home--v2 .prayer-mini-times small { font-size: 9.5px !important; }
+
+.premium-home--v2 .prayer-mini-times strong {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 11px !important;
+  font-variant-numeric: tabular-nums !important;
+}
+
+.premium-home--v2 .prayer-mini-times svg { width: 15px !important; height: 15px !important; }
+
+/* The Gebet tab already leads here — the screen does not need a second door. */
+.premium-home--v2 .prayer-hero--v2 .gold-button { display: none !important; }
+
+.premium-home--v2 .prayer-source-note {
+  padding: 0 var(--ds-space-1) !important;
+  border: 0 !important;
+  background: none !important;
+  font-size: 9.5px !important;
+  line-height: 1.45 !important;
+}
+
+/* ---------- Problems 03 + 04: navigation sat over the content ----------
+   Shape and behaviour live in navigation.css and base.css. These settle the
+   remaining pill and float that later layers still declare — by order, not
+   by weight, since this file loads last. */
+
+.app-shell .bottom-nav,
+.app-shell:not(.app-shell--onboarding) .bottom-nav {
+  position: static;
+  left: auto;
+  bottom: auto;
+  width: auto;
+  transform: none;
+  margin-inline: 0;
+  border: 0;
+  border-top: 1px solid rgba(226, 191, 119, 0.14);
+  border-radius: 0 !important; /* earlier layers pin 22–26px */
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.app-shell .bottom-nav__item {
+  border: 0;
+  border-radius: 0 !important; /* geometry lock pins 16px */
+  background: none;
+}
+
+.app-shell .bottom-nav__item--active {
+  border-color: transparent;
+  background: none !important; /* earlier layers pin the gold pill */
+}
+
+.bottom-nav__item--active > span,
+.bottom-nav__item > span {
+  width: auto;
+  height: auto;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+/* The arch cap is the active marker; the old underline and icon glow go. */
+.bottom-nav__item--active::after,
+.bottom-nav__item--active > span::after { content: none !important; }
+
+.bottom-nav__item small {
+  max-width: none;
+  overflow: visible;
+  text-decoration: none;
+}
+
+/* Toast: an overlay, so it stays fixed — it just no longer shares a strip
+   with the navigation. */
+.toast {
+  position: fixed;
+  z-index: 40;
+  left: 50%;
+  bottom: calc(var(--ds-nav-height) + 18px + env(safe-area-inset-bottom));
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2);
+  width: max-content;
+  max-width: calc(100% - 34px);
+  padding: var(--ds-space-3) var(--ds-space-4);
+  transform: translateX(-50%);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--ds-radius-pill);
+  color: var(--ds-cream);
+  background: rgba(0, 27, 22, 0.96);
+  box-shadow: var(--ds-sh-3);
+  font-size: .72rem;
+  font-weight: 700;
+}
+
+/* ---------- Problem 01: the image was drawn over its own scrim ----------
+   __shade and __visual both sat at z-index 1, so DOM order won and the mosque
+   covered the very layer meant to darken it. The image now sits below the
+   scrim, and is masked away toward the top so no text ever crosses it. */
+
+.welcome-hero__visual { z-index: 0 !important; }
+
+.welcome-hero__shade {
+  z-index: 2 !important;
+  background: linear-gradient(
+    180deg,
+    var(--ds-ink-800) 0%,
+    rgba(0, 27, 22, 0.92) 38%,
+    rgba(0, 27, 22, 0.55) 62%,
+    rgba(0, 18, 15, 0.5) 100%
+  ) !important;
+}
+
+.welcome-hero__visual > img {
+  mask-image: linear-gradient(180deg, transparent 0%, #000 42%);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 42%);
+}
+
+.welcome-hero__copy,
+.welcome-hero__date { z-index: 4 !important; }
+
+/* ---------- Problem 06: times were set in oldstyle figures ---------- */
+
+.next-prayer-panel__main strong,
+.prayer-row__time,
+.reference-prayer-row__time,
+.prayer-list__time,
+time {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+/* ---------- Motion: only where it explains something ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-arch__progress,
+  .bottom-nav__item--active::before { transition: none !important; }
+}

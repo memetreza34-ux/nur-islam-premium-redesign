@@ -25,18 +25,20 @@ function requireTokens(source, label, tokens) {
   }
 }
 
+// The bar is 68px in the document flow with an arch cap marking the active
+// tab. It carries no pill, no float and no radius of its own.
 requireTokens(navigation, 'Bottom navigation source', [
-  'background: rgba(0, 27, 22, 0.94)',
-  'color: rgba(207, 220, 212, 0.66)',
-  'color: #f3d996',
+  'color: #8fa39a',
+  'color: #f2d79a',
   'stroke-width: 1.75',
-  'border-radius: 24px',
-  'border-radius: 16px',
-  'border-radius: 10px',
   'white-space: nowrap',
-  'box-shadow: none',
-  '@media (max-height: 720px)',
+  'border-top: 1px solid rgba(226, 191, 119, 0.14)',
+  '.bottom-nav__item--active::before',
+  'env(safe-area-inset-bottom)',
 ]);
+if (/\.bottom-nav\s*\{[^}]*position:\s*fixed/.test(navigation)) {
+  throw new Error('Bottom navigation must stay in the document flow; it used to sit over the content.');
+}
 
 requireTokens(referenceShell, 'Detail shell base', [
   'border: 1px solid rgba(226, 191, 119, .14)',
@@ -163,16 +165,7 @@ requireTokens(finalLock, 'Final shell/brand/navigation override', [
   '.app-shell--detail .reference-screen-header',
   'background: linear-gradient(145deg, #001b16, #00120f) !important',
   'background: #fffcf3 !important',
-  '.bottom-nav {',
-  'border-radius: 24px !important',
-  'background: linear-gradient(150deg, rgba(5, 35, 27, .965), rgba(1, 20, 15, .975)) !important',
-  '.bottom-nav__item {',
-  'border-radius: 16px !important',
-  '.bottom-nav__item > span',
-  'border-radius: 10px !important',
-  '.bottom-nav__item--active',
-  'color: #f3d996 !important',
-  'box-shadow: none !important',
+  // Navigation geometry left this lock with the rest of its styling.
   '.reference-onboarding__visual',
   'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
   '.reference-onboarding__visual-icon,',
@@ -249,8 +242,13 @@ for (const selector of [
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('System-surface geometry is unsafe because the final reference lock is no longer the last stylesheet import.');
+// The design system is the last layer; the reference lock keeps its place
+// directly before it, so system-surface geometry is still protected.
+if (importedLayers.at(-1) !== 'nur-design-system.css') {
+  throw new Error('System-surface geometry is unsafe because the design system is no longer the last stylesheet import.');
+}
+if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
+  throw new Error('System-surface geometry is unsafe because the final reference lock no longer loads directly before the design system.');
 }
 
 for (const stale of [

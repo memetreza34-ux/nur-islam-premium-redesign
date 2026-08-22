@@ -29,11 +29,13 @@ const main = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
 
 const guardrailImport = "@import './styles/visual-consistency.css';";
 const geometryImport = "@import './styles/premium-reference-geometry-lock.css';";
+const designSystemImport = "@import './styles/nur-design-system.css';";
 const postGuardrailNames = new Set([
   'release-hardening.css',
   'premium-release-design.css',
   'premium-core-screens.css',
   'premium-entry-system.css',
+  'nur-design-system.css',
 ]);
 const postGuardrailPatterns = [/^premium-.+-(lock|pass)\.css$/, /^functional-.+\.css$/];
 const isDeclaredLateLayer = (layer) => postGuardrailNames.has(layer)
@@ -51,8 +53,16 @@ if (geometryIndex === -1 || geometryIndex < styleIndex.indexOf("@import './style
 }
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
-  throw new Error(`The reference geometry/icon lock must be the final stylesheet import; found ${importedLayers.at(-1) ?? 'none'} after it.`);
+// The design system settles the historical layers, so it loads last and the
+// geometry lock sits directly before it.
+if (importedLayers.at(-1) !== 'nur-design-system.css') {
+  throw new Error(`The design system must be the final stylesheet import; found ${importedLayers.at(-1) ?? 'none'} after it.`);
+}
+if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
+  throw new Error(`The reference geometry/icon lock must load directly before the design system; found ${importedLayers.at(-2) ?? 'none'} there.`);
+}
+if (styleIndex.indexOf(designSystemImport) < styleIndex.indexOf(geometryImport)) {
+  throw new Error('The design system must load after the reference geometry lock.');
 }
 const lateLayers = [...styleIndex.slice(guardrailIndex + guardrailImport.length).matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
@@ -94,8 +104,8 @@ const requiredGuardrails = [
   '--icon-stroke: 1.75',
   'grid-template-columns: var(--tap-target) minmax(0, 1fr) var(--tap-target)',
   'width: var(--tap-target) !important',
-  'min-height: 72px',
-  'border-radius: 26px',
+  // The navigation's own height and radius left this layer with the rest of
+  // its styling; navigation.css owns them now.
   '.app-shell',
   'z-index: 3',
   'stroke-width: var(--icon-stroke)',
@@ -118,13 +128,9 @@ for (const requirement of [
   'border-radius: 42px !important',
   'border-radius: 28px !important',
   'border-radius: 18px !important',
-  '.bottom-nav',
-  'border-radius: 24px !important',
-  '.bottom-nav__item',
-  'border-radius: 16px !important',
-  '.bottom-nav__item > span',
-  'border-radius: 10px !important',
-  'box-shadow: none !important',
+  // The navigation is no longer pinned from here; navigation.css owns its
+  // geometry, and the design system settles what earlier layers still declare.
+  // The lock keeps the card radii and the uniform Lucide stroke.
   ':where(svg.lucide)',
   'stroke-width: 1.75 !important',
   'stroke-linecap: round !important',
@@ -154,14 +160,18 @@ if (!navigation.includes('.bottom-nav') || !viewport.includes('env(safe-area-ins
   throw new Error('Bottom navigation or safe-area handling is missing.');
 }
 for (const requirement of [
-  'color: rgba(207, 220, 212, 0.66)',
-  'color: #f3d996',
+  'color: #8fa39a',
+  'color: #f2d79a',
   'vector-effect: non-scaling-stroke',
   'white-space: nowrap',
-  'background: linear-gradient(145deg, rgba(226, 191, 119, 0.14), rgba(226, 191, 119, 0.045))',
-  'box-shadow: none',
+  // The active tab is marked by the arch cap, not by a pill around the label.
+  '.bottom-nav__item--active::before',
+  'stroke-linecap=\'round\'',
 ]) {
   if (!navigation.includes(requirement)) throw new Error(`Refreshed navigation source state is missing: ${requirement}`);
+}
+if (/\.bottom-nav__item--active\s*\{[^}]*background:\s*linear-gradient/.test(navigation)) {
+  throw new Error('The active tab must not reintroduce the pill background; the arch cap marks it.');
 }
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');

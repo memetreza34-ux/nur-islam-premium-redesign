@@ -220,8 +220,11 @@ for (const requirement of [
 }
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('The final 1.75 Lucide lock must remain the last stylesheet import.');
+if (importedLayers.at(-1) !== 'nur-design-system.css') {
+  throw new Error('The design system must remain the last stylesheet import.');
+}
+if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
+  throw new Error('The final 1.75 Lucide lock must load directly before the design system.');
 }
 
 console.log('Reference icon map verified: primary navigation and shortcut hubs use calm semantic Lucide icons, custom SVG primitives and generic AI novelty glyphs are blocked, and the final stylesheet enforces uniform 1.75 rounded strokes.');

@@ -136,21 +136,6 @@ textarea:focus-visible,
   scroll-snap-align: start;
 }
 
-/* Bottom navigation: stronger safe-area and selected-state definition. */
-.bottom-nav {
-  bottom: max(12px, env(safe-area-inset-bottom)) !important;
-  width: min(calc(100% - 24px), 452px) !important;
-  border-color: rgba(247,226,178,.22) !important;
-}
-
-.bottom-nav__item {
-  min-height: 52px;
-}
-
-.bottom-nav__item--active > span {
-  box-shadow: 0 8px 20px rgba(194,137,45,.1), inset 0 1px 0 rgba(255,255,255,.035) !important;
-}
-
 /* Form surfaces */
 .reference-account-form input,
 .reference-note-editor input,
@@ -268,20 +253,11 @@ textarea:focus-visible,
     gap: 9px;
   }
 
-  .bottom-nav {
-    width: min(calc(100% - 18px), 452px) !important;
-    padding: 6px !important;
-    border-radius: 23px !important;
-  }
+  
 
-  .bottom-nav__item {
-    min-height: 50px;
-  }
+  
 
-  .bottom-nav__item > span {
-    width: 35px !important;
-    height: 35px !important;
-  }
+  
 
   .toast {
     bottom: calc(96px + env(safe-area-inset-bottom)) !important;
@@ -306,15 +282,9 @@ textarea:focus-visible,
     font-size: .5rem !important;
   }
 
-  .bottom-nav {
-    width: calc(100% - 12px) !important;
-    padding-inline: 4px !important;
-  }
+  
 
-  .bottom-nav__item {
-    min-width: 0;
-    padding-inline: 0 !important;
-  }
+  
 
   .bottom-nav__item small {
     max-width: 100%;
@@ -346,9 +316,7 @@ textarea:focus-visible,
     padding-inline: 26px !important;
   }
 
-  .bottom-nav {
-    width: min(calc(100% - 36px), 470px) !important;
-  }
+  
 }
 
 @media (prefers-contrast:more) {
