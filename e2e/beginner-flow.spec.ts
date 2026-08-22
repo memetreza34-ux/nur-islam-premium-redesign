@@ -115,7 +115,10 @@ test('opens beginner FAQ, glossary and purity basics', async ({ page }) => {
   await page.getByRole('button', { name: 'Zurück zu Islam lernen' }).click();
   await page.getByRole('button').filter({ hasText: 'Ghusl & Tayammum' }).click();
   await expect(page.getByRole('heading', { name: 'Ghusl & Tayammum' })).toBeVisible();
-  await expect(page.getByText('Sure Al-Maida 5:6')).toBeVisible();
+  // Wudu, Ghusl and Tayammum all rest on the same verse, so the screen cites it
+  // more than once; the exact match is the source label itself.
+  await expect(page.getByText('Sure Al-Maida 5:6', { exact: true })).toBeVisible();
+  expect(await page.getByText('Sure Al-Maida 5:6').count()).toBeGreaterThanOrEqual(3);
 });
 
 test('opens the seven day starter plan and routes into the matching lesson', async ({ page }) => {

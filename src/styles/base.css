@@ -12,6 +12,9 @@
   /* Gold used as text. `--gold` stays the ornament colour on borders, icons and
      fills; on a light background it reads at 1.55:1, which is not text. */
   --gold-text: #e2bf77;
+  /* The warning accent used as text, for the same reason: the peach reads at
+     1.65:1 on the light surface, which is not text. */
+  --warn-text: #efbd9c;
   --gold-bright: #f2d79a;
   --gold-dark: #8d6d39;
   --cream: #f6ebd6;

@@ -77,7 +77,12 @@
   content: none;
 }
 
-.premium-home--v2 .prayer-hero--v2 .gold-button {
+/* The countdown hero repeats what the Gebete tab already offers, so its button
+   is dropped to match the phone reference. The unavailable state is not the
+   same card: it tells the user to open the prayer times and refresh them, so
+   hiding the button that does exactly that left the instruction with nothing
+   to act on. */
+.premium-home--v2 .prayer-hero--v2:not([aria-label='Gebetszeiten nicht aktuell']) .gold-button {
   display: none;
 }
 

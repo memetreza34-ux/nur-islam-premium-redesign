@@ -43,7 +43,16 @@ const BUDGET = {
   // this budget exists to make visible. The calendar block needed no
   // `!important`: `.calendar-event-card p.x` outranks `.calendar-event-card p`
   // on specificity alone, which is the cheaper way to win.
-  totalBytes: 727_922,
+  //
+  // Raised once more, by 626 bytes, for three accessibility fixes made in the
+  // files that own the rules rather than in a 34th layer: a `--warn-text`
+  // token beside the existing `--gold-text`, two badge rules moved off the
+  // ornament tokens they used as text colour, and the prayer hero's hidden
+  // call-to-action scoped to the state it was meant for. File count,
+  // `!important` count and override-file count are all unchanged; the growth
+  // is the comments explaining why those colours exist, which is the part
+  // that keeps the next fix from becoming another layer.
+  totalBytes: 728_548,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

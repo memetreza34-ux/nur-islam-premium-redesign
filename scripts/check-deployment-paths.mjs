@@ -151,7 +151,14 @@ for (const requirement of [
   "scoped('premium-assets/high-res-objects/nur-logo-emblem.png')",
   "scoped('data/quran/surahs.json')",
   'cache.put(INDEX_URL, copy)',
-  'caches.match(INDEX_URL)',
+  // Lookups pass MATCH ({ ignoreVary: true }): static hosts send Vary: Origin,
+  // and a strict match missed every entry this worker precaches itself.
+  'caches.match(INDEX_URL, MATCH)',
+  'const MATCH = { ignoreVary: true }',
+  // The build writes the content-hashed chunk names the worker cannot know, so
+  // an on-demand screen is cached before it is first opened.
+  "fetch(scoped('asset-manifest.json')",
+  'await cacheBuildAssets(cache)',
   `nur-islam-premium-v${workerCache[1]}`,
 ]) {
   if (!worker.includes(requirement)) throw new Error(`Service worker scope handling is incomplete: ${requirement}`);

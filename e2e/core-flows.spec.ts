@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
+import { expectHonestPrayerCard } from './prayerCard';
 
 /**
  * Smoke tests for the flows a user actually performs.
@@ -20,10 +21,7 @@ test('opens on the home screen with a prayer schedule', async ({ page }) => {
   // so a bare heading query matched two elements and failed on timing alone.
   await expect(page.locator('.premium-home').getByRole('heading', { level: 1 })).toBeVisible();
 
-  // Six entries, whatever their source: live, cached or the offline fallback.
-  // A user must never face an empty prayer card.
-  const times = page.locator('text=/^([01]\\d|2[0-3]):[0-5]\\d$/');
-  expect(await times.count()).toBeGreaterThanOrEqual(6);
+  await expectHonestPrayerCard(page);
 });
 
 test('reaches every primary tab', async ({ page }) => {
@@ -99,7 +97,11 @@ test('saves today’s Hadith and reopens that exact entry from Collections', asy
   await page.getByRole('button', { name: 'Zurück' }).click();
   await expect(page.locator('.premium-home')).toBeVisible();
 
-  const collectionsEntry = page.getByRole('button').filter({ hasText: 'Meine Sammlung' }).first();
+  // Reached through More rather than through Home: Home only carries the
+  // collection card for users past the beginner path, and this test is about
+  // the saved entry, not about which Home a first-time user gets.
+  await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  const collectionsEntry = page.getByRole('button').filter({ hasText: 'Sammlung' }).first();
   await collectionsEntry.scrollIntoViewIfNeeded();
   await collectionsEntry.click();
   await expect(page.locator('.reference-collections-screen')).toBeVisible();
