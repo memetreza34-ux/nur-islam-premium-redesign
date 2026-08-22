@@ -15,7 +15,13 @@ describe('v1 religious release scope', () => {
       .map((record) => record.contentId)
       .sort();
 
-    expect(V1_RELIGIOUS_RELEASE_SCOPE).toHaveLength(39);
+    // 10 beginner lessons + 18 learning units + 14 core content areas. The
+    // count is pinned so a block cannot quietly leave the release gate.
+    const byGroup = (group: string) => V1_RELIGIOUS_RELEASE_SCOPE.filter((item) => item.group === group).length;
+    expect(byGroup('beginner')).toBe(10);
+    expect(byGroup('learning')).toBe(18);
+    expect(byGroup('core')).toBe(14);
+    expect(V1_RELIGIOUS_RELEASE_SCOPE).toHaveLength(42);
     expect(new Set(scopeIds).size).toBe(scopeIds.length);
     expect(new Set(reviewIds).size).toBe(reviewIds.length);
     expect(reviewIds).toEqual(scopeIds);

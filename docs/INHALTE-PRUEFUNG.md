@@ -13,8 +13,8 @@ ist, entscheidet die Prüfung selbst.
 
 | | |
 |---|---|
-| Einträge insgesamt | 215 |
-| davon ohne Einzelnachweis | 127 |
+| Einträge insgesamt | 211 |
+| davon ohne Einzelnachweis | 123 |
 | davon für diese App verfasst | 15 |
 
 ## Zuerst prüfen
@@ -40,7 +40,7 @@ Jeder Eintrag ist ausdrücklich als sinngemäße Inhaltsangabe gekennzeichnet, n
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
 | 1 | Absichten | Sahih al-Bukhari 1; Sahih Muslim 1907 | übernommen | ☐ |
-| 2 | Barmherzigkeit | Sahih al-Bukhari 6013; Sahih Muslim 2319 | übernommen | ☐ |
+| 2 | Barmherzigkeit | Sahih al-Bukhari 6013; Sahih Muslim 2319a | übernommen | ☐ |
 | 3 | Ein gutes Wort | Sahih al-Bukhari 2989; Sahih Muslim 1009 | übernommen | ☐ |
 | 4 | Selbstbeherrschung | Sahih al-Bukhari 6114; Sahih Muslim 2609 | übernommen | ☐ |
 | 5 | Für den anderen wünschen | Sahih al-Bukhari 13; Sahih Muslim 45 | übernommen | ☐ |
@@ -71,39 +71,39 @@ Bestand der App, jeder Eintrag mit Quellenangabe.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
-| 1 | Bei Kummer und Trauer | Ahmad 1/391 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
-| 2 | Bei schwerer Not | Sahih al-Bukhari 6346 · Sahih Muslim 2730 | übernommen | ☐ |
+| 1 | Bei Kummer und Trauer | Ahmad 1/391 · Hisn al-Muslim 120 · dort als authentisch nach Al-Albani angegeben | übernommen | ☐ |
+| 2 | Bei schwerer Not | Sahih al-Bukhari 6346 · Sahih Muslim 2730a | übernommen | ☐ |
 | 3 | Gegen Sorgen und Faulheit | Sahih al-Bukhari 2893 | übernommen | ☐ |
-| 4 | Wenn etwas zu schwer fällt | Ibn Hibban 974 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
-| 5 | Bitte um Barmherzigkeit | Al-Hakim 1/545 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
+| 4 | Wenn etwas zu schwer fällt | Sahih Ibn Hibban 2427 · Hisn al-Muslim 139 · dort als authentisch angegeben | übernommen | ☐ |
+| 5 | Bitte um Barmherzigkeit | Al-Hakim 1/545 · Hisn al-Muslim 88 · Kette dort als sahih angegeben | übernommen | ☐ |
 | 6 | Der Meister der Vergebung | Sahih al-Bukhari 6306 | übernommen | ☐ |
-| 7 | Schutz vor allem Übel · dreimal | Abu Dawud 5088 · At-Tirmidhi 3388 | übernommen | ☐ |
-| 8 | Bitte um Wohlbefinden | Abu Dawud 5074 | übernommen | ☐ |
+| 7 | Schutz vor allem Übel · dreimal | Sunan Abi Dawud 5088 · Jami at-Tirmidhi 3388 | übernommen | ☐ |
+| 8 | Bitte um Wohlbefinden · Auszug | Sunan Abi Dawud 5074 · Auszug aus einer längeren Morgen-/Abend-Dua | übernommen | ☐ |
 | 9 | Heilung bei Krankheit | Sahih al-Bukhari 5743 · Sahih Muslim 2191 | übernommen | ☐ |
 | 10 | Bei Schmerzen im Körper | Sahih Muslim 2202 | übernommen | ☐ |
-| 11 | Dua des Propheten Yunus | Quran 21:87 · At-Tirmidhi 3505 | übernommen | ☐ |
+| 11 | Dua des Propheten Yunus | Quran 21:87 · Jami at-Tirmidhi 3505 (sahih, Darussalam) | übernommen | ☐ |
 | 12 | Umfassende Vergebung | Sahih Muslim 483 | übernommen | ☐ |
 | 13 | Bitte um Vergebung | Sahih al-Bukhari 6307 | übernommen | ☐ |
 | 14 | Gutes im Diesseits und Jenseits | Quran 2:201 · Sahih al-Bukhari 4522 | übernommen | ☐ |
-| 15 | Bitte um Rechtleitung | Sahih Muslim 2721 | übernommen | ☐ |
-| 16 | Für nützliches Wissen | Ibn Majah 925 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
-| 17 | Befreiung von Schulden | At-Tirmidhi 3563 · im Altbestand als hasan gekennzeichnet | übernommen | ☐ |
-| 18 | Bitte um Versorgung | Sahih Muslim 2697 | übernommen | ☐ |
+| 15 | Bitte um Rechtleitung | Sahih Muslim 2721a | übernommen | ☐ |
+| 16 | Für nützliches Wissen | Sunan Ibn Majah 925 · sahih (Darussalam) | übernommen | ☐ |
+| 17 | Befreiung von Schulden | Jami at-Tirmidhi 3563 · hasan (Darussalam) | übernommen | ☐ |
+| 18 | Bitte um Versorgung | Sahih Muslim 2697b | übernommen | ☐ |
 | 19 | Schutz vor dem bösen Blick | Sahih al-Bukhari 3371 | übernommen | ☐ |
-| 20 | Beim Verlassen des Hauses | Abu Dawud 5095 | übernommen | ☐ |
+| 20 | Beim Verlassen des Hauses | Sunan Abi Dawud 5095 · sahih (Al-Albani) | übernommen | ☐ |
 | 21 | Für die Eltern | Quran 17:24 | übernommen | ☐ |
 | 22 | Für rechtschaffene Nachkommen | Quran 25:74 | übernommen | ☐ |
 | 23 | Vor dem Schlafen | Sahih al-Bukhari 6312 | übernommen | ☐ |
 | 24 | Beim Aufwachen | Sahih al-Bukhari 6312 | übernommen | ☐ |
 | 25 | Zuflucht vor dem Teufel | Sahih al-Bukhari 6115 | übernommen | ☐ |
-| 26 | Vor dem Essen | Abu Dawud 3767 | übernommen | ☐ |
-| 27 | Nach dem Essen | At-Tirmidhi 3458 | übernommen | ☐ |
+| 26 | Vor dem Essen | Sunan Abi Dawud 3767 · sahih (Al-Albani) | übernommen | ☐ |
+| 27 | Nach dem Essen | Jami at-Tirmidhi 3458 · hasan (Darussalam) | übernommen | ☐ |
 | 28 | Vor dem Betreten der Toilette | Sahih al-Bukhari 142 | übernommen | ☐ |
-| 29 | Nach dem Verlassen der Toilette | Abu Dawud 30 | übernommen | ☐ |
-| 30 | Beim Betreten der Moschee | Sahih Muslim 713 | übernommen | ☐ |
-| 31 | Beim Verlassen der Moschee | Sahih Muslim 713 | übernommen | ☐ |
+| 29 | Nach dem Verlassen der Toilette | Sunan Abi Dawud 30 · sahih (Al-Albani) | übernommen | ☐ |
+| 30 | Beim Betreten der Moschee | Sahih Muslim 713a | übernommen | ☐ |
+| 31 | Beim Verlassen der Moschee | Sahih Muslim 713a | übernommen | ☐ |
 | 32 | Beim Besteigen eines Verkehrsmittels | Quran 43:13–14 | übernommen | ☐ |
-| 33 | Bei einem Unglück | Sahih Muslim 918 | übernommen | ☐ |
+| 33 | Bei einem Unglück | Sahih Muslim 918b | übernommen | ☐ |
 | 34 | Bitte um Geduld | Quran 7:126 | übernommen | ☐ |
 
 ## Sunnah im Alltag · Fehler und Reue
@@ -282,10 +282,10 @@ Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift u
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
 | 1 | Takbir al-Ihram | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 2 | Eröffnungs-Bittgebet (Sana) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 2 | Eröffnungs-Bittgebet (eine überlieferte Form) | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 3 | Zuflucht suchen & Basmalah | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 4 | Sure Al-Fatihah | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 5 | Eine weitere Sure (z. B. Al-Ikhlas) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 5 | Weitere Quranrezitation | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 6 | Ruku (Verbeugung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 7 | Aufrichten aus dem Ruku | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 8 | Sujud (Niederwerfung) | Wortlaut ohne Belegstelle | übernommen | ☐ |
@@ -293,7 +293,7 @@ Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift u
 | 10 | Zweite Niederwerfung | — (Bewegung) | übernommen | ☐ |
 | 11 | Tashahhud (At-Tahiyyat) | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 12 | Salawat auf den Propheten ﷺ | Wortlaut ohne Belegstelle | übernommen | ☐ |
-| 13 | Bittgebet vor dem Salam (optional) | Wortlaut ohne Belegstelle | übernommen | ☐ |
+| 13 | Bittgebet vor dem Salam | Wortlaut ohne Belegstelle | übernommen | ☐ |
 | 14 | Taslim (Abschluss) | Wortlaut ohne Belegstelle | übernommen | ☐ |
 
 ## Kalendertermine
@@ -302,21 +302,17 @@ Aus dem Altbestand übernommen. Zu prüfen sind Hijri-Datum, Bedeutung und die a
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
-| 1 | Islamisches Neujahr | — (keine) | übernommen | ☐ |
+| 1 | 1. Muharram · Beginn des Hijri-Jahres | — (keine) | übernommen | ☐ |
 | 2 | Tasuʿa | — (keine) | übernommen | ☐ |
 | 3 | Ashura | — (keine) | übernommen | ☐ |
-| 4 | Geburt des Propheten ﷺ | — (keine) | übernommen | ☐ |
-| 5 | Isra und Miʿraj | — (keine) | übernommen | ☐ |
-| 6 | Mitte Shaʿban | — (keine) | übernommen | ☐ |
-| 7 | Ramadan beginnt | — (keine) | übernommen | ☐ |
-| 8 | Letzte zehn Nächte des Ramadan | — (keine) | übernommen | ☐ |
-| 9 | Laylat al-Qadr | — (keine) | übernommen | ☐ |
-| 10 | Eid al-Fitr | — (keine) | übernommen | ☐ |
-| 11 | Erste zehn Tage von Dhul-Hijjah | — (keine) | übernommen | ☐ |
-| 12 | Tag at-Tarwiyah | — (keine) | übernommen | ☐ |
-| 13 | Tag von Arafah | — (keine) | übernommen | ☐ |
-| 14 | Eid al-Adha | — (keine) | übernommen | ☐ |
-| 15 | Ayyam at-Tashriq | — (keine) | übernommen | ☐ |
+| 4 | Ramadan beginnt | — (keine) | übernommen | ☐ |
+| 5 | Laylat al-Qadr suchen | — (keine) | übernommen | ☐ |
+| 6 | Letzte zehn Nächte des Ramadan | — (keine) | übernommen | ☐ |
+| 7 | Eid al-Fitr | — (keine) | übernommen | ☐ |
+| 8 | Erste Tage von Dhul-Hijjah | — (keine) | übernommen | ☐ |
+| 9 | Tag von Arafah | — (keine) | übernommen | ☐ |
+| 10 | Eid al-Adha | — (keine) | übernommen | ☐ |
+| 11 | Ayyam at-Tashriq | — (keine) | übernommen | ☐ |
 
 ---
 

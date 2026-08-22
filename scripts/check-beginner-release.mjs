@@ -40,7 +40,10 @@ if (lessonIds.length !== requiredLessonIds.length) {
 }
 if (new Set(lessonIds).size !== lessonIds.length) throw new Error('Beginner lesson IDs must be unique.');
 
-const reviewMarkers = content.match(/reviewStatus: 'needs-expert-review'/g) ?? [];
+// The type declaration in the same file ends the line with a semicolon; only
+// the lesson records end it with a comma, so the comma keeps this counting
+// data and not the type.
+const reviewMarkers = content.match(/reviewStatus: 'needs-expert-review',/g) ?? [];
 if (reviewMarkers.length !== requiredLessonIds.length) {
   throw new Error(`Every beginner lesson must remain explicitly gated for expert review. Found ${reviewMarkers.length}/${requiredLessonIds.length}.`);
 }

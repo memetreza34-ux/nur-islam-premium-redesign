@@ -74,10 +74,8 @@ for (const [label, icon] of [
   // glyphs read as placeholder next to the rendered artwork on the same screen.
   ['Quran lesen', 'NurQuranIcon'],
   ['Beten lernen', 'NurMihrabIcon'],
-  ['99 Namen Allahs', 'NurRosetteIcon'],
-  ['Islam Quiz', 'NurQuizIcon'],
+  ['Namen Allahs', 'NurRosetteIcon'],
   ['Duas', 'NurDuaIcon'],
-  ['Nur Assistent', 'NurAssistantIcon'],
 ]) {
   const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
   if (!pairing.test(app)) {
@@ -85,9 +83,23 @@ for (const [label, icon] of [
   }
 }
 
+// Home only advertises what v1 actually releases. The quiz sits behind the
+// legacy feature gate and the assistant is not public, so neither may reappear
+// as a Home quick action even though both still have icons in the set.
+const quickActionsBlock = app.match(/const quickActions: QuickAction\[\] = \[[\s\S]*?\n\];/);
+if (!quickActionsBlock) {
+  throw new Error('Home quick actions list not found in src/app/App.tsx');
+}
+for (const forbidden of ['NurQuizIcon', 'NurAssistantIcon', "target: 'assistant'", "target: 'legacy:"]) {
+  if (quickActionsBlock[0].includes(forbidden)) {
+    throw new Error(`Home quick actions must not surface gated features: ${forbidden}`);
+  }
+}
+
+// The Ummah card used the Globe2 glyph and left Home with the unreleased
+// modules; the mosque finder is the recommendation card that stayed.
 requireFragments(app, 'Home semantic cards', [
   '<MapPin size={22} />',
-  '<Globe2 size={22} />',
 ]);
 
 requireFragments(quran, 'Quran header', [

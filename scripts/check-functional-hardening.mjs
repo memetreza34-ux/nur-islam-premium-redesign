@@ -88,7 +88,8 @@ requireText(app, [
   '<div className="brand-lockup" aria-label="Nur Islam">',
   'selectedAyahNumber',
   'initialAyahNumber={selectedAyahNumber}',
-  'Lokaler Quellenmodus',
+  // 'Lokaler Quellenmodus' was the assistant tile's eyebrow. The assistant is
+  // not part of the public v1 surface, so Home no longer carries that string.
   'selectedDuaId',
   'selectedNameId',
   'selectedCalendarDate',
@@ -298,8 +299,15 @@ requireText(hadithData, [
   "const LEGACY_DAILY_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved'",
   "saved.add('intentions')",
   'localDayNumber(date)',
-  'HADITH_LIBRARY[index]',
+  // The daily Hadith rotates over the curated, individually referenced pool -
+  // not over the whole legacy library, which is still awaiting review.
+  'export const DAILY_HADITH_IDS',
+  'const DAILY_HADITH_POOL = DAILY_HADITH_IDS',
+  'return pool[index]',
   'A damaged legacy key must not prevent valid favorites',
+], 'Hadith rotation and bookmark migration');
+forbidText(hadithData, [
+  'HADITH_LIBRARY[index]',
 ], 'Hadith rotation and bookmark migration');
 
 requireText(dhikr, [

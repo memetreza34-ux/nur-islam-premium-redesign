@@ -95,10 +95,8 @@ requireTokens(app, 'Home semantic actions and honest progress', [
   "onNavigate('profile')",
   "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon",
   "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon",
-  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: NurRosetteIcon",
-  "label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: NurQuizIcon",
+  "label: 'Namen Allahs', eyebrow: 'Alle 99 Namen', icon: NurRosetteIcon",
   "label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon",
-  "label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: NurAssistantIcon",
   'hasProgress: boolean',
   'surahNumber: 1',
   "englishName: 'Al-Faatiha'",
@@ -115,6 +113,12 @@ for (const forbidden of [
   "label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen",
 ]) {
   if (app.includes(forbidden)) throw new Error(`Home still contains synthetic Quran resume state: ${forbidden}`);
+}
+
+// The quiz and the assistant are not part of the v1 public surface, so their
+// tiles must not come back to Home even though the icons still exist.
+for (const forbidden of ["icon: NurQuizIcon", "icon: NurAssistantIcon"]) {
+  if (app.includes(forbidden)) throw new Error(`Home advertises a gated module again: ${forbidden}`);
 }
 
 requireTokens(finalLock, 'Final Home reference lock', [

@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { getPrayerDateKey, loadCachedPrayerTimes, fetchPrayerTimes } from './prayerTimesService';
+import type { PrayerLocation } from './prayerTimesService';
 
 // Prayer days are local calendar days, not 24-hour spans. On the two DST
 // switch days a local day is 23 or 25 hours long, so anything derived from
@@ -16,6 +17,16 @@ const TIMINGS = {
 function apiResponse(body: unknown) {
   return { ok: true, status: 200, json: async () => body } as unknown as Response;
 }
+
+// Live times require a device-backed location on purpose: a generic default
+// must never be calculated as if it were the user's own. These day-boundary
+// tests therefore stand in for a granted geolocation.
+const DEVICE_LOCATION: PrayerLocation = {
+  latitude: 52.52,
+  longitude: 13.405,
+  label: 'Mein Standort',
+  source: 'device',
+};
 
 function stubValidApi() {
   vi.stubGlobal('fetch', vi.fn(async () => apiResponse({
@@ -57,16 +68,23 @@ describe('prayer day boundaries', () => {
 
   it('serves a cached day back to itself', async () => {
     stubValidApi();
-    const fetched = await fetchPrayerTimes();
+    const fetched = await fetchPrayerTimes(DEVICE_LOCATION);
     expect(loadCachedPrayerTimes(new Date())?.dateKey).toBe(fetched.dateKey);
   });
 
   it('drops the cache once the local day has turned, including over a DST switch', async () => {
     stubValidApi();
     // Cache the switch day itself, then ask on the following day.
-    await fetchPrayerTimes(undefined, undefined, new Date(2026, 9, 25, 12, 0));
+    await fetchPrayerTimes(DEVICE_LOCATION, undefined, new Date(2026, 9, 25, 12, 0));
 
     expect(loadCachedPrayerTimes(new Date(2026, 9, 25, 23, 0))).not.toBeNull();
     expect(loadCachedPrayerTimes(new Date(2026, 9, 26, 0, 30))).toBeNull();
+  });
+
+  // Without a granted device location there is no personal schedule to fetch,
+  // and the placeholder coordinates must not be silently used instead.
+  it('refuses to fetch personal times without a device location', async () => {
+    stubValidApi();
+    await expect(fetchPrayerTimes({ ...DEVICE_LOCATION, source: 'default' })).rejects.toThrow(/Gerätestandort/);
   });
 });
