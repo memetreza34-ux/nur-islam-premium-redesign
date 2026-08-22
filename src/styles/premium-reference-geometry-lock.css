@@ -281,8 +281,8 @@ html:not([data-theme='light']) :where(
   color: #75541f !important;
   background: rgba(255, 252, 243, .48) !important;
 }
-.reference-quran-progress { background: rgba(50, 76, 64, .13) !important; }
-.reference-quran-progress > i { background: linear-gradient(90deg, #bd8735, #e2bf77) !important; }
+
+
 
 html:not([data-theme='light']) .reference-reader-verse {
   border-color: rgba(141, 109, 57, .3) !important;

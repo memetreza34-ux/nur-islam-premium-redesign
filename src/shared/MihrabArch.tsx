@@ -7,8 +7,13 @@ export type MihrabArchProps = {
   overline: string;
   title: string;
   titleArabic?: string;
-  /** The one number this screen is about. Set in tabular figures. */
+  /** The one thing this screen is about — a time, a count, or a name. */
   value: string;
+  /**
+   * How the value is set. `num` is tabular Inter for anything read against a
+   * clock or down a column; `display` is Cormorant for a name.
+   */
+  valueAs?: 'num' | 'display';
   /** Pill under the value, e.g. "in 12 Minuten". */
   meta?: ReactNode;
   /** 0–100. The arch line itself is the progress bar. */
@@ -30,6 +35,7 @@ export function MihrabArch({
   title,
   titleArabic,
   value,
+  valueAs = 'num',
   meta,
   progress,
   height = 210,
@@ -72,7 +78,7 @@ export function MihrabArch({
           {title}
           {titleArabic ? <span className="ds-arch__name-arabic"> {titleArabic}</span> : null}
         </span>
-        <span className="ds-arch__value ds-num">{value}</span>
+        <span className={valueAs === 'display' ? 'ds-arch__value ds-arch__value--display' : 'ds-arch__value ds-num'}>{value}</span>
         {meta ? <span className="ds-arch__meta ds-num">{meta}</span> : null}
       </div>
     </div>

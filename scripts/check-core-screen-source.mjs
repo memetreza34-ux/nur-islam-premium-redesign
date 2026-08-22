@@ -40,18 +40,16 @@ requireTokens('homeContent', [
   'border-radius: 28px',
   'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
 ]);
+// The arch carries the next prayer and the day counter, so the tracker card
+// and the panel's inner parts are gone; the panel itself stays as its frame.
 requireTokens('prayer', [
   '.prayer-page-header{',
   'border-radius:18px',
   '.next-prayer-panel{',
-  'border-radius:42px',
   'linear-gradient(145deg,#0d5743 0%,#07372b 45%,#00120f 100%)',
-  '.daily-prayer-progress{',
-  'border-radius:28px',
 ]);
 requireTokens('prayerList', [
   '.prayer-time-row{',
-  'border-radius:28px',
   'rgba(13,87,67,.74)',
   'rgba(0,27,22,.82)',
   '.prayer-alert,.prayer-complete{',

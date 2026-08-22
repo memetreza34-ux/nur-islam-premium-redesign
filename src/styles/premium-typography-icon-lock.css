@@ -1,45 +1,10 @@
-/* Final typography and icon hierarchy.
-   Presentation only. Keeps the visual language coherent after all legacy/reference layers. */
 
-/* ---------- Home hero hierarchy ---------- */
-.premium-home--v2 .welcome-hero__copy {
-  gap: 9px !important;
-}
 
-.premium-home--v2 .welcome-hero__copy .overline {
-  display: inline-flex !important;
-  width: fit-content;
-  color: #f0cf89 !important;
-  font-family: Inter, system-ui, sans-serif !important;
-  font-size: .66rem !important;
-  font-weight: 800 !important;
-  line-height: 1.2 !important;
-  letter-spacing: .12em !important;
-  text-transform: uppercase !important;
-  text-shadow: 0 4px 14px rgba(0, 0, 0, .28);
-}
 
-.premium-home--v2 .welcome-hero__copy h1 {
-  margin: 0 !important;
-  color: #fff8e9 !important;
-  font-family: 'Cormorant Garamond', Georgia, serif !important;
-  font-size: clamp(2.08rem, 8.5vw, 2.72rem) !important;
-  font-weight: 600 !important;
-  line-height: .94 !important;
-  letter-spacing: -.035em !important;
-  text-wrap: balance;
-  text-shadow: 0 13px 34px rgba(0, 0, 0, .31);
-}
 
-.premium-home--v2 .welcome-hero__copy p {
-  display: block !important;
-  margin: 1px 0 0 !important;
-  color: rgba(234, 239, 231, .78) !important;
-  font-size: .76rem !important;
-  font-weight: 500;
-  line-height: 1.58 !important;
-  text-wrap: pretty;
-}
+
+
+
 
 /* ---------- Display headings ---------- */
 .reference-screen-header h1,
@@ -215,22 +180,11 @@ button:disabled:not(.gold-button),
   background: rgba(239, 211, 151, .88);
 }
 
-/* ---------- Light theme ---------- */
-/* The Home welcome hero intentionally remains dark emerald in both themes,
-   therefore its foreground stays light for contrast. */
-[data-theme='light'] .premium-home--v2 .welcome-hero__copy h1 {
-  color: #fff8e9 !important;
-  text-shadow: 0 13px 34px rgba(0, 0, 0, .28) !important;
-}
 
-[data-theme='light'] .premium-home--v2 .welcome-hero__copy p {
-  color: rgba(234, 239, 231, .78) !important;
-}
 
-[data-theme='light'] .premium-home--v2 .welcome-hero__copy .overline {
-  color: #f0cf89 !important;
-  text-shadow: 0 4px 14px rgba(0, 0, 0, .24) !important;
-}
+
+
+
 
 [data-theme='light'] .reference-reader-verse > p[dir='rtl'],
 [data-theme='light'] .reference-dua-card__arabic,
@@ -250,23 +204,15 @@ button:disabled:not(.gold-button),
 
 /* ---------- Narrow phones ---------- */
 @media (max-width: 390px) {
-  .premium-home--v2 .welcome-hero__copy h1 {
-    font-size: clamp(1.96rem, 8.8vw, 2.38rem) !important;
-  }
+  
 
-  .premium-home--v2 .welcome-hero__copy p {
-    font-size: .72rem !important;
-  }
+  
 }
 
 @media (max-width: 350px) {
-  .premium-home--v2 .welcome-hero__copy .overline {
-    font-size: .61rem !important;
-  }
+  
 
-  .premium-home--v2 .welcome-hero__copy h1 {
-    font-size: 1.92rem !important;
-  }
+  
 
   .reference-reader-verse > p[dir='rtl'],
   .reference-dhikr-copy > p[dir='rtl'] {

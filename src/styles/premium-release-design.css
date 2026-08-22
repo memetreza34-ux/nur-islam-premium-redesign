@@ -142,79 +142,25 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(1.1);
 }
 
-.premium-home--v2 .welcome-hero {
-  min-height: 404px;
-  border-color: rgba(236, 204, 136, .33);
-  border-radius: 32px;
-  background:
-    linear-gradient(180deg, rgba(1, 14, 11, .04), rgba(1, 13, 10, .84)),
-    radial-gradient(circle at 66% 24%, rgba(255, 216, 137, .22), transparent 18rem),
-    #05231b;
-  box-shadow: 0 30px 80px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 248, 226, .075);
-}
 
-.premium-home--v2 .welcome-hero::before {
-  opacity: .075;
-  background-size: 37px 37px;
-}
 
-.premium-home--v2 .welcome-hero__shade {
-  background:
-    linear-gradient(90deg, rgba(1, 13, 10, .96) 0%, rgba(2, 22, 17, .76) 46%, rgba(2, 18, 14, .13) 100%),
-    linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, .28));
-}
 
-.premium-home--v2 .welcome-hero__visual {
-  right: -80px;
-  bottom: 50px;
-  width: 426px;
-  height: 292px;
-  opacity: .92;
-  filter: saturate(.92) drop-shadow(0 26px 28px rgba(0, 0, 0, .46));
-}
 
-.premium-home--v2 .welcome-hero__copy {
-  max-width: 78%;
-  padding: 86px 24px 120px;
-}
 
-.premium-home--v2 .welcome-hero__copy .overline {
-  color: rgba(245, 215, 151, .92);
-}
 
-.premium-home--v2 .welcome-hero__copy h1::after {
-  max-width: 250px;
-  color: rgba(255, 247, 231, .9);
-  font-size: .78rem;
-  font-weight: 550;
-  line-height: 1.58;
-  text-wrap: balance;
-}
 
-.premium-home--v2 .welcome-hero__copy p {
-  max-width: 246px;
-  color: rgba(225, 235, 228, .66);
-  font-size: .66rem;
-  line-height: 1.55;
-}
 
-.premium-home--v2 .welcome-hero__date {
-  right: 14px;
-  bottom: 14px;
-  left: 14px;
-  min-height: 68px;
-  padding: 12px 14px;
-  border-color: rgba(232, 199, 122, .22);
-  border-radius: 18px;
-  background: linear-gradient(135deg, rgba(7, 48, 36, .92), rgba(3, 25, 19, .93));
-  box-shadow: 0 14px 32px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .04);
-}
 
-.welcome-hero__date-day {
-  color: var(--premium-gold-bright);
-  font-size: 2.15rem;
-  font-weight: 600;
-}
+
+
+
+
+
+
+
+
+
+
 
 /* Prayer card on home */
 .premium-home--v2 .prayer-hero--v2 {
@@ -236,21 +182,9 @@ body {
   font-weight: 600;
 }
 
-.hero-orb {
-  width: 108px;
-  height: 108px;
-  border-color: rgba(232, 199, 122, .22);
-  background: radial-gradient(circle, rgba(222, 185, 103, .11), rgba(0, 0, 0, .12) 68%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .035), 0 12px 30px rgba(0, 0, 0, .18);
-}
 
-.hero-orb__ring {
-  inset: 9px;
-  border-width: 4px;
-  border-color: rgba(224, 190, 119, .11);
-  border-top-color: #f0d391;
-  border-right-color: #c99646;
-}
+
+
 
 .prayer-mini-times {
   margin: 12px 0 8px;
@@ -540,31 +474,17 @@ body {
     padding-left: 11px;
   }
 
-  .premium-home--v2 .welcome-hero {
-    min-height: 388px;
-    border-radius: 28px;
-  }
+  
 
-  .premium-home--v2 .welcome-hero__copy {
-    max-width: 82%;
-    padding-top: 82px;
-    padding-right: 18px;
-    padding-left: 18px;
-  }
+  
 
-  .premium-home--v2 .welcome-hero__visual {
-    right: -112px;
-    width: 402px;
-  }
+  
 
   .premium-home--v2 .prayer-hero--v2 .hero-main h2 {
     font-size: 2.42rem;
   }
 
-  .hero-orb {
-    width: 98px;
-    height: 98px;
-  }
+  
 
   .journey-grid {
     gap: 7px;
@@ -591,9 +511,7 @@ body {
   }
 
 @media (max-width: 350px) {
-  .premium-home--v2 .welcome-hero__copy h1::after {
-    font-size: .72rem;
-  }
+  
 
   .prayer-mini-times {
     gap: 2px;

@@ -4,7 +4,7 @@
 .reference-next-prayer::after{content:'';position:absolute;z-index:0;right:-76px;bottom:-92px;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(226,191,119,.1),rgba(38,125,91,.055) 44%,transparent 70%);filter:blur(9px);pointer-events:none}
 .reference-next-prayer>*:not(.next-prayer-panel__glow){position:relative;z-index:2}
 .reference-next-prayer>.next-prayer-panel__glow{position:absolute}
-.reference-next-prayer .next-prayer-panel__time{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+
 
 .reference-dhikr-counter{isolation:isolate;min-height:420px!important}
 .reference-dhikr-counter__glow{top:12px!important;width:256px!important;height:256px!important;background:radial-gradient(circle,rgba(226,191,119,.145) 0%,rgba(49,139,103,.06) 39%,transparent 69%)!important}

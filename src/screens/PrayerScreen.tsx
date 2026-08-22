@@ -35,6 +35,7 @@ import {
   PRAYER_METHOD_OPTIONS,
 } from '../services/prayerTimesService';
 import type { AsrSchool, PrayerCalculationMethod } from '../services/prayerTimesService';
+import { MihrabArch } from '../shared/MihrabArch';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
 import { getHijriLabel } from '../services/hijriCalendar';
 
@@ -333,25 +334,24 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>
 
       <section className="next-prayer-panel reference-next-prayer">
-        <div className="next-prayer-panel__glow" />
-        <div className="next-prayer-panel__topline"><span className="hero-pill">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}</span><span><MapPin size={14} /> {meta.city}</span></div>
-        <div className="next-prayer-panel__main">
-          <div><span className="arabic-label">{nextPrayer.prayer.arabic}</span><h2>{nextPrayer.prayer.label}</h2><p>{nextPrayer.prayer.description}</p></div>
-          <div className="next-prayer-panel__time"><span className="reference-next-prayer__icon"><PrayerIcon prayer={nextPrayer.prayer} size={23} /></span><strong>{nextPrayer.prayer.time}</strong><span><Clock3 size={15} /> noch {formatPrayerRemaining(nextPrayer.remaining)}</span></div>
-        </div>
-        <div className="next-prayer-panel__progress"><span style={{ width: `${nextPrayer.progress}%` }} /></div>
+        {/* The arch carries the time and the day counter, so the tracker card
+            and the separate progress bar are no longer needed. */}
+        <MihrabArch
+          overline={nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}
+          title={nextPrayer.prayer.label}
+          titleArabic={nextPrayer.prayer.arabic}
+          value={nextPrayer.prayer.time}
+          meta={`noch ${formatPrayerRemaining(nextPrayer.remaining)} · ${completedCount}/5 heute`}
+          progress={nextPrayer.progress}
+          height={196}
+        />
         <div className="next-prayer-panel__actions">
           <button className="gold-button" onClick={() => toggleCompleted(nextPrayer.prayer.id)} disabled={!nextTrackable}>
             {nextDone ? <CircleCheck size={18} /> : <Check size={18} />}{nextTrackable ? nextDone ? 'Als gebetet markiert' : 'Als gebetet markieren' : 'Kein Pflichtgebet'}
           </button>
+          {completedCount === 5 ? <button className="reference-prayer-complete-replay" onClick={() => setCelebrationOpen(true)} aria-label="Abschlussanimation erneut anzeigen"><Sparkles size={18} /></button> : null}
           <button className={tonePlaying ? 'adhan-button adhan-button--active' : 'adhan-button'} onClick={testTone} disabled={tonePlaying} aria-label="Hinweiston testen"><Volume2 size={19} /></button>
         </div>
-      </section>
-
-      <section className={completedCount === 5 ? 'daily-prayer-progress glass-card reference-prayer-progress is-complete' : 'daily-prayer-progress glass-card reference-prayer-progress'}>
-        <div className="daily-prayer-progress__ring" style={{ '--progress': `${completedCount * 20}%` } as CSSProperties}><span><strong>{completedCount}</strong>/5</span></div>
-        <div><span className="overline">Gebets-Tracker</span><h3>{completedCount === 5 ? 'Alle Pflichtgebete abgeschlossen' : 'Dein Fortschritt heute'}</h3><p>{completedCount === 5 ? `Möge Allah deine Gebete annehmen.${completionStreak > 1 ? ` Serie: ${completionStreak} Tage.` : ''}` : `${5 - completedCount} Pflichtgebete sind noch offen.`}</p></div>
-        {completedCount === 5 ? <button className="reference-prayer-complete-replay" onClick={() => setCelebrationOpen(true)} aria-label="Abschlussanimation erneut anzeigen"><Sparkles size={18} /></button> : null}
       </section>
 
       <section className="prayer-schedule-section">

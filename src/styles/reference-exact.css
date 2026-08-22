@@ -98,85 +98,27 @@ body {
   background: rgba(14, 49, 39, .68);
 }
 
-.welcome-hero {
-  min-height: 405px;
-  border-color: rgba(216, 175, 86, .54);
-  border-radius: 28px;
-  background:
-    linear-gradient(180deg, rgba(8, 29, 24, .04), rgba(3, 18, 15, .88)),
-    radial-gradient(circle at 67% 27%, rgba(248, 202, 119, .28), transparent 17rem),
-    #0a241d;
-  box-shadow: 0 27px 62px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 242, 207, .07);
-}
 
-.welcome-hero::before {
-  opacity: .065;
-}
 
-.welcome-hero__shade {
-  background:
-    linear-gradient(90deg, rgba(3, 15, 12, .95) 0%, rgba(4, 22, 17, .72) 42%, rgba(3, 18, 14, .1) 76%),
-    linear-gradient(0deg, rgba(2, 13, 10, .74), transparent 50%);
-}
 
-.welcome-hero__visual {
-  right: -68px;
-  bottom: 45px;
-  width: 420px;
-  height: 308px;
-  opacity: .98;
-  filter: drop-shadow(0 24px 22px rgba(0, 0, 0, .46)) saturate(.9) contrast(1.03);
-}
 
-.welcome-hero__copy {
-  max-width: 72%;
-  gap: 8px;
-  padding: 37px 22px 118px;
-}
 
-.welcome-hero__copy .overline {
-  color: var(--cream-strong);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2.36rem;
-  font-weight: 600;
-  line-height: .92;
-  letter-spacing: -.025em;
-  text-transform: none;
-}
 
-.welcome-hero__copy h1 {
-  max-width: 245px;
-  color: rgba(255, 248, 231, .86);
-  font-family: Inter, system-ui, sans-serif;
-  font-size: .76rem;
-  font-weight: 500;
-  line-height: 1.55;
-  letter-spacing: 0;
-}
 
-.welcome-hero__copy p {
-  display: none;
-}
 
-.welcome-hero__date {
-  right: 13px;
-  bottom: 13px;
-  left: 13px;
-  gap: 10px;
-  padding: 12px 14px;
-  border-color: rgba(216, 177, 87, .35);
-  border-radius: 16px;
-  background: linear-gradient(135deg, rgba(5, 42, 32, .96), rgba(4, 27, 22, .94));
-}
 
-.welcome-hero__date-day {
-  min-width: 39px;
-  font-size: 1.82rem;
-}
 
-.welcome-hero__date strong {
-  font-size: .63rem;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 .prayer-hero--v2 {
   border-color: rgba(216, 177, 87, .38);
@@ -200,16 +142,9 @@ body {
   font-size: 2.2rem;
 }
 
-.hero-orb {
-  width: 103px;
-  height: 103px;
-  border-color: rgba(232, 199, 122, .22);
-}
 
-.hero-orb__ring {
-  inset: 7px;
-  border-width: 4px;
-}
+
+
 
 .prayer-mini-times {
   gap: 3px;
@@ -347,18 +282,11 @@ body {
     padding-inline: 10px;
   }
 
-  .welcome-hero {
-    min-height: 382px;
-  }
+  
 
-  .welcome-hero__copy .overline {
-    font-size: 2.08rem;
-  }
+  
 
-  .welcome-hero__visual {
-    right: -84px;
-    width: 390px;
-  }
+  
 
   .journey-card {
     min-height: 152px;

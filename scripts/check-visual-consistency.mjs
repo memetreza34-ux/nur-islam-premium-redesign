@@ -205,13 +205,26 @@ for (const item of navigationItems) {
 if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
   throw new Error('Bottom navigation must expose the active page semantically.');
 }
-if (!app.includes("['prayer', 'calendar', 'dhikr', 'qibla'].includes(activeTab)")) {
-  throw new Error('Prayer-related secondary screens must keep Gebet active in the primary navigation.');
+// The marked tab answers "where am I", so every secondary screen must be
+// claimed by exactly one tab. Falling through to 'home' is the bug this
+// guards against — it is what used to make Start light up on the reader.
+const secondaryScreens = [
+  'calendar', 'dhikr', 'qibla', 'duas', 'names', 'mosques',
+  'collections', 'assistant', 'reader', 'ayah', 'account', 'notes',
+];
+const primaryActiveBlock = app.slice(app.indexOf('const primaryActive'), app.indexOf('const primaryActive') + 700);
+for (const screen of secondaryScreens) {
+  if (!primaryActiveBlock.includes(`'${screen}'`)) {
+    throw new Error(`Secondary screen "${screen}" is not claimed by a primary tab, so navigation falls through to Start.`);
+  }
+}
+if (!app.includes("['prayer', 'qibla'].includes(activeTab)")) {
+  throw new Error('Qibla must keep Gebet active in the primary navigation; it is the prayer direction.');
 }
 if (!app.includes("['quran', 'reader', 'ayah'].includes(activeTab)")) {
   throw new Error('Quran-related screens must keep Quran active in the primary navigation.');
 }
-if (!app.includes("['learn', 'duas', 'names', 'assistant'].includes(activeTab)")) {
+if (!app.includes("['learn', 'duas', 'names', 'assistant', 'wudu', 'salah'].includes(activeTab)")) {
   throw new Error('Learning-related secondary screens must keep Lernen active in the primary navigation.');
 }
 if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {

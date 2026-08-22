@@ -17,6 +17,7 @@ import {
   WifiOff,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { MihrabArch } from '../shared/MihrabArch';
 import { PremiumImage, QuranObject } from '../shared/PremiumVisuals';
 import {
   fetchSurahs,
@@ -174,14 +175,20 @@ export function QuranScreen({
       </header>
 
       <section className="reference-quran-continue">
-        <div className="reference-quran-continue__copy">
-          <span className="hero-pill">{lastRead ? 'Weiterlesen' : 'Quran beginnen'}</span>
-          <h2>{lastSurah?.englishName ?? (lastRead ? `Sure ${lastRead.surahNumber}` : 'Al-Faatiha')}</h2>
-          <p>{lastRead ? `Sure ${readerSurahNumber} · Ayah ${lastAyah}` : 'Noch kein gespeicherter Lesestand · Start bei Sure 1'}</p>
-          <span className="reference-quran-progress"><i style={{ width: `${lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0}%` }} /></span>
-          <button className="reference-inline-button" onClick={() => onOpenReader(readerSurahNumber, lastAyah)}>{lastRead ? 'Weiterlesen' : 'Lesen beginnen'} <ChevronRight size={16} /></button>
-        </div>
-        <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" className="reference-quran-continue__book" fallback={<QuranObject />} />
+        {/* Same arch as Prayer, measuring the reading position instead of time. */}
+        <MihrabArch
+          overline={lastRead ? 'Weiterlesen' : 'Quran beginnen'}
+          title={lastSurah ? `Sure ${readerSurahNumber}` : 'Sure 1'}
+          titleArabic={lastSurah?.name}
+          value={lastSurah?.englishName ?? 'Al-Faatiha'}
+          valueAs="display"
+          meta={lastRead && lastSurah
+            ? `Ayah ${lastAyah} von ${lastSurah.numberOfAyahs}`
+            : 'Noch kein Lesestand'}
+          progress={lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0}
+          height={172}
+        />
+        <button className="reference-inline-button" onClick={() => onOpenReader(readerSurahNumber, lastAyah)}>{lastRead ? 'Weiterlesen' : 'Lesen beginnen'} <ChevronRight size={16} /></button>
       </section>
 
       <section className="reference-quran-library-status glass-card">

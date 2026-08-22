@@ -45,6 +45,42 @@
   font-feature-settings: 'tnum' 1;
 }
 
+/* ---------- Type: eight roles, one scale ----------
+   Applies across every screen, so headings stop being set at hero size on
+   list pages. Cormorant stays the display face; numbers leave it entirely. */
+
+.section-heading h2 {
+  font-size: 21px !important;
+  line-height: 1.05 !important;
+  letter-spacing: -0.02em;
+}
+
+.reference-screen-header h1 {
+  font-size: 23px !important;
+  line-height: 1.05 !important;
+}
+
+.reference-screen-header {
+  min-height: 0 !important;
+  padding: var(--ds-space-2) var(--ds-space-2) !important;
+  border-radius: var(--ds-radius-3) !important;
+}
+
+.content-section { gap: var(--ds-space-2) !important; }
+.section-heading { padding: 0 !important; }
+
+/* Every number that is read in a column or against a clock. */
+.prayer-time-row__time,
+.next-prayer-panel__time strong,
+.reference-prayer-row__time,
+.dhikr-counter__value,
+.reference-dhikr-count,
+.quick-card strong,
+.daily-prayer-progress__ring strong {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
 /* ---------- Signature: the mihrab arch ---------- */
 
 .ds-arch {
@@ -68,7 +104,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-bottom: var(--ds-space-6);
+  padding: var(--ds-space-4) var(--ds-space-3) var(--ds-space-3);
 }
 
 /* The silhouette closes the arch at its base and carries the ground line.
@@ -140,6 +176,18 @@
   font: 600 52px/1 Inter, system-ui, sans-serif;
   letter-spacing: -0.035em;
   color: var(--ds-cream-hi);
+}
+
+/* A name, not a number: Cormorant, and it may wrap. */
+.ds-arch__value--display {
+  max-width: 100%;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 34px;
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-align: center;
+  text-wrap: balance;
 }
 
 .ds-arch__meta {
@@ -348,6 +396,471 @@
 
 .welcome-hero__copy,
 .welcome-hero__date { z-index: 4 !important; }
+
+/* ---------- Gebet: the head shrinks so the focus arrives sooner ----------
+   Status, location and the privacy note took 430px before the time appeared.
+   All three stay — the note is a real disclosure — but as one quiet band. */
+
+.reference-prayer-screen { gap: var(--ds-block-gap) !important; }
+
+.reference-prayer-live-status {
+  min-height: 0 !important;
+  padding: var(--ds-space-2) var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.reference-prayer-live-status > span { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.reference-prayer-live-status strong { font-size: 12px !important; }
+.reference-prayer-live-status small { font-size: 10px !important; opacity: .75; }
+
+.reference-prayer-location {
+  gap: var(--ds-space-3) !important;
+  padding: var(--ds-space-2) var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.prayer-location-card__icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.reference-prayer-location small { font-size: 9.5px !important; }
+.reference-prayer-location strong { font-size: 12.5px !important; }
+
+.reference-prayer-location-privacy {
+  margin: calc(var(--ds-space-2) * -1) 0 0 !important;
+  padding-left: var(--ds-space-3) !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+/* ---------- Gebet: six rows on rules, not six cards ----------
+   Six cards at 28px radius cost ~190px of height for framing alone. The
+   material stays (gold icon, glass surface for the next prayer) — only the
+   per-row card frame goes. */
+
+.prayer-schedule-list {
+  display: grid;
+  gap: 0;
+  padding: var(--ds-space-1) var(--ds-space-3);
+  border: 1px solid rgba(226, 191, 119, 0.14);
+  border-radius: var(--ds-radius-3);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.prayer-time-row,
+.reference-prayer-screen .prayer-time-row {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto auto auto;
+  align-items: center;
+  gap: var(--ds-space-3);
+  min-height: var(--ds-row-height);
+  padding: var(--ds-space-2) 0;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.prayer-time-row + .prayer-time-row { border-top: 1px solid rgba(226, 191, 119, 0.1) !important; }
+
+.prayer-time-row__icon {
+  width: 30px !important;
+  height: 30px !important;
+  border: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+  color: var(--ds-gold);
+}
+
+/* Name and Arabic share one line; the German gloss sits quietly under it. */
+.prayer-time-row__name {
+  display: flex !important;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0 var(--ds-space-2);
+  min-width: 0;
+}
+
+.prayer-time-row__name strong {
+  order: 1;
+  font-size: 14px !important;
+  font-weight: 600;
+  color: var(--ds-cream-hi);
+}
+
+.prayer-time-row__name small {
+  order: 2;
+  font-family: Amiri, serif !important;
+  font-size: 12px !important;
+  color: var(--ds-gold-dk);
+}
+
+.prayer-time-row__name em {
+  order: 3;
+  flex-basis: 100%;
+  margin-top: 1px;
+  font-size: 10px !important;
+  font-style: normal;
+  line-height: 1.3 !important;
+  color: var(--ds-muted);
+}
+
+/* The time reads down the column, so it is tabular and right-aligned. */
+.prayer-time-row__time {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+  text-align: right;
+  color: var(--ds-cream-hi);
+}
+
+.prayer-time-row--next { background: rgba(226, 191, 119, 0.07) !important; }
+.prayer-time-row--next .prayer-time-row__time { color: var(--ds-gold-lt); }
+.prayer-time-row--done .prayer-time-row__name strong { color: var(--ds-muted); }
+
+.prayer-alert,
+.prayer-complete {
+  width: var(--ds-tap-min);
+  height: var(--ds-tap-min);
+  border-radius: var(--ds-radius-2) !important;
+}
+
+/* Method and disclosure: a note, not a card. */
+.reference-prayer-method {
+  gap: var(--ds-space-3) !important;
+  padding: var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-3) !important;
+}
+
+.method-card__icon {
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.reference-prayer-method small { font-size: 9.5px !important; }
+.reference-prayer-method strong { font-size: 12.5px !important; line-height: 1.3 !important; }
+.reference-prayer-method em { font-size: 10.5px !important; line-height: 1.5 !important; }
+
+/* ---------- Quran: one entry point, then the list ----------
+   The arch replaces the paper card, so cream is left to mean one thing:
+   the Ayah of the day. */
+
+.reference-quran-screen { gap: var(--ds-block-gap) !important; }
+
+/* The paper card is gone, so cream is left to mean one thing on Home: the
+   Ayah of the day. Here the arch supplies the surface. */
+.reference-quran-continue {
+  display: grid !important;
+  gap: var(--ds-space-2) !important;
+  min-height: 0 !important;
+  padding: var(--ds-space-3) !important;
+  border: 1px solid rgba(226, 191, 119, 0.16) !important;
+  border-radius: var(--ds-radius-4) !important;
+  background: linear-gradient(160deg, rgba(13, 70, 52, 0.5), rgba(4, 35, 28, 0.6)) !important;
+  color: var(--ds-cream) !important;
+}
+
+/* An ::after laid a cream paper wash over the whole block, which is what made
+   the text on it unreadable. */
+.reference-quran-continue::after { content: none !important; }
+
+.reference-quran-continue .reference-inline-button {
+  justify-self: start;
+  min-height: var(--ds-tap-min) !important;
+  padding: 0 var(--ds-space-4) !important;
+  border: 1px solid rgba(226, 191, 119, 0.28) !important;
+  border-radius: var(--ds-radius-2) !important;
+  font-size: 12.5px !important;
+  color: var(--ds-gold-lt) !important;
+  background: rgba(226, 191, 119, 0.09) !important;
+}
+
+/* The book was a bright object sitting behind the text — the one thing the
+   contrast rule forbids. The arch carries this screen on its own. */
+.reference-quran-continue__book { display: none !important; }
+
+/* Directory status and the offline note: two lines, not two cards. */
+.reference-quran-library-status {
+  gap: var(--ds-space-3) !important;
+  padding: var(--ds-space-2) var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.reference-quran-library-status small { font-size: 9.5px !important; }
+.reference-quran-library-status strong { font-size: 12.5px !important; }
+.reference-quran-library-status em { font-size: 10px !important; line-height: 1.4 !important; }
+.reference-quran-library-status__count {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 19px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+.reference-quran-online-note {
+  padding: var(--ds-space-2) var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+.reference-quran-online-note strong { font-size: 11.5px !important; }
+.reference-quran-online-note small { font-size: 10px !important; line-height: 1.5 !important; }
+
+/* Surah rows: 52px, ruled, number in tabular figures. */
+.reference-quran-list--catalog {
+  display: grid;
+  gap: 0 !important;
+  padding: var(--ds-space-1) var(--ds-space-3) !important;
+  border: 1px solid rgba(226, 191, 119, 0.14);
+  border-radius: var(--ds-radius-3);
+  background: rgba(255, 255, 255, 0.022);
+}
+
+.reference-quran-list--catalog > article {
+  grid-template-columns: minmax(0, 1fr) var(--ds-tap-min) !important;
+  align-items: center;
+  min-height: 52px;
+  padding: var(--ds-space-1) 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  box-shadow: none !important;
+}
+
+.reference-quran-list--catalog > article + article {
+  border-top: 1px solid rgba(226, 191, 119, 0.1) !important;
+}
+
+/* Number · name · Arabic · availability, each in its own column. */
+.reference-quran-list__main {
+  display: grid !important;
+  grid-template-columns: 30px minmax(0, 1fr) auto auto !important;
+  align-items: center;
+  gap: var(--ds-space-3) !important;
+  min-height: 52px !important;
+  padding: var(--ds-space-1) 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: none !important;
+  text-align: left;
+}
+
+.reference-quran-list__number {
+  width: 30px !important;
+  height: 30px !important;
+  border: 0 !important;
+  border-radius: var(--ds-radius-1) !important;
+  background: rgba(226, 191, 119, 0.1) !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 11.5px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  color: var(--ds-gold-lt) !important;
+}
+
+.reference-quran-list__copy { display: grid; gap: 0; min-width: 0; }
+.reference-quran-list__copy strong { font-size: 13.5px !important; line-height: 1.25 !important; }
+.reference-quran-list__copy small { font-size: 10px !important; line-height: 1.3 !important; color: var(--ds-muted) !important; }
+
+.reference-quran-list__arabic {
+  font-family: Amiri, serif !important;
+  font-size: 15px !important;
+  white-space: nowrap;
+  color: var(--ds-gold) !important;
+}
+
+/* Availability is a state, so it reads as a dot with a label, not a chip. */
+.reference-quran-availability {
+  padding: 3px var(--ds-space-2) !important;
+  border-radius: var(--ds-radius-pill) !important;
+  font-size: 9px !important;
+  letter-spacing: .04em;
+  white-space: nowrap;
+}
+
+/* The bookmark shared the row with the surah button but was pinned to the
+   block's top edge, so it floated above its own row. */
+.reference-quran-favorite {
+  grid-row: 1 !important;
+  grid-column: 2 !important;
+  align-self: center !important;
+  justify-self: center !important;
+  position: static !important;
+  inset: auto !important;
+  width: var(--ds-tap-min) !important;
+  height: var(--ds-tap-min) !important;
+  margin: 0 !important;
+  transform: none !important;
+  border-radius: var(--ds-radius-2) !important;
+}
+
+/* ---------- Lernen: the artwork already is the arch ----------
+   The mihrab illustration carries the signature form here, so the screen
+   does not draw a second one. It only needs to stop being 415px tall. */
+
+.reference-learning-hero,
+.reference-prayer-learning-hub {
+  min-height: 0 !important;
+  padding: var(--ds-space-4) !important;
+  border-radius: var(--ds-radius-4) !important;
+}
+
+.reference-learning-hero h2,
+.reference-prayer-learning-hub h2 {
+  font-size: 27px !important;
+  line-height: 1.05 !important;
+}
+
+.reference-learning-hero p,
+.reference-prayer-learning-hub p {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+/* The path progress is the number that matters here, so it is set like one. */
+.reference-prayer-learning-hub__progress-label,
+.reference-learning-progress-label {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+.reference-learning-tile,
+.reference-core-access-grid > button {
+  min-height: 0 !important;
+  padding: var(--ds-space-3) !important;
+  border-radius: var(--ds-radius-3) !important;
+}
+
+/* Direct-access tiles: the label is one line, the gloss one more. */
+.reference-core-access-grid { gap: var(--ds-space-2) !important; }
+
+.reference-core-access-grid > button > span:not([class]) strong,
+.reference-core-access-grid > button strong {
+  font-size: 13px !important;
+  line-height: 1.2 !important;
+}
+
+.reference-core-access-grid > button small {
+  font-size: 10.5px !important;
+  line-height: 1.35 !important;
+  color: var(--ds-muted) !important;
+}
+
+.reference-core-access-grid > button > svg:last-child { color: var(--ds-gold); }
+
+/* ---------- Secondary screen heroes ----------
+   Several of these were given a fixed height that their own copy outgrew, so
+   the last line was clipped. The artwork stays — it is what makes the app
+   feel made — but the box now sizes to its content. */
+
+.reference-duas-hero,
+.reference-names-hero,
+.reference-mosque-hero,
+.reference-collection-hero,
+.reference-calendar-hero,
+.reference-notes-hero,
+.reference-account-hero,
+.reference-legacy-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  padding: var(--ds-space-4) !important;
+  border-radius: var(--ds-radius-4) !important;
+  overflow: visible !important;
+}
+
+.reference-duas-hero > h2,
+.reference-names-hero > h2,
+.reference-mosque-hero h2,
+.reference-collection-hero h2,
+.reference-calendar-hero h2 {
+  font-size: 27px !important;
+  line-height: 1.08 !important;
+}
+
+.reference-duas-hero > p,
+.reference-names-hero > p,
+.reference-mosque-hero p,
+.reference-collection-hero p,
+.reference-calendar-hero p {
+  font-size: 12px !important;
+  line-height: 1.55 !important;
+}
+
+/* Ornaments are atmosphere, so they stop taking a layout row of their own —
+   this one alone claimed 208px above the headline. */
+.reference-duas-hero__ornament,
+.reference-names-hero__ornament,
+.reference-collection-hero__ornament,
+.reference-calendar-hero__ornament {
+  position: absolute !important;
+  top: 0 !important;
+  right: 0 !important;
+  width: 168px !important;
+  height: 168px !important;
+  pointer-events: none;
+  opacity: 0.16 !important;
+}
+
+/* Hero artwork sits beside the copy, never under it. */
+.reference-duas-hero > .premium-image,
+.reference-names-hero__allah,
+.reference-mosque-hero > .premium-image,
+.reference-collection-hero > .premium-image {
+  max-height: 152px !important;
+}
+
+/* ---------- Qibla: the bearing is a reading, not a heading ----------
+   137° was set in Cormorant oldstyle figures, where the digits sit at
+   different heights and the 1 reads as an I. */
+
+.reference-qibla-stage__copy h2 {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 30px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.02em !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+  color: var(--ds-cream-hi) !important;
+}
+
+.reference-qibla-stage__copy p {
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+/* ---------- Dhikr: the count is the screen ----------
+   It was set in Cormorant oldstyle figures, where a zero reads as an O. */
+
+.reference-dhikr-ring strong {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 46px !important;
+  font-weight: 600 !important;
+  letter-spacing: -0.03em !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+  color: var(--ds-cream-hi) !important;
+}
+
+.reference-dhikr-ring small {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+/* The tasbih is atmosphere, so it sits behind and stays out of the count. */
+.reference-dhikr-counter__tasbih {
+  height: 128px !important;
+  opacity: 0.4 !important;
+}
+
+.reference-dhikr-counter { padding: var(--ds-space-4) var(--ds-space-3) !important; }
+.reference-dhikr-copy h2 { font-size: 25px !important; line-height: 1.1 !important; }
 
 /* ---------- Problem 06: times were set in oldstyle figures ---------- */
 

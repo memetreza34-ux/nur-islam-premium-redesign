@@ -50,7 +50,18 @@ const BUDGET = {
   // clipped its own label.
   files: 99,
   overrideFiles: 33,
-  importantRules: 2278,
+  // Raised for the design system's 248 `!important`, which is what it costs to
+  // settle 98 stylesheets that already declare the same properties that way —
+  // and only for properties an earlier layer actually pins. It buys: the arch
+  // on four screens, one type scale, six times on a row, and every number in
+  // tabular Inter.
+  //
+  // Paid for by deleting what the redesign made dead rather than leaving it:
+  // 196 rules across sixteen files, 71 of them `!important` and 26 KB, for
+  // elements no screen renders any more — the whole welcome hero, the prayer
+  // tracker card, the hero orb and the four next-prayer-panel parts the arch
+  // replaced. Without that sweep this number would be ~2483.
+  importantRules: 2412,
   // Raised three times now, each for surface that did not exist: the prayer
   // sequence (Arabic wording, transliteration and German meaning for every
   // spoken step), the calendar's occasions, which now explain what a day is and

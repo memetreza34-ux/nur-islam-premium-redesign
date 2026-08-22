@@ -513,13 +513,16 @@ export default function App() {
   const latestNavigationSnapshotRef = useRef(currentNavigationSnapshot);
   const pendingBrowserRootRef = useRef<NavigationSnapshot | null>(null);
   latestNavigationSnapshotRef.current = currentNavigationSnapshot;
-  const primaryActive: PrimaryTab = ['prayer', 'calendar', 'dhikr', 'qibla'].includes(activeTab)
+  // The marked tab answers "where am I", so a screen marks the tab it is
+  // reached from. Qibla stays with Gebet because it is the prayer direction;
+  // Dhikr and the calendar are opened from Mehr and now say so.
+  const primaryActive: PrimaryTab = ['prayer', 'qibla'].includes(activeTab)
     ? 'prayer'
     : ['quran', 'reader', 'ayah'].includes(activeTab)
       ? 'quran'
-      : ['learn', 'duas', 'names', 'assistant'].includes(activeTab)
+      : ['learn', 'duas', 'names', 'assistant', 'wudu', 'salah'].includes(activeTab)
         ? 'learn'
-        : ['profile', 'mosques', 'collections', 'account', 'notes'].includes(activeTab)
+        : ['profile', 'mosques', 'collections', 'account', 'notes', 'calendar', 'dhikr'].includes(activeTab)
           ? 'profile'
           : 'home';
 

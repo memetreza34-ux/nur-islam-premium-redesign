@@ -261,9 +261,7 @@ select:focus-visible {
     animation: nurAmbientGlow 8s ease-in-out infinite alternate;
   }
 
-  .hero-orb__ring {
-    animation: nurOrbBreath 5.5s ease-in-out infinite;
-  }
+  
 }
 
 @keyframes nurAmbientGlow {

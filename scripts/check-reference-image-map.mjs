@@ -113,8 +113,11 @@ requireFragments(splash, 'Splash', [
   'nur-logo-emblem-v2.webp',
 ]);
 
+// The closed-book artwork was a bright object sitting behind the entry text,
+// which the contrast rule forbids. It still carries Home; here the arch does.
+// The reader keeps its own open-book artwork below.
 requireFragments(quran, 'Quran catalog', [
-  'quran-closed-v2.webp" className="reference-quran-continue__book"',
+  '<MihrabArch',
 ]);
 
 requireFragments(reader, 'Quran reader', [
