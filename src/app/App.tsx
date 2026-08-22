@@ -378,6 +378,7 @@ function PremiumHome({
             meta={`${nextPrayer.tomorrow ? 'morgen in ' : 'in '}${formatPrayerRemaining(nextPrayer.remaining)}`}
             progress={nextPrayer.progress}
             height={214}
+            sky
             footer={<PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" className="ds-arch__silhouette" fallback={<MosqueScene />} />}
           />
           <div className="prayer-mini-times">

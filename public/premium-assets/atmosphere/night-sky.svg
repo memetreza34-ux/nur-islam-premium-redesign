@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="800" height="600" role="img" aria-label="Nachthimmel">
+  <defs>
+    <linearGradient id="sky-base" x1="0" y1="0" x2="0" y2="600" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#03302a"></stop><stop offset=".46" stop-color="#021c17"></stop><stop offset="1" stop-color="#010c0a"></stop>
+    </linearGradient>
+    <radialGradient id="sky-bloom" cx=".62" cy=".14" r=".62">
+      <stop offset="0" stop-color="#f2d79a" stop-opacity=".26"></stop>
+      <stop offset=".42" stop-color="#2b7a5e" stop-opacity=".11"></stop>
+      <stop offset="1" stop-color="#021c17" stop-opacity="0"></stop>
+    </radialGradient>
+    <radialGradient id="sky-horizon" cx=".5" cy="1" r=".7">
+      <stop offset="0" stop-color="#0d5743" stop-opacity=".34"></stop>
+      <stop offset="1" stop-color="#0d5743" stop-opacity="0"></stop>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="600" fill="url(#sky-base)"></rect>
+  <rect width="800" height="600" fill="url(#sky-bloom)"></rect>
+  <rect width="800" height="600" fill="url(#sky-horizon)"></rect>
+  <g fill="#f6ebd6">
+    <circle cx="72" cy="88" r="1.5" opacity=".5"></circle><circle cx="148" cy="46" r="1" opacity=".34"></circle>
+    <circle cx="214" cy="124" r="1.7" opacity=".58"></circle><circle cx="292" cy="62" r="1.1" opacity=".38"></circle>
+    <circle cx="352" cy="152" r="1" opacity=".3"></circle><circle cx="430" cy="40" r="1.6" opacity=".5"></circle>
+    <circle cx="486" cy="118" r="1.1" opacity=".36"></circle><circle cx="556" cy="72" r="1.9" opacity=".62"></circle>
+    <circle cx="628" cy="140" r="1" opacity=".3"></circle><circle cx="694" cy="58" r="1.4" opacity=".46"></circle>
+    <circle cx="752" cy="112" r="1.1" opacity=".36"></circle><circle cx="106" cy="184" r="1.2" opacity=".34"></circle>
+    <circle cx="256" cy="214" r="1" opacity=".26"></circle><circle cx="392" cy="228" r="1.3" opacity=".34"></circle>
+    <circle cx="520" cy="206" r="1" opacity=".26"></circle><circle cx="668" cy="232" r="1.2" opacity=".3"></circle>
+    <circle cx="40" cy="268" r="1" opacity=".22"></circle><circle cx="192" cy="296" r="1.1" opacity=".24"></circle>
+    <circle cx="336" cy="322" r="1" opacity=".2"></circle><circle cx="470" cy="300" r="1.2" opacity=".24"></circle>
+    <circle cx="604" cy="330" r="1" opacity=".2"></circle><circle cx="736" cy="288" r="1.1" opacity=".22"></circle>
+    <circle cx="128" cy="376" r="1" opacity=".16"></circle><circle cx="308" cy="404" r="1" opacity=".14"></circle>
+    <circle cx="548" cy="392" r="1" opacity=".16"></circle><circle cx="700" cy="424" r="1" opacity=".13"></circle>
+  </g>
+  <g stroke="#f2d79a" stroke-width="1" fill="none" opacity=".5">
+    <path d="M180 82v-11M180 93v11M169 87h-11M191 87h11"></path>
+    <path d="M598 168v-8M598 176v8M590 172h-8M606 172h8" opacity=".7"></path>
+    <path d="M318 104v-7M318 111v7M311 107h-7M325 107h7" opacity=".55"></path>
+  </g>
+</svg>

@@ -950,9 +950,122 @@ time {
   font-feature-settings: 'tnum' 1 !important;
 }
 
-/* ---------- Motion: only where it explains something ---------- */
+/* ---------- Motion ----------
+   Five concepts, all under 700ms except the one that explains something.
+   Nothing overshoots, nothing blinks, nothing celebrates. */
 
+/* 1. Tap feedback. Cards give 3.5%, tiles 7%, icons 8% — a card is a large
+      surface, so the same scale would read as a lurch. */
+.glass-card,
+.quick-card,
+.journey-card,
+.continue-card,
+.recommendation-card,
+.prayer-time-row,
+.reference-quran-list__main,
+.reference-name-list__main,
+.reference-profile-row {
+  transition: transform 140ms var(--ds-ease);
+}
+
+.quick-card:active,
+.journey-card:active,
+.continue-card:active,
+.recommendation-card:active,
+.reference-quran-list__main:active,
+.reference-name-list__main:active,
+.reference-profile-row:active { transform: scale(0.965); }
+
+.reference-core-access-grid > button,
+.reference-learning-tile,
+.reference-collection-grid > button {
+  transition: transform 140ms var(--ds-ease);
+}
+
+.reference-core-access-grid > button:active,
+.reference-learning-tile:active,
+.reference-collection-grid > button:active { transform: scale(0.93); }
+
+.icon-button,
+.bottom-nav__item,
+.prayer-alert,
+.prayer-complete,
+.reference-quran-favorite {
+  transition: transform 120ms var(--ds-ease), color 180ms var(--ds-ease);
+}
+
+.icon-button:active,
+.bottom-nav__item:active,
+.prayer-alert:active,
+.prayer-complete:active,
+.reference-quran-favorite:active { transform: scale(0.92); }
+
+/* 2. The check draws itself rather than appearing. */
+@keyframes ds-draw-check {
+  from { stroke-dasharray: 0 32; }
+  to { stroke-dasharray: 32 0; }
+}
+
+.prayer-complete--done svg,
+.reference-name-list__learned svg {
+  animation: ds-draw-check 420ms var(--ds-ease) both;
+}
+
+/* 3. The arch fills on arrival — the one animation that explains something,
+      so it is allowed the longest run. */
+@keyframes ds-arch-fill {
+  from { stroke-dasharray: 0 100; }
+}
+
+.ds-arch__progress { animation: ds-arch-fill 900ms var(--ds-ease) both; }
+
+/* 4. Ambient light. Five points, periods offset by primes so they never
+      align — slow enough that you notice them only on second look. */
+.ds-sky {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.ds-sky i {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--ds-gold-lt);
+  opacity: 0;
+  animation: ds-glimmer var(--ds-period, 13s) ease-in-out infinite;
+}
+
+@keyframes ds-glimmer {
+  0%, 100% { opacity: 0; transform: scale(0.6); }
+  50% { opacity: 0.5; transform: scale(1); }
+}
+
+.ds-sky i:nth-child(1) { top: 18%; left: 12%; --ds-period: 11s; animation-delay: 0s; }
+.ds-sky i:nth-child(2) { top: 34%; left: 78%; --ds-period: 13s; animation-delay: 2.3s; }
+.ds-sky i:nth-child(3) { top: 62%; left: 28%; --ds-period: 17s; animation-delay: 5.1s; }
+.ds-sky i:nth-child(4) { top: 12%; left: 58%; --ds-period: 19s; animation-delay: 1.4s; }
+.ds-sky i:nth-child(5) { top: 46%; left: 88%; --ds-period: 13s; animation-delay: 7.6s; }
+
+/* 5. The splash draws the arch instead of spinning a loader. */
+@keyframes ds-draw-arch {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* prefers-reduced-motion: the app stays fully usable, it just stops moving. */
 @media (prefers-reduced-motion: reduce) {
   .ds-arch__progress,
   .bottom-nav__item--active::before { transition: none !important; }
+
+  .ds-arch__progress,
+  .prayer-complete--done svg,
+  .reference-name-list__learned svg,
+  .ds-sky i { animation: none !important; }
+
+  .ds-sky i { opacity: 0.28; }
 }

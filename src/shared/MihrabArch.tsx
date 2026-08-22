@@ -22,6 +22,8 @@ export type MihrabArchProps = {
   className?: string;
   /** Mosque silhouette closing the arch off at its base. */
   footer?: ReactNode;
+  /** Ambient light points behind the arch. Off by default. */
+  sky?: boolean;
 };
 
 /**
@@ -41,6 +43,7 @@ export function MihrabArch({
   height = 210,
   className,
   footer,
+  sky = false,
 }: MihrabArchProps) {
   const id = useId();
   const fillId = `arch-fill-${id}`;
@@ -49,6 +52,11 @@ export function MihrabArch({
 
   return (
     <div className={className ? `ds-arch ${className}` : 'ds-arch'} style={{ height }}>
+      {sky ? (
+        <div className="ds-sky" aria-hidden="true">
+          <i /><i /><i /><i /><i />
+        </div>
+      ) : null}
       <svg className="ds-arch__svg" viewBox="0 0 343 210" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <defs>
           <linearGradient id={fillId} x1="171" y1="0" x2="171" y2="210" gradientUnits="userSpaceOnUse">

@@ -17,3 +17,6 @@ npm-debug.log*
 .idea/
 playwright-report/
 test-results/
+
+# Single-file preview build
+dist-artifact/
