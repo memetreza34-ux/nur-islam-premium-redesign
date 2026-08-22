@@ -36,7 +36,10 @@ import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { PrayerLearningScreen, PRAYER_LESSONS } from './PrayerLearningScreen';
 import type { PrayerLessonId } from './PrayerLearningScreen';
 import { MosqueScene, PremiumImage } from '../shared/PremiumVisuals';
-import { WorshipGuideScreen } from './ReferenceReadingScreens';
+// Lazy here as well as in App: a static import from this screen would pull the
+// guide back into the eager graph and undo the split on both routes.
+const WorshipGuideScreen = lazy(() => import('./ReferenceReadingScreens')
+  .then((module) => ({ default: module.WorshipGuideScreen })));
 
 const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
   aqidah: Sparkles,
@@ -122,7 +125,11 @@ export function LearnScreen({
   }
 
   if (wuduOpen) {
-    return <WorshipGuideScreen initialMode="wudu" onBack={() => setWuduOpen(false)} />;
+    return (
+      <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+        <WorshipGuideScreen initialMode="wudu" onBack={() => setWuduOpen(false)} />
+      </Suspense>
+    );
   }
 
   if (prayerLesson) {

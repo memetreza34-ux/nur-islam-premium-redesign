@@ -6,6 +6,19 @@ const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name
 const INDEX_URL = scoped('index.html');
 const PREMIUM_PATHNAME = new URL('premium-assets/', self.registration.scope).pathname;
 
+/**
+ * Cache lookups ignore Vary on purpose.
+ *
+ * Static hosts answer asset requests with `Vary: Origin`. Entries precached by
+ * this worker are stored under a request that carries no Origin header, while a
+ * dynamic `import()` from the page is a CORS request that does — so a strict
+ * match missed every precached chunk and the screen failed to load offline even
+ * though its bytes were sitting in the cache. These are content-hashed build
+ * assets and same-origin app files: the origin cannot change what the right
+ * response is.
+ */
+const MATCH = { ignoreVary: true };
+
 const APP_SHELL = [
   scoped(),
   INDEX_URL,
@@ -41,6 +54,33 @@ const APP_SHELL = [
   scoped('data/quran/de/114.json'),
 ];
 
+/**
+ * The built JavaScript and CSS, read from the manifest the build writes.
+ *
+ * The screens below the five navigation tabs are fetched when they are first
+ * opened, which keeps the first load small but means a chunk nobody has opened
+ * yet has never been cached either. Without this the app answered "works
+ * offline" with a blank screen for anything the user had not already visited.
+ * The filenames are content-hashed, so they cannot be listed above.
+ *
+ * A missing manifest is not an error: the dev server has no build output, and
+ * an older deployment may not have one yet. The runtime handler still caches
+ * whatever is actually fetched.
+ */
+async function cacheBuildAssets(cache) {
+  let manifest;
+  try {
+    const response = await fetch(scoped('asset-manifest.json'), { cache: 'no-store' });
+    if (!response.ok) return;
+    manifest = await response.json();
+  } catch {
+    return;
+  }
+
+  const files = Array.isArray(manifest?.files) ? manifest.files : [];
+  await Promise.allSettled(files.map((file) => cache.add(scoped(file))));
+}
+
 // The remaining 110 surahs are ~3 MB. They are not part of install, and no
 // longer part of activate either: starting that download the moment the worker
 // takes over put it in direct competition with the requests the first render is
@@ -53,7 +93,7 @@ const QURAN_WARM_URLS = Array.from({ length: 114 }, (_, index) => index + 1)
 async function warmQuranCache() {
   const cache = await caches.open(CACHE_NAME);
   for (const url of QURAN_WARM_URLS) {
-    if (await cache.match(url)) continue;
+    if (await cache.match(url, MATCH)) continue;
     try {
       await cache.add(url);
     } catch {
@@ -72,7 +112,10 @@ function offlineDocument() {
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => Promise.allSettled(APP_SHELL.map((url) => cache.add(url))))
+      .then(async (cache) => {
+        await Promise.allSettled(APP_SHELL.map((url) => cache.add(url)));
+        await cacheBuildAssets(cache);
+      })
       .then(() => self.skipWaiting()),
   );
 });
@@ -133,7 +176,7 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(async () => (await caches.match(INDEX_URL)) || offlineDocument()),
+        .catch(async () => (await caches.match(INDEX_URL, MATCH)) || offlineDocument()),
     );
     return;
   }
@@ -148,13 +191,13 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(async () => (await caches.match(request)) || Response.error()),
+        .catch(async () => (await caches.match(request, MATCH)) || Response.error()),
     );
     return;
   }
 
   event.respondWith(
-    caches.match(request).then((cached) => {
+    caches.match(request, MATCH).then((cached) => {
       const network = fetch(request)
         .then((response) => {
           if (response.ok) {
