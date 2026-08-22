@@ -22,9 +22,16 @@ export type LegalSection = {
   paragraphs: string[];
 };
 
-/** Details only the operator can supply. An imprint may not be invented. */
+/**
+ * Details only the operator can supply. An imprint may not be invented.
+ *
+ * `street` and `city` must be an address where post can actually be served —
+ * §5 TMG asks for a summonable address, which a P.O. box does not satisfy.
+ * Services that provide a c/o business address exist for exactly this case;
+ * whichever one is used, the address it issues goes here verbatim.
+ */
 export const operator = {
-  name: OPERATOR_PLACEHOLDER,
+  name: 'Mohammad Reza Rahimi',
   street: OPERATOR_PLACEHOLDER,
   city: OPERATOR_PLACEHOLDER,
   country: 'Deutschland',
