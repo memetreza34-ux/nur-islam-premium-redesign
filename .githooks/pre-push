@@ -1,9 +1,8 @@
 #!/bin/sh
-# Refuse to push a red branch.
+# Refuse to push a red branch, and refuse to push straight to main.
 #
-# GitHub Actions cannot run while the account's billing is blocked, so this is
-# currently the only automated gate between a broken commit and the shared
-# branch. Both a red merge and a red design pass have reached origin this way.
+# Both a red merge and a red design pass have reached origin this way, which is
+# why the check runs here and not only in CI.
 #
 # Bypass deliberately with: git push --no-verify
 
@@ -11,6 +10,30 @@ if [ -n "$NUR_SKIP_PREPUSH" ]; then
   echo "pre-push: skipped via NUR_SKIP_PREPUSH"
   exit 0
 fi
+
+# main is what GitHub Pages publishes. The workflow gates mean a stray push
+# cannot reach the public URL — the deploy run fails instead — but the commit
+# still lands, and main stays broken until somebody notices. The remote ruleset
+# only blocks force pushes and deletion, so this is where an accidental
+# `git push` from the wrong branch gets caught.
+#
+# Deliberate pushes to main go through a pull request. If you really mean to
+# push directly, `git push --no-verify` says so out loud.
+while read -r _local_ref _local_sha remote_ref _remote_sha; do
+  case "$remote_ref" in
+    refs/heads/main)
+      echo
+      echo "pre-push: BLOCKED — direct push to main."
+      echo
+      echo "  main is the published branch. Open a pull request instead:"
+      echo "    gh pr create --base main"
+      echo
+      echo "  Deliberate direct push: git push --no-verify"
+      echo
+      exit 1
+      ;;
+  esac
+done
 
 echo "pre-push: running npm run check ..."
 

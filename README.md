@@ -76,8 +76,10 @@ Quran bundle is touched and record the result in `docs/QURAN-PROVENANCE.md`.
 
 ### Pre-push hook
 
-`npm install` enables it. It runs `npm run check` and refuses a failing push.
-Bypass deliberately with `git push --no-verify`. To enable by hand:
+`npm install` enables it. It refuses a push to `main` — that branch is what
+gets published, and it is reached through a pull request — and it runs
+`npm run check`, refusing a failing push. Bypass deliberately with
+`git push --no-verify`. To enable by hand:
 
 ```bash
 git config core.hooksPath .githooks

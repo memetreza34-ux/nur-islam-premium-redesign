@@ -96,10 +96,23 @@ auf dem alten Stand. Ein Rollback wirkt also nicht sofort für alle.
 
 ### Schutz von `main`
 
-Ein Ruleset namens `main safety` verhindert Force-Push und Löschen des Branches.
-Mehr ist bewusst nicht gesetzt: Ein PR-Zwang bringt einem Ein-Personen-Repo
-wenig — der eigene Pull Request lässt sich nicht selbst freigeben — und die
-Veröffentlichung hängt ohnehin am Workflow.
+Zwei Ebenen, absichtlich getrennt:
+
+**Auf GitHub** verhindert ein Ruleset namens `main safety` Force-Push und
+Löschen des Branches. Das schützt die Historie.
+
+**Lokal** lehnt der Pre-Push-Hook einen Push auf `main` ab. Das fängt den
+tatsächlich wahrscheinlichen Unfall: ein `git push` aus dem falschen Branch.
+
+Der Hook wirkt nur auf Rechnern, auf denen `npm install` gelaufen ist, und ist
+mit `git push --no-verify` umgehbar — das ist beabsichtigt, weil ein bewusster
+Direkt-Push dann eine bewusste Handlung bleibt und kein Versehen.
+
+Serverseitig fehlt damit nur noch der PR-Zwang. Der würde den Direkt-Push
+endgültig unmöglich machen, auch von einem fremden Rechner oder über die
+Weboberfläche. Kosten: jede Änderung an `main` läuft über einen Pull Request.
+Freigeben musst du ihn nicht selbst — mit `required_approving_review_count: 0`
+ist der PR ein Pflichtschritt, keine Freigabepflicht.
 
 Falls das später enger werden soll, etwa weil jemand mitarbeitet:
 
