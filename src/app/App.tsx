@@ -24,19 +24,30 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
 import { BEGINNER_LESSONS, getNextBeginnerLesson } from '../data/beginnerLearningContent';
+// Everything below the five bottom-navigation tabs loads on demand. Home,
+// Prayer, Calendar, Learn and More stay eager so a tab switch never shows a
+// loading state; the detail screens are opened deliberately, which is where a
+// short fetch is acceptable and where the entry chunk pays for itself.
+//
 // Kept lazy for compatibility with stored navigation state. The assistant is
 // not linked from the public v1 surfaces until its release gate is cleared.
 const AssistantScreen = lazy(() => import('../screens/AssistantScreen')
   .then((module) => ({ default: module.AssistantScreen })));
 import { CalendarScreen } from '../screens/CalendarScreen';
-import { CollectionsScreen } from '../screens/CollectionsScreen';
-import { DailyHadithScreen } from '../screens/DailyHadithScreen';
-import { DhikrScreen } from '../screens/DhikrScreen';
-import { MosqueScreen } from '../screens/DiscoveryScreens';
-import { DuasScreen } from '../screens/DuasScreen';
+const CollectionsScreen = lazy(() => import('../screens/CollectionsScreen')
+  .then((module) => ({ default: module.CollectionsScreen })));
+const DailyHadithScreen = lazy(() => import('../screens/DailyHadithScreen')
+  .then((module) => ({ default: module.DailyHadithScreen })));
+const DhikrScreen = lazy(() => import('../screens/DhikrScreen')
+  .then((module) => ({ default: module.DhikrScreen })));
+const MosqueScreen = lazy(() => import('../screens/DiscoveryScreens')
+  .then((module) => ({ default: module.MosqueScreen })));
+const DuasScreen = lazy(() => import('../screens/DuasScreen')
+  .then((module) => ({ default: module.DuasScreen })));
 import { InstallAppPrompt } from '../shared/InstallAppPrompt';
 import { LearnScreen } from '../screens/LearnScreen';
-import { LegalScreen } from '../screens/LegalScreen';
+const LegalScreen = lazy(() => import('../screens/LegalScreen')
+  .then((module) => ({ default: module.LegalScreen })));
 // Legacy screens remain in the codebase for later reviewed releases, but the
 // public v1 hubs expose only items explicitly marked release-ready.
 const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
@@ -44,7 +55,8 @@ const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
 import { getLegacyFeature, isLegacyFeatureReleaseReady } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
 import { MoreScreen } from '../screens/MoreScreen';
-import { NamesScreen } from '../screens/NamesScreen';
+const NamesScreen = lazy(() => import('../screens/NamesScreen')
+  .then((module) => ({ default: module.NamesScreen })));
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { getHijriLabel } from '../services/hijriCalendar';
 import {
@@ -56,13 +68,16 @@ import {
 import { consumePendingNavigation } from '../services/pendingNavigation';
 import type { PendingNavigationIntent } from '../services/pendingNavigation';
 import { PrayerScreen } from '../screens/PrayerScreen';
-import { QiblaScreen } from '../screens/QiblaScreen';
-import { QuranReaderScreen } from '../screens/QuranReaderScreen';
-import { QuranScreen } from '../screens/QuranScreen';
-import {
-  AyahDetailScreen,
-  WorshipGuideScreen,
-} from '../screens/ReferenceReadingScreens';
+const QiblaScreen = lazy(() => import('../screens/QiblaScreen')
+  .then((module) => ({ default: module.QiblaScreen })));
+const QuranReaderScreen = lazy(() => import('../screens/QuranReaderScreen')
+  .then((module) => ({ default: module.QuranReaderScreen })));
+const QuranScreen = lazy(() => import('../screens/QuranScreen')
+  .then((module) => ({ default: module.QuranScreen })));
+const AyahDetailScreen = lazy(() => import('../screens/ReferenceReadingScreens')
+  .then((module) => ({ default: module.AyahDetailScreen })));
+const WorshipGuideScreen = lazy(() => import('../screens/ReferenceReadingScreens')
+  .then((module) => ({ default: module.WorshipGuideScreen })));
 import type { NurIcon } from '../shared/NurIcons';
 import {
   NurDuaIcon,
@@ -868,11 +883,7 @@ export default function App() {
   const screen = isReleaseBlockedTab(activeTab)
     ? <ReleaseLockedScreen tab={activeTab} onBack={() => goBack('home')} />
     : isLegacyTab(activeTab)
-      ? (
-        <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-          <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
-        </Suspense>
-      )
+      ? <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
       : activeTab === 'home'
         ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
         : activeTab === 'quran'
@@ -918,11 +929,7 @@ export default function App() {
                                               onOpenHadith={openSavedHadith}
                                               onOpenCalendarDate={openSavedCalendarDate}
                                             />
-                                          : (
-                                            <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-                                              <AssistantScreen onBack={goBack} />
-                                            </Suspense>
-                                          );
+                                          : <AssistantScreen onBack={goBack} />;
 
   return (
     <div className="app-background app-background--v2">
@@ -931,7 +938,9 @@ export default function App() {
       <div className={screensWithBottomNavigation.has(activeTab) ? 'app-shell' : 'app-shell app-shell--detail'}>
         <AnimatePresence mode="wait">
           <motion.div key={`${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`} className="screen-transition-frame" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .12, ease: [0.22, 1, 0.36, 1] }}>
-            {screen}
+            <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+              {screen}
+            </Suspense>
           </motion.div>
         </AnimatePresence>
         {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={navigatePrimary} /> : null}

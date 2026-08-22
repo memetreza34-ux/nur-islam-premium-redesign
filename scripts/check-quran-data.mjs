@@ -92,7 +92,8 @@ const onlineStyles = await readFile(resolve(root, 'src/styles/reference-quran-on
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 
 for (const required of [
-  "import { QuranReaderScreen } from '../screens/QuranReaderScreen';",
+  // Loaded on demand; the module specifier is the stable assertion.
+  "'../screens/QuranReaderScreen'",
   'selectedSurahNumber',
   'selectedAyahNumber',
   'onOpenReader={openReader}',

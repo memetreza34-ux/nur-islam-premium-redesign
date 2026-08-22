@@ -57,7 +57,9 @@ if (service.includes('return `https://${value}`')) {
 if (bridge.trim() !== "export { MosqueScreen } from './MosqueScreen';") {
   throw new Error('DiscoveryScreens must route the existing app import to the live MosqueScreen.');
 }
-if (!app.includes("import { MosqueScreen } from '../screens/DiscoveryScreens';") || !app.includes("activeTab === 'mosques'")) {
+// Loaded on demand: the module specifier is what stays stable across a switch
+// between a static and a lazy import.
+if (!app.includes("'../screens/DiscoveryScreens'") || !app.includes("activeTab === 'mosques'")) {
   throw new Error('App no longer routes to the mosque finder.');
 }
 if (!styles.includes('.reference-mosque-live-status') || !styles.includes('.reference-mosque-detail-modal')) {

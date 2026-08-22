@@ -66,7 +66,11 @@ if (!collectionsSource.includes('NAMES_OF_ALLAH.find')) {
 if (screenSource.includes("migrateNameSet('nur_name_favorites', ['1'])")) {
   throw new Error('An empty Name favorite set must not be silently pre-seeded.');
 }
-if (!appSource.includes("import { NamesScreen } from '../screens/NamesScreen';")) throw new Error('App does not route to the Names learning screen.');
+// The screen is loaded on demand, so match the module specifier rather than a
+// static import statement: either form proves the route is wired.
+if (!appSource.includes("'../screens/NamesScreen'") || !appSource.includes("activeTab === 'names'")) {
+  throw new Error('App does not route to the Names learning screen.');
+}
 if (!stylesSource.includes('reference-names-complete.css')) throw new Error('Complete Names stylesheet is not loaded.');
 
 console.log(`Names verified: all ${legacyIds.length} learning entries remain visible-capable, while ${verifiedEntries.length} currently have direct Quran-source audit metadata and the full list stays under expert review.`);

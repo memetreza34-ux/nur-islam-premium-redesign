@@ -12,9 +12,11 @@ const calendar = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'),
 const browserNavigation = await readFile(resolve(root, 'src/services/browserNavigation.ts'), 'utf8');
 
 const requiredAppFragments = [
-  "import { CollectionsScreen } from '../screens/CollectionsScreen';",
-  "import { DailyHadithScreen } from '../screens/DailyHadithScreen';",
-  "import { MosqueScreen } from '../screens/DiscoveryScreens';",
+  // These screens load on demand; the module specifier proves the route is
+  // wired whether the import is static or lazy.
+  "'../screens/CollectionsScreen'",
+  "'../screens/DailyHadithScreen'",
+  "'../screens/DiscoveryScreens'",
   'onOpenQuran={openQuran}',
   'onOpenReader={openReader}',
   'onOpenDua={openSavedDua}',
