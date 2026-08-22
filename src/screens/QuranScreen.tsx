@@ -222,7 +222,7 @@ export function QuranScreen({
 
       <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Alle 114 Suren offline · Online nur als Fallback</strong><small>Der vollständige Quran-Bestand liegt lokal in der App. Falls eine lokale Datei fehlt oder nicht lesbar ist, kann Al Quran Cloud als technischer Fallback mit arabischem Uthmani-Text und deutscher Bubenheim-&-Elyas-Übersetzung geladen und im Browser zwischengespeichert werden.</small></span>
+        <span><strong>Alle 114 Suren offline · Online nur als Fallback</strong><small>Der vollständige Quran-Bestand liegt lokal in der App: arabischer Uthmani-Text und die deutsche Übersetzung von Abu Rida. Falls eine lokale Datei fehlt oder nicht lesbar ist, lädt Al Quran Cloud dieselbe Ausgabe als technischen Fallback und speichert sie im Browser zwischen.</small></span>
       </section>
 
       <label className="reference-input-search">

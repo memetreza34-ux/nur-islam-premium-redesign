@@ -67,10 +67,26 @@ if (totalAyahs !== 6236) {
   throw new Error(`Bundled Arabic text holds ${totalAyahs} ayahs; the 114-surah catalog describes 6236.`);
 }
 
+// The reader must not change translation depending on whether a local file
+// happened to be readable. Whatever edition the online fallback uses, the label
+// the offline bundle shows has to name the same translator.
+const onlineEdition = serviceSource.match(/ONLINE_GERMAN_EDITION = '([^']+)'/)?.[1] ?? '';
+const offlineLabels = [...serviceSource.matchAll(/translationLabel: '([^']+)'/g)].map((match) => match[1]);
+if (offlineLabels.length !== 2 || new Set(offlineLabels).size !== 1) {
+  throw new Error(`Offline and online Quran must name the same translation; found ${JSON.stringify(offlineLabels)}.`);
+}
+if (!onlineEdition.startsWith('de.') || !onlineEdition.slice(3).replace(/[^a-z]/g, '').includes(offlineLabels[0].toLowerCase().replace(/[^a-z]/g, ''))) {
+  throw new Error(`Quran translation label '${offlineLabels[0]}' does not match the online edition '${onlineEdition}'.`);
+}
+
 const onlineServiceFeatures = [
   "ONLINE_API_BASE = 'https://api.alquran.cloud/v1'",
   "ONLINE_ARABIC_EDITION = 'quran-uthmani'",
-  "ONLINE_GERMAN_EDITION = 'de.bubenheim'",
+  // The same translation the offline bundle carries. It used to be de.bubenheim
+  // while every bundled file was Abu Rida, so the same ayah could appear in two
+  // different German translations depending on whether a local file happened to
+  // be readable. See docs/QURAN-PROVENANCE.md.
+  "ONLINE_GERMAN_EDITION = 'de.aburida'",
   "ONLINE_CACHE_NAME = 'nur-quran-online-v1'",
   'AbortController',
   'ONLINE_TIMEOUT_MS',

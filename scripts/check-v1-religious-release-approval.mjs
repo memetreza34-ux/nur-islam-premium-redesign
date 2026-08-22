@@ -65,6 +65,22 @@ if (byId.get('quran-offline-bundle')?.status === 'approved') {
   if (quranService.includes("translationLabel: 'übernommener deutscher Altbestand'")) {
     throw new Error('Offline Quran cannot be approved while the German translation provenance is still labelled only as inherited legacy content.');
   }
+
+  // Knowing which edition the bundle is does not grant the right to ship it.
+  // The wording was verified ayah by ayah; a translation is its own copyrighted
+  // work, and that question is answered in the provenance document or not at
+  // all. This replaces the label tripwire above, which the verification itself
+  // made unreachable.
+  const provenance = await readFile(resolve(root, 'docs/QURAN-PROVENANCE.md'), 'utf8').catch(() => '');
+  if (!provenance.trim()) {
+    throw new Error('Offline Quran cannot be approved without docs/QURAN-PROVENANCE.md.');
+  }
+  if (provenance.includes('WAITING FOR LICENSE')) {
+    throw new Error('Offline Quran cannot be approved while docs/QURAN-PROVENANCE.md still lists an unresolved licence for the Arabic text or the German translation.');
+  }
+  if (!/6236\s*\/\s*6236/.test(provenance)) {
+    throw new Error('Offline Quran cannot be approved without a recorded full-text comparison in docs/QURAN-PROVENANCE.md.');
+  }
 }
 
 if (byId.get('daily-hadith-rotation')?.status === 'approved') {

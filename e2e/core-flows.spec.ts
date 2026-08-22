@@ -27,7 +27,10 @@ test('opens on the home screen with a prayer schedule', async ({ page }) => {
 test('reaches every primary tab', async ({ page }) => {
   for (const label of ['Gebete', 'Kalender', 'Mehr']) {
     await page.getByRole('navigation').getByText(label, { exact: true }).click();
-    await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+    // Scoped past the splash for the same reason as the Home test above: its
+    // own <h1>Nur</h1> stays mounted for the length of the crossfade, so a bare
+    // heading query matches two elements and fails on timing alone.
+    await expect(page.locator('.screen-transition-frame').getByRole('heading', { level: 1 })).toBeVisible();
   }
 });
 

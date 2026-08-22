@@ -31,15 +31,28 @@ export interface QuranSurahBundle {
 const DATA_BASE = `${import.meta.env.BASE_URL}data/quran`;
 const ONLINE_API_BASE = 'https://api.alquran.cloud/v1';
 const ONLINE_ARABIC_EDITION = 'quran-uthmani';
-const ONLINE_GERMAN_EDITION = 'de.bubenheim';
+/**
+ * The same translation the offline bundle carries.
+ *
+ * This used to be de.bubenheim while every bundled file was Abu Rida, so the
+ * same ayah could appear in two different German translations depending only on
+ * whether a local file happened to be readable — a difference a reader would
+ * see as the Quran changing its wording. See docs/QURAN-PROVENANCE.md.
+ */
+const ONLINE_GERMAN_EDITION = 'de.aburida';
 const ONLINE_CACHE_NAME = 'nur-quran-online-v1';
 const ONLINE_TIMEOUT_MS = 12000;
 const memoryCache = new Map<string, unknown>();
 
 /**
- * Alle 114 Suren liegen paarweise offline vor: arabischer Text und der
- * übernommene deutsche Altbestand. Der Online-Weg bleibt nur als Notfallpfad,
- * falls eine lokale Datei einmal fehlt oder beschädigt ist.
+ * Alle 114 Suren liegen paarweise offline vor: arabischer Text (Uthmani) und
+ * die deutsche Übersetzung von Abu Rida. Der Online-Weg bleibt nur als
+ * Notfallpfad, falls eine lokale Datei einmal fehlt oder beschädigt ist.
+ *
+ * Beide Bestandteile wurden Ayah für Ayah gegen die veröffentlichten Ausgaben
+ * verglichen (6236/6236 identisch) und sind über ein sha256-Manifest gegen
+ * spätere Änderung gesichert. Das Nutzungsrecht ist davon unberührt und weiter
+ * offen: siehe docs/QURAN-PROVENANCE.md.
  */
 export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);
 export const OFFLINE_QURAN_SURAH_SET = new Set<number>(OFFLINE_QURAN_SURAHS);
@@ -143,7 +156,7 @@ function parseOnlineBundle(payload: QuranApiResponse, meta: Surah, source: Exclu
     german: toDetail(germanEdition),
     source,
     sourceLabel: source === 'cache' ? 'Al Quran Cloud · Browser-Cache' : 'Al Quran Cloud · Online',
-    translationLabel: 'Bubenheim & Elyas',
+    translationLabel: 'Abu Rida',
   };
 }
 
@@ -232,7 +245,7 @@ export async function fetchSurahBundle(number: number): Promise<QuranSurahBundle
     german,
     source: 'offline',
     sourceLabel: 'Lokaler Offline-Bestand',
-    translationLabel: 'übernommener deutscher Altbestand',
+    translationLabel: 'Abu Rida',
   };
 }
 

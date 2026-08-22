@@ -220,9 +220,11 @@ export function QuranReaderScreen({
     });
   };
 
-  const germanAttribution = bundle?.source === 'offline'
-    ? 'Sinngemäße deutsche Bedeutung aus dem übernommenen Altbestand'
-    : `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Bubenheim & Elyas'}`;
+  // The offline bundle and the online fallback now carry the same translation,
+  // so the attribution no longer changes with the delivery path. Which
+  // translation a reader is looking at is a fact about the text; where the
+  // bytes came from is not.
+  const germanAttribution = `Deutsche Übersetzung: ${bundle?.translationLabel ?? 'Abu Rida'}`;
 
   const copyAyah = async (index: number) => {
     if (!bundle) return;
@@ -294,7 +296,7 @@ export function QuranReaderScreen({
           <section className="reference-reader-source">
             <ShieldCheck size={17} />
             {bundle.source === 'offline' ? (
-              <span><strong>Lokaler arabischer Qurantext · Sure {bundle.meta.number}</strong><small>Die deutsche Fassung stammt aus dem übernommenen Altbestand und wird als sinngemäße Bedeutung angezeigt. Eine fachliche Endprüfung bleibt vor Veröffentlichung erforderlich.</small></span>
+              <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Vollständig lokal in der App. Der arabische Text und die deutsche Übersetzung wurden Ayah für Ayah mit den veröffentlichten Ausgaben abgeglichen. Die fachliche Endprüfung der Darstellung steht vor der Veröffentlichung noch aus.</small></span>
             ) : (
               <span><strong>Arabisch: Uthmani · Deutsch: {bundle.translationLabel}</strong><small>Geladen über Al Quran Cloud und im Browser zwischengespeichert. Die Übersetzung wird unverändert angezeigt und nicht automatisch erneut übersetzt.</small></span>
             )}
