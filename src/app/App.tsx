@@ -59,6 +59,7 @@ const NamesScreen = lazy(() => import('../screens/NamesScreen')
   .then((module) => ({ default: module.NamesScreen })));
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { getHijriLabel } from '../services/hijriCalendar';
+import { getEffectiveIslamicDay } from '../services/islamicDay';
 import {
   browserNavigationDepth,
   pushBrowserNavigation,
@@ -172,8 +173,24 @@ function isReleaseBlockedTab(tab: Tab) {
   return isLegacyTab(tab) && !isLegacyFeatureReleaseReady(getLegacyFeatureId(tab));
 }
 
+/**
+ * The Islamic date as it stands right now, not as the Gregorian clock has it.
+ *
+ * The Islamic day turns at Maghrib, so between sunset and midnight the correct
+ * answer is tomorrow's Hijri date. The caption says which rule produced the
+ * date, because without a trusted Maghrib time the app falls back to the
+ * calendar day and should not let that pass as the same thing.
+ */
 function getIslamicDate(date = new Date()) {
-  return getHijriLabel(date, 'Islamischer Kalender');
+  const day = getEffectiveIslamicDay(date);
+  return {
+    label: getHijriLabel(day.date, 'Islamischer Kalender'),
+    caption: day.afterMaghrib
+      ? 'Islamischer Kalender · seit Maghrib'
+      : day.resolution === 'unknown-maghrib'
+        ? 'Islamischer Kalender · Maghrib-Wechsel unbekannt'
+        : 'Islamischer Kalender',
+  };
 }
 
 function getHomeGreeting(date: Date) {
@@ -423,7 +440,7 @@ function PremiumHome({
         </div>
         <button className="welcome-hero__date" onClick={() => onNavigate('calendar')}>
           <span className="welcome-hero__date-day">{now.getDate()}</span>
-          <span><strong>{islamicDate}</strong><small>Islamischer Kalender</small></span>
+          <span><strong>{islamicDate.label}</strong><small>{islamicDate.caption}</small></span>
           <CalendarDays size={20} />
         </button>
       </section>

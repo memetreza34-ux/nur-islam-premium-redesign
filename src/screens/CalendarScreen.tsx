@@ -19,6 +19,7 @@ import { useDialog } from '../shared/useDialog';
 import { readCalendarEntries, writeCalendarEntries } from '../services/calendarReminderService';
 import type { PersonalCalendarEntry } from '../services/calendarReminderService';
 import { getHijriDay, getHijriLabel, getHijriMonth } from '../services/hijriCalendar';
+import { getEffectiveIslamicDay } from '../services/islamicDay';
 import {
   WEEKLY_FAST_EVENT,
   WHITE_DAYS,
@@ -165,6 +166,11 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const selectedDate = new Date(monthData.year, monthData.month, Math.min(selectedDay, monthData.daysInMonth));
   const selectedDateKey = getDateKey(selectedDate);
   const hijriLabel = getHijriLabel(selectedDate);
+  // The grid is a Gregorian month, so its cells keep the Gregorian mapping. What
+  // it cannot show on its own is that the Islamic day has already turned: after
+  // Maghrib the night belongs to the next Hijri date, which is when the nights
+  // people look for actually begin.
+  const islamicNow = getEffectiveIslamicDay();
   const selectedEvent = getCalendarEvent(selectedDate);
   const selectedEntries = entries.filter((entry) => entry.date === selectedDateKey);
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
@@ -269,6 +275,12 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
       </section>
 
       <section className="reference-calendar-calculation-note"><ShieldCheck size={16} /><span><strong>Berechnetes Hijri-Datum</strong><small>Das islamische Datum wird aus dem Kalender des Geräts berechnet. Der tatsächliche Monatsbeginn kann je nach örtlicher Mondsichtung oder zuständiger Stelle abweichen.</small></span></section>
+
+      <section className="reference-calendar-calculation-note"><ShieldCheck size={16} /><span><strong>Tageswechsel ab Maghrib</strong><small>{islamicNow.afterMaghrib
+        ? `Seit Maghrib (${islamicNow.maghrib} Uhr) gilt bereits der ${getHijriLabel(islamicNow.date)}. Die Kalenderfelder zeigen weiterhin die gregorianischen Tage.`
+        : islamicNow.resolution === 'unknown-maghrib'
+          ? 'Der islamische Tag beginnt am Abend mit Maghrib. Ohne aktuelle Gebetszeiten für deinen Standort kann Nur diesen Wechsel nicht berechnen und zeigt bis dahin den gregorianischen Tag.'
+          : `Der islamische Tag beginnt heute mit Maghrib um ${islamicNow.maghrib} Uhr. Bis dahin gilt der hier gezeigte Tag.`}</small></span></section>
 
       <section className="selected-date-card glass-card reference-selected-date">
         <span className="selected-date-card__icon"><CalendarDays size={24} /></span>
