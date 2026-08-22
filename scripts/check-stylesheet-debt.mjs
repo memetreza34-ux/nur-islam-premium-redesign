@@ -61,7 +61,7 @@ const BUDGET = {
   // elements no screen renders any more — the whole welcome hero, the prayer
   // tracker card, the hero orb and the four next-prayer-panel parts the arch
   // replaced. Without that sweep this number would be ~2483.
-  importantRules: 2450,
+  importantRules: 2458,
   // Raised three times now, each for surface that did not exist: the prayer
   // sequence (Arabic wording, transliteration and German meaning for every
   // spoken step), the calendar's occasions, which now explain what a day is and

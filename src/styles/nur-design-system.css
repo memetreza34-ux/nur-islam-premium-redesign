@@ -832,6 +832,34 @@
   max-height: 118px !important;
 }
 
+/* ---------- Legacy feature template: one screen, fifteen sections ----------
+   Hadith-Sammlung, Wissensbibliothek, Propheten, Sahabah, Frauen im Islam,
+   Quiz, Hajj, Sunnah, Reue, Fasten, Ummah, Orte, Jumuah, Zakat, Standby all
+   render through this. The title column was 189px against a 118px image, so
+   the longer names broke in two. */
+
+.reference-legacy-hero {
+  grid-template-columns: minmax(0, 1fr) 104px !important;
+  gap: var(--ds-space-3) !important;
+  align-items: center;
+}
+
+.reference-legacy-hero__copy h2 {
+  font-size: 23px !important;
+  line-height: 1.1 !important;
+  text-wrap: balance;
+}
+
+.reference-legacy-hero__copy p {
+  font-size: 12px !important;
+  line-height: 1.5 !important;
+}
+
+.reference-legacy-hero img {
+  width: 104px !important;
+  max-height: 104px !important;
+}
+
 /* ---------- Secondary screen heroes ----------
    Several of these were given a fixed height that their own copy outgrew, so
    the last line was clipped. The artwork stays — it is what makes the app
