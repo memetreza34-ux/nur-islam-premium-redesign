@@ -739,10 +739,14 @@
 /* Direct-access tiles: the label is one line, the gloss one more. */
 .reference-core-access-grid { gap: var(--ds-space-2) !important; }
 
+/* A tile label wraps rather than truncating — "Beten ler…" is not a label. */
 .reference-core-access-grid > button > span:not([class]) strong,
 .reference-core-access-grid > button strong {
+  overflow: visible !important;
   font-size: 13px !important;
   line-height: 1.2 !important;
+  text-overflow: clip !important;
+  white-space: normal !important;
 }
 
 .reference-core-access-grid > button small {
@@ -806,12 +810,84 @@
   opacity: 0.16 !important;
 }
 
-/* Hero artwork sits beside the copy, never under it. */
+/* Hero artwork sits beside the copy, never under it. Where the copy is tall
+   enough to reach it, the artwork retreats to the lower corner and fades out
+   toward the text rather than sitting behind it. */
 .reference-duas-hero > .premium-image,
 .reference-names-hero__allah,
 .reference-mosque-hero > .premium-image,
 .reference-collection-hero > .premium-image {
   max-height: 152px !important;
+}
+
+.reference-mosque-hero > .premium-image {
+  top: auto !important;
+  right: -12px !important;
+  bottom: -8px !important;
+  left: auto !important;
+  width: 132px !important;
+  max-height: 124px !important;
+  opacity: 0.42 !important;
+}
+
+.reference-mosque-hero > .premium-image > img {
+  mask-image: linear-gradient(250deg, #000 30%, transparent 82%);
+  -webkit-mask-image: linear-gradient(250deg, #000 30%, transparent 82%);
+}
+
+.reference-mosque-hero { position: relative; }
+
+/* The contrast rule allows three fixes; here the copy gets an opaque ground,
+   because the illustration is wide enough to reach across the block. */
+.reference-mosque-hero::before {
+  content: '';
+  position: absolute;
+  z-index: 3;
+  inset: 0 auto 0 0;
+  width: 78%;
+  pointer-events: none;
+  background: linear-gradient(90deg, #06251d 0%, rgba(6, 37, 29, 0.94) 55%, rgba(6, 37, 29, 0) 100%);
+}
+
+.reference-mosque-hero > div { position: relative; z-index: 4 !important; max-width: 68% !important; }
+.reference-mosque-hero .hero-pill { white-space: nowrap; }
+
+/* ---------- Forms: a placeholder is not an entry ----------
+   Set at the input's own weight and size, "name@beispiel.de" reads as a
+   filled field rather than a hint. */
+
+input::placeholder,
+textarea::placeholder {
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  color: rgba(185, 176, 159, 0.62) !important;
+}
+
+input,
+textarea,
+select {
+  font-size: 14px !important;
+  color: var(--ds-cream-hi) !important;
+}
+
+/* ---------- Kalender: a grid of numbers you compare ----------
+   Oldstyle figures put 1, 2 and 3 at three different heights inside a grid
+   whose whole job is letting you scan down a column. */
+
+.calendar-day strong,
+.calendar-day > strong {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  font-variant-numeric: tabular-nums !important;
+  font-feature-settings: 'tnum' 1 !important;
+}
+
+.calendar-weekday,
+.calendar-grid__weekday {
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: 10px !important;
+  letter-spacing: .08em;
 }
 
 /* ---------- Qibla: the bearing is a reading, not a heading ----------
