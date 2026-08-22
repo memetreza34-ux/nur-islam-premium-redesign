@@ -765,6 +765,73 @@
 
 .reference-core-access-grid > button > svg:last-child { color: var(--ds-gold); }
 
+/* ---------- Descriptions wrap; they do not get cut off ----------
+   Nine entries on Lernen ended in an ellipsis mid-sentence ("Ein ruhiger
+   Bereich zu Reue,…"), which loses the half that says what the section is. */
+
+.reference-expanded-learning-grid em,
+.reference-expanded-learning-grid small,
+.recommendation-card strong,
+.recommendation-card span > strong,
+.reference-learning-section li p,
+.reference-learning-list__copy small,
+.reference-legacy-list__copy small,
+.reference-collection-row small,
+.quick-card small,
+.recommendation-card p,
+.reference-profile-row small {
+  overflow: visible !important;
+  white-space: normal !important;
+  text-overflow: clip !important;
+  -webkit-line-clamp: none !important;
+  line-height: 1.4 !important;
+}
+
+/* The row grew a line, so it stops being pinned to a single-line height. */
+.reference-expanded-learning-grid > button {
+  height: auto !important;
+  min-height: var(--ds-tap-min) !important;
+  align-items: start !important;
+}
+
+/* ---------- Every control keeps a 44px tap target ----------
+   Text buttons were 15–16px tall — legible, but not reliably hittable. The
+   label keeps its size; the target grows around it. */
+
+.text-button,
+.premium-local-widgets__heading button,
+.reference-prayer-method > button {
+  min-height: var(--ds-tap-min);
+  padding-block: var(--ds-space-2);
+}
+
+.section-heading .text-button,
+.premium-local-widgets__heading button { margin-block: calc(var(--ds-space-2) * -1); }
+
+/* ---------- Quran reader: the surah name must fit on one line ----------
+   The copy column was capped at 61% of an already narrow block, leaving 93px
+   for a 35px title — so "Al-Faatiha" broke after "Al-". */
+
+.reference-reader-hero > div:first-child {
+  max-width: none !important;
+  min-width: 0;
+  flex: 1 1 auto;
+}
+
+.reference-reader-hero h2 {
+  font-size: 26px !important;
+  line-height: 1.08 !important;
+  overflow-wrap: normal;
+  hyphens: none;
+  text-wrap: balance;
+}
+
+.reference-reader-hero > .premium-image {
+  flex: none;
+  width: 118px !important;
+  max-height: 118px !important;
+}
+
 /* ---------- Secondary screen heroes ----------
    Several of these were given a fixed height that their own copy outgrew, so
    the last line was clipped. The artwork stays — it is what makes the app
