@@ -47,8 +47,13 @@ for (const required of [
   'lokal für die persönliche Qibla-Richtung verwendet',
   'keine persönliche Qibla-Richtung und keine persönlichen Live-Gebetszeiten',
   'technischer Quran-Fallback, falls eine lokale Quran-Datei fehlt oder nicht lesbar ist',
-  'Lokaler Offline-Quran: Herkunft, konkrete arabische Ausgabe, deutsche Wiedergabe und Nutzungsrechte des übernommenen Bestands sind noch nicht abschließend dokumentiert.',
-  'Diese Angaben beziehen sich ausschließlich auf den Online-Fallback und nicht automatisch auf den lokalen Offline-Bestand.',
+  // The wording moved on once the bundle was actually identified: the edition
+  // and the translator are now known and stated, while the licence — the part
+  // that decides whether it may be shipped — is still open and must stay said.
+  'deutsche Übersetzung von Abu Rida Muhammad ibn Ahmad ibn Rassoul',
+  'alle 6236 Ayat stimmen überein',
+  'Für die arabische Edition und für die deutsche Übersetzung ist die Lizenzlage noch nicht geklärt.',
+  'Der überprüfte Wortlaut sagt nichts über das Recht zur Weitergabe aus.',
 ]) {
   if (!legal.includes(required)) throw new Error(`Privacy/license truthfulness wording is missing: ${required}`);
 }
@@ -57,6 +62,10 @@ for (const stale of [
   'Verweigerst du die Freigabe, nutzt die App einen voreingestellten Ort und bleibt vollständig bedienbar.',
   'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
   'Deutsche Quran-Wiedergabe: Bubenheim & Elyas über Al Quran Cloud.',
+  // The offline bundle is Abu Rida, not Bubenheim; naming Bubenheim as the
+  // German text anywhere would be the original mistake restated.
+  'de.bubenheim',
+  'Bubenheim & Elyas',
 ]) {
   if (legal.includes(stale)) throw new Error(`Privacy/license text contains a stale claim: ${stale}`);
 }

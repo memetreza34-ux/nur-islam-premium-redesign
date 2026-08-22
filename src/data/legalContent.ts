@@ -144,8 +144,9 @@ export const licenseSections: LegalSection[] = [
   {
     heading: 'Textquellen',
     paragraphs: [
-      'Lokaler Offline-Quran: Herkunft, konkrete arabische Ausgabe, deutsche Wiedergabe und Nutzungsrechte des übernommenen Bestands sind noch nicht abschließend dokumentiert. Dieser Punkt blockiert die Freigabe des Quran-Bestands für den öffentlichen Release.',
-      'Online-Fallback über Al Quran Cloud: arabische Ausgabe quran-uthmani; deutsche Ausgabe de.bubenheim (Bubenheim & Elyas). Diese Angaben beziehen sich ausschließlich auf den Online-Fallback und nicht automatisch auf den lokalen Offline-Bestand.',
+      'Lokaler Offline-Quran: arabischer Text in der Ausgabe Uthmani, deutsche Übersetzung von Abu Rida Muhammad ibn Ahmad ibn Rassoul. Beide Bestandteile wurden Ayah für Ayah mit den veröffentlichten Ausgaben abgeglichen; alle 6236 Ayat stimmen überein.',
+      'Der Online-Fallback über Al Quran Cloud lädt dieselben Ausgaben, damit dieselbe Ayah nicht je nach Verfügbarkeit einer lokalen Datei in einer anderen Übersetzung erscheint.',
+      'Nutzungsrechte: Für die arabische Edition und für die deutsche Übersetzung ist die Lizenzlage noch nicht geklärt. Dieser Punkt blockiert die Freigabe des Quran-Bestands für den öffentlichen Release. Der überprüfte Wortlaut sagt nichts über das Recht zur Weitergabe aus.',
       'Herkunft und Nutzungsrechte der einzelnen Textbestände werden vor Veröffentlichung dokumentiert. Ungeklärte Provenienz wird nicht als bereits verifizierte Ausgabe ausgegeben.',
     ],
   },
