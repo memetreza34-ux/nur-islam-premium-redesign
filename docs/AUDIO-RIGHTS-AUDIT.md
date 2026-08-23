@@ -1,6 +1,6 @@
 # Nur Islam – Audio-/Quellenrechte Audit
 
-**Stand:** 17. August 2026  
+**Stand:** 23. August 2026  
 **Zweck:** Arbeitsnachweis für die spätere qualifizierte Rechtsprüfung. Dies ist keine Rechtsberatung und keine pauschale Rechtefreigabe.
 
 ## 1. Islamic Network / Al Quran Cloud – Quran-Rezitation
@@ -12,14 +12,14 @@ Offizielle Quellen:
 - Terms & Conditions: `https://alquran.cloud/terms-and-conditions`
 - CDN-Dokumentation: `https://alquran.cloud/cdn`
 
-Die am 17. August 2026 geprüften Terms nennen als letzten Aktualisierungsstand den 14. Juni 2026. Sie erklären unter anderem:
+Die am **23. August 2026** erneut geprüften Terms nennen weiterhin als letzten Aktualisierungsstand den **14. Juni 2026**. Sie erklären unter anderem:
 
 - Audio-Dateien behalten die jeweiligen Copyrights ihrer Rechteinhaber.
 - Rezitationen seien dem Dienst von Rezitatoren bzw. deren Nachlässen für freie, nichtkommerzielle Weiterverteilung lizenziert worden.
 - Streaming, Einbettung und Download für persönliche/edukative Nutzung werden genannt.
 - Die Terms sagen zugleich ausdrücklich, dass Rezitationen in ein kommerzielles Produkt eingebunden werden dürfen.
 - Das Copyright verbleibt trotzdem bei den Rezitatoren; diese können nach den Terms die Entfernung verlangen.
-- Die CDN-Dokumentation beschreibt `cdn.islamic.network` ausdrücklich als Integrations-CDN für Apps und dokumentiert `ar.alafasy` als Audio-Edition.
+- Die CDN-Dokumentation beschreibt `cdn.islamic.network` als Integrations-CDN für Apps und dokumentiert `ar.alafasy` als Audio-Edition.
 
 ### Bewertung für Nur Islam
 
@@ -33,20 +33,24 @@ Vor öffentlichem kommerziellem Release sollte eine qualifizierte Rechtsprüfung
 
 Verwendeter Host: `www.hisnmuslim.com` / Hisn-al-Muslim-Angebot.
 
-Am 17. August 2026 wurden die öffentlich erreichbare Website und der öffentlich verlinkte API-Einstieg geprüft:
+Am **23. August 2026** wurden die öffentlich erreichbare Website, öffentlich auffindbare API-/Inhaltsseiten und gezielte Suchen nach Terms, Copyright- und Lizenzangaben erneut geprüft.
+
+Geprüfte Ausgangspunkte:
 
 - `https://hisnmuslim.com/`
 - `https://hisnmuslim.com/api/husn.json`
 
-Die Website stellt Inhalte und eine Entwickler-API bereit. In den bei dieser Prüfung auffindbaren öffentlichen Seiten wurde jedoch **keine eindeutige Lizenz für die Weiterverwendung bzw. Einbettung der Audioaufnahmen in einer fremden App** gefunden.
+Die Website stellt Inhalte und Entwickler-/API-Zugänge bereit. In den bei dieser Prüfung auffindbaren **offiziellen** Seiten wurde weiterhin **keine eindeutige Lizenz für die Weiterverwendung bzw. Einbettung der Audioaufnahmen in einer fremden App** gefunden.
+
+Es existieren Drittanbieter- und Open-Source-Projekte, die `hisnmuslim.com` als Audioquelle nennen. Deren eigene Softwarelizenz (zum Beispiel MIT) wird **nicht** als Lizenz für die fremden Audioaufnahmen interpretiert. Ein Repository kann nur Rechte an seinem eigenen Code vergeben, soweit es diese besitzt; die bloße Nutzung einer externen Audioquelle durch Dritte ist kein Rechtebeleg für Nur Islam.
 
 ### Bewertung für Nur Islam
 
-Dieser Punkt bleibt offen. Die technische Abrufbarkeit und die Existenz einer API werden nicht als Audio-Rechtefreigabe behandelt.
+Dieser Punkt bleibt offen. Die technische Abrufbarkeit, die Existenz einer API und die Nutzung durch andere Apps werden nicht als Audio-Rechtefreigabe behandelt.
 
 Vor öffentlichem Release ist daher eine der folgenden Lösungen nötig:
 
-1. belastbare Audio-Nutzungserlaubnis/Lizenz dokumentieren; oder
+1. belastbare Audio-Nutzungserlaubnis/Lizenz des Rechteinhabers dokumentieren; oder
 2. die betroffenen Hisn-al-Muslim-Audioaufrufe für den Release deaktivieren/entfernen.
 
 Die Text-/Hadith-/Dua-Inhalte sind separat vom konkreten Audio-Recht zu betrachten.
