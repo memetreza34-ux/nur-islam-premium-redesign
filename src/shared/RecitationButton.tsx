@@ -16,19 +16,19 @@ import { AlertCircle, Pause, Play } from 'lucide-react';
 
 type PlaybackState = 'idle' | 'playing' | 'error';
 
-const BLOCKED_AUDIO_HOSTS = new Set([
-  'hisnmuslim.com',
-  'www.hisnmuslim.com',
+const ALLOWED_AUDIO_HOSTS = new Set([
+  'cdn.islamic.network',
 ]);
 
 /**
- * Release-Sicherheitsgrenze für externe Rezitationsquellen.
- * Unbekannte oder ungültige URLs werden ebenfalls nicht abgespielt.
+ * Release-Sicherheitsgrenze für externe Rezitationsquellen. Audio ist bewusst
+ * allowlist-basiert: neue Hosts sind gesperrt, bis Rechte, Datenschutz und CSP
+ * für sie ausdrücklich geprüft wurden.
  */
 export function isRecitationUrlAllowed(value: string) {
   try {
     const url = new URL(value);
-    return url.protocol === 'https:' && !BLOCKED_AUDIO_HOSTS.has(url.hostname.toLowerCase());
+    return url.protocol === 'https:' && ALLOWED_AUDIO_HOSTS.has(url.hostname.toLowerCase());
   } catch {
     return false;
   }
