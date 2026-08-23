@@ -1,0 +1,120 @@
+{
+  "schemaVersion": 1,
+  "policy": "A public release requires explicit qualified human review of every listed scope. Approval is bound to the exact file contents through contentHash and becomes stale automatically after a content change.",
+  "reviewGuide": "docs/INHALTE-PRUEFUNG.md",
+  "scopes": [
+    {
+      "id": "prayer-practice",
+      "label": "Gebet, Wudu, Salah und Rechtsschul-Unterschiede",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/prayerRakatData.ts",
+        "src/data/worshipGuideData.ts",
+        "src/data/madhhabData.ts",
+        "src/data/prayerLessons.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "learning-aqidah-names",
+      "label": "Lerninhalte, Glaubensgrundlagen und 99 Namen Allahs",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/islamicLearningContent.ts",
+        "src/data/knowledgeData.ts",
+        "src/data/namesOfAllahData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "duas-dhikr",
+      "label": "Duas und Dhikr",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/duaData.ts",
+        "src/data/dhikrData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "pilgrimage",
+      "label": "Hajj, Umrah und heilige Stätten",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/pilgrimageData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "hadith-sunnah",
+      "label": "Hadith-Sammlung und Sunnah im Alltag",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/hadithData.ts",
+        "src/data/practiceData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "quiz-calendar",
+      "label": "Islam-Quiz und islamischer Kalender",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/quizData.ts",
+        "src/data/islamicEventsData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "prophets-companions",
+      "label": "Propheten und Gefährten",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/prophetData.ts",
+        "src/data/companionData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    },
+    {
+      "id": "ummah",
+      "label": "Ummah-Übersicht und verbleibende Prozentangaben",
+      "requiredForRelease": true,
+      "files": [
+        "src/data/ummahData.ts"
+      ],
+      "status": "pending",
+      "reviewedBy": "",
+      "qualification": "",
+      "reviewedAt": "",
+      "contentHash": ""
+    }
+  ]
+}
