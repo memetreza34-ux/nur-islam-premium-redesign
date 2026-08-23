@@ -42,3 +42,8 @@ jobs:
         run: npm run check
         env:
           NUR_RELEASE: 'true'
+          # Public browser configuration. These are repository/environment
+          # variables, not privileged Supabase secrets; the release gate rejects
+          # missing values so production cannot silently fall back to source defaults.
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_PUBLISHABLE_KEY: ${{ vars.VITE_SUPABASE_PUBLISHABLE_KEY }}
