@@ -29,9 +29,9 @@ Für den geplanten 0,99-€-Premium-Pfad sollte Quran-Audio nicht künstlich hin
 
 Vor öffentlichem kommerziellem Release sollte eine qualifizierte Rechtsprüfung bestätigen, ob die konkrete Einbindung unter den dann aktuellen Terms ausreichend ist. Bei Unsicherheit kann die Audiofunktion ohne Verlust der übrigen App deaktiviert werden.
 
-## 2. Hisn al-Muslim – Gebetsformel-/Dhikr-Audio
+## 2. Hisn al-Muslim – Gebetsformel-Audio
 
-Verwendeter Host: `www.hisnmuslim.com` / Hisn-al-Muslim-Angebot.
+Historisch im Gebetskurs hinterlegter Host: `www.hisnmuslim.com`.
 
 Am **23. August 2026** wurden die öffentlich erreichbare Website, öffentlich auffindbare API-/Inhaltsseiten und gezielte Suchen nach Terms, Copyright- und Lizenzangaben erneut geprüft.
 
@@ -40,20 +40,24 @@ Geprüfte Ausgangspunkte:
 - `https://hisnmuslim.com/`
 - `https://hisnmuslim.com/api/husn.json`
 
-Die Website stellt Inhalte und Entwickler-/API-Zugänge bereit. In den bei dieser Prüfung auffindbaren **offiziellen** Seiten wurde weiterhin **keine eindeutige Lizenz für die Weiterverwendung bzw. Einbettung der Audioaufnahmen in einer fremden App** gefunden.
+In den bei dieser Prüfung auffindbaren **offiziellen** Seiten wurde weiterhin **keine eindeutige Lizenz für die Weiterverwendung bzw. Einbettung der Audioaufnahmen in einer fremden App** gefunden.
 
-Es existieren Drittanbieter- und Open-Source-Projekte, die `hisnmuslim.com` als Audioquelle nennen. Deren eigene Softwarelizenz (zum Beispiel MIT) wird **nicht** als Lizenz für die fremden Audioaufnahmen interpretiert. Ein Repository kann nur Rechte an seinem eigenen Code vergeben, soweit es diese besitzt; die bloße Nutzung einer externen Audioquelle durch Dritte ist kein Rechtebeleg für Nur Islam.
+Drittanbieter- oder Open-Source-Projekte, die dieselben Audio-URLs verwenden, werden nicht als Rechtebeleg gewertet. Eine Softwarelizenz eines fremden Repositories lizenziert nicht automatisch extern bezogene Audioaufnahmen.
 
-### Bewertung für Nur Islam
+### Technische Release-Entscheidung
 
-Dieser Punkt bleibt offen. Die technische Abrufbarkeit, die Existenz einer API und die Nutzung durch andere Apps werden nicht als Audio-Rechtefreigabe behandelt.
+Der Release Candidate liefert Hisn-Audio daher **nicht mehr aus**:
 
-Vor öffentlichem Release ist daher eine der folgenden Lösungen nötig:
+- die historischen URL-Zuordnungen bleiben nur als prüfbare Herkunfts-/Mappinginformation im Datensatz;
+- `RecitationButton` verwendet eine feste Allowlist und akzeptiert derzeit ausschließlich `cdn.islamic.network`;
+- Hisn-URLs werden vor Erzeugung eines `Audio`-Requests verworfen;
+- im automatischen Gebetsdurchlauf werden gesperrte Audio-Schritte ohne Netzwerkrequest weitergeschaltet;
+- die Content-Security-Policy erlaubt `hisnmuslim.com` nicht mehr unter `media-src`;
+- Unit- und Legal-Guards verhindern, dass ein unbekannter Audiohost unbemerkt wieder freigeschaltet wird.
 
-1. belastbare Audio-Nutzungserlaubnis/Lizenz des Rechteinhabers dokumentieren; oder
-2. die betroffenen Hisn-al-Muslim-Audioaufrufe für den Release deaktivieren/entfernen.
+Damit ist die **ungeklärte Hisn-Audionutzung für den aktuellen Release technisch entschärft**. Eine spätere Reaktivierung benötigt zuerst einen belastbaren Rechtenachweis und danach eine bewusste Änderung von Allowlist, CSP, Datenschutz- und Lizenztexten.
 
-Die Text-/Hadith-/Dua-Inhalte sind separat vom konkreten Audio-Recht zu betrachten.
+Die religiösen Textinhalte sind separat vom Audio-Recht zu prüfen.
 
 ## 3. Release-Entscheidung
 
@@ -61,9 +65,10 @@ Aktueller sicherer Release-Pfad:
 
 - Islamic-Network-/Al-Quran-Cloud-Quelle und aktuelle Terms dokumentiert halten;
 - Quran-Audio nicht als exklusives Premium-Gut vermarkten;
-- Hisn-al-Muslim-Audio bis zu eindeutiger Rechteklärung als offenen P0-Punkt behandeln;
+- Quran-Audio vor kommerziellem Release rechtlich final prüfen;
+- Hisn-Audio deaktiviert lassen, solange keine belastbare Nutzungserlaubnis vorliegt;
 - vor Aktivierung einer Zahlung die dann aktuellen Terms erneut prüfen;
-- bei unklarer Rechtslage Audio abschalten statt den gesamten Release zu blockieren oder eine Rechtefreigabe zu behaupten.
+- bei unklarer Rechtslage eine Audioquelle deaktiviert lassen statt eine Rechtefreigabe zu behaupten.
 
 ## 4. Was dieses Audit nicht behauptet
 
