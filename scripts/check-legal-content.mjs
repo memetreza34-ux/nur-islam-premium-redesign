@@ -21,6 +21,7 @@ const quran = await read('src/services/quranService.ts');
 const mosque = await read('src/services/mosqueService.ts');
 const backend = await read('src/services/nurBackend.ts');
 const premiumLocal = await read('src/services/premiumLocalService.ts');
+const recitationButton = await read('src/shared/RecitationButton.tsx');
 
 const RELEASE = process.env.NUR_RELEASE === 'true';
 
@@ -67,6 +68,26 @@ for (const allowed of connectSrc.split(/\s+/).filter((value) => value.startsWith
   if (!codeHosts.has(host)) {
     throw new Error(`connect-src allows a host nothing in the code contacts: ${host}`);
   }
+}
+
+// Audio rights are a release boundary, not just documentation. Quran audio is
+// currently approved for delivery under the documented provider terms. The
+// historical Hisn mappings stay in the data for review, but the current release
+// must block them both before playback and again in the CSP.
+const mediaSrc = csp.match(/media-src ([^;]+)/)?.[1] ?? '';
+if (!mediaSrc.includes('https://cdn.islamic.network')) {
+  throw new Error('media-src no longer allows the documented Quran recitation CDN.');
+}
+if (mediaSrc.includes('hisnmuslim.com')) {
+  throw new Error('Hisn al-Muslim audio is not rights-cleared for release and must stay out of media-src.');
+}
+for (const marker of ["'hisnmuslim.com'", "'www.hisnmuslim.com'"]) {
+  if (!recitationButton.includes(marker)) {
+    throw new Error(`Recitation playback no longer blocks unresolved Hisn host: ${marker}`);
+  }
+}
+if (!legal.includes('im aktuellen Release deaktiviert')) {
+  throw new Error('Legal copy no longer discloses that unresolved Hisn audio is disabled for release.');
 }
 
 // Claims the text makes about itself, which code changes could quietly falsify.
