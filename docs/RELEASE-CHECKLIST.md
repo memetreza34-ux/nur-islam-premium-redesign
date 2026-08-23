@@ -24,6 +24,26 @@ Vor jedem Release-relevanten Merge müssen mindestens folgende Nachweise grün s
 
 Der jeweils neueste GitHub-Actions-Lauf ist die maßgebliche Evidenz. Diese Datei trägt bewusst keine schnell veraltenden Run-IDs ein.
 
+Für Pull Requests nach `main` muss zusätzlich der strenge Release-Modus laufen:
+
+```bash
+NUR_RELEASE=true npm run check
+```
+
+Dieser Gate darf insbesondere mit ungefüllten Betreiberangaben nicht grün werden.
+
+### Repository-Governance
+
+Vor dem finalen Merge nach `main` zusätzlich im GitHub-Repository prüfen:
+
+- [ ] Merge nach `main` verlangt erfolgreiche Status-Checks
+- [ ] zentraler `Premium redesign check` ist als erforderlicher Check gesetzt
+- [ ] E2E-Smoke ist als erforderlicher Check gesetzt
+- [ ] direkter Merge/Push darf die Release-Gates nicht versehentlich umgehen
+- [ ] strenger `release-readiness`-Job läuft bei PRs nach `main`
+
+Ein vorhandener Workflow ohne verpflichtende Merge-Regel ist kein vollständiger Release-Schutz.
+
 ## B. Aktueller Premium-Stand
 
 Das lokale Premium-Komfortpaket ist implementiert. Es umfasst:
@@ -132,7 +152,8 @@ Erst nach Abschluss der relevanten P0-Punkte:
 
 1. neuesten RC vollständig prüfen;
 2. Release-Check mit `NUR_RELEASE=true` grün bekommen;
-3. `premium-design-finish` kontrolliert nach `main` übernehmen;
-4. Pages-/Produktionsdeployment beobachten;
-5. Smoke-Test durchführen;
-6. bei Releasefehlern auf die letzte bekannte grüne Version zurückrollen statt neue Features einzubauen.
+3. erforderliche GitHub-Status-Checks/Rules für `main` aktiv bestätigen;
+4. `premium-design-finish` kontrolliert nach `main` übernehmen;
+5. Pages-/Produktionsdeployment beobachten;
+6. Smoke-Test durchführen;
+7. bei Releasefehlern auf die letzte bekannte grüne Version zurückrollen statt neue Features einzubauen.
