@@ -4,7 +4,7 @@
 
 Ergänzende Arbeitsunterlagen:
 
-- [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md) – aktueller Nachweis zur Islamic-Network-/Al-Quran-Cloud-Nutzung und offener Hisn-al-Muslim-Audiolizenz.
+- [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md) – aktueller Nachweis zur Islamic-Network-/Al-Quran-Cloud-Nutzung und zur technisch deaktivierten Hisn-Audioquelle.
 - [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md) – priorisierter Handoff für die qualifizierte islamische Inhaltsprüfung.
 - [`REAL-DEVICE-QA.md`](./REAL-DEVICE-QA.md) – konkrete physische iPhone-/Android-Abnahmematrix.
 - [`RELEASE-OPERATIONS.md`](./RELEASE-OPERATIONS.md) – Beta-, Smoke-Test- und Rollback-Runbook.
@@ -93,14 +93,16 @@ Automatisierte Quellen- und Content-Checks ersetzen diesen Fachreview nicht.
 Aktueller Stand aus dem dokumentierten Rechte-Audit:
 
 - Islamic Network / Al Quran Cloud veröffentlicht aktuelle Terms, die App-Integration und auch Einbindung in kommerzielle Produkte beschreiben; zugleich verbleiben Copyrights bei den Rezitatoren und ein Entfernungsverlangen bleibt möglich. Das ist eine dokumentierte Nutzungsgrundlage, aber keine unbeschränkte eigene Rechtefreigabe.
-- Für Hisn-al-Muslim-Audio wurde bei der aktuellen öffentlichen Prüfung keine eindeutige Audio-Nutzungslizenz gefunden.
+- Für Hisn-al-Muslim-Audio wurde bei der aktuellen öffentlichen Prüfung keine eindeutige Audio-Nutzungslizenz gefunden. Deshalb wird diese Quelle im Release Candidate technisch nicht ausgeliefert.
 
-Daher offen:
+Daher:
 
-- [ ] Islamic-Network-/Alafasy-Nutzung im konkreten Release rechtlich final bestätigen **oder** betroffene Audiofunktion deaktivieren
-- [ ] Hisn-al-Muslim-Audionutzung belastbar klären **oder** betroffene Audiofunktion deaktivieren
+- [ ] Islamic-Network-/Alafasy-Nutzung im konkreten Release rechtlich final bestätigen **oder** betroffene Quran-Audiofunktion deaktivieren
+- [x] Hisn-al-Muslim-Audio für den Release deaktiviert: Playback-Allowlist blockiert den Host und CSP enthält ihn nicht mehr
+- [x] Regressionstest für nicht freigegebene Audiohosts vorhanden
+- [x] Legal-Guard erzwingt den Hisn-Block in Playback/CSP
 
-Technische Abrufbarkeit gilt nicht als Rechtefreigabe. Details: [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md).
+Eine spätere Reaktivierung von Hisn-Audio benötigt zuerst einen belastbaren Rechtenachweis. Technische Abrufbarkeit gilt nicht als Rechtefreigabe. Details: [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md).
 
 ### Physische Geräte
 
