@@ -145,8 +145,10 @@ try {
   await capture(page, '06-home-return');
 
   // Calendar remains a first-class screen, but no longer occupies one of the
-  // five primary tabs. Capture it through the real Home date affordance.
-  const calendarEntry = page.locator('.welcome-hero__date').first();
+  // five primary tabs. Capture it through the real visible Home date affordance.
+  // Motion can briefly leave an exiting Home tree in the DOM; selecting the
+  // visible instance avoids binding the audit to that hidden transition copy.
+  const calendarEntry = page.locator('.premium-home--v2:visible .welcome-hero__date:visible').first();
   await calendarEntry.waitFor({ state: 'visible', timeout: 10_000 });
   await calendarEntry.click();
   await page.locator('.reference-calendar-screen').waitFor({ state: 'visible', timeout: 15_000 });
