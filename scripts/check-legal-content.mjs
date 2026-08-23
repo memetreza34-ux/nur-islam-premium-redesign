@@ -81,10 +81,22 @@ if (!mediaSrc.includes('https://cdn.islamic.network')) {
 if (mediaSrc.includes('hisnmuslim.com')) {
   throw new Error('Hisn al-Muslim audio is not rights-cleared for release and must stay out of media-src.');
 }
-for (const marker of ["'hisnmuslim.com'", "'www.hisnmuslim.com'"]) {
-  if (!recitationButton.includes(marker)) {
-    throw new Error(`Recitation playback no longer blocks unresolved Hisn host: ${marker}`);
-  }
+
+// Playback is allowlist-based: a new provider must be deliberately approved,
+// not merely added to a data file. Verify the allowlist itself instead of
+// looking for old blacklist literals that may correctly disappear from code.
+const audioAllowlist = /const ALLOWED_AUDIO_HOSTS\s*=\s*new Set\(\[([\s\S]*?)\]\)/.exec(recitationButton)?.[1];
+if (!audioAllowlist) {
+  throw new Error('Recitation playback no longer exposes an explicit ALLOWED_AUDIO_HOSTS allowlist.');
+}
+if (!audioAllowlist.includes("'cdn.islamic.network'")) {
+  throw new Error('The documented Quran recitation CDN is missing from the playback allowlist.');
+}
+if (audioAllowlist.includes('hisnmuslim.com')) {
+  throw new Error('Hisn al-Muslim audio is not rights-cleared and must stay out of the playback allowlist.');
+}
+if (!recitationButton.includes('ALLOWED_AUDIO_HOSTS.has(url.hostname.toLowerCase())')) {
+  throw new Error('Recitation URL validation no longer enforces the approved-host allowlist.');
 }
 if (!legal.includes('im aktuellen Release deaktiviert')) {
   throw new Error('Legal copy no longer discloses that unresolved Hisn audio is disabled for release.');
