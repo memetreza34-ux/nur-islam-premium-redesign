@@ -11,6 +11,11 @@ describe('Recitation release policy', () => {
     expect(isRecitationUrlAllowed('https://hisnmuslim.com/audio/ar/28.mp3')).toBe(false);
   });
 
+  it('rejects every host that is not explicitly release-approved', () => {
+    expect(isRecitationUrlAllowed('https://example.com/audio.mp3')).toBe(false);
+    expect(isRecitationUrlAllowed('https://cdn.example.org/audio.mp3')).toBe(false);
+  });
+
   it('rejects insecure and malformed audio URLs', () => {
     expect(isRecitationUrlAllowed('http://cdn.islamic.network/quran/audio/2.mp3')).toBe(false);
     expect(isRecitationUrlAllowed('not-a-url')).toBe(false);
