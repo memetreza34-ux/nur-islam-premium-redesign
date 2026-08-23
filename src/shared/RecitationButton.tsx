@@ -1,24 +1,38 @@
 /**
  * Die Rezitation eines Schritts zum Anhören.
  *
- * Wer beten lernt, braucht nicht nur den Wortlaut, sondern den Klang — die
- * Umschrift allein trägt weder Länge noch Betonung. Der Knopf spielt die
- * Aufnahmen des Schritts der Reihe nach ab; beim Koran ist das Vers für Vers.
+ * Der Release spielt nur Audioquellen ab, deren Nutzung für diesen Produktstand
+ * ausreichend dokumentiert ist. Quran-Rezitationen über Islamic Network bleiben
+ * verfügbar. Die im Altbestand hinterlegten Hisn-al-Muslim-Dateien werden
+ * dagegen bewusst nicht angefordert, solange ihre Einbettungs-/Weiterverwendungs-
+ * rechte für diese App nicht belastbar geklärt sind.
  *
- * Zwei Quellen, beide mit echten Sprechern: der Koran von Al Quran Cloud, die
- * überlieferten Formeln aus Hisn al-Muslim. Eine künstlich erzeugte Stimme
- * steht bewusst nirgends — wer nachspricht, prägt sich die Aussprache ein, die
- * er hört, und dafür ist eine synthetische Näherung die falsche Vorlage.
- * Welche Schritte trotzdem stumm bleiben, steht bei `audioUrl` in
- * `prayerRakatData`.
- *
- * Die Aufnahmen liegen nicht im App-Paket. Ohne Verbindung sagt der Knopf das,
- * statt still nichts zu tun.
+ * Die Filterung sitzt direkt an der Audio-Grenze: selbst wenn ein alter Schritt
+ * noch eine Hisn-URL als dokumentierte Zuordnung trägt, erzeugt diese Komponente
+ * dafür weder bei einem Tap noch im automatischen Gebetsdurchlauf einen Request.
  */
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AlertCircle, Pause, Play } from 'lucide-react';
 
 type PlaybackState = 'idle' | 'playing' | 'error';
+
+const ALLOWED_AUDIO_HOSTS = new Set([
+  'cdn.islamic.network',
+]);
+
+/**
+ * Release-Sicherheitsgrenze für externe Rezitationsquellen. Audio ist bewusst
+ * allowlist-basiert: neue Hosts sind gesperrt, bis Rechte, Datenschutz und CSP
+ * für sie ausdrücklich geprüft wurden.
+ */
+export function isRecitationUrlAllowed(value: string) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && ALLOWED_AUDIO_HOSTS.has(url.hostname.toLowerCase());
+  } catch {
+    return false;
+  }
+}
 
 export function RecitationButton({
   urls,
@@ -33,6 +47,7 @@ export function RecitationButton({
 }) {
   const [state, setState] = useState<PlaybackState>('idle');
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const playableUrls = useMemo(() => urls.filter(isRecitationUrlAllowed), [urls]);
   // Als Ref, damit ein Wechsel des Rückrufs nicht die laufende Kette abbricht.
   const finishedRef = useRef(onFinished);
   finishedRef.current = onFinished;
@@ -50,15 +65,15 @@ export function RecitationButton({
 
   // Ein Schrittwechsel beendet die Wiedergabe. Sonst liefe die Rezitation des
   // vorigen Schritts unter dem neuen Text weiter.
-  useEffect(() => stop, [urls, stop]);
+  useEffect(() => stop, [playableUrls, stop]);
 
   const playFrom = useCallback((index: number) => {
-    if (index >= urls.length) {
+    if (index >= playableUrls.length) {
       stop();
       finishedRef.current?.();
       return;
     }
-    const audio = new Audio(urls[index]);
+    const audio = new Audio(playableUrls[index]);
     audioRef.current = audio;
     audio.onended = () => {
       if (audioRef.current === audio) playFrom(index + 1);
@@ -80,14 +95,24 @@ export function RecitationButton({
     audio.play().then(() => {
       if (audioRef.current === audio) setState('playing');
     }).catch(failed);
-  }, [urls, stop]);
+  }, [playableUrls, stop]);
 
-  // Im Durchlauf beginnt der Schritt von selbst zu sprechen.
+  // Im Durchlauf beginnt der Schritt von selbst zu sprechen. Ein aus
+  // Rechte-/Releasegründen gesperrter Audio-Schritt wird ohne Request direkt
+  // weitergeschaltet, damit der automatische Gebetsablauf nicht hängen bleibt.
   useEffect(() => {
     if (!autoPlay) return;
+    if (!playableUrls.length) {
+      const timer = window.setTimeout(() => finishedRef.current?.(), 0);
+      return () => window.clearTimeout(timer);
+    }
     playFrom(0);
     return stop;
-  }, [autoPlay, playFrom, stop, urls]);
+  }, [autoPlay, playFrom, playableUrls, stop]);
+
+  // Keine sichtbare Aktion anbieten, wenn sämtliche hinterlegten Quellen für
+  // den Release gesperrt sind.
+  if (!playableUrls.length) return null;
 
   if (state === 'error') {
     return (

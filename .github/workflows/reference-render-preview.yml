@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     branches:
+      - main
       - premium-design-finish
       - final-design-release-pass
     paths:
@@ -21,7 +22,9 @@ on:
       - '.github/workflows/reference-render-preview.yml'
   pull_request:
     branches:
+      - main
       - premium-home-redesign
+      - premium-design-finish
     paths:
       - 'src/**'
       - 'public/**'
@@ -46,6 +49,7 @@ concurrency:
 jobs:
   capture:
     runs-on: ubuntu-latest
+    container: mcr.microsoft.com/playwright:v1.62.1-noble
     timeout-minutes: 20
     steps:
       - name: Checkout
@@ -58,10 +62,7 @@ jobs:
           cache: npm
 
       - name: Install app dependencies
-        run: npm ci
-
-      - name: Install Chromium and WebKit for render QA
-        run: npx playwright install --with-deps chromium webkit
+        run: npm ci --no-audit --no-fund
 
       - name: Build production app for local render QA
         env:
@@ -76,10 +77,12 @@ jobs:
       - name: Wait for preview
         run: |
           URL='http://127.0.0.1:4173/'
-          for attempt in {1..40}; do
+          attempt=0
+          while [ "$attempt" -lt 40 ]; do
             if curl --fail --silent --show-error "$URL" > /dev/null; then
               exit 0
             fi
+            attempt=$((attempt + 1))
             sleep 1
           done
           cat /tmp/nur-preview.log
@@ -114,7 +117,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: nur-islam-reference-preview-390x844
+          name: nur-islam-reference-preview-${{ github.run_attempt }}
           path: artifacts/reference-preview/*.png
           if-no-files-found: warn
           retention-days: 14

@@ -138,10 +138,14 @@ try {
     await shot(name);
   }
 
-  await nav('Start');
-  await settle();
-  const calendarEntry = page.locator('.welcome-hero__date').first();
+  // Calendar is a core shortcut in Mehr, not a primary bottom-navigation tab.
+  // Follow the real visible user path so the light-theme audit stays aligned
+  // with the current product navigation instead of a hidden legacy Home control.
+  await nav('Mehr');
+  await page.locator('.reference-profile-screen').waitFor({ state: 'visible', timeout: 15_000 });
+  const calendarEntry = page.locator('.reference-core-access-grid > button').filter({ hasText: 'Kalender' }).first();
   await calendarEntry.waitFor({ state: 'visible', timeout: 10_000 });
+  await calendarEntry.scrollIntoViewIfNeeded();
   await calendarEntry.click();
   await page.locator('.reference-calendar-screen').waitFor({ state: 'visible', timeout: 15_000 });
   await settle();
@@ -201,4 +205,4 @@ try {
   await browser.close();
 }
 
-console.log('Light-theme premium reference screenshots captured at 390x844 with refreshed primary navigation, Calendar via Home, daily-detail and focal-title contrast assertions.');
+console.log('Light-theme premium reference screenshots captured at 390x844 with refreshed primary navigation, Calendar via Mehr, daily-detail and focal-title contrast assertions.');

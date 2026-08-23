@@ -4,7 +4,7 @@ name: End-to-end smoke
 # spend each run reinstalling Chromium and system packages on ubuntu-latest.
 on:
   push:
-    branches: [premium-design-finish, final-design-release-pass]
+    branches: [main, premium-design-finish, final-design-release-pass]
   pull_request:
     branches: [main, premium-design-finish]
   workflow_dispatch:

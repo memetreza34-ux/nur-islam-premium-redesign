@@ -11,8 +11,8 @@
  *   1. every OPERATOR_PLACEHOLDER value has to be filled in with real details,
  *   2. the result has to be reviewed by someone qualified.
  *
- * `npm run legal:check` fails while placeholders remain, so an unfinished
- * imprint cannot reach a release build unnoticed.
+ * `npm run legal:check` fails while placeholders remain in release mode, so an
+ * unfinished imprint cannot reach a release build unnoticed.
  */
 
 export const OPERATOR_PLACEHOLDER = '<<BITTE AUSFÜLLEN>>';
@@ -89,8 +89,8 @@ export const privacySections: LegalSection[] = [
     paragraphs: [
       'AlAdhan (api.aladhan.com) – Gebetszeiten. Übermittelt werden Breiten- und Längengrad, Datum, Berechnungsmethode und Asr-Schule.',
       'Al Quran Cloud (api.alquran.cloud) – die deutsche Wiedergabe des Quran. Sie ist nicht Teil der App, sondern wird beim Öffnen einer Sure abgerufen und danach im Browser gespeichert. Übermittelt werden Surennummer und Ausgabenkennung, keine personenbezogenen Daten; wie bei jedem Abruf verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse. Der arabische Text liegt vollständig in der App und wird nicht abgefragt.',
-      'Islamic Network (cdn.islamic.network) – Rezitations-Aufnahmen im Gebetskurs, nur wenn du „Anhören“ antippst. Übermittelt wird die Versnummer; wie bei jedem Abruf verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse. Ohne Antippen wird nichts geladen.',
-      'Hisn al-Muslim (www.hisnmuslim.com) – Aufnahmen der überlieferten Gebetsformeln im Gebetskurs, ebenfalls nur beim Antippen von „Anhören“. Übermittelt wird die Nummer der Aufnahme; auch hier verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse.',
+      'Islamic Network (cdn.islamic.network) – Quran-Rezitations-Aufnahmen im Gebetskurs, nur wenn du „Anhören“ antippst oder den automatischen Übungsdurchlauf startest. Übermittelt wird die Versnummer; wie bei jedem Abruf verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse.',
+      'Hisn-al-Muslim-Aufnahmen sind im aktuellen Release nicht als Netzwerkquelle freigegeben. Historische URL-Zuordnungen können zu Prüfzwecken im Quellcode dokumentiert bleiben, werden von der Wiedergabekomponente blockiert und sind zusätzlich nicht in der Content-Security-Policy als Medienquelle zugelassen.',
       'OpenStreetMap über die öffentlichen Overpass-Dienste overpass-api.de und overpass.kumi.systems – Moschee-Suche. Übermittelt werden Breiten- und Längengrad sowie der Suchradius. Kartendaten stammen von OpenStreetMap-Mitwirkenden und stehen unter der Open Database License.',
       'Supabase (jmswsgwnvmvsfayeodcd.supabase.co) – nur bei angelegtem Konto: Anmeldung, Profil, Cloud-Sicherung und Cloud-Notizen. Das genutzte Projekt liegt in der Region EU-Nord (Stockholm).',
       'GitHub Pages – Auslieferung der App. Beim Abruf verarbeitet GitHub technisch notwendige Verbindungsdaten wie deine IP-Adresse.',
@@ -155,8 +155,8 @@ export const licenseSections: LegalSection[] = [
     heading: 'Aufnahmen',
     paragraphs: [
       'Quran-Rezitation im Gebetskurs: Mishary Alafasy, bezogen über Islamic Network (cdn.islamic.network).',
-      'Aufnahmen der überlieferten Gebetsformeln: Hisn al-Muslim (hisnmuslim.com).',
-      'Beide werden erst beim Antippen von „Anhören" abgerufen und liegen nicht in der App. Die Nutzungsrechte an den Aufnahmen sind mit den Rechteinhabern bzw. Anbietern nicht abschließend geklärt. Die bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt.',
+      'Hisn-al-Muslim-Aufnahmen der überlieferten Gebetsformeln sind wegen noch nicht abschließend geklärter Einbettungs-/Weiterverwendungsrechte im aktuellen Release deaktiviert. Die bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt.',
+      'Eine spätere Aktivierung einer derzeit gesperrten Audioquelle benötigt zuerst einen belastbaren Rechtenachweis und anschließend eine erneute Prüfung von Code, Content-Security-Policy, Datenschutz- und Lizenzangaben.',
     ],
   },
   {

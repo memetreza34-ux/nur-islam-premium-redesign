@@ -4,7 +4,9 @@ on:
   workflow_dispatch:
   pull_request:
     branches:
+      - main
       - premium-home-redesign
+      - premium-design-finish
     paths:
       - 'src/app/App.tsx'
       - 'src/styles/base.css'

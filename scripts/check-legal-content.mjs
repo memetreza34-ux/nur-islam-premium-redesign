@@ -21,6 +21,7 @@ const quran = await read('src/services/quranService.ts');
 const mosque = await read('src/services/mosqueService.ts');
 const backend = await read('src/services/nurBackend.ts');
 const premiumLocal = await read('src/services/premiumLocalService.ts');
+const recitationButton = await read('src/shared/RecitationButton.tsx');
 
 const RELEASE = process.env.NUR_RELEASE === 'true';
 
@@ -67,6 +68,38 @@ for (const allowed of connectSrc.split(/\s+/).filter((value) => value.startsWith
   if (!codeHosts.has(host)) {
     throw new Error(`connect-src allows a host nothing in the code contacts: ${host}`);
   }
+}
+
+// Audio rights are a release boundary, not just documentation. Quran audio is
+// currently approved for delivery under the documented provider terms. The
+// historical Hisn mappings stay in the data for review, but the current release
+// must block them both before playback and again in the CSP.
+const mediaSrc = csp.match(/media-src ([^;]+)/)?.[1] ?? '';
+if (!mediaSrc.includes('https://cdn.islamic.network')) {
+  throw new Error('media-src no longer allows the documented Quran recitation CDN.');
+}
+if (mediaSrc.includes('hisnmuslim.com')) {
+  throw new Error('Hisn al-Muslim audio is not rights-cleared for release and must stay out of media-src.');
+}
+
+// Playback is allowlist-based: a new provider must be deliberately approved,
+// not merely added to a data file. Verify the allowlist itself instead of
+// looking for old blacklist literals that may correctly disappear from code.
+const audioAllowlist = /const ALLOWED_AUDIO_HOSTS\s*=\s*new Set\(\[([\s\S]*?)\]\)/.exec(recitationButton)?.[1];
+if (!audioAllowlist) {
+  throw new Error('Recitation playback no longer exposes an explicit ALLOWED_AUDIO_HOSTS allowlist.');
+}
+if (!audioAllowlist.includes("'cdn.islamic.network'")) {
+  throw new Error('The documented Quran recitation CDN is missing from the playback allowlist.');
+}
+if (audioAllowlist.includes('hisnmuslim.com')) {
+  throw new Error('Hisn al-Muslim audio is not rights-cleared and must stay out of the playback allowlist.');
+}
+if (!recitationButton.includes('ALLOWED_AUDIO_HOSTS.has(url.hostname.toLowerCase())')) {
+  throw new Error('Recitation URL validation no longer enforces the approved-host allowlist.');
+}
+if (!legal.includes('im aktuellen Release deaktiviert')) {
+  throw new Error('Legal copy no longer discloses that unresolved Hisn audio is disabled for release.');
 }
 
 // Claims the text makes about itself, which code changes could quietly falsify.

@@ -10,18 +10,17 @@
       that is not documented there, the request would be blocked rather than
       quietly succeed.
 
-      media-src exists for one thing: the recitation recordings in the prayer
-      course. Two hosts serve them — islamic.network for the Quran passages (the
-      same project behind the already listed api.alquran.cloud) and
-      hisnmuslim.com for the transmitted formulas. It grants audio and video
-      only: a host on this line cannot run script or be talked to by fetch.
+      media-src currently allows only the Quran recitation CDN used in the
+      prayer course. Hisn-al-Muslim audio remains mapped in the source data for
+      review purposes but is intentionally not permitted in the release CSP
+      while its reuse rights are unresolved.
 
       'unsafe-inline' is required for styles because the animation library sets
       element styles directly; scripts stay restricted to the bundle.
       frame-ancestors is intentionally absent: it is ignored in a meta tag and
       needs a real header, which GitHub Pages cannot set.
     -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' https://cdn.islamic.network https://www.hisnmuslim.com; font-src 'self'; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://overpass-api.de https://overpass.kumi.systems https://jmswsgwnvmvsfayeodcd.supabase.co; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; media-src 'self' https://cdn.islamic.network; font-src 'self'; connect-src 'self' https://api.aladhan.com https://api.alquran.cloud https://overpass-api.de https://overpass.kumi.systems https://jmswsgwnvmvsfayeodcd.supabase.co; worker-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'; object-src 'none'" />
     <!--
       Every request leaving the app otherwise carries the page it came from.
       The mosque finder opens whatever website OpenStreetMap has on record, so

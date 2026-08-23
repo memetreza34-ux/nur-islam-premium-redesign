@@ -144,10 +144,15 @@ try {
   await waitForStableUi(page);
   await capture(page, '06-home-return');
 
-  // Calendar remains a first-class screen, but no longer occupies one of the
-  // five primary tabs. Capture it through the real Home date affordance.
-  const calendarEntry = page.locator('.welcome-hero__date').first();
+  // Calendar is still a first-class screen but no longer a primary tab. The
+  // current user-facing route is More -> Direktzugriff -> Kalender. Test that
+  // real path instead of relying on an older Home date affordance that is no
+  // longer visible in the approved compact Home composition.
+  await clickNav(page, 'Mehr');
+  await page.locator('.reference-profile-screen').waitFor({ state: 'visible', timeout: 10_000 });
+  const calendarEntry = page.locator('.reference-core-access-grid button').filter({ hasText: 'Kalender' }).first();
   await calendarEntry.waitFor({ state: 'visible', timeout: 10_000 });
+  await calendarEntry.scrollIntoViewIfNeeded();
   await calendarEntry.click();
   await page.locator('.reference-calendar-screen').waitFor({ state: 'visible', timeout: 15_000 });
   await waitForStableUi(page);
