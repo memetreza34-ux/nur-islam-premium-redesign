@@ -10,6 +10,7 @@ const requiredChecks = [
   'image-map:check',
   'icon-map:check',
   'deployment:check',
+  'backend-config:check',
   'visual:check',
   'art-palette:check',
   'home-reference:check',
@@ -58,4 +59,4 @@ if (lintIndex < 0 || buildIndex < 0 || lintIndex > buildIndex) {
   throw new Error('npm run check must finish with TypeScript lint before the production build.');
 }
 
-console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired, religious human-review and reference/content gates are critical, and lint/build remain final.`);
+console.log(`Check chain verified: ${definedChecks.length} defined release checks are wired; explicit backend config, religious human review and reference/content gates are critical, and lint/build remain final.`);
