@@ -15,6 +15,14 @@ Deno.serve(async (request: Request) => {
   if (request.method === 'OPTIONS') return new Response('ok', { headers: corsHeaders });
   if (request.method !== 'POST') return json(405, { error: 'method_not_allowed' });
 
+  // A client-side feature flag is not a security boundary. Even if this
+  // function is deployed accidentally to the current shared auth project, a
+  // direct request must not be able to delete that cross-app identity. Enable
+  // this secret only on a backend dedicated exclusively to Nur Islam.
+  if (Deno.env.get('NUR_ALLOW_FULL_ACCOUNT_DELETE') !== 'true') {
+    return json(503, { error: 'account_deletion_disabled' });
+  }
+
   const authorization = request.headers.get('Authorization') ?? '';
   if (!authorization.startsWith('Bearer ')) return json(401, { error: 'missing_user_session' });
 
