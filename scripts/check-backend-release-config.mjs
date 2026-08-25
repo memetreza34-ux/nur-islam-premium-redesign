@@ -33,7 +33,10 @@ requireText(accountScreen, "fullAccountDeletion ? 'Konto löschen' : 'Cloud-Date
 
 // The privileged delete must stay in a server-only Edge Function. It resolves
 // identity from the caller's signed session token and never accepts a browser-
-// supplied user id as the deletion target.
+// supplied user id as the deletion target. The independent server-side kill
+// switch protects the current shared auth project even if the function is
+// deployed there by mistake.
+requireText(deleteAccountFunction, "Deno.env.get('NUR_ALLOW_FULL_ACCOUNT_DELETE') !== 'true'", 'Delete-account Edge Function');
 requireText(deleteAccountFunction, "request.headers.get('Authorization')", 'Delete-account Edge Function');
 requireText(deleteAccountFunction, 'admin.auth.getUser(token)', 'Delete-account Edge Function');
 requireText(deleteAccountFunction, 'admin.auth.admin.deleteUser(userId, false)', 'Delete-account Edge Function');
