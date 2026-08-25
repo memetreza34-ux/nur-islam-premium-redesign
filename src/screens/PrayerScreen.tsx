@@ -297,8 +297,8 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
     }
   };
 
-  const nextDone = completed.has(nextPrayer.prayer.id);
-  const nextTrackable = Boolean(nextPrayer.prayer.obligatory);
+  const nextDone = Boolean(nextPrayer && completed.has(nextPrayer.prayer.id));
+  const nextTrackable = Boolean(nextPrayer?.prayer.obligatory);
   const statusLabel = status === 'live'
     ? 'Live berechnet'
     : status === 'loading'
@@ -333,6 +333,9 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       </section>
       <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>
 
+      {/* Without a usable timetable there is no next prayer, and the arch would
+          otherwise show a prayer and a countdown the app does not know. */}
+      {nextPrayer ? (
       <section className="next-prayer-panel reference-next-prayer">
         {/* The arch carries the time and the day counter, so the tracker card
             and the separate progress bar are no longer needed. */}
@@ -353,12 +356,17 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
           <button className={tonePlaying ? 'adhan-button adhan-button--active' : 'adhan-button'} onClick={testTone} disabled={tonePlaying} aria-label="Hinweiston testen"><Volume2 size={19} /></button>
         </div>
       </section>
+      ) : (
+        <section className="next-prayer-panel reference-next-prayer">
+          <p className="reference-prayer-location-privacy">Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Aktualisiere die Daten oder gleiche mit einer örtlichen Moschee ab.</p>
+        </section>
+      )}
 
       <section className="prayer-schedule-section">
         <div className="section-heading"><div><span className="overline">Tagesübersicht</span><h2>Alle Gebetszeiten</h2></div><button className="text-button" onClick={() => setSettingsOpen(true)}><Settings2 size={15} /> Berechnung</button></div>
         <div className="prayer-schedule-list">
           {prayerTimes.map((prayer, index) => {
-            const isNext = prayer.id === nextPrayer.prayer.id;
+            const isNext = prayer.id === nextPrayer?.prayer.id;
             const done = completed.has(prayer.id);
             const notificationOn = prayer.obligatory && notifications.has(prayer.id);
             return (

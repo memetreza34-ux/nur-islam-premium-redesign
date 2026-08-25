@@ -58,7 +58,16 @@ export type NextPrayer = {
 };
 
 export function prayerTimeToMinutes(time: string) {
-  const [hours, minutes] = time.split(':').map(Number);
+  // Validated rather than parsed loosely: the placeholder "—:—" and a nonsense
+  // value like "25:00" both used to come back as a number, so a caller asking
+  // "is this a real time?" got yes for both. Everything downstream — the next
+  // prayer, the Maghrib day boundary — then computed on a time that does not
+  // exist. NaN is the honest answer and every caller already checks for it.
+  const match = time.match(/^(\d{1,2}):(\d{2})$/);
+  if (!match) return Number.NaN;
+  const hours = Number(match[1]);
+  const minutes = Number(match[2]);
+  if (hours < 0 || hours > 23 || minutes < 0 || minutes > 59) return Number.NaN;
   return hours * 60 + minutes;
 }
 
@@ -70,9 +79,20 @@ export function formatPrayerRemaining(totalMinutes: number) {
   return `${hours} Std. ${minutes} Min.`;
 }
 
-export function getNextPrayer(now = new Date(), schedule: PrayerScheduleItem[] = PRAYER_SCHEDULE): NextPrayer {
-  const obligatoryPrayers = schedule.filter((item) => item.obligatory);
-  if (!obligatoryPrayers.length) throw new Error('Der Gebetszeitplan enthält keine Pflichtgebete.');
+/**
+ * The next obligatory prayer, or `null` when there is no usable timetable.
+ *
+ * Null rather than a placeholder on purpose. With no parseable clock values the
+ * old code still answered with the first obligatory prayer, which reads as
+ * "Fajr is next" to every caller that renders `prayer` without also inspecting
+ * `remaining`. A screen can forget a check; it cannot render null by accident.
+ */
+export function getNextPrayer(now = new Date(), schedule: PrayerScheduleItem[] = PRAYER_SCHEDULE): NextPrayer | null {
+  const allObligatory = schedule.filter((item) => item.obligatory);
+  if (!allObligatory.length) throw new Error('Der Gebetszeitplan enthält keine Pflichtgebete.');
+
+  const obligatoryPrayers = allObligatory.filter((prayer) => Number.isFinite(prayerTimeToMinutes(prayer.time)));
+  if (!obligatoryPrayers.length) return null;
 
   const currentMinutes = now.getHours() * 60 + now.getMinutes();
   const nextToday = obligatoryPrayers.find((prayer) => prayerTimeToMinutes(prayer.time) > currentMinutes);

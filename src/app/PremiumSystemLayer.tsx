@@ -166,7 +166,7 @@ function PremiumHomeWidgets({ onOpen }: { onOpen: () => void }) {
         <button onClick={onOpen}>Anpassen</button>
       </div>
       <div className="premium-local-widgets__grid">
-        {settings.widgets.includes('prayer') ? (
+        {settings.widgets.includes('prayer') && nextPrayer ? (
           <button onClick={onOpen} className="premium-local-widget">
             <MoonStar size={18} />
             <span><small>{PRAYER_SCHEDULE_META.city}</small><strong>{nextPrayer.prayer.label} · {nextPrayer.prayer.time}</strong><em>{nextPrayer.tomorrow ? 'morgen ' : ''}in {formatPrayerRemaining(nextPrayer.remaining)}</em></span>

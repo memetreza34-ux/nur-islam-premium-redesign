@@ -402,11 +402,25 @@ function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
     <LegacyMotionMain className="reference-standby-screen">
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-standby-stage">
-        <span className="overline">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
-        <p className="reference-standby-arabic" dir="rtl">{nextPrayer.prayer.arabic}</p>
-        <h2>{nextPrayer.prayer.label}</h2>
-        <strong>{nextPrayer.prayer.time}</strong>
-        <span className="reference-standby-countdown">noch {formatPrayerRemaining(nextPrayer.remaining)}</span>
+        {/* A standby screen is read from across the room, so it must not name a
+            prayer the app has no usable times for. */}
+        {nextPrayer ? (
+          <>
+            <span className="overline">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
+            <p className="reference-standby-arabic" dir="rtl">{nextPrayer.prayer.arabic}</p>
+            <h2>{nextPrayer.prayer.label}</h2>
+            <strong>{nextPrayer.prayer.time}</strong>
+            <span className="reference-standby-countdown">noch {formatPrayerRemaining(nextPrayer.remaining)}</span>
+          </>
+        ) : (
+          <>
+            <span className="overline">Gebetszeiten nicht verfügbar</span>
+            <p className="reference-standby-arabic" dir="rtl">الصلاة</p>
+            <h2>Keine aktuellen Zeiten</h2>
+            <strong>—:—</strong>
+            <span className="reference-standby-countdown">Öffne die Gebetszeiten und aktualisiere sie.</span>
+          </>
+        )}
         <button className="gold-button" onClick={() => void toggleFullscreen()}>{fullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}{fullscreen ? 'Vollbild beenden' : 'Vollbild starten'}</button>
       </section>
       {status ? <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>{status}</p></section> : null}

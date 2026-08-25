@@ -368,6 +368,10 @@ function PremiumHome({
         </button>
       </section>
 
+      {/* No usable timetable means there is no next prayer to name. Rendering
+          the arch anyway would put a prayer and a countdown on screen that the
+          app does not actually know. */}
+      {nextPrayer ? (
       <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
         <div className="prayer-hero__content">
           <MihrabArch
@@ -394,6 +398,14 @@ function PremiumHome({
           <button className="gold-button" onClick={() => onNavigate('prayer')}>Alle Gebetszeiten <ChevronRight size={18} /></button>
         </div>
       </section>
+      ) : (
+        <section className="prayer-hero prayer-hero--v2" aria-label="Gebetszeiten nicht verfügbar">
+          <div className="prayer-hero__content">
+            <span className="prayer-source-note">Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Öffne die Gebetszeiten und aktualisiere sie.</span>
+            <button className="gold-button" onClick={() => onNavigate('prayer')}>Gebetszeiten prüfen <ChevronRight size={18} /></button>
+          </div>
+        </section>
+      )}
 
       <section className="content-section">
         <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
