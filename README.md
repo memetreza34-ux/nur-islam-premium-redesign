@@ -4,7 +4,7 @@ Mobile-first PWA für Quran, Gebetszeiten, Qibla, Dhikr, Duas, Lernen und weiter
 
 ## Aktueller Projektmodus
 
-Der aktive Release-Candidate-Code liegt auf `premium-design-finish`.
+Der aktive Code liegt auf `design/claude-design-system`. Das ist der einzige Arbeitsbranch; `main` ist der Veröffentlichungszweig.
 
 Nach dem bewusst ergänzten **lokalen Premium-Komfortpaket** ist der Produktumfang wieder eingefroren. Bis V1 geht es jetzt um Stabilität, reale Geräteprüfung, religiösen Fachreview, Rechte/Datenschutz, Betreiberangaben und Release-Härtung. Die echte 0,99-€-Abo-Abrechnung wird bewusst erst am Ende angebunden.
 
@@ -68,7 +68,7 @@ Browser-E2E:
 npm run e2e
 ```
 
-GitHub Actions ist aktiv; die Workflows auf `premium-design-finish` liefern die jeweils aktuellste CI-Evidenz.
+GitHub Actions ist aktiv; die Workflows auf `design/claude-design-system` liefern die jeweils aktuellste CI-Evidenz.
 
 ### Pre-push hook
 
@@ -94,7 +94,7 @@ NUR_RELEASE=true npm run check
 
 Damit sollen releasekritische Zustände – insbesondere noch nicht ausgefüllte Legal-/Betreiberangaben – den öffentlichen Release stoppen.
 
-`premium-design-finish` ist deshalb bewusst ein Release-Candidate-Branch und wird nicht durch jeden Push automatisch als Produktion veröffentlicht.
+`design/claude-design-system` ist deshalb bewusst ein Arbeitsbranch und wird nicht durch jeden Push automatisch als Produktion veröffentlicht.
 
 Optional können `VITE_SUPABASE_URL` und `VITE_SUPABASE_PUBLISHABLE_KEY` als GitHub-Actions-Variablen gesetzt werden. Das sind öffentliche Browser-Client-Konfigurationswerte; ein Supabase-Service-Role-Key darf niemals in Frontend, Repository oder öffentlichen Build gelangen.
 
