@@ -7,7 +7,7 @@
     "prepare": "node scripts/install-git-hooks.mjs",
     "dev": "vite --port=3000 --host=0.0.0.0",
     "build": "vite build",
-    "prepreview": "npm run build",
+    "prepreview": "npm run build -- --base=/",
     "preview": "vite preview --port 4173 --strictPort",
     "lint": "tsc --noEmit",
     "test": "vitest run",
