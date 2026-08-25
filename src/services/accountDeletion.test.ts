@@ -59,13 +59,15 @@ describe('full account deletion', () => {
       user: { id: 'user-a', email: 'a@example.com' },
     });
     backend.signOut.mockResolvedValue(undefined);
-    const fetchMock = vi.fn(async () => ({ ok: true, status: 200, json: async () => ({ deleted: true }) } as Response));
+    const fetchMock = vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit) => (
+      { ok: true, status: 200, json: async () => ({ deleted: true }) } as Response
+    ));
     vi.stubGlobal('fetch', fetchMock);
 
     await deleteFullAccount();
 
     expect(fetchMock).toHaveBeenCalledTimes(1);
-    const [url, init] = fetchMock.mock.calls[0];
+    const [url, init] = fetchMock.mock.calls[0]!;
     expect(String(url)).toContain('/functions/v1/delete-account');
     expect(init?.method).toBe('POST');
     expect((init?.headers as Record<string, string>).Authorization).toBe('Bearer user-access-token');
