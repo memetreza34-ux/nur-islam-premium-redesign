@@ -29,6 +29,7 @@ import {
   subscribeAuth,
   upsertProfile,
 } from '../services/nurBackend';
+import { deleteFullAccount, isFullAccountDeletionEnabled } from '../services/accountDeletion';
 import type { NurSession } from '../services/nurBackend';
 
 function storeDisplayName(value: string) {
@@ -49,6 +50,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmRestore, setConfirmRestore] = useState(false);
   const reduceMotion = useReducedMotion();
+  const fullAccountDeletion = isFullAccountDeletionEnabled();
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
 
@@ -163,15 +165,18 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
     }
   };
 
-  const removeCloudData = async () => {
+  const removeAccountData = async () => {
     setBusy(true);
     setStatus(null);
     try {
-      await deleteCloudData();
+      if (fullAccountDeletion) await deleteFullAccount();
+      else await deleteCloudData();
       setSession(null);
       setConfirmDelete(false);
       setCloudUpdatedAt(null);
-      setStatus('Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
+      setStatus(fullAccountDeletion
+        ? 'Dein Nur-Islam-Konto und die zugehörigen Cloud-Daten wurden vollständig gelöscht. Die Daten auf diesem Gerät bleiben erhalten.'
+        : 'Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
     } finally {
@@ -228,15 +233,17 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
           <section className="reference-account-data">
             <button onClick={() => void exportData()} disabled={busy}><Download size={18} /> Meine Daten exportieren</button>
             {confirmDelete ? (
-              <div className="reference-account-data-confirm" role="alertdialog" aria-label="Cloud-Daten endgültig löschen">
-                <p>Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet. Die Daten auf diesem Gerät werden nicht angetastet.</p>
+              <div className="reference-account-data-confirm" role="alertdialog" aria-label={fullAccountDeletion ? 'Konto endgültig löschen' : 'Cloud-Daten endgültig löschen'}>
+                <p>{fullAccountDeletion
+                  ? 'Dein Nur-Islam-Konto, Profil, Cloud-Backup und Cloud-Notizen endgültig löschen? Das lässt sich nicht rückgängig machen. Die Daten auf diesem Gerät werden nicht angetastet.'
+                  : 'Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet. Die Daten auf diesem Gerät werden nicht angetastet.'}</p>
                 <div>
                   <button onClick={() => setConfirmDelete(false)} disabled={busy}>Abbrechen</button>
-                  <button className="is-destructive" onClick={() => void removeCloudData()} disabled={busy}>Endgültig löschen</button>
+                  <button className="is-destructive" onClick={() => void removeAccountData()} disabled={busy}>Endgültig löschen</button>
                 </div>
               </div>
             ) : (
-              <button className="is-destructive" onClick={() => setConfirmDelete(true)} disabled={busy}><Trash2 size={18} /> Cloud-Daten löschen</button>
+              <button className="is-destructive" onClick={() => setConfirmDelete(true)} disabled={busy}><Trash2 size={18} /> {fullAccountDeletion ? 'Konto löschen' : 'Cloud-Daten löschen'}</button>
             )}
           </section>
 
