@@ -22,6 +22,8 @@ async function readFunctionError(response: Response) {
     case 'missing_user_session':
     case 'invalid_user_session':
       return 'Deine Sitzung ist nicht mehr gültig. Bitte melde dich erneut an.';
+    case 'account_deletion_disabled':
+      return 'Die vollständige Kontolöschung ist für dieses Backend serverseitig nicht freigeschaltet.';
     case 'server_not_configured':
       return 'Die vollständige Kontolöschung ist serverseitig noch nicht konfiguriert.';
     case 'account_deletion_failed':
