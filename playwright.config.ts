@@ -28,9 +28,10 @@ export default defineConfig({
     { name: 'phone', use: { ...devices['Pixel 7'] } },
   ],
   webServer: {
-    // Preview serves the production build, so these exercise what ships
-    // rather than the dev server.
-    command: 'VITE_BASE_PATH=/ npm run build && npm run preview -- --port=4173 --strictPort',
+    // Build exactly once with the root base used by the local test server.
+    // Calling `npm run preview` here would trigger the local prepreview hook
+    // and rebuild a second time; CI must serve the artifact it just validated.
+    command: 'VITE_BASE_PATH=/ npm run build && npx vite preview --port=4173 --strictPort',
     url: 'http://localhost:4173',
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
