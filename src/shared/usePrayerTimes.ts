@@ -1,10 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
+  applyPrayerSnapshotToSharedSchedule,
+  createFallbackPrayerSnapshot,
   fetchPrayerTimes,
-  getFallbackPrayerTimesSnapshot,
+  getInitialPrayerTimesSnapshot,
   loadCachedPrayerTimes,
-  loadPrayerLocation,
-  loadPrayerPreferences,
+  loadFollowingPrayerDay,
   savePrayerLocation,
   savePrayerPreferences,
 } from '../services/prayerTimesService';
@@ -37,12 +38,8 @@ function requestDeviceCoordinates(): Promise<PrayerLocation> {
 }
 
 export function usePrayerTimes() {
-  const initialLocation = loadPrayerLocation();
-  const initialPreferences = loadPrayerPreferences();
-  const cached = loadCachedPrayerTimes();
-  const fallback = getFallbackPrayerTimesSnapshot();
-  const [snapshot, setSnapshot] = useState<PrayerTimesSnapshot>(cached ?? fallback);
-  const [status, setStatus] = useState<PrayerTimesStatus>(cached ? 'cache' : 'fallback');
+  const [snapshot, setSnapshot] = useState<PrayerTimesSnapshot>(getInitialPrayerTimesSnapshot);
+  const [status, setStatus] = useState<PrayerTimesStatus>(snapshot.source);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const requestCounter = useRef(0);
@@ -53,6 +50,10 @@ export function usePrayerTimes() {
   ) => {
     const requestId = requestCounter.current + 1;
     requestCounter.current = requestId;
+    const pending = loadCachedPrayerTimes(new Date(), location, preferences)
+      ?? createFallbackPrayerSnapshot(location, preferences);
+    setSnapshot(pending);
+    applyPrayerSnapshotToSharedSchedule(pending);
     setRefreshing(true);
     setStatus('loading');
     setError(null);
@@ -60,18 +61,23 @@ export function usePrayerTimes() {
     try {
       const live = await fetchPrayerTimes(location, preferences);
       if (requestCounter.current !== requestId) return 'ignored' as const;
+      applyPrayerSnapshotToSharedSchedule(live);
+      void loadFollowingPrayerDay(live);
       setSnapshot(live);
       setStatus('live');
       return 'live' as const;
     } catch (reason) {
       if (requestCounter.current !== requestId) return 'ignored' as const;
       const message = reason instanceof Error ? reason.message : 'Gebetszeiten konnten nicht geladen werden.';
-      const stored = loadCachedPrayerTimes();
+      const stored = loadCachedPrayerTimes(new Date(), location, preferences);
+      const unavailable = createFallbackPrayerSnapshot(location, preferences);
+      applyPrayerSnapshotToSharedSchedule(stored ?? unavailable);
+      if (stored) void loadFollowingPrayerDay(stored);
       if (stored) {
         setSnapshot(stored);
         setStatus('cache');
       } else {
-        setSnapshot(getFallbackPrayerTimesSnapshot());
+        setSnapshot(unavailable);
         setStatus('fallback');
       }
       setError(message);
@@ -83,6 +89,7 @@ export function usePrayerTimes() {
 
   useEffect(() => {
     void load(snapshot.location, snapshot.preferences);
+    return () => { requestCounter.current += 1; };
     // Der erste Abruf soll nur einmal pro Mount mit dem gespeicherten Ausgangszustand erfolgen.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [load]);
@@ -107,7 +114,6 @@ export function usePrayerTimes() {
 
   const updatePreferences = useCallback(async (preferences: PrayerTimesPreferences) => {
     savePrayerPreferences(preferences);
-    setSnapshot((current) => ({ ...current, preferences }));
     return load(snapshot.location, preferences);
   }, [load, snapshot.location]);
 

@@ -1,0 +1,67 @@
+/* Keep every app dialog visibly separated from the persistent bottom navigation. */
+:root {
+  --overlay-navigation-clearance: calc(var(--ds-nav-height, 68px) + 24px + env(safe-area-inset-bottom));
+}
+
+:is(
+  .reference-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-learning-completion-backdrop,
+  .reference-prayer-course-complete,
+  .prayer-completion-backdrop,
+  .calendar-modal-backdrop
+) {
+  box-sizing: border-box;
+  align-items: center !important;
+  padding-top: max(16px, env(safe-area-inset-top)) !important;
+  padding-right: 16px !important;
+  padding-bottom: var(--overlay-navigation-clearance) !important;
+  padding-left: 16px !important;
+}
+
+:is(
+  .reference-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-learning-completion-backdrop,
+  .prayer-completion-backdrop,
+  .calendar-modal-backdrop
+) > [role='dialog'],
+.reference-prayer-course-complete > section {
+  max-height: calc(100dvh - max(32px, env(safe-area-inset-top)) - var(--overlay-navigation-clearance)) !important;
+  scroll-padding-bottom: 24px;
+  scrollbar-width: none !important;
+  -ms-overflow-style: none;
+}
+
+:is(
+  .reference-modal-backdrop,
+  .reference-prayer-settings-backdrop,
+  .reference-learning-completion-backdrop,
+  .prayer-completion-backdrop,
+  .calendar-modal-backdrop
+) > [role='dialog']::-webkit-scrollbar,
+.reference-prayer-course-complete > section::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Long dialogs must never let their close control cover scrolled content. */
+:is(
+  .reference-modal-close,
+  .reference-prayer-settings-modal__close,
+  .reference-mosque-detail-modal__close,
+  .reference-learning-completion-modal__close,
+  .prayer-completion-modal__close
+) {
+  position: absolute !important;
+  top: 18px !important;
+  right: 18px !important;
+  margin: 0 !important;
+}
+
+@media (max-height: 680px) {
+  :root {
+    --overlay-navigation-clearance: calc(var(--ds-nav-height, 68px) + 16px + env(safe-area-inset-bottom));
+  }
+}

@@ -1,5 +1,5 @@
-const VISUAL_VERSION = '20260808-release-hardening';
-const CACHE_NAME = `nur-islam-premium-v14-${VISUAL_VERSION}`;
+const VISUAL_VERSION = '20260826-original-art';
+const CACHE_NAME = `nur-islam-premium-v33-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
@@ -14,31 +14,93 @@ const APP_SHELL = [
   scoped('nur-app-icon-192.png'),
   scoped('nur-app-icon-512.png'),
   scoped('premium-assets/high-res-objects/nur-logo-emblem.png'),
-  premiumAsset('nur-logo-emblem-v2.webp'),
-  premiumAsset('mosque-gold-v2.svg'),
+  premiumAsset('nur-logo-emblem-v3.svg'),
+  premiumAsset('splash-mosque-v1.webp'),
+  premiumAsset('mosque-heritage-v1.webp'),
+  premiumAsset('mosque-finder-arch-v1.webp'),
   premiumAsset('quran-closed-v2.webp'),
-  premiumAsset('quran-open-v2.webp'),
+  premiumAsset('quran-closed-v3.webp'),
+  premiumAsset('quran-open-v3.webp'),
   premiumAsset('tasbih-v2.webp'),
+  premiumAsset('tasbih-v3.webp'),
   premiumAsset('qibla-compass-v2.webp'),
+  premiumAsset('qibla-compass-v3.webp'),
   premiumAsset('qibla-v2.webp'),
   premiumAsset('mihrab-v2.webp'),
   premiumAsset('mihrab-arch-v2.webp'),
-  premiumAsset('lantern-v2.webp'),
+  premiumAsset('lantern-v3.webp'),
   premiumAsset('kaaba-v2.webp'),
-  premiumAsset('bookmark-v2.webp'),
-  premiumAsset('calendar-chip-v2.webp'),
+  premiumAsset('bookmark-v3.webp'),
+  premiumAsset('calendar-object-v1.webp'),
+  premiumAsset('prayer-standby-v1.webp'),
+  premiumAsset('zakat-scale-v1.webp'),
   premiumAsset('dome-v2.webp'),
   premiumAsset('sun-emblem-v2.webp'),
   premiumAsset('dua-hands-v2.webp'),
+  premiumAsset('mini-quran-v1.webp'),
+  premiumAsset('mini-prayer-learning-v1.webp'),
+  premiumAsset('home-quran-illustrated-v1.webp'),
+  premiumAsset('home-learn-prayer-v2.webp'),
+  premiumAsset('home-dhikr-illustrated-v1.webp'),
+  premiumAsset('home-qibla-illustrated-v1.webp'),
+  premiumAsset('home-names-v1.webp'),
+  premiumAsset('widget-date-illustrated-v1.webp'),
+  premiumAsset('widget-inspiration-illustrated-v1.webp'),
+  premiumAsset('widget-routine-illustrated-v1.webp'),
+  premiumAsset('widget-quran-plan-illustrated-v1.webp'),
+  premiumAsset('widget-weekly-prayers-illustrated-v1.webp'),
+  premiumAsset('widget-favorites-illustrated-v1.webp'),
+  premiumAsset('widget-reminders-illustrated-v1.webp'),
+  premiumAsset('widget-friday-illustrated-v1.webp'),
+  premiumAsset('learn-salah-v3.webp'),
+  premiumAsset('learn-faith-v3.webp'),
+  premiumAsset('learn-pillars-v3.webp'),
+  premiumAsset('learn-terms-v3.webp'),
+  premiumAsset('learn-practice-v3.webp'),
+  premiumAsset('learn-character-v3.webp'),
+  premiumAsset('learn-community-v3.webp'),
+  premiumAsset('learn-seerah-v3.webp'),
+  premiumAsset('learn-prophets-v3.webp'),
+  premiumAsset('learn-madhhabs-v3.webp'),
+  premiumAsset('learn-hadith-v3.webp'),
+  premiumAsset('learn-sunnah-v3.webp'),
+  premiumAsset('learn-repentance-v3.webp'),
+  premiumAsset('wudu-washing-v1.webp'),
+  premiumAsset('wudu-step-hands-v1.webp'),
+  premiumAsset('wudu-step-mouth-v1.webp'),
+  premiumAsset('wudu-step-nose-v1.webp'),
+  premiumAsset('wudu-step-face-v1.webp'),
+  premiumAsset('wudu-step-arms-v1.webp'),
+  premiumAsset('wudu-step-head-v1.webp'),
+  premiumAsset('wudu-step-ears-v1.webp'),
+  premiumAsset('wudu-step-feet-v1.webp'),
+  premiumAsset('mini-names-v2.webp'),
+  premiumAsset('mini-names-v3.webp'),
+  premiumAsset('mini-names-v5.webp'),
+  premiumAsset('mini-quiz-v1.webp'),
+  premiumAsset('mini-quiz-v2.webp'),
+  premiumAsset('mini-quiz-v3.webp'),
+  premiumAsset('mini-dua-v1.webp'),
+  premiumAsset('mini-dua-v2.webp'),
+  premiumAsset('mini-dua-v3.webp'),
+  premiumAsset('ayah-focus-bg-v1.webp'),
+  premiumAsset('home-prayer-sky-v1.webp'),
+  premiumAsset('prayer-fajr-v1.webp'),
+  premiumAsset('prayer-dhuhr-v1.webp'),
+  premiumAsset('prayer-asr-v1.webp'),
+  premiumAsset('prayer-maghrib-v1.webp'),
+  premiumAsset('prayer-isha-v1.webp'),
+  premiumAsset('prayer-mini-fajr-v1.webp'),
+  premiumAsset('prayer-mini-sunrise-v1.webp'),
+  premiumAsset('prayer-mini-dhuhr-v1.webp'),
+  premiumAsset('prayer-mini-asr-v1.webp'),
+  premiumAsset('prayer-mini-maghrib-v1.webp'),
+  premiumAsset('prayer-mini-isha-v1.webp'),
   scoped('data/quran/surahs.json'),
   scoped('data/quran/ar/1.json'),
-  scoped('data/quran/de/1.json'),
   scoped('data/quran/ar/112.json'),
-  scoped('data/quran/de/112.json'),
   scoped('data/quran/ar/113.json'),
-  scoped('data/quran/de/113.json'),
   scoped('data/quran/ar/114.json'),
-  scoped('data/quran/de/114.json'),
 ];
 
 // The remaining 110 surahs are ~3 MB. They are not part of install, and no
@@ -48,7 +110,7 @@ const APP_SHELL = [
 // file at a time, skipping whatever is already cached. A file that fails is
 // picked up on the next request, or fetched on demand by the read handler.
 const QURAN_WARM_URLS = Array.from({ length: 114 }, (_, index) => index + 1)
-  .flatMap((number) => [scoped(`data/quran/ar/${number}.json`), scoped(`data/quran/de/${number}.json`)]);
+  .map((number) => scoped(`data/quran/ar/${number}.json`));
 
 async function warmQuranCache() {
   const cache = await caches.open(CACHE_NAME);
@@ -159,7 +221,7 @@ self.addEventListener('fetch', (event) => {
           }
           return response;
         })
-        .catch(async () => (await caches.match(request)) || Response.error()),
+        .catch(async () => (await caches.match(request, { ignoreSearch: true })) || Response.error()),
     );
     return;
   }

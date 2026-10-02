@@ -154,52 +154,6 @@
   box-shadow: 0 10px 24px rgba(141, 109, 57, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
 }
 
-/* Assistant */
-.reference-assistant-screen {
-  gap: 14px;
-}
-
-.reference-assistant-greeting,
-.reference-assistant-safety,
-.reference-assistant-suggestions > div > button,
-.reference-chat-message--assistant,
-.reference-assistant-input {
-  border-color: rgba(226, 191, 119, .15) !important;
-  box-shadow: 0 13px 30px rgba(0, 0, 0, .16), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
-}
-
-.reference-assistant-greeting {
-  border-radius: 28px !important;
-  background:
-    radial-gradient(circle at 0% 0%, rgba(226, 191, 119, .075), transparent 9rem),
-    linear-gradient(145deg, rgba(13, 87, 67, .9), rgba(0, 18, 15, .98)) !important;
-}
-
-.reference-assistant-suggestions > div > button,
-.reference-chat-message--assistant {
-  border-radius: 18px !important;
-  background: linear-gradient(145deg, rgba(7, 55, 43, .78), rgba(0, 18, 15, .94)) !important;
-}
-
-.reference-chat-message--user {
-  border-radius: 18px !important;
-  color: #001b16 !important;
-  background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
-  box-shadow: 0 10px 24px rgba(141, 109, 57, .18) !important;
-}
-
-.reference-assistant-safety {
-  border-radius: 18px !important;
-  background: rgba(13, 87, 67, .1) !important;
-}
-
-.reference-assistant-input {
-  border-radius: 18px !important;
-  background: rgba(0, 27, 22, .92) !important;
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
 /* Install prompt */
 .reference-install-prompt {
   right: 12px;

@@ -19,6 +19,7 @@ import { startInstallPromptCapture } from '../services/installPromptService';
 import { queuePendingNavigation } from '../services/pendingNavigation';
 import { startPrayerReminderScheduler } from '../services/prayerReminderService';
 import { bootstrapSharedPrayerTimes, getPrayerDateKey } from '../services/prayerTimesService';
+import { PRAYER_SCHEDULE_META } from '../services/prayerSchedule';
 import { registerNurPwa } from './pwa';
 import { SplashScreen } from '../screens/SplashScreen';
 import { initializeTheme } from '../services/themeService';
@@ -28,13 +29,10 @@ import '../styles/premium-local-features.css';
 
 const PremiumSystemLayer = React.lazy(() => import('./PremiumSystemLayer').then(({ PremiumSystemLayer }) => ({ default: PremiumSystemLayer })));
 
-const VISUAL_VERSION = '20260808-release-hardening';
-const PREVIEW_ASSETS = [
-  'nur-logo-emblem-v2.webp',
-  'mosque-gold-v2.webp',
-  'quran-closed-v2.webp',
-  'tasbih-v2.webp',
-  'qibla-compass-v2.webp',
+const VISUAL_VERSION = '20260826-original-art';
+const STARTUP_ASSETS = [
+  'nur-logo-emblem-v3.svg',
+  'splash-mosque-v1.webp',
 ];
 
 function consumeInitialNavigationIntent() {
@@ -63,14 +61,14 @@ function prepareImmediatePreview() {
   }
 
   document.documentElement.classList.toggle('is-preview', previewMode && !forceOnboarding);
-  PREVIEW_ASSETS.forEach((name) => {
+  STARTUP_ASSETS.forEach((name) => {
     const href = versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION);
     if (document.head.querySelector(`link[href="${href}"]`)) return;
     const link = document.createElement('link');
     link.rel = 'preload';
     link.as = 'image';
     link.href = href;
-    link.type = 'image/webp';
+    link.type = name.endsWith('.svg') ? 'image/svg+xml' : 'image/webp';
     document.head.appendChild(link);
   });
 
@@ -109,13 +107,12 @@ registerNurPwa();
 function BootRoot() {
   const [ready, setReady] = useState(false);
   const [, setPrayerTimesVersion] = useState(0);
-  const prayerDateKeyRef = useRef(getPrayerDateKey());
+  const prayerDateKeyRef = useRef(getPrayerDateKey(new Date(), PRAYER_SCHEDULE_META.timezone));
 
   useEffect(() => {
     window.scrollTo(0, 0);
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const previewMode = document.documentElement.classList.contains('is-preview');
-    const timer = window.setTimeout(() => setReady(true), previewMode || reducedMotion ? 160 : 800);
+    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 160 : 1600);
     return () => window.clearTimeout(timer);
   }, []);
 
@@ -125,7 +122,7 @@ function BootRoot() {
     let active = true;
     const renderLatestPrayerTimes = () => { if (active) setPrayerTimesVersion((version) => version + 1); };
     const refreshAfterDayChange = () => {
-      const currentDateKey = getPrayerDateKey();
+      const currentDateKey = getPrayerDateKey(new Date(), PRAYER_SCHEDULE_META.timezone);
       if (currentDateKey === prayerDateKeyRef.current) return;
       prayerDateKeyRef.current = currentDateKey;
       void bootstrapSharedPrayerTimes();
@@ -136,7 +133,7 @@ function BootRoot() {
     document.addEventListener('visibilitychange', handleVisibilityChange);
     const dayChangeTimer = window.setInterval(refreshAfterDayChange, 60000);
     void sharedPrayerTimesReady.then(() => {
-      prayerDateKeyRef.current = getPrayerDateKey();
+      prayerDateKeyRef.current = getPrayerDateKey(new Date(), PRAYER_SCHEDULE_META.timezone);
       renderLatestPrayerTimes();
     });
 

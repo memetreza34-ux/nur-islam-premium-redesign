@@ -60,6 +60,7 @@ for (const [, name] of steps) {
   if (!/posture: '/.test(body)) throw new Error(`Prayer step ${name} has no posture.`);
   if (!/arabic: '/.test(body)) continue;
   if (!/transliteration: '/.test(body)) throw new Error(`Prayer step ${name} has Arabic but no transliteration.`);
+  if (!/pronunciation: '/.test(body)) throw new Error(`Prayer step ${name} has Arabic but no German pronunciation aid.`);
   if (!/translation: '/.test(body)) throw new Error(`Prayer step ${name} has Arabic but no German meaning.`);
   // How often it is spoken belongs to the step, not to a sentence inside the
   // description. Written only as prose („Sage dreimal“) it disappeared from the
@@ -91,7 +92,7 @@ if (!/reference-rakah-runs/.test(screen) || !/repetitionRuns/.test(screen)) {
 // Each run carries the transliteration too. Someone learning the prayer reads
 // from the transliteration, so printing it once under three Arabic lines would
 // withhold the repetition from the very line being read.
-if (!/reference-rakah-runs[\s\S]{0,700}reference-rakah-wording__transliteration/.test(screen)) {
+if (!/reference-rakah-runs[\s\S]{0,900}reference-rakah-wording__pronunciation/.test(screen)) {
   throw new Error('The repeated runs must show the transliteration, not only the Arabic.');
 }
 if (!/repetitionLabels: \['nach rechts', 'nach links'\]/.test(source)) {
@@ -116,7 +117,8 @@ if (!/recitationUrlsForRun/.test(source) || !/recitationUrlsForRun/.test(screen)
 // The screen has to render the wording, not just hold the data.
 for (const fragment of [
   'reference-rakah-wording__arabic',
-  'reference-rakah-wording__transliteration',
+  'reference-rakah-wording__pronunciation',
+  'Deutsche Aussprachehilfe',
   'reference-rakah-wording__translation',
   'POSTURE_LABEL',
 ]) {

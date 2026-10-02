@@ -4,14 +4,13 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
-const [navigation, referenceShell, entrySystem, brandEntryArt, systemSurfaces, modalInput, assistantBase, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
+const [navigation, referenceShell, entrySystem, brandEntryArt, systemSurfaces, modalInput, profileBase, profileBrand, runtimeLock, finalLock, styleIndex] = await Promise.all([
   read('src/styles/navigation.css'),
   read('src/styles/reference-shell.css'),
   read('src/styles/premium-entry-system.css'),
   read('src/styles/premium-brand-entry-art-lock.css'),
   read('src/styles/premium-system-surfaces-lock.css'),
   read('src/styles/premium-mobile-modal-input-lock.css'),
-  read('src/styles/reference-assistant.css'),
   read('src/styles/reference-profile.css'),
   read('src/styles/premium-profile-brand-lock.css'),
   read('src/styles/premium-visual-runtime-lock.css'),
@@ -25,10 +24,10 @@ function requireTokens(source, label, tokens) {
   }
 }
 
-// The bar is 68px in the document flow with an arch cap marking the active
-// tab. It carries no pill, no float and no radius of its own.
+// Filled active arch, legible inactive controls, in-flow layout.
 requireTokens(navigation, 'Bottom navigation source', [
-  'color: #8fa39a',
+  'color: #a1b5aa',
+  'background: #163e31',
   'color: #f2d79a',
   'stroke-width: 1.75',
   'white-space: nowrap',
@@ -58,10 +57,6 @@ requireTokens(entrySystem, 'Entry/system integration layer', [
   'border-radius: 13px',
   '.reference-onboarding__permissions > button',
   'border-radius: 18px',
-  '.reference-assistant-greeting',
-  'border-radius: 28px !important',
-  '.reference-assistant-input',
-  'background: rgba(0, 27, 22, .92) !important',
   '.reference-install-prompt',
   'border-radius: 28px',
   '.reference-network-status,',
@@ -72,13 +67,13 @@ requireTokens(entrySystem, 'Entry/system integration layer', [
 ]);
 
 requireTokens(brandEntryArt, 'Splash/brand art layer', [
-  '.reference-splash__mosque > img',
+  '.reference-splash__mosque-image > img',
   'object-fit: contain !important',
-  'object-position: right bottom !important',
-  'background: radial-gradient(circle, rgba(226, 191, 119, .18), rgba(13, 87, 67, .07) 48%, transparent 73%)',
+  'object-position: center bottom',
+  'background: radial-gradient(ellipse, rgba(226, 191, 119, .18), rgba(13, 87, 67, .08) 47%, transparent 72%)',
   '.reference-splash__mark > img',
-  'background: radial-gradient(circle, rgba(242, 215, 154, .22), rgba(226, 191, 119, .06) 48%, transparent 72%)',
-  'box-shadow: 0 0 10px rgba(242, 215, 154, .3)',
+  'background: radial-gradient(circle, rgba(242, 215, 154, .2), rgba(226, 191, 119, .055) 48%, transparent 72%)',
+  'box-shadow: 0 0 12px rgba(242, 215, 154, .34)',
   '.reference-system-error__logo > img',
   'background: radial-gradient(circle, rgba(226, 191, 119, .17), transparent 70%)',
 ]);
@@ -110,17 +105,6 @@ requireTokens(modalInput, 'Modal/input surfaces', [
   'rgba(0, 18, 15, .94) !important',
 ]);
 
-requireTokens(assistantBase, 'Assistant base surfaces', [
-  'border-radius: 28px',
-  'linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .98))',
-  'grid-template-columns: minmax(0, 1fr) 44px',
-  'background: rgba(0, 27, 22, .95)',
-  'border-radius: 18px',
-  'border-radius: 13px',
-  'linear-gradient(135deg, #f2d79a, #e2bf77)',
-  'border-radius: 18px 18px 18px 6px',
-  'border-radius: 18px 18px 6px 18px',
-]);
 
 requireTokens(profileBase, 'Profile base surfaces', [
   'border-radius: 42px',
@@ -148,7 +132,7 @@ requireTokens(runtimeLock, 'No-blur fallback', [
   'background-color: rgba(0, 27, 22, .97) !important',
 ]);
 
-requireTokens(finalLock, 'Account/notes/assistant final utility material', [
+requireTokens(finalLock, 'Account/notes final utility material', [
   "html:not([data-theme='light']) :where(",
   '--utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99))',
   '--utility-surface-soft: rgba(7, 55, 43, .82)',
@@ -169,7 +153,7 @@ requireTokens(finalLock, 'Final shell/brand/navigation override', [
   '.reference-onboarding__visual',
   'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
   '.reference-onboarding__visual-icon,',
-  '.reference-splash__mosque > img,',
+  '.reference-splash__mosque-image > img',
   '.reference-splash__mark > img,',
   '.reference-system-error__logo > img,',
   "[data-theme='light'] .app-shell--detail .reference-screen-header",
@@ -202,7 +186,6 @@ for (const selector of [
   '.reference-mosque-detail-modal',
   '.reference-prayer-course-complete > section',
   '.reference-input-search',
-  '.reference-assistant-input',
   '.reference-legacy-search',
   '.reference-fasting-reminder-settings input',
   '.reference-zakat-calculator input',
@@ -223,17 +206,13 @@ for (const selector of [
   '.reference-notes-storage > button',
   '.reference-notes-list > button',
   '.reference-note-editor__heading > button',
-  '.reference-assistant-suggestions button',
-  '.reference-assistant-safety',
-  '.reference-assistant-info-list > span',
-  ".reference-assistant-input > button[type='submit']",
   '.reference-onboarding__topbar > button',
   '.reference-onboarding__permissions > button',
   '.reference-onboarding__back',
   '.reference-onboarding__actions .gold-button',
   '.reference-onboarding__visual-icon',
   '.reference-onboarding__permissions > button > span:first-child',
-  '.reference-splash__mosque > img',
+  '.reference-splash__mosque-image > img',
   '.reference-splash__mark > img',
   '.reference-system-error__logo > img',
 ]) {
@@ -242,13 +221,9 @@ for (const selector of [
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-// The design system is the last layer; the reference lock keeps its place
-// directly before it, so system-surface geometry is still protected.
-if (importedLayers.at(-1) !== 'nur-design-system.css') {
-  throw new Error('System-surface geometry is unsafe because the design system is no longer the last stylesheet import.');
-}
-if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('System-surface geometry is unsafe because the final reference lock no longer loads directly before the design system.');
+const finalLayers = ['premium-reference-geometry-lock.css', 'nur-design-system.css', 'learn-library-redesign.css', 'overlay-navigation-clearance.css', 'legal-premium.css', 'about-premium.css', 'mosque-finder-hero.css'];
+if (JSON.stringify(importedLayers.slice(-finalLayers.length)) !== JSON.stringify(finalLayers)) {
+  throw new Error('System-surface geometry and scoped layer order must remain intact.');
 }
 
 for (const stale of [
@@ -301,17 +276,6 @@ for (const staleShell of [
   }
 }
 
-for (const staleAssistant of [
-  'grid-template-columns: 1fr 38px 42px',
-  'border-radius: 15px',
-  'border-radius: 12px',
-  'background: rgba(5, 29, 23, .95)',
-  'linear-gradient(135deg, #efd394, #c9953a)',
-]) {
-  if (assistantBase.includes(staleAssistant)) {
-    throw new Error(`Assistant base layer still contains a stale pre-reference value: ${staleAssistant}`);
-  }
-}
 
 for (const staleProfile of [
   'border-radius: 19px',
@@ -328,4 +292,4 @@ for (const staleProfile of [
   }
 }
 
-console.log('Reference system surfaces verified: Splash/entry brand, compact one-line bottom navigation, shell/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, assistant base UI and no-blur fallback use the emerald/gold/cream palette, protected icon weight and mobile-safe geometry with explicit light-theme preservation.');
+console.log('Reference system surfaces verified: Splash/entry brand, compact one-line bottom navigation, shell/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, no-blur fallback use the emerald/gold/cream palette, protected icon weight and mobile-safe geometry with explicit light-theme preservation.');

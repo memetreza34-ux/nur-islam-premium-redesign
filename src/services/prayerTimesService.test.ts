@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   bootstrapSharedPrayerTimes,
   fetchPrayerTimes,
+  fetchPrayerTimesMonth,
   loadCachedPrayerTimes,
 } from './prayerTimesService';
 import { PRAYER_SCHEDULE, PRAYER_SCHEDULE_META } from './prayerSchedule';
@@ -26,7 +27,7 @@ function validPayload(timings: Record<string, string> = TIMINGS) {
   };
 }
 
-function stubFetch(handler: () => Promise<Response>) {
+function stubFetch(handler: (input: RequestInfo | URL) => Promise<Response>) {
   const mock = vi.fn(handler);
   vi.stubGlobal('fetch', mock);
   return mock;
@@ -89,6 +90,44 @@ describe('fetchPrayerTimes', () => {
     stubFetch(async () => apiResponse({}, 500));
     await expect(fetchPrayerTimes()).rejects.toThrow();
     expect(loadCachedPrayerTimes()).toBeNull();
+  });
+});
+
+describe('fetchPrayerTimesMonth', () => {
+  beforeEach(() => localStorage.clear());
+
+  it('loads every day with one calendar request and normalizes the five prayer columns', async () => {
+    const month = Array.from({ length: 30 }, () => validPayload().data);
+    const fetchMock = stubFetch(async () => apiResponse({ code: 200, data: month }));
+
+    const plan = await fetchPrayerTimesMonth(undefined, undefined, new Date(2026, 8, 1, 12));
+
+    expect(fetchMock).toHaveBeenCalledTimes(1);
+    expect(String(fetchMock.mock.calls[0][0])).toContain('/v1/calendar/2026/9');
+    expect(plan.monthKey).toBe('2026-09');
+    expect(plan.days).toHaveLength(30);
+    expect(plan.days[0].dateKey).toBe('2026-09-01');
+    expect(plan.days[29].dateKey).toBe('2026-09-30');
+    expect(plan.days[0].schedule.find((prayer) => prayer.id === 'maghrib')?.time).toBe('20:12');
+  });
+
+  it('rejects an incomplete month instead of filling missing days with guessed times', async () => {
+    const incomplete = Array.from({ length: 29 }, () => validPayload().data);
+    stubFetch(async () => apiResponse({ code: 200, data: incomplete }));
+
+    await expect(fetchPrayerTimesMonth(undefined, undefined, new Date(2026, 8, 1, 12))).rejects.toThrow('vollständigen Monatsplan');
+  });
+
+  it('does not replace the cached current day when a future month is opened', async () => {
+    stubFetch(async () => apiResponse(validPayload()));
+    const today = await fetchPrayerTimes();
+    const month = Array.from({ length: 31 }, () => validPayload({ ...TIMINGS, Fajr: '06:33' }).data);
+    stubFetch(async () => apiResponse({ code: 200, data: month }));
+
+    await fetchPrayerTimesMonth(undefined, undefined, new Date(2026, 9, 1, 12));
+
+    expect(loadCachedPrayerTimes()?.dateKey).toBe(today.dateKey);
+    expect(loadCachedPrayerTimes()?.schedule.find((prayer) => prayer.id === 'fajr')?.time).toBe('04:11');
   });
 });
 

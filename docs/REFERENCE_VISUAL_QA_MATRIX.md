@@ -26,7 +26,7 @@ This matrix is the source-level visual contract for the premium redesign. It com
 
 | Screen / surface | Primary reference artwork | Crop / role | Primary semantic icon contract |
 | --- | --- | --- | --- |
-| Splash | `nur-logo-emblem-v2.webp` + `mosque-gold-v2.webp` | Nur mark centered; mosque contained at right/bottom | brand mark, no fake action |
+| Splash | `nur-logo-emblem-v3.svg` + `splash-mosque-v1.webp` | sharp Nur mark centered; mosque rises from center/bottom without overlapping copy | brand mark, no fake action |
 | Onboarding 1 | `mosque-gold-v2.webp` | architectural, center/bottom | contextual slide icon |
 | Onboarding 2 | `qibla-compass-v2.webp` | centered circular hero | contextual slide icon |
 | Onboarding 3 | `quran-closed-v2.webp` + `tasbih-v2.webp` | Quran slightly left/bottom; Tasbih companion | contextual slide icon |
@@ -34,7 +34,7 @@ This matrix is the source-level visual contract for the premium redesign. It com
 | Home Quran quick action | `quran-closed-v2.webp` | object card | `BookOpen` |
 | Home Dhikr quick action | `tasbih-v2.webp` | object card | semantic Dhikr action |
 | Home Qibla quick action | `qibla-compass-v2.webp` | object card | location / direction semantics |
-| Home daily Ayah | `mihrab-arch-v2.webp` | cover, center 42% | real daily-Ayah action |
+| Home daily Ayah | `ayah-focus-bg-v1.webp` | cover; quiet center/left, arch at far right | real daily-Ayah action |
 | Prayer / next prayer | `dome-v2.webp` | contained architectural accent | refresh / location / calculation icons remain functional |
 | Quran catalogue | `quran-closed-v2.webp` | contain, center/bottom | Heart = favorite Surahs |
 | Quran reader | `quran-open-v2.webp` | contain, center/bottom | real reader controls only |
@@ -51,12 +51,11 @@ This matrix is the source-level visual contract for the premium redesign. It com
 | Calendar month | `sun-emblem-v2.webp` | subtle ornament | `CalendarDays`, Plus = real add action |
 | Calendar event | `calendar-chip-v2.webp` | subtle ornament | event semantics |
 | Collections | `bookmark-v2.webp` | subtle saved-content ornament | content-specific row icons |
-| Profile / More | `nur-logo-emblem-v2.webp` | contain, centered | Settings2 = real settings action |
+| Profile / More | `nur-logo-emblem-v3.svg` | contain, centered | Settings2 = real settings action |
 | Account | Nur visual language | brand/utility hero | account/security/cloud semantic icons |
 | Notes | no unrelated focal object | utility surfaces | note/edit/delete semantic icons |
-| Nur Assistant | `nur-logo-emblem-v2.webp` | contain, centered | ShieldCheck = source-mode information |
-| Fatal error | `nur-logo-emblem-v2.webp` | contain, centered | recovery action only |
-| Install prompt | `nur-logo-emblem-v2.webp` | contain, centered | install / close only |
+| Fatal error | `nur-logo-emblem-v3.svg` | contain, centered | recovery action only |
+| Install prompt | `nur-logo-emblem-v3.svg` | contain, centered | install / close only |
 
 ## Additional feature ID → artwork → icon contract
 
@@ -97,7 +96,6 @@ Inactive navigation stays cream/muted. Active navigation is bright gold with a r
 | 99 Namen Allahs | `Sparkles` |
 | Islam Quiz | `BrainCircuit` |
 | Duas | `BookHeart` |
-| Nur Assistent | `MessageCircleQuestion` |
 
 ## Render QA checklist
 
@@ -119,7 +117,8 @@ For each capture verify:
 - `scripts/check-reference-image-map.mjs` — exact image and crop mappings.
 - `scripts/check-reference-icon-map.mjs` — semantic icon mappings.
 - `scripts/check-reference-art-palette.mjs` — late content-domain palette drift.
-- `scripts/check-reference-system-surfaces.mjs` — shell, navigation, modals, system surfaces, profile/account/assistant.
+- `scripts/check-reference-system-surfaces.mjs` — shell, navigation, modals, system surfaces, profile/account.
+- `scripts/check-no-assistant.mjs` — no chat UI, answer engine, route or shipped assistant artwork.
 - `scripts/check-onboarding-visuals.mjs` — onboarding composition and geometry.
 - `scripts/check-reference-home-art.mjs` — dedicated Home source audit.
 - `.github/workflows/reference-render-preview.yml` — real 390×844 screenshots when GitHub runners are available.

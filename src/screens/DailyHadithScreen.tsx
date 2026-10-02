@@ -98,7 +98,7 @@ export function DailyHadithScreen({
         <ShieldCheck size={19} />
         <span>
           <strong>{entry.source}</strong>
-          <small>Nur Islam zeigt hier bewusst eine sinngemäße Inhaltsangabe. Wortlaut, Übersetzung und fachliche Einordnung bleiben vor Veröffentlichung Teil der religiösen Endprüfung.</small>
+          <small>Du liest eine sinngemäße Inhaltsangabe, nicht den Originalwortlaut des Hadiths.</small>
         </span>
       </section>
 

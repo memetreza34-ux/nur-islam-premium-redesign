@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none">
+  <defs>
+    <linearGradient id="nur-v3-gold" x1="22" y1="10" x2="101" y2="110" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFF5D8"/>
+      <stop offset=".43" stop-color="#E2BF77"/>
+      <stop offset="1" stop-color="#8D6D39"/>
+    </linearGradient>
+    <radialGradient id="nur-v3-emerald" cx="0" cy="0" r="1" gradientTransform="translate(49 38) rotate(51) scale(78)">
+      <stop stop-color="#176047"/>
+      <stop offset=".55" stop-color="#07372B"/>
+      <stop offset="1" stop-color="#001B16"/>
+    </radialGradient>
+  </defs>
+  <path d="M60 6 76.5 20.3 98.2 21.8 99.7 43.5 114 60 99.7 76.5 98.2 98.2 76.5 99.7 60 114 43.5 99.7 21.8 98.2 20.3 76.5 6 60 20.3 43.5 21.8 21.8 43.5 20.3Z" fill="url(#nur-v3-emerald)" stroke="url(#nur-v3-gold)" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M60 17 72.8 28.9 90.4 29.6 91.1 47.2 103 60 91.1 72.8 90.4 90.4 72.8 91.1 60 103 47.2 91.1 29.6 90.4 28.9 72.8 17 60 28.9 47.2 29.6 29.6 47.2 28.9Z" stroke="#E2BF77" stroke-opacity=".52" stroke-width="1.5" stroke-linejoin="round"/>
+  <circle cx="60" cy="60" r="28" fill="#001B16" fill-opacity=".56" stroke="#F2D79A" stroke-opacity=".72" stroke-width="1.5"/>
+  <circle cx="53" cy="61" r="18" fill="url(#nur-v3-gold)"/>
+  <circle cx="61" cy="54" r="18" fill="#07372B"/>
+  <path d="m77 43 2.5 5.2 5.8.8-4.2 4.1 1 5.8-5.1-2.8-5.2 2.8 1-5.8-4.2-4.1 5.8-.8Z" fill="#FFF5D8"/>
+</svg>

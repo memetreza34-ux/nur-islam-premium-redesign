@@ -1,4 +1,7 @@
 import { useId, type ReactNode } from 'react';
+import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { versionAppPath } from '../app/appPaths';
+import { getPrayerBackdrop, type PrayerBackdropId } from './prayerBackdrops';
 
 const ARCH_OUTLINE = 'M1.5,210 L1.5,92 C1.5,39 65,26 171.5,1.5 C278,26 341.5,39 341.5,92 L341.5,210';
 
@@ -24,6 +27,9 @@ export type MihrabArchProps = {
   footer?: ReactNode;
   /** Ambient light points behind the arch. Off by default. */
   sky?: boolean;
+  /** Optional text-safe artwork clipped exactly to the inside of the arch. */
+  backdropSrc?: string;
+  scene?: PrayerBackdropId;
 };
 
 /**
@@ -44,14 +50,20 @@ export function MihrabArch({
   className,
   footer,
   sky = false,
+  backdropSrc,
+  scene,
 }: MihrabArchProps) {
   const id = useId();
+  const reduceMotion = useReducedMotion();
   const fillId = `arch-fill-${id}`;
+  const shadeId = `arch-shade-${id}`;
   const strokeId = `arch-stroke-${id}`;
+  const clipId = `arch-clip-${id}`;
   const clamped = Math.max(0, Math.min(100, progress));
+  const backdrop = getPrayerBackdrop(scene) ?? backdropSrc;
 
   return (
-    <div className={className ? `ds-arch ${className}` : 'ds-arch'} style={{ height }}>
+    <div className={['ds-arch', backdrop && 'ds-arch--landscape', className].filter(Boolean).join(' ')} style={{ height }} data-prayer-scene={backdrop ? scene : undefined}>
       {sky ? (
         <div className="ds-sky" aria-hidden="true">
           <i /><i /><i /><i /><i />
@@ -59,17 +71,43 @@ export function MihrabArch({
       ) : null}
       <svg className="ds-arch__svg" viewBox="0 0 343 210" preserveAspectRatio="none" aria-hidden="true" focusable="false">
         <defs>
+          <clipPath id={clipId}>
+            <path d={`${ARCH_OUTLINE} Z`} />
+          </clipPath>
           <linearGradient id={fillId} x1="171" y1="0" x2="171" y2="210" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#0d4634" />
             <stop offset="1" stopColor="#04231c" />
           </linearGradient>
+          <radialGradient id={shadeId} cx="50%" cy="43%" r="72%">
+            <stop offset="0" stopColor="#021c19" stopOpacity=".84" />
+            <stop offset=".54" stopColor="#021c19" stopOpacity=".78" />
+            <stop offset="1" stopColor="#021c19" stopOpacity=".12" />
+          </radialGradient>
           <linearGradient id={strokeId} x1="0" y1="210" x2="343" y2="20" gradientUnits="userSpaceOnUse">
             <stop offset="0" stopColor="#8d6d39" />
             <stop offset=".5" stopColor="#e2bf77" />
             <stop offset="1" stopColor="#f2d79a" />
           </linearGradient>
         </defs>
-        <path d={`${ARCH_OUTLINE} Z`} fill={`url(#${fillId})`} />
+        <path className="ds-arch__base" d={`${ARCH_OUTLINE} Z`} fill={`url(#${fillId})`} />
+        <AnimatePresence initial={false}>
+          {backdrop ? (
+            <motion.image
+              key={backdrop}
+              className="ds-arch__backdrop"
+              href={versionAppPath(backdrop, '20260826-original-art')}
+              width="343"
+              height="210"
+              preserveAspectRatio="xMidYMid slice"
+              clipPath={`url(#${clipId})`}
+              initial={{ opacity: reduceMotion ? 1 : 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: reduceMotion ? 0 : .8 }}
+            />
+          ) : null}
+        </AnimatePresence>
+        {backdrop ? <path className="ds-arch__veil" d={`${ARCH_OUTLINE} Z`} fill={`url(#${shadeId})`} /> : null}
         <path className="ds-arch__track" d={ARCH_OUTLINE} />
         <path
           className="ds-arch__progress"

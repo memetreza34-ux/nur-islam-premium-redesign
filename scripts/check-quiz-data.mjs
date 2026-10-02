@@ -59,6 +59,8 @@ for (const [, id, rawOptions, correctAnswer, explanation] of questions) {
 for (const requirement of [
   "import { QUIZ_CATEGORIES } from '../data/quizData';",
   'reference-quiz-categories',
+  "featureId === 'quiz'",
+  '<QuizFeature feature={feature} onBack={onBack} />',
   // The explanation renders only once an answer is locked in; showing it
   // earlier would hand over the answer.
   'selected === null ? null : (',

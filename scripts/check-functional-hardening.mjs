@@ -3,10 +3,11 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
+const homeProgress = await read('src/services/homeQuranProgress.ts');
+const dhikrDailyState = await read('src/services/dhikrDailyState.ts');
 
 const [
   app,
-  assistant,
   reader,
   quran,
   readingScreens,
@@ -35,7 +36,6 @@ const [
   calendarService,
 ] = await Promise.all([
   read('src/app/App.tsx'),
-  read('src/screens/AssistantScreen.tsx'),
   read('src/screens/QuranReaderScreen.tsx'),
   read('src/screens/QuranScreen.tsx'),
   read('src/screens/ReferenceReadingScreens.tsx'),
@@ -79,16 +79,12 @@ function forbidText(source, forbidden, label) {
 requireText(app, [
   'readHomeQuranProgress',
   'readDhikrTotalToday',
-  "localStorage.getItem('nur_quran_last_read')",
-  "localStorage.getItem('nur_dhikr_daily_v2')",
-  'fetchSurahs()',
   'openLastRead',
   'quranPercent',
   'onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber)',
   '<div className="brand-lockup" aria-label="Nur Islam">',
   'selectedAyahNumber',
   'initialAyahNumber={selectedAyahNumber}',
-  'Lokaler Quellenmodus',
   'selectedDuaId',
   'selectedNameId',
   'selectedCalendarDate',
@@ -112,6 +108,19 @@ requireText(app, [
   "window.addEventListener('popstate'",
   'window.history.back()',
 ], 'Home and direct navigation');
+requireText(dhikrDailyState, [
+  "localStorage.getItem('nur_dhikr_daily_v2')",
+  'parsed.date !== day',
+  'targetByKey.has(key)',
+  'Math.min(targetByKey.get(key) ?? 0, Math.floor(value as number))',
+  'Object.values(readDhikrDailyState(date).counts)',
+], 'Validated daily Dhikr state shared with Home');
+requireText(homeProgress, [
+  "localStorage.getItem('nur_quran_last_read')",
+  "public/data/quran/surahs.json?raw",
+  'surahsByNumber.get(surahNumber)',
+  'Number.isSafeInteger(ayahNumber)',
+], 'Synchronous, validated Home Quran progress');
 forbidText(app, [
   '33 von 100',
   "width: '25%'",
@@ -120,7 +129,6 @@ forbidText(app, [
   '<button className="brand-lockup"',
   "showToast('Nur Islam')",
   'onOpenDuas=',
-  'onOpenNames=',
   'onOpenCalendar=',
   'Ayah des Tages',
 ], 'Home and direct navigation');
@@ -173,9 +181,9 @@ forbidText(collections, [
 
 requireText(reader, [
   'initialAyahNumber?: number',
-  'setShowMeaning',
-  'Bedeutung an',
-  'Bedeutung aus',
+  'Aussprachehilfe',
+  'bundle.transliteration',
+  'bundle.german',
   'reference-font-control',
   'quran-ayah-${surahNumber}-${targetAyah}',
   "scrollIntoView({ behavior: 'smooth', block: 'center' })",
@@ -215,33 +223,6 @@ requireText(calendar, [
   'selectedDay: target.getDate()',
 ], 'Calendar direct open');
 
-requireText(assistant, [
-  // The nine hand-written answers were replaced by a lookup over the app's own
-  // content, so an answer now points at an entry the user can open. The
-  // guarantee this list protects is unchanged: no invented answers, and the
-  // assistant says so when it has none. check-assistant-boundary covers the
-  // decline path for ruling questions.
-  'answerFromApp',
-  'reference-chat-hits',
-  'Kein Fake-KI-Modus',
-  'reference-chat-message__source',
-  'infoOpen',
-  'setInfoOpen(true)',
-  'reference-profile-modal reference-assistant-info-modal',
-  'Was dieser Assistent wirklich kann',
-  'Unbekannte Fragen werden ausdrücklich nicht beantwortet',
-  'messageIdRef',
-  'const userId = nextMessageId()',
-  'const assistantId = nextMessageId()',
-], 'Nur local assistant');
-forbidText(assistant, [
-  'Die Oberfläche ist vorbereitet',
-  'Aktuell ist noch kein KI-Anbieter verbunden',
-  '<Mic',
-  'CircleCheckIcon',
-  "flash('Nur Antworten",
-  'const id = Date.now();',
-], 'Nur local assistant');
 
 requireText(readingScreens, [
   'async function copyText',
@@ -303,7 +284,7 @@ requireText(hadithData, [
 ], 'Hadith rotation and bookmark migration');
 
 requireText(dhikr, [
-  'DHIKR_TARGET_BY_KEY',
+  'readDhikrDailyState',
   'statsOpen',
   'setStatsOpen(true)',
   'reference-dhikr-stats-modal',
@@ -405,11 +386,11 @@ requireText(legacy, [
   'JumuahFeature',
   'nur_feature_jumuah_progress',
   // The generic overview is gone: all fifteen areas have their own screen with
-  // real content behind them. What it guarded against — a screen that looks
-  // like an article but holds four bullet points — is now covered by the
-  // fallback, which names the gap instead of dressing it up.
+  // real content behind them. The Prophets area now carries its own sourced
+  // course plan and lesson structure instead of the former two-row summary.
   'UnbuiltFeature',
-  'reference-legacy-list--overview',
+  'reference-prophet-plan__list',
+  'reference-prophet-lesson__sources',
   'Für diesen Bereich ist noch kein Inhalt hinterlegt',
   "featureId === 'jumuah'",
   "featureId === 'zakat'",
@@ -456,14 +437,12 @@ requireText(hardeningStyles, [
   'scroll-margin-top: 88px',
   '.reference-reader-verse.is-active',
   '.prayer-alert--disabled',
-  '.reference-chat-message__source',
   '.reference-dhikr-stats-modal',
   '.reference-fasting-reminder-settings',
   '.reference-zakat-calculator',
   '.reference-standby-stage',
 ], 'Functional design layer');
 requireText(legacyOverviewStyles, [
-  '.reference-legacy-list--overview > article',
   '.reference-legacy-list--checklist > button',
 ], 'Honest legacy overview styles');
 requireText(installStyles, [
@@ -471,4 +450,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader preserves its Quran parent in browser/system history, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Assistant message identity is stable, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader preserves its Quran parent in browser/system history, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');

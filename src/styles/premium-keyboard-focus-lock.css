@@ -8,13 +8,6 @@
       pointer-events: none;
     }
 
-    body:has(.reference-assistant-input input:focus) .reference-assistant-input {
-      bottom: max(10px, env(safe-area-inset-bottom)) !important;
-    }
-
     body:has(input:focus, textarea:focus) .toast {
       bottom: max(12px, env(safe-area-inset-bottom)) !important;
     }}}
-
-@media (prefers-reduced-motion: reduce) {
-  }

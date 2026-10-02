@@ -35,38 +35,6 @@
   opacity: .22;
 }
 
-/* Local sourced assistant. */
-.reference-chat-message > div {
-  display: grid;
-  min-width: 0;
-  gap: 8px;
-}
-
-.reference-chat-message__source {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  width: fit-content;
-  max-width: 100%;
-  padding: 5px 8px;
-  border: 1px solid rgba(232, 199, 122, .14);
-  border-radius: 999px;
-  color: rgba(235, 211, 156, .86);
-  background: rgba(232, 199, 122, .045);
-  font-size: .49rem;
-  line-height: 1.3;
-}
-
-.reference-chat-message__source svg {
-  flex: 0 0 auto;
-}
-
-.reference-assistant-input button[type='submit']:disabled {
-  opacity: .38;
-  cursor: not-allowed;
-  transform: none !important;
-}
-
 /* Dhikr statistics: the header chart control opens a real daily summary. */
 .reference-dhikr-stats-modal {
   position: relative;

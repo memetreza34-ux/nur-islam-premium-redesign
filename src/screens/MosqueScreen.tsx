@@ -188,13 +188,14 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       <section className="reference-mosque-hero">
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-gold-v2.webp" fallback={<MosqueScene />} priority />
+        <PremiumImage src="/premium-assets/high-res-objects/mosque-finder-arch-v1.webp" fallback={<MosqueScene />} priority />
         <div><span className="hero-pill">{origin.label}</span><h2>Finde einen Ort<br />für dein Gebet.</h2><p>Echte Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern.</p><button className="reference-mosque-location-button" onClick={() => void useDeviceLocation()} disabled={status === 'loading'}><LocateFixed size={16} /> Eigenen Standort verwenden</button></div>
+        <span className="reference-mosque-hero__caption">Illustrative Ansicht</span>
       </section>
 
       <section className={`reference-mosque-live-status is-${status}`} aria-live="polite">
         <span className="reference-mosque-live-status__dot" />
-        <span><strong>{statusLabel}</strong><small>{resultCount} Ergebnisse · Aktualisiert {formatUpdatedAt(snapshot?.fetchedAt)}</small></span>
+        <span><strong>{statusLabel}</strong><small>{snapshot ? `${resultCount} Ergebnisse · Aktualisiert ${formatUpdatedAt(snapshot.fetchedAt)}` : status === 'loading' ? 'Einträge werden geladen' : status === 'error' ? 'Bitte später erneut versuchen' : 'Noch keine Einträge geladen'}</small></span>
         {snapshot?.source === 'live' ? <CircleCheck size={18} /> : status === 'loading' ? <LoaderCircle size={18} className="is-spinning" /> : null}
       </section>
 

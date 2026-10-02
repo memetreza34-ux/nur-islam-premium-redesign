@@ -8,12 +8,9 @@
 }
 
 /* Keep secondary information readable and visually consistent across screens. */
-:where(
-  .reference-profile-greeting p,
+:where(.reference-profile-greeting p,
   .reference-profile-row__copy small,
   .reference-settings-toggles small,
-  .reference-assistant-greeting p,
-  .reference-assistant-safety small,
   .prayer-location-card small,
   .next-prayer-panel__main p,
   .next-prayer-panel__time span,
@@ -35,7 +32,7 @@
   .reference-quran-results small,
   .reference-quran-list__copy small,
   .reference-quran-availability,
-  .reference-reader-screen--dynamic .reference-reader-verse blockquote small,
+  .reference-reader-verse__reading small,
   .reference-reader-loading small,
   .reference-reader-unavailable small,
   .reference-quran-verse small,
@@ -61,15 +58,12 @@
   .reference-prayer-course-hero__progress strong,
   .reference-prayer-lesson-summary p,
   .reference-qibla-shortcut small,
-  .reference-prayer-lesson-steps em
-) {
+  .reference-prayer-lesson-steps em) {
   font-size: var(--text-micro) !important;
   line-height: var(--compact-line-height);
 }
 
-:where(
-  .reference-profile-section__label,
-  .reference-assistant-safety strong,
+:where(.reference-profile-section__label,
   .prayer-location-card button,
   .reference-install-prompt__action,
   .reference-prayer-reminder-banner__open,
@@ -84,21 +78,15 @@
   .reference-mosque-location-button,
   .reference-mosque-error button,
   .reference-mosque-detail-actions button,
-  .reference-mosque-detail-actions a
-) {
+  .reference-mosque-detail-actions a) {
   font-size: var(--text-caption) !important;
   line-height: 1.3;
 }
 
-:where(
-  .reference-profile-row__copy strong,
+:where(.reference-profile-row__copy strong,
   .reference-settings-toggles strong,
-  .reference-assistant-suggestions strong,
-  .reference-chat-message p,
-  .reference-assistant-input input,
   .prayer-location-card strong,
-  .reference-learning-reading p
-) {
+  .reference-learning-reading p) {
   font-size: var(--text-body-small) !important;
 }
 
@@ -132,16 +120,13 @@
 }
 
 /* Repeated list icons align on one compact grid instead of drifting by screen. */
-:where(
-  .reference-profile-row__icon,
-  .reference-assistant-suggestions button > span,
+:where(.reference-profile-row__icon,
   .prayer-location-card__icon,
   .reference-quran-library-status > span:first-child,
   .reference-name-progress__icon,
   .reference-dua-progress > span:first-child,
   .reference-prayer-learning-actions > button > span:first-child,
-  .reference-five-prayer-lessons > div:last-child > button > span:first-child
-) {
+  .reference-five-prayer-lessons > div:last-child > button > span:first-child) {
   width: var(--icon-box-medium);
   min-width: var(--icon-box-medium);
   height: var(--icon-box-medium);
@@ -150,21 +135,16 @@
 }
 
 /* Compact icon buttons that are not primary navigation remain visually centered. */
-:where(
-  .reference-chat-message__mark,
-  .reference-learning-key-points button > span,
+:where(.reference-learning-key-points button > span,
   .reference-learning-quiz__options button > span,
-  .reference-learning-lesson-selector button > span
-) {
+  .reference-learning-lesson-selector button > span) {
   display: grid;
   place-items: center;
 }
 
 /* Avoid text touching card edges when German labels become longer. */
-:where(
-  .reference-profile-row__copy,
+:where(.reference-profile-row__copy,
   .reference-core-access-grid button > span:nth-child(2),
-  .reference-assistant-suggestions button,
   .prayer-location-card > span:nth-child(2),
   .reference-prayer-reminder-banner__copy,
   .reference-install-prompt__copy,
@@ -173,22 +153,18 @@
   .reference-name-progress > span:nth-child(2),
   .reference-name-list__copy,
   .reference-dua-progress > div:nth-child(2),
-  .reference-learning-lesson-selector button
-) {
+  .reference-learning-lesson-selector button) {
   min-width: 0;
 }
 
-:where(
-  .reference-profile-row__copy strong,
-  .reference-assistant-suggestions strong,
+:where(.reference-profile-row__copy strong,
   .reference-core-access-grid strong,
   .reference-prayer-reminder-banner__copy strong,
   .reference-install-prompt__copy strong,
   .reference-quran-library-status strong,
   .reference-name-progress strong,
   .reference-dua-progress strong,
-  .reference-learning-lesson-selector strong
-) {
+  .reference-learning-lesson-selector strong) {
   overflow-wrap: anywhere;
 }
 

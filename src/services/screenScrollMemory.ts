@@ -4,7 +4,7 @@
  * Every screen change mounts a fresh `.screen-transition-frame`, and a fresh
  * element starts at scroll position 0. That is right on the way in — a screen
  * you have never opened should begin at its top — but wrong on the way back:
- * scrolling to the bottom of Home, opening the fasting assistant and returning
+ * scrolling to the bottom of Home, opening the fasting plan and returning
  * dropped the reader at the very top of Home, with the card they had just
  * tapped somewhere far below.
  *

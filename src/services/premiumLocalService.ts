@@ -1,6 +1,20 @@
+import { getHadithById, readSavedHadithIds } from '../data/hadithData';
+
 export type PremiumAccent = 'classic' | 'sapphire' | 'plum' | 'sand';
-export type PremiumWidgetId = 'prayer' | 'quran' | 'dhikr' | 'routine';
-export type PremiumHomeSection = 'journey' | 'discover' | 'continue' | 'inspiration' | 'assistant' | 'recommendations';
+export type PremiumWidgetId =
+  | 'prayer'
+  | 'quran'
+  | 'dhikr'
+  | 'qibla'
+  | 'islamic-date'
+  | 'daily-inspiration'
+  | 'routine'
+  | 'quran-plan'
+  | 'weekly-prayers'
+  | 'favorites'
+  | 'reminders'
+  | 'friday';
+export type PremiumHomeSection = 'journey' | 'discover' | 'continue' | 'inspiration' | 'recommendations';
 
 export type PremiumSettings = {
   accent: PremiumAccent;
@@ -75,12 +89,14 @@ const JOURNAL_KEY = 'local_nur_premium_journal_v1';
 const STATS_KEY = 'local_nur_premium_stats_v1';
 const REMINDER_FIRED_KEY = 'local_nur_premium_reminders_fired_v1';
 
-export const PREMIUM_HOME_SECTIONS: PremiumHomeSection[] = ['journey', 'discover', 'continue', 'inspiration', 'assistant', 'recommendations'];
-export const PREMIUM_WIDGETS: PremiumWidgetId[] = ['prayer', 'quran', 'dhikr', 'routine'];
+export const PREMIUM_HOME_SECTIONS: PremiumHomeSection[] = ['continue', 'journey', 'discover', 'inspiration', 'recommendations'];
+export const FREE_WIDGETS: PremiumWidgetId[] = ['prayer', 'quran', 'dhikr', 'qibla', 'islamic-date', 'daily-inspiration'];
+export const SUBSCRIPTION_WIDGETS: PremiumWidgetId[] = ['routine', 'quran-plan', 'weekly-prayers', 'favorites', 'reminders', 'friday'];
+export const PREMIUM_WIDGETS: PremiumWidgetId[] = [...FREE_WIDGETS, ...SUBSCRIPTION_WIDGETS];
 
 const DEFAULT_SETTINGS: PremiumSettings = {
   accent: 'classic',
-  widgets: ['prayer', 'quran', 'routine'],
+  widgets: [...PREMIUM_WIDGETS],
   homeOrder: [...PREMIUM_HOME_SECTIONS],
   hiddenHomeSections: [],
 };
@@ -325,7 +341,24 @@ export function readPremiumFavoriteRefs(): PremiumFavoriteRef[] {
   if (Array.isArray(duas)) duas.filter((id): id is string => typeof id === 'string').forEach((id) => refs.push({ ref: `dua:${id}`, label: `Dua · ${id}`, group: 'Duas' }));
   const names = readJson<unknown>('nur_name_favorites', []);
   if (Array.isArray(names)) names.filter((id): id is string => typeof id === 'string').forEach((id) => refs.push({ ref: `name:${id}`, label: `Name Allahs · ${id}`, group: '99 Namen' }));
-  return refs.slice(0, 500);
+  try {
+    if (localStorage.getItem('nur_daily_ayah_saved') === '1') refs.push({ ref: 'focus-ayah:112:1', label: 'Ayah im Fokus', group: 'Impulse' });
+  } catch { /* Storage ist optional. */ }
+  readSavedHadithIds().forEach((id) => refs.push({ ref: `hadith:${id}`, label: `Hadith · ${getHadithById(id)?.title ?? id}`, group: 'Impulse' }));
+  const dates = readJson<unknown>('nur_calendar_favorites', []);
+  if (Array.isArray(dates)) dates.forEach((value) => {
+    if (typeof value !== 'string') return;
+    const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+    if (!match) return;
+    const date = new Date(Number(match[1]), Number(match[2]) - 1, Number(match[3]), 12);
+    if (Number.isNaN(date.getTime()) || date.getFullYear() !== Number(match[1]) || date.getMonth() + 1 !== Number(match[2]) || date.getDate() !== Number(match[3])) return;
+    refs.push({ ref: `calendar:${value}`, label: `Kalendertag · ${new Intl.DateTimeFormat('de-DE').format(date)}`, group: 'Termine' });
+  });
+  return [...new Map(refs.map((item) => [item.ref, item])).values()].slice(0, 500);
+}
+
+export function readPremiumCollectionCount() {
+  return readPremiumFavoriteRefs().length;
 }
 
 export function readPremiumJournal(): PremiumJournalNote[] {

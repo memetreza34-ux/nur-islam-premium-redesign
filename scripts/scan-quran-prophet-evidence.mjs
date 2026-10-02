@@ -45,15 +45,12 @@ function normalize(text, superscriptAlef) {
 const forms = (text) => new Set([normalize(text, 'ا'), normalize(text, '')]);
 
 /**
- * Namen und arabische Schreibweisen stammen aus src/data/knowledgeData.ts,
+ * Namen und arabische Schreibweisen stammen aus src/data/prophetData.ts,
  * damit die Liste im Repo steht und nicht in diesem Skript erfunden wird.
  */
-const knowledge = await readFile(resolve(root, 'src/data/knowledgeData.ts'), 'utf8');
-const topicStart = knowledge.indexOf("title: 'Die 25 Propheten im Islam'");
-if (topicStart === -1) throw new Error('The 25-prophets topic is no longer in knowledgeData.ts.');
-const topic = knowledge.slice(topicStart, knowledge.indexOf('  },', knowledge.indexOf('sections:', topicStart)));
-const prophets = [...topic.matchAll(/subtitle: '(\d+)\. ([^(]+)\(([^)]+)\)'/g)]
-  .map((match) => ({ number: Number(match[1]), label: match[2].trim().replace(/\\'/g, "'"), arabic: match[3] }));
+const prophetData = await readFile(resolve(root, 'src/data/prophetData.ts'), 'utf8');
+const prophets = [...prophetData.matchAll(/id: '[^']+', name: '([^']+)', arabic: '([^']+)'/g)]
+  .map((match, index) => ({ number: index + 1, label: match[1], arabic: match[2] }));
 if (prophets.length !== 25) throw new Error(`Expected 25 prophets, found ${prophets.length}.`);
 
 async function loadEdition(language) {
@@ -220,7 +217,8 @@ for (const entry of results) {
   const warning = HOMOGRAPHS.get(entry.number);
   if (warning) lines.push(`> **Vorsicht beim Zählen:** ${warning}`, '');
   lines.push(`${entry.refs.length} Fundstelle${entry.refs.length === 1 ? '' : 'n'}.`, '');
-  lines.push(`**${entry.refs[0]}** — ${shorten(german.get(entry.refs[0]) ?? '')}`, '');
+  const translation = german.get(entry.refs[0]);
+  lines.push(translation ? `**${entry.refs[0]}** — ${shorten(translation)}` : `**${entry.refs[0]}**`, '');
   if (entry.refs.length > 1) {
     lines.push(`Weitere: ${entry.refs.slice(1, 15).join(', ')}${entry.refs.length > 15 ? ` … (${entry.refs.length - 15} weitere)` : ''}`, '');
   }

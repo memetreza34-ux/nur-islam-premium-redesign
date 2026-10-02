@@ -30,7 +30,7 @@ const files = await collectScreens(dir);
 
 // A container is a dialog if its class ends in -modal. Inner parts use the
 // block__element form and are not dialogs themselves.
-const dialogClass = /className="([^"]*\b[a-z-]*-modal)"/g;
+const dialogClass = /className="([^"]*(?:\b[a-z-]*-modal|\bpremium-local-overlay))"/g;
 
 const offenders = [];
 let dialogCount = 0;
@@ -42,9 +42,9 @@ for (const name of files) {
     if (classes.includes('__') || classes.includes('backdrop')) continue;
 
     dialogCount += 1;
-    // The spread sits immediately before className on the same tag.
     const tagStart = source.lastIndexOf('<', match.index);
-    const tag = source.slice(tagStart, match.index + match[0].length);
+    const tagEnd = source.indexOf('>', match.index);
+    const tag = source.slice(tagStart, tagEnd + 1);
     if (!/\{\.\.\.\w*[Dd]ialog\.props\}/.test(tag)) {
       offenders.push(`${relative(root, name)}: ${classes}`);
     }

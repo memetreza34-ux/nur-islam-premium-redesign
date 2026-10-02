@@ -177,7 +177,6 @@
   background: rgba(232, 199, 122, .035);
 }
 
-.premium-home--v2 .ai-preview,
 .premium-home--v2 .recommendation-card {
   transition: border-color .2s ease, transform .2s ease, background .2s ease;
 }
@@ -606,19 +605,6 @@
   text-wrap: pretty;
 }
 
-.reference-reader-verse blockquote {
-  padding: 13px 14px;
-  border-left: 2px solid rgba(232, 199, 122, .3);
-  border-radius: 0 14px 14px 0;
-  color: rgba(226, 235, 229, .87);
-  background: rgba(255, 255, 255, .025);
-  line-height: 1.62;
-}
-
-.reference-reader-verse blockquote small {
-  color: rgba(232, 199, 122, .75);
-}
-
 .reference-reader-next {
   min-height: 68px;
   padding: 11px 14px;
@@ -756,19 +742,13 @@
   color: #3e5c50;
 }
 
-[data-theme='light'] .reference-reader-verse blockquote {
-  color: #344f44;
-  background: rgba(110, 85, 35, .04);
-}
-
 @media (hover: hover) and (pointer: fine) {
   .premium-home--v2 .quick-card:hover,
-  .premium-home--v2 .journey-card:hover,
-  .premium-home--v2 .recommendation-card:hover,
-  .premium-home--v2 .ai-preview:hover,
-  .reference-prayer-screen .prayer-time-row:hover,
-  .reference-quran-list--catalog > article:hover,
-  .reference-reader-verse:hover {
+.premium-home--v2 .journey-card:hover,
+.premium-home--v2 .recommendation-card:hover,
+.reference-prayer-screen .prayer-time-row:hover,
+.reference-quran-list--catalog > article:hover,
+.reference-reader-verse:hover {
     border-color: rgba(232, 199, 122, .29);
     transform: translateY(-1px);
   }}

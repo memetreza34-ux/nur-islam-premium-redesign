@@ -1,7 +1,7 @@
 import { resolveAppPath } from './appPaths';
 import { queuePendingNavigation } from '../services/pendingNavigation';
 
-const SERVICE_WORKER_VERSION = '14-20260808-release-hardening';
+const SERVICE_WORKER_VERSION = '33-20260826-original-art';
 
 /**
  * Asks the worker to cache the remaining surahs, once the page is done loading

@@ -31,7 +31,9 @@ const requiredCourseFeatures = [
   'reference-rakah-wording__arabic',
   'nur_prayer_learning_complete',
   'nur_prayer_learning_preparation',
-  'mihrab-arch-v2.webp',
+  'PRAYER_TIME_IMAGE',
+  'PRAYER_MINI_IMAGE',
+  'PrayerPostureImage',
   'onOpenQibla',
   'onOpenPrayerTimes',
 ];
@@ -39,10 +41,10 @@ for (const feature of requiredCourseFeatures) {
   if (!course.includes(feature)) throw new Error(`Prayer learning course is missing: ${feature}`);
 }
 
-if (!learn.includes('reference-prayer-learning-hub') || !learn.includes('Die fünf Pflichtgebete')) {
+if (!learn.includes('learn-library-prayer-entry') || !learn.includes('Die fünf Pflichtgebete')) {
   throw new Error('Prayer learning is no longer the primary learning experience.');
 }
-if (!learn.includes('PRAYER_LESSONS.map') || !learn.includes('Wudu lernen') || !learn.includes('Qibla finden')) {
+if (!learn.includes('PRAYER_LESSONS.map') || !learn.includes('<strong>Wudu</strong>') || !learn.includes('<strong>Qibla</strong>')) {
   throw new Error('Learning screen is missing a core prayer-learning action.');
 }
 for (const fragment of [

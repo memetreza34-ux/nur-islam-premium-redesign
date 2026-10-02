@@ -4,7 +4,6 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 
 const primaryScreens = [
-  'AssistantScreen.tsx',
   'CalendarScreen.tsx',
   'CollectionsScreen.tsx',
   'DhikrScreen.tsx',
@@ -47,7 +46,6 @@ for (const destination of [
   'names',
   'mosques',
   'collections',
-  'assistant',
 ]) {
   if (!app.includes(`'${destination}'`)) {
     throw new Error(`Bottom-navigation screen contract is missing destination: ${destination}`);

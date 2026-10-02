@@ -15,7 +15,8 @@ test.beforeEach(async ({ page }) => {
 });
 
 test('opens on the home screen with a prayer schedule', async ({ page }) => {
-  await expect(page.locator('.premium-home').getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.locator('.premium-home--v2')).toBeVisible();
+  await expect(page.locator('.home-prayer-focus')).toBeVisible();
   const times = page.locator('text=/^([01]\\d|2[0-3]):[0-5]\\d$/');
   expect(await times.count()).toBeGreaterThanOrEqual(6);
 });
@@ -54,6 +55,17 @@ test('browser Back and Forward preserve the synthetic Quran parent from Home', a
   await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
 });
 
+test('Home quiz keeps its title and survives browser Forward and reload', async ({ page }) => {
+  await page.getByRole('button', { name: /Wissen testen Islam Quiz/i }).click();
+  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
+  await page.goBack();
+  await expect(page.locator('.premium-home--v2')).toBeVisible();
+  await page.goForward();
+  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
+  await page.reload();
+  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
+});
+
 test('primary navigation resets the app-owned browser stack', async ({ page }) => {
   await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
@@ -63,10 +75,49 @@ test('primary navigation resets the app-owned browser stack', async ({ page }) =
   expect(depth).toBe(0);
 });
 
+test('shows the Islamic calendar below prayer times and opens the full planner', async ({ page }) => {
+  await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
+  await expect(page.locator('.prayer-calendar-section')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Islamische Tage & Termine' })).toBeVisible();
+  expect(await page.locator('.prayer-calendar-day:not(.prayer-calendar-day--empty)').count()).toBeGreaterThanOrEqual(28);
+  await expect(page.getByText('Nächste wichtige Termine', { exact: true })).toBeVisible();
+  await page.getByRole('button', { name: 'Kalender öffnen', exact: true }).click();
+  await expect(page.getByRole('heading', { name: 'Kalender' })).toBeVisible();
+  await expect(page.getByText('Nächste wichtige Termine', { exact: true })).toBeVisible();
+});
+
+test('offers the essential prayer companions and opens each destination', async ({ page }) => {
+  const destinations = [
+    ['Beten lernen', 'Gebetskurs'],
+    ['Qibla', 'Qibla'],
+    ['Duas', 'Duas'],
+    ['Dhikr', 'Dhikr'],
+    ['Moscheen', 'Moschee-Finder'],
+    ['Fastenplan', 'Fastenplan'],
+  ] as const;
+
+  for (const [entry, heading] of destinations) {
+    await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
+    const companions = page.locator('.prayer-companions');
+    await expect(companions).toBeVisible();
+    await expect(companions.getByRole('button')).toHaveCount(6);
+    await companions.getByRole('button', { name: new RegExp(`^${entry}`) }).click();
+    await expect(page.getByRole('heading', { level: 1, name: heading })).toBeVisible();
+  }
+});
+
+test('opens prayer learning directly and returns to the prayer screen', async ({ page }) => {
+  await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
+  await page.locator('.prayer-companions').getByRole('button', { name: /^Beten lernen/ }).click();
+  await expect(page.getByRole('heading', { level: 1, name: 'Gebetskurs' })).toBeVisible();
+  await page.getByRole('button', { name: 'Zurück zu Gebet' }).click();
+  await expect(page.locator('.reference-prayer-screen')).toBeVisible();
+});
+
 test('secondary devotional screens keep the correct primary tab active', async ({ page }) => {
   await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
-  await expect(page.getByRole('navigation').getByRole('button', { name: 'Gebet' })).toHaveAttribute('aria-current', 'page');
+  await expect(page.getByRole('navigation').getByRole('button', { name: 'Mehr' })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByText('Duas', { exact: true }).first().click();
   await expect(page.getByRole('navigation').getByRole('button', { name: 'Lernen' })).toHaveAttribute('aria-current', 'page');
@@ -145,22 +196,87 @@ test('reports no console errors while navigating', async ({ page }) => {
   expect(realErrors).toEqual([]);
 });
 
-test('reads a long surah from the local bundle instead of the network', async ({ page }) => {
+test('reads a long surah from the local bundle instead of the network', async ({ page }, testInfo) => {
   const onlineCalls: string[] = [];
   await page.route('**://api.alquran.cloud/**', async (route) => {
-    onlineCalls.push(route.request().url());
-    await route.continue();
+    const url = route.request().url();
+    const isGerman = url.includes('de.bubenheim');
+    onlineCalls.push(url);
+    await route.fulfill({
+      contentType: 'application/json',
+      body: JSON.stringify({
+        code: 200,
+        status: 'OK',
+        data: {
+          number: 2,
+          name: 'سُورَةُ البَقَرَةِ',
+          englishName: 'Al-Baqara',
+          englishNameTranslation: 'The Cow',
+          numberOfAyahs: 286,
+          revelationType: 'Medinan',
+          ayahs: Array.from({ length: 286 }, (_, index) => ({
+            numberInSurah: index + 1,
+            text: isGerman
+              ? (index === 0 ? 'Alif-Lam-Mim' : `Deutsche Bedeutung ${index + 1}`)
+              : (index === 0 ? 'Alif Laam Meem' : `Pronunciation ${index + 1}`),
+          })),
+          edition: {
+            identifier: isGerman ? 'de.bubenheim' : 'en.transliteration',
+            language: isGerman ? 'de' : 'en',
+            name: isGerman ? 'Bubenheim & Elyas' : 'Transliteration',
+            englishName: isGerman ? 'German Translation' : 'English Transliteration',
+            format: 'text',
+            type: isGerman ? 'translation' : 'transliteration',
+          },
+        },
+      }),
+    });
   });
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
   await page.getByText('Quran', { exact: true }).first().click();
+  await expect(page.getByRole('button', { name: 'Mekkanisch', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Medinensisch', exact: true })).toHaveCount(0);
   await page.getByPlaceholder(/Sure/i).fill('Baqara');
   await page.getByRole('button').filter({ hasText: /Al-Baqara/ }).first().click();
-  await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
-  expect(onlineCalls.length, 'only the translation is fetched, and only once').toBe(1);
-  expect(onlineCalls[0], 'the request must name the translation edition').toContain('de.bubenheim');
-  expect(onlineCalls[0], 'the Arabic is bundled and must not be requested').not.toContain('quran-uthmani');
-  await expect(page.getByText('Bubenheim & Elyas').first()).toBeVisible();
-  await expect(page.getByText(/Sinngemäße deutsche Bedeutung/)).toHaveCount(0);
-  await expect(page.getByText(/im Diesseits Gutes und im Jenseits Gutes/).first()).toBeVisible();
-  await expect(page.getByText(/in dieser Welt Gutes und im Jenseits Gutes/)).toHaveCount(0);
+  await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.reference-reader-pronunciation').first()).toContainText('Alif Laam Meem', { timeout: 15_000 });
+  await expect(page.locator('.reference-reader-translation').first()).toContainText('Alif-Lam-Mim', { timeout: 15_000 });
+  expect(onlineCalls.length, 'pronunciation and German translation are each fetched once').toBe(2);
+  expect(onlineCalls.some((url) => url.includes('en.transliteration'))).toBe(true);
+  expect(onlineCalls.some((url) => url.includes('de.bubenheim'))).toBe(true);
+  expect(onlineCalls.some((url) => url.includes('quran-uthmani')), 'the Arabic is bundled and must not be requested').toBe(false);
+  await expect(page.getByText(/Deutsche Übersetzung · Bubenheim & Elyas/).first()).toBeVisible();
+  await expect(page.getByText(/Bedeutung an|Bedeutung aus/)).toHaveCount(0);
+
+  const modes = page.locator('.reference-reader-mode-tabs');
+  await modes.getByRole('button', { name: /Deutsch/ }).click();
+  await expect(page.locator('.reference-reader-flow.is-german-flow')).toBeVisible();
+  await expect(page.locator('.reference-reader-flow__page strong')).toHaveText('Seite 1');
+  const firstGermanPageCount = await page.locator('.reference-reader-flow__text.is-german > span').count();
+  expect(firstGermanPageCount).toBeGreaterThan(0);
+  expect(firstGermanPageCount).toBeLessThan(286);
+  await expect(page.locator('.reference-reader-flow__text.is-german')).toContainText('Deutsche Bedeutung 2');
+  await page.getByRole('button', { name: 'Nächste Leseseite' }).click();
+  await expect(page.locator('.reference-reader-flow__page strong')).toHaveText('Seite 2');
+  await page.getByRole('button', { name: 'Lesestelle merken' }).click();
+  await expect(page.locator('.reference-reader-pagination__marker')).toContainText('Gemerkt');
+  await page.screenshot({ path: testInfo.outputPath('quran-german-flow.png') });
+
+  await modes.getByRole('button', { name: /Arabisch/ }).click();
+  await expect(page.locator('.reference-reader-flow.is-arabic-flow')).toBeVisible();
+  const firstArabicPageCount = await page.locator('.reference-reader-flow__text.is-arabic > span').count();
+  expect(firstArabicPageCount).toBeGreaterThan(0);
+  expect(firstArabicPageCount).toBeLessThan(286);
+  await page.screenshot({ path: testInfo.outputPath('quran-arabic-flow.png') });
+
+  await modes.getByRole('button', { name: /Deutsch/ }).click();
+  await expect(page.locator('.reference-reader-flow__page strong')).toHaveText('Seite 2');
+  await expect(page.locator('.reference-reader-pagination__marker')).toContainText('Gemerkt');
+  await page.getByRole('button', { name: 'Nächste Leseseite' }).click();
+  await expect(page.getByRole('button', { name: /Zur Markierung/ })).toBeVisible();
+  await page.getByRole('button', { name: /Zur Markierung/ }).click();
+  await expect(page.locator('.reference-reader-flow__page strong')).toHaveText('Seite 2');
+
+  await modes.getByRole('button', { name: /Versweise/ }).click();
+  await expect(page.locator('.reference-reader-verse').first()).toBeVisible();
 });

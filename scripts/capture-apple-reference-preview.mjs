@@ -98,20 +98,18 @@ try {
   await shot(darkPage, 'apple-02-ayah-detail');
   await openHome(darkPage);
 
-  const assistantButton = darkPage.locator('button').filter({ hasText: 'Nur Assistent' }).first();
-  await assistantButton.waitFor({ state: 'visible', timeout: 10_000 });
-  await assistantButton.click();
-  const assistantScreen = darkPage.locator('.reference-assistant-screen');
-  await assistantScreen.waitFor({ state: 'visible', timeout: 10_000 });
+  await darkPage.getByRole('navigation').getByText('Mehr', { exact: true }).click();
+  await darkPage.getByRole('button').filter({ hasText: /^Notizen/ }).first().click();
+  await darkPage.getByRole('button', { name: 'Neue Notiz', exact: true }).click();
   await darkPage.waitForTimeout(180);
   const routeScrollY = await darkPage.evaluate(() => window.scrollY);
-  if (routeScrollY > 8) throw new Error(`iPhone WebKit kept ${routeScrollY}px of scroll after opening Assistant.`);
+  if (routeScrollY > 8) throw new Error(`iPhone WebKit kept ${routeScrollY}px of scroll after opening Notes.`);
 
-  const assistantInput = darkPage.locator('.reference-assistant-input input').first();
-  await assistantInput.scrollIntoViewIfNeeded();
-  await assistantInput.focus();
+  const noteInput = darkPage.getByRole('textbox', { name: 'Titel der Notiz' });
+  await noteInput.scrollIntoViewIfNeeded();
+  await noteInput.focus();
   await darkPage.waitForTimeout(350);
-  const inputState = await assistantInput.evaluate((node) => {
+  const inputState = await noteInput.evaluate((node) => {
     const rect = node.getBoundingClientRect();
     return {
       fontSize: Number.parseFloat(getComputedStyle(node).fontSize),
@@ -123,14 +121,14 @@ try {
   });
   if (inputState.fontSize < 16) throw new Error(`iOS input font size regressed below 16px: ${inputState.fontSize}px.`);
   if (inputState.top < 0 || inputState.bottom > inputState.viewportHeight + 1) {
-    throw new Error(`Focused Assistant input left the iPhone viewport: ${JSON.stringify(inputState)}.`);
+    throw new Error(`Focused Notes input left the iPhone viewport: ${JSON.stringify(inputState)}.`);
   }
   const bottomNav = darkPage.locator('.bottom-nav').first();
   const navVisibility = await bottomNav.evaluate((node) => ({ opacity: getComputedStyle(node).opacity, visibility: getComputedStyle(node).visibility }));
   if (navVisibility.visibility !== 'hidden' && Number.parseFloat(navVisibility.opacity) > .01) {
     throw new Error(`Bottom navigation remains visible during iPhone input focus: ${JSON.stringify(navVisibility)}.`);
   }
-  await shot(darkPage, 'apple-03-assistant-focus');
+  await shot(darkPage, 'apple-03-notes-focus');
   await darkContext.close();
 
   const installContext = await createIphoneContext({ dismissInstall: false });
@@ -193,4 +191,4 @@ try {
   await browser.close();
 }
 
-console.log('Apple WebKit QA captured: painted iPhone Home, Ayah, focused Assistant, install flow, standalone mode and Light Theme with route-scroll and install-guide viewport assertions.');
+console.log('Apple WebKit QA captured: painted iPhone Home, Ayah, focused Notes, install flow, standalone mode and Light Theme with route-scroll and install-guide viewport assertions.');

@@ -52,16 +52,33 @@ test('a service feature opens the same way from the hub as from Home', async ({ 
   // From Home it has always been a real screen: no bottom navigation, and the
   // system back button closes it.
   await page.getByRole('button').filter({ hasText: 'Fastentage' }).first().click();
-  await expect(page.getByRole('heading', { name: 'Fasten-Assistent', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Fastenplan', level: 1 })).toBeVisible();
   await expect(page.getByRole('navigation')).toHaveCount(0);
   await page.goBack();
   await expect(page.getByRole('navigation')).toBeVisible();
 
   await openHub(page);
   await page.getByRole('button').filter({ hasText: 'Freiwillige Fastentage' }).first().click();
-  await expect(page.getByRole('heading', { name: 'Fasten-Assistent', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Fastenplan', level: 1 })).toBeVisible();
   await expect(page.getByRole('navigation')).toHaveCount(0);
 
+  await page.goBack();
+  await expect(page.getByRole('heading', { name: 'Mehr', level: 1 })).toBeVisible();
+});
+
+test('the complete directory exposes every main, prayer and learning area without duplicating services', async ({ page }) => {
+  await openApp(page);
+  await openHub(page);
+
+  const directory = page.locator('.reference-core-access');
+  for (const group of ['Hauptbereiche', 'Gebet & Alltag', 'Grundlagen', 'Wissen & Vertiefung']) {
+    await expect(directory.getByRole('heading', { name: group, exact: true })).toBeVisible();
+  }
+  await expect(directory.getByRole('button')).toHaveCount(30);
+  await expect(page.locator('.reference-services-grid').getByRole('button')).toHaveCount(4);
+
+  await directory.getByRole('button', { name: /Allah & der Glaube/ }).click();
+  await expect(page.getByRole('heading', { name: 'Allah & der Glaube', exact: true })).toBeVisible();
   await page.goBack();
   await expect(page.getByRole('heading', { name: 'Mehr', level: 1 })).toBeVisible();
 });

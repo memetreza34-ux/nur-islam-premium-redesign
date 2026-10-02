@@ -72,7 +72,7 @@
   width: 148px !important;
   height: 174px !important;
   opacity: .19 !important;
-  background: url('/premium-assets/high-res-objects/lantern-v2.webp?v=20260808-release-hardening') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/lantern-v3.webp') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
 }
 
@@ -105,13 +105,13 @@
 }
 
 .verse-card--cream .verse-card__art {
-  opacity: .11 !important;
-  mix-blend-mode: multiply;
+  opacity: .9 !important;
+  mix-blend-mode: normal;
 }
 
 .verse-card--cream .verse-card__art > img {
-  object-position: center 46% !important;
-  transform: scale(1.04);
+  object-position: center !important;
+  transform: none;
 }
 
 .hadith-card,

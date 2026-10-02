@@ -1,5 +1,7 @@
 # Masterplan: Nur Islam bis zum Launch
 
+> **Aktualisierung 27.08.2026:** Historischer Plan. Der Nur-Assistent ist inzwischen vollständig entfernt und darf nicht anhand dieses Plans wieder aktiviert werden. Siehe [ASSISTANT-REMOVAL.md](ASSISTANT-REMOVAL.md).
+
 Stand: 14. August 2026 · Branch `premium-design-finish` · Bearbeiter: Claude Code allein
 
 > **Was heute noch fehlt — die kurze Fassung.** Der Release-Build scheitert an

@@ -5,12 +5,10 @@
  * Umschrift allein trägt weder Länge noch Betonung. Der Knopf spielt die
  * Aufnahmen des Schritts der Reihe nach ab; beim Koran ist das Vers für Vers.
  *
- * Zwei Quellen, beide mit echten Sprechern: der Koran von Al Quran Cloud, die
- * überlieferten Formeln aus Hisn al-Muslim. Eine künstlich erzeugte Stimme
- * steht bewusst nirgends — wer nachspricht, prägt sich die Aussprache ein, die
- * er hört, und dafür ist eine synthetische Näherung die falsche Vorlage.
- * Welche Schritte trotzdem stumm bleiben, steht bei `audioUrl` in
- * `prayerRakatData`.
+ * Die Quran-Verse kommen von Al Quran Cloud. Andere Gebetsformeln bleiben
+ * stumm, bis für eine passende Aufnahme eindeutige Nutzungsrechte vorliegen.
+ * Eine künstlich erzeugte Stimme steht bewusst nirgends — wer nachspricht,
+ * prägt sich die Aussprache ein, die er hört.
  *
  * Die Aufnahmen liegen nicht im App-Paket. Ohne Verbindung sagt der Knopf das,
  * statt still nichts zu tun.

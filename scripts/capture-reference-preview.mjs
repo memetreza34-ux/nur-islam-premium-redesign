@@ -176,7 +176,6 @@ try {
   await returnHome(page);
   await captureSecondary(page, { trigger: '99 Namen Allahs', screen: '.reference-names-screen', name: '12-names' });
   await returnHome(page);
-  await captureSecondary(page, { trigger: 'Nur Assistent', screen: '.reference-assistant-screen', name: '13-assistant' });
   await returnHome(page);
   await captureSecondary(page, { trigger: 'Meine Sammlung', screen: '.reference-collections-screen', name: '14-collections' });
   await returnHome(page);

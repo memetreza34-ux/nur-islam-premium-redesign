@@ -38,7 +38,13 @@ for (const requirement of serviceRequirements) {
 // one path silently leaves the home hero on stale times.
 const bootstrapBody = service.slice(service.indexOf('export async function bootstrapSharedPrayerTimes'));
 const appliedSnapshots = [...bootstrapBody.matchAll(/applyPrayerSnapshotToSharedSchedule\((\w+)\)/g)].map((match) => match[1]);
-for (const path of ['cached', 'live', 'fallback']) {
+if (!bootstrapBody.includes('applyPrayerSnapshotToSharedSchedule(cached ?? getFallbackPrayerTimesSnapshot())')) {
+  throw new Error('Bootstrap must immediately publish matching cached times or explicit unavailable placeholders.');
+}
+if (!bootstrapBody.includes('generation !== sharedGeneration')) {
+  throw new Error('Obsolete bootstrap responses must not overwrite newer settings.');
+}
+for (const path of ['live', 'fallback']) {
   if (!appliedSnapshots.includes(path)) {
     throw new Error(`Shared prayer schedule is not updated on the ${path} bootstrap path.`);
   }
@@ -47,12 +53,30 @@ for (const path of ['cached', 'live', 'fallback']) {
 const homeRequirements = [
   'getNextPrayer(now)',
   'PRAYER_SCHEDULE.map((prayer)',
-  'PRAYER_SCHEDULE_META.sourceLabel',
-  'PRAYER_SCHEDULE_META.methodLabel',
+  'PRAYER_SCHEDULE_META.locationLabel',
+  'PRAYER_SCHEDULE_META.timezone',
 ];
 
 for (const requirement of homeRequirements) {
   if (!app.includes(requirement)) throw new Error(`Home prayer hero no longer consumes the shared schedule: ${requirement}`);
 }
 
-console.log('Home prayer synchronization verified: live updates, day rollover, visibility refresh, shared schedule rendering, and cleanup.');
+const prayer = await readFile(resolve(root, 'src/screens/PrayerScreen.tsx'), 'utf8');
+const backdrops = await readFile(resolve(root, 'src/shared/prayerBackdrops.ts'), 'utf8');
+const arch = await readFile(resolve(root, 'src/shared/MihrabArch.tsx'), 'utf8');
+const worker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
+for (const screen of [app, prayer]) {
+  if (!screen.includes('scene={currentScene}')) throw new Error('Both prayer cards must illustrate the current local daylight phase.');
+}
+if (!app.includes('getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META.timezone)')
+  || !prayer.includes('getCurrentPrayerScene(now, prayerTimes, meta.timezone)')) {
+  throw new Error('Landscape selection must use each own timetable and location timezone, separately from the next prayer.');
+}
+for (const id of ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
+  const filename = `prayer-${id}-v1.webp`;
+  if (!backdrops.includes(filename) || !worker.includes(filename)) throw new Error(`Missing prayer landscape or offline cache entry: ${id}`);
+}
+for (const token of ['getPrayerBackdrop(scene)', '<AnimatePresence', 'useReducedMotion', 'ds-arch__veil', 'strokeDasharray={`${clamped} 100`}']) {
+  if (!arch.includes(token)) throw new Error(`Prayer landscape must retain text protection, progress and accessible transitions: ${token}`);
+}
+console.log('Home prayer synchronization verified: shared timetable, matching five prayer landscapes, offline entries, day rollover, visibility refresh, protected text and reduced-motion transitions.');

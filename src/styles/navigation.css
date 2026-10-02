@@ -1,6 +1,4 @@
-/* Bottom navigation: 68px, in the document flow.
-   It used to be fixed at 96px against a guessed 110px reserve in .app-shell,
-   which is what put it over the content. */
+/* Five destinations, with a mihrab-shaped active backdrop. */
 .bottom-nav {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -17,18 +15,18 @@
   min-height: var(--ds-tap-min);
   justify-items: center;
   align-content: center;
-  gap: var(--ds-space-1);
-  padding: 7px 0 3px;
+  gap: 4px;
+  padding: 0 0 3px;
   border: 0;
-  color: #8fa39a;
+  color: #a1b5aa;
   background: transparent;
   cursor: pointer;
   transition: color 180ms var(--ds-ease);
 }
 
 .bottom-nav__item svg {
-  width: 20px;
-  height: 20px;
+  width: 28px;
+  height: 28px;
   fill: none;
   stroke: currentColor;
   stroke-width: 1.75;
@@ -48,27 +46,36 @@
 }
 
 .bottom-nav__item--active { color: #f2d79a; }
+.bottom-nav__item--active .nur-navigation-icon__surface { fill-opacity: .42; }
+.bottom-nav__item .nur-navigation-icon { transition: transform 180ms var(--ds-ease); }
+.bottom-nav__item--active .nur-navigation-icon { transform: translateY(-1px); }
+.bottom-nav__item:active .nur-navigation-icon { transform: scale(.92); }
 
-/* The arch cap marks the active tab. Nothing encloses the label, so nothing
-   can clip it — the old 37px pill around a 66px cell is what cut it off. */
-.bottom-nav__item--active::before {
+/* Filled arch behind the icon; the label stays outside. */
+.bottom-nav__item::before {
   content: '';
   position: absolute;
   top: 0;
   left: 50%;
-  width: 34px;
-  height: 7px;
+  width: 52px;
+  height: 42px;
   transform: translateX(-50%);
-  background: currentColor;
-  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8' preserveAspectRatio='none'%3E%3Cpath d='M2,8 L2,5 C2,2.4 9,1 20,1 C31,1 38,2.4 38,5 L38,8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 8' preserveAspectRatio='none'%3E%3Cpath d='M2,8 L2,5 C2,2.4 9,1 20,1 C31,1 38,2.4 38,5 L38,8' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  background: #163e31;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 52 42'%3E%3Cpath d='M26 1.5C20 6 3 7 3 21v14q0 6 6 6h34q6 0 6-6V21C49 7 32 6 26 1.5Z' fill='none' stroke='%23e2bf77' stroke-opacity='.48' stroke-width='.8'/%3E%3C/svg%3E"), linear-gradient(150deg, rgba(242, 215, 154, .18), transparent 70%);
+  clip-path: path('M 26 0 C 20 5 2 6 2 21 L 2 35 Q 2 42 9 42 L 43 42 Q 50 42 50 35 L 50 21 C 50 6 32 5 26 0 Z');
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms var(--ds-ease);
 }
+.bottom-nav__item--active::before { opacity: 1; }
+[data-theme='light'] .bottom-nav__item::before { background: #e2e9df; }
 
 @media (hover: hover) and (pointer: fine) {
   .bottom-nav__item:hover:not(.bottom-nav__item--active) { color: rgba(255, 248, 234, 0.88); }
 }
 
-@media (max-width: 370px) {
-  .bottom-nav__item small { font-size: 10px; }
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav__item,
+  .bottom-nav__item::before,
+  .bottom-nav__item .nur-navigation-icon { transition: none; }
 }
-

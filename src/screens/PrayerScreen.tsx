@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
   Bell,
   BellRing,
+  CalendarRange,
+  CalendarDays,
   Check,
   ChevronLeft,
+  ChevronRight,
   CircleCheck,
+  CircleDotDashed,
   Clock3,
   LocateFixed,
   MapPin,
@@ -29,15 +33,21 @@ import {
   getNextPrayer,
   OBLIGATORY_PRAYER_IDS,
 } from '../services/prayerSchedule';
-import type { PrayerScheduleItem } from '../services/prayerSchedule';
+import type { PrayerId, PrayerScheduleItem } from '../services/prayerSchedule';
+import { versionAppPath } from '../app/appPaths';
 import {
   ASR_SCHOOL_OPTIONS,
+  fetchPrayerTimesMonth,
+  getPrayerMonthKey,
   PRAYER_METHOD_OPTIONS,
 } from '../services/prayerTimesService';
-import type { AsrSchool, PrayerCalculationMethod } from '../services/prayerTimesService';
+import type { AsrSchool, PrayerCalculationMethod, PrayerTimesMonth } from '../services/prayerTimesService';
 import { MihrabArch } from '../shared/MihrabArch';
+import { getCurrentPrayerScene } from '../shared/prayerBackdrops';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
 import { getHijriLabel } from '../services/hijriCalendar';
+
+const PrayerCalendarSection = lazy(() => import('../shared/PrayerCalendarSection').then((module) => ({ default: module.PrayerCalendarSection })));
 
 const obligatoryIds = OBLIGATORY_PRAYER_IDS;
 const celebrationParticles = Array.from({ length: 18 }, (_, index) => ({
@@ -95,6 +105,38 @@ function getGregorianDate(date = new Date()) {
   return new Intl.DateTimeFormat('de-DE', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(date);
 }
 
+function localNoon(date = new Date()) {
+  return new Date(date.getFullYear(), date.getMonth(), date.getDate(), 12);
+}
+
+function shiftDate(date: Date, days: number) {
+  const shifted = localNoon(date);
+  shifted.setDate(shifted.getDate() + days);
+  return shifted;
+}
+
+function dateFromKey(dateKey: string) {
+  const [year, month, day] = dateKey.split('-').map(Number);
+  return new Date(year, month - 1, day, 12);
+}
+
+function getPrayerDayHeading(date: Date, today: boolean) {
+  const weekday = new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(date);
+  return today ? `Heute · ${weekday}` : weekday;
+}
+
+function getPrayerDayDate(date: Date) {
+  return new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(date);
+}
+
+function getPrayerMonthTitle(date: Date) {
+  return new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric' }).format(date);
+}
+
+function prayerMonthCacheKey(date: Date, latitude: number, longitude: number, method: number, school: number) {
+  return `${getPrayerMonthKey(date)}:${latitude.toFixed(2)}:${longitude.toFixed(2)}:${method}:${school}`;
+}
+
 // This screen used to format its own Hijri date with the bare `islamic`
 // calendar, which resolves to a tabular civil calendar and ran a day ahead of
 // the shared service: the header said 4. Rabiʻ I while Home and Calendar both
@@ -110,6 +152,21 @@ function PrayerIcon({ prayer, size = 21 }: { prayer: PrayerScheduleItem; size?: 
   if (prayer.visual === 'sunset') return <Sunset size={size} />;
   if (prayer.visual === 'afternoon') return <SunDim size={size} />;
   return <SunMedium size={size} />;
+}
+
+const PRAYER_MINIATURES: Record<PrayerId, string> = {
+  fajr: '/premium-assets/high-res-objects/prayer-mini-fajr-v1.webp',
+  sunrise: '/premium-assets/high-res-objects/prayer-mini-sunrise-v1.webp',
+  dhuhr: '/premium-assets/high-res-objects/prayer-mini-dhuhr-v1.webp',
+  asr: '/premium-assets/high-res-objects/prayer-mini-asr-v1.webp',
+  maghrib: '/premium-assets/high-res-objects/prayer-mini-maghrib-v1.webp',
+  isha: '/premium-assets/high-res-objects/prayer-mini-isha-v1.webp',
+};
+
+function PrayerMiniature({ prayer }: { prayer: PrayerScheduleItem }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return <PrayerIcon prayer={prayer} />;
+  return <img src={versionAppPath(PRAYER_MINIATURES[prayer.id], '20260826-original-art')} alt="" width={192} height={192} decoding="async" draggable={false} onError={() => setFailed(true)} />;
 }
 
 async function playReminderTone() {
@@ -137,7 +194,27 @@ async function playReminderTone() {
   return true;
 }
 
-export function PrayerScreen({ onBack }: { onBack: () => void }) {
+type PrayerScreenProps = {
+  onBack: () => void;
+  openCalendar: (dateKey: string) => void;
+  openDhikr: () => void;
+  openDuas: () => void;
+  openFastingPlan: () => void;
+  openLearn: () => void;
+  openMosques: () => void;
+  openQibla: () => void;
+};
+
+export function PrayerScreen({
+  onBack,
+  openCalendar,
+  openDhikr,
+  openDuas,
+  openFastingPlan,
+  openLearn,
+  openMosques,
+  openQibla,
+}: PrayerScreenProps) {
   const initialDateKey = useRef(getDateKey()).current;
   const [now, setNow] = useState(() => new Date());
   const currentDateKey = useMemo(() => getDateKey(now), [now]);
@@ -148,11 +225,24 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const [toast, setToast] = useState<string | null>(null);
   const [celebrationOpen, setCelebrationOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [selectedPrayerDate, setSelectedPrayerDate] = useState(() => localNoon());
+  const [previewSchedule, setPreviewSchedule] = useState<PrayerScheduleItem[] | null>(null);
+  const [previewStatus, setPreviewStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [monthOpen, setMonthOpen] = useState(false);
+  const [monthCursor, setMonthCursor] = useState(() => localNoon());
+  const [monthPlan, setMonthPlan] = useState<PrayerTimesMonth | null>(null);
+  const [monthStatus, setMonthStatus] = useState<'idle' | 'loading' | 'error'>('idle');
+  const [monthReloadToken, setMonthReloadToken] = useState(0);
+  const monthCache = useRef(new Map<string, PrayerTimesMonth>());
+  const monthRequests = useRef(new Map<string, Promise<PrayerTimesMonth>>());
+  const previewRequestId = useRef(0);
+  const monthRequestId = useRef(0);
   const [completionStreak, setCompletionStreak] = useState(() => calculatePrayerStreak());
   const reduceMotion = useReducedMotion();
   const {
     schedule: prayerTimes,
     meta,
+    location,
     preferences,
     status,
     refreshing,
@@ -167,12 +257,77 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
   const settingsDialog = useDialog(settingsOpen, closeSettings, 'Gebetszeiten-Einstellungen');
   const closeCelebration = useCallback(() => { setCelebrationOpen(false); }, []);
   const celebrationDialog = useDialog(celebrationOpen, closeCelebration, 'Alle Pflichtgebete abgeschlossen');
+  const closeMonth = useCallback(() => { setMonthOpen(false); }, []);
+  const monthDialog = useDialog(monthOpen, closeMonth, 'Gebetszeiten im Monat');
 
   const dateLabel = useMemo(() => getGregorianDate(now), [now]);
   const hijriLabel = useMemo(() => getHijriDate(now), [now]);
-  const nextPrayer = useMemo(() => getNextPrayer(now, prayerTimes), [now, prayerTimes]);
+  const selectedPrayerDateKey = useMemo(() => getDateKey(selectedPrayerDate), [selectedPrayerDate]);
+  const selectedIsToday = selectedPrayerDateKey === currentDateKey;
+  const displayedPrayerTimes = selectedIsToday ? prayerTimes : previewSchedule ?? [];
+  const nextPrayer = useMemo(() => getNextPrayer(now), [now, prayerTimes]);
+  const currentScene = getCurrentPrayerScene(now, prayerTimes, meta.timezone);
   const completedCount = obligatoryIds.filter((id) => completed.has(id)).length;
   const previousCompletedCount = useRef(completedCount);
+
+  const loadMonth = useCallback((date: Date) => {
+    const key = prayerMonthCacheKey(date, location.latitude, location.longitude, preferences.method, preferences.school);
+    const cached = monthCache.current.get(key);
+    if (cached) return Promise.resolve(cached);
+    const pending = monthRequests.current.get(key);
+    if (pending) return pending;
+    const request = fetchPrayerTimesMonth(location, preferences, date)
+      .then((plan) => {
+        monthCache.current.set(key, plan);
+        monthRequests.current.delete(key);
+        return plan;
+      })
+      .catch((reason) => {
+        monthRequests.current.delete(key);
+        throw reason;
+      });
+    monthRequests.current.set(key, request);
+    return request;
+  }, [location, preferences]);
+
+  const selectPrayerDate = useCallback(async (date: Date, knownSchedule?: PrayerScheduleItem[]) => {
+    const normalized = localNoon(date);
+    const dateKey = getDateKey(normalized);
+    const requestId = previewRequestId.current + 1;
+    previewRequestId.current = requestId;
+    setSelectedPrayerDate(normalized);
+
+    if (dateKey === getDateKey()) {
+      setPreviewSchedule(null);
+      setPreviewStatus('idle');
+      return;
+    }
+    if (knownSchedule) {
+      setPreviewSchedule(knownSchedule);
+      setPreviewStatus('idle');
+      return;
+    }
+
+    setPreviewSchedule(null);
+    setPreviewStatus('loading');
+    try {
+      const plan = await loadMonth(normalized);
+      if (previewRequestId.current !== requestId) return;
+      const day = plan.days.find((entry) => entry.dateKey === dateKey);
+      if (!day) throw new Error('Für diesen Tag sind keine Gebetszeiten vorhanden.');
+      setPreviewSchedule(day.schedule);
+      setPreviewStatus('idle');
+    } catch {
+      if (previewRequestId.current !== requestId) return;
+      setPreviewStatus('error');
+    }
+  }, [loadMonth]);
+
+  const openMonthPlan = useCallback(() => {
+    setMonthCursor(selectedPrayerDate);
+    setMonthPlan(null);
+    setMonthOpen(true);
+  }, [selectedPrayerDate]);
 
   useEffect(() => {
     const syncClock = () => setNow(new Date());
@@ -181,13 +336,34 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       if (document.visibilityState === 'visible') syncClock();
     };
     window.addEventListener('focus', syncClock);
+    window.addEventListener('nur:prayer-times-updated', syncClock);
     document.addEventListener('visibilitychange', handleVisibility);
     return () => {
       window.clearInterval(timer);
       window.removeEventListener('focus', syncClock);
+      window.removeEventListener('nur:prayer-times-updated', syncClock);
       document.removeEventListener('visibilitychange', handleVisibility);
     };
   }, []);
+
+  useEffect(() => {
+    if (!monthOpen) return undefined;
+    const requestId = monthRequestId.current + 1;
+    monthRequestId.current = requestId;
+    setMonthPlan(null);
+    setMonthStatus('loading');
+    void loadMonth(monthCursor)
+      .then((plan) => {
+        if (monthRequestId.current !== requestId) return;
+        setMonthPlan(plan);
+        setMonthStatus('idle');
+      })
+      .catch(() => {
+        if (monthRequestId.current !== requestId) return;
+        setMonthStatus('error');
+      });
+    return () => { monthRequestId.current += 1; };
+  }, [loadMonth, monthCursor, monthOpen, monthReloadToken]);
 
   useEffect(() => {
     if (completedDateKey === currentDateKey) return;
@@ -197,7 +373,12 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
     previousCompletedCount.current = obligatoryIds.filter((id) => nextCompleted.has(id)).length;
     setCompletionStreak(calculatePrayerStreak());
     setCelebrationOpen(false);
-  }, [completedDateKey, currentDateKey]);
+    if (selectedPrayerDateKey === completedDateKey) {
+      setSelectedPrayerDate(localNoon(now));
+      setPreviewSchedule(null);
+      setPreviewStatus('idle');
+    }
+  }, [completedDateKey, currentDateKey, now, selectedPrayerDateKey]);
 
   useEffect(() => writeSet(`nur_prayers_${completedDateKey}`, completed), [completed, completedDateKey]);
   useEffect(() => writeSet('nur_prayer_notifications', notifications), [notifications]);
@@ -261,16 +442,19 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
 
   const handleRefresh = async () => {
     setNow(new Date());
+    await selectPrayerDate(localNoon());
     const result = await refresh();
     flash(result === 'live' ? 'Live-Gebetszeiten aktualisiert' : 'Offline-Zeitplan wird weiter verwendet');
   };
 
   const handleLocation = async () => {
+    await selectPrayerDate(localNoon());
     const result = await requestLocation();
     flash(result === 'live' ? 'Gebetszeiten für deinen Standort geladen' : result === 'location-denied' ? 'Standort wurde nicht freigegeben' : 'Gespeicherter Zeitplan wird verwendet');
   };
 
   const applyPreferences = async () => {
+    await selectPrayerDate(localNoon());
     const result = await updatePreferences({ method: draftMethod, school: draftSchool });
     setSettingsOpen(false);
     flash(result === 'live' ? 'Berechnungseinstellung übernommen' : 'Einstellung gespeichert – Offline-Fallback aktiv');
@@ -336,9 +520,7 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       {/* Without a usable timetable there is no next prayer, and the arch would
           otherwise show a prayer and a countdown the app does not know. */}
       {nextPrayer ? (
-      <section className="next-prayer-panel reference-next-prayer">
-        {/* The arch carries the time and the day counter, so the tracker card
-            and the separate progress bar are no longer needed. */}
+      <section className="prayer-focus" aria-label="Nächstes Pflichtgebet">
         <MihrabArch
           overline={nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}
           title={nextPrayer.prayer.label}
@@ -346,7 +528,8 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
           value={nextPrayer.prayer.time}
           meta={`noch ${formatPrayerRemaining(nextPrayer.remaining)} · ${completedCount}/5 heute`}
           progress={nextPrayer.progress}
-          height={196}
+          height={230}
+          scene={currentScene}
         />
         <div className="next-prayer-panel__actions">
           <button className="gold-button" onClick={() => toggleCompleted(nextPrayer.prayer.id)} disabled={!nextTrackable}>
@@ -363,20 +546,68 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
       )}
 
       <section className="prayer-schedule-section">
-        <div className="section-heading"><div><span className="overline">Tagesübersicht</span><h2>Alle Gebetszeiten</h2></div><button className="text-button" onClick={() => setSettingsOpen(true)}><Settings2 size={15} /> Berechnung</button></div>
+        <div className="section-heading"><div><span className="overline">Tagesübersicht</span><h2>{getPrayerDayHeading(selectedPrayerDate, selectedIsToday)}</h2></div><button className="text-button" onClick={() => setSettingsOpen(true)}><Settings2 size={15} /> Berechnung</button></div>
+        <div className="prayer-date-ribbon" aria-label="Tag auswählen">
+          <button onClick={() => void selectPrayerDate(shiftDate(selectedPrayerDate, -1))} aria-label="Vorherigen Tag anzeigen"><ChevronLeft size={19} /></button>
+          <div aria-live="polite"><strong>{getPrayerDayDate(selectedPrayerDate)}</strong><span>{selectedIsToday ? 'Heute · aktuelle Zeiten' : 'Vorschau für diesen Tag'}</span></div>
+          <button onClick={() => void selectPrayerDate(shiftDate(selectedPrayerDate, 1))} aria-label="Nächsten Tag anzeigen"><ChevronRight size={19} /></button>
+        </div>
+        <div className="prayer-date-actions">
+          {!selectedIsToday ? <button onClick={() => void selectPrayerDate(localNoon())}><CalendarDays size={15} /> Heute</button> : <span><CircleDotDashed size={13} /> Heute</span>}
+          <button onClick={openMonthPlan}><CalendarRange size={16} /> Monatsplan</button>
+        </div>
         <div className="prayer-schedule-list">
-          {prayerTimes.map((prayer, index) => {
-            const isNext = prayer.id === nextPrayer?.prayer.id;
-            const done = completed.has(prayer.id);
-            const notificationOn = prayer.obligatory && notifications.has(prayer.id);
+          {previewStatus === 'loading' ? <div className="prayer-date-state" aria-live="polite"><RefreshCw size={17} className="spin" /> Gebetszeiten werden geladen …</div> : null}
+          {previewStatus === 'error' ? <div className="prayer-date-state prayer-date-state--error"><span>Für diesen Tag konnten keine Zeiten geladen werden.</span><button onClick={() => void selectPrayerDate(selectedPrayerDate)}>Erneut versuchen</button></div> : null}
+          {displayedPrayerTimes.map((prayer, index) => {
+            const isNext = selectedIsToday && prayer.id === nextPrayer?.prayer.id;
+            const done = selectedIsToday && completed.has(prayer.id);
+            const notificationOn = selectedIsToday && prayer.obligatory && notifications.has(prayer.id);
             return (
-              <motion.article key={prayer.id} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : index * 0.025, ease: [0.22, 1, 0.36, 1] }}>
-                <span className="prayer-time-row__icon"><PrayerIcon prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
-                {prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}
-                {prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}
+              <motion.article key={`${selectedPrayerDateKey}-${prayer.id}`} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}${selectedIsToday ? '' : ' prayer-time-row--preview'}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : index * 0.025, ease: [0.22, 1, 0.36, 1] }}>
+                <span className="prayer-time-row__art" aria-hidden="true"><PrayerMiniature prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
+                {selectedIsToday ? <>{prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}{prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}</> : null}
               </motion.article>
             );
           })}
+        </div>
+      </section>
+
+      <section className="prayer-companions" aria-labelledby="prayer-companions-title">
+        <div className="section-heading">
+          <div><span className="overline">Rund ums Gebet</span><h2 id="prayer-companions-title">Direkt weiter</h2></div>
+        </div>
+        <div className="prayer-companions__grid">
+          <button className="prayer-companion-card prayer-companion-card--feature" onClick={openLearn} aria-label="Beten lernen – von Wudu bis zum vollständigen Gebet">
+            <span className="prayer-companion-card__copy"><em>Schritt für Schritt</em><strong>Beten lernen</strong><small>Von Wudu bis zum vollständigen Gebet</small></span>
+            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-learn-prayer-v2.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
+          <button className="prayer-companion-card" onClick={openQibla} aria-label="Qibla – Richtung zur Kaaba finden">
+            <span className="prayer-companion-card__copy"><em>Ausrichtung</em><strong>Qibla</strong><small>Richtung zur Kaaba finden</small></span>
+            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
+          <button className="prayer-companion-card" onClick={openDuas} aria-label="Duas – Bittgebete für Alltag und besondere Momente">
+            <span className="prayer-companion-card__copy"><em>Bittgebete</em><strong>Duas</strong><small>Für Alltag und besondere Momente</small></span>
+            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-duas-v2.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
+          <button className="prayer-companion-card" onClick={openDhikr} aria-label="Dhikr – Tasbih, Tagesziel und Routinen">
+            <span className="prayer-companion-card__copy"><em>Gedenken</em><strong>Dhikr</strong><small>Tasbih, Tagesziel und Routinen</small></span>
+            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
+          <button className="prayer-companion-card" onClick={openMosques} aria-label="Moscheen – Gebetsorte auf der Karte">
+            <span className="prayer-companion-card__copy"><em>In der Nähe</em><strong>Moscheen</strong><small>Gebetsorte auf der Karte</small></span>
+            <img className="prayer-companion-card__art prayer-companion-card__art--mosque" src={versionAppPath('/premium-assets/high-res-objects/splash-mosque-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
+          <button className="prayer-companion-card prayer-companion-card--wide" onClick={openFastingPlan} aria-label="Fastenplan – Fastentage planen und Erinnerungen setzen">
+            <span className="prayer-companion-card__copy"><em>Fasten</em><strong>Fastenplan</strong><small>Fastentage planen und Erinnerungen setzen</small></span>
+            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/lantern-v3.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
+            <ChevronRight size={16} />
+          </button>
         </div>
       </section>
 
@@ -385,6 +616,46 @@ export function PrayerScreen({ onBack }: { onBack: () => void }) {
         <span><small>{meta.sourceLabel}</small><strong>{meta.methodLabel}</strong><em>{meta.calculationNotice}</em></span>
         <button onClick={() => setSettingsOpen(true)}>Anpassen</button>
       </section>
+
+      <Suspense fallback={<section className="prayer-calendar-loading" aria-busy="true">Kalender wird geladen …</section>}>
+        <PrayerCalendarSection onOpenCalendar={openCalendar} />
+      </Suspense>
+
+      <AnimatePresence>
+        {monthOpen ? (
+          <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.18 }} onClick={closeMonth}>
+            <motion.section {...monthDialog.props} className="reference-prayer-settings-modal prayer-month-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
+              <button className="reference-prayer-settings-modal__close" onClick={closeMonth} aria-label="Monatsplan schließen"><X size={18} /></button>
+              <span className="reference-prayer-settings-modal__icon"><CalendarRange size={25} /></span>
+              <span className="overline">Gebetszeiten im Monat</span>
+              <h2>{getPrayerMonthTitle(monthCursor)}</h2>
+              <p>Alle fünf Pflichtgebete auf einen Blick. Tippe auf einen Tag, um seine vollständige Tagesansicht zu öffnen.</p>
+              <div className="prayer-month-navigation">
+                <button onClick={() => setMonthCursor(new Date(monthCursor.getFullYear(), monthCursor.getMonth() - 1, 1, 12))} aria-label="Vorherigen Monat anzeigen"><ChevronLeft size={18} /></button>
+                <strong>{getPrayerMonthTitle(monthCursor)}</strong>
+                <button onClick={() => setMonthCursor(new Date(monthCursor.getFullYear(), monthCursor.getMonth() + 1, 1, 12))} aria-label="Nächsten Monat anzeigen"><ChevronRight size={18} /></button>
+              </div>
+              <div className="prayer-month-ledger" aria-busy={monthStatus === 'loading'}>
+                <div className="prayer-month-ledger__head" aria-hidden="true"><span>Tag</span>{['Fajr', 'Dhuhr', 'Asr', 'Mag.', 'Isha'].map((label) => <span key={label}>{label}</span>)}</div>
+                {monthStatus === 'loading' ? <div className="prayer-month-ledger__state"><RefreshCw size={18} className="spin" /> Monatsplan wird geladen …</div> : null}
+                {monthStatus === 'error' ? <div className="prayer-month-ledger__state"><span>Der Monatsplan konnte nicht geladen werden.</span><button onClick={() => setMonthReloadToken((value) => value + 1)}>Erneut versuchen</button></div> : null}
+                {monthPlan?.monthKey === getPrayerMonthKey(monthCursor) ? monthPlan.days.map((day) => {
+                  const date = dateFromKey(day.dateKey);
+                  const isToday = day.dateKey === currentDateKey;
+                  const isSelected = day.dateKey === selectedPrayerDateKey;
+                  return (
+                    <button key={day.dateKey} className={`${isToday ? 'is-today' : ''}${isSelected ? ' is-selected' : ''}`} onClick={() => { closeMonth(); void selectPrayerDate(date, day.schedule); }} aria-label={`${getGregorianDate(date)} auswählen`}>
+                      <span><strong>{date.getDate()}</strong><small>{new Intl.DateTimeFormat('de-DE', { weekday: 'short' }).format(date)}</small></span>
+                      {obligatoryIds.map((id) => <time key={id}>{day.schedule.find((prayer) => prayer.id === id)?.time ?? '–'}</time>)}
+                    </button>
+                  );
+                }) : null}
+              </div>
+              <small className="prayer-month-source">{monthPlan?.meta.locationLabel ?? meta.locationLabel} · {monthPlan?.meta.methodLabel ?? meta.methodLabel}</small>
+            </motion.section>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
 
       <AnimatePresence>
         {settingsOpen ? (

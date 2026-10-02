@@ -9,7 +9,6 @@ const names = await readFile(resolve(root, 'src/styles/reference-names-complete.
 const calendar = await readFile(resolve(root, 'src/styles/calendar.css'), 'utf8');
 const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer-calendar.css'), 'utf8');
 const core = await readFile(resolve(root, 'src/styles/reference-core-screens.css'), 'utf8');
-const assistant = await readFile(resolve(root, 'src/styles/reference-assistant.css'), 'utf8');
 const installPrompt = await readFile(resolve(root, 'src/styles/reference-install-prompt.css'), 'utf8');
 const prayerReminders = await readFile(resolve(root, 'src/styles/reference-prayer-reminders.css'), 'utf8');
 
@@ -45,7 +44,6 @@ for (const selector of [
   '.calendar-entry-row > button',
   '.favorite-button',
   '.reference-qibla-location button',
-  '.reference-assistant-input button',
   '.reference-install-prompt__close',
   '.reference-install-prompt__action',
   '.reference-prayer-reminder-banner__close',
@@ -72,7 +70,6 @@ for (const gridRule of [
   'grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important',
   '.calendar-month-nav',
   '.calendar-entry-row',
-  '.reference-assistant-input',
   'grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important',
   '.reference-prayer-reminder-banner',
   'grid-template-columns: 44px minmax(0, 1fr) auto var(--compact-touch-target) !important',
@@ -85,10 +82,8 @@ for (const gridRule of [
 // change has to be looked at rather than assumed harmless. Updating an entry
 // here is the way to record that the look happened.
 //
-// reference-assistant.css previously listed 38px. The assistant input button
-// was raised to a native 44px, so it no longer depends on the override at all.
-if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !assistant.includes('width: 44px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
   throw new Error('Expected compact control baselines changed; review the centralized 44px overrides.');
 }
 
-console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, assistant, install prompt, prayer reminder, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
+console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, install prompt, prayer reminder, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');

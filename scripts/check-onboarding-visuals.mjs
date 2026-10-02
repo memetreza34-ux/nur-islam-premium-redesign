@@ -8,10 +8,10 @@ const art = await readFile(resolve(root, 'src/styles/premium-onboarding-art-lock
 const finalLock = await readFile(resolve(root, 'src/styles/premium-reference-geometry-lock.css'), 'utf8');
 
 const v2Assets = [
-  'mosque-gold-v2.webp',
+  'mosque-heritage-v1.webp',
   'qibla-compass-v2.webp',
   'quran-closed-v2.webp',
-  'nur-logo-emblem-v2.webp',
+  'nur-logo-emblem-v3.svg',
   'tasbih-v2.webp',
 ];
 

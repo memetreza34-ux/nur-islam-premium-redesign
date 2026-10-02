@@ -84,7 +84,7 @@
 
 .reference-reader-controls {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) 108px;
+  grid-template-columns: minmax(0, 1fr) 108px;
   gap: 7px;
 }
 
@@ -219,15 +219,6 @@
   font-family: 'Noto Naskh Arabic', 'Amiri', serif;
   line-height: 1.95;
   text-align: right;
-}
-
-.reference-reader-verse blockquote {
-  margin: 0;
-  padding-top: 10px;
-  border-top: 1px solid rgba(214, 175, 55, .11);
-  color: rgba(245, 239, 227, .76);
-  font-size: .62rem;
-  line-height: 1.55;
 }
 
 .reference-reader-verse footer {

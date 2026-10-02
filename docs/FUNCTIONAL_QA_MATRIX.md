@@ -40,7 +40,7 @@ Bei FAIL wird nicht gemergt.
 | Quran Weiterlesen | Öffnet exakt die zuletzt gelesene Ayah. |
 | Dhikr Journey | Zeigt heutige reale Zählung. |
 | Quick Actions | Jede sichtbare Karte öffnet einen echten Zielbereich. |
-| Assistent-Karte | Öffnet lokalen Quellenmodus. |
+| Kein Assistent | Keine Chat-Kachel, Eingabe oder Navigation vorhanden. |
 
 ## 3. Gebetszeiten / Tracker / Reminder
 
@@ -211,16 +211,14 @@ Bei FAIL wird nicht gemergt.
 | Website | Nur validierte HTTP/HTTPS-Links sind anklickbar. |
 | Manipulierter URL-Wert | `javascript:`, ungültige Protokolle etc. werden nicht als Website übernommen. |
 
-## 15. Nur Assistent
+## 15. Entfernung des Nur-Assistenten (27.08.2026)
 
 | Test | Sollzustand |
 | --- | --- |
-| Vorschläge | Erzeugen lokale Antwort mit Quellenhinweis. |
-| Unterstützte freie Frage | Passender lokaler Quellen-Treffer. |
-| Unbekannte religiöse Frage | Keine erfundene Antwort; expliziter Nicht-Treffer. |
-| Leere Eingabe | Send-Button deaktiviert. |
-| Info-Icon | Öffnet echte Quellenmodus-Info, keinen Toast. |
-| Info schließen | Backdrop, X und „Verstanden“ schließen Modal. |
+| Home / Mehr | Kein Chat-Einstieg und kein Eingabefeld. |
+| Alte Browserhistorie | Entferntes Ziel führt sicher zu Start. |
+| Alte Premium-Einstellungen | Entfernte Abschnitte werden herausgefiltert; andere Einstellungen bleiben erhalten. |
+| Release-Guard | `no-assistant:check` verhindert bekannte Wiedereinbindungen. |
 
 ## 16. Mehr / Profil / Einstellungen
 

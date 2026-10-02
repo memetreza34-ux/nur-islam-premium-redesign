@@ -10,7 +10,6 @@
 .reference-screen-header h1,
 .section-heading h2,
 .reference-account-hero h2,
-.reference-assistant-greeting h2,
 .reference-calendar-event h3,
 .reference-dua-card__content h2,
 .reference-learning-lesson-card h2,
@@ -106,7 +105,6 @@
 .reference-dhikr-source p,
 .reference-dhikr-source em,
 .reference-account-security small,
-.reference-assistant-safety small,
 .reference-legacy-notice p {
   line-height: 1.55;
   text-wrap: pretty;
@@ -154,7 +152,6 @@
 }
 
 /* ---------- Section separators ---------- */
-.reference-reader-verse blockquote,
 .reference-dua-card footer,
 .reference-note-editor__heading,
 .reference-learning-lesson-card > header,
@@ -203,11 +200,6 @@ button:disabled:not(.gold-button),
 }
 
 /* ---------- Narrow phones ---------- */
-@media (max-width: 390px) {
-  
-
-  
-}
 
 @media (max-width: 350px) {
   

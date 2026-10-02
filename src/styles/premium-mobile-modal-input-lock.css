@@ -84,7 +84,6 @@
 
 /* ---------- Input materials ---------- */
 .reference-input-search,
-.reference-assistant-input,
 .reference-account-form label > div,
 .reference-account-form label > input,
 .reference-note-editor > input,
@@ -98,7 +97,6 @@
 }
 
 .reference-input-search:focus-within,
-.reference-assistant-input:focus-within,
 .reference-account-form label > div:focus-within,
 .reference-account-form label > input:focus,
 .reference-note-editor > input:focus,
@@ -121,26 +119,24 @@
    available while preventing that automatic layout jump on touch devices. */
 @media (pointer: coarse) {
   .reference-account-form input,
-  .reference-note-editor input,
-  .reference-note-editor textarea,
-  .calendar-modal input,
-  .reference-legacy-search input,
-  .reference-fasting-reminder-settings input,
-  .reference-zakat-calculator input,
-  .reference-input-search input,
-  .reference-assistant-input input {
+.reference-note-editor input,
+.reference-note-editor textarea,
+.calendar-modal input,
+.reference-legacy-search input,
+.reference-fasting-reminder-settings input,
+.reference-zakat-calculator input,
+.reference-input-search input {
     font-size: 16px !important;
   }
 
   .reference-account-form input::placeholder,
-  .reference-note-editor input::placeholder,
-  .reference-note-editor textarea::placeholder,
-  .calendar-modal input::placeholder,
-  .reference-legacy-search input::placeholder,
-  .reference-fasting-reminder-settings input::placeholder,
-  .reference-zakat-calculator input::placeholder,
-  .reference-input-search input::placeholder,
-  .reference-assistant-input input::placeholder {
+.reference-note-editor input::placeholder,
+.reference-note-editor textarea::placeholder,
+.calendar-modal input::placeholder,
+.reference-legacy-search input::placeholder,
+.reference-fasting-reminder-settings input::placeholder,
+.reference-zakat-calculator input::placeholder,
+.reference-input-search input::placeholder {
     font-size: 16px !important;
   }
 }
@@ -216,14 +212,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reference-input-search,
-  .reference-assistant-input,
-  .reference-account-form label > div,
-  .reference-account-form label > input,
-  .reference-note-editor > input,
-  .reference-note-editor > textarea,
-  .calendar-modal input,
-  .reference-legacy-search,
-  .reference-fasting-reminder-settings input,
-  .reference-zakat-calculator input {
+.reference-account-form label > div,
+.reference-account-form label > input,
+.reference-note-editor > input,
+.reference-note-editor > textarea,
+.calendar-modal input,
+.reference-legacy-search,
+.reference-fasting-reminder-settings input,
+.reference-zakat-calculator input {
     transition: none !important;
   }}

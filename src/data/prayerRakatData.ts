@@ -25,6 +25,8 @@ export type RakatStep = {
   /** Wortlaut, wo es einen festen gibt. Schritte ohne sind reine Bewegung. */
   arabic?: string;
   transliteration?: string;
+  /** Deutsche Lesehilfe. Sie nähert die Aussprache an, ersetzt aber keinen Lehrer. */
+  pronunciation?: string;
   translation?: string;
   /**
    * Wie oft der Wortlaut gesprochen wird. Stand vorher nur im Beschreibungssatz
@@ -63,24 +65,6 @@ export type RakatStep = {
    * wer nachspricht, prägt sich die Aussprache ein, die er hört.
    */
   audioAyahs?: readonly number[];
-  /**
-   * Aufnahme für die überlieferten Gebetsformeln, die kein Koran sind und
-   * deshalb bei der Quran-Quelle nicht vorkommen.
-   *
-   * Zugeordnet über den arabischen Wortlaut, nicht nach Gehör: die Quelle
-   * (Hisn al-Muslim, `hisnmuslim.com/api`) liefert zu jeder Aufnahme den Text
-   * mit, sodass der Abgleich prüfbar ist statt geraten. Der Test dazu steht in
-   * `prayerRakatData.test.ts`; er vergleicht die hinterlegten Texte Zeichen für
-   * Zeichen mit dem, was die Quelle zur selben Datei ausliefert.
-   *
-   * Bewusst leer bleiben vier Schritte, jeder aus demselben Grund — man würde
-   * etwas anderes hören, als man liest. Für Takbir und Taslim führt die Quelle
-   * keinen eigenen Eintrag. Beim Bittgebet vor dem Salam weicht die Reihenfolge
-   * der Zufluchtnahmen ab. Und das Aufrichten aus dem Ruku trägt hier zwei
-   * Formeln, die die Quelle getrennt aufnimmt und deren zweite sie in der
-   * längeren überlieferten Fassung spricht.
-   */
-  audioUrl?: string;
 };
 
 /** Wo die Rezitation eines Schritts liegt, in Abspielreihenfolge. */
@@ -88,7 +72,7 @@ const QURAN_RECITATION_BASE = 'https://cdn.islamic.network/quran/audio/128/ar.al
 
 export function recitationUrls(step: RakatStep): readonly string[] {
   if (step.audioAyahs) return step.audioAyahs.map((ayah) => `${QURAN_RECITATION_BASE}/${ayah}.mp3`);
-  return step.audioUrl ? [step.audioUrl] : [];
+  return [];
 }
 
 /**
@@ -120,7 +104,7 @@ export function stepRunDuration(step: RakatStep): number {
 /** Wer die Aufnahme spricht — steht unter dem Wortlaut neben der Belegstelle. */
 export function recitationCredit(step: RakatStep): string | null {
   if (step.audioAyahs) return 'Rezitation: Mishary Alafasy';
-  return step.audioUrl ? 'Aufnahme: Hisn al-Muslim (hisnmuslim.com)' : null;
+  return null;
 }
 
 /**
@@ -154,6 +138,7 @@ const TAKBIR: RakatStep = {
   posture: 'takbir',
   arabic: 'اللَّهُ أَكْبَر',
   transliteration: 'Allahu Akbar',
+  pronunciation: 'Al-laa-hu ak-bar',
   translation: 'Allah ist am größten.',
   repetitions: 1,
   source: 'Sahih al-Bukhari; Sahih Muslim',
@@ -168,10 +153,10 @@ const SANA: RakatStep = {
   posture: 'qiyam',
   arabic: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ',
   transliteration: 'Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta’ala jadduka, wa la ilaha ghayruk',
+  pronunciation: 'Sub-haa-na-kal-laa-hum-ma wa bi-ham-dik,\nwa ta-baa-ra-kas-muk, wa ta-aa-laa dschad-duk,\nwa laa i-laa-ha ghai-ruk',
   translation: 'Preis sei Dir, o Allah, und Lob sei Dir, und gesegnet ist Dein Name, und hoch erhaben ist Deine Majestät, und es gibt keinen Gott außer Dir.',
   repetitions: 1,
   source: 'Sunan Abu Dawud; Sunan at-Tirmidhi; Sunan Ibn Majah',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/28.mp3',
 };
 
 /**
@@ -186,6 +171,7 @@ const TA_AWWUDH_BASMALAH: RakatStep = {
   posture: 'qiyam',
   arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
   transliteration: 'A’udhu billahi minash-shaytanir-rajim\nBismillahir-Rahmanir-Rahim',
+  pronunciation: 'A-uu-dhu bil-laa-hi mi-nasch-schai-taa-nir-ra-dschiim\nBis-mil-laa-hir-rah-maa-nir-ra-hiim',
   translation: 'Ich suche Zuflucht bei Allah vor dem verfluchten Satan. Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
   repetitionNote: 'Nur in der ersten Rakʿah.',
@@ -201,6 +187,7 @@ const BASMALAH: RakatStep = {
   posture: 'qiyam',
   arabic: 'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
   transliteration: 'Bismillahir-Rahmanir-Rahim',
+  pronunciation: 'Bis-mil-laa-hir-rah-maa-nir-ra-hiim',
   translation: 'Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
   source: 'Quran 1:1',
@@ -214,6 +201,7 @@ const FATIHA: RakatStep = {
   posture: 'qiyam',
   arabic: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
   transliteration: 'Alhamdu lillahi rabbil-’alamin\nAr-Rahmanir-Rahim\nMaliki yawmid-din\nIyyaka na’budu wa iyyaka nasta’in\nIhdinas-siratal-mustaqim\nSiratal-ladhina an’amta ’alayhim ghayril-maghdubi ’alayhim wa lad-dallin (Amin)',
+  pronunciation: 'Al-ham-du lil-laa-hi rab-bil-aa-la-miin\nAr-rah-maa-nir-ra-hiim\nMaa-li-ki jau-mid-diin\nIj-jaa-ka na-bu-du wa ij-jaa-ka nas-ta-iin\nIh-di-nas-si-raa-tal-mus-ta-qiim\nSi-raa-tal-la-dhii-na an-am-ta a-lai-him, ghai-ril-magh-duu-bi a-lai-him wa lad-daal-liin. Aa-miin.',
   translation: 'Alles Lob gehört Allah, dem Herrn der Welten, dem Allerbarmer, dem Barmherzigen, dem Herrscher am Tag des Gerichts. Dir allein dienen wir, und Dich allein bitten wir um Hilfe. Leite uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht den Weg derer, die Deinen Zorn erregt haben, und nicht den Weg der Irregehenden.',
   repetitions: 1,
   source: 'Quran, Sure 1 (Al-Fatihah)',
@@ -229,6 +217,7 @@ const SHORT_SURAH: RakatStep = {
   posture: 'qiyam',
   arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ\nلَمْ يَلِدْ وَلَمْ يُولَدْ\nوَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
   transliteration: 'Qul huwallahu ahad\nAllahus-samad\nLam yalid wa lam yulad\nWa lam yakul-lahu kufuwan ahad',
+  pronunciation: 'Qul hu-wal-laa-hu a-had\nAl-laa-hus-sa-mad\nLam ja-lid wa lam juu-lad\nWa lam ja-kul-la-hu ku-fu-wan a-had',
   translation: 'Sprich: Er ist Allah, ein Einziger, Allah, der Absolute. Er zeugt nicht und ist nicht gezeugt worden, und Ihm ebenbürtig ist keiner.',
   repetitions: 1,
   repetitionNote: 'Jede Sure ist möglich, nicht nur diese.',
@@ -244,11 +233,11 @@ const RUKU: RakatStep = {
   posture: 'ruku',
   arabic: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ',
   transliteration: 'Subhana Rabbiyal Adhim',
+  pronunciation: 'Sub-haa-na rab-bi-jal-a-siim',
   translation: 'Preis sei meinem Herrn, dem Allmächtigen.',
   repetitions: 3,
   repetitionNote: 'Dreimal ist die Sunnah, einmal genügt.',
   source: 'Sunan Abu Dawud; Sunan Ibn Majah',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/33.mp3',
 };
 
 const RISING_RUKU: RakatStep = {
@@ -258,6 +247,7 @@ const RISING_RUKU: RakatStep = {
   posture: 'standing',
   arabic: 'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ\nرَبَّنَا وَلَكَ الْحَمْدُ',
   transliteration: 'Sami Allahu liman hamidah\nRabbana wa lakal hamd',
+  pronunciation: 'Sa-mi-al-laa-hu li-man ha-mi-dah\nRab-ba-naa wa la-kal-hamd',
   translation: 'Allah hört den, der Ihn lobt. Unser Herr, Dir gebührt alles Lob.',
   repetitions: 1,
   source: 'Sahih al-Bukhari; Sahih Muslim',
@@ -270,11 +260,11 @@ const SUJUD: RakatStep = {
   posture: 'sujud',
   arabic: 'سُبْحَانَ رَبِّيَ الْأَعْلَى',
   transliteration: 'Subhana Rabbiyal A’la',
+  pronunciation: 'Sub-haa-na rab-bi-jal-a-laa',
   translation: 'Preis sei meinem Herrn, dem Höchsten.',
   repetitions: 3,
   repetitionNote: 'Dreimal ist die Sunnah, einmal genügt.',
   source: 'Sahih Muslim; Sunan Abu Dawud',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/41.mp3',
 };
 
 const SITTING_SUJUD: RakatStep = {
@@ -284,11 +274,11 @@ const SITTING_SUJUD: RakatStep = {
   posture: 'sitting',
   arabic: 'رَبِّ اغْفِرْ لِي',
   transliteration: 'Rabbighfir li',
+  pronunciation: 'Rab-bigh-fir lii',
   translation: 'Mein Herr, vergib mir.',
   repetitions: 1,
   repetitionNote: 'Auch mehrfach überliefert.',
   source: 'Sunan Abu Dawud; Sunan Ibn Majah',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/48.mp3',
 };
 
 const SUJUD_SECOND: RakatStep = {
@@ -310,6 +300,7 @@ const RISE_TO_NEXT_RAKAH: RakatStep = {
   posture: 'rising',
   arabic: 'اللَّهُ أَكْبَر',
   transliteration: 'Allahu Akbar',
+  pronunciation: 'Al-laa-hu ak-bar',
   translation: 'Allah ist am größten.',
   repetitions: 1,
   source: 'Sahih al-Bukhari; Sahih Muslim',
@@ -329,10 +320,10 @@ const TASHAHHUD: RakatStep = {
   posture: 'sitting',
   arabic: 'التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ',
   transliteration: 'At-tahiyyatu lillahi was-salawatu wat-tayyibat, as-salamu ’alayka ayyuhan-Nabiyyu wa rahmatullahi wa barakatuh, as-salamu ’alayna wa ’ala ’ibadillahis-salihin. Ash-hadu an la ilaha illallah, wa ash-hadu anna Muhammadan ’abduhu wa rasuluh.',
+  pronunciation: 'At-ta-hij-jaa-tu lil-laa-hi was-sa-la-waa-tu wat-taj-ji-baat.\nAs-sa-laa-mu a-lai-ka aj-ju-han-na-bij-ju wa rah-ma-tul-laa-hi wa ba-ra-kaa-tuh.\nAs-sa-laa-mu a-lai-naa wa a-laa i-baa-dil-laa-his-saa-li-hiin.\nAsch-ha-du al-laa i-laa-ha il-lal-laah, wa asch-ha-du an-na Mu-ham-ma-dan ab-du-hu wa ra-suu-luh.',
   translation: 'Alle Ehrerbietungen, Gebete und guten Taten gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Seine Segnungen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass es keinen Gott gibt außer Allah, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist.',
   repetitions: 1,
   source: 'Sahih al-Bukhari; Sahih Muslim (überliefert von Ibn Masʿud)',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/52.mp3',
 };
 
 const SALAWAT: RakatStep = {
@@ -342,10 +333,10 @@ const SALAWAT: RakatStep = {
   posture: 'sitting',
   arabic: 'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ، اللَّهُمَّ بَارِكْ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا بَارَكْتَ عَلَى إِبْرَاهِيمَ وَعَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ',
   transliteration: 'Allahumma salli ’ala Muhammadin wa ’ala ali Muhammadin, kama sallayta ’ala Ibrahima wa ’ala ali Ibrahima, innaka Hamidun Majid. Allahumma barik ’ala Muhammadin wa ’ala ali Muhammadin, kama barakta ’ala Ibrahima wa ’ala ali Ibrahima, innaka Hamidun Majid.',
+  pronunciation: 'Al-laa-hum-ma sal-li a-laa Mu-ham-ma-din wa a-laa aa-li Mu-ham-mad.\nKa-maa sal-lai-ta a-laa Ib-raa-hii-ma wa a-laa aa-li Ib-raa-hiim. In-na-ka ha-mii-dun ma-dschiid.\nAl-laa-hum-ma baa-rik a-laa Mu-ham-ma-din wa a-laa aa-li Mu-ham-mad.\nKa-maa baa-rak-ta a-laa Ib-raa-hii-ma wa a-laa aa-li Ib-raa-hiim. In-na-ka ha-mii-dun ma-dschiid.',
   translation: 'O Allah, segne Muhammad und die Familie von Muhammad, wie Du Ibrahim und die Familie von Ibrahim gesegnet hast. Wahrlich, Du bist lobenswert und ruhmreich. O Allah, schenke Muhammad und der Familie von Muhammad Segen, wie Du Ibrahim und der Familie von Ibrahim Segen geschenkt hast. Wahrlich, Du bist lobenswert und ruhmreich.',
   repetitions: 1,
   source: 'Sahih al-Bukhari; Sahih Muslim',
-  audioUrl: 'https://www.hisnmuslim.com/audio/ar/53.mp3',
 };
 
 const DUA_BEFORE_SALAM: RakatStep = {
@@ -355,6 +346,7 @@ const DUA_BEFORE_SALAM: RakatStep = {
   posture: 'sitting',
   arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ',
   transliteration: 'Allahumma inni a’udhu bika min ’adhabi jahannam, wa min ’adhabil-qabr, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal.',
+  pronunciation: 'Al-laa-hum-ma in-nii a-uu-dhu bi-ka min a-dhaa-bi dschah-an-nam,\nwa min a-dhaa-bil-qabr, wa min fit-na-til-mah-jaa wal-ma-maat,\nwa min schar-ri fit-na-til-ma-sii-hid-dad-sch-dschaal.',
   translation: 'O Allah, ich suche Zuflucht bei Dir vor der Strafe der Hölle, vor der Strafe des Grabes, vor den Versuchungen des Lebens und des Todes und vor der Versuchung des falschen Messias (Dajjal).',
   repetitions: 1,
   repetitionNote: 'Freiwillig; auch ein eigenes Bittgebet ist möglich.',
@@ -368,6 +360,7 @@ const TASLIM: RakatStep = {
   posture: 'taslim',
   arabic: 'السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ',
   transliteration: 'Assalamu Alaikum wa Rahmatullah',
+  pronunciation: 'As-sa-laa-mu a-lai-kum wa rah-ma-tul-laah',
   translation: 'Der Friede und die Barmherzigkeit Allahs seien mit euch.',
   repetitions: 2,
   repetitionNote: 'Einmal nach rechts, einmal nach links.',

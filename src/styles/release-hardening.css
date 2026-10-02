@@ -251,6 +251,66 @@
 .reference-account-security > svg,
 .reference-calendar-calculation-note > svg { flex: 0 0 auto; margin-top: 1px; }
 
+.reference-account-consent {
+  display: grid;
+  grid-template-columns: 24px minmax(0, 1fr);
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid rgba(226, 191, 119, .28);
+  border-radius: 17px;
+  color: var(--gold);
+  background: linear-gradient(145deg, rgba(76, 52, 14, .2), rgba(5, 29, 23, .94));
+}
+
+.reference-account-consent.is-granted {
+  border-color: rgba(91, 190, 123, .24);
+  color: #98dbae;
+  background: rgba(61, 158, 91, .05);
+}
+
+.reference-account-consent > svg { margin-top: 1px; }
+.reference-account-consent > div { display: grid; gap: 9px; min-width: 0; }
+.reference-account-consent strong { color: var(--cream-strong); font-size: .72rem; }
+.reference-account-consent small { color: var(--muted-green); font-size: .58rem; line-height: 1.55; }
+
+.reference-account-consent label {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 9px;
+  align-items: start;
+  color: #ded2b6;
+  cursor: pointer;
+}
+
+.reference-account-consent label input {
+  width: 18px;
+  height: 18px;
+  margin: 1px 0 0;
+  accent-color: #d8ad54;
+}
+
+.reference-account-consent label span { font-size: .6rem; line-height: 1.5; }
+.reference-account-consent > div > div { display: flex; flex-wrap: wrap; gap: 8px; }
+
+.reference-account-consent button {
+  min-height: 40px;
+  padding: 0 12px;
+  border: 1px solid rgba(226, 191, 119, .23);
+  border-radius: 12px;
+  color: #eadfca;
+  background: rgba(226, 191, 119, .06);
+  cursor: pointer;
+  font-size: .58rem;
+  font-weight: 800;
+}
+
+.reference-account-consent button:last-child {
+  color: #17372c;
+  background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.reference-account-consent button:disabled { cursor: not-allowed; opacity: .45; }
+
 .reference-account-logout {
   min-height: 44px;
   border: 1px solid rgba(213, 119, 101, .2);

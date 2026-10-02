@@ -7,37 +7,37 @@ import { LEARNING_LESSONS } from '../data/islamicLearningContent';
 // stored pointer, the screen must fall back to something real rather than
 // resuming into a lesson that no longer exists.
 
-const aqidahLessons = LEARNING_LESSONS.filter((lesson) => lesson.categoryId === 'aqidah');
+const faithLessons = LEARNING_LESSONS.filter((lesson) => lesson.categoryId === 'faith');
 
 describe('resuming a course', () => {
   beforeEach(() => localStorage.clear());
 
   it('resumes the stored lesson when it still exists', () => {
-    const target = aqidahLessons[1] ?? aqidahLessons[0];
-    localStorage.setItem('nur_learning_last_aqidah', target.id);
-    expect(readLastLesson('aqidah', aqidahLessons)).toBe(target.id);
+    const target = faithLessons[1] ?? faithLessons[0];
+    localStorage.setItem('nur_learning_last_faith', target.id);
+    expect(readLastLesson('faith', faithLessons)).toBe(target.id);
   });
 
   it('starts at the first lesson when nothing is stored', () => {
-    expect(readLastLesson('aqidah', aqidahLessons)).toBe(aqidahLessons[0].id);
+    expect(readLastLesson('faith', faithLessons)).toBe(faithLessons[0].id);
   });
 
   // The case a content update creates: the pointer survives, the lesson does
   // not. Resuming into it would leave the screen empty.
   it('falls back to the first lesson when the stored one is gone', () => {
-    localStorage.setItem('nur_learning_last_aqidah', 'lesson-removed-in-a-content-update');
-    expect(readLastLesson('aqidah', aqidahLessons)).toBe(aqidahLessons[0].id);
+    localStorage.setItem('nur_learning_last_faith', 'lesson-removed-in-a-content-update');
+    expect(readLastLesson('faith', faithLessons)).toBe(faithLessons[0].id);
   });
 
   it('does not resume a lesson from a different category', () => {
-    const foreign = LEARNING_LESSONS.find((lesson) => lesson.categoryId !== 'aqidah');
-    localStorage.setItem('nur_learning_last_aqidah', foreign?.id ?? 'x');
-    expect(readLastLesson('aqidah', aqidahLessons)).toBe(aqidahLessons[0].id);
+    const foreign = LEARNING_LESSONS.find((lesson) => lesson.categoryId !== 'faith');
+    localStorage.setItem('nur_learning_last_faith', foreign?.id ?? 'x');
+    expect(readLastLesson('faith', faithLessons)).toBe(faithLessons[0].id);
   });
 
   it('copes with an empty course without throwing', () => {
-    localStorage.setItem('nur_learning_last_aqidah', 'anything');
-    expect(readLastLesson('aqidah', [])).toBe('');
+    localStorage.setItem('nur_learning_last_faith', 'anything');
+    expect(readLastLesson('faith', [])).toBe('');
   });
 });
 

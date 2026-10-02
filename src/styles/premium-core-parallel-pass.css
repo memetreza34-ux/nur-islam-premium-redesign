@@ -176,21 +176,6 @@
   box-shadow: 0 16px 38px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
 }
 
-.premium-home--v2 .ai-preview {
-  min-height: 100px;
-  padding: 13px 14px !important;
-  border-color: rgba(232, 199, 122, .18) !important;
-  border-radius: 22px !important;
-  background:
-    radial-gradient(circle at 5% 50%, rgba(232, 199, 122, .08), transparent 7rem),
-    linear-gradient(145deg, rgba(12, 61, 46, .94), rgba(3, 25, 20, .985)) !important;
-  box-shadow: var(--core-shadow) !important;
-}
-
-.premium-home--v2 .ai-preview__mark {
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, .25));
-}
-
 .premium-home--v2 .recommendation-list {
   display: grid;
   gap: 7px;
@@ -617,16 +602,15 @@
 /* Hover is deliberately limited to true pointer devices. */
 @media (hover: hover) and (pointer: fine) {
   .premium-home--v2 .journey-card:hover,
-  .premium-home--v2 .quick-card:hover,
-  .premium-home--v2 .recommendation-card:hover,
-  .premium-home--v2 .ai-preview:hover,
-  .reference-prayer-location:hover,
-  .reference-quran-list--catalog > article:hover,
-  .reference-reader-screen--dynamic .reference-reader-verse:hover,
-  .reference-prayer-learning-actions > button:hover,
-  .reference-five-prayer-lessons > div:last-child > button:hover,
-  .reference-category-card:hover,
-  .reference-expanded-learning-grid > button:hover {
+.premium-home--v2 .quick-card:hover,
+.premium-home--v2 .recommendation-card:hover,
+.reference-prayer-location:hover,
+.reference-quran-list--catalog > article:hover,
+.reference-reader-screen--dynamic .reference-reader-verse:hover,
+.reference-prayer-learning-actions > button:hover,
+.reference-five-prayer-lessons > div:last-child > button:hover,
+.reference-category-card:hover,
+.reference-expanded-learning-grid > button:hover {
     border-color: rgba(247, 226, 178, .29) !important;
     transform: translateY(-1px);
   }
@@ -652,7 +636,6 @@
 
 [data-theme='light'] .premium-home--v2 .journey-card,
 [data-theme='light'] .premium-home--v2 .continue-card--v2,
-[data-theme='light'] .premium-home--v2 .ai-preview,
 [data-theme='light'] .premium-home--v2 .recommendation-card,
 [data-theme='light'] .reference-prayer-location,
 [data-theme='light'] .reference-prayer-progress,
@@ -675,7 +658,6 @@
 
 [data-theme='light'] .premium-home--v2 .journey-card strong,
 [data-theme='light'] .reference-quran-list__main,
-[data-theme='light'] .reference-reader-screen--dynamic .reference-reader-verse blockquote,
 [data-theme='light'] .reference-prayer-learning-actions strong,
 [data-theme='light'] .reference-category-card strong,
 [data-theme='light'] .reference-expanded-learning-grid strong {
@@ -772,16 +754,15 @@
 
 @media (prefers-reduced-motion: reduce) {
   .premium-home--v2 .journey-card,
-  .premium-home--v2 .quick-card,
-  .premium-home--v2 .recommendation-card,
-  .premium-home--v2 .ai-preview,
-  .reference-prayer-location,
-  .reference-quran-list--catalog > article,
-  .reference-reader-screen--dynamic .reference-reader-verse,
-  .reference-prayer-learning-actions > button,
-  .reference-five-prayer-lessons > div:last-child > button,
-  .reference-category-card,
-  .reference-expanded-learning-grid > button {
+.premium-home--v2 .quick-card,
+.premium-home--v2 .recommendation-card,
+.reference-prayer-location,
+.reference-quran-list--catalog > article,
+.reference-reader-screen--dynamic .reference-reader-verse,
+.reference-prayer-learning-actions > button,
+.reference-five-prayer-lessons > div:last-child > button,
+.reference-category-card,
+.reference-expanded-learning-grid > button {
     transition: none !important;
     transform: none !important;
   }}

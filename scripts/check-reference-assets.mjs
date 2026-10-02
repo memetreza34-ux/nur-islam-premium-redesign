@@ -3,7 +3,7 @@ import { readFile, readdir, stat } from 'node:fs/promises';
 import { extname, resolve } from 'node:path';
 
 const root = process.cwd();
-const expectedVisualVersion = '20260808-release-hardening';
+const expectedVisualVersion = '20260826-original-art';
 const chunksDirectory = resolve(root, 'src/assets');
 const chunkNames = (await readdir(chunksDirectory))
   .filter((name) => /^referenceSpriteChunk\d{2}\.ts$/.test(name))
@@ -61,28 +61,64 @@ const recoveredAssets = [
   'nur-logo-emblem-v2.webp',
   'mosque-gold-v2.webp',
   'mosque-v2.webp',
+  'mosque-heritage-v1.webp',
+  'mosque-finder-arch-v1.webp',
   'quran-closed-v2.webp',
+  'quran-closed-v3.webp',
   'quran-open-v2.webp',
+  'quran-open-v3.webp',
   'tasbih-v2.webp',
+  'tasbih-v3.webp',
   'qibla-compass-v2.webp',
+  'qibla-compass-v3.webp',
   'qibla-v2.webp',
   'mihrab-v2.webp',
   'mihrab-arch-v2.webp',
   'lantern-v2.webp',
+  'lantern-v3.webp',
   'kaaba-v2.webp',
   'dome-v2.webp',
   'dua-hands-v2.webp',
   'sun-emblem-v2.webp',
   'calendar-chip-v2.webp',
+  'calendar-object-v1.webp',
   'bookmark-v2.webp',
+  'bookmark-v3.webp',
+  'prayer-standby-v1.webp',
+  'zakat-scale-v1.webp',
+  'mini-quran-v1.webp',
+  'mini-prayer-learning-v1.webp',
+  'mini-names-v1.webp',
+  'mini-names-v2.webp',
+  'mini-names-v3.webp',
+  'mini-names-v4.webp',
+  'mini-names-v5.webp',
+  'mini-quiz-v1.webp',
+  'mini-quiz-v2.webp',
+  'mini-quiz-v3.webp',
+  'mini-dua-v1.webp',
+  'mini-dua-v2.webp',
+  'mini-dua-v3.webp',
+  'ayah-focus-bg-v1.webp',
+  'prayer-fajr-v1.webp',
+  'prayer-dhuhr-v1.webp',
+  'prayer-asr-v1.webp',
+  'prayer-maghrib-v1.webp',
+  'prayer-isha-v1.webp',
+  'prayer-mini-fajr-v1.webp',
+  'prayer-mini-sunrise-v1.webp',
+  'prayer-mini-dhuhr-v1.webp',
+  'prayer-mini-asr-v1.webp',
+  'prayer-mini-maghrib-v1.webp',
+  'prayer-mini-isha-v1.webp',
 ];
 
 /**
  * The four mosque rasters are the same truncated file: the RIFF header
  * announces 24090 bytes, 14743 are present, and the VP8 chunk holding the
  * picture never made it in — only the alpha channel did. Chromium decodes them
- * as 0x0. They are aliased to dome-v2.webp in appPaths.ts, so nothing renders
- * them, and no earlier commit has an intact copy to restore.
+ * as 0x0. They are aliased to mosque-heritage-v1.webp in appPaths.ts, so
+ * nothing renders them, and no earlier commit has an intact copy to restore.
  *
  * They are named here rather than skipped silently, so the integrity check
  * below stays meaningful for every other asset.
@@ -208,8 +244,16 @@ const sourceFiles = await collectTextFiles(resolve(root, 'src'));
 const sourceParts = await Promise.all(sourceFiles.map((path) => readFile(path, 'utf8')));
 const completeSource = sourceParts.join('\n');
 
+const retainedUnreferencedAssets = new Set([
+  'quran-closed-v3.webp', 'quran-open-v2.webp', 'tasbih-v3.webp',
+  'qibla-compass-v3.webp', 'lantern-v2.webp', 'calendar-chip-v2.webp',
+  'bookmark-v2.webp', 'mini-prayer-learning-v1.webp',
+  'mini-names-v1.webp', 'mini-names-v2.webp', 'mini-names-v3.webp',
+  'mini-names-v4.webp', 'mini-names-v5.webp', 'mini-quiz-v2.webp',
+  'mini-quiz-v3.webp', 'mini-dua-v1.webp', 'mini-dua-v2.webp', 'mini-dua-v3.webp',
+]);
 for (const name of recoveredAssets) {
-  if (!completeSource.includes(name) && !['mosque-v2.webp', 'qibla-v2.webp', 'mihrab-v2.webp'].includes(name)) {
+  if (!completeSource.includes(name) && !retainedUnreferencedAssets.has(name) && !['mosque-v2.webp', 'qibla-v2.webp', 'mihrab-v2.webp'].includes(name)) {
     throw new Error(`Recovered asset is not wired in the app source: ${name}`);
   }
 }
@@ -241,6 +285,10 @@ if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVis
 }
 
 const mainSource = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
+const startupAssets = mainSource.match(/const STARTUP_ASSETS = \[([\s\S]*?)\];/)?.[1].match(/'[^']+'/g);
+if (JSON.stringify(startupAssets) !== JSON.stringify(["'nur-logo-emblem-v3.svg'", "'splash-mosque-v1.webp'"])) {
+  throw new Error('Startup must preload only the logo and splash artwork; below-fold Home images load on demand.');
+}
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const stylesEntry = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const styleEntries = await readdir(resolve(root, 'src/styles'));
@@ -262,8 +310,35 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v14-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must stay on premium v14 for the current reference visual release.');
+if (!serviceWorker.includes(`nur-islam-premium-v33-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must be v33 for the refreshed widget image set.');
+}
+for (const name of ['home-dhikr-illustrated-v1', 'widget-date-illustrated-v1', 'widget-inspiration-illustrated-v1', 'widget-routine-illustrated-v1', 'widget-quran-plan-illustrated-v1', 'widget-weekly-prayers-illustrated-v1', 'widget-favorites-illustrated-v1', 'widget-reminders-illustrated-v1', 'widget-friday-illustrated-v1']) {
+  if (!serviceWorker.includes(`premiumAsset('${name}.webp')`)) {
+    throw new Error(`New widget artwork must be available offline: ${name}.webp`);
+  }
+}
+if (!serviceWorker.includes("premiumAsset('mosque-heritage-v1.webp')")) {
+  throw new Error('The onboarding mosque artwork must be available offline.');
+}
+if (!serviceWorker.includes("premiumAsset('mosque-finder-arch-v1.webp')")) {
+  throw new Error('The Mosque Finder hero image must be available offline.');
+}
+for (const id of ['hands', 'mouth', 'nose', 'face', 'arms', 'head', 'ears', 'feet']) {
+  if (!serviceWorker.includes(`premiumAsset('wudu-step-${id}-v1.webp')`)) {
+    throw new Error(`Wudu cartoon ${id} must be available offline.`);
+  }
+}
+if (!serviceWorker.includes("premiumAsset('wudu-washing-v1.webp')")) {
+  throw new Error('Wudu illustration must be included in the offline shell.');
+}
+if (!serviceWorker.includes("premiumAsset('home-prayer-sky-v1.webp')")) {
+  throw new Error('Quran backdrop must be included in the offline shell.');
+}
+for (const id of ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']) {
+  if (!serviceWorker.includes(`premiumAsset('prayer-mini-${id}-v1.webp')`)) {
+    throw new Error(`Prayer miniature missing from offline shell: ${id}`);
+  }
 }
 if (!serviceWorker.includes("scoped('premium-assets/high-res-objects/nur-logo-emblem.png')")) {
   throw new Error('Service worker must cache the reference-aligned Apple touch icon in the app shell.');
@@ -287,5 +362,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v14 reference styling, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v33 with refreshed images, no obsolete artwork host or global image-hiding CSS.`,
 );

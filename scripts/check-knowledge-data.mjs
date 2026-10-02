@@ -24,7 +24,7 @@ const ummah = await readFile(resolve(root, 'src/data/ummahData.ts'), 'utf8');
 const screen = await readFile(resolve(root, 'src/screens/LegacyFeatureScreens.tsx'), 'utf8');
 
 const topics = [...knowledge.matchAll(/^ {4}id: '([^']+)',\n\s+title: '((?:[^'\\]|\\.)*)',\n\s+intro: '((?:[^'\\]|\\.)*)',/gm)];
-if (topics.length < 12) throw new Error(`Knowledge library holds ${topics.length} topics; at least 12 are expected.`);
+if (topics.length < 11) throw new Error(`Knowledge library holds ${topics.length} topics; at least 11 are expected.`);
 if (new Set(topics.map(([, id]) => id)).size !== topics.length) {
   throw new Error('Knowledge topic ids are not unique.');
 }

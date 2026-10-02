@@ -1,0 +1,282 @@
+/* Compact brand story for the About dialog. */
+.reference-profile-modal--about {
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: min(100%, 448px);
+  gap: 14px;
+  padding: 18px;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 22% -8%, rgba(244, 212, 139, .17), transparent 17rem),
+    radial-gradient(circle at 102% 82%, rgba(24, 111, 81, .2), transparent 16rem),
+    linear-gradient(155deg, #0d5843 0%, #06382c 52%, #011b16 100%);
+}
+
+.reference-profile-modal--about::before {
+  top: auto;
+  right: -96px;
+  bottom: -112px;
+  width: 270px;
+  height: 270px;
+  border-color: rgba(235, 204, 132, .09);
+  box-shadow: 0 0 0 34px rgba(235, 204, 132, .022), 0 0 0 68px rgba(235, 204, 132, .01);
+}
+
+.reference-about {
+  display: grid;
+  gap: 13px;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding-right: 1px;
+  scrollbar-width: none;
+}
+
+.reference-about::-webkit-scrollbar {
+  display: none;
+}
+
+.reference-about__hero {
+  position: relative;
+  display: grid;
+  gap: 7px;
+  min-height: 278px;
+  align-content: start;
+  overflow: hidden;
+  padding: 88px 20px 18px;
+  border: 1px solid rgba(241, 211, 143, .24);
+  border-radius: 23px;
+  background:
+    linear-gradient(120deg, rgba(1, 23, 18, .16), rgba(1, 18, 15, .73)),
+    radial-gradient(circle at 14% 10%, rgba(248, 223, 164, .13), transparent 12rem);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .045), 0 18px 34px rgba(0, 15, 11, .2);
+}
+
+.reference-about__hero::after {
+  content: '';
+  position: absolute;
+  top: -104px;
+  right: -78px;
+  width: 250px;
+  height: 250px;
+  border: 1px solid rgba(241, 211, 143, .1);
+  border-radius: 50%;
+  box-shadow: 0 0 0 27px rgba(241, 211, 143, .026), 0 0 0 54px rgba(241, 211, 143, .012);
+  pointer-events: none;
+}
+
+.reference-about__mark {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  left: 18px;
+  display: grid;
+  width: 58px;
+  height: 58px;
+  place-items: center;
+  filter: drop-shadow(0 12px 18px rgba(0, 0, 0, .36));
+}
+
+.reference-about__mark .premium-image,
+.reference-about__mark img,
+.reference-about__mark svg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.reference-about__hero > :not(.reference-about__mark) {
+  position: relative;
+  z-index: 2;
+}
+
+.reference-profile-modal--about .reference-about__hero .overline {
+  color: #e6bc61;
+  font-size: .52rem;
+  letter-spacing: .17em;
+}
+
+.reference-profile-modal--about .reference-about__hero h2 {
+  max-width: 350px;
+  padding: 0;
+  color: #fff4dc;
+  font-size: clamp(1.95rem, 7vw, 2.25rem);
+  line-height: .91;
+  letter-spacing: -.02em;
+}
+
+.reference-profile-modal--about .reference-about__hero p {
+  max-width: 335px;
+  color: rgba(239, 233, 214, .72);
+  font-size: .62rem;
+  line-height: 1.55;
+  text-wrap: pretty;
+}
+
+.reference-about__promise {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 12px 13px;
+  border: 1px solid rgba(236, 201, 120, .24);
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(225, 183, 87, .09), transparent 44%),
+    rgba(2, 30, 23, .72);
+}
+
+.reference-about__promise > span {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border: 1px solid rgba(232, 195, 108, .3);
+  border-radius: 14px;
+  color: #e4b853;
+  background: rgba(226, 191, 119, .08);
+}
+
+.reference-about__promise > div {
+  display: grid;
+  gap: 3px;
+}
+
+.reference-about__promise small {
+  color: #d9ad4d;
+  font-size: .46rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.reference-about__promise strong {
+  color: #f8ecd0;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.05;
+}
+
+.reference-profile-modal--about .reference-about__promise p {
+  color: rgba(183, 203, 193, .68);
+  font-size: .5rem;
+  line-height: 1.45;
+}
+
+.reference-about__areas {
+  display: grid;
+  gap: 9px;
+  padding: 12px 13px 13px;
+  border: 1px solid rgba(231, 198, 121, .16);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(9, 61, 46, .74), rgba(2, 27, 22, .82));
+}
+
+.reference-about__section-heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.reference-about__section-heading strong {
+  color: #f5e7c8;
+  font-size: .61rem;
+}
+
+.reference-about__section-heading small {
+  color: rgba(183, 203, 193, .58);
+  font-size: .44rem;
+}
+
+.reference-about__area-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.reference-about__area-grid span {
+  display: flex;
+  min-width: 0;
+  min-height: 31px;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 8px;
+  border: 1px solid rgba(230, 194, 109, .1);
+  border-radius: 10px;
+  color: rgba(241, 233, 211, .84);
+  background: rgba(0, 22, 18, .3);
+  font-size: .48rem;
+  font-weight: 650;
+}
+
+.reference-about__area-grid svg {
+  flex: 0 0 auto;
+  color: #dcae47;
+}
+
+.reference-about__footer {
+  display: flex;
+  min-height: 40px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 11px;
+  border: 1px solid rgba(231, 198, 121, .13);
+  border-radius: 14px;
+  color: #e9d39d;
+  background: rgba(0, 21, 17, .35);
+}
+
+.reference-about__footer span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: .51rem;
+  font-weight: 750;
+}
+
+.reference-about__footer svg {
+  color: #e2b654;
+}
+
+.reference-about__footer small {
+  color: rgba(177, 199, 188, .56);
+  font-size: .46rem;
+  white-space: nowrap;
+}
+
+.reference-profile-modal--about > .gold-button {
+  width: 100%;
+  justify-content: center;
+  margin: 0;
+}
+
+@media (max-width: 390px) {
+  .reference-profile-modal--about {
+    padding: 14px;
+  }
+
+  .reference-about__section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .reference-about__footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+
+@media (max-height: 690px) and (min-width: 391px) {
+  .reference-about__hero {
+    min-height: 266px;
+    padding-top: 80px;
+  }
+
+  .reference-about__area-grid span {
+    min-height: 29px;
+  }
+}

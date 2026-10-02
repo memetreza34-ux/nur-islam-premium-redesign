@@ -35,22 +35,205 @@
 
 
 
-.reference-next-prayer .next-prayer-panel__actions {
-  display: grid;
-  grid-template-columns: 1fr 47px;
+.prayer-focus .next-prayer-panel__actions {
+  display: flex;
   gap: 8px;
 }
 
-.reference-next-prayer .adhan-button {
+.prayer-focus .gold-button { flex: 1; margin: 0; justify-content: center; }
+
+.prayer-focus .adhan-button {
   display: grid;
   min-height: 44px;
   place-items: center;
 }
 
-.reference-next-prayer .adhan-button--active {
+.prayer-focus .adhan-button--active {
   border-color: rgba(232, 199, 122, .52);
   color: #10251e;
   background: linear-gradient(135deg, #efd394, #c9953a);
+}
+
+.prayer-companions {
+  display: grid;
+  gap: 10px;
+}
+
+.prayer-companions__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.prayer-companion-card {
+  position: relative;
+  display: block;
+  min-height: 180px;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 21px;
+  color: var(--cream);
+  text-align: left;
+  isolation: isolate;
+  background:
+    radial-gradient(circle at 78% 24%, rgba(38, 97, 74, .34), transparent 68%),
+    linear-gradient(160deg, #103a2e, #061c17 86%);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025);
+  cursor: pointer;
+}
+
+.prayer-companion-card::before {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(115deg, rgba(255, 255, 255, .035), transparent 48%);
+  content: '';
+  pointer-events: none;
+}
+
+.prayer-companion-card > svg {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  bottom: auto;
+  color: var(--ds-gold-lt);
+  transition: transform .2s ease;
+}
+
+.prayer-companion-card__copy {
+  position: absolute;
+  z-index: 2;
+  right: 16px;
+  bottom: 16px;
+  left: 16px;
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.prayer-companion-card__copy em {
+  max-width: calc(100% - 112px);
+  color: #d5c189;
+  font-size: .66rem;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .045em;
+  line-height: 1.35;
+  text-transform: uppercase;
+}
+
+.prayer-companion-card__copy strong {
+  max-width: calc(100% - 112px);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.04;
+}
+
+.prayer-companion-card__copy small {
+  display: flex;
+  min-height: 2.7em;
+  align-items: center;
+  margin-top: 3px;
+  color: #d0dbd2;
+  font-size: .8rem;
+  line-height: 1.35;
+}
+
+.prayer-companion-card__art {
+  position: absolute;
+  z-index: 1;
+  top: 24px;
+  right: 14px;
+  display: block;
+  width: 100px;
+  height: 98px;
+  object-fit: contain;
+  object-position: center;
+  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, .32)) saturate(.94);
+  transition: transform .25s ease;
+}
+
+.prayer-companion-card__art--mosque {
+  height: 104px;
+}
+
+.prayer-companion-card--feature,
+.prayer-companion-card--wide {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 35%);
+  align-items: center;
+  gap: 12px;
+  min-height: 144px;
+  padding: 18px;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__copy,
+.prayer-companion-card--wide .prayer-companion-card__copy {
+  position: relative;
+  inset: auto;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__copy em,
+.prayer-companion-card--feature .prayer-companion-card__copy strong,
+.prayer-companion-card--wide .prayer-companion-card__copy em,
+.prayer-companion-card--wide .prayer-companion-card__copy strong {
+  max-width: none;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__copy small,
+.prayer-companion-card--wide .prayer-companion-card__copy small {
+  display: block;
+  min-height: 0;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__art,
+.prayer-companion-card--wide .prayer-companion-card__art {
+  position: relative;
+  inset: auto;
+  width: 100%;
+  margin-top: 14px;
+}
+
+.prayer-companion-card--feature {
+  min-height: 144px;
+}
+
+.prayer-companion-card--feature::after {
+  display: none;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__copy strong {
+  font-size: 1.7rem;
+}
+
+.prayer-companion-card--feature .prayer-companion-card__art {
+  height: 124px;
+}
+
+.prayer-companion-card--wide {
+  min-height: 130px;
+}
+
+.prayer-companion-card--wide .prayer-companion-card__art {
+  height: 114px;
+}
+
+.prayer-companion-card:hover,
+.prayer-companion-card:focus-visible {
+  border-color: rgba(232, 199, 122, .42);
+}
+
+.prayer-companion-card:hover .prayer-companion-card__art,
+.prayer-companion-card:focus-visible .prayer-companion-card__art {
+  transform: translateY(-2px) scale(1.025);
+}
+
+.prayer-companion-card:hover > svg,
+.prayer-companion-card:focus-visible > svg {
+  transform: translateX(2px);
 }
 
 
@@ -73,9 +256,50 @@
   text-overflow: ellipsis;
 }
 
-@media (max-width: 370px) {
-  
+@media (max-width: 560px) {
+  .prayer-companions__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .prayer-companion-card,
+  .prayer-companion-card--feature,
+  .prayer-companion-card--wide {
+    grid-column: auto;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(100px, 34%);
+    align-items: center;
+    gap: 12px;
+    min-height: 132px;
+    padding: 16px;
+  }
+
+  .prayer-companion-card__copy {
+    position: relative;
+    inset: auto;
+  }
+
+  .prayer-companion-card__copy em,
+  .prayer-companion-card__copy strong {
+    max-width: none;
+  }
+
+  .prayer-companion-card__copy small {
+    display: block;
+    min-height: 0;
+  }
+
+  .prayer-companion-card__art,
+  .prayer-companion-card__art--mosque,
+  .prayer-companion-card--feature .prayer-companion-card__art,
+  .prayer-companion-card--wide .prayer-companion-card__art {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: 104px;
+    margin-top: 14px;
+  }
 
   .reference-prayer-method em {
     max-width: 170px;
-  }}
+  }
+}

@@ -87,8 +87,17 @@ const practiceItems = [...practice.matchAll(
 areas.push({
   name: 'Sunnah im Alltag · Fehler und Reue',
   tier: 'C',
-  note: 'Jeder Eintrag führt den Beleg mit, der im Altbestand hinterlegt war. Der Wortlaut der Belege ist mitzuprüfen.',
-  rows: practiceItems.map(([, title, proof]) => ({ text: short(title), source: short(proof, 60), origin: CARRIED })),
+  note: 'Alltagspraxis und Reue wurden am 03.09.2026 mit Quellen, Begriffserklärungen und didaktischen Beispielen überarbeitet. Der Abschnitt zu schweren Verfehlungen bleibt Altbestand. Alle Einträge benötigen fachliche Prüfung; Quellenprüfung ist keine Freigabe.',
+  rows: practiceItems.map(([, title, proof]) => ({ text: short(title), source: short(proof, 60), origin: proof.startsWith('Koran (') || title === 'Zauberei (Sihr)' ? CARRIED : WRITTEN })),
+});
+
+const supplements = await read('src/data/foundationSupplementData.ts');
+areas.push({
+  name: 'Grundlagenpfad · vier ergänzende Lesebereiche',
+  tier: 'A',
+  priority: true,
+  note: 'Einführungen und Kapiteltexte zu Hadith, Hajj/Umrah, Sunnah und Reue. Quellenabgleich und Grenzen sind in docs/FOUNDATION-SUPPLEMENTS.md dokumentiert. Definitionen, Beispiele und Einordnung gemeinsam fachlich prüfen.',
+  rows: values(supplements, 'title').map((title) => ({ text: title, source: 'Quellenmatrix: FOUNDATION-SUPPLEMENTS.md', origin: WRITTEN })),
 });
 
 // --- Pilgrimage -------------------------------------------------------------
@@ -120,17 +129,26 @@ const knowledgeTitles = values(knowledge.slice(0, knowledge.indexOf('GLOSSARY_TE
 areas.push({
   name: 'Wissensbibliothek',
   tier: 'D',
-  note: 'Zwölf Themen mit je mehreren Abschnitten. Zu prüfen ist der gesamte Abschnittstext, nicht nur die Überschrift.',
+  note: 'Elf Themen mit je mehreren Abschnitten. Zu prüfen ist der gesamte Abschnittstext, nicht nur die Überschrift.',
   rows: knowledgeTitles.map((title) => ({ text: short(title), source: '— (keine)', origin: CARRIED })),
 });
 
 // --- Prophets ---------------------------------------------------------------
 const prophets = await read('src/data/prophetData.ts');
+const prophetEntries = [...prophets.matchAll(/id: '[^']+', name: '([^']+)', arabic: '[^']+'[\s\S]*?quranReferences: \[([^\]]+)\]/g)];
+const prophetCourses = await read('src/data/prophetCourseData.ts');
+const prophetChapters = [...prophetCourses.matchAll(/\{ id: '[^']+', title: '([^']+)'[\s\S]*?quranReferences: \[([^\]]+)\] \}/g)];
+const prophetOverviews = await read('src/data/prophetCourseOverviews.ts');
+const prophetOverviewRows = [...prophetOverviews.matchAll(/orientation: '([^']+)'[\s\S]*?boundary: '([^']+)'/g)];
 areas.push({
   name: 'Propheten',
-  tier: 'D',
-  note: 'Je Eintrag sind Einordnung, Beschreibung, Kernpunkte und Lehren zu prüfen.',
-  rows: values(prophets, 'name').map((name) => ({ text: name, source: '— (keine)', origin: CARRIED })),
+  tier: 'B',
+  note: `25 Katalogeinträge, ${prophetOverviewRows.length} ausführliche Kursorientierungen mit Wissensgrenze und ${prophetChapters.length} Kurskapitel. Je Kapitel sind Erzählung, Merksätze und Quran-Stellen gemeinsam zu prüfen. Bei Dhul-Kifl ist die unterschiedliche gelehrte Einordnung ausdrücklich Teil der Prüfung.`,
+  rows: [
+    ...prophetEntries.map(([, name, references]) => ({ text: `Einführung · ${name}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
+    ...prophetOverviewRows.map(([, orientation, boundary]) => ({ text: `Kursorientierung · ${short(orientation, 48)}`, source: `Grenze: ${short(boundary, 46)}`, origin: WRITTEN })),
+    ...prophetChapters.map(([, title, references]) => ({ text: `Kapitel · ${short(title, 52)}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
+  ],
 });
 
 // --- Ummah ------------------------------------------------------------------
@@ -211,6 +229,19 @@ areas.push({
   rows: values(madhhabBlock, 'question').map((question) => ({
     text: question,
     source: '— (keine Belegstelle; beschreibende Übersicht)',
+    origin: WRITTEN,
+  })),
+});
+
+const schoolCatalogue = await read('src/data/madhhabCatalogueData.ts');
+areas.push({
+  name: 'Katalog der vier sunnitischen Rechtsschulen',
+  tier: 'A',
+  priority: true,
+  note: 'Neue Zusammenfassungen, nicht fachlich freigegeben. Je Schule sind Lebensdaten, Entstehung, Methodik, Verbreitung und die Einordnung der Institutionen zu prüfen. Die verlinkten Institutionen sind keine zentralen Vertretungen einer Rechtsschule.',
+  rows: schoolCatalogue.split(/\n  \{\n    id:/).slice(1).map((school) => ({
+    text: `${values(school, 'title')[0]}: Geschichte, Methodik, Verbreitung und Praxis`,
+    source: values(school, 'href').join(' · '),
     origin: WRITTEN,
   })),
 });

@@ -17,7 +17,12 @@ const requiredFragments = [
   'navigator.geolocation.getCurrentPosition',
   'calculateBearing(coordinates, KAABA)',
   'normalizeDegrees(direction - heading)',
-  'qibla-compass-v2.webp',
+  '<QiblaCompass direction={direction}',
+  'Vorschau nach Norden',
+  'Live-Kompass starten',
+  'Math.hypot(tilt.beta, tilt.gamma)',
+  "'vibrate' in navigator",
+  'event.absolute === true',
   "sensorStatus === 'active'",
   'loadPrayerLocation',
   'savePrayerLocation',
@@ -40,7 +45,7 @@ for (const fragment of requiredFragments) {
   }
 }
 
-if (source.includes('/premium-assets/high-res-objects/qibla-compass.webp')) {
+if (source.includes('/premium-assets/high-res-objects/qibla-compass')) {
   throw new Error('Qibla screen still references the obsolete compass asset path.');
 }
 if (source.includes('const BERLIN')) {

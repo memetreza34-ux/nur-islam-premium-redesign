@@ -221,6 +221,197 @@
   margin-top: 3px;
 }
 
+.prayer-date-ribbon {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+  padding: 7px;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 18px;
+  background: linear-gradient(145deg, rgba(13, 66, 50, .72), rgba(4, 27, 21, .9));
+}
+
+.prayer-date-ribbon > button,
+.prayer-month-navigation > button {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 14px;
+  color: var(--gold-bright);
+  background: rgba(226, 191, 119, .055);
+  cursor: pointer;
+}
+
+.prayer-date-ribbon > div {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+  text-align: center;
+}
+
+.prayer-date-ribbon strong { color: var(--cream-strong); font-size: .7rem; }
+.prayer-date-ribbon span { color: var(--muted-green); font-size: .51rem; }
+
+.prayer-date-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.prayer-date-actions > button,
+.prayer-date-actions > span {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 11px;
+  border: 1px solid rgba(226, 191, 119, .16);
+  border-radius: 999px;
+  color: var(--gold-soft);
+  background: rgba(226, 191, 119, .045);
+  font-size: .53rem;
+  font-weight: 800;
+}
+
+.prayer-date-actions > button { cursor: pointer; }
+
+.reference-prayer-screen .prayer-time-row.prayer-time-row--preview {
+  grid-template-columns: clamp(32px, 10vw, 44px) minmax(0, 1fr) auto;
+}
+
+.prayer-date-state {
+  display: flex;
+  min-height: 112px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: var(--muted-green);
+  font-size: .58rem;
+  text-align: center;
+}
+
+.prayer-date-state--error { flex-direction: column; }
+.prayer-date-state button,
+.prayer-month-ledger__state button {
+  min-height: 36px;
+  padding: 7px 11px;
+  border: 1px solid rgba(226, 191, 119, .24);
+  border-radius: 999px;
+  color: var(--gold-bright);
+  background: rgba(226, 191, 119, .07);
+  font-size: .52rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.prayer-month-modal { gap: 10px; }
+
+.prayer-month-navigation {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: 8px;
+}
+
+.prayer-month-navigation strong {
+  color: var(--cream-strong);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.12rem;
+  text-align: center;
+}
+
+.prayer-month-ledger {
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: min(47vh, 430px);
+  border: 1px solid rgba(226, 191, 119, .16);
+  border-radius: 16px;
+  background: rgba(0, 15, 12, .3);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(226, 191, 119, .22) transparent;
+}
+
+.prayer-month-ledger__head,
+.prayer-month-ledger > button {
+  display: grid;
+  grid-template-columns: 44px repeat(5, minmax(0, 1fr));
+  align-items: center;
+}
+
+.prayer-month-ledger__head {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  min-height: 34px;
+  color: var(--gold-soft);
+  background: rgba(5, 32, 25, .97);
+  box-shadow: 0 1px rgba(226, 191, 119, .16);
+  font-size: .43rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.prayer-month-ledger > button {
+  width: 100%;
+  min-height: 46px;
+  padding: 0;
+  border: 0;
+  border-top: 1px solid rgba(226, 191, 119, .09);
+  color: var(--cream);
+  background: transparent;
+  cursor: pointer;
+}
+
+.prayer-month-ledger > button:hover,
+.prayer-month-ledger > button:focus-visible { background: rgba(226, 191, 119, .07); }
+.prayer-month-ledger > button.is-today { box-shadow: inset 3px 0 var(--gold-bright); }
+.prayer-month-ledger > button.is-selected { background: rgba(226, 191, 119, .11); }
+
+.prayer-month-ledger > button > span {
+  display: grid;
+  gap: 1px;
+  place-items: center;
+}
+
+.prayer-month-ledger > button > span strong { color: var(--gold-bright); font-size: .62rem; }
+.prayer-month-ledger > button > span small { color: var(--muted-green); font-size: .41rem; text-transform: uppercase; }
+.prayer-month-ledger time { font-size: .5rem; font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; text-align: center; }
+
+.prayer-month-ledger__state {
+  display: grid;
+  min-height: 180px;
+  place-items: center;
+  align-content: center;
+  gap: 10px;
+  padding: 22px;
+  color: var(--muted-green);
+  font-size: .56rem;
+  text-align: center;
+}
+
+.prayer-month-source {
+  color: var(--muted-green);
+  font-size: .48rem;
+  line-height: 1.45;
+  text-align: center;
+}
+
+[data-theme='light'] .prayer-date-ribbon,
+[data-theme='light'] .prayer-month-ledger {
+  border-color: rgba(120, 91, 38, .16);
+  background: rgba(255, 252, 243, .88);
+}
+
+[data-theme='light'] .prayer-date-ribbon strong,
+[data-theme='light'] .prayer-month-navigation strong,
+[data-theme='light'] .prayer-month-ledger > button { color: #17372c; }
+[data-theme='light'] .prayer-month-ledger__head { color: #7e5b20; background: rgba(244, 237, 220, .98); }
+[data-theme='light'] .prayer-month-ledger > button.is-selected { background: rgba(166, 121, 44, .11); }
+
 @keyframes reference-live-pulse {
   0%, 100% { opacity: .42; transform: scale(.8); }
   50% { opacity: 1; transform: scale(1.08); }
@@ -243,7 +434,12 @@
 
   .reference-prayer-settings-group > div {
     grid-template-columns: 1fr;
-  }}
+  }
+
+  .prayer-month-ledger__head,
+  .prayer-month-ledger > button { grid-template-columns: 38px repeat(5, minmax(0, 1fr)); }
+  .prayer-month-ledger time { font-size: .46rem; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-prayer-live-status.is-loading .reference-prayer-live-status__dot {

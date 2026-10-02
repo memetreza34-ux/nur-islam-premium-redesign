@@ -15,6 +15,9 @@ const [
   atmosphere,
   finalLock,
   styleIndex,
+  premiumSystemLayer,
+  homeLayout,
+  designSystem,
 ] = await Promise.all([
   read('src/app/App.tsx'),
   read('src/styles/base.css'),
@@ -26,6 +29,9 @@ const [
   read('src/styles/premium-atmosphere-details-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
   read('src/styles.css'),
+  read('src/app/PremiumSystemLayer.tsx'),
+  read('src/services/homeLayout.ts'),
+  read('src/styles/nur-design-system.css'),
 ]);
 
 function requireTokens(source, label, tokens) {
@@ -49,7 +55,6 @@ requireTokens(base, 'Base palette', [
 requireTokens(homeHero, 'Home hero source', [
   'linear-gradient(145deg, #0d5743 0%, #07372b 46%, #00120f 100%)',
   'rgba(242, 215, 154, 0.2)',
-  'linear-gradient(90deg, #8d6d39, var(--gold-bright))',
   'background: linear-gradient(135deg, var(--gold-bright), #e2bf77)',
   '.prayer-check {',
   'border-radius: 18px;',
@@ -58,8 +63,6 @@ requireTokens(homeHero, 'Home hero source', [
 requireTokens(homeContent, 'Home content source', [
   'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
   '.quick-card__icon {',
-  '.continue-card {',
-  'background: linear-gradient(135deg, rgba(226, 191, 119, 0.13), transparent), #07372b',
   '.hadith-card { padding: 22px; border-radius: 28px; }',
   'linear-gradient(145deg, #fff8ea, #f6ebd6)',
   '.recommendation-card {',
@@ -80,33 +83,48 @@ requireTokens(atmosphere, 'Atmosphere source', [
 ]);
 
 requireTokens(app, 'Home artwork map', [
-  'dome-v2.webp" className="ds-arch__silhouette"',
-  'quran-closed-v2.webp" fallback={<QuranObject />}',
-  'tasbih-v2.webp" fallback={<RosetteObject />}',
-  'qibla-compass-v2.webp" fallback={<QiblaObject />}',
-  'mihrab-arch-v2.webp" className="verse-card__art"',
+  'className="home-prayer-focus"',
+  'className="home-prayer-times"',
+  'className="home-prayer-arch"',
+  'scene={currentScene}',
+  'home-quran-illustrated-v1.webp" fallback={<QuranObject />}',
+  'home-dhikr-illustrated-v1.webp" fallback={<RosetteObject />}',
+  'home-qibla-illustrated-v1.webp" fallback={<QiblaObject />}',
+  'ayah-focus-bg-v1.webp" className="verse-card__art"',
 ]);
 
 requireTokens(app, 'Home semantic actions and honest progress', [
   '<BellRing size={20} />',
   "onNavigate('prayer')",
+  '<Compass size={20} />',
+  "onNavigate('qibla')",
   '<Menu size={20} />',
   "onNavigate('profile')",
-  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon",
-  "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon",
-  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: NurRosetteIcon",
-  "label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: NurQuizIcon",
-  "label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon",
-  "label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: NurAssistantIcon",
-  'hasProgress: boolean',
-  'surahNumber: 1',
-  "englishName: 'Al-Faatiha'",
-  'hasProgress: false',
+  'PRAYER_SCHEDULE_META.locationLabel',
+  'getGermanDate(now, PRAYER_SCHEDULE_META.timezone)',
+  'data-home-section="continue"',
+  "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', detail: 'Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v2.webp'",
+  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', detail: 'Namen und Bedeutungen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v1.webp'",
+  "label: 'Islam Quiz', eyebrow: 'Wissen testen', detail: 'Fragen direkt beantworten', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v2.webp'",
+  "label: 'Duas', eyebrow: 'Für jeden Moment', detail: 'Bittgebete für deinen Tag', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v2.webp'",
+  'useState(readHomeQuranProgress)',
   'quranProgress.hasProgress && quranProgress.numberOfAyahs',
   ": 0;",
   "'Quran beginnen'",
   "'Noch kein Lesestand'",
-  "'Noch kein gespeicherter Lesestand'",
+]);
+
+requireTokens(premiumSystemLayer, 'Premium widget placement', [
+  'applyHomePreferences',
+  'home.appendChild(currentHost)',
+  'home.lastElementChild !== currentHost',
+]);
+requireTokens(homeLayout, 'Home section ordering', ["host.style.order = '100'", '.home-prayer-note', 'hiddenHomeSections.includes(section)']);
+requireTokens(designSystem, 'Standalone Quran resume styling', [
+  '.premium-home--v2 > .journey-card--quran',
+  '.home-reading-progress {',
+  '.home-reading-progress > span { display: block; height: 100%; background: var(--ds-gold); }',
+  '[data-home-section][hidden]',
 ]);
 
 for (const forbidden of [
@@ -125,7 +143,7 @@ requireTokens(finalLock, 'Final Home reference lock', [
   '.icon-button,',
   '.gold-button,',
   'border-radius: 18px !important',
-  '.premium-home--v2 .welcome-hero__visual > img,',
+  '.premium-home--v2 .welcome-hero__visual > img',
   'object-fit: contain !important',
   'object-position: right bottom !important',
   '.verse-card__art > img,',
@@ -160,11 +178,9 @@ for (const [file, source, forbidden] of forbiddenHomeSourceTokens) {
 
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'nur-design-system.css') {
-  throw new Error('Home reference geometry/crop protection is unsafe because the design system is not the last stylesheet import.');
-}
-if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('Home reference geometry/crop protection is unsafe because the final lock does not load directly before the design system.');
+const expectedTail = ['premium-reference-geometry-lock.css', 'nur-design-system.css', 'learn-library-redesign.css', 'overlay-navigation-clearance.css', 'legal-premium.css', 'about-premium.css', 'mosque-finder-hero.css'];
+if (JSON.stringify(importedLayers.slice(-expectedTail.length)) !== JSON.stringify(expectedTail)) {
+  throw new Error('Home geometry must precede the design system, followed only by the approved scoped screen and overlay layers.');
 }
 
 const homeLayers = `${homeHero}\n${homeContent}\n${homeExact}\n${artDirection}\n${artComposition}\n${atmosphere}`;

@@ -1,5 +1,7 @@
 # 06 – KI-Assistent: Quellen, Safety und Architektur
 
+> **Aufgehoben am 27.08.2026:** Historischer Entwurf, keine Implementierungsanweisung. Der Betreiber hat den Assistenten vollständig entfernen lassen. [Aktuelle Entscheidung](../ASSISTANT-REMOVAL.md).
+
 ## Ausgangslage
 
 `AssistantScreen.tsx` ist aktuell bewusst nur eine Oberfläche. Antworten weisen darauf hin, dass noch kein echter KI-Anbieter verbunden ist. Das ist für den jetzigen Stand korrekt und sollte erst geändert werden, wenn der gesamte Quellen-/Safety-Prozess steht.

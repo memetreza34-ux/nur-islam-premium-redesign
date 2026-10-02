@@ -1,23 +1,22 @@
 const PREMIUM_ASSET_PREFIX = 'premium-assets/high-res-objects/';
 
 const PREMIUM_ASSET_ALIASES: Record<string, string> = {
-  'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp',
-  'nur-logo-emblem.png': 'nur-logo-emblem-v2.webp',
-  'mosque-gold.webp': 'mosque-gold-v2.svg',
-  'mosque-gold.png': 'mosque-gold-v2.svg',
-  'mosque.webp': 'mosque-gold-v2.svg',
-  // The committed mosque-gold-v2.webp raster is truncated. Recover the exact
-  // same mosque role with the intact scalable SVG instead of substituting a
-  // different dome image or relying on an image-load failure at runtime.
-  'mosque-gold-v2.webp': 'mosque-gold-v2.svg',
+  'nur-logo-emblem.webp': 'nur-logo-emblem-v3.svg',
+  'nur-logo-emblem.png': 'nur-logo-emblem-v3.svg',
+  'nur-logo-emblem-v2.webp': 'nur-logo-emblem-v3.svg',
+  'mosque-gold.webp': 'mosque-heritage-v1.webp',
+  'mosque-gold.png': 'mosque-heritage-v1.webp',
+  'mosque.webp': 'mosque-heritage-v1.webp',
+  // The older raster is truncated; retain its route with the intact replacement.
+  'mosque-gold-v2.webp': 'mosque-heritage-v1.webp',
   'quran-closed.webp': 'quran-closed-v2.webp',
   'quran-closed.png': 'quran-closed-v2.webp',
-  'quran-open.webp': 'quran-open-v2.webp',
+  'quran-open.webp': 'quran-open-v3.webp',
   'tasbih.webp': 'tasbih-v2.webp',
   'qibla-compass.webp': 'qibla-compass-v2.webp',
   'qibla.webp': 'qibla-compass-v2.webp',
   'mihrab.webp': 'mihrab-v2.webp',
-  'lantern.webp': 'lantern-v2.webp',
+  'lantern.webp': 'lantern-v3.webp',
   'kaaba.webp': 'kaaba-v2.webp',
 };
 

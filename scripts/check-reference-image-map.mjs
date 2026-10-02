@@ -15,7 +15,6 @@ const [
   mosque,
   learn,
   collections,
-  assistant,
   more,
   legacy,
   reading,
@@ -26,6 +25,7 @@ const [
   discoveryCss,
   worshipCss,
   finalLock,
+  finderCss,
 ] = await Promise.all([
   read('src/app/App.tsx'),
   read('src/screens/OnboardingScreen.tsx'),
@@ -37,7 +37,6 @@ const [
   read('src/screens/MosqueScreen.tsx'),
   read('src/screens/LearnScreen.tsx'),
   read('src/screens/CollectionsScreen.tsx'),
-  read('src/screens/AssistantScreen.tsx'),
   read('src/screens/MoreScreen.tsx'),
   Promise.all([read('src/screens/LegacyFeatureScreens.tsx'), read('src/data/legacyFeatures.ts')])
     .then((parts) => parts.join('\n')),
@@ -49,6 +48,7 @@ const [
   read('src/styles/premium-discovery-collection-art-lock.css'),
   read('src/styles/premium-worship-art-lock.css'),
   read('src/styles/premium-reference-geometry-lock.css'),
+  read('src/styles/mosque-finder-hero.css'),
 ]);
 
 function requireFragments(source, label, fragments) {
@@ -91,26 +91,32 @@ function requireCssFit(source, label, selector, declarations) {
 }
 
 requireFragments(app, 'Home', [
-  'dome-v2.webp" className="ds-arch__silhouette"',
-  'quran-closed-v2.webp" fallback={<QuranObject />}',
-  'tasbih-v2.webp" fallback={<RosetteObject />}',
-  'qibla-compass-v2.webp" fallback={<QiblaObject />}',
-  'mihrab-arch-v2.webp" className="verse-card__art"',
+  'className="home-prayer-arch"',
+  'scene={currentScene}',
+  'home-quran-illustrated-v1.webp" fallback={<QuranObject />}',
+  'home-dhikr-illustrated-v1.webp" fallback={<RosetteObject />}',
+  'home-qibla-illustrated-v1.webp" fallback={<QiblaObject />}',
+  'ayah-focus-bg-v1.webp" className="verse-card__art"',
+  'data-home-section="continue"',
+  "art: '/premium-assets/high-res-objects/home-learn-prayer-v2.webp'",
+  "art: '/premium-assets/high-res-objects/home-names-v1.webp'",
+  "art: '/premium-assets/high-res-objects/home-quiz-v2.webp'",
+  "art: '/premium-assets/high-res-objects/home-duas-v2.webp'",
   '<BellRing size={20} />',
   "onNavigate('prayer')",
 ]);
 
 requireFragments(onboarding, 'Onboarding', [
-  "image: '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
+  "image: '/premium-assets/high-res-objects/mosque-heritage-v1.webp'",
   "image: '/premium-assets/high-res-objects/qibla-compass-v2.webp'",
   "image: '/premium-assets/high-res-objects/quran-closed-v2.webp'",
   'tasbih-v2.webp',
-  'nur-logo-emblem-v2.webp',
+  'nur-logo-emblem-v3.svg',
 ]);
 
 requireFragments(splash, 'Splash', [
-  'mosque-gold-v2.webp',
-  'nur-logo-emblem-v2.webp',
+  'splash-mosque-v1.webp',
+  'nur-logo-emblem-v3.svg',
 ]);
 
 // The closed-book artwork was a bright object sitting behind the entry text,
@@ -118,10 +124,15 @@ requireFragments(splash, 'Splash', [
 // The reader keeps its own open-book artwork below.
 requireFragments(quran, 'Quran catalog', [
   '<MihrabArch',
+  'className="quran-focus"',
+  'home-prayer-sky-v1.webp',
+  'mini-quran-v1.webp',
+  'ayah-focus-bg-v1.webp" className="verse-card__art"',
+  'verse-card verse-card--cream reference-daily-card-button quran-daily-ayah',
 ]);
 
 requireFragments(reader, 'Quran reader', [
-  'quran-open-v2.webp',
+  'quran-open-v3.webp',
 ]);
 
 requireFragments(dhikr, 'Dhikr', [
@@ -129,46 +140,46 @@ requireFragments(dhikr, 'Dhikr', [
 ]);
 
 requireFragments(qibla, 'Qibla', [
-  'qibla-compass-v2.webp" className="reference-qibla-stage__compass"',
+  '<QiblaCompass direction={direction}',
 ]);
 
 requireFragments(mosque, 'Mosque discovery', [
-  'mosque-gold-v2.webp" fallback={<MosqueScene />}',
+  'mosque-finder-arch-v1.webp" fallback={<MosqueScene />}',
+  'reference-mosque-hero__caption">Illustrative Ansicht',
 ]);
 
 requireFragments(learn, 'Learning hub', [
-  'mihrab-arch-v2.webp" fallback={<MosqueScene />}',
+  'home-learn-prayer-v2.webp" fallback={<GraduationCap />}',
+  'home-quran-illustrated-v1.webp" fallback={<BookOpen />}',
+  'className="learning-intro__art"',
+  'className="learning-intro__description"',
 ]);
 
 requireFragments(collections, 'Collections', [
   'quran-closed-v2.webp" fallback={<QuranObject />}',
 ]);
 
-requireFragments(assistant, 'Assistant', [
-  'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
-]);
 
 requireFragments(more, 'Profile / More', [
-  'nur-logo-emblem-v2.webp" fallback={<NurMark />}',
+  'nur-logo-emblem-v3.svg" fallback={<NurMark />}',
 ]);
 
 // These mappings are release guardrails, not historical snapshots. Compact UI
 // chips must not be enlarged as hero art, and known truncated rasters must not
 // be reintroduced into a plain <img> path without same-subject recovery.
 const legacyArtMap = {
-  'hadith-library': 'lantern-v2.webp',
-  knowledge: 'quran-open-v2.webp',
-  prophets: 'mihrab-v2.webp',
-  quiz: 'quran-closed-v2.webp',
+  'hadith-library': 'learning-hadith-v2.webp',
+  madhhabs: 'learning-madhhabs-v2.webp',
+  prophets: 'learning-prophets-v2.webp',
   hajj: 'kaaba-v2.webp',
-  sunnah: 'sun-emblem-v2.webp',
-  sins: 'dome-v2.webp',
-  fasting: 'lantern-v2.webp',
+  sunnah: 'learning-sunnah-v2.webp',
+  sins: 'learning-repentance-v2.webp',
+  fasting: 'lantern-v3.webp',
   ummah: 'dome-v2.webp',
-  places: 'mosque-gold-v2.svg',
+  places: 'mosque-heritage-v1.webp',
   jumuah: 'mihrab-arch-v2.webp',
-  zakat: 'bookmark-v2.webp',
-  standby: 'qibla-compass-v2.webp',
+  zakat: 'zakat-scale-v1.webp',
+  standby: 'prayer-standby-v1.webp',
 };
 for (const [id, filename] of Object.entries(legacyArtMap)) {
   const definition = featureObject(legacy, id);
@@ -178,18 +189,26 @@ for (const [id, filename] of Object.entries(legacyArtMap)) {
   }
 }
 
+const learningDirectory = legacy.split('export const learningLegacyFeatures: LegacyFeatureItem[] = [')[1]?.split('];')[0] ?? '';
+for (const id of ['knowledge', 'sahabah', 'women', 'quiz']) {
+  if (new RegExp(`\\{\\s*id:\\s*'${id}'`).test(learningDirectory)) {
+    throw new Error(`Removed learning feature ${id} must not return to navigation.`);
+  }
+}
+
 const fastingDefinition = featureObject(legacy, 'fasting');
 if (fastingDefinition.includes('calendar-chip-v2.webp')) {
   throw new Error('Fasting hero must not enlarge calendar-chip-v2.webp; it is a compact UI asset.');
 }
 const placesDefinition = featureObject(legacy, 'places');
-if (placesDefinition.includes('mosque-gold-v2.webp')) {
-  throw new Error('Islamic Places must use the intact mosque SVG rather than the truncated mosque WebP.');
+if (placesDefinition.includes('mosque-gold-v2.webp') || placesDefinition.includes('mosque-gold-v2.svg')) {
+  throw new Error('Islamic Places must use the current mosque artwork rather than the archived versions.');
 }
 
 requireFragments(reading, 'Daily Ayah and worship guides', [
   'mihrab-arch-v2.webp" className="reference-ayah-hero__art"',
-  "? '/premium-assets/high-res-objects/mosque-gold-v2.webp'",
+  "? '/premium-assets/high-res-objects/wudu-washing-v1.webp'",
+  'className="worship-guide-intro"',
   ": '/premium-assets/high-res-objects/qibla-compass-v2.webp';",
 ]);
 
@@ -224,33 +243,32 @@ requireCssFit(onboardingArt, 'Onboarding Tasbih companion', '.reference-onboardi
 ]);
 
 requireCssFit(brandEntryArt, 'Splash mosque composition', '.reference-splash__mosque', [
-  'right: -46px',
-  'bottom: -8px',
-  'width: 390px !important',
-  'height: 292px !important',
+  'inset: auto 0 -42px',
+  'width: 100%',
+  'height: 57%',
 ]);
-requireCssFit(brandEntryArt, 'Splash mosque crop', '.reference-splash__mosque > img', [
-  'object-fit: contain !important',
-  'object-position: right bottom !important',
+requireCssFit(brandEntryArt, 'Splash mosque crop', '.reference-splash__mosque-image > img {', [
+  'object-fit: contain',
+  'object-position: center bottom',
 ]);
 requireCssFit(brandEntryArt, 'Splash Nur mark', '.reference-splash__mark > img', [
-  'object-fit: contain !important',
+  'object-fit: contain',
 ]);
 requireCssFit(brandEntryArt, 'System error Nur mark', '.reference-system-error__logo > img', [
   'object-fit: contain !important',
 ]);
 
-requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260808-release-hardening');
-requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v2.webp?v=20260808-release-hardening');
-requireCssAsset(discoveryCss, 'Calendar month', '.reference-calendar-month::after', 'sun-emblem-v2.webp?v=20260808-release-hardening');
-requireCssAsset(discoveryCss, 'Calendar event', '.reference-calendar-event::after', 'calendar-chip-v2.webp?v=20260808-release-hardening');
-requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-section:first-of-type::after', 'bookmark-v2.webp?v=20260808-release-hardening');
-requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260808-release-hardening');
-requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260808-release-hardening');
+requireCssAsset(devotionalCss, 'Dua hero', '.reference-duas-hero::after', 'dua-hands-v2.webp?v=20260826-original-art');
+requireCssAsset(dailyCss, 'Daily Hadith', '.reference-hadith-hero::after', 'lantern-v3.webp');
+requireCssAsset(discoveryCss, 'Calendar month', '.reference-calendar-month::after', 'sun-emblem-v2.webp?v=20260826-original-art');
+requireCssAsset(discoveryCss, 'Calendar event', '.reference-calendar-event::after', 'calendar-object-v1.webp');
+requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-section:first-of-type::after', 'bookmark-v3.webp');
+requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260826-original-art');
+requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260826-original-art');
 
-requireCssFit(finalLock, 'Splash mosque final lock', '.reference-splash__mosque > img', [
+requireCssFit(finalLock, 'Splash mosque final lock', '.reference-splash__mosque-image > img', [
   'object-fit: contain !important',
-  'object-position: right bottom !important',
+  'object-position: center bottom !important',
 ]);
 requireCssFit(finalLock, 'Splash mark final lock', '.reference-splash__mark > img', [
   'object-fit: contain !important',
@@ -264,9 +282,10 @@ requireCssFit(finalLock, 'Home hero', '.premium-home--v2 .welcome-hero__visual >
   'object-fit: contain !important',
   'object-position: right bottom !important',
 ]);
-requireCssFit(finalLock, 'Mosque hero', '.reference-mosque-hero > .premium-image > img', [
-  'object-fit: contain !important',
-  'object-position: right bottom !important',
+requireCssFit(finderCss, 'Mosque Finder hero', '.reference-mosque-screen--live .reference-mosque-hero > .premium-image > img', [
+  'object-fit: cover !important',
+  'object-position: 61% center !important',
+  'transform: none !important',
 ]);
 requireCssFit(finalLock, 'Quran continue', '.reference-quran-continue__book > img', [
   'object-fit: contain !important',
@@ -293,18 +312,68 @@ const forbiddenPairs = [
   [dhikr, 'quran-closed-v2.webp', 'Dhikr must not use a Quran cover as its focal image.'],
   [qibla, 'tasbih-v2.webp', 'Qibla must not use Tasbih as its focal image.'],
   [quran, 'qibla-compass-v2.webp', 'Quran catalog must not use the Qibla compass as its focal image.'],
-  [assistant, 'quran-closed-v2.webp', 'Assistant greeting must use the Nur identity mark, not a Quran cover.'],
 ];
 for (const [source, forbidden, message] of forbiddenPairs) {
   if (source.includes(forbidden)) throw new Error(message);
 }
 
-const visibleTsx = [app, onboarding, splash, quran, reader, dhikr, qibla, mosque, learn, collections, assistant, more, legacy, reading].join('\n');
+const visibleTsx = [app, onboarding, splash, quran, reader, dhikr, qibla, mosque, learn, collections, more, legacy, reading].join('\n');
+const originalMiniAssets = new Set([
+  'mini-quran-v1.webp',
+  'mini-prayer-learning-v1.webp',
+  'mini-names-v2.webp',
+  'mini-names-v3.webp',
+  'mini-names-v4.webp',
+  'mini-names-v5.webp',
+  'mini-quiz-v3.webp',
+  'mini-dua-v3.webp',
+  'quran-closed-v3.webp',
+  'tasbih-v3.webp',
+  'qibla-compass-v3.webp',
+  'home-quran-illustrated-v1.webp',
+  'home-dhikr-illustrated-v1.webp',
+  'home-qibla-illustrated-v1.webp',
+  'home-learn-prayer-v2.webp',
+  'home-names-v1.webp',
+  'home-quiz-v1.webp',
+  'home-duas-v1.webp',
+  'home-quiz-v2.webp',
+  'home-duas-v2.webp',
+  'quran-open-v3.webp',
+  'lantern-v3.webp',
+  'zakat-scale-v1.webp',
+  'prayer-standby-v1.webp',
+  'mosque-heritage-v1.webp',
+  'mosque-finder-arch-v1.webp',
+  'mini-quiz-v1.webp',
+  'mini-dua-v1.webp',
+  'ayah-focus-bg-v1.webp',
+  'splash-mosque-v1.webp',
+  'home-prayer-sky-v1.webp',
+  'wudu-washing-v1.webp',
+  'learn-salah-v3.webp',
+  'learn-faith-v3.webp',
+  'learn-pillars-v3.webp',
+  'learn-terms-v3.webp',
+  'learn-practice-v3.webp',
+  'learn-character-v3.webp',
+  'learn-community-v3.webp',
+  'learn-seerah-v3.webp',
+  'learn-prophets-v3.webp',
+  'learn-madhhabs-v3.webp',
+  'learn-hadith-v3.webp',
+  'learn-sunnah-v3.webp',
+  'learn-repentance-v3.webp',
+  'prayer-${prayer.id}-v1.webp',
+]);
+for (const prayer of ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
+  await readFile(resolve(root, `public/premium-assets/high-res-objects/prayer-${prayer}-v1.webp`));
+}
 for (const match of visibleTsx.matchAll(/premium-assets\/high-res-objects\/([^"'`?\s)]+\.webp)/g)) {
   const filename = match[1];
-  if (!filename.endsWith('-v2.webp')) {
+  if (!filename.endsWith('-v2.webp') && !originalMiniAssets.has(filename)) {
     throw new Error(`Visible screen still references a legacy non-v2 WebP asset: ${filename}`);
   }
 }
 
-console.log('Reference image map verified: primary screens, corrected legacy hero assets, onboarding compositions and CSS ornaments keep intentional mappings; compact UI art is blocked and Islamic Places uses the intact scalable mosque artwork.');
+console.log('Reference image map verified: primary screens, corrected legacy hero assets, onboarding compositions and CSS ornaments keep intentional mappings; compact UI art is blocked and Islamic Places uses the current conceptual mosque artwork.');

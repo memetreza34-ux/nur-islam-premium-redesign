@@ -20,6 +20,7 @@ const geometryLock = await readFile(resolve(root, 'src/styles/premium-reference-
 const moreHubStyles = await readFile(resolve(root, 'src/styles/reference-more-hub.css'), 'utf8');
 const base = await readFile(resolve(root, 'src/styles/base.css'), 'utf8');
 const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'utf8');
+const navigationIcons = await readFile(resolve(root, 'src/shared/NavigationIcon.tsx'), 'utf8');
 const viewport = await readFile(resolve(root, 'src/styles/reference-mobile-viewport.css'), 'utf8');
 const sprite = await readFile(resolve(root, 'src/styles/reference-sprite.css'), 'utf8');
 const visuals = await readFile(resolve(root, 'src/shared/PremiumVisuals.tsx'), 'utf8');
@@ -36,6 +37,11 @@ const postGuardrailNames = new Set([
   'premium-core-screens.css',
   'premium-entry-system.css',
   'nur-design-system.css',
+  'learn-library-redesign.css',
+  'overlay-navigation-clearance.css',
+  'legal-premium.css',
+  'about-premium.css',
+  'mosque-finder-hero.css',
 ]);
 const postGuardrailPatterns = [/^premium-.+-(lock|pass)\.css$/, /^functional-.+\.css$/];
 const isDeclaredLateLayer = (layer) => postGuardrailNames.has(layer)
@@ -53,13 +59,9 @@ if (geometryIndex === -1 || geometryIndex < styleIndex.indexOf("@import './style
 }
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-// The design system settles the historical layers, so it loads last and the
-// geometry lock sits directly before it.
-if (importedLayers.at(-1) !== 'nur-design-system.css') {
-  throw new Error(`The design system must be the final stylesheet import; found ${importedLayers.at(-1) ?? 'none'} after it.`);
-}
-if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
-  throw new Error(`The reference geometry/icon lock must load directly before the design system; found ${importedLayers.at(-2) ?? 'none'} there.`);
+const finalLayers = ['premium-reference-geometry-lock.css', 'nur-design-system.css', 'learn-library-redesign.css', 'overlay-navigation-clearance.css', 'legal-premium.css', 'about-premium.css', 'mosque-finder-hero.css'];
+if (JSON.stringify(importedLayers.slice(-finalLayers.length)) !== JSON.stringify(finalLayers)) {
+  throw new Error('Final layers must preserve geometry, design system, scoped learning, overlay clearance, legal and about order.');
 }
 if (styleIndex.indexOf(designSystemImport) < styleIndex.indexOf(geometryImport)) {
   throw new Error('The design system must load after the reference geometry lock.');
@@ -112,7 +114,7 @@ const requiredGuardrails = [
   '.premium-image > img:not([hidden])',
   'visibility: visible !important',
   '.premium-image > .premium-image__fallback[hidden]',
-  'mihrab-arch-v2.webp?v=20260808-release-hardening',
+  'mihrab-arch-v2.webp?v=20260826-original-art',
   '@media (max-width: 370px)',
   'grid-template-columns: repeat(2, minmax(0, 1fr))',
   '@media (prefers-reduced-motion: reduce)',
@@ -160,18 +162,35 @@ if (!navigation.includes('.bottom-nav') || !viewport.includes('env(safe-area-ins
   throw new Error('Bottom navigation or safe-area handling is missing.');
 }
 for (const requirement of [
-  'color: #8fa39a',
+  'color: #a1b5aa',
   'color: #f2d79a',
   'vector-effect: non-scaling-stroke',
   'white-space: nowrap',
-  // The active tab is marked by the arch cap, not by a pill around the label.
+  // A filled mihrab behind the active icon leaves its label unobstructed.
   '.bottom-nav__item--active::before',
-  'stroke-linecap=\'round\'',
+  'stroke-linecap: round',
 ]) {
   if (!navigation.includes(requirement)) throw new Error(`Refreshed navigation source state is missing: ${requirement}`);
 }
 if (/\.bottom-nav__item--active\s*\{[^}]*background:\s*linear-gradient/.test(navigation)) {
-  throw new Error('The active tab must not reintroduce the pill background; the arch cap marks it.');
+  throw new Error('The active tab must preserve the filled mihrab behind its icon and keep the label unobstructed.');
+}
+for (const requirement of [
+  'export function NavigationIcon',
+  'className="nur-navigation-icon"',
+  'stroke="currentColor"',
+  'aria-hidden="true"',
+  'focusable="false"',
+]) {
+  if (!navigationIcons.includes(requirement)) throw new Error(`Navigation SVG family is missing: ${requirement}`);
+}
+for (const name of ['home', 'prayer', 'quran', 'learn', 'profile']) {
+  if (!new RegExp(`^\\s*${name}:`, 'm').test(navigationIcons)) {
+    throw new Error(`Navigation SVG family is missing a destination: ${name}`);
+  }
+}
+if (!navigationIcons.includes('<svg') || !navigationIcons.includes('<path') || /<(?:image|foreignObject)\b/.test(navigationIcons)) {
+  throw new Error('Navigation icons must use their own vector artwork without embedded images or foreign content.');
 }
 if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-events: none')) {
   throw new Error('Decorative artwork must never block app interaction.');
@@ -179,7 +198,7 @@ if (!sprite.includes('pointer-events: none') || !guardrails.includes('pointer-ev
 
 const requiredImageBehavior = [
   "import { versionAppPath } from '../app/appPaths';",
-  "const PREMIUM_ASSET_VERSION = '20260808-release-hardening';",
+  "const PREMIUM_ASSET_VERSION = '20260826-original-art';",
   'onLoad={(event) =>',
   'event.currentTarget.hidden = false',
   'onError={(event) =>',
@@ -210,7 +229,7 @@ if (!app.includes('aria-current={active === id ? \'page\' : undefined}')) {
 // guards against — it is what used to make Start light up on the reader.
 const secondaryScreens = [
   'calendar', 'dhikr', 'qibla', 'duas', 'names', 'mosques',
-  'collections', 'assistant', 'reader', 'ayah', 'account', 'notes',
+  'collections', 'reader', 'ayah', 'account', 'notes',
 ];
 const primaryActiveBlock = app.slice(app.indexOf('const primaryActive'), app.indexOf('const primaryActive') + 700);
 for (const screen of secondaryScreens) {
@@ -224,11 +243,11 @@ if (!app.includes("['prayer', 'qibla'].includes(activeTab)")) {
 if (!app.includes("['quran', 'reader', 'ayah'].includes(activeTab)")) {
   throw new Error('Quran-related screens must keep Quran active in the primary navigation.');
 }
-if (!app.includes("['learn', 'duas', 'names', 'assistant', 'wudu', 'salah'].includes(activeTab)")) {
+if (!app.includes("['learn', 'prayer-learning', 'duas', 'names', 'wudu', 'salah'].includes(activeTab)")) {
   throw new Error('Learning-related secondary screens must keep Lernen active in the primary navigation.');
 }
-if (!app.includes('mihrab-arch-v2.webp" className="verse-card__art"')) {
-  throw new Error('Home daily Ayah card must use the Mihrab artwork from the reference composition.');
+if (!app.includes('ayah-focus-bg-v1.webp" className="verse-card__art"')) {
+  throw new Error('Home daily Ayah card must use the original text-safe Ayah background.');
 }
 if (!app.includes("onNavigate('prayer')") || !app.includes('<BellRing size={20} />')) {
   throw new Error('Home header must keep the reference notification icon connected to the real prayer/reminder screen.');

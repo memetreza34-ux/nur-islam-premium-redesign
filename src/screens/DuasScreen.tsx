@@ -116,7 +116,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   };
 
   const shareDua = async (dua: DuaEntry) => {
-    const text = `${dua.title}\n\n${dua.arabic}\n\nSinngemäße Bedeutung: ${dua.translation}\n\nQuelle im Altbestand: ${dua.source}`;
+    const text = `${dua.title}\n\n${dua.arabic}\n\nSinngemäße Bedeutung: ${dua.translation}\n\nQuelle: ${dua.source}`;
     try {
       if (navigator.share) {
         await navigator.share({ title: dua.title, text });
@@ -162,11 +162,6 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
         <span><BookOpenCheck size={21} /></span>
         <div><small>Bereits geöffnet</small><strong>{viewed.size} von {DUAS.length} Duas</strong><em>{favorites.size} Favoriten gespeichert</em></div>
         <div className="reference-dua-progress__bar"><span style={{ width: `${Math.round((viewed.size / DUAS.length) * 100)}%` }} /></div>
-      </section>
-
-      <section className="reference-prototype-note">
-        <ShieldCheck size={16} />
-        <span><strong>Vollständiger Altbestand migriert</strong><small>Die 34 Einträge sind funktional eingebunden. Arabischer Text, Transliteration, Bedeutungsangaben und Quellenhinweise werden vor Veröffentlichung einzeln fachlich geprüft.</small></span>
       </section>
 
       <label className="reference-input-search">
@@ -223,7 +218,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
               <p className="reference-dua-modal__arabic" dir="rtl">{selected.arabic}</p>
               <section><small>Transliteration</small><p>{selected.transliteration}</p></section>
               <section><small>Sinngemäße Bedeutung</small><p>{selected.translation}</p></section>
-              <div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quellenhinweis aus dem Altbestand</small><strong>{selected.source}</strong><em>Fachliche Einzelprüfung vor Veröffentlichung ausstehend.</em></span></div>
+              <div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quelle</small><strong>{selected.source}</strong></span></div>
               <div className="reference-dua-modal__actions">
                 <button className={favorites.has(selected.id) ? 'is-active' : ''} onClick={() => toggleFavorite(selected.id)}><Heart size={18} fill={favorites.has(selected.id) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button onClick={() => copyText(selected.arabic).then(() => flash('Arabischer Text kopiert')).catch(() => flash('Kopieren war nicht möglich'))}><Copy size={18} /> Kopieren</button>

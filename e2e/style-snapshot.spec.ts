@@ -68,7 +68,7 @@ test('snapshots the computed styles', async ({ page }) => {
 
   // Moscheen is deliberately absent: it asks for a location and queries
   // Overpass, so it settles differently from run to run and blocked this walk.
-  for (const hub of ['Quran', 'Dhikr', 'Duas', '99 Namen', 'Sammlung', 'Konto', 'Notizen', 'Assistent']) {
+  for (const hub of ['Quran', 'Dhikr', 'Duas', '99 Namen', 'Sammlung', 'Konto', 'Notizen']) {
     await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
     await page.waitForTimeout(400);
     const entry = page.getByRole('button').filter({ hasText: hub }).first();

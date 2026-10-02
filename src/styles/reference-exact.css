@@ -229,22 +229,6 @@ body {
   background: linear-gradient(108deg, #f4ead7, #ead4ab);
 }
 
-.ai-preview {
-  grid-template-columns: 51px 1fr 39px;
-  padding: 14px;
-  border-radius: 18px;
-  border-color: rgba(212, 175, 55, .23);
-  background: linear-gradient(145deg, rgba(16, 61, 47, .92), rgba(4, 25, 20, .97));
-}
-
-.ai-preview__mark,
-.ai-preview__mark img,
-.ai-preview__mark .premium-image__fallback,
-.ai-preview__mark svg {
-  width: 49px;
-  height: 49px;
-}
-
 .recommendation-card {
   border-radius: 16px;
   border-color: rgba(212, 175, 55, .18);

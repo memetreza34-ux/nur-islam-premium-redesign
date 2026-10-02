@@ -33,7 +33,7 @@ test('returning from a card lands where the reader left, not at the top', async 
 
   await fastingCard.click();
   await page.waitForTimeout(800);
-  await expect(page.getByRole('heading', { name: 'Fasten-Assistent', level: 1 })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Fastenplan', level: 1 })).toBeVisible();
 
   // A screen opened for the first time still begins at its own top.
   expect(await frameScroll(page)).toBe(0);

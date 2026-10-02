@@ -21,6 +21,8 @@ Die von der App tatsächlich gerenderten Einzelobjekte liegen bereits direkt unt
 
 Dort befinden sich unter anderem Logo, Moschee, geschlossener und offener Quran, Tasbih, Qibla-Kompass, Kaaba, Mihrab, Laterne, Dua-Hände, Kalenderobjekt und Lesezeichen als gültige `-v2.webp`-Dateien.
 
+Die am 26.08.2026 neu erzeugte, aktive Fünfzehn-Asset-Serie ist mit Prompts, Werkzeug, Einsatzorten und SHA-256-Prüfsummen in [`docs/IMAGE-ASSET-PROVENANCE.md`](../../IMAGE-ASSET-PROVENANCE.md) dokumentiert.
+
 ## Auswahlregel
 
 Doppelte Chat-Uploads wurden nicht mehrfach gespeichert. Externe Inspirationsscreens werden nicht als Produktasset übernommen. Enthalten sind die für Entwicklung, Vergleich und visuelle Abnahme benötigten eigenen Projektboards sowie die separaten Laufzeitgrafiken.
