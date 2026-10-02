@@ -88,10 +88,14 @@ requireTokens('moreControls', [
   'border-radius:28px',
   'linear-gradient(160deg,#0d5743,#00120f)',
 ]);
-// 68px in the flow, arch cap as the active marker, no pill and no radius.
+// In-flow navigation with a filled arch behind the active icon.
 requireTokens('navigation', [
   '.bottom-nav__item {',
   '.bottom-nav__item--active::before',
+  "clip-path: path('M 26 0",
+  'width: 52px',
+  'height: 42px',
+  'pointer-events: none',
   'border-top: 1px solid rgba(226, 191, 119, 0.14)',
   'white-space: nowrap',
   'color: #f2d79a',

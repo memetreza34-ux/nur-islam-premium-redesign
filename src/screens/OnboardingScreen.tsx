@@ -39,7 +39,7 @@ const slides: OnboardingSlide[] = [
     eyebrow: 'Willkommen bei Nur',
     title: 'Ein ruhiger Ort für deinen Glauben.',
     description: 'Gebetszeiten, Quran, Dhikr und islamisches Wissen in einer klaren, hochwertigen App.',
-    image: '/premium-assets/high-res-objects/mosque-gold-v2.webp',
+    image: '/premium-assets/high-res-objects/mosque-heritage-v1.webp',
     fallback: <MosqueScene />,
     icon: MoonStar,
     points: ['Wichtige Bereiche direkt erreichbar', 'Ruhiges Smaragd- und Gold-Design', 'Persönlicher Fortschritt auf deinem Gerät'],
@@ -134,7 +134,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
       transition={screenTransition}
     >
       <header className="reference-onboarding__topbar">
-        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} priority /><strong>Nur</strong></span>
+        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} priority /><strong>Nur</strong></span>
         <button onClick={finish}>Überspringen</button>
       </header>
 

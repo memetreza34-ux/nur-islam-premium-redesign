@@ -51,11 +51,7 @@ for (const requirement of [
 for (const requirement of [
   'function normalizePositiveInteger(value: unknown, fallback = 1)',
   "localStorage.getItem('nur_reader_font_size')",
-  // Reading preferences that used to reset on every restart: the meaning
-  // toggle looked persistent only because it defaulted to on.
-  "localStorage.getItem('nur_reader_show_meaning')",
   "localStorage.getItem('nur_reader_arabic_font')",
-  "localStorage.setItem('nur_reader_show_meaning', showMeaning ? '1' : '0')",
   "localStorage.setItem('nur_reader_arabic_font', arabicFont)",
   'Math.min(48, Math.max(26, Math.round(value)))',
   'normalizePositiveInteger(value, 0)',
@@ -97,6 +93,7 @@ for (const requirement of [
 
 for (const requirement of [
   "'nur_local_notes_v1'",
+  "'nur_calendar_day_notes_v1'",
   "'nur_prayer_times_latest'",
   "'nur_prayer_location'",
   "'nur_mosque_location_v1'",

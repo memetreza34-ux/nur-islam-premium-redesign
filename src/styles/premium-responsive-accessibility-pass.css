@@ -87,7 +87,6 @@ textarea:focus-visible,
 .reference-learning-course-screen h2,
 .reference-prayer-course-screen h2,
 .reference-legacy-screen h2,
-.reference-assistant-screen h2,
 .reference-account-screen h2 {
   text-wrap: balance;
 }
@@ -99,7 +98,6 @@ textarea:focus-visible,
 .reference-notes-screen small,
 .reference-mosque-screen--live strong,
 .reference-mosque-screen--live small,
-.reference-chat-message,
 .reference-learning-sources strong,
 .reference-learning-sources p,
 .reference-legacy-screen strong,
@@ -144,8 +142,7 @@ textarea:focus-visible,
 .reference-legacy-search input,
 .reference-fasting-reminder-settings input,
 .reference-zakat-calculator input,
-.reference-input-search input,
-.reference-assistant-input input {
+.reference-input-search input {
   caret-color: #e8c77d;
 }
 
@@ -156,8 +153,7 @@ textarea:focus-visible,
 .reference-legacy-search input:focus-visible,
 .reference-fasting-reminder-settings input:focus-visible,
 .reference-zakat-calculator input:focus-visible,
-.reference-input-search input:focus-visible,
-.reference-assistant-input input:focus-visible {
+.reference-input-search input:focus-visible {
   outline: 0 !important;
 }
 
@@ -289,7 +285,7 @@ textarea:focus-visible,
   .bottom-nav__item small {
     max-width: 100%;
     overflow: hidden;
-    font-size: .49rem !important;
+    font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }

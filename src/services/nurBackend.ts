@@ -11,15 +11,17 @@ export type NurSession = {
 };
 
 /**
- * The cloud profile carries only what the app reads back from it. Theme and
- * prayer notification settings live in local storage and travel inside the
- * backup payload; mirroring them into columns here produced rows that
- * contradicted the app, because nothing ever wrote the user's actual choice.
+ * The cloud profile carries only what the app reads back from it. Prayer
+ * notification settings travel inside an explicitly requested backup; the
+ * fixed theme remains device-only. Mirroring either into legacy columns here
+ * produced rows that contradicted the app's actual state.
  */
 export type NurProfile = {
   user_id: string;
   display_name: string;
   language: 'de';
+  sensitive_cloud_consent_version?: string | null;
+  sensitive_cloud_consent_at?: string | null;
   created_at?: string;
   updated_at?: string;
 };
@@ -57,17 +59,21 @@ const SESSION_REFRESH_MARGIN_MS = 90_000;
 const AUTH_EVENT = 'nur:auth-changed';
 const CLOUD_RESTORED_EVENT = 'nur:cloud-restored';
 const STORAGE_SCHEMA_VERSION = 1;
+export const SENSITIVE_CLOUD_CONSENT_VERSION = '2026-09-11-v1';
 
 const EXCLUDED_BACKUP_KEYS = new Set([
   SESSION_KEY,
   'nur_pending_display_name',
   'nur_local_notes_v1',
+  'nur_calendar_day_notes_v1',
   'nur_prayer_times_latest',
   'nur_prayer_location',
   'nur_mosque_location_v1',
   'nur_mosque_search_cache_v1',
   'nur_install_prompt_dismissed',
   'nur_onboarding_complete',
+  'nur_theme',
+  'premium_theme',
 ]);
 
 let refreshInFlight: Promise<NurSession | null> | null = null;
@@ -237,6 +243,8 @@ export async function upsertProfile(input: Partial<Omit<NurProfile, 'user_id' | 
     user_id: session.user.id,
     display_name: input.display_name ?? current?.display_name ?? 'Nur Nutzer',
     language: 'de',
+    sensitive_cloud_consent_version: input.sensitive_cloud_consent_version ?? current?.sensitive_cloud_consent_version ?? null,
+    sensitive_cloud_consent_at: input.sensitive_cloud_consent_at ?? current?.sensitive_cloud_consent_at ?? null,
   };
   const response = await authenticatedFetch('nur_islam_profiles?on_conflict=user_id', {
     method: 'POST',
@@ -245,6 +253,26 @@ export async function upsertProfile(input: Partial<Omit<NurProfile, 'user_id' | 
   });
   const rows = await response.json() as NurProfile[];
   return rows[0] ?? row;
+}
+
+export function profileHasSensitiveCloudConsent(profile: NurProfile | null) {
+  return profile?.sensitive_cloud_consent_version === SENSITIVE_CLOUD_CONSENT_VERSION
+    && typeof profile.sensitive_cloud_consent_at === 'string'
+    && Number.isFinite(Date.parse(profile.sensitive_cloud_consent_at));
+}
+
+export async function recordSensitiveCloudConsent() {
+  return upsertProfile({
+    sensitive_cloud_consent_version: SENSITIVE_CLOUD_CONSENT_VERSION,
+    sensitive_cloud_consent_at: new Date().toISOString(),
+  });
+}
+
+async function requireSensitiveCloudConsent() {
+  const profile = await loadProfile();
+  if (!profileHasSensitiveCloudConsent(profile)) {
+    throw new Error('Bitte erteile unter „Konto & Sicherung“ zuerst die ausdrückliche Cloud-Einwilligung.');
+  }
 }
 
 function shouldBackUpKey(key: string) {
@@ -272,6 +300,7 @@ export function collectLocalState() {
 export async function backupLocalState() {
   const session = await getSession();
   if (!session) throw new Error('Bitte melde dich zuerst an.');
+  await requireSensitiveCloudConsent();
   const now = new Date().toISOString();
   const response = await authenticatedFetch('nur_islam_user_state?on_conflict=user_id', {
     method: 'POST',
@@ -292,6 +321,7 @@ export async function backupLocalState() {
 export async function restoreCloudState() {
   const session = await getSession();
   if (!session) throw new Error('Bitte melde dich zuerst an.');
+  await requireSensitiveCloudConsent();
   const response = await authenticatedFetch(`nur_islam_user_state?user_id=eq.${encodeURIComponent(session.user.id)}&select=schema_version,payload,updated_at`);
   const rows = await response.json() as Array<{ schema_version: number; payload: unknown; updated_at: string }>;
   const cloud = rows[0];
@@ -320,6 +350,7 @@ export async function listNotes() {
 export async function createNote(title: string, body: string) {
   const session = await getSession();
   if (!session) throw new Error('Bitte melde dich zuerst an.');
+  await requireSensitiveCloudConsent();
   const response = await authenticatedFetch('nur_islam_notes', {
     method: 'POST',
     headers: { Prefer: 'return=representation' },
@@ -330,6 +361,7 @@ export async function createNote(title: string, body: string) {
 }
 
 export async function updateNote(id: string, title: string, body: string) {
+  await requireSensitiveCloudConsent();
   const response = await authenticatedFetch(`nur_islam_notes?id=eq.${encodeURIComponent(id)}`, {
     method: 'PATCH',
     headers: { Prefer: 'return=representation' },

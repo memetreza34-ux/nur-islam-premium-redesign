@@ -146,11 +146,6 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
         <div className="reference-name-progress__bar"><span style={{ width: `${progress}%` }} /></div>
       </section>
 
-      <section className="reference-prototype-note">
-        <ShieldCheck size={16} />
-        <span><strong>Vollständiger Altbestand migriert</strong><small>Alle 99 Einträge sind funktional eingebunden. Schreibweisen, Reihenfolge und deutsche Bedeutungsangaben benötigen vor Veröffentlichung eine fachliche und redaktionelle Endprüfung.</small></span>
-      </section>
-
       <label className="reference-input-search">
         <Search size={18} />
         <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Arabisch, Name oder Bedeutung suchen …" />
@@ -195,7 +190,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
               <h2>{selected.latin}</h2>
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
-              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Deutsche Bedeutungsangabe aus dem Altbestand. Fachliche Endprüfung vor Veröffentlichung ausstehend.</span></div>
+              <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Die deutsche Bedeutungsangabe ist eine kurze Erklärung. Sie gibt nicht alle Bedeutungsnuancen des arabischen Namens wieder.</span></div>
               <div className="reference-name-modal__actions">
                 <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>

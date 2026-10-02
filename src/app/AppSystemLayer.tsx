@@ -24,7 +24,7 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
     return (
       <main className="reference-system-error">
         <div className="reference-system-error__halo" />
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="reference-system-error__logo" fallback={<NurMark />} />
+        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" className="reference-system-error__logo" fallback={<NurMark />} />
         <span className="reference-system-error__icon"><ShieldAlert size={24} /></span>
         <span className="overline">Nur Islam</span>
         <h1>Die Ansicht konnte nicht geladen werden.</h1>

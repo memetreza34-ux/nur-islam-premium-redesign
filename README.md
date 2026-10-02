@@ -27,7 +27,7 @@ Der aktuelle RC enthält unter anderem:
 - Qibla-/Device-Orientation-Pfad;
 - Dhikr, Duas, Namen, Kalender, Lern- und Wissensbereiche;
 - optionalen Supabase-Account mit RLS, Backup/Restore und Cloud-Notizen;
-- lokalen quellengebundenen Nur-Assistenten ohne frei generierende religiöse Antworten;
+- keinen Chat-/KI-Assistenten; Entfernung und Regressionstests sind in [docs/ASSISTANT-REMOVAL.md](docs/ASSISTANT-REMOVAL.md) dokumentiert;
 - lokales Premium-Komfortpaket mit Quran-Plan, Routinen, In-App-Widgets, Home-Personalisierung, Statistiken, Favoriten-Ordnern, privatem Journal, Erinnerungen und Design-Akzenten;
 - automatisierte Unit-/Integration-, E2E-, Release-, Asset-, Icon- und Browser-Render-Prüfungen.
 

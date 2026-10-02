@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
@@ -55,6 +55,39 @@ function forbidText(source, forbidden, label) {
     if (source.includes(item)) throw new Error(`${label} still contains forbidden release placeholder: ${item}`);
   }
 }
+
+// Editorial approval remains an internal release prerequisite, not learner UI.
+for (const directory of ['src/screens', 'src/shared']) {
+  for (const file of await readdir(resolve(root, directory))) {
+    if (!file.endsWith('.tsx')) continue;
+    const source = await read(`${directory}/${file}`);
+    for (const pattern of [
+      /fachliche.{0,30}Freigabe/i,
+      /Fachprüfung offen/i,
+      /Endprüfung|(?:fachlich|redaktionell).{0,90}(?:offen|ausstehend|steht noch aus)/i,
+      /(?:vor|vor der) Veröffentlichung/i,
+      /Altbestand|migriert/,
+    ]) {
+      if (pattern.test(source)) throw new Error(`Internal editorial status leaked into ${directory}/${file}: ${pattern}`);
+    }
+  }
+}
+
+const legalScreen = await read('src/screens/LegalScreen.tsx');
+requireText(legalScreen, ['hasUnfilledOperatorDetails()', 'Noch nicht veröffentlichungsfertig'], 'Incomplete imprint warning');
+const legalContent = await read('src/data/legalContent.ts');
+const prayerRakatData = await read('src/data/prayerRakatData.ts');
+forbidText(legalContent, ['hisnmuslim.com', 'Hisn al-Muslim'], 'Release audio sources');
+forbidText(prayerRakatData, ['hisnmuslim.com', 'audioUrl'], 'Release audio sources');
+requireText(
+  legalContent,
+  ['Mishary Alafasy', 'Die Nutzung richtet sich nach den Bedingungen von Al Quran Cloud'],
+  'Quran audio attribution',
+);
+const wudu = await read('src/shared/WuduLesson.tsx');
+requireText(wudu, ['https://sunnah.com/muslim:234b', 'unterschiedlich bewertet', 'vereinfachte Lernhilfen'], 'Wudu source and illustration limits');
+const legacyScreens = await read('src/screens/LegacyFeatureScreens.tsx');
+requireText(legacyScreens, ['beschreibt den Ablauf, nicht die Urteile', 'Wo der Quran keine Details nennt', 'Sinngemäßer Inhalt'], 'Content scope and paraphrase limits');
 
 requireText(backend, [
   '/auth/v1/token?grant_type=password',
@@ -125,10 +158,10 @@ requireText(more, [
   "destination: 'notes'",
   'onNavigate(`legacy:${feature.id}`)',
   "localStorage.setItem('nur_prayer_notifications'",
-  'applyTheme(next)',
   'await signOut()',
   'Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache',
 ], 'Profile/settings integration');
+forbidText(more, ['Erscheinungsbild', "modal === 'appearance'", 'applyTheme(next)'], 'Fixed premium palette');
 forbidText(more, ['premium_prayer_notifications', 'premium_cloud_sync', 'bis Firebase verbunden wird'], 'Profile/settings integration');
 forbidText(more, ['<AccountScreen', '<NotesScreen', '<LegacyFeatureScreen'], 'Profile screens outside navigation');
 
@@ -211,10 +244,11 @@ requireText(sw, [
 ], 'Service worker');
 
 requireText(theme, [
-  "export type NurTheme = 'dark' | 'light' | 'system'",
-  'dataset.theme',
-  'prefers-color-scheme: light',
-  "resolved === 'light' ? '#f2eadc' : '#001b16'",
+  "dataset.theme = 'dark'",
+  "dataset.themePreference = 'dark'",
+  "style.colorScheme = 'dark'",
+  "themeMeta.content = '#001b16'",
+  'localStorage.removeItem(THEME_STORAGE_KEY)',
 ], 'Theme service');
 requireText(styles, ["@import './styles/release-hardening.css';", "@import './styles/premium-reference-geometry-lock.css';"], 'Style index');
 requireText(releaseStyles, ["html[data-theme='light']", '.reference-account-screen', '.reference-notes-screen'], 'Release styles');
@@ -222,7 +256,7 @@ requireText(releaseStyles, ["html[data-theme='light']", '.reference-account-scre
 if (html.includes('maximum-scale=1')) throw new Error('Viewport still blocks user zoom.');
 requireText(html, [
   'viewport-fit=cover',
-  'color-scheme" content="dark light',
+  'color-scheme" content="dark"',
   'meta name="theme-color" content="#001b16"',
   'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png"',
 ], 'HTML accessibility/reference shell');
@@ -240,4 +274,4 @@ requireText(migration, [
 ], 'Supabase migration');
 forbidText(migration, ['disable row level security', 'grant all', 'grant truncate', 'grant trigger', 'grant references'], 'Supabase migration');
 
-console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, functional themes, reference-aligned PWA v${swCacheMajor} shell/colors/icons, queued closed-PWA routing, direct in-app routing and accessibility.`);
+console.log(`Release hardening verified: privacy-scoped cloud backup, device-local onboarding state, visible note failures, least-privilege RLS, background-tolerant reminders, fixed premium palette, reference-aligned PWA v${swCacheMajor} shell/colors/icons, queued closed-PWA routing, direct in-app routing and accessibility.`);

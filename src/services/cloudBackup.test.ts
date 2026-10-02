@@ -6,6 +6,13 @@ import { backupLocalState, collectLocalState, restoreCloudState } from './nurBac
 // phone, and restoring something that corrupts local state. Both are silent.
 
 const SESSION_KEY = 'nur_auth_session_v1';
+const CONSENTED_PROFILE = {
+  user_id: 'user-a',
+  display_name: 'Arman',
+  language: 'de',
+  sensitive_cloud_consent_version: '2026-09-11-v1',
+  sensitive_cloud_consent_at: '2026-09-11T18:00:00Z',
+};
 
 function signIn() {
   localStorage.setItem(SESSION_KEY, JSON.stringify({
@@ -35,6 +42,8 @@ const DEVICE_ONLY = {
   nur_onboarding_complete: 'true',
   nur_install_prompt_dismissed: 'true',
   nur_pending_display_name: 'Arman',
+  nur_theme: 'light',
+  premium_theme: '"System"',
   'nur_prayer_reminders_fired_2026-08-08': '["dhuhr"]',
   'nur_calendar_reminders_fired_2026-08-08': '["1"]',
 };
@@ -73,7 +82,10 @@ describe('backup and restore round trip', () => {
     signIn(); // after seeding, so a real session is present and still excluded
 
     let uploaded: Record<string, string> = {};
-    vi.stubGlobal('fetch', vi.fn(async (_input: RequestInfo | URL, init?: RequestInit) => {
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL, init?: RequestInit) => {
+      if (String(input).includes('nur_islam_profiles')) {
+        return { ok: true, json: async () => [CONSENTED_PROFILE] } as unknown as Response;
+      }
       if (init?.method === 'POST') {
         uploaded = JSON.parse(String(init.body)).payload;
         return { ok: true, json: async () => [{ updated_at: '2026-08-08T10:00:00Z' }] } as unknown as Response;
@@ -96,7 +108,10 @@ describe('backup and restore round trip', () => {
   it('reports no backup rather than clearing local progress', async () => {
     signIn();
     localStorage.setItem('nur_dua_favorites', '["dua-1"]');
-    vi.stubGlobal('fetch', vi.fn(async () => ({ ok: true, json: async () => [] } as unknown as Response)));
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => ({
+      ok: true,
+      json: async () => String(input).includes('nur_islam_profiles') ? [CONSENTED_PROFILE] : [],
+    } as unknown as Response)));
 
     expect(await restoreCloudState()).toBeNull();
     expect(localStorage.getItem('nur_dua_favorites')).toBe('["dua-1"]');
@@ -106,22 +121,25 @@ describe('backup and restore round trip', () => {
     signIn();
     const seen: string[] = [];
     window.addEventListener('nur:cloud-restored', (event) => seen.push(String((event as CustomEvent).detail)));
-    vi.stubGlobal('fetch', vi.fn(async () => ({
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => ({
       ok: true,
-      json: async () => [{ schema_version: 1, payload: { nur_theme: 'light' }, updated_at: '2026-08-08T11:00:00Z' }],
+      json: async () => String(input).includes('nur_islam_profiles')
+        ? [CONSENTED_PROFILE]
+        : [{ schema_version: 1, payload: { nur_theme: 'light' }, updated_at: '2026-08-08T11:00:00Z' }],
     } as unknown as Response)));
 
     await restoreCloudState();
 
     expect(seen).toEqual(['2026-08-08T11:00:00Z']);
+    expect(localStorage.getItem('nur_theme')).toBeNull();
   });
 
   it('refuses payload entries that must never come back from the cloud', async () => {
     signIn();
     localStorage.setItem('nur_prayer_location', '{"latitude":52.52,"longitude":13.405}');
-    vi.stubGlobal('fetch', vi.fn(async () => ({
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => ({
       ok: true,
-      json: async () => [{
+      json: async () => String(input).includes('nur_islam_profiles') ? [CONSENTED_PROFILE] : [{
         schema_version: 1,
         updated_at: '2026-08-08T12:00:00Z',
         payload: {
@@ -145,9 +163,9 @@ describe('backup and restore round trip', () => {
 
   it('skips non-string payload values instead of writing "[object Object]"', async () => {
     signIn();
-    vi.stubGlobal('fetch', vi.fn(async () => ({
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => ({
       ok: true,
-      json: async () => [{
+      json: async () => String(input).includes('nur_islam_profiles') ? [CONSENTED_PROFILE] : [{
         schema_version: 1,
         updated_at: '2026-08-08T13:00:00Z',
         payload: { nur_dua_favorites: { not: 'a string' }, nur_name_favorites: '["1"]' },
@@ -163,9 +181,11 @@ describe('backup and restore round trip', () => {
   it('tolerates a payload that is not an object at all', async () => {
     signIn();
     localStorage.setItem('nur_dua_favorites', '["dua-1"]');
-    vi.stubGlobal('fetch', vi.fn(async () => ({
+    vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => ({
       ok: true,
-      json: async () => [{ schema_version: 1, payload: 'nonsense', updated_at: '2026-08-08T14:00:00Z' }],
+      json: async () => String(input).includes('nur_islam_profiles')
+        ? [CONSENTED_PROFILE]
+        : [{ schema_version: 1, payload: 'nonsense', updated_at: '2026-08-08T14:00:00Z' }],
     } as unknown as Response)));
 
     expect(await restoreCloudState()).toBeNull();
@@ -178,5 +198,14 @@ describe('backup and restore round trip', () => {
     await expect(backupLocalState()).rejects.toThrow();
     await expect(restoreCloudState()).rejects.toThrow();
     expect(mock).not.toHaveBeenCalled();
+  });
+
+  it('refuses cloud progress without explicit sensitive-data consent', async () => {
+    signIn();
+    const mock = vi.fn(async () => ({ ok: true, json: async () => [] } as unknown as Response));
+    vi.stubGlobal('fetch', mock);
+
+    await expect(backupLocalState()).rejects.toThrow('ausdrückliche Cloud-Einwilligung');
+    expect(mock).toHaveBeenCalledTimes(1);
   });
 });

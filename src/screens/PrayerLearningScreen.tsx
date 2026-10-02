@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
@@ -15,8 +16,8 @@ import {
   TimerReset,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { PremiumImage, QiblaObject } from '../shared/PremiumVisuals';
-import { PrayerPostureFigure } from '../shared/PrayerPostureFigure';
+import { PremiumImage } from '../shared/PremiumVisuals';
+import { PrayerPostureImage } from '../shared/PrayerPostureImage';
 import { RecitationButton } from '../shared/RecitationButton';
 import {
   PRAYER_PRACTICE_TIPS,
@@ -82,6 +83,22 @@ const preparationItems = [
   'Ruhigen Gebetsplatz wählen',
 ] as const;
 
+const PRAYER_TIME_IMAGE: Record<PrayerLessonId, string> = {
+  fajr: 'prayer-fajr-v1.webp',
+  dhuhr: 'prayer-dhuhr-v1.webp',
+  asr: 'prayer-asr-v1.webp',
+  maghrib: 'prayer-maghrib-v1.webp',
+  isha: 'prayer-isha-v1.webp',
+};
+
+const PRAYER_MINI_IMAGE: Record<PrayerLessonId, string> = {
+  fajr: 'prayer-mini-fajr-v1.webp',
+  dhuhr: 'prayer-mini-dhuhr-v1.webp',
+  asr: 'prayer-mini-asr-v1.webp',
+  maghrib: 'prayer-mini-maghrib-v1.webp',
+  isha: 'prayer-mini-isha-v1.webp',
+};
+
 function readStringSet(key: string) {
   try {
     const raw = localStorage.getItem(key);
@@ -110,11 +127,13 @@ function writeStringSet(key: string, value: Set<string>) {
 export function PrayerLearningScreen({
   initialPrayer = 'fajr',
   onBack,
+  backLabel = 'Zurück zu Lernen',
   onOpenQibla,
   onOpenPrayerTimes,
 }: {
   initialPrayer?: PrayerLessonId;
   onBack: () => void;
+  backLabel?: string;
   onOpenQibla: () => void;
   onOpenPrayerTimes: () => void;
 }) {
@@ -124,6 +143,7 @@ export function PrayerLearningScreen({
   const [preparation, setPreparation] = useState(() => readStringSet('nur_prayer_learning_preparation'));
   const [completedLessons, setCompletedLessons] = useState(() => readStringSet('nur_prayer_learning_complete'));
   const [completionOpen, setCompletionOpen] = useState(false);
+  const [stepChooserOpen, setStepChooserOpen] = useState(false);
   /**
    * Der Durchlauf: der Ablauf läuft von selbst weiter, mit Rezitation, wo es
    * eine gibt. Gedacht zum Mitbeten — die Hände bleiben frei, was beim Üben
@@ -185,6 +205,12 @@ export function PrayerLearningScreen({
   const selectRakah = (value: number) => {
     setPracticeRakah(value);
     setActiveStep(0);
+    setStepChooserOpen(false);
+  };
+
+  const selectStep = (index: number) => {
+    setActiveStep(index);
+    setStepChooserOpen(false);
   };
 
   const togglePreparation = (item: string) => {
@@ -260,25 +286,33 @@ export function PrayerLearningScreen({
   return (
     <motion.main className="screen reference-prayer-course-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zu Lernen"><ChevronLeft size={20} /></button>
+        <button className="icon-button" onClick={onBack} aria-label={backLabel}><ChevronLeft size={20} /></button>
         <div><span className="overline">Beten lernen</span><h1>Gebetskurs</h1></div>
         <button className="icon-button" onClick={onOpenQibla} aria-label="Qibla öffnen"><Compass size={20} /></button>
       </header>
 
-      {/* Flach gehalten. Der Kurs-Fortschritt gehört an den Anfang, das
-          Titelbild trägt ihn — aber davor stand ein 236px hoher Block mit
-          Überschrift und Erklärsatz, und darunter noch eine Zusammenfassung,
-          die dieselbe Rakʿah-Zahl ein drittes Mal zeigte. Zusammen war der
-          eigentliche Lerninhalt fast zwei Bildschirme tief. */}
-      <section className="reference-prayer-course-hero reference-prayer-course-hero--compact">
+      {/* Ein durchgehendes Zeitfenster statt Bild plus leerer Kartenhälfte:
+          Landschaft, Gebetsidentität und Lernstand bilden eine Fläche. */}
+      <section className="reference-prayer-course-hero reference-prayer-course-hero--compact" data-prayer-scene={selectedPrayerId}>
+        <PremiumImage
+          src={`/premium-assets/high-res-objects/${PRAYER_TIME_IMAGE[selectedPrayerId]}`}
+          alt={`${selectedPrayer.timeLabel} als ruhige Tageszeit-Landschaft`}
+          className="reference-prayer-course-hero__time-art"
+          fallback={<PrayerPostureImage posture="qiyam" />}
+          priority
+        />
         <div className="reference-prayer-course-hero__copy">
-          {/* Das gewählte Gebet steht hier, nicht mehr „Schritt für Schritt“:
-              es ist die Angabe, die die gestrichene Zusammenfassungskarte als
-              Einzige beigetragen hat. */}
-          <span className="hero-pill">{selectedPrayer.label} · {selectedPrayer.timeLabel}</span>
-          <div className="reference-prayer-course-hero__progress"><span><i style={{ width: `${courseProgress}%` }} /></span><strong>{completedLessons.size}/5 Gebete gelernt</strong></div>
+          <span className="reference-prayer-course-hero__eyebrow">{selectedPrayer.timeLabel}</span>
+          <div className="reference-prayer-course-hero__title">
+            <h2>{selectedPrayer.label}</h2>
+            <span lang="ar" dir="rtl">{selectedPrayer.arabic}</span>
+          </div>
+          <p>{selectedPrayer.rakahs} Rakʿah · Gebet {PRAYER_LESSONS.findIndex((prayer) => prayer.id === selectedPrayerId) + 1} von 5</p>
+          <div className="reference-prayer-course-hero__progress">
+            <strong><span>{completedLessons.size}</span> von 5 Gebeten gelernt</strong>
+            <span aria-hidden="true"><i style={{ width: `${courseProgress}%` }} /></span>
+          </div>
         </div>
-        <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" fallback={<QiblaObject />} />
       </section>
 
       <section className="reference-prayer-course-selector" aria-label="Gebet auswählen">
@@ -286,9 +320,11 @@ export function PrayerLearningScreen({
           const complete = completedLessons.has(prayer.id);
           return (
             <button key={prayer.id} className={selectedPrayerId === prayer.id ? 'is-active' : ''} onClick={() => selectPrayer(prayer.id)}>
-              <span>{complete ? <CircleCheck size={17} /> : prayer.rakahs}</span>
+              <span className="reference-prayer-course-selector__image">
+                {complete ? <CircleCheck size={17} /> : <img src={`/premium-assets/high-res-objects/${PRAYER_MINI_IMAGE[prayer.id]}`} alt="" />}
+              </span>
               <strong>{prayer.label}</strong>
-              <small>{prayer.arabic}</small>
+              <small>{prayer.arabic} · {prayer.rakahs} Rakʿah</small>
             </button>
           );
         })}
@@ -312,7 +348,7 @@ export function PrayerLearningScreen({
             <strong>{runMode ? 'Durchlauf anhalten' : 'Durchlauf starten'}</strong>
             <small>{runMode
               ? `Läuft: Rakʿah ${practiceRakah}, Schritt ${stepIndex + 1} von ${steps.length}`
-              : 'Der Ablauf blättert selbst weiter und spricht mit, wo es eine Aufnahme gibt'}</small>
+              : 'Der Ablauf blättert selbst weiter; Quran-Verse werden dabei vorgespielt'}</small>
           </span>
         </button>
 
@@ -327,6 +363,32 @@ export function PrayerLearningScreen({
       </section>
 
       {currentStep ? (
+        <details
+          className="reference-prayer-step-chooser"
+          open={stepChooserOpen}
+          onToggle={(event) => setStepChooserOpen(event.currentTarget.open)}
+        >
+          <summary>
+            <span><small>Rakʿah {practiceRakah} · Schritt {stepIndex + 1} von {steps.length}</small><strong>{currentStep.title}</strong></span>
+            <ChevronDown size={18} />
+          </summary>
+          <div>
+            {steps.map((step, index) => (
+              <button
+                key={`${step.id}-${index}`}
+                className={stepIndex === index ? 'is-active' : index < stepIndex ? 'is-complete' : ''}
+                onClick={() => selectStep(index)}
+              >
+                <PrayerPostureImage posture={step.posture} compact />
+                <span><small>{index + 1}. {POSTURE_LABEL[step.posture]}</small><strong>{step.title}</strong></span>
+                {index < stepIndex ? <Check size={16} /> : <ChevronRight size={16} />}
+              </button>
+            ))}
+          </div>
+        </details>
+      ) : null}
+
+      {currentStep ? (
         <section className={`reference-rakah-step-detail${runMode ? ' is-running' : ''}`}>
           <div className="section-heading">
             <div><span className="overline">Schritt {stepIndex + 1} von {steps.length}</span><h2>{currentStep.title}</h2></div>
@@ -337,7 +399,7 @@ export function PrayerLearningScreen({
               gleichzeitig lesen, was man darin sagt. */}
           <div className="reference-rakah-step-detail__body">
             <figure className="reference-rakah-figure">
-              <PrayerPostureFigure posture={currentStep.posture} labelled />
+              <PrayerPostureImage posture={currentStep.posture} />
               <figcaption>{POSTURE_LABEL[currentStep.posture]}</figcaption>
             </figure>
             <p className="reference-rakah-step-detail__description">{currentStep.description}</p>
@@ -347,8 +409,7 @@ export function PrayerLearningScreen({
               <div className="reference-rakah-wording__count">
                 <strong>{repetitionLabel(currentStep)}</strong>
                 <span>sprechen{currentStep.repetitionNote ? ` · ${currentStep.repetitionNote}` : ''}</span>
-                {/* Nur bei Koran — siehe RecitationButton, warum die
-                    überlieferten Formeln keine Aufnahme bekommen. */}
+                {/* Nur bei Quran-Versen mit dokumentierter Audio-Nutzung. */}
                 {stepRecitation.length ? (
                   <RecitationButton
                     key={`${currentStep.id}-${practiceRakah}-${runMode}`}
@@ -371,7 +432,7 @@ export function PrayerLearningScreen({
                       <span className="reference-rakah-runs__label">{run.label}</span>
                       <div>
                         <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
-                        <p className="reference-rakah-wording__transliteration">{currentStep.transliteration}</p>
+                        <p className="reference-rakah-wording__pronunciation"><span>Deutsche Aussprachehilfe</span>{currentStep.pronunciation ?? currentStep.transliteration}</p>
                       </div>
                     </li>
                   ))}
@@ -379,10 +440,11 @@ export function PrayerLearningScreen({
               ) : (
                 <>
                   <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
-                  <p className="reference-rakah-wording__transliteration">{currentStep.transliteration}</p>
+                  <p className="reference-rakah-wording__pronunciation"><span>Deutsche Aussprachehilfe</span>{currentStep.pronunciation ?? currentStep.transliteration}</p>
                 </>
               )}
-              <p className="reference-rakah-wording__translation">{currentStep.translation}</p>
+              <p className="reference-rakah-pronunciation-note">Näherung für deutschsprachige Anfänger. „dh“, „gh“ und „q“ haben im Deutschen keine genaue Entsprechung – nutze bei Quran-Abschnitten die Aufnahme und sonst eine qualifizierte Lehrperson.</p>
+              <p className="reference-rakah-wording__translation"><span>Bedeutung</span>{currentStep.translation}</p>
               {/* Woher der Wortlaut stammt. Duas und Hadithe der App tragen das
                   längst; die Gebetsschritte standen bis hierher ohne Beleg. */}
               <p className="reference-rakah-source">
@@ -428,32 +490,6 @@ export function PrayerLearningScreen({
         </section>
       ) : null}
 
-      <section className="reference-prayer-lesson-steps">
-        <div className="section-heading"><div><span className="overline">Ablauf</span><h2>{currentRakat?.title}</h2></div><span>{steps.length} Schritte</span></div>
-        <div>
-          {steps.map((step, index) => {
-            const active = stepIndex === index;
-            const complete = index < stepIndex;
-            return (
-              <button key={`${step.id}-${index}`} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}>
-                {/* Die Haltung als Bild, damit die Liste im Überflug lesbar
-                    ist; die Schrittnummer wandert dafür in die Textzeile.
-                    Auch abgearbeitete Schritte behalten ihr Bild — man blättert
-                    hier zurück, um etwas nachzuschauen, und ein Haken an der
-                    Stelle nimmt genau das weg. Erledigt zeigt die Färbung. */}
-                <span><PrayerPostureFigure posture={step.posture} /></span>
-                <span>
-                  <small>{index + 1}. {POSTURE_LABEL[step.posture]}</small>
-                  <strong>{step.title}</strong>
-                  <em>{step.transliteration ?? step.description}</em>
-                </span>
-                {step.arabic ? <span className="reference-rakah-step-count">{repetitionLabel(step)}</span> : <ChevronRight size={17} />}
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
       <section className="reference-prayer-tips">
         <div className="section-heading"><div><span className="overline">Worauf es ankommt</span><h2>Hinweise</h2></div></div>
         <ul>{PRAYER_PRACTICE_TIPS.map((tip) => <li key={tip}>{tip}</li>)}</ul>
@@ -472,9 +508,7 @@ export function PrayerLearningScreen({
         <button className="reference-qibla-shortcut" onClick={onOpenQibla}><MapPin size={17} /><span><strong>Qibla prüfen</strong><small>Richtung zur Kaaba mit Standort und Gerätesensor</small></span><ChevronRight size={17} /></button>
       </section>
 
-      {/* Warum an manchen Schritten „Anhören“ steht und an anderen nicht —
-          einmal erklärt, statt an zwölf Schritten einen Hinweis zu zeigen. */}
-      <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.<br />Aufnahmen werden beim Antippen aus dem Netz geladen: die Koran-Abschnitte von Mishary Alafasy, die überlieferten Formeln aus Hisn al-Muslim. Ein paar Schritte bleiben ohne Ton, weil dort keine Aufnahme vorliegt, die genau dem hier abgedruckten Wortlaut entspricht — gehört und gelesen soll dasselbe sein.</small></span></section>
+      <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.<br />Nur die Quran-Abschnitte haben eine Aufnahme. Sie wird erst beim Antippen von Islamic Network gestreamt und von Mishary Alafasy rezitiert. Für die übrigen Formeln helfen arabischer Wortlaut und deutsche Aussprachehilfe.</small></span></section>
 
       {lessonComplete ? <button className="reference-prayer-course-restart" onClick={restartLesson}><RotateCcw size={16} /> Lektion neu beginnen</button> : null}
 

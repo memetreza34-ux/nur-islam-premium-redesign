@@ -58,6 +58,7 @@ for (const width of WIDTHS) {
         // way to scroll to it — the reader simply loses the rest of the line.
         for (const el of document.querySelectorAll('*')) {
           if (el.children.length > 0) continue;
+          if (el.classList.contains('sr-only')) continue;
           const text = (el.textContent ?? '').trim();
           if (!text) continue;
           const style = getComputedStyle(el);

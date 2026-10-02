@@ -6,6 +6,7 @@ const scripts = pkg.scripts ?? {};
 const chain = String(scripts.check ?? '');
 
 const requiredChecks = [
+  'no-assistant:check',
   'assets:check',
   'image-map:check',
   'icon-map:check',

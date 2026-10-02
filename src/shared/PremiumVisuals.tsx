@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import { versionAppPath } from '../app/appPaths';
 
-const PREMIUM_ASSET_VERSION = '20260808-release-hardening';
+const PREMIUM_ASSET_VERSION = '20260826-original-art';
 
 type VisualProps = {
   className?: string;

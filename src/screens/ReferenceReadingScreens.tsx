@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { WORSHIP_GUIDES, WORSHIP_GUIDE_BY_ID } from '../data/worshipGuideData';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage } from '../shared/PremiumVisuals';
+
+const WuduLesson = lazy(() => import('../shared/WuduLesson'));
 
 type ToastState = string | null;
 
@@ -207,7 +209,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
   };
 
   const heroAsset = guide.id === 'wudu'
-    ? '/premium-assets/high-res-objects/mosque-gold-v2.webp'
+    ? '/premium-assets/high-res-objects/wudu-washing-v1.webp'
     : '/premium-assets/high-res-objects/qibla-compass-v2.webp';
 
   return (
@@ -222,17 +224,26 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
         ))}
       </div>
 
-      <section className={`reference-guide-hero reference-guide-hero--${guide.id}`}>
-        <PremiumImage src={heroAsset} fallback={<Droplets size={76} />} />
-        {/* The intro is a sentence, not a heading: as an h2 it hit the display
-            face at hero size and broke mid-word in a narrow column. */}
-        <div><span className="hero-pill">Ablauf</span><h2>{guide.title}</h2><p>{guide.intro}</p><p>{steps.length} Schritte · Fortschritt lokal gespeichert</p></div>
+      <section className="worship-guide-intro" aria-label="Einführung">
+        <header>
+          <span className="overline">Ablauf</span>
+          <h2>{guide.id === 'wudu' ? <>Wudu <span>Gebetswaschung</span></> : guide.title}</h2>
+        </header>
+        <div className="worship-guide-intro__body">
+          <p>{guide.intro}</p>
+          <div aria-hidden="true"><PremiumImage src={heroAsset} className="worship-guide-intro__art" fallback={<Droplets size={48} />} priority /></div>
+        </div>
+        <p className="worship-guide-intro__meta">{steps.length} Schritte · Fortschritt lokal gespeichert</p>
       </section>
 
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Wichtiger Hinweis</strong><small>Dieser Bereich ist ein verständlicher Überblick. Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen. Für verbindliche Praxisfragen sollte eine vertrauenswürdige Lehrperson vor Ort hinzugezogen werden.</small></span></section>
       <section className="reference-guide-progress"><span><strong>Schritt {stepIndex + 1}</strong><small>von {steps.length}</small></span><div><i style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} /></div></section>
 
-      <section className="reference-guide-steps">
+      {guide.id === 'wudu' ? (
+        <Suspense fallback={<p role="status">Schritte werden geladen …</p>}>
+          <WuduLesson steps={steps} stepIndex={stepIndex} onSelect={setActiveStep} onComplete={completeGuide} />
+        </Suspense>
+      ) : <section className="reference-guide-steps">
         {steps.map((step, index) => {
           const Icon = icons[index] ?? Sparkles;
           const active = index === stepIndex;
@@ -253,7 +264,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
             </button>
           );
         })}
-      </section>
+      </section>}
 
       {guide.tips.length ? (
         <section className="reference-legacy-notice">
@@ -262,9 +273,8 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
         </section>
       ) : null}
 
-      <div className="reference-guide-navigation"><button disabled={stepIndex === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? completeGuide() : setActiveStep((value) => Math.min(steps.length - 1, value + 1))}>{stepIndex === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div>
+      {guide.id !== 'wudu' ? <div className="reference-guide-navigation"><button disabled={stepIndex === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? completeGuide() : setActiveStep((value) => Math.min(steps.length - 1, value + 1))}>{stepIndex === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div> : null}
       <Toast message={toast} />
     </motion.main>
   );
 }
-

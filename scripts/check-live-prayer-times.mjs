@@ -12,6 +12,8 @@ const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 
 const serviceRequirements = [
   'https://api.aladhan.com/v1/timings/',
+  'https://api.aladhan.com/v1/calendar/',
+  'fetchPrayerTimesMonth',
   'AbortController',
   'normalizeTime',
   'nur_prayer_times_latest',
@@ -42,10 +44,11 @@ const hookRequirements = [
   'requestLocation',
   'updatePreferences',
   'loadCachedPrayerTimes',
-  'loadPrayerLocation',
-  'loadPrayerPreferences',
+  'getInitialPrayerTimesSnapshot',
   'savePrayerLocation(location)',
-  'getFallbackPrayerTimesSnapshot',
+  'createFallbackPrayerSnapshot(location, preferences)',
+  'applyPrayerSnapshotToSharedSchedule(pending)',
+  'requestCounter.current !== requestId',
 ];
 for (const requirement of hookRequirements) {
   if (!hook.includes(requirement)) throw new Error(`Live prayer times hook is missing: ${requirement}`);
@@ -55,7 +58,6 @@ for (const obsoleteImport of [
   'readCachedPrayerSnapshot',
   'readPrayerLocation',
   'readPrayerPreferences',
-  'createFallbackPrayerSnapshot',
 ]) {
   if (hook.includes(obsoleteImport)) throw new Error(`Prayer hook still references obsolete service API: ${obsoleteImport}`);
 }
@@ -73,7 +75,7 @@ const screenRequirements = [
   'ASR_SCHOOL_OPTIONS',
   'Notification.requestPermission()',
   'playReminderTone',
-  'getNextPrayer(now, prayerTimes)',
+  'getNextPrayer(now)',
   'currentDateKey',
   'completedDateKey',
   'document.visibilityState',
@@ -81,6 +83,10 @@ const screenRequirements = [
   'setCompletedDateKey(currentDateKey)',
   'reference-prayer-location-privacy',
   'an AlAdhan übermittelt',
+  'Vorherigen Tag anzeigen',
+  'Nächsten Tag anzeigen',
+  'Gebetszeiten im Monat',
+  'Monatsplan',
 ];
 for (const requirement of screenRequirements) {
   if (!screen.includes(requirement)) throw new Error(`Prayer screen live feature is missing: ${requirement}`);

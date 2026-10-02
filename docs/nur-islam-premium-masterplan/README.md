@@ -1,5 +1,7 @@
 # Nur Islam Premium – Masterplan und vollständige App-Anleitung
 
+> **Produktentscheidung 27.08.2026:** Kein Assistent in der App. Sämtliche KI-/Assistenten-Vorschläge dieses historischen Plans sind aufgehoben. Maßgeblich: [Entfernungsnachweis](../ASSISTANT-REMOVAL.md) und AGENTS.md.
+
 **Ursprung der übertragenen Anleitung:** 8. August 2026  
 **Quellprojekt:** `memetreza34-ux/von-idee-bis-fertig`  
 **App-Repository:** `memetreza34-ux/nur-islam-premium-redesign`

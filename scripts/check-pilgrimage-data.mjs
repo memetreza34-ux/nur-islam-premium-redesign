@@ -9,8 +9,8 @@
  * Two rules. The text describes the sequence, never the ruling — what is
  * obligatory, what invalidates the pilgrimage, what to do when something is
  * missed. Those differ between schools of law and belong to a qualified source.
- * And the screen has to keep saying that the text was written here and still
- * needs review, because that caveat is exactly what gets dropped in a redesign.
+ * The screen retains the scope limitation. Editorial review status belongs in
+ * the internal review documents, not in the learning flow.
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -61,9 +61,8 @@ for (const requirement of [
   "import { HAJJ_STATIONS, HOLY_PLACES, UMRAH_STATIONS } from '../data/pilgrimageData';",
   "if (featureId === 'hajj') return <PilgrimageFeature",
   "if (featureId === 'places') return <HolyPlacesFeature",
-  // The caveat that this text was written here and is not yet reviewed.
   'beschreibt den Ablauf, nicht die Urteile',
-  'für diese App verfasst',
+  'worin sich die Rechtsschulen unterscheiden',
 ]) {
   if (!screen.includes(requirement)) throw new Error(`Pilgrimage screens are missing: ${requirement}`);
 }
@@ -74,5 +73,5 @@ if (screen.includes('const featureContent')) {
 
 const withReference = (data.match(/reference: '/g) ?? []).length;
 console.log(
-  `Pilgrimage verified: ${entries.length} entries describing the sequence without stating rulings, ${withReference} carrying an exact Quran citation, and the screens still name the text as written here and unreviewed.`,
+  `Pilgrimage verified: ${entries.length} entries describing the sequence without stating rulings, ${withReference} carrying an exact Quran citation, and the screen retains scope and school-difference limitations.`,
 );

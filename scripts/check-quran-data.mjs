@@ -56,16 +56,13 @@ for (const number of offlineNumbers) {
   totalAyahs += arabic.ayahs.length;
 }
 
-// The German rendering is deliberately not here. Bubenheim & Elyas is a
-// protected work; shipping all 114 Surahs of it made this app the distributor,
-// which needs the rights holder's permission. It is fetched per Surah instead
-// and cached in the reader's own browser. A `de/` directory reappearing means
-// that decision was reversed by accident.
+// No translation or transliteration is bundled here. The Arabic is the offline
+// source; the Latin-script pronunciation aid is fetched per Surah and cached in
+// the reader's browser.
 try {
   await readFile(resolve(dataRoot, 'de/1.json'), 'utf8');
   throw new Error(
-    'public/data/quran/de is back. The German translation is fetched per Surah, not shipped —\n' +
-      'bundling it makes this app the distributor of a protected work.',
+    'public/data/quran/de is back. Quran translations must not be bundled with the app.',
   );
 } catch (error) {
   if (error.code !== 'ENOENT') throw error;
@@ -80,13 +77,14 @@ if (totalAyahs !== 6236) {
 const onlineServiceFeatures = [
   "ONLINE_API_BASE = 'https://api.alquran.cloud/v1'",
   "ONLINE_ARABIC_EDITION = 'quran-uthmani'",
+  "ONLINE_TRANSLITERATION_EDITION = 'en.transliteration'",
   "ONLINE_GERMAN_EDITION = 'de.bubenheim'",
-  "ONLINE_CACHE_NAME = 'nur-quran-online-v1'",
+  "ONLINE_CACHE_NAME = 'nur-quran-online-v3'",
   'AbortController',
   'ONLINE_TIMEOUT_MS',
   'readOnlineCache',
   'writeOnlineCache',
-  'parseOnlineBundle',
+  'parseOnlineEdition',
   'validateEdition',
   "source: 'offline'",
 ];
@@ -94,42 +92,32 @@ for (const required of onlineServiceFeatures) {
   if (!serviceSource.includes(required)) throw new Error(`Online Quran service is missing: ${required}`);
 }
 
-// Four places have to agree on which German rendering the app ships: the
-// bundled files the reader shows, the edition the online fallback asks for,
-// the label the reader prints above the text, and the translator the licence
-// names. They did not. Every offline file held Abu Rida while the service
-// fetched de.bubenheim and the imprint credited Bubenheim & Elyas, so the app
-// read one translation, could fall back to a second, and credited a third
-// combination of the two. The bundle has since been rebuilt from de.bubenheim,
-// which is what the rest of the code always intended.
-//
-// The fingerprint is one Ayah of the shipped edition, quoted exactly. Swapping
-// the bundle for a different translation changes it and fails here.
 const legalSource = await readFile(resolve(root, 'src/data/legalContent.ts'), 'utf8');
-if (!legalSource.includes('Bubenheim & Elyas')) {
-  throw new Error('The licence section no longer credits the German Quran translation the reader is shown.');
+if (!legalSource.includes('en.transliteration') || !legalSource.includes('de.bubenheim')) {
+  throw new Error('The legal source section no longer names both Quran reading editions the reader uses.');
 }
 
-// The translation must stay a fetch, never a bundled asset. Requesting both
-// editions at once was how it used to work, and it is the shape to guard
-// against: it downloads the Arabic half the device already has, and it couples
-// the two so a failed translation takes the Arabic text down with it.
+// Supporting text must stay a fetch, never a bundled asset. The multi-edition
+// endpoint would also download the Arabic half the device already has.
 if (serviceSource.includes(`${'editions'}/`)) {
-  throw new Error('The Quran service requests both editions again; only the translation is fetched.');
+  throw new Error('The Quran service requests a coupled multi-edition bundle instead of independent reading layers.');
 }
 for (const required of [
+  'transliteration: SurahDetail | null',
   'german: SurahDetail | null',
+  "transliterationSource: transliteration?.source ?? 'unavailable'",
   "translationSource: translation?.source ?? 'unavailable'",
 ]) {
   if (!serviceSource.includes(required)) {
     throw new Error(
-      `The Quran service no longer treats the translation as optional (missing: ${required}).\n` +
-        'A Surah has to render from the bundled Arabic when the translation cannot be fetched.',
+      `The Quran service no longer treats its supporting reading layers as optional (missing: ${required}).\n` +
+        'A Surah has to render from the bundled Arabic when either supporting layer cannot be fetched.',
     );
   }
 }
 
 const appSource = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');
+const homeProgressSource = await readFile(resolve(root, 'src/services/homeQuranProgress.ts'), 'utf8');
 const catalogSource = await readFile(resolve(root, 'src/screens/QuranScreen.tsx'), 'utf8');
 const readerSource = await readFile(resolve(root, 'src/screens/QuranReaderScreen.tsx'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
@@ -142,11 +130,12 @@ for (const required of [
   'selectedAyahNumber',
   'onOpenReader={openReader}',
   'initialAyahNumber={selectedAyahNumber}',
-  'hasProgress: boolean',
-  'hasProgress: false',
-  "englishName: 'Al-Faatiha'",
+  'useState(readHomeQuranProgress)',
 ]) {
   if (!appSource.includes(required)) throw new Error(`Quran app routing/progress is missing: ${required}`);
+}
+for (const required of ['hasProgress: boolean', 'hasProgress = false', 'progressFor(surahs[0])', 'englishName: surah.englishName', 'surahsByNumber.get(surahNumber)']) {
+  if (!homeProgressSource.includes(required)) throw new Error(`Home Quran metadata/progress is missing: ${required}`);
 }
 if (appSource.includes("surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 'Al-Ikhlaas'")) {
   throw new Error('Home must not synthesize Al-Ikhlaas 112:1 as first-use reading history.');
@@ -183,11 +172,12 @@ for (const required of [
   'nur_quran_last_read',
   'nur_quran_bookmarks_',
   'bundle.source',
+  'transliterationLabel',
   'translationLabel',
   'reloadToken',
   'initialAyahNumber?: number',
   'scrollIntoView',
-  'Al Quran Cloud',
+  'germanAttribution',
   'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
   'surahNumber: bundle.meta.number',
   'ayahNumber: validatedAyah',
@@ -195,11 +185,10 @@ for (const required of [
   if (!readerSource.includes(required)) throw new Error(`Quran reader integration is missing: ${required}`);
 }
 
-// The reader may not present a verbatim third-party translation as the app's
-// own loose rendering of the meaning. It has to say whose words these are —
-// offline and online alike, since both now serve the same edition.
-if (readerSource.includes('Sinngemäße deutsche Bedeutung')) {
-  throw new Error('The reader labels the bundled translation as its own meaning rendering instead of naming the translator.');
+for (const forbidden of ['Bedeutung an', 'Bedeutung aus']) {
+  if (readerSource.includes(forbidden)) {
+    throw new Error(`The Quran reader still exposes an unnecessary meaning visibility toggle: ${forbidden}`);
+  }
 }
 
 if (!stylesSource.includes('reference-quran-complete.css') || !stylesSource.includes('reference-quran-online.css')) {
@@ -212,4 +201,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} Surahs in Arabic offline (${totalAyahs} ayahs), the German rendering fetched per Surah and never bundled, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);
+console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} Surahs in Arabic offline (${totalAyahs} ayahs), pronunciation and German meaning fetched independently per Surah, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);

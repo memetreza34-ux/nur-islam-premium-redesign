@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
+const homeProgress = await read('src/services/homeQuranProgress.ts');
+const dhikrDailyState = await read('src/services/dhikrDailyState.ts');
 
 const [app, quran, reader, duas, names, dhikr, collections, calendar, notes, account, backend] = await Promise.all([
   read('src/app/App.tsx'),
@@ -30,18 +32,22 @@ function forbidTokens(source, label, tokens) {
   }
 }
 
-requireTokens(app, 'Home Quran progress', [
+requireTokens(homeProgress, 'Home Quran progress data', [
   'hasProgress: boolean',
-  'surahNumber: 1',
-  "englishName: 'Al-Faatiha'",
-  'hasProgress: false',
+  'progressFor(surahs[0])',
+  'hasProgress = false',
+  'surahsByNumber.get(surahNumber)',
+  'Math.min(ayahNumber, surah.numberOfAyahs)',
   "localStorage.getItem('nur_quran_last_read')",
+]);
+requireTokens(app, 'Home Quran progress', [
+  'useState(readHomeQuranProgress)',
   'quranProgress.hasProgress && quranProgress.numberOfAyahs',
   "'Quran beginnen'",
   "'Noch kein Lesestand'",
-  "'Noch kein gespeicherter Lesestand'",
-  "label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon",
+  'data-home-section="continue"',
 ]);
+if (app.split('data-home-section="continue"').length !== 2) throw new Error('Start must contain exactly one Quran resume card.');
 forbidTokens(app, 'Home Quran progress', [
   "surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 'Al-Ikhlaas'",
   "label: 'Quran lesen', eyebrow: 'Zuletzt gelesen', icon: BookOpen",
@@ -90,11 +96,17 @@ forbidTokens(names, 'Name favorites', [
 ]);
 
 requireTokens(dhikr, 'Dhikr daily persistence', [
-  'parsed.date !== fallback.date',
+  'readDhikrDailyState()',
   'const firstItem = routine.items[0]',
   'const firstItemKey = `${routine.id}:${firstItem.id}`',
   'counts: { [firstItemKey]: 1 }',
   'toastTimerRef',
+]);
+requireTokens(dhikrDailyState, 'Validated Dhikr daily state', [
+  "localStorage.getItem('nur_dhikr_daily_v2')",
+  'parsed.date !== day',
+  'targetByKey.has(key)',
+  'Math.min(targetByKey.get(key) ?? 0, Math.floor(value as number))',
 ]);
 forbidTokens(dhikr, 'Dhikr daily persistence', [
   'counts: { [itemKey]: 1 }',

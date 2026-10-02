@@ -21,8 +21,10 @@ for (const requirement of [
 
 for (const requirement of [
   "THEME_STORAGE_KEY = 'nur_theme'",
-  "SYSTEM_QUERY = '(prefers-color-scheme: light)'",
-  'applyResolvedTheme',
+  "LEGACY_KEY = 'premium_theme'",
+  'applyFixedTheme',
+  "dataset.theme = 'dark'",
+  'localStorage.removeItem(THEME_STORAGE_KEY)',
   "window.addEventListener('nur:cloud-restored', handleCloudRestore)",
   "window.removeEventListener('nur:cloud-restored', handleCloudRestore)",
   "window.addEventListener('storage', handleStorage)",
@@ -30,4 +32,4 @@ for (const requirement of [
   if (!theme.includes(requirement)) throw new Error(`Theme restore synchronization is missing: ${requirement}`);
 }
 
-console.log('Cloud restore synchronization verified: restore events reapply theme state immediately, while coordinates, fired-reminder markers and device-specific install-prompt state stay out of cloud backups.');
+console.log('Cloud restore synchronization verified: restore events reapply the fixed premium palette, while old theme choices, coordinates, fired-reminder markers and device-specific install-prompt state stay out of cloud backups.');

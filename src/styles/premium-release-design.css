@@ -294,7 +294,6 @@ body {
 
 /* Continue / daily cards */
 .continue-card--v2,
-.ai-preview,
 .recommendation-card,
 .hadith-card {
   border-color: rgba(232, 199, 122, .16);
@@ -325,20 +324,6 @@ body {
   right: -20px;
   bottom: -28px;
   opacity: .43;
-}
-
-.ai-preview {
-  grid-template-columns: 54px minmax(0, 1fr) 40px;
-  padding: 15px;
-  border-radius: 21px;
-  background:
-    radial-gradient(circle at 8% 50%, rgba(222, 180, 91, .12), transparent 8rem),
-    linear-gradient(145deg, rgba(10, 55, 41, .94), rgba(2, 22, 17, .98));
-}
-
-.ai-preview strong {
-  font-size: 1.18rem;
-  font-weight: 600;
 }
 
 .recommendation-list {

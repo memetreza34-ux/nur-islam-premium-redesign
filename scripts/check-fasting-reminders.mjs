@@ -47,7 +47,7 @@ for (const requirement of [
   'Notification.requestPermission()',
   'Fasten-Erinnerungen',
 ]) {
-  if (!legacy.includes(requirement)) throw new Error(`Fasting assistant UI is missing central service integration: ${requirement}`);
+  if (!legacy.includes(requirement)) throw new Error(`Fasting plan UI is missing central service integration: ${requirement}`);
 }
 
 for (const forbidden of [
@@ -59,7 +59,7 @@ for (const forbidden of [
   'readCalendarEntries()',
   'writeCalendarEntries(',
 ]) {
-  if (legacy.includes(forbidden)) throw new Error(`Fasting assistant contains duplicate calendar scheduling logic: ${forbidden}`);
+  if (legacy.includes(forbidden)) throw new Error(`Fasting plan contains duplicate calendar scheduling logic: ${forbidden}`);
 }
 
 for (const requirement of [
@@ -71,4 +71,4 @@ for (const requirement of [
   if (!calendarService.includes(requirement)) throw new Error(`Shared calendar reminder engine is missing: ${requirement}`);
 }
 
-console.log('Fasting reminders verified: the assistant writes only preferences and immediately delegates to the single 45-day rolling scheduler; no duplicate screen-local calendar planning remains, and delivery uses the shared calendar reminder engine.');
+console.log('Fasting reminders verified: the fasting plan writes only preferences and immediately delegates to the single 45-day rolling scheduler; no duplicate screen-local calendar planning remains, and delivery uses the shared calendar reminder engine.');

@@ -1,0 +1,1235 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-08-26",
+  "generator": {
+    "provider": "OpenAI",
+    "surface": "Codex built-in image generation",
+    "model": "platform-managed image model; exact model identifier was not exposed",
+    "inputImages": []
+  },
+  "processing": {
+    "sourceFormat": "PNG; alpha preserved when present",
+    "finalFormat": "WebP; alpha for cutout objects, opaque for card backgrounds",
+    "command": "cwebp -q 88 -m 6; cutout objects additionally use -alpha_q 100",
+    "colorDirection": "dark emerald, antique gold, walnut and warm ivory"
+  },
+  "assets": [
+    {
+      "path": "public/premium-assets/high-res-objects/widget-date-illustrated-v1.webp",
+      "sha256": "410e5bf065556ac463d3e0bd598f43f32cca51806f4799a90e4075cf9c719797",
+      "dimensions": "512x512",
+      "use": "Hijri date widget; decorative undated calendar, not the authoritative date display.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b7b63693-c528-4e64-bead-20eb86166f69.png",
+      "inputImages": ["calendar-object-v1.webp", "home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Rebuild an undated standing calendar as a transparent premium softly animated 3D object in the app's forest-green, ivory, walnut and restrained gold language; no readable text or numbers. Existing calendar was a subject reference; illustrated home Quran was the style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-inspiration-illustrated-v1.webp",
+      "sha256": "9f8f36a63fb3e9d9a9fe2ae3b6536137937401e9c2da7b61d6a3fa337dd4cd47",
+      "dimensions": "512x341",
+      "use": "Daily inspiration widget; blank verse card with bookmark, not religious source text.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-8aa3093a-65c0-437d-9e6c-d0413d75bdd1.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D blank ivory inspiration card with green bookmark on a walnut holder; forest-green, ivory, walnut and restrained gold palette; compact three-quarter object, no readable text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-routine-illustrated-v1.webp",
+      "sha256": "31213e308255449ad7b30429d1dd0dd62d7505e0c6e956f155440ff3e6e81e19",
+      "dimensions": "512x342",
+      "use": "Daily routine widget; blank task cards and check motif, not a live task state.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-484d0e05-6401-4547-9577-034abae42ca2.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D walnut task-card holder with three blank ivory cards and restrained gold check motif; compact readable silhouette, app-matched materials and no text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-quran-plan-illustrated-v1.webp",
+      "sha256": "70efd29cf9bac7897fc394699d69d3db10caac7ee65085b4424680f2a4bd0cb4",
+      "dimensions": "512x341",
+      "use": "Quran plan widget; Quran with a blank planning card, no generated scripture.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-ad08d011-ad9e-46e9-a8f5-bd33c16ec2a8.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D closed forest-green Quran beside a blank ivory reading-plan card, warm walnut and restrained gold; compact three-quarter silhouette, no scripture or readable text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-weekly-prayers-illustrated-v1.webp",
+      "sha256": "1750d9d323ae35104b947a52546c9e3f82600e54c80179abfd9e8f19df75e0fe",
+      "dimensions": "512x341",
+      "use": "Weekly prayers widget; rolled mat and blank seven-part planner, not live progress.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-62d17d97-2893-4dfa-8dfb-4979f8f031c1.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D rolled deep-green prayer mat with ivory fringe beside a small walnut weekly planner notebook with seven blank divisions; rounded realistic materials, restrained brass, no text or extra objects. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-favorites-illustrated-v1.webp",
+      "sha256": "1957a454f806a8944f73c58f532e04391d55cad6e2bd4a65acc20de5d2349586",
+      "dimensions": "512x341",
+      "use": "Favorites widget; blank saved cards with ribbon, no user data embedded.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-8e81975a-74bf-45bc-a62b-ee61d577b6c8.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D two blank ivory saved cards with an emerald ribbon in a compact walnut holder; forest-green, ivory and restrained gold palette, no legible text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-reminders-illustrated-v1.webp",
+      "sha256": "9ebd7974f58cadc487533cb505f7ded6c8fb2e58fa8984f9e29d9ba90e396081",
+      "dimensions": "512x342",
+      "use": "Reminders widget; desk bell and blank schedule card, not an active notification.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b1793828-fcb8-4341-ac54-31914a60738b.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D small brass desk bell with a blank ivory schedule card in a walnut holder; compact silhouette, app-matched green and gold palette, no text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/widget-friday-illustrated-v1.webp",
+      "sha256": "eca2b60741658feb271bf312295ae2d3b1c8b554ed52250a3fb3e7a55b35407f",
+      "dimensions": "512x342",
+      "use": "Friday preparation widget; arched prayer setting and mat, no asserted mosque identity.",
+      "generatedAt": "2026-09-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-7f838eff-e5f2-4524-af5d-d616e6abd2aa.png",
+      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
+      "prompt": "Transparent premium softly animated 3D cream-and-emerald mosque arch with a folded deep-green prayer mat and small brass vessel; compact three-quarter silhouette, no identifiable real mosque, no text. Illustrated home Quran used only as style reference."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-hands-v1.webp",
+      "sha256": "1463551883af4b4250b2cd4a7713557a869dad12d4d9555a93d8112e30dbace6",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: hands. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-28879781-580a-4868-b2b2-f22a1eb8d289.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character at a small rounded ivory wash basin with a simple gold faucet. Both hands together under a short stream of water, one hand rubbing the back of the other. Wrist areas visible. Friendly relaxed expression. The hands and action are central and prominent."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-mouth-v1.webp",
+      "sha256": "fb60975031923ca8a66a4595e1662bc4fd3b89fa913863819078e13428973dee",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: mouth. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-6c151872-5670-4c9b-9110-0f4cbe6ac502.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character in three-quarter view, above a small rounded ivory wash basin. One cupped RIGHT hand brings a small amount of water right to the lips to rinse the mouth. Lips meet the water in the cupped hand, nose remains visible above it. Other hand lowered. No glass, no toothbrush, no drinking bottle."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-nose-v1.webp",
+      "sha256": "2f63ffd579fe3bb82a95c1cbfefe4639141e9fcb6006f36bbdf4b9e842dddcc9",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: nose. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-7da47c60-9cb9-484c-8067-266e7a28a2a8.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character in three-quarter side view above a small rounded ivory wash basin. One cupped right hand holds a little water immediately below the nostrils; head slightly leaned forward, mouth closed. Nose and water contact clearly visible, fingers NOT inserted into nostrils. Other hand lowered. Show gentle nose-rinsing action."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-face-v1.webp",
+      "sha256": "7b70b98eb0a30e0664a819a164a0752d7f8ccbab96b67a71be4b614cb728092d",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: face. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-60b69791-215b-4a14-aa8f-da6a2b56d08d.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character at an ivory wash basin, both wet palms gently on the cheeks washing the face, eyes closed peacefully. Forehead and chin visible between the hands, a few turquoise droplets. Palms on cheeks, not over eyes."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-arms-v1.webp",
+      "sha256": "ca6e78f61899ac08a7a7deb6cdd1c22a41b43b5cb572b8cd7e2bcdf4c7211cc6",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: arms. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b24135e5-9316-4f37-8e58-5261c4114c8e.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character at an ivory wash basin. RIGHT arm held diagonally across the front, sleeve rolled well ABOVE the elbow so the entire forearm and elbow are exposed; LEFT hand washes the right forearm near the elbow with a few water droplets. Both hands and the whole right elbow clearly visible."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-head-v1.webp",
+      "sha256": "600876c41f868fc8a188ab0b821eb736f57e6bbceb0e31de111958093659c6e2",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: head. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b77a2828-808a-4795-ae1b-1408b566e0df.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character, both damp palms gently on top of the smooth short hair, fingers pointing toward back of head, wiping hair. Elbows comfortably outward, face visible and eyes relaxed. No faucet, no shower, no running water onto the head; only tiny droplets on hands."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-ears-v1.webp",
+      "sha256": "1266e228b719416d6edf0081eae82542c3246f7b41dcf62d640b2da19d7527ac",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: ears. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-3f1e6aa1-7d85-49b9-8e1a-a03af6302a91.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: Waist-up cartoon character in three-quarter view, hands at ears, index fingers gently at the OUTER ear bowls and thumbs behind ears, cleaning the ears with damp fingers. Exaggerated round cartoon ears readable; no fingers pushed deepdeep in ear canals. Gentle expression, no earbuds or objects."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-step-feet-v1.webp",
+      "sha256": "04528435feca631d0c9bfcf9ce3f4e2717af5bd73e75d8a88d2d62ae50344bc0",
+      "dimensions": "512x512",
+      "use": "Wudu single-step lesson: feet. Static stylized cartoon visual aid; written instructions remain authoritative. Not a religious approval.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-ad4b8b97-69aa-4706-90dc-3a5100a2ce60.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; generated alpha preserved",
+      "prompt": "Use case: scientific-educational. Create ONE illustration for a beginner Wudu app, as a highly stylized 3D animated family-film cartoon. Clearly a charming TOY-LIKE cartoon, NOT a realistic human or anatomical medical illustration. Consistent character: ordinary friendly adult man, oversized round head, small rounded nose, huge expressive brown eyes, simplified short dark brown hair in 3 smooth sculpted tufts, no beard, warm honey-colored uniform matte vinyl skin, compact rounded body, deep emerald green tunic with cuffs rolled above elbows. Smooth simplified shapes, soft rounded fingers (five on each hand), NO pores, skin creases, muscles, veins, body hair, photoreal textures, realistic wet skin or dramatic shadows. Soft Pixar-like animated-film rendering, cheerful but respectful, original character not copied from a movie. Square 1024x1024 illustration, subject centered with generous padding, genuine TRANSPARENT alpha background; no text, Arabic lettering, numbers, arrows, badges, frame, logos or scenery. Water is a few translucent turquoise cartoon droplets, not realistic spray. Show a clearly understandable single washing gesture. No religious figures. Specific action: The SAME cartoon adult man seated modestly on a simple low ivory stool, emerald tunic and trousers covering knees, one trouser leg rolled just above the ankle. One bare RIGHT foot clearly seen above a shallow ivory basin, LEFT hand gently washing the foot around the ankle with a few turquoise droplets. Five rounded cartoon toes, right ankle and heel visible. No realistic anatomy, no detached limbs."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/wudu-washing-v1.webp",
+      "sha256": "07e0ecdfbcb53dd1ab3faf7c47f7fc36e8ebd82c161bcf37f97cf5fdb6134bc7",
+      "dimensions": "640x640",
+      "use": "Wudu introductory card; decorative washing still life, not a demonstration of ritual steps. Replaces mosque-gold-v2.webp only in this introduction.",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-5e115f98-223e-454e-a729-8804fc6a741b.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 640; generated alpha preserved; 80576 bytes",
+      "prompt": "Use case: stylized-concept. Asset type: one original transparent 3D illustration for the Wudu (ablution) introduction card in the Nur Islam mobile app. Subject: a compact warm-ivory stone washbasin with a small elegant brushed antique-gold faucet releasing a thin clear stream into gently rippling water; one neatly folded emerald towel beside the basin. This is a decorative symbol of washing, NOT a diagram of ritual practice. Style: polished animated-feature-film-quality 3D, soft rounded clay-and-ceramic forms, tactile matte limestone, restrained gold accents, emerald textile, clear pale-aqua water. Calm premium and approachable, not photorealistic, no imitation of a named studio. Composition: centered complete compact object group, three-quarter slightly elevated view, square canvas, all objects visible with clean generous transparent padding; bold readable silhouette at 150px. Genuine transparent alpha background, no room, no walls, no rectangular backdrop, no mosque, no arches, no pedestal, no unrelated decorations. Soft warm studio lighting, delicate grounded contact shadow only. No people, hands, anatomy, faces, text, Arabic calligraphy, logos, brands, or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-fajr-v1.webp",
+      "sha256": "010714634d43ed52c4ff17f0e11a1d38c66abe9cf84e2041230bc07940c01f0e",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Morgendämmerung: blauer Horizont und Stern; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-fdd40bdb-b52c-4caf-b999-e8218c4ee4c4.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: FAJR / PRE-DAWN: two softly curved layered blue-teal horizon ribbons, a very faint pale pink dawn rim just behind them, one small ivory star above. The sun is below the horizon: NO SUN DISK. Compact cool blue sculpted miniature, quiet and luminous enough to read on dark green."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-sunrise-v1.webp",
+      "sha256": "baa2918ffcaf8b0b72409fe70717e10b6003b6145b27d4deacfb5fbe3f9842b1",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Sonnenaufgang: halbe goldene Sonne; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-d78065a2-999b-477f-8048-38de57571188.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: SUNRISE: a round warm pale-golden sun with a few short rounded rays, its lower half concealed behind two shallow curved teal horizon ribbons. Airy warm ivory and apricot light. Rising half sun is the unmistakable main shape, symmetrical and simple."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-dhuhr-v1.webp",
+      "sha256": "ae0596567b171ba6a55e290d05ad18761f3ee72637dfbc66b61f12ff88f06dd2",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Mittag: volle goldene Sonne; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-a280b587-7cb9-4698-9a3e-dec830dc7676.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: DHUHR / MIDDAY: one full round luminous golden sun with eight short thick rounded rays evenly spaced around it. Rich honey-gold edge, soft warm ivory center, gently convex 3D form. No moon, no horizon, no stars. One compact elegant cheerful sun with no face."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-asr-v1.webp",
+      "sha256": "4e2547d93e45c984314bef26309780782d744524764ecfd7c97b1c13f4572a5f",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Nachmittag: erhöhte warme Sonne; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2c23e97f-b665-47fb-a00e-514db563398b.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: ASR / AFTERNOON: one warm amber-gold sun, fully visible just ABOVE two low curved emerald horizon ribbons, a small gap between sun and horizon. Three short rounded rays above. The sun is offcenter slightly right. Honey-orange lighting, not sunset; clearly more elevated than a half-sun."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-maghrib-v1.webp",
+      "sha256": "2998f17b31f41b97480a8e1ba66f99e687c791b658f3556da5e264e421304b9a",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Abend: korallfarbener Horizont; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-0433d6c8-0c4f-4a1a-90a4-2023a6bc01dc.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: MAGHRIB / SUNSET: coral-orange sunset light as a narrow glowing curved rim sinking BEHIND two deep teal curved horizon ribbons, with a short soft lavender sky ribbon just above. The sun is almost entirely hidden, not a full sun above the horizon. Compact layered sculptural silhouette with warm coral/copper and plum accents, no stars."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-mini-isha-v1.webp",
+      "sha256": "568417bc24d827d834ddc122e512eb8ae67384076f28d7dcc98b59d9021e1a50",
+      "dimensions": "192x192",
+      "use": "Nur Gebetsseite, Tagesübersicht: Nacht: Mondsichel und zwei Sterne; dekorativ, keine aktuelle Sonnen- oder Mondposition",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b4006174-c73a-46dd-b5fc-ca3dfaaf1c32.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 192 192; generated alpha preserved",
+      "prompt": "Use case: stylized-concept. Asset type: ONE small 3D cutout illustration for a prayer timetable row in the emerald-and-gold Nur Islam app, to be displayed at 40 pixels. Original premium animated-feature-film look, not photorealistic, simple rounded sculpted forms, satin ceramic and softly luminous enamel, gentle bevels, soft studio lighting, readable bold silhouette. Straight-on slight three-quarter depth, centered balanced composition, square canvas, the subject fills 80 percent of canvas with generous clean transparent margins. GENUINELY TRANSPARENT BACKGROUND with alpha. No colored background, no badge, frame, pedestal, square tile, floor plane, lettering, logo, watermark, people, faces or eyes. No fine decorative details or large blurry glow. Colors jewel teal and emerald with warm antique gold, ivory, plus the time-specific colors below. This must be a small charming object illustration rather than a line icon or a full rectangular landscape. Subject: ISHA / NIGHT: one sculptural ivory crescent moon with cool pale blue shaded inner surface and warm champagne edge light, accompanied by exactly two small rounded gold four-point stars. Clear clean crescent silhouette, no face, no horizon, no clouds. Quiet deep-night mood."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-fajr-v1.webp",
+      "sha256": "ca780965003fb18261fe80a40cb7ec407a6684eebad94a802096371a67df9e37",
+      "dimensions": "1200x800",
+      "use": "Start- und Gebetsseite: aktuelle lokale Morgendämmerung von Fajr bis Sonnenaufgang; kein Live-Wetter",
+      "generatedAt": "2026-08-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
+      "inputImages": [],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: stylized-concept. Create ONE landscape illustration, 1536x1024, for the background INSIDE a prayer countdown arch in the emerald-and-gold Nur Islam mobile app. This is the FAJR / PRE-DAWN scene, first of a matched set of five times of day. Original high-end soft 3D animated-film landscape, tactile smooth rolling dunes and layered hills, sparse elegant date palms at FAR LEFT and FAR RIGHT edges only, a tranquil distant oasis valley. Camera fixed, wide composition, horizon around 72% down. The central 50% of width from 15% to 78% height must be clean quiet open sky with subtle gradients, because large white clock typography will be added in code there. No objects behind that central text zone. Rich deep blue and teal sky, soft lavender and muted rose dawn glow very low on horizon. Sun still BELOW horizon, no visible solar disk, only a few fading stars at far upper edges. Foreground deep emerald, fine warm rimlight on dune crests. Details and brightness live in the outer thirds and bottom 20%, keeping the middle calm but NOT blacked out. Make the landscape feel spacious, beautiful and cinematic, not flat clipart, not photorealistic. No mosque, buildings, people, lettering, symbols, clock, text, UI, borders, arch frame, logos or watermark. Full-bleed landscape asset only."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-dhuhr-v1.webp",
+      "sha256": "3a83268fb2ca61e901abd45ecb81a69693d09cc04e5df1f213b5649bba6bb716",
+      "dimensions": "1200x800",
+      "use": "Start- und Gebetsseite: aktuelle lokale Tageslichtphase von Sonnenaufgang bis Asr; kein Live-Wetter",
+      "generatedAt": "2026-08-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-4451a4f2-49ac-47bb-995d-4c4e07e9832b.png",
+      "inputImages": [
+        {
+          "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
+          "role": "Eigene generierte Fajr-Landschaft; Referenz für Kameraposition und Geometrie"
+        }
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET: our original generated oasis landscape for the Nur Islam app. Create one matching 1536x1024 landscape variant. Preserve EXACT camera, framing, hills, valley, water, palms and vegetation positions. Retain the same soft high-end animated-film 3D landscape style. Keep central 50% width from 15% to 78% height quiet open sky for WHITE clock typography added later in code. Celestial objects must be in outer side thirds, never the center. Only change lighting, sky, shadows and atmosphere. No text, UI, border, arch, mosque, people, logo, watermark. DHUHR / MIDDAY: clear pale turquoise-blue daytime sky, clean sunlight from high on the upper-right side (solar glow centered near x=82%, y=25%), emerald palms, softly lit warm sand, short shadows. No stars or moon. Airy and luminous but retain jewel green foreground and gentle natural shading. Avoid harsh blown-out white areas."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-asr-v1.webp",
+      "sha256": "0007f475352ac8e33f28e155ad7c3e1b51e6e8226789082c4343dec2506d0051",
+      "dimensions": "1200x800",
+      "use": "Start- und Gebetsseite: aktuelle lokale Nachmittagsphase von Asr bis Maghrib; kein Live-Wetter",
+      "generatedAt": "2026-08-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-288e7cc4-5505-4059-bafe-edfce0300bc8.png",
+      "inputImages": [
+        {
+          "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
+          "role": "Eigene generierte Fajr-Landschaft; Referenz für Kameraposition und Geometrie"
+        }
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET: our original generated oasis landscape for the Nur Islam app. Create one matching 1536x1024 landscape variant. Preserve EXACT camera, framing, hills, valley, water, palms and vegetation positions. Retain the same soft high-end animated-film 3D landscape style. Keep central 50% width from 15% to 78% height quiet open sky for WHITE clock typography added later in code. Celestial objects must be in outer side thirds, never the center. Only change lighting, sky, shadows and atmosphere. No text, UI, border, arch, mosque, people, logo, watermark. ASR / LATE AFTERNOON: warm honey-gold sunlight at the right side (small sun near x=84%, y=52%, safely above horizon), long soft shadows across dunes, amber rimlight on palms, muted cyan sky. No stars or moon, not sunset: sun still clearlyabove horizon and sky predominantly blue. Same oasis geometry."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-maghrib-v1.webp",
+      "sha256": "c33f7688a85ce40fc28bb5af07efbabf37beb5c1fbe007247b090fc411faafb7",
+      "dimensions": "1200x800",
+      "use": "Start- und Gebetsseite: aktuelle lokale Abendphase von Maghrib bis Isha; kein Live-Wetter",
+      "generatedAt": "2026-08-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-cadf5aca-9ba6-4601-8648-b33f3d940745.png",
+      "inputImages": [
+        {
+          "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
+          "role": "Eigene generierte Fajr-Landschaft; Referenz für Kameraposition und Geometrie"
+        }
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET: our original generated oasis landscape for the Nur Islam app. Create one matching 1536x1024 landscape variant. Preserve EXACT camera, framing, hills, valley, water, palms and vegetation positions. Retain the same soft high-end animated-film 3D landscape style. Keep central 50% width from 15% to 78% height quiet open sky for WHITE clock typography added later in code. Celestial objects must be in outer side thirds, never the center. Only change lighting, sky, shadows and atmosphere. No text, UI, border, arch, mosque, people, logo, watermark. MAGHRIB / JUST AFTER SUNSET: sunset coral, apricot and muted violet sky with peach light concentrated near the far right horizon, the sun has just slipped below the hills so no sun disk above horizon. Deep emerald foreground, long evening shadows, golden edges, soft rosy reflection in oasis. Same geometry. No bright sun in center, no moon, no dense stars."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-isha-v1.webp",
+      "sha256": "2a3218a61193307751af81ea07bac0ab13d0be0cbde07d7873e3970041218e74",
+      "dimensions": "1200x800",
+      "use": "Start- und Gebetsseite: aktuelle lokale Nachtphase von Isha bis Fajr; kein Live-Wetter oder aktuelle Mondphase",
+      "generatedAt": "2026-08-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-5650ff08-aa98-4d64-9733-8b94778177b0.png",
+      "inputImages": [
+        {
+          "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
+          "role": "Eigene generierte Fajr-Landschaft; Referenz für Kameraposition und Geometrie"
+        }
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET: our original generated oasis landscape for the Nur Islam app. Create one matching 1536x1024 landscape variant. Preserve EXACT camera, framing, hills, valley, water, palms and vegetation positions. Retain the same soft high-end animated-film 3D landscape style. Keep central 50% width from 15% to 78% height quiet open sky for WHITE clock typography added later in code. Celestial objects must be in outer side thirds, never the center. Only change lighting, sky, shadows and atmosphere. No text, UI, border, arch, mosque, people, logo, watermark. ISHA / NIGHT: deep indigo and midnight teal sky, sparse tiny elegant stars, a small delicate crescent moon at x=83%, y=36% well away from central clock region. Cool silver moonlight catches dune ridges, palm silhouettes, subtle reflection on the lake. Same oasis geometry. Luxurious tranquil clear night, not fantasy, no nebula or giant moon, no sunset glow."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/dome-v2.webp",
+      "sha256": "3ea1f14f807889cd6dce589a0f824bee356a1315763b22d5af04dd80b48dc2c5",
+      "dimensions": "1448x1086",
+      "use": "Home prayer card and prayer surfaces",
+      "prompt": "Original centered mosque dome with two slender minarets; high-end editorial 3D illustration blended with illuminated-manuscript craftsmanship; emerald enamel and restrained antique gold; transparent background; no people, text, calligraphy, logos, watermark or crescent."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/quran-closed-v2.webp",
+      "sha256": "df6350294104a550b58d2bc5cd4879af60f232f0e7eae91f66e8b8d6b8b4b30d",
+      "dimensions": "1254x1254",
+      "use": "Quran entry cards, collections and onboarding",
+      "prompt": "Original closed deep-emerald Quran on a carved walnut rehal; geometric embossing only; premium editorial 3D with illuminated-manuscript craftsmanship; transparent background; no readable words, calligraphy, logos, watermark or hands."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/tasbih-v2.webp",
+      "sha256": "fc1fd0a41e5de83531a1b9c4e3a60914c493f593d2c12db527be6e133790a45f",
+      "dimensions": "1224x1285",
+      "use": "Dhikr cards, counter and onboarding",
+      "prompt": "Original deep-emerald stone tasbih in an open oval with antique-gold separators and silk tassel; premium editorial 3D; transparent background; no text, logos, watermark, hands or religious writing."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/qibla-compass-v2.webp",
+      "sha256": "4b34e66158f7b1ed04cd2a53bedbe406d293250bcbb3aee132faecad8b59bc8e",
+      "dimensions": "1254x1254",
+      "use": "Home Qibla shortcut, onboarding and standby; replaced by code-native SVG on the Qibla screen",
+      "prompt": "Original circular antique-brass qibla compass with deep-emerald enamel, gold needle and restrained geometric inlay; premium editorial 3D; transparent background; no letters, numerals, calligraphy, Kaaba icon, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/quran-open-v2.webp",
+      "sha256": "ccfe37f2036aeb90ee45159dda08f22490007e9cc4d0517bd9b1f441cac68854",
+      "dimensions": "1536x1024",
+      "use": "Quran reader and knowledge surfaces",
+      "prompt": "Original open Quran on a carved walnut rehal with warm ivory pages and abstract geometric border texture only; premium editorial 3D; alpha-capable background; no readable text, calligraphy, logos, watermark or hands."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/lantern-v2.webp",
+      "sha256": "0bcdda4c69f02f26821e8441e1e49bc74b29ddad16e294edee01bd360e756af5",
+      "dimensions": "1024x1536",
+      "use": "Hadith, fasting and inspiration surfaces",
+      "prompt": "Original slender antique-brass lantern with deep-emerald enamel panels and a controlled warm glow; premium editorial 3D; alpha-capable background; no crescent, text, logo, watermark, smoke or particles."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/kaaba-v2.webp",
+      "sha256": "7f8ccb76b1f2a0619d2067d04760428201f6c498083094fa6552cc0b69d6d45f",
+      "dimensions": "1254x1254",
+      "use": "Hajj surfaces; removed from the Qibla compass on 2026-08-28, retained for other screens",
+      "prompt": "Original respectful architectural miniature of the Kaaba with matte black textile and restrained antique-gold band and door details; transparent background; no crowd, readable calligraphy, logos or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/dua-hands-v2.webp",
+      "sha256": "6ee9fe772007803654bf5972993f436b8fc472fa0cc73d87c95e1d7428eb1b8c",
+      "dimensions": "1207x1303",
+      "use": "Dua and women-in-Islam surfaces",
+      "prompt": "Original symbolic pair of anatomically correct raised hands in dua with simple deep-emerald sleeves and restrained antique-gold cuffs; refined editorial 3D; transparent background; no face, identity, jewelry, text, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-quran-v1.webp",
+      "sha256": "4477e3fd2bc6a967a7263ba5e59977e3f9da8233168bb871ca889ccb522234b5",
+      "dimensions": "640x602",
+      "use": "Home quick card: Quran lesen; seit 28.08.2026 auch kleine 3D-Miniatur beim Quran-Verzeichnis",
+      "prompt": "Original tiny transparent 3D feature illustration: open warm-ivory Quran with abstract page ornament on a rounded walnut rehal; soft family-animation-quality forms, emerald enamel and antique-gold accents; not photorealistic; no readable text, calligraphy, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp",
+      "sha256": "93cc17b725ae075c48985180bae7ba09e11206486e44d4f68e5fa815bfbef937",
+      "dimensions": "427x640",
+      "use": "Home quick card: Beten lernen; seit 28.08.2026 unverändert auch im separaten Bildbereich des Lernseiten-Einstiegs, ersetzt dort mihrab-arch-v2.webp",
+      "prompt": "Original tiny transparent 3D feature illustration: rolled emerald prayer mat inside a restrained gold mihrab arch with a small lantern and tasbih; soft rounded clay-and-enamel family-animation-quality forms; not photorealistic; no people, readable text, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-names-v1.webp",
+      "sha256": "95bdd74c0ffabe040ba97491a1210493cebd10e985f949497dab123aeb03c651",
+      "dimensions": "586x640",
+      "use": "Home quick card: 99 Namen Allahs",
+      "prompt": "Original tiny transparent 3D feature illustration: layered emerald, cream and antique-gold geometric rosette medallion with short ribbons; soft rounded enamel family-animation-quality forms; no numerals, readable text, calligraphy, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-quiz-v1.webp",
+      "sha256": "cecdff8c8d40a35a4176e313476bd08480a9a457584289ee4953b0ae84e55182",
+      "dimensions": "640x561",
+      "use": "Home quick card: Islam Quiz",
+      "prompt": "Original tiny transparent 3D feature illustration: emerald study book, three warm-ivory answer tiles with abstract star marks and a gold check token; soft rounded family-animation-quality forms; no readable text, logo, watermark or religious writing."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-dua-v1.webp",
+      "sha256": "dc21677cdf703542d770762dbff03946c127c9b5b39faaafb715db3ce5ba5834",
+      "dimensions": "640x585",
+      "use": "Home quick card: Duas",
+      "prompt": "Original tiny transparent 3D feature illustration: simplified respectful raised hands in dua with emerald sleeves and small antique-gold cuffs; soft rounded family-animation-quality forms; no face, identity, jewelry, text, logo or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/ayah-focus-bg-v1.webp",
+      "sha256": "8598b7afb1fb0b033ba80e908ef1f9f952831ee58c3f82e73946738f1ef76d27",
+      "dimensions": "1280x640",
+      "use": "Home daily card: Ayah im Fokus; seit 28.08.2026 unverändert auch Quran: Ayah des Tages",
+      "prompt": "Original wide warm-ivory card background with matte limestone and handmade-paper texture; a restrained embossed mihrab arch and antique-gold glow sit only at the far right edge while the central and left 72 percent remain deliberately quiet for dark-green Arabic and German UI copy; refined stylized 3D relief with original family-animation-quality polish; no text, letters, numerals, Arabic calligraphy, Quran pages, people, logos, trademarks or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/splash-mosque-v1.webp",
+      "sha256": "55ebe82049d24d3076fba9ba9e544520696d4720df785a233a5472bec49a6a72",
+      "dimensions": "768x1152",
+      "use": "Opening animation: central rising mosque architecture",
+      "prompt": "Use case: stylized-concept. Asset type: transparent hero illustration for the opening animation of a premium Islamic mobile app. Primary request: create an original, architecturally coherent mosque miniature that feels serene, refined and unmistakably premium. Subject: one symmetrical central emerald dome on a graceful prayer hall, two matching slender minarets, a small rhythm of rounded entrance arches and a stable stone base; accurate balanced proportions, clean silhouette. Style/medium: high-end stylized 3D architectural illustration with soft rounded enamel and carved-stone forms, original family-animation-quality polish, not an imitation of any named studio or artist, not photorealistic. Composition/framing: centered front three-quarter view, complete building visible, generous transparent padding on every side, designed to rise gently from the bottom of a portrait splash screen. Lighting/mood: soft predawn rim light, calm warm interior glow, contemplative and elegant. Color palette: deep emerald, warm ivory limestone, walnut-shadow tones and restrained antique gold. Materials/textures: matte carved limestone, glazed emerald dome, brushed antique-gold trim, subtle glass glow. Constraints: genuinely transparent background; no people, no crowd, no readable text, no Arabic calligraphy, no logos, no watermark; no floating parts; exactly two primary minarets; physically plausible attachment between dome, hall, arches and base. Avoid: crooked minarets, duplicated towers, excessive ornament, crescent symbols, fantasy palace, dramatic fog, particles, busy scenery, flat icon look."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-prayer-sky-v1.webp",
+      "sha256": "fcec44be72d2ff91499216bde946231076b754315a1d829a8cfc66058d7532cb",
+      "dimensions": "1672x941",
+      "use": "Seit 28.08.2026: ruhiger Hintergrund im offenen Quran-Lesebogen, rein dekorativ und keine Tageslichtanzeige; zuvor Home-Gebetskarte",
+      "prompt": "Use case: stylized-concept. Asset type: premium mobile prayer-time card background, wide landscape raster. Primary request: create an elegant atmospheric background that makes a dark emerald-and-gold Islamic prayer app feel richer while preserving a mihrab arch and progress outline rendered separately by the UI. Scene/backdrop: a timeless deep emerald celestial garden at blue hour, soft layered clouds and faint warm horizon light, a refined golden crescent in the upper-right outer third, delicate palm silhouettes and distant architectural shadows only along the extreme lower corners. Style/medium: high-end cinematic digital matte painting with subtle 3D depth, natural and sophisticated, not cartoonish, no photorealistic mosque object. Composition/framing: 16:9 wide composition; the central 60% must remain dark, quiet, low-detail negative space for overlaid prayer name, Arabic, large time and countdown; visual interest must stay at the far edges and corners; no objects behind the center text. Lighting/mood: peaceful, devotional, premium, soft volumetric glow, restrained contrast. Color palette: Nur Islam emerald #001b16 and #07372b, muted antique gold #e2bf77, warm cream highlights, nearly black edges. Text: none. Constraints: no typography, no Arabic calligraphy, no Quran verses, no logos, no watermark, no people, no prominent mosque, no central subject, no bright details in the middle, readable overlay safe zone, respectful Islamic visual language."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-qiyam-v1.webp",
+      "sha256": "de053972909eac9c5f884250442db0da4264aabfacc2e15df8222e97dcb3688a",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: stehende Rezitationshaltung (Qiyam); statische Lernhilfe, keine religiöse Freigabe",
+      "generatedAt": "2026-08-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-f7049b6f-1530-4e8f-8d9f-6641868c46bf.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Originale, respektvolle 3D-Cartoon-Lernfigur: freundlicher erwachsener Mann in smaragdgrüner Tunika und elfenbeinfarbener Hose, vollständig auf transparenter Fläche und einer schlichten Gebetsmatte. Qiyam: aufrecht stehend, rechte Hand über linker Hand am Oberbauch, Blick gesenkt. Keine Schrift, Moschee, Logos oder Wasserzeichen; keine fotorealistische Anatomie."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-takbir-v1.webp",
+      "sha256": "087555db39d74484c227a5ada1ccec453fc695c337b0455b3abcff2b2bdbd844",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: Eröffnungstakbir; statische Lernhilfe, keine religiöse Freigabe",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-6cca1217-39ac-428b-b5f4-aec999a297a6.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für den Eröffnungstakbir: aufrecht stehend, beide offenen Hände neben den Schultern erhoben, Finger nach oben, Blick gesenkt. Vollständiger Körper, transparente Fläche, keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-ruku-v1.webp",
+      "sha256": "e7e6841e496c0be3a1f5d770156540944d1563abfd70d1ca6ca00e646c66bb79",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: Verbeugung (Ruku); statische Lernhilfe, keine religiöse Freigabe",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2554f77c-6e22-4f7d-bd86-dd9902a2f643.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert in klarer Seitenansicht für Ruku: etwa 90 Grad an der Hüfte gebeugt, Rücken gerade, Kopf ausgerichtet, Hände auf den Knien, Füße flach. Keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-standing-v1.webp",
+      "sha256": "ed3bc2011b1bb96b48ce99e625b2845be40c509f98c61a499639dd8eb29dac47",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: Aufrichten und Aufstehen; Zielhaltung, keine religiöse Freigabe",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-e00ef342-8111-4494-9ca1-e96b5631405b.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für das vollständige Aufrichten: aufrecht stehend, Arme entspannt an den Seiten, Füße parallel, Blick gesenkt. Vollständiger Körper, transparente Fläche, keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-sujud-v1.webp",
+      "sha256": "9a224b93ce1eadd4f370a1092eed5c8083531eb5b6e3f6c60f0bedbe35242ec6",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: Niederwerfung (Sujud); statische Lernhilfe, keine religiöse Freigabe",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-5dd2e6ca-867e-464b-9d82-14a47627894a.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert in klarer Seitenansicht für Sujud: Stirn und Nase an der Matte, Handflächen neben dem Kopf, Knie und gebeugte Zehen an der Matte, Hüfte angehoben. Keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-sitting-v1.webp",
+      "sha256": "d21bd7a8d4074bdce108605101bae11a919005c414cac933e263ee18d56602e3",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: Sitzen; allgemeine statische Lernhilfe, Rechtsschuldetails bleiben im Text",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c50cb359-2822-4de7-93d6-f1bcea7dae57.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für das aufrechte Sitzen zwischen den Niederwerfungen: gefaltete Beine, Hände flach auf den Oberschenkeln, gerader Oberkörper, Blick gesenkt. Keine erhobenen Finger, Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/salah-posture-taslim-v1.webp",
+      "sha256": "98b9fbf6bc69f2cfdcb647bfe96a4d4e0a3b8c667c7d01b9fe1c795f4bdc7c8e",
+      "dimensions": "512x512",
+      "use": "Gebetskurs: erste Richtung beim Taslim; der zweite Durchgang bleibt im Text beschriftet",
+      "generatedAt": "2026-08-29",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-fde3bb2d-fcfc-4e58-b9ce-e22d35264751.png",
+      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
+      "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für den ersten Taslim: aufrecht sitzend, Hände auf den Oberschenkeln, Oberkörper nach vorn, Kopf klar zur eigenen rechten Schulter gedreht. Keine Pfeile, Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-faith-v2.webp",
+      "sha256": "4e1dfa1d65527fc5caf35bf7fba87069f1a977f075dd3dd5254dcd9cf94017b8",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Allah und der Glaube; symbolisches Grundlagenmotiv ohne Personen- oder Gottesdarstellung",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-a1cda6d2-fbea-466d-8969-648f68a962d1.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Lernmotiv für Glaubensgrundlagen: ein eleganter offener Quran auf geschnitztem Rehal unter einer zurückhaltenden Konstellation goldener Lichter; Smaragd, Antikgold, Elfenbein und Walnuss; keine Darstellung Allahs, von Propheten, Engeln oder Menschen; keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-pillars-v2.webp",
+      "sha256": "62a2da1b2054fba17c3a9a16adb163921bcd9163381e4634a487db9f4fc72961",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Die fünf Säulen; fünf zusammengehörige tragende Elemente",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-20baf2e3-f93e-4742-bd71-0d4bc47073f7.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Lernmotiv aus genau fünf gleich hohen, unterschiedlichen architektonischen Säulen auf einem gemeinsamen Fundament; Smaragd-Emaille, Antikgold und Elfenbein; keine Schrift, Menschen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-terms-v2.webp",
+      "sha256": "40f51b368dd066a03f6be75dc837b671885d1923db61d83a4690be07aef1ca58",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Wichtige Begriffe; Definition, Beispiel und Abgrenzung als Lernkarten",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-9105f4f7-5e4b-4dda-9a67-4f614f457342.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Lernstillleben aus drei geschichteten elfenbeinfarbenen Lernkarten mit einfachen geometrischen Symbolen, Messing-Lesezeichen und dunkelgrünem Stift; keine lesbare oder erfundene Schrift, keine Menschen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-practice-v2.webp",
+      "sha256": "9a8371652f75cc7bf362788bf4db7744affbd4ab0dd5e81283f4dd652e72241a",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Reinheit und Alltag; dekoratives Wasserstillleben, keine Handlungsanweisung",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-8f3339ef-2621-4dcc-a3d7-7b8cbe0ed3d0.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Stillleben für Reinheit: gehämmerte Messingkanne gießt klares Wasser in eine flache smaragd-elfenbeinfarbene Schale, daneben ein sauber gefaltetes Tuch; keine Schrift, Menschen, Hände, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-character-v2.webp",
+      "sha256": "8ba080d9ff35ee3faefc29542c4bf88ac15ef54f984d0ee6b301a098e7865229",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Charakter und Rechte; Olivenbaum als Symbol für wachsende gute Eigenschaften",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-29701c12-88b7-48a4-a950-ec8bc4d0d9b7.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestellter 3D-Olivenbaum in achteckigem Smaragd-Pflanzgefäß, drei gesunde Zweige, goldene Früchte und dezentes herzförmiges Messingspalier als Symbol für Aufrichtigkeit, Geduld und Barmherzigkeit; keine Schrift, Menschen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-community-v2.webp",
+      "sha256": "e21e6326a0239f221b2c824fbc8bba4758568e080c7a9066aa0eaea458a150f6",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Miteinander und Verantwortung; verbundener Innenhof als Gemeinschaftssymbol",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-0d01a398-df25-4066-88ec-a7427bb7e43e.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestellte 3D-Innenhofminiatur aus sechs verbundenen offenen Bögen um einen gemeinsamen Brunnen auf durchgehendem geometrischem Boden; Smaragd, Antikgold, Elfenbein und Wasser; keine Schrift, Menschen, Flaggen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-seerah-v2.webp",
+      "sha256": "1db93adaabd44bac7deafd117c200df4d59e722b6e46f838f48b34c479358e40",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Der Prophet ﷺ; Seerah- und Hijra-Geschichtsmotiv ohne Personendarstellung",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-e436e89b-fcc2-47b3-b939-5699b88bacbe.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestellte 3D-Seerah-Miniatur ohne Darstellung eines Propheten oder Menschen: alte Pergament-Reisekarte mit Weg zwischen zwei historischen Wüstensiedlungen, Felsenhöhle, Dattelpalmen und warme Messinglaterne; Smaragd, Antikgold, Creme und dunkles Holz; keine Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-prophets-v2.webp",
+      "sha256": "577fa4e2159973674dbfded4fd1e217c9eb93b8fbf7ad125ca4725f4704d3a4d",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Die 25 Propheten; respektvolles Geschichtsmotiv ohne Personendarstellung",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-311731df-1594-4f5d-869e-1eaaee839adf.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Geschichtsmotiv: leere entrollte Pergamentrolle neben antiker Messinglaterne, ein schmaler Wüstenweg führt auf kleinem Felssockel zu einem fernen Lichtpunkt; keine Schrift, Propheten-, Menschen- oder Silhouettendarstellung, keine Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-madhhabs-v2.webp",
+      "sha256": "8d397611903be6d06f0775af18e34d70d124e57eb3497c071debc6d9c4e27de3",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Die vier Rechtsschulen; vier gleichwertige Studienwege ohne Quran-Darstellung",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b10d2f60-6d56-4ba1-a106-b84ccc273ebc.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Lernmotiv aus genau vier gleichwertigen Gelehrtenbüchern unter vier einzelnen Bögen auf gemeinsamem Sockel; Smaragd, Antikgold und Elfenbein; keine lesbare Schrift, Menschen, Quran-Darstellung, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-hadith-v2.webp",
+      "sha256": "527d5172b32d3386abdaaa81e81843fc60b7bbbcc10189657c55961e40fc7193",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Hadith-Sammlung; Recherche und Quellenarbeit statt beliebiger Laterne",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-0431a275-25a0-4ccb-b640-022d0e7cbe73.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Archivmotiv mit geordneten Folios in einer Smaragd-Archivbox, Messing-Tintenfass, Feder und Lupe als Symbol für Hadith-Fundstellen und Quellenprüfung; keine lesbare Schrift, Quran-Darstellung, Menschen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-sunnah-v2.webp",
+      "sha256": "e39409d3540d30848f49bb6841c4f2154c55a2dd14952022ec868e4af6d44956",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Sunnah im Alltag; konkrete Alltagsgegenstände statt allgemeinem Sonnenornament",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2cb8c830-ecee-4a0a-85f8-4821e8bc6b88.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Alltagsstillleben aus Datteln, Wasserschale, Miswak und sauber gefaltetem Tuch auf einem kleinen Smaragdtablett; ruhig, respektvoll und praktisch; keine Schrift, Menschen, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learning-repentance-v2.webp",
+      "sha256": "8ef7ac7704475f55aceb91ae89cf362b4ab4cb98396b04fdf4ee2b44232030e6",
+      "dimensions": "512x512",
+      "use": "Lernpfad-Karte: Fehler und Reue; Rückkehr und Neubeginn ohne unpassendes Moscheemotiv",
+      "generatedAt": "2026-09-05",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-498171a8-5a0c-4985-baf3-39b39d1d7d16.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -resize 512 512; generiertes Alpha erhalten",
+      "prompt": "Premium freigestelltes 3D-Sinnbild für Reue und Neubeginn: ein zurückführender Steinweg durch einen offenen Bogen ins warme Morgenlicht, am Weg ein kleiner grüner Spross; keine Darstellung Allahs, keine Menschen, Schrift, Logos oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-masjid-al-haram-v1.webp",
+      "sha256": "66a5cbad9e483362544d69fe61c296ac992a85a175c3adfe2077d4a986aa835c",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Al-Masjid al-Haram; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-14981719-722e-4463-978d-08ba5babff74.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square premium editorial architecture illustration of Al-Masjid al-Haram in Makkah with the Kaaba, mosque courtyard and city context at dawn; respectful documentary composition in emerald, sandstone and antique-gold light; no people, text, logos or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-masjid-an-nabawi-v1.webp",
+      "sha256": "a3382bbd24f08905779aab299c71f8f06b0c0c0d1df10611329192031a88be1b",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Al-Masjid an-Nabawi; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-725427db-ff95-483e-b8fc-6eeaf77d7245.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square premium editorial architecture illustration of Al-Masjid an-Nabawi in Madinah, recognizable by the Green Dome, cream minarets and courtyard umbrellas at warm sunset; respectful documentary composition; no people, text, logos or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-masjid-al-aqsa-v1.webp",
+      "sha256": "25a8be3c87b239eade5f155089cc452ab8d22ccb56499f9918cc2db20b4cad58",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Al-Masjid al-Aqsa; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-566def4b-b8dc-4624-8a35-e2ae901ee8b6.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square premium editorial architecture illustration of the Al-Aqsa compound in Jerusalem, with the silver-domed Qibli Mosque prominent and the Dome of the Rock in the background, stone courtyard and olive trees; respectful documentary composition; no people, text, logos or watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-jabal-an-nur-v1.webp",
+      "sha256": "84193cd2fd126ef3676599b652260a8531c3ac95acb494c55494b109d5e58bc2",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Jabal an-Nur und Ghar Hira; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-3c7da24c-e2e5-4698-bf85-f53388140bbc.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square 1:1 premium editorial architecture-and-landscape illustration for a German Islamic learning app. Subject: Jabal al-Nour outside Makkah at first light, rugged dark granite mountain with the ascent path leading toward the small cave area of Ghar Hira, Makkah city faintly visible far below, restrained desert atmosphere. No people, no prophets, no human figures, no calligraphy, no text, no signs, no logos, no watermark. Respectful documentary visual language, recognizable geography, not fantasy. Deep emerald shadows, sandstone, warm antique-gold dawn light, natural atmospheric depth. No ornate frame. Leave calm negative space near the lower-left for interface cropping. High-detail matte-painted realism, coherent with a premium dark emerald mobile app."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-masjid-quba-v1.webp",
+      "sha256": "bec85f7b0e6b6503931e694cfe8e1f4dc392dc44f4a6e4830857292d24d6d88b",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Masjid Quba; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b4122573-c705-49ad-8674-f7a7f1fe8dca.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square 1:1 premium editorial architecture illustration for a German Islamic learning app. Subject: Masjid Quba in Madinah, recognizable white mosque complex with several slender white minarets and green palms under a clear warm morning sky, viewed from a quiet public forecourt. No people, no vehicles, no text, no Arabic lettering, no logos, no watermark. Respectful, documentary, architecturally grounded, not fantasy. Cream stone, deep emerald accents, restrained antique-gold sunlight, natural depth. No decorative frame. Leave calm negative space near lower-left for interface cropping. High-detail matte-painted realism, coherent with a premium dark emerald mobile app."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/place-mount-uhud-v1.webp",
+      "sha256": "a87bee128b791efbba17fbc22e1ff488d73a3b5683f4fce4ee61b8995d2b4ece",
+      "dimensions": "1024x1024",
+      "use": "Islamische Orte: Berg Uhud; eigene Ortsansicht für den Reise-Atlas",
+      "generatedAt": "2026-09-08",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-cd4a9717-edf7-4804-9efd-f8a2b32d5d6f.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -resize 1024 1024; opaque editorial artwork",
+      "prompt": "Square 1:1 premium editorial landscape illustration for a German Islamic learning app. Subject: Mount Uhud north of Madinah, the long reddish-brown mountain ridge unmistakably spanning the horizon, desert foreground with sparse acacia and stone, warm late-afternoon light. No battle scene, no people, no graves, no religious figures, no text, no symbols, no logos, no watermark. Respectful documentary geography, restrained and historically contemplative, not fantasy. Deep emerald shadows, sandstone and antique-gold sunlight. No ornate frame. Leave calm negative space near lower-left for interface cropping. High-detail matte-painted realism, coherent with a premium dark emerald mobile app."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/lantern-v3.webp",
+      "sha256": "174608770ff8b7340c387a206659092b2ced2341e82861c5da51d5eb330c0905",
+      "dimensions": "512x768",
+      "use": "Fastenplan, Erinnerungen und Hadith: bereinigte Laterne ohne Alpha-Blockartefakte",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-02237e15-2f85-4b2f-ae59-17479aee193f.png",
+      "inputImages": ["public/premium-assets/high-res-objects/lantern-v2.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Vorhandene messing- und smaragdgrüne Laterne erhalten, braune Blockartefakte entfernen, echten transparenten Hintergrund schaffen; keine Schrift."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-names-v2.webp",
+      "sha256": "9aa34c3efd2b4a8d6fa9b7ef3834c39585d6c1715f6445173806491600808cd5",
+      "dimensions": "512x512",
+      "use": "99 Namen Allahs: symbolische Sammlung unbeschrifteter Tafeln statt Medaillon; tatsächliche Namen nur im App-Text",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-30ace20d-cb7a-4a66-9a90-1bcfdca902ac.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Freigestellter Bogen mit vielen leeren Elfenbeintafeln in Smaragd und Antikgold; kein Buch, Orden, Text, Zahlen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-names-v3.webp",
+      "sha256": "8ab16f5171474f04bc4fd73bd03a48d5a60cc16b7f6c6c797bb3208a2ed7a6fa",
+      "dimensions": "768x512",
+      "use": "Startseite: Schnellkarte 99 Namen Allahs; symbolisches unbeschriftetes Album, tatsächliche Namen nur im App-Text",
+      "generatedAt": "2026-09-25",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-f5b10478-a164-4cbf-b042-17cc6d6ad1ee.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Use case: product-mockup. Asset type: transparent-background cutout for a small mobile app card about the 99 Names of Allah. Create a single palm-sized open illuminated manuscript album, slightly angled three-quarter view, with deep emerald leather covers, warm ivory parchment pages, restrained antique brass edge tooling and a small eight-point geometric rosette clasp. The pages should visibly suggest a collection of names through elegant blank inset cartouches, but contain NO readable letters, NO Arabic glyphs, NO numbers, NO invented sacred text, NO symbols of God or people. Studio-object rendering with believable leather grain and paper fibers, controlled warm upper-left lighting, soft natural contact shadow, premium understated craftsmanship. Centered composition, clean silhouette, generous transparent margin, genuinely transparent background with alpha. Match the visual family of an emerald and antique-brass prayer-bead object and compass, not a flat app icon. No scenery, pedestal, logo, watermark, extra props, or interface."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-quiz-v2.webp",
+      "sha256": "1de658a6bc9a8092226f565e0fa7fbccd47573d3492549a4f7cb7610076776b2",
+      "dimensions": "768x512",
+      "use": "Startseite: Schnellkarte Islam Quiz; Frage und Antwortauswahl ohne eingebrannten Inhalt",
+      "generatedAt": "2026-09-25",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-a4ac1eb0-e0d7-4b51-9542-87ad4011636d.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Use case: product-mockup. Asset type: transparent-background cutout for a small mobile app quiz card. A compact tactile stack of three ivory answer cards beside one deep emerald question card, one answer selected with a small embossed antique-brass checkmark. No words, no letters, no numbers, no Arabic or Quran text. Slight three-quarter perspective, cohesive premium miniature object rendering, believable textured paper and leather, subdued antique brass edge detail, controlled warm studio light from upper left, soft natural contact shadow. Clean centered silhouette and generous transparent margin. Match a refined emerald-and-brass compass and prayer beads visual family, not a playful emoji or flat icon. Genuinely transparent background with alpha. No book, no extra props, no scenery, no logo, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-dua-v2.webp",
+      "sha256": "3ac88f47c80f4b001dc007462ed01a80b682904351951f0032f3d3e0b366b285",
+      "dimensions": "640x585",
+      "use": "Startseite: Schnellkarte Duas; natürliche erhobene Hände statt der stark stilisierten Vorgängerfassung",
+      "generatedAt": "2026-09-25",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-ff484266-0ee0-404c-acc2-b0fbe09f7fba.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: product-mockup. Asset type: transparent-background cutout for a small mobile app card about making dua. Two anatomically natural adult hands held together in a quiet Islamic supplication gesture, palms facing upward, fingertips softly curved. Only forearms and hands visible, no face, no person, no jewelry. Deep emerald sleeves in fine matte woven fabric with very restrained antique-brass trim at the cuffs. Sophisticated realistic miniature object rendering, gentle warm studio light from upper left, tactile skin with natural variation, calm reverent expression through pose, soft contact shadow, genuinely transparent background with alpha. Centered symmetrical composition with generous transparent margin. Visually cohesive with emerald stone and antique-brass prayer beads and a compass; avoid glossy plastic, cartoon skin, excessive ornament, text, logo, watermark, extra fingers or distorted anatomy."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/quran-closed-v3.webp",
+      "sha256": "2389df5f818e54bb320217645a84e2a527cf3114a96d0667e06531eb7def9183",
+      "dimensions": "768x841",
+      "use": "Startseite: Quran-Weiterlesenkarte; stilisierte Miniatur ohne eingebrannten Text",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c411e327-1ae5-4e01-8946-14f0d4a25ebc.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Quran reading card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW Quran book on a simple low carved wooden rehal, closed with an emerald-green fabric cover, restrained warm brass cornerwork and a single abstract central geometric medallion; cream page edges visible. Match the reference's exact visual language: charming premium 3D storybook miniature, slightly elevated three-quarter camera angle, softly beveled handcrafted geometry, restrained ornament, satin brass rather than mirror gold, tactile emerald textile, warm cream stone details, warm light from upper left, soft grounded shadow. Center one isolated object, fully visible with generous transparent margins, strong legible silhouette at 100px card size. Genuinely transparent background and no floor scene or colored square. NO Arabic or Latin letters, no verses, no invented religious text, no people, no photorealism, no glossy AI render, no extra objects, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/tasbih-v3.webp",
+      "sha256": "b6620917273e1706b9223d57a1c3897d24d983c30a3b607eafe9a88a2ddc36c6",
+      "dimensions": "640x960",
+      "use": "Startseite: Dhikrkarte; Tasbih als passende Miniatur zum Beten-lernen-Motiv",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-4a285bb4-9f9f-4eea-8b05-d5f0c58ebaca.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Dhikr card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW isolated miniature of an elegant loop of emerald-green prayer beads with warm brushed-brass separators and one cream-and-emerald tassel; let the loop rest naturally on a low carved cream-stone pedestal like the prayer-learning reference. Match that image's charming premium 3D storybook miniature style, slightly elevated three-quarter view, softly beveled handcrafted geometry, restrained ornamental detail, satin brass, tactile emerald material and cream stone, warm light from upper left, soft grounded shadow. One centered object, fully visible with generous transparent margins, bold readable silhouette at 100px card size. Genuinely transparent background, no colored square or floor scene. No Arabic/Latin letters, no text, no people, no photorealism, no glossy metallic product photo, no extra symbols, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/qibla-compass-v3.webp",
+      "sha256": "997d7f09b51bcf996d54674dd5d41f80d4cf1b778f34cbd31025a8906dbf321a",
+      "dimensions": "640x960",
+      "use": "Startseite: Qibla-Karte; generischer Kompass ohne behauptete Richtung",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1ea41144-81bc-4276-ac66-70296a631ebb.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Qibla card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW small directional compass on a compact carved cream-stone stand, with a deep emerald circular face, a restrained brass rim and one sculpted brass pointer. Match the reference prayer-learning object's charming premium 3D storybook-miniature language: softly beveled handcrafted geometry, slightly elevated three-quarter view, satin warm brass, cream stone with shallow Islamic geometric carving, rich but matte emerald, warm upper-left light, soft grounded shadow. The compass should be functional-looking but without any particular calculated bearing; generic north-up arrow only. One centered object, full silhouette with generous transparent margins, legible at 100px. Genuinely transparent background, no colored square, no map, no Arabic/Latin letters, no digits, no photorealistic product-shot look, no mirror shine, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp",
+      "sha256": "b9a04a1c0005680ab0f72642cdc9dfab179bc70e6758e5622cd7e44575edae56",
+      "dimensions": "768x512",
+      "use": "Nur Startseite: Quran-Weiterlesenkarte; kompaktes Buch auf Rehal rechts vom Lesestand",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-e8c03800-9679-4521-bcd1-73b3ee9fdbbc.png",
+      "inputImages": ["/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1fa60dd5-7139-46e4-8d6e-3e9a79b06886.png"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Use case: background-extraction. Asset type: small image in a dark emerald app home card. Image 1 is the edit target. Extract only the illustrated physical Quran book and its wooden rehal stand as a clean cutout. Make every area outside the physical object truly transparent alpha, with crisp natural antialiased edges and no dark vignette, drop shadow, floor, halo, or background pixels. Preserve the exact book angle, realistic premium stylized 3D materials, forest-green leather, warm wood, subtle brass trim, and exact cover text 'QURAN' verbatim. Do not introduce any other object, label or ornament. Keep the complete object within the canvas."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp",
+      "sha256": "23110e43fbd99f139ee67607c4fd71d8bd0e776529728afdfd42e4aaabf105ad",
+      "dimensions": "768x512",
+      "use": "Nur Startseite: Qibla-Einstieg; dekorativer Kompass, keine berechnete Qibla-Richtung",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-ebd473dd-edaa-462f-9fa7-01ce5245363c.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Bildauftrag (sinngemäß): Ein einzelner hochwertig animiert wirkender 3D-Taschenkompass in Marineblau, Elfenbein und gebürstetem Messing als freigestelltes Motiv für die Qibla-Startkarte. Glaubwürdige Materialien und Kompassdetails; keine behauptete ortsabhängige Qibla-Richtung, keine zusätzliche Beschriftung oder Kulisse."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp",
+      "sha256": "007956419e92d82894656705e2a7f81ff473f981298d029fec783927cb02fca9",
+      "dimensions": "768x512",
+      "use": "Nur Startseite: Dhikr-Einstieg; freigestellte Gebetskette",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-149c0eb2-0628-4510-a049-8d1d34055650.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Bildauftrag (sinngemäß): Eine einzelne hochwertig animiert wirkende 3D-Gebetskette aus warmem Rosenholz mit wenigen türkisfarbenen Akzentperlen und heller Quaste als freigestelltes Motiv für die Dhikr-Startkarte. Glaubwürdige Materialien, ruhige Beleuchtung, keine Schrift, keine weitere Kulisse."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-names-v4.webp",
+      "sha256": "e8b19023929e3c060854e161b5c5d57e1e0789ec35c28a2e3ccfc88836d85f62",
+      "dimensions": "640x960",
+      "use": "Startseite: 99 Namen; unbeschriftete Lerntafeln im Miniaturstil, tatsächliche Namen nur im App-Text",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-a0c39d63-8057-4b13-a825-0bef8e34328b.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page 99 Names of Allah learning card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW small freestanding illuminated teaching display: one elegant pointed cream-stone arch with satin brass trim, holding three overlapping emerald and ivory parchment plaques with repeated blank ornamental cartouches to suggest a collection of Names. This must not be a Quran book, a medallion or a prayer rug. Match the reference prayer-learning image's charming premium 3D storybook-miniature language, slightly elevated three-quarter view, softly beveled handcrafted geometry, warm left lighting, tactile emerald and cream, satin brass, soft grounded shadow. The arch and plaques should form one clear silhouette at 100px, centered and fully visible with transparent margins. Genuinely transparent background, no square/floor scene. The plaques are deliberately blank: NO Arabic/Latin letters, no names, no calligraphy, no invented sacred content, no digits, no photorealism, no glossy AI render, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-names-v5.webp",
+      "sha256": "db5911ecb4a0885480116ec6c06d6e94ad4752da025d796774ed74c66ab82bf3",
+      "dimensions": "640x640",
+      "use": "Startseite: 99 Namen; drei unbeschriftete Tafeln als eigenständige Miniatur, tatsächliche Namen nur im App-Text",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2a59c7cf-ec00-4933-ad86-4ad65debed74.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Create a SINGLE premium stylized 3D miniature icon for an Islamic learning app's '99 Names of Allah' discovery card. Use the supplied prayer-learning artwork ONLY as a MATERIAL, LIGHTING, RENDERING, and COLOR PALETTE reference: emerald green velvet/enamel, warm brushed brass, carved ivory stone, restrained artisan details, soft warm studio light, slightly animated storybook 3D aesthetic, subtle shadow. Make a clearly DIFFERENT silhouette from the reference prayer niche/arch: an elegant fan-shaped arrangement of three small blank pointed-arch plaques or medallion tablets on a low carved ivory-and-brass display plinth, with a simple central luminous emerald gem or ornamental rosette. No large enclosing prayer arch, no prayer rug, no book, no mosque. The plaques are decorative and contain NO writing, NO letters, NO Arabic script, NO numbers, NO calligraphy, and NO religious claims. Object centered, isolated, transparent background, clear at 72px height, no scenery, no border, no text, square 1:1 composition with generous transparent margins. Keep design respectful and polished, avoid plastic or cartoon exaggeration."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-quiz-v3.webp",
+      "sha256": "c78a1be7270dade5221e1e58a9d98c300e87c9868205342c673f8827e3f62619",
+      "dimensions": "640x671",
+      "use": "Startseite: Islam-Quizkarte; stilisierte Frage- und Antworttafeln ohne eingebrannten Inhalt",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-7c328aa1-b3d3-42bb-ad1b-6798f89b62c6.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Islam Quiz learning card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW compact carved cream-stone bookstand holding a slightly tilted small emerald question card with ONE simple embossed gold question-mark symbol, next to three short ivory answer tiles with gold-rimmed empty circles, no words. Match the reference prayer-learning image's charming premium 3D storybook-miniature visual language: hand-crafted softly beveled geometry, slightly elevated three-quarter view, satin brass trim, warm cream stone, tactile emerald, warm upper-left light and soft grounded shadow. One cohesive object, full silhouette, generous transparent margins, readable at 100px. Genuinely transparent background, no floor scene or colored box. No other text, no Arabic/Latin letters, no invented religious content, no photorealism, no glossy AI look, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mini-dua-v3.webp",
+      "sha256": "a368ab4012035db4700140a40da2af83167e653a1ec4ca3c9cc2c3be05b688c1",
+      "dimensions": "640x960",
+      "use": "Startseite: Duas-Karte; stilisierte Dua-Geste als Miniatur statt realistischer Hände",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-6b3fadf2-4446-4b85-a05f-eb2dca6f47c4.png",
+      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
+      "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Duas card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW gentle symbol of dua: two modestly cupped upward hands as smooth handcrafted warm-ivory sculpture, with simplified natural fingers and short emerald fabric sleeves, resting on a low carved cream-stone plinth with restrained satin-brass trim. The gesture must clearly read as supplication, not clapping or praying palms pressed together. Match the reference prayer-learning image's charming premium 3D storybook-miniature style: softly beveled illustrated shapes (not photoreal human skin), slightly elevated three-quarter view, tactile cloth, subtle geometric carving, warm upper-left light, soft grounded shadow. One clear centered silhouette fully visible with generous genuinely transparent margins, legible at 100px. No arch, no lantern, no extra symbols or objects, no text or letters, no photorealism, no plastic skin, no watermark."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-learn-prayer-v2.webp",
+      "sha256": "af0ccd8de1c1559a8bc6030f4359b56a8804b9f68335a832c343dff2c701eb9a",
+      "dimensions": "768x512",
+      "use": "Startseite: Beten lernen; teilweise ausgerollter Gebetsteppich, im Materialstil des Quran-Motivs",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-29b5e125-6b77-40fa-a8b2-1a994fbaa40b.png",
+      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D illustration of a tactile emerald prayer rug, partially unrolled diagonally with visible fringe and a readable woven mihrab motif. No book, stand, platform, people, writing or extra religious content; warm studio light, restrained gold thread, elevated three-quarter view."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-names-v1.webp",
+      "sha256": "41ce70ed0f73e8aa5d63e364ebc6d13f8bbde2970ad0d55b4979112a16543b54",
+      "dimensions": "768x512",
+      "use": "Startseite: 99 Namen Allahs; unbeschriftete Lernkarten hinten, exakte Kategorieüberschrift 99 NAMEN vorne; keine erzeugten religiösen Namen",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-d44db837-ba2c-47aa-85d6-853a2e2a6b52.png",
+      "editSourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-15b67885-7a60-49d9-b73e-19d2eff06213.png",
+      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D walnut organizer with several slim ivory study cards, emerald edges and subtle geometric embossing; tactile materials, elevated three-quarter view and warm studio light. Initially blank fronts, no invented sacred text.",
+      "editPrompt": "Preserve the organizer; print exactly 99 NAMEN in dark emerald serif capitals on the front card and a small geometric rosette below. No other lettering or religious claims."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-quiz-v1.webp",
+      "sha256": "a3bab249c76e24f239c8ca208724bb6222f0cc646b12c8a9cc2a795043ac0fa2",
+      "dimensions": "768x512",
+      "use": "Startseite: Islam Quiz; Fragekarte und drei leere Antwortkarten ohne erfundene Inhalte",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-0383588c-b2fc-4476-9176-276b2c6c93fb.png",
+      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D walnut quiz tray with upright emerald card bearing one brass question mark and three blank ivory answer tiles with selection circles; warm light, tactile materials, compact three-quarter composition. No fake questions or religious content."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-duas-v1.webp",
+      "sha256": "b044df40da961f5c87a3186e15ebbadbfff068a153c7a8db30904daece4ec359",
+      "dimensions": "768x512",
+      "use": "Startseite: Duas; persönliches Gebetsnotizbuch mit exaktem Titel DUA und Laterne, ohne erfundenen Bittgebetstext",
+      "generatedAt": "2026-09-26",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1381d658-94ba-4750-85a3-035d625e2fcd.png",
+      "editSourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-78ad336f-ec2e-4de0-aa98-09d39359995a.png",
+      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D open ivory personal prayer notebook with emerald cloth cover and one brass lantern; tactile materials, warm light and three-quarter view; initially blank pages, no invented sacred text.",
+      "editPrompt": "Preserve notebook and lantern; on the right page print exactly DUA in dark emerald serif type with a tiny gold rule, and add a small ornamental rosette to the left page. No other letters or false prayer lines."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-quiz-v2.webp",
+      "sha256": "abe80924deff1def4f5d0b220da63170305ff930b46aadfc4851063529fafbe3",
+      "dimensions": "768x640",
+      "use": "Startseite: Islam Quiz; größere Fragekarte mit den exakten Zeichen ? und QUIZ sowie drei leeren Antwortfeldern",
+      "generatedAt": "2026-09-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-91eedc82-9ed5-4310-ba72-088f986f2e2e.png",
+      "inputImages": [],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Create one isolated premium animated-film 3D quiz object: walnut tray with three blank ivory answer keys, an upright emerald question card with a large gold question mark and the exact word QUIZ beneath it in legible ivory serif type. Match tactile emerald, walnut, warm ivory and restrained antique-gold materials; genuine transparent alpha background, no scene, no other text or invented religious content."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/home-duas-v2.webp",
+      "sha256": "a9fd47050e04c53dff63de4246ef80cea85a77d991ac896f97a5b97b9ee1d6ad",
+      "dimensions": "768x512",
+      "use": "Startseite: Duas; dieselbe Buch-und-Laternen-Komposition mit deutlich größerem DUA-Schriftzug",
+      "generatedAt": "2026-09-27",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-55a6fcd1-707b-4624-abda-e74ae742c9fe.png",
+      "inputImages": ["public/premium-assets/high-res-objects/home-duas-v1.webp"],
+      "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Edit the existing transparent open ivory-and-emerald prayer notebook with brass lantern. Preserve the composition, objects and lighting; enlarge only the exact title DUA on the right page roughly 2.5 times so it remains readable as a small app-card illustration. No other text or new religious content; preserve genuine transparency."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/calendar-object-v1.webp",
+      "sha256": "b05243a57f1eeba07ab8080cc1c4dc1206ae09e3bb40186be6c10cf4ef30c5a4",
+      "dimensions": "512x512",
+      "use": "Widget und Kalenderereignis: zeitloses Kalenderobjekt ohne fest eingebranntes Datum",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1e269b43-8274-46f3-add5-85271d8e7e61.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Freigestellter Tischkalender aus Messing, Smaragd und leerem Elfenbeinblatt; keine Zahlen, Daten, Schrift oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/quran-open-v3.webp",
+      "sha256": "8047e0f5a4394d82f14d7f24beb2dffe9679f55d613a7f913098f585ba490ab5",
+      "dimensions": "768x512",
+      "use": "Quran-Lesen, Lernbereich und Widget: bereinigtes offenes Buch auf Rehal ohne Alpha-Blockartefakte",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-44a04f30-abfe-4642-8e02-47c65712ec00.png",
+      "inputImages": ["public/premium-assets/high-res-objects/quran-open-v2.webp"],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Offenes Buch auf Rehal und Ornamente erhalten, braune Blockartefakte entfernen; Transparenz, kein lesbarer erfundener religiöser Text."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/bookmark-v3.webp",
+      "sha256": "13dda80ae71ad69b2fe6b159884ee68e0496fb267eef9f1e2f70adf660ff1440",
+      "dimensions": "384x384",
+      "use": "Favoriten-Widget und Sammlung: deutliches Lesezeichen statt verwaschenem Altbild",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-cb92b1ef-3185-4804-b69b-ff1047214604.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 384 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Ein schmales smaragdgrünes Lederlesezeichen mit Goldkante und heller Quaste als freigestelltes 3D-Objekt; keine Schrift."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-standby-v1.webp",
+      "sha256": "f8e46b0c225cfb7318545c1a9b21b6eb165dac9b5f150e472cb43da6a7dbfcd1",
+      "dimensions": "512x512",
+      "use": "Gebetsanzeige/Standby: ruhiges Gebetsdisplay statt thematisch falschem Qibla-Kompass",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-eabf5016-8325-4fa3-aa6d-8e032c7b4d87.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Kleines Gebetsdisplay mit Mihrab-Silhouette, Messingrahmen, Smaragd und ruhigem Horizont; keine Zeit, Zahlen oder Schrift."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/zakat-scale-v1.webp",
+      "sha256": "a89de2a07f0e735ff25185edc08d53766a5b9bd2cdee78eaf15d5bdc78162062",
+      "dimensions": "512x512",
+      "use": "Zakat-Rechner: Waage als Planungsmotiv statt Lesezeichen; keine Aussage zur Berechnung",
+      "generatedAt": "2026-09-24",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-4d51b34a-ef36-4fd6-95a1-6c8b0e891ae0.png",
+      "inputImages": [],
+      "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Symmetrische Messingwaage mit smaragdgrünem Sockel und unbeschrifteten Münzen; keine Prozentangabe, Schrift oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mosque-heritage-v1.webp",
+      "sha256": "3b51c35c022a1499e3e326134a76fc176c4c6c31f897c0aa56b950e6ef504ca8",
+      "dimensions": "768x702",
+      "use": "Konzeptionelle, keinem realen Ort zugeordnete Moschee für Onboarding und weitere dekorative Flächen; ersetzt das beschädigte ältere Moschee-Raster sowie dessen generische Vektorersatzgrafik. Im Moschee-Finder seit 25.09.2026 durch eine breitere Architekturansicht ersetzt.",
+      "generatedAt": "2026-09-25",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-89a4c931-017c-4894-a962-0bbe3ccd1925.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-37c80dbf-389b-4639-8f6b-356871f16cf1.png"
+      ],
+      "processing": "Built-in image generation, anschließend gezielte Alpha-/Kantenkorrektur des eigenen Erstentwurfs; cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0",
+      "prompt": "Archivarische Zusammenfassung: Würdevolles konzeptionelles Moscheegebäude mit smaragdgrüner Kuppel, hellem Kalkstein, zwei Minaretten und warmem Messinglicht als freigestelltes redaktionelles 3D-Motiv. Kein bestimmter realer Ort, keine Schrift. Zweiter Durchgang: nur transparente Kanten und einzelne Farbpixel bereinigen, Gebäude und Beleuchtung erhalten."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/mosque-finder-arch-v1.webp",
+      "sha256": "659848b17e7114de96f901b28eae801bbfbe6412565933d8612754e52c1370e0",
+      "dimensions": "1280x720",
+      "use": "Breite illustrative Architekturansicht im Moschee-Finder; keine Abbildung einer konkreten Moschee oder eines Berliner Suchergebnisses.",
+      "generatedAt": "2026-09-25",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b5dc0068-217c-48fd-85d4-68cc78834f72.png",
+      "inputImages": [],
+      "processing": "Built-in image generation; cwebp -q 84 -m 6 -resize 1280 720; keine Freistellung oder nachträgliche Bildmanipulation",
+      "prompt": "Photorealistische redaktionelle 16:9-Architekturansicht für eine Moschee-Finder-Karte: Blick durch den Arkadeneingang einer bewusst generischen, nicht lokalisierbaren zeitgenössischen Moschee auf einen ruhigen Hof; Kalkstein, dezente smaragdgrüne Glasur, warmes Messing-Laternenlicht; dunkler linker Bereich als Freiraum für weißen UI-Text, natürliche Materialien und spätes Tageslicht. Keine Personen, Schrift, Kalligrafie, berühmten Moscheen, Kaaba, Stadtmarken, Logos oder Wasserzeichen; keine freigestellte 3D-Grafik."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-faith-v3.webp",
+      "sha256": "d5d3e4e3d09a65212e6404b38f85bb2e16dbb2d353d1228b059121390d02f040",
+      "dimensions": "768x512",
+      "use": "Kapitel Glaube: sechs unbeschriftete Lerntafeln; keine Darstellung Allahs.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Offenes elfenbeinfarbenes Studienetui mit sechs leeren smaragdgrünen Lerntafeln; keine Darstellung Allahs. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-pillars-v3.webp",
+      "sha256": "1aec90637e40ea6fcf2c1f2449820dc8284f65995615cd7df25d3de0582fc123",
+      "dimensions": "768x512",
+      "use": "Kapitel fünf Säulen: fünf gleichwertige Säulen.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-3162fc65-4a23-49e4-80bc-cac6515601eb.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Fünf gleich hohe elfenbeinfarbene Säulen in einer flachen Holzschale mit smaragdgrünen Bändern. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-terms-v3.webp",
+      "sha256": "bfd81ab36b3de04831404eac9e259eb874adbecacb5cd03f15d01a7052b63f6b",
+      "dimensions": "768x512",
+      "use": "Kapitel wichtige Begriffe: unbeschriftete Lernkarten.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-944f7830-ced4-42f9-bf08-88ab99632b71.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Drei leere elfenbeinfarbene Lernkarten in smaragdgrüner Mappe mit kleinem Stift. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-practice-v3.webp",
+      "sha256": "8c8626905040684b01dba7c8c1795f9180f72724436aafd49abc06b13155a03f",
+      "dimensions": "768x512",
+      "use": "Kapitel Reinheit und Alltag: Kanne, Schale und Tuch.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-058dc598-26f8-4dd4-8d58-eefcbee9db40.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Messingkanne gießt Wasser in helle Steinschale neben grünem Tuch. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-character-v3.webp",
+      "sha256": "95b1a81e3f0b4551051e8287b594a74e6bbd06c3b0dfa959d7d68863a8be4250",
+      "dimensions": "768x512",
+      "use": "Kapitel Charakter und Rechte: Waage und Olivenzweig.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-9c3febff-38db-4b74-af6e-3e2d9e42b356.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Ausbalancierte Holz-Messing-Waage mit Olivenzweig. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-community-v3.webp",
+      "sha256": "818350c77095b28442f2ae50357a5104e35f70dfb17689cae0c6939df3360e3a",
+      "dimensions": "768x512",
+      "use": "Kapitel Miteinander und Verantwortung: offene Sitzrunde ohne Menschen.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-609bf4e4-5c3b-4454-b9ff-2a6459650699.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Drei grün gepolsterte Holzstühle um einen niedrigen Tisch. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-seerah-v3.webp",
+      "sha256": "71d8a4cc777cf29114e7d0d35dc469f003d9b06a08ee24e7734d9fa98eb7f428",
+      "dimensions": "768x512",
+      "use": "Kapitel Der Prophet: Geschichtsbuch und symbolische Landkarte; keine Person oder Reliquie.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-f29320e1-7b0c-4010-91ef-026302ae426c.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Leeres Geschichtsbuch neben symbolischer Reisekarte und Stift; keine Prophetenabbildung. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-prophets-v3.webp",
+      "sha256": "44188247e74ca9d2ec66a8f4ace9c710dbc814c186714963a72c4e3f437d4a69",
+      "dimensions": "768x512",
+      "use": "Kapitel 25 Propheten: unbeschriftetes Schriftrollenarchiv; keine Personen.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-40972bfc-259c-4ccb-ae6f-802a2f9a6c2b.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Mehrere leere Schriftrollen in einer Holzarchivschale; keine Prophetenabbildung. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-madhhabs-v3.webp",
+      "sha256": "edfa328f2e6ac096199c19062862440ed3c375d9adcbb8813997e520b1518200",
+      "dimensions": "768x512",
+      "use": "Kapitel vier Rechtsschulen: vier gleichwertige Bücher.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c6e60343-baa6-449b-8bab-0fa039d13dad.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Vier gleich große, unbeschriftete Bücher auf einem Holzregal. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-hadith-v3.webp",
+      "sha256": "bdc636c7f432906c0fc7f6c9caf83aee2b7a2f3bd46a9d7594cf683d56c72729",
+      "dimensions": "768x512",
+      "use": "Kapitel Hadith-Sammlung: Quellenarchiv mit Lupe.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c3ca329e-5176-4f1e-91f0-ec395a7ae270.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Holzarchiv mit leeren Manuskriptmappen und Lupe. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-sunnah-v3.webp",
+      "sha256": "010bbdb900744512bb6bcd75ea67621b17c4b98a266585a2c8381c28e74688b6",
+      "dimensions": "768x512",
+      "use": "Kapitel Sunnah im Alltag: Datteln, Wasser und Miswak.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-bbbea398-d1d0-4201-ae6b-9dcd87f6e303.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Datteln, Wasser und Miswak auf grünem Tuch. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-repentance-v3.webp",
+      "sha256": "dcdb4a7454408ffc4aad59d6c08fd178cddee937be989346284d38d658848029",
+      "dimensions": "768x512",
+      "use": "Kapitel Fehler und Reue: offene Tür als Hoffnungsmetapher.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b0e24cfc-18ab-40dc-a9d4-021e261724e1.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Offene Holztür im hellen Steinrahmen als Hoffnungsmetapher. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/learn-salah-v3.webp",
+      "sha256": "797b57de18c7a703a0ceac3d8d773bd738c7242c85e71658876e7f417276dd1d",
+      "dimensions": "768x512",
+      "use": "Kurzweg Gebetsablauf: gefalteter Teppich und symbolische Schrittfolge.",
+      "generatedAt": "2026-09-28",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b27a9679-6e8b-4632-9690-7bbb89efbef5.png",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-650d1a3c-bbef-408b-a802-d61b6c6347a9.png"
+      ],
+      "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
+      "prompt": "Archivarische Zusammenfassung: Gefalteter Gebetsteppich und blankes Lernheft mit drei Ziffern als Symbol der Schrittfolge. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    }
+  ],
+  "vectorAssets": [
+    {
+      "path": "public/premium-assets/high-res-objects/nur-logo-emblem-v3.svg",
+      "sha256": "b004f63db84d234aa1acb3c04b16440f8fe4e1c76a4bc97745b7dc190bc3a333",
+      "dimensions": "120x120 viewBox",
+      "use": "App-wide Nur brand mark and opening animation",
+      "origin": "Code-native SVG authored locally from geometric paths and gradients; no external artwork or generated raster input."
+    }
+  ],
+  "retiredAssets": [
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-assistant-v1.webp",
+      "sha256": "8e1e6a2f2dbac9e691d3068bfd026d9d60db3c37feb00d0225a4c1739d0c79b3",
+      "prompt": "Original tiny transparent 3D feature illustration: glowing emerald-and-gold lantern beside a warm-ivory closed source book and a blank speech bubble; soft rounded family-animation-quality forms; no readable text, calligraphy, logo or watermark.",
+      "removedAt": "2026-08-27",
+      "reason": "Assistent vollständig entfernt; Bild nicht mehr ausgeliefert."
+    }
+  ]
+}

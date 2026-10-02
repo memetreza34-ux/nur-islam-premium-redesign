@@ -46,6 +46,8 @@ Diese Funktionen verursachen in der aktuellen Form keine KI- oder nutzungsabhän
 
 ### Betreiber / Recht
 
+Aktueller technischer Befund und Rechtsquellen: [`LEGAL-COMPLIANCE-AUDIT-2026-09-11.md`](./LEGAL-COMPLIANCE-AUDIT-2026-09-11.md).
+
 - [ ] echter Betreibername eingetragen
 - [ ] ladungsfähige Anschrift eingetragen
 - [ ] Kontakt-E-Mail eingetragen

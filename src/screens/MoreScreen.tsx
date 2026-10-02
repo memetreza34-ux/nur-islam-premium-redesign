@@ -2,31 +2,38 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
+  BookOpen,
+  BookOpenCheck,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleHelp,
   Cloud,
+  Droplets,
+  HeartHandshake,
+  Home,
   Info,
+  Landmark,
   Languages,
+  ListChecks,
   LogIn,
   LogOut,
-  MoonStar,
   NotebookPen,
-  Palette,
-  RotateCcw,
   ScrollText,
   Route,
+  Scale,
   Settings2,
   ShieldCheck,
-  Smartphone,
-  SunMedium,
+  Star,
+  Users,
   X,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
-import { serviceLegacyFeatures } from '../data/legacyFeatures';
+import { learningLegacyFeatures, serviceLegacyFeatures } from '../data/legacyFeatures';
 import type { LegacyFeatureId } from '../data/legacyFeatures';
+import { LEARNING_CATEGORIES } from '../data/learningCategories';
+import type { LearningCategoryId } from '../data/learningCategories';
 import { getCachedSession, signOut, subscribeAuth } from '../services/nurBackend';
 import type { NurSession } from '../services/nurBackend';
 import { OBLIGATORY_PRAYER_IDS } from '../services/prayerSchedule';
@@ -44,8 +51,6 @@ import {
   NurTasbihIcon,
 } from '../shared/NurIcons';
 import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
-import { getTheme, setTheme as applyTheme } from '../services/themeService';
-import type { NurTheme } from '../services/themeService';
 
 /**
  * Everything this screen can open. Account, notes and the service features used
@@ -54,9 +59,9 @@ import type { NurTheme } from '../services/themeService';
  * tapping the already-active tab could not return to this list. They are
  * ordinary destinations now, the same as every other row.
  */
-export type MoreDestination = 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections' | 'legal' | 'account' | 'notes' | `legacy:${LegacyFeatureId}`;
+export type MoreDestination = 'home' | 'prayer' | 'learn' | 'quran' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'calendar' | 'collections' | 'ayah' | 'hadith' | 'wudu' | 'prayer-learning' | 'legal' | 'account' | 'notes' | `learn:${LearningCategoryId}` | `legacy:${LegacyFeatureId}`;
 
-type ProfileAction = 'appearance' | 'language' | 'settings' | 'onboarding' | 'support' | 'about';
+type ProfileAction = 'language' | 'settings' | 'support' | 'about';
 
 type ProfileRow = {
   id: string;
@@ -71,20 +76,80 @@ type CoreShortcut = {
   destination: MoreDestination;
   title: string;
   description: string;
-  icon: NurIcon;
+  icon: NurIcon | LucideIcon;
 };
 
-const coreShortcuts: CoreShortcut[] = [
-  { destination: 'prayer', title: 'Gebete', description: 'Zeiten & Tracker', icon: NurPrayerTimesIcon },
-  { destination: 'learn', title: 'Beten lernen', description: 'Wudu & Salah', icon: NurMihrabIcon },
-  { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', icon: NurQuranIcon },
-  { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: NurTasbihIcon },
-  { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: NurQiblaIcon },
-  { destination: 'duas', title: 'Duas', description: 'Für jeden Moment', icon: NurDuaIcon },
-  { destination: 'names', title: '99 Namen', description: 'Bedeutungen lernen', icon: NurRosetteIcon },
-  { destination: 'mosques', title: 'Moscheen', description: 'In deiner Nähe', icon: NurMosqueIcon },
-  { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage', icon: NurCalendarIcon },
-  { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: NurBookmarkIcon },
+const learningCategoryIcons: Record<LearningCategoryId, LucideIcon> = {
+  faith: ShieldCheck,
+  pillars: Landmark,
+  terms: ListChecks,
+  practice: Droplets,
+  character: HeartHandshake,
+  community: Users,
+  prophet: Star,
+};
+
+const directServiceIds = new Set<LegacyFeatureId>(['fasting', 'ummah']);
+const directServiceFeatures = serviceLegacyFeatures.filter((feature) => directServiceIds.has(feature.id));
+const standaloneServiceFeatures = serviceLegacyFeatures.filter((feature) => !directServiceIds.has(feature.id));
+
+function legacyShortcut(feature: (typeof serviceLegacyFeatures)[number]): CoreShortcut {
+  return {
+    destination: `legacy:${feature.id}`,
+    title: feature.title,
+    description: feature.subtitle,
+    icon: feature.icon,
+  };
+}
+
+const coreShortcutGroups: Array<{ title: string; shortcuts: CoreShortcut[] }> = [
+  {
+    title: 'Hauptbereiche',
+    shortcuts: [
+      { destination: 'home', title: 'Start', description: 'Heute & nächstes Gebet', icon: Home },
+      { destination: 'prayer', title: 'Gebetszeiten', description: 'Zeiten, Plan & Tracker', icon: NurPrayerTimesIcon },
+      { destination: 'quran', title: 'Quran', description: 'Alle 114 Suren', icon: NurQuranIcon },
+      { destination: 'learn', title: 'Lernen', description: 'Alle Kurse & Grundlagen', icon: BookOpen },
+    ],
+  },
+  {
+    title: 'Gebet & Alltag',
+    shortcuts: [
+      { destination: 'prayer-learning', title: 'Beten lernen', description: 'Fünf Gebete Schritt für Schritt', icon: NurMihrabIcon },
+      { destination: 'wudu', title: 'Wudu lernen', description: 'Waschung Schritt für Schritt', icon: Droplets },
+      { destination: 'qibla', title: 'Qibla', description: 'Live-Kompass', icon: NurQiblaIcon },
+      { destination: 'dhikr', title: 'Dhikr', description: 'Zähler & Tagesziel', icon: NurTasbihIcon },
+      { destination: 'duas', title: 'Duas', description: 'Bittgebete für jeden Moment', icon: NurDuaIcon },
+      { destination: 'mosques', title: 'Moscheen', description: 'Gebetsorte in deiner Nähe', icon: NurMosqueIcon },
+      { destination: 'calendar', title: 'Kalender', description: 'Islamische Tage & Termine', icon: NurCalendarIcon },
+      ...directServiceFeatures.filter((feature) => feature.id === 'fasting').map(legacyShortcut),
+      { destination: 'collections', title: 'Sammlung', description: 'Favoriten & Lesezeichen', icon: NurBookmarkIcon },
+    ],
+  },
+  {
+    title: 'Grundlagen',
+    shortcuts: LEARNING_CATEGORIES.map((category) => ({
+      destination: `learn:${category.id}` as MoreDestination,
+      title: category.title,
+      description: category.subtitle,
+      icon: learningCategoryIcons[category.id],
+    })),
+  },
+  {
+    title: 'Wissen & Vertiefung',
+    shortcuts: [
+      { destination: 'ayah', title: 'Vers des Tages', description: 'Arabisch, Aussprache & Bedeutung', icon: BookOpenCheck },
+      { destination: 'hadith', title: 'Hadith des Tages', description: 'Quelle & Einordnung', icon: BookOpen },
+      { destination: 'names', title: '99 Namen Allahs', description: 'Arabisch, Aussprache & Bedeutung', icon: NurRosetteIcon },
+      ...directServiceFeatures.filter((feature) => feature.id === 'ummah').map(legacyShortcut),
+      ...learningLegacyFeatures.map((feature) => ({
+        destination: `legacy:${feature.id}` as MoreDestination,
+        title: feature.title,
+        description: feature.subtitle,
+        icon: feature.icon,
+      })),
+    ],
+  },
 ];
 
 const journeyRows: ProfileRow[] = [
@@ -93,17 +158,15 @@ const journeyRows: ProfileRow[] = [
   // above, under a second name. Two entries for one destination is the kind of
   // thing that makes a reader doubt they found the right one.
   { id: 'notes', title: 'Notizen', description: 'Lokal oder geschützt in der Cloud', icon: NotebookPen, destination: 'notes' },
-  { id: 'reminders', title: 'Erinnerungen', description: 'Gebete direkt verwalten', icon: BellRing, destination: 'prayer' },
+  { id: 'reminders', title: 'Gebetserinnerungen', description: 'Benachrichtigungen für die fünf Gebete einstellen', icon: BellRing, destination: 'prayer' },
 ];
 
 const preferenceRows: ProfileRow[] = [
-  { id: 'appearance', title: 'Erscheinungsbild', description: 'Dunkel, hell oder System', icon: Palette, action: 'appearance' },
   { id: 'language', title: 'Sprache', description: 'Aktuell vollständig: Deutsch', icon: Languages, action: 'language' },
   { id: 'settings', title: 'Einstellungen', description: 'Reminder, Konto und Cloud', icon: Settings2, action: 'settings' },
 ];
 
 const supportRows: ProfileRow[] = [
-  { id: 'onboarding', title: 'Einführung wiederholen', description: 'Premium-Einstieg erneut ansehen', icon: RotateCcw, action: 'onboarding' },
   // Named "Hilfe & Datenschutz" before, directly above "Impressum &
   // Datenschutz": two rows whose titles claimed the same subject, so the only
   // way to tell them apart was to read the small line underneath.
@@ -155,13 +218,16 @@ function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: P
 
 export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavigate: (destination: MoreDestination) => void }) {
   const [modal, setModal] = useState<ProfileAction | null>(null);
-  const [theme, setThemeState] = useState<NurTheme>(() => getTheme());
   const [notifications, setNotifications] = useState(readReminderEnabled);
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [toast, setToast] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
   const closeDialog = useCallback(() => { setModal(null); }, []);
-  const screenDialog = useDialog(Boolean(modal), closeDialog, 'Einstellungen');
+  const screenDialog = useDialog(
+    Boolean(modal),
+    closeDialog,
+    modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Nur' : modal === 'language' ? 'App-Sprache' : 'Einstellungen',
+  );
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
   const itemTransition = (index: number) => ({ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .02, .1), ease: [0.22, 1, .36, 1] as const });
@@ -183,12 +249,6 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   const selectRow = (row: ProfileRow) => {
     if (row.destination) return onNavigate(row.destination);
     if (row.action) setModal(row.action);
-  };
-
-  const chooseTheme = (next: NurTheme) => {
-    setThemeState(next);
-    applyTheme(next);
-    flash('Erscheinungsbild gespeichert');
   };
 
   const toggleNotifications = async () => {
@@ -216,10 +276,6 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       : 'Alle fünf Pflichtgebete sind als In-App-Erinnerungen aktiviert; Systembenachrichtigungen sind nicht verfügbar');
   };
 
-  const repeatOnboarding = () => {
-    try { localStorage.removeItem('nur_onboarding_complete'); } finally { window.location.reload(); }
-  };
-
   const logout = async () => {
     if (!session) {
       onNavigate('account');
@@ -239,7 +295,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       </header>
 
       <section className="reference-profile-greeting">
-        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" fallback={<NurMark />} /></span>
+        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} /></span>
         <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Nur Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
         <span className="reference-profile-avatar">{initials}</span>
       </section>
@@ -251,18 +307,25 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       </button>
 
       <section className="reference-profile-section reference-core-access">
-        <div className="reference-core-access__heading"><span className="reference-profile-section__label">Direktzugriff</span><small>Alle zentralen Bereiche ohne Umwege</small></div>
-        <div className="reference-core-access-grid">
-          {coreShortcuts.map((shortcut, index) => {
-            const Icon = shortcut.icon;
-            return (
-              <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
-                <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
-                <ChevronRight size={16} />
-              </motion.button>
-            );
-          })}
+        <div className="reference-core-access__heading"><span className="reference-profile-section__label">Direktzugriff</span><small>Alle Bereiche der App an einem Ort</small></div>
+        <div className="reference-core-access__groups">
+          {coreShortcutGroups.map((group, groupIndex) => (
+            <section className="reference-core-access__group" key={group.title} aria-labelledby={`direct-access-${groupIndex}`}>
+              <div className="reference-core-access__group-title"><h3 id={`direct-access-${groupIndex}`}>{group.title}</h3><span>{group.shortcuts.length}</span></div>
+              <div className="reference-core-access-grid">
+                {group.shortcuts.map((shortcut, index) => {
+                  const Icon = shortcut.icon;
+                  return (
+                    <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(groupIndex * 4 + index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
+                      <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
+                      <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
+                      <ChevronRight size={16} />
+                    </motion.button>
+                  );
+                })}
+              </div>
+            </section>
+          ))}
         </div>
       </section>
 
@@ -270,14 +333,14 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
 
       <section className="reference-profile-section reference-services-section">
         <span className="reference-profile-section__label">Islamische Dienste</span>
-        <p className="reference-services-section__intro">Zusatzfunktionen aus dem bisherigen Funktionsumfang im gemeinsamen Premium-Aufbau.</p>
+        <p className="reference-services-section__intro">Zusätzliche Werkzeuge, die keinem Hauptbereich doppelt zugeordnet sind.</p>
         <div className="reference-services-grid">
-          {serviceLegacyFeatures.map((feature, index) => {
+          {standaloneServiceFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
               <motion.button key={feature.id} onClick={() => onNavigate(`legacy:${feature.id}`)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
                 <span className="reference-services-grid__icon"><Icon size={21} /></span>
-                <span><small>{feature.subtitle}</small><strong>{feature.title}</strong></span>
+                <span><small>{feature.id === 'standby' ? 'Gebetsanzeige' : feature.subtitle}</small><strong>{feature.id === 'standby' ? 'Standby' : feature.title}</strong></span>
                 <ChevronRight size={17} />
               </motion.button>
             );
@@ -285,7 +348,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
         </div>
       </section>
 
-      <section className="reference-profile-section"><span className="reference-profile-section__label">Personalisierung</span><ProfileList rows={preferenceRows} onSelect={selectRow} /></section>
+      <section className="reference-profile-section"><span className="reference-profile-section__label">App</span><ProfileList rows={preferenceRows} onSelect={selectRow} /></section>
       <section className="reference-profile-section"><span className="reference-profile-section__label">Informationen</span><ProfileList rows={supportRows} onSelect={selectRow} /></section>
 
       <button className="reference-profile-logout" onClick={() => void logout()}>{session ? <><LogOut size={18} /> Abmelden</> : <><LogIn size={18} /> Konto öffnen</>}</button>
@@ -293,21 +356,8 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
       <AnimatePresence>
         {modal ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setModal(null)}>
-            <motion.section {...screenDialog.props} className="reference-profile-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
+            <motion.section {...screenDialog.props} className={`reference-profile-modal${modal === 'support' ? ' reference-profile-modal--support' : ''}${modal === 'about' ? ' reference-profile-modal--about' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setModal(null)} aria-label="Schließen"><X size={18} /></button>
-
-              {modal === 'appearance' ? (
-                <>
-                  <span className="reference-profile-modal__icon"><Palette size={28} /></span><span className="overline">Personalisierung</span><h2>Erscheinungsbild</h2><p>Die Auswahl wird sofort auf die App angewendet und auf diesem Gerät gespeichert.</p>
-                  <div className="reference-choice-grid">
-                    {([
-                      ['dark', 'Dunkel', MoonStar],
-                      ['system', 'System', Smartphone],
-                      ['light', 'Hell', SunMedium],
-                    ] as const).map(([value, label, Icon]) => <button key={value} className={theme === value ? 'reference-choice reference-choice--active' : 'reference-choice'} onClick={() => chooseTheme(value)}><Icon size={20} /><span>{label}</span>{theme === value ? <CircleCheck size={16} /> : null}</button>)}
-                  </div>
-                </>
-              ) : null}
 
               {modal === 'language' ? (
                 <>
@@ -326,29 +376,99 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
                 </>
               ) : null}
 
-              {modal === 'onboarding' ? (
-                <>
-                  <span className="reference-profile-modal__icon"><RotateCcw size={28} /></span><span className="overline">App-Einführung</span><h2>Einführung wiederholen</h2><p>Nur der Onboarding-Status wird zurückgesetzt. Tracker, Favoriten, Termine und Notizen bleiben erhalten.</p>
-                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Termine bleiben erhalten</span><span><CircleCheck size={16} /> Gebets-Tracker bleibt erhalten</span><span><CircleCheck size={16} /> Nur die Einführung startet neu</span></div>
-                  <button className="gold-button" onClick={repeatOnboarding}>Einführung starten <RotateCcw size={17} /></button>
-                </>
-              ) : null}
-
               {modal === 'support' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><ShieldCheck size={28} /></span><span className="overline">Hilfe & Datenschutz</span><h2>Was die App verarbeitet</h2><p>Fortschritt bleibt standardmäßig lokal. Bei freiwilliger Standortnutzung werden Koordinaten für Gebetszeiten an AlAdhan und für die Moschee-Suche an öffentliche OpenStreetMap/Overpass-Dienste übertragen. Der arabische Quran-Text liegt vollständig auf dem Gerät; die deutsche Wiedergabe wird beim Öffnen einer Sure von Al Quran Cloud geladen und danach im Browser gespeichert.</p>
-                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> Cloud nur nach Anmeldung und bewusster Sicherung</span><span><CircleCheck size={16} /> Keine Werbe-Tracker im App-Code</span><span><CircleCheck size={16} /> Religiöse Hinweise ersetzen keine Fatwa</span></div>
+                  <span className="reference-profile-modal__icon"><CircleHelp size={28} /></span>
+                  <span className="overline">Hilfe-Center</span>
+                  <h2>Hilfe, Funktionen & Datenschutz</h2>
+                  <p>Hier siehst du den aktuellen Stand wichtiger Funktionen, findest die passenden Einstellungen und kannst Probleme direkt lösen.</p>
+
+                  <section className="reference-support-section" aria-labelledby="support-automation-title">
+                    <div className="reference-support-section__heading"><span>Funktionen & Status</span><small>Was selbstständig läuft</small></div>
+                    <div className="reference-support-status" id="support-automation-title">
+                      <div><BellRing size={18} /><span><strong>Gebetszeiten</strong><small>Werden jeden Tag selbstständig aktualisiert</small></span><em>Jeden Tag</em></div>
+                      <div><BellRing size={18} /><span><strong>Gebetserinnerungen</strong><small>{notifications ? 'Laufen nach der Aktivierung selbstständig' : 'Müssen einmal eingerichtet werden'}</small></span><em className={notifications ? 'is-ready' : ''}>{notifications ? 'Aktiv' : 'Einrichten'}</em></div>
+                      <div><Cloud size={18} /><span><strong>Cloud-Sicherung</strong><small>{session ? 'Konto verbunden; du startest jedes Backup selbst' : 'Nur verfügbar, wenn du ein Konto verbindest'}</small></span><em className={session ? 'is-ready' : ''}>{session ? 'Manuell' : 'Optional'}</em></div>
+                    </div>
+                  </section>
+
+                  <section className="reference-support-section" aria-labelledby="support-actions-title">
+                    <div className="reference-support-section__heading"><span id="support-actions-title">Direkte Hilfe</span><small>Öffnet die richtige Stelle</small></div>
+                    <div className="reference-support-actions">
+                      <button onClick={() => { setModal(null); onNavigate('prayer'); }}><BellRing size={19} /><span><strong>Gebetserinnerungen einrichten</strong><small>Glocke beim gewünschten Pflichtgebet aktivieren</small></span><ChevronRight size={17} /></button>
+                      <button onClick={() => { setModal(null); onNavigate('legacy:fasting'); }}><Route size={19} /><span><strong>Fastentage planen</strong><small>Auswahl als Kalender-Erinnerungen vorbereiten</small></span><ChevronRight size={17} /></button>
+                      <button onClick={() => { setModal(null); onNavigate('account'); }}><Cloud size={19} /><span><strong>Konto & Sicherung öffnen</strong><small>Fortschritt sichern, exportieren oder löschen</small></span><ChevronRight size={17} /></button>
+                      <button onClick={() => { setModal(null); onNavigate('legal'); }}><ShieldCheck size={19} /><span><strong>Datenschutz vollständig lesen</strong><small>Dienste, Speicherdauer und deine Rechte</small></span><ChevronRight size={17} /></button>
+                    </div>
+                  </section>
+
+                  <section className="reference-support-section reference-support-data" aria-labelledby="support-data-title">
+                    <div className="reference-support-section__heading"><span id="support-data-title">Dein Datenweg</span><small>Transparent in drei Stufen</small></div>
+                    <div className="reference-support-data__steps">
+                      <article><b>1</b><span><strong>Zunächst auf deinem Gerät</strong><small>Tracker, Dhikr, Favoriten, Termine, lokale Notizen und Lernfortschritt.</small></span></article>
+                      <article><b>2</b><span><strong>Nur wenn du eine Funktion nutzt</strong><small>Standort an AlAdhan oder Overpass; Surennummer an Al Quran Cloud. Dabei fallen technisch notwendige Verbindungsdaten an.</small></span></article>
+                      <article><b>3</b><span><strong>Cloud nur mit Einwilligung</strong><small>Backups und Cloud-Notizen nutzen Supabase erst nach ausdrücklicher Freigabe. Standort und lokale Notizen werden nicht mitgesichert.</small></span></article>
+                    </div>
+                    <div className="reference-support-trust"><Scale size={17} /><span><strong>Keine Werbung und keine Werbe-Tracker</strong><small>Die App funktioniert auch ohne Konto. Cloud-Sicherungen werden nicht automatisch ohne deine Aktion gestartet.</small></span></div>
+                  </section>
+
+                  <section className="reference-support-section" aria-labelledby="support-faq-title">
+                    <div className="reference-support-section__heading"><span id="support-faq-title">Wenn etwas nicht funktioniert</span><small>Schnelle Lösungen</small></div>
+                    <div className="reference-support-faq">
+                      <details><summary>Ich erhalte keine Erinnerung</summary><p>Öffne „Gebetserinnerungen“, aktiviere die Glocke bei einem Pflichtgebet und erlaube Benachrichtigungen im Browser oder auf deinem Gerät.</p></details>
+                      <details><summary>Die Gebetszeit oder der Ort stimmt nicht</summary><p>Öffne den Gebetsbereich und prüfe Standort, Berechnungsmethode und Asr-Einstellung. Ohne Standortfreigabe verwendet die App den voreingestellten Ort.</p></details>
+                      <details><summary>Wie sichere oder lösche ich meine Daten?</summary><p>Unter „Konto & Sicherung“ kannst du ein Backup bewusst starten, Daten als JSON exportieren und Cloud-Daten wieder löschen.</p></details>
+                      <details><summary>Kann ich die App offline nutzen?</summary><p>Der arabische Quran-Text und bereits geladene Inhalte bleiben verfügbar. Live-Gebetszeiten, Übersetzungen und Moschee-Suche benötigen zeitweise Internet.</p></details>
+                    </div>
+                  </section>
                 </>
               ) : null}
 
               {modal === 'about' ? (
-                <>
-                  <span className="reference-profile-modal__icon"><Info size={28} /></span><span className="overline">Nur Islam</span><h2>Premium-App</h2><p>Nur bündelt Gebetszeiten, Quran, Dhikr, Qibla, Duas, Lernen, Moschee-Suche und persönliche Fortschritte in einer ruhigen Oberfläche. Quellen und Unsicherheiten werden sichtbar gekennzeichnet.</p>
-                  <div className="reference-category-modal__meta"><span><CircleCheck size={16} /> React + TypeScript + PWA</span><span><CircleCheck size={16} /> Supabase Auth und RLS-geschützte Cloud</span><span><CircleCheck size={16} /> Lokaler Offline-First-Ansatz</span></div>
-                </>
+                <div className="reference-about">
+                  <header className="reference-about__hero">
+                    <span className="reference-about__mark">
+                      <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} />
+                    </span>
+                    <span className="overline">Nur Islam · Version 0.3</span>
+                    <h2>Eine App.<br />Dein muslimischer Alltag.</h2>
+                    <p>Nur Islam wurde speziell für Muslime entwickelt. Die wichtigsten Begleiter für Glauben, Gebet, Wissen und Alltag kommen in einer ruhigen App zusammen.</p>
+                  </header>
+
+                  <section className="reference-about__promise" aria-labelledby="about-promise-title">
+                    <span><ShieldCheck size={21} /></span>
+                    <div>
+                      <small id="about-promise-title">Unser Grundsatz</small>
+                      <strong>Ohne Werbung. Ohne Pflichtkonto.</strong>
+                      <p>Keine Werbebanner und keine Werbe-Tracker. Du kannst Nur Islam lokal nutzen; Konto und Cloud bleiben freiwillig.</p>
+                    </div>
+                  </section>
+
+                  <section className="reference-about__areas" aria-labelledby="about-areas-title">
+                    <div className="reference-about__section-heading">
+                      <strong id="about-areas-title">Alles Wichtige an einem Ort</strong>
+                      <small>Für Ibadah, Wissen und Alltag</small>
+                    </div>
+                    <div className="reference-about__area-grid">
+                      <span><CircleCheck size={14} /> Gebetszeiten & Erinnerungen</span>
+                      <span><CircleCheck size={14} /> Quran & Lesezeichen</span>
+                      <span><CircleCheck size={14} /> Dhikr & Duas</span>
+                      <span><CircleCheck size={14} /> Qibla & Moscheen</span>
+                      <span><CircleCheck size={14} /> Lernen & Gebet</span>
+                      <span><CircleCheck size={14} /> Kalender & Fasten</span>
+                      <span><CircleCheck size={14} /> Notizen & Fortschritt</span>
+                      <span><CircleCheck size={14} /> Quellen & Einordnung</span>
+                    </div>
+                  </section>
+
+                  <footer className="reference-about__footer">
+                    <span><HeartHandshake size={16} /> Mit Sorgfalt für Muslime entwickelt</span>
+                    <small>Als App installierbar</small>
+                  </footer>
+                </div>
               ) : null}
 
-              {modal !== 'onboarding' ? <button className="gold-button" onClick={() => setModal(null)}>Fertig <CircleCheck size={17} /></button> : null}
+              <button className="gold-button" onClick={() => setModal(null)}>{modal === 'support' ? 'Hilfe schließen' : 'Fertig'} <CircleCheck size={17} /></button>
             </motion.section>
           </motion.div>
         ) : null}

@@ -74,9 +74,10 @@ for (const requirement of [
 }
 
 const requiredAssetAliases = [
-  "'nur-logo-emblem.webp': 'nur-logo-emblem-v2.webp'",
-  "'mosque-gold.webp': 'mosque-gold-v2.svg'",
-  "'mosque-gold-v2.webp': 'mosque-gold-v2.svg'",
+  "'nur-logo-emblem.webp': 'nur-logo-emblem-v3.svg'",
+  "'nur-logo-emblem-v2.webp': 'nur-logo-emblem-v3.svg'",
+  "'mosque-gold.webp': 'mosque-heritage-v1.webp'",
+  "'mosque-gold-v2.webp': 'mosque-heritage-v1.webp'",
   "'quran-closed.webp': 'quran-closed-v2.webp'",
   "'tasbih.webp': 'tasbih-v2.webp'",
   "'qibla-compass.webp': 'qibla-compass-v2.webp'",
@@ -89,13 +90,13 @@ for (const alias of requiredAssetAliases) {
 if (!visuals.includes("import { versionAppPath } from '../app/appPaths';") || !visuals.includes('return versionAppPath(src, PREMIUM_ASSET_VERSION);')) {
   throw new Error('PremiumImage does not resolve assets through the deployment base path.');
 }
-if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260808-release-hardening';")) {
+if (!visuals.includes("const PREMIUM_ASSET_VERSION = '20260826-original-art';")) {
   throw new Error('PremiumImage is not pinned to the current release asset version.');
 }
 
 for (const requirement of [
   "import { versionAppPath } from '../app/appPaths';",
-  "const VISUAL_VERSION = '20260808-release-hardening';",
+  "const VISUAL_VERSION = '20260826-original-art';",
   'const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);',
 ]) {
   if (!legacyFeatures.includes(requirement)) throw new Error(`Legacy hero assets are not deployment-safe: ${requirement}`);
@@ -110,7 +111,7 @@ if (main.includes('ReferenceArtworkHost')) {
 
 for (const requirement of [
   "versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION)",
-  "const VISUAL_VERSION = '20260808-release-hardening';",
+  "const VISUAL_VERSION = '20260826-original-art';",
   "resolveAppPath('manifest.webmanifest')",
 ]) {
   if (!main.includes(requirement)) throw new Error(`Main preload path is not deployment-safe: ${requirement}`);
@@ -200,4 +201,4 @@ for (const requirement of [
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: current GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, same-subject mosque SVG recovery plus legacy premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, current mosque artwork plus legacy premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);

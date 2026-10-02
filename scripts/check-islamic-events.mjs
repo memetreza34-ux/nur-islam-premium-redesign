@@ -13,6 +13,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const source = await readFile(resolve(root, 'src/data/islamicEventsData.ts'), 'utf8');
 const screen = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'), 'utf8');
+const viewModel = await readFile(resolve(root, 'src/services/calendarViewModel.ts'), 'utf8');
 
 const events = [];
 const block = source.slice(source.indexOf('ISLAMIC_EVENTS'), source.indexOf('export const WHITE_DAYS'));
@@ -107,14 +108,16 @@ for (const [id, [month, days]] of Object.entries(FIXED_DATES)) {
 if (!source.includes('NO_FASTING_DAYS') || !source.includes('isFastingForbidden')) {
   throw new Error('The calendar no longer suppresses fasting hints on Eid and the Tashriq days.');
 }
-if (!screen.includes('isFastingForbidden')) {
-  throw new Error('The calendar screen does not apply the fasting-forbidden rule.');
+if (!viewModel.includes('isFastingForbidden') || !screen.includes('getCalendarEvent')) {
+  throw new Error('The shared calendar model does not apply the fasting-forbidden rule to the calendar screen.');
 }
 
-// One number per cell was the point of the redesign: the Hijri date belongs in
-// the header and on the selected day, not stacked under every date.
-if (/<strong>\{day\}<\/strong><em>/.test(screen)) {
-  throw new Error('Calendar cells show two numbers again; the Hijri day belongs in the header.');
+// The calendar deliberately shows both systems in every cell. The legend must
+// make the hierarchy explicit so the smaller Hijri number cannot be mistaken
+// for a second Gregorian date.
+if (!/<strong>\{day\}<\/strong>\s*<em>\{getHijriDay\(cellDate\)\}<\/em>/.test(screen)
+  || !screen.includes('Groß: gregorianisch · klein: Hijri')) {
+  throw new Error('Calendar cells must show a clearly labelled Gregorian/Hijri date pair.');
 }
 
-console.log(`Islamic calendar verified: ${events.length} occasions, every one reached within two years of real Umm al-Qura dates, fasting suppressed on Eid and Tashriq, and one number per cell.`);
+console.log(`Islamic calendar verified: ${events.length} occasions, every one reached within two years of real Umm al-Qura dates, fasting suppressed on Eid and Tashriq, and the dual-date hierarchy is labelled.`);

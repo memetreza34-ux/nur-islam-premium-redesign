@@ -98,7 +98,7 @@ if (!serviceWorker.includes("self.addEventListener('notificationclick'") || !ser
 if (!styles.includes('.reference-prayer-reminder-banner') || !styleIndex.includes('reference-prayer-reminders.css')) {
   throw new Error('Prayer reminder banner styles are missing or not loaded.');
 }
-if (!systemLayer.includes('nur-logo-emblem-v2.webp')) {
+if (!systemLayer.includes('nur-logo-emblem-v3.svg')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 

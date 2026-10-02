@@ -5,7 +5,6 @@ const root = process.cwd();
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const micro = await readFile(resolve(root, 'src/styles/micro-ui-consistency.css'), 'utf8');
 const profile = await readFile(resolve(root, 'src/styles/reference-profile.css'), 'utf8');
-const assistant = await readFile(resolve(root, 'src/styles/reference-assistant.css'), 'utf8');
 const prayerCalendar = await readFile(resolve(root, 'src/styles/reference-prayer-calendar.css'), 'utf8');
 const quran = await readFile(resolve(root, 'src/styles/reference-quran-complete.css'), 'utf8');
 const duas = await readFile(resolve(root, 'src/styles/reference-duas-complete.css'), 'utf8');
@@ -36,7 +35,6 @@ for (const token of [
 for (const selector of [
   '.reference-profile-greeting p',
   '.reference-profile-row__copy small',
-  '.reference-assistant-safety small',
   '.prayer-location-card small',
   '.calendar-weekdays span',
   '.reference-prayer-live-status small',
@@ -52,7 +50,7 @@ for (const selector of [
   '.reference-quran-results small',
   '.reference-quran-list__copy small',
   '.reference-quran-availability',
-  '.reference-reader-screen--dynamic .reference-reader-verse blockquote small',
+  '.reference-reader-verse__reading small',
   '.reference-name-progress small',
   '.reference-name-list__copy small',
   '.reference-name-modal__notice',
@@ -84,8 +82,8 @@ for (const requirement of [
   if (!micro.includes(requirement)) throw new Error(`Micro UI rhythm requirement is missing: ${requirement}`);
 }
 
-if (!profile.includes('font-size: .51rem') || !assistant.includes('font-size: .49rem') || !prayerCalendar.includes('font-size: .49rem')) {
-  throw new Error('Expected profile/assistant/prayer legacy micro-copy baselines changed; review the centralized overrides.');
+if (!profile.includes('font-size: .51rem') || !prayerCalendar.includes('font-size: .49rem')) {
+  throw new Error('Expected profile/prayer legacy micro-copy baselines changed; review the centralized overrides.');
 }
 if (!quran.includes('font-size: .4rem') || !duas.includes('font-size: .47rem') || !names.includes('font-size: .48rem')) {
   throw new Error('Expected Quran/Dua/Names legacy micro-copy baselines changed; review the centralized overrides.');
@@ -94,4 +92,4 @@ if (!installPrompt.includes('font-size: .46rem') || !installPrompt.includes('fon
   throw new Error('Expected global install/network/reminder micro-copy baselines changed; review the centralized overrides.');
 }
 
-console.log('Micro UI consistency verified: secondary text across profile, assistant, prayer, reminder banner, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');
+console.log('Micro UI consistency verified: secondary text across profile, prayer, reminder banner, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');

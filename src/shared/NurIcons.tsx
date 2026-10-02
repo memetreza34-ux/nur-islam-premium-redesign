@@ -10,7 +10,6 @@ import {
   Compass,
   Heart,
   Landmark,
-  MessageSquare,
   Star,
 } from 'lucide-react';
 
@@ -81,10 +80,6 @@ export function NurPrayerTimesIcon(props: IconProps) {
 
 export function NurQuizIcon(props: IconProps) {
   return <CircleHelp {...sharedProps(props)} />;
-}
-
-export function NurAssistantIcon(props: IconProps) {
-  return <MessageSquare {...sharedProps(props)} />;
 }
 
 export type NurIcon = (props: IconProps) => React.JSX.Element;

@@ -176,7 +176,7 @@ try {
   await settle();
 
   for (const [id, title, name] of [
-    ['fasting', 'Fasten-Assistent', '12-fasting'],
+    ['fasting', 'Fastenplan', '12-fasting'],
     ['places', 'Islamische Orte', '13-places'],
   ]) {
     const button = page.locator('.reference-services-grid > button').filter({ hasText: title }).first();

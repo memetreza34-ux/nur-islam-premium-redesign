@@ -65,9 +65,10 @@ export function getHijriMonth(date: Date) {
 }
 
 /** German Hijri date, e.g. "25. Safar 1448 AH". */
-export function getHijriLabel(date: Date, fallback = 'Islamisches Datum') {
+export function getHijriLabel(date: Date, fallback = 'Islamisches Datum', timeZone?: string) {
   try {
     return new Intl.DateTimeFormat(calendarLocale('de-DE'), {
+      timeZone,
       day: 'numeric',
       month: 'long',
       year: 'numeric',

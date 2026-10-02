@@ -22,6 +22,8 @@ import {
   getCachedSession,
   getSession,
   loadProfile,
+  profileHasSensitiveCloudConsent,
+  recordSensitiveCloudConsent,
   restoreCloudState,
   signInWithPassword,
   signOut,
@@ -37,7 +39,7 @@ function storeDisplayName(value: string) {
   try { localStorage.setItem('nur_display_name', clean); } catch { /* optional */ }
 }
 
-export function AccountScreen({ onBack }: { onBack: () => void }) {
+export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onOpenLegal: () => void }) {
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
   const [mode, setMode] = useState<'login' | 'register'>('login');
   const [email, setEmail] = useState('');
@@ -48,6 +50,8 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
   const [cloudUpdatedAt, setCloudUpdatedAt] = useState<string | null>(null);
   const [confirmDelete, setConfirmDelete] = useState(false);
   const [confirmRestore, setConfirmRestore] = useState(false);
+  const [cloudConsentGranted, setCloudConsentGranted] = useState(false);
+  const [cloudConsentChecked, setCloudConsentChecked] = useState(false);
   const reduceMotion = useReducedMotion();
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
@@ -60,7 +64,9 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
       setSession(current);
       if (!current) return;
       const profile = await loadProfile().catch(() => null);
-      if (!active || !profile) return;
+      if (!active) return;
+      setCloudConsentGranted(profileHasSensitiveCloudConsent(profile));
+      if (!profile) return;
       storeDisplayName(profile.display_name);
       setDisplayName(profile.display_name);
     });
@@ -80,6 +86,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
         const next = await signInWithPassword(email, password);
         setSession(next);
         const profile = await loadProfile().catch(() => null);
+        setCloudConsentGranted(profileHasSensitiveCloudConsent(profile));
         const pendingName = (() => {
           try { return localStorage.getItem('nur_pending_display_name') || ''; } catch { return ''; }
         })();
@@ -95,6 +102,7 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
         if (result.session) {
           setSession(result.session);
           await upsertProfile({ display_name: name });
+          setCloudConsentGranted(false);
           setStatus('Konto erstellt und angemeldet.');
         } else {
           try { localStorage.setItem('nur_pending_display_name', name); } catch { /* optional */ }
@@ -105,6 +113,25 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
       setPassword('');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Der Account-Vorgang ist fehlgeschlagen.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const allowSensitiveCloudData = async () => {
+    if (!cloudConsentChecked) {
+      setStatus('Bitte bestätige zuerst die ausdrückliche Cloud-Einwilligung.');
+      return;
+    }
+    setBusy(true);
+    setStatus(null);
+    try {
+      const profile = await recordSensitiveCloudConsent();
+      setCloudConsentGranted(profileHasSensitiveCloudConsent(profile));
+      setCloudConsentChecked(false);
+      setStatus('Cloud-Nutzung ist freigegeben. Du entscheidest weiterhin selbst, wann ein Backup erstellt wird.');
+    } catch (reason) {
+      setStatus(reason instanceof Error ? reason.message : 'Die Cloud-Einwilligung konnte nicht gespeichert werden.');
     } finally {
       setBusy(false);
     }
@@ -171,6 +198,8 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
       setSession(null);
       setConfirmDelete(false);
       setCloudUpdatedAt(null);
+      setCloudConsentGranted(false);
+      setCloudConsentChecked(false);
       setStatus('Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
@@ -205,9 +234,31 @@ export function AccountScreen({ onBack }: { onBack: () => void }) {
             <div><small>Angemeldet</small><h2>{session.user.email}</h2><p>Favoriten, Lernfortschritt, Gebets-Tracker und unterstützte Einstellungen können zwischen Geräten gesichert werden. Standortdaten bleiben auf dem jeweiligen Gerät.</p></div>
           </section>
 
+          <section className={cloudConsentGranted ? 'reference-account-consent is-granted' : 'reference-account-consent'}>
+            <ShieldCheck size={20} />
+            <div>
+              <strong>{cloudConsentGranted ? 'Cloud-Nutzung ausdrücklich erlaubt' : 'Cloud-Einwilligung erforderlich'}</strong>
+              {cloudConsentGranted ? (
+                <small>Du hast der Speicherung von Cloud-Inhalten zugestimmt, die Rückschlüsse auf religiöse Praxis zulassen können. Widerrufen kannst du durch „Cloud-Daten löschen“; lokale Daten bleiben dabei erhalten.</small>
+              ) : (
+                <>
+                  <small>Backups und Cloud-Notizen können Gebets-Tracker, Quran-Favoriten und Lernfortschritt enthalten. Diese Angaben können religiöse Überzeugungen erkennen lassen.</small>
+                  <label>
+                    <input type="checkbox" checked={cloudConsentChecked} onChange={(event) => setCloudConsentChecked(event.target.checked)} />
+                    <span>Ich willige ausdrücklich und freiwillig in diese Cloud-Verarbeitung ein. Ich kann die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen.</span>
+                  </label>
+                  <div>
+                    <button type="button" onClick={onOpenLegal}>Datenschutz lesen</button>
+                    <button type="button" onClick={() => void allowSensitiveCloudData()} disabled={busy || !cloudConsentChecked}>Cloud-Nutzung erlauben</button>
+                  </div>
+                </>
+              )}
+            </div>
+          </section>
+
           <section className="reference-account-cloud-grid">
-            <button onClick={() => void backup()} disabled={busy}><CloudUpload size={24} /><strong>Jetzt sichern</strong><small>Fortschritt und unterstützte Einstellungen in die Cloud schreiben</small></button>
-            <button onClick={() => setConfirmRestore(true)} disabled={busy}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>Letztes Fortschritts-Backup auf dieses Gerät laden</small></button>
+            <button onClick={() => void backup()} disabled={busy || !cloudConsentGranted}><CloudUpload size={24} /><strong>Jetzt sichern</strong><small>{cloudConsentGranted ? 'Fortschritt und unterstützte Einstellungen in die Cloud schreiben' : 'Erst nach ausdrücklicher Cloud-Einwilligung verfügbar'}</small></button>
+            <button onClick={() => setConfirmRestore(true)} disabled={busy || !cloudConsentGranted}><CloudDownload size={24} /><strong>Wiederherstellen</strong><small>{cloudConsentGranted ? 'Letztes Fortschritts-Backup auf dieses Gerät laden' : 'Erst nach ausdrücklicher Cloud-Einwilligung verfügbar'}</small></button>
           </section>
 
           {confirmRestore ? (

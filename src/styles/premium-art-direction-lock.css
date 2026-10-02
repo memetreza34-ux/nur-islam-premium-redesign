@@ -50,14 +50,12 @@
 
 /* ---------- Brand artwork ---------- */
 .brand-lockup__mark,
-.ai-preview__mark,
 .reference-profile-greeting__logo,
 .reference-install-prompt__logo {
   isolation: isolate;
 }
 
 .brand-lockup__mark::before,
-.ai-preview__mark::before,
 .reference-profile-greeting__logo::before,
 .reference-install-prompt__logo::before {
   content: '';
@@ -71,7 +69,6 @@
 }
 
 .brand-lockup__mark > img,
-.ai-preview__mark > img,
 .reference-profile-greeting__logo > img,
 .reference-install-prompt__logo > img {
   object-fit: contain;
@@ -114,37 +111,15 @@
 }
 
 .premium-home--v2 .journey-card--quran .premium-image > img {
-  transform: scale(.98) rotate(-1.5deg);
-  transform-origin: 50% 72%;
+  transform: none;
 }
 
 .premium-home--v2 .journey-card:nth-child(2) .premium-image > img {
-  transform: scale(.94);
+  transform: scale(1.18);
 }
 
 .premium-home--v2 .journey-card:nth-child(3) .premium-image > img {
   transform: scale(.92);
-}
-
-.continue-card--v2 .continue-card__cover {
-  isolation: isolate;
-  overflow: visible;
-}
-
-.continue-card--v2 .continue-card__cover::before {
-  content: '';
-  position: absolute;
-  inset: 18%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 199, 122, .13), transparent 72%);
-  filter: blur(7px);
-  pointer-events: none;
-}
-
-.continue-card--v2 .continue-card__cover .premium-image > img {
-  object-position: center;
-  filter: drop-shadow(0 17px 17px rgba(0, 0, 0, .42)) saturate(1.02) !important;
-  transform: rotate(-2deg) scale(.97);
 }
 
 /* ---------- Daily inspiration ---------- */
@@ -405,14 +380,14 @@
 
 .reference-learning-hero .premium-image,
 .reference-prayer-learning-hub > .premium-image,
-.reference-prayer-course-hero > .premium-image,
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art),
 .reference-guide-hero > .premium-image {
   overflow: visible;
 }
 
 .reference-learning-hero .premium-image::before,
 .reference-prayer-learning-hub > .premium-image::before,
-.reference-prayer-course-hero > .premium-image::before,
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art)::before,
 .reference-guide-hero > .premium-image::before {
   content: '';
   position: absolute;
@@ -426,7 +401,7 @@
 
 .reference-learning-hero .premium-image > img,
 .reference-prayer-learning-hub > .premium-image > img,
-.reference-prayer-course-hero > .premium-image > img,
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art) > img,
 .reference-guide-hero > .premium-image > img {
   object-fit: contain !important;
   object-position: center bottom !important;

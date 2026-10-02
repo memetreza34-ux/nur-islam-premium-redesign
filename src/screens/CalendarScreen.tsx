@@ -18,30 +18,10 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { readCalendarEntries, writeCalendarEntries } from '../services/calendarReminderService';
 import type { PersonalCalendarEntry } from '../services/calendarReminderService';
-import { getHijriDay, getHijriLabel, getHijriMonth } from '../services/hijriCalendar';
-import {
-  WEEKLY_FAST_EVENT,
-  WHITE_DAYS,
-  WHITE_DAYS_EVENT,
-  findIslamicEvents,
-  isFastingForbidden,
-} from '../data/islamicEventsData';
-
-type CalendarEvent = {
-  title: string;
-  subtitle: string;
-  meaning?: string;
-  practice?: string;
-  fasting: boolean;
-  sourceNote: string;
-};
-
-function getDateKey(date: Date) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
+import { CALENDAR_DAY_NOTES_CHANGED_EVENT, readCalendarDayNotes } from '../services/calendarDayNotes';
+import { getHijriDay, getHijriLabel } from '../services/hijriCalendar';
+import { getCalendarEvent, getDateKey, getMonthData, getUpcomingIslamicDates } from '../services/calendarViewModel';
+import { CalendarDayNotes } from '../shared/CalendarDayNotes';
 
 function isValidDateKey(value: string) {
   const match = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
@@ -81,77 +61,13 @@ function readFavorites() {
   }
 }
 
-function getMonthData(offset: number) {
-  const today = new Date();
-  const first = new Date(today.getFullYear(), today.getMonth() + offset, 1);
-  const year = first.getFullYear();
-  const month = first.getMonth();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const mondayFirstIndex = (first.getDay() + 6) % 7;
-  const cells: Array<number | null> = Array.from({ length: mondayFirstIndex }, () => null);
-  for (let day = 1; day <= daysInMonth; day += 1) cells.push(day);
-  while (cells.length < 42) cells.push(null);
-  return { first, year, month, daysInMonth, cells };
-}
-
-const HIJRI_SOURCE_NOTE = 'Der Termin ist aus dem Hijri-Kalender des Geräts berechnet. Die örtliche Mondsichtung kann um einen Tag abweichen.';
-
-/**
- * What falls on this day, most significant first.
- *
- * The order matters: Eid outranks the white days it can collide with, and a
- * named occasion outranks the weekly voluntary fast. Before this, the calendar
- * knew only the white days and Monday/Thursday — Ramadan, both Eids, Arafah and
- * Laylat al-Qadr were nowhere in a screen that exists to show them.
- */
-function getCalendarEvent(date: Date): CalendarEvent | null {
-  const hijriDay = getHijriDay(date);
-  const hijriMonth = getHijriMonth(date);
-  const fastingForbidden = isFastingForbidden(hijriMonth, hijriDay);
-
-  const [named] = findIslamicEvents(hijriMonth, hijriDay);
-  if (named) {
-    return {
-      title: named.title,
-      subtitle: `${hijriDay}. Tag des ${hijriMonth}. islamischen Monats`,
-      meaning: named.meaning,
-      practice: named.practice,
-      fasting: named.fasting && !fastingForbidden,
-      sourceNote: HIJRI_SOURCE_NOTE,
-    };
-  }
-
-  if (WHITE_DAYS.includes(hijriDay as (typeof WHITE_DAYS)[number])) {
-    return {
-      title: WHITE_DAYS_EVENT.title,
-      subtitle: `${hijriDay}. berechneter Tag des islamischen Monats`,
-      meaning: WHITE_DAYS_EVENT.meaning,
-      practice: WHITE_DAYS_EVENT.practice,
-      fasting: !fastingForbidden,
-      sourceNote: HIJRI_SOURCE_NOTE,
-    };
-  }
-
-  const weekday = date.getDay();
-  if (weekday === 1 || weekday === 4) {
-    return {
-      title: weekday === 1 ? 'Montagsfasten' : 'Donnerstagsfasten',
-      subtitle: 'Freiwilliger Fastentag',
-      meaning: WEEKLY_FAST_EVENT.meaning,
-      practice: WEEKLY_FAST_EVENT.practice,
-      fasting: !fastingForbidden,
-      sourceNote: 'Dieser Hinweis basiert ausschließlich auf dem lokalen Wochentag.',
-    };
-  }
-  return null;
-}
-
 export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () => void; initialDateKey?: string | null }) {
   const initialPosition = useMemo(() => getInitialCalendarPosition(initialDateKey), [initialDateKey]);
   const [monthOffset, setMonthOffset] = useState(initialPosition.monthOffset);
   const [selectedDay, setSelectedDay] = useState(initialPosition.selectedDay);
   const [favorites, setFavorites] = useState(readFavorites);
   const [entries, setEntries] = useState<PersonalCalendarEntry[]>(readCalendarEntries);
+  const [notes, setNotes] = useState(readCalendarDayNotes);
   const [showAdd, setShowAdd] = useState(false);
   const [newTitle, setNewTitle] = useState('');
   const [newTime, setNewTime] = useState('19:30');
@@ -169,10 +85,22 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
   const hijriLabel = getHijriLabel(selectedDate);
   const selectedEvent = getCalendarEvent(selectedDate);
   const selectedEntries = entries.filter((entry) => entry.date === selectedDateKey);
+  const upcomingDates = useMemo(() => getUpcomingIslamicDates(new Date(), 4), []);
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
 
   useEffect(() => writeCalendarEntries(entries), [entries]);
+  useEffect(() => {
+    const refresh = () => setNotes(readCalendarDayNotes());
+    window.addEventListener(CALENDAR_DAY_NOTES_CHANGED_EVENT, refresh);
+    window.addEventListener('storage', refresh);
+    window.addEventListener('nur:cloud-restored', refresh);
+    return () => {
+      window.removeEventListener(CALENDAR_DAY_NOTES_CHANGED_EVENT, refresh);
+      window.removeEventListener('storage', refresh);
+      window.removeEventListener('nur:cloud-restored', refresh);
+    };
+  }, []);
   useEffect(() => {
     try { localStorage.setItem('nur_calendar_favorites', JSON.stringify([...favorites])); } catch { /* optional */ }
   }, [favorites]);
@@ -259,21 +187,22 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             // A named occasion — Ramadan, Eid, Arafah — is worth more than the
             // recurring voluntary fast, so it gets its own mark rather than
             // sharing one dot with every Monday.
-            const named = Boolean(event && findIslamicEvents(getHijriMonth(cellDate), getHijriDay(cellDate)).length > 0);
-            const personal = entries.some((entry) => entry.date === dateKey);
+            const named = Boolean(event?.named);
+            const appointmentCount = entries.filter((entry) => entry.date === dateKey).length;
+            const noteCount = notes.filter((note) => note.date === dateKey).length;
+            const personal = appointmentCount > 0 || noteCount > 0;
             const selected = day === selectedDay;
             const isToday = dateKey === getDateKey(new Date());
             return (
-              <button key={day} className={`calendar-day${selected ? ' calendar-day--selected' : ''}${isToday ? ' calendar-day--today' : ''}`} onClick={() => setSelectedDay(day)} aria-label={event ? `${day}. — ${event.title}` : undefined}>
-                {/* One number, the one people navigate by. The Hijri date stays
-                    in the month header and on the selected day, where there is
-                    room to label it as calculated. */}
+              <button key={day} className={`calendar-day${selected ? ' calendar-day--selected' : ''}${isToday ? ' calendar-day--today' : ''}`} onClick={() => setSelectedDay(day)} aria-pressed={selected} aria-label={`${day}. ${monthTitle}${event ? `, ${event.title}` : ''}${appointmentCount ? `, ${appointmentCount} ${appointmentCount === 1 ? 'persönlicher Termin' : 'persönliche Termine'}` : ''}${noteCount ? `, ${noteCount} ${noteCount === 1 ? 'persönliche Notiz' : 'persönliche Notizen'}` : ''}`}>
                 <strong>{day}</strong>
+                <em>{getHijriDay(cellDate)}</em>
                 <span className="calendar-day__dots">{named ? <i className="calendar-dot calendar-dot--named" /> : event ? <i className="calendar-dot calendar-dot--event" /> : null}{personal ? <i className="calendar-dot calendar-dot--personal" /> : null}</span>
               </button>
             );
           })}
         </div>
+        <div className="calendar-legend" aria-label="Kalenderlegende"><span><i className="calendar-dot calendar-dot--named" /> Wichtiger Termin</span><span><i className="calendar-dot calendar-dot--event" /> Fastenhinweis</span><span><i className="calendar-dot calendar-dot--personal" /> Termin oder Notiz</span><small>Groß: gregorianisch · klein: Hijri</small></div>
       </section>
 
       <section className="reference-calendar-calculation-note"><ShieldCheck size={16} /><span><strong>Berechnetes Hijri-Datum</strong><small>Das islamische Datum wird aus dem Kalender des Geräts berechnet. Der tatsächliche Monatsbeginn kann je nach örtlicher Mondsichtung oder zuständiger Stelle abweichen.</small></span></section>
@@ -301,6 +230,25 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
           <span className="reference-calendar-event__source"><ShieldCheck size={14} /> {selectedEvent.sourceNote}</span>
         </section>
       ) : null}
+
+      <CalendarDayNotes date={selectedDate} />
+
+      <section className="calendar-upcoming-section">
+        <div className="section-heading"><div><span className="overline">Vorausblick</span><h2>Nächste wichtige Termine</h2></div></div>
+        <div className="calendar-upcoming-list">
+          {upcomingDates.map(({ date, event }) => (
+            <button key={`${getDateKey(date)}-${event.title}`} onClick={() => {
+              const today = new Date();
+              setMonthOffset((date.getFullYear() - today.getFullYear()) * 12 + date.getMonth() - today.getMonth());
+              setSelectedDay(date.getDate());
+            }}>
+              <time dateTime={getDateKey(date)}><strong>{date.getDate()}</strong><small>{new Intl.DateTimeFormat('de-DE', { month: 'short' }).format(date)}</small></time>
+              <span><strong>{event.title}</strong><small>{getHijriLabel(date)}</small></span>
+              <ChevronRight size={17} />
+            </button>
+          ))}
+        </div>
+      </section>
 
       <section className="calendar-entries-section">
         <div className="section-heading"><div><span className="overline">Deine Planung</span><h2>Termine an diesem Tag</h2></div><button className="text-button" onClick={() => setShowAdd(true)}><Plus size={15} /> Hinzufügen</button></div>

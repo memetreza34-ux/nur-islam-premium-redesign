@@ -16,6 +16,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { DHIKR_ROUTINES, DHIKR_ROUTINE_BY_ID } from '../data/dhikrData';
+import { readDhikrDailyState } from '../services/dhikrDailyState';
 import { PremiumImage, RosetteObject } from '../shared/PremiumVisuals';
 
 type DailyDhikrState = {
@@ -23,29 +24,13 @@ type DailyDhikrState = {
   counts: Record<string, number>;
 };
 
-const DHIKR_TARGET_BY_KEY = new Map<string, number>(
-  DHIKR_ROUTINES.flatMap((routine) => routine.items.map((item) => [`${routine.id}:${item.id}`, item.target] as const)),
-);
-
 function todayKey() {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 
 function readDailyState(): DailyDhikrState {
-  const fallback = { date: todayKey(), counts: {} };
-  try {
-    const raw = localStorage.getItem('nur_dhikr_daily_v2');
-    if (!raw) return fallback;
-    const parsed = JSON.parse(raw) as Partial<DailyDhikrState>;
-    if (parsed.date !== fallback.date || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return fallback;
-    const counts = Object.fromEntries(Object.entries(parsed.counts as Record<string, unknown>)
-      .filter(([key, value]) => DHIKR_TARGET_BY_KEY.has(key) && typeof value === 'number' && Number.isFinite(value) && value >= 0)
-      .map(([key, value]) => [key, Math.min(DHIKR_TARGET_BY_KEY.get(key) ?? 0, Math.floor(value as number))]));
-    return { date: parsed.date, counts };
-  } catch {
-    return fallback;
-  }
+  return readDhikrDailyState();
 }
 
 function readRoutineId() {

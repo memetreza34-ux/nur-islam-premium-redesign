@@ -5,9 +5,9 @@ name: End-to-end smoke
 # place for it.
 on:
   push:
-    branches: [premium-design-finish, final-design-release-pass]
+    branches: [design/claude-design-system, 'codex/**']
   pull_request:
-    branches: [main, premium-design-finish]
+    branches: [design/claude-design-system, main]
   workflow_dispatch:
 
 permissions:

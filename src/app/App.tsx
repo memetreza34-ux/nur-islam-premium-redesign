@@ -1,24 +1,18 @@
 import { Suspense, lazy, useEffect, useRef, useState } from 'react';
 import type { UIEvent } from 'react';
-import type { LucideIcon } from 'lucide-react';
 import {
   BellRing,
   BookHeart,
   BookOpen,
-  BrainCircuit,
   CalendarDays,
   ChevronRight,
   Clock3,
+  Compass,
   Globe2,
-  GraduationCap,
   HandHeart,
-  Home,
-  LayoutGrid,
   MapPin,
   Menu,
-  MessageCircleQuestion,
   MoonStar,
-  Play,
   Quote,
   Sparkles,
   SunDim,
@@ -28,12 +22,11 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
-// Split out with the legacy screens: the assistant indexes the knowledge
-// topics, lessons, Hadiths, Duas, prophets and guides, and pulling all six into
-// startup put 10 KB gzipped in front of the first render for a screen reached
-// from a tile.
-const AssistantScreen = lazy(() => import('../screens/AssistantScreen')
-  .then((module) => ({ default: module.AssistantScreen })));
+import { readDhikrTotalToday } from '../services/dhikrDailyState';
+import { isWidgetId, WIDGET_ACTIONS } from '../services/widgetActions';
+import { readQuranLastRead } from '../services/premiumLocalService';
+import { LEARNING_CATEGORIES } from '../data/learningCategories';
+import type { LearningCategoryId } from '../data/learningCategories';
 import { CalendarScreen } from '../screens/CalendarScreen';
 import { CollectionsScreen } from '../screens/CollectionsScreen';
 import { DailyHadithScreen } from '../screens/DailyHadithScreen';
@@ -42,8 +35,11 @@ import { MosqueScreen } from '../screens/DiscoveryScreens';
 import { DuasScreen } from '../screens/DuasScreen';
 import { InstallAppPrompt } from '../shared/InstallAppPrompt';
 import { MihrabArch } from '../shared/MihrabArch';
-import { LearnScreen } from '../screens/LearnScreen';
+import { NavigationIcon } from '../shared/NavigationIcon';
+import { getCurrentPrayerScene } from '../shared/prayerBackdrops';
 import { LegalScreen } from '../screens/LegalScreen';
+const LearnScreen = lazy(() => import('../screens/LearnScreen')
+  .then((module) => ({ default: module.LearnScreen })));
 // Split out of the initial bundle: these thirteen screens carry the quiz
 // catalogue, the prophets and the companion lists, and none of them is
 // reachable before the learning hub. Loading them on the way in kept ~20 KB
@@ -51,10 +47,12 @@ import { LegalScreen } from '../screens/LegalScreen';
 const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
 import type { LegacyFeatureId } from '../data/legacyFeatures';
+import { learningLegacyFeatures, quizFeature, serviceLegacyFeatures } from '../data/legacyFeatures';
 import { readScreenScroll, rememberScreenScroll } from '../services/screenScrollMemory';
 import { AccountScreen } from '../screens/AccountScreen';
-import { MoreScreen } from '../screens/MoreScreen';
 import { NotesScreen } from '../screens/NotesScreen';
+const MoreScreen = lazy(() => import('../screens/MoreScreen')
+  .then((module) => ({ default: module.MoreScreen })));
 import { NamesScreen } from '../screens/NamesScreen';
 import { OnboardingScreen } from '../screens/OnboardingScreen';
 import { getHijriLabel } from '../services/hijriCalendar';
@@ -66,8 +64,9 @@ import {
 } from '../services/browserNavigation';
 import { consumePendingNavigation } from '../services/pendingNavigation';
 import type { PendingNavigationIntent } from '../services/pendingNavigation';
-import { PrayerScreen } from '../screens/PrayerScreen';
 import { QiblaScreen } from '../screens/QiblaScreen';
+const PrayerScreen = lazy(() => import('../screens/PrayerScreen')
+  .then((module) => ({ default: module.PrayerScreen })));
 import { QuranReaderScreen } from '../screens/QuranReaderScreen';
 import { QuranScreen } from '../screens/QuranScreen';
 import {
@@ -76,16 +75,13 @@ import {
 } from '../screens/ReferenceReadingScreens';
 import type { NurIcon } from '../shared/NurIcons';
 import {
-  NurAssistantIcon,
   NurDuaIcon,
   NurMihrabIcon,
   NurQuizIcon,
-  NurQuranIcon,
   NurRosetteIcon,
 } from '../shared/NurIcons';
 import {
   LanternObject,
-  MosqueScene,
   NurMark,
   PremiumImage,
   QiblaObject,
@@ -95,15 +91,17 @@ import {
 import {
   formatPrayerRemaining,
   getNextPrayer,
+  isSharedPrayerScheduleCurrent,
   PRAYER_SCHEDULE,
   PRAYER_SCHEDULE_META,
 } from '../services/prayerSchedule';
 import type { PrayerScheduleItem } from '../services/prayerSchedule';
-import { fetchSurahs, OFFLINE_QURAN_SURAH_SET } from '../services/quranService';
+import { readHomeQuranProgress } from '../services/homeQuranProgress';
 
 type PrimaryTab = 'home' | 'prayer' | 'quran' | 'learn' | 'profile';
 type LegacyTab = `legacy:${LegacyFeatureId}`;
-type Tab = PrimaryTab | 'calendar' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'assistant' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'legal' | 'account' | 'notes' | LegacyTab;
+type LearningCategoryTab = `learn:${LearningCategoryId}`;
+type Tab = PrimaryTab | 'calendar' | 'dhikr' | 'qibla' | 'duas' | 'names' | 'mosques' | 'collections' | 'reader' | 'ayah' | 'hadith' | 'wudu' | 'salah' | 'prayer-learning' | 'legal' | 'account' | 'notes' | LegacyTab | LearningCategoryTab;
 
 type NavigationSnapshot = {
   activeTab: Tab;
@@ -119,27 +117,18 @@ type NavigationSnapshot = {
 type QuickAction = {
   label: string;
   eyebrow: string;
+  detail: string;
   icon: NurIcon;
+  art: string;
   accent: 'gold' | 'cream' | 'emerald';
-  target?: Tab;
-};
-
-type HomeQuranProgress = {
-  surahNumber: number;
-  ayahNumber: number;
-  englishName: string;
-  numberOfAyahs: number | null;
-  offline: boolean;
-  hasProgress: boolean;
+  target: Tab;
 };
 
 const quickActions: QuickAction[] = [
-  { label: 'Quran lesen', eyebrow: 'Lesen & weiterlesen', icon: NurQuranIcon, accent: 'gold', target: 'reader' },
-  { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', icon: NurMihrabIcon, accent: 'cream', target: 'learn' },
-  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', icon: NurRosetteIcon, accent: 'emerald', target: 'names' },
-  { label: 'Islam Quiz', eyebrow: 'Wissen testen', icon: NurQuizIcon, accent: 'gold', target: 'legacy:quiz' },
-  { label: 'Duas', eyebrow: 'Für jeden Moment', icon: NurDuaIcon, accent: 'cream', target: 'duas' },
-  { label: 'Nur Assistent', eyebrow: 'Lokaler Quellenmodus', icon: NurAssistantIcon, accent: 'emerald', target: 'assistant' },
+  { label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', detail: 'Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v2.webp', accent: 'cream', target: 'prayer-learning' },
+  { label: '99 Namen Allahs', eyebrow: 'Heute entdecken', detail: 'Namen und Bedeutungen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v1.webp', accent: 'emerald', target: 'names' },
+  { label: 'Islam Quiz', eyebrow: 'Wissen testen', detail: 'Fragen direkt beantworten', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v2.webp', accent: 'gold', target: 'legacy:quiz' },
+  { label: 'Duas', eyebrow: 'Für jeden Moment', detail: 'Bittgebete für deinen Tag', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v2.webp', accent: 'cream', target: 'duas' },
 ];
 
 const screensWithBottomNavigation = new Set<Tab>([
@@ -151,11 +140,11 @@ const screensWithBottomNavigation = new Set<Tab>([
   'prayer',
   'calendar',
   'learn',
+  'prayer-learning',
   'duas',
   'names',
   'mosques',
   'collections',
-  'assistant',
   'account',
   'notes',
 ]);
@@ -168,68 +157,35 @@ function getLegacyFeatureId(tab: LegacyTab) {
   return tab.slice('legacy:'.length) as LegacyFeatureId;
 }
 
-function getIslamicDate(date = new Date()) {
-  return getHijriLabel(date, 'Islamischer Kalender');
+function isLearningCategoryTab(tab: Tab): tab is LearningCategoryTab {
+  return tab.startsWith('learn:');
 }
 
-function getHomeGreeting(date: Date) {
-  const hour = date.getHours();
-  if (hour < 11) return 'Ein friedlicher Morgen für deinen Glauben.';
-  if (hour < 18) return 'Ein ruhiger Tag für deinen Glauben.';
-  return 'Ein gesegneter Abend für deinen Glauben.';
+function getLearningCategoryId(tab: LearningCategoryTab) {
+  return tab.slice('learn:'.length) as LearningCategoryId;
 }
 
-function getLocalDateKey(date = new Date()) {
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+function getIslamicDate(date = new Date(), timezone?: string) {
+  return getHijriLabel(date, 'Islamischer Kalender', timezone);
 }
 
-function readHomeQuranProgress(): HomeQuranProgress {
-  const emptyProgress: HomeQuranProgress = {
-    surahNumber: 1,
-    ayahNumber: 1,
-    englishName: 'Al-Faatiha',
-    numberOfAyahs: 7,
-    offline: OFFLINE_QURAN_SURAH_SET.has(1),
-    hasProgress: false,
+function getGermanDate(date: Date, timeZone?: string, compact = false) {
+  const options: Intl.DateTimeFormatOptions = {
+    ...(compact ? {} : { weekday: 'short' }),
+    day: 'numeric',
+    month: compact ? 'short' : 'long',
+    year: 'numeric',
+    ...(timeZone ? { timeZone } : {}),
   };
   try {
-    const raw = localStorage.getItem('nur_quran_last_read');
-    if (!raw) return emptyProgress;
-    const parsed = JSON.parse(raw) as { surahNumber?: unknown; ayahNumber?: unknown };
-    if (
-      typeof parsed.surahNumber !== 'number'
-      || !Number.isInteger(parsed.surahNumber)
-      || parsed.surahNumber < 1
-      || parsed.surahNumber > 114
-      || typeof parsed.ayahNumber !== 'number'
-      || !Number.isInteger(parsed.ayahNumber)
-      || parsed.ayahNumber < 1
-    ) return emptyProgress;
-    const surahNumber = parsed.surahNumber;
-    return {
-      surahNumber,
-      ayahNumber: parsed.ayahNumber,
-      englishName: surahNumber === 1 ? 'Al-Faatiha' : surahNumber === 112 ? 'Al-Ikhlaas' : `Sure ${surahNumber}`,
-      numberOfAyahs: surahNumber === 1 ? 7 : surahNumber === 112 ? 4 : null,
-      offline: OFFLINE_QURAN_SURAH_SET.has(surahNumber),
-      hasProgress: true,
-    };
+    return new Intl.DateTimeFormat('de-DE', options).format(date);
   } catch {
-    return emptyProgress;
-  }
-}
-
-function readDhikrTotalToday() {
-  try {
-    const raw = localStorage.getItem('nur_dhikr_daily_v2');
-    if (!raw) return 0;
-    const parsed = JSON.parse(raw) as { date?: unknown; counts?: unknown };
-    if (parsed.date !== getLocalDateKey() || !parsed.counts || typeof parsed.counts !== 'object' || Array.isArray(parsed.counts)) return 0;
-    return Object.values(parsed.counts as Record<string, unknown>).reduce<number>((sum, value) => {
-      return sum + (typeof value === 'number' && Number.isFinite(value) && value > 0 ? Math.floor(value) : 0);
-    }, 0);
-  } catch {
-    return 0;
+    return new Intl.DateTimeFormat('de-DE', {
+      ...(compact ? {} : { weekday: 'short' }),
+      day: 'numeric',
+      month: compact ? 'short' : 'long',
+      year: 'numeric',
+    }).format(date);
   }
 }
 
@@ -254,12 +210,20 @@ function hasCompletedOnboarding() {
   }
 }
 
+function isKnownTab(value: unknown): value is Tab {
+  if (typeof value !== 'string') return false;
+  return screensWithBottomNavigation.has(value as Tab)
+    || ['reader', 'ayah', 'hadith', 'wudu', 'salah', 'legal'].includes(value)
+    || LEARNING_CATEGORIES.some((category) => value === `learn:${category.id}`)
+    || [...learningLegacyFeatures, ...serviceLegacyFeatures, quizFeature].some((feature) => value === `legacy:${feature.id}`);
+}
+
 function isNavigationSnapshot(value: unknown): value is NavigationSnapshot {
   if (!value || typeof value !== 'object' || Array.isArray(value)) return false;
   const snapshot = value as Partial<NavigationSnapshot>;
-  return typeof snapshot.activeTab === 'string'
+  return isKnownTab(snapshot.activeTab)
     && Array.isArray(snapshot.navigationHistory)
-    && snapshot.navigationHistory.every((tab) => typeof tab === 'string')
+    && snapshot.navigationHistory.every(isKnownTab)
     && typeof snapshot.selectedSurahNumber === 'number'
     && Number.isInteger(snapshot.selectedSurahNumber)
     && snapshot.selectedSurahNumber >= 1
@@ -284,9 +248,12 @@ function PremiumHome({
   const [quranProgress, setQuranProgress] = useState(readHomeQuranProgress);
   const [dhikrTotal, setDhikrTotal] = useState(readDhikrTotalToday);
   const reduceMotion = useReducedMotion();
-  const islamicDate = getIslamicDate(now);
+  const islamicDate = getIslamicDate(now, PRAYER_SCHEDULE_META.timezone);
+  const germanDate = getGermanDate(now, PRAYER_SCHEDULE_META.timezone);
+  const compactGermanDate = getGermanDate(now, PRAYER_SCHEDULE_META.timezone, true);
   const nextPrayer = getNextPrayer(now);
-  const greeting = getHomeGreeting(now);
+  const currentScene = getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META.timezone);
+  const currentTimetable = isSharedPrayerScheduleCurrent(now);
   const dailyHadith = getDailyHadith(now);
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
@@ -316,29 +283,6 @@ function PremiumHome({
     };
   }, []);
 
-  useEffect(() => {
-    let active = true;
-    const stored = readHomeQuranProgress();
-    void fetchSurahs()
-      .then((surahs) => {
-        if (!active) return;
-        const surah = surahs.find((item) => item.number === stored.surahNumber);
-        if (!surah) return;
-        setQuranProgress({
-          surahNumber: surah.number,
-          ayahNumber: stored.hasProgress ? Math.min(stored.ayahNumber, surah.numberOfAyahs) : 1,
-          englishName: surah.englishName,
-          numberOfAyahs: surah.numberOfAyahs,
-          offline: OFFLINE_QURAN_SURAH_SET.has(surah.number),
-          hasProgress: stored.hasProgress,
-        });
-      })
-      .catch(() => {
-        // The validated local state remains useful even if metadata cannot load.
-      });
-    return () => { active = false; };
-  }, []);
-
   const openLastRead = () => onOpenReader(quranProgress.surahNumber, quranProgress.ayahNumber);
 
   return (
@@ -349,110 +293,110 @@ function PremiumHome({
       exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
       transition={screenTransition}
     >
+      <h1 className="sr-only">Start – Nur Islam</h1>
       <header className="brand-bar">
         <div className="brand-lockup" aria-label="Nur Islam">
-          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="brand-lockup__mark" fallback={<NurMark />} />
+          <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" className="brand-lockup__mark" fallback={<NurMark />} />
           <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
         </div>
         <div className="brand-bar__actions">
           <button className="icon-button" onClick={() => onNavigate('prayer')} aria-label="Gebete und Erinnerungen öffnen"><BellRing size={20} /></button>
+          <button className="icon-button" onClick={() => onNavigate('qibla')} aria-label="Qibla-Kompass öffnen"><Compass size={20} /></button>
           <button className="icon-button" onClick={() => onNavigate('profile')} aria-label="Mehr öffnen"><Menu size={20} /></button>
         </div>
       </header>
 
       <section className="home-standfirst" aria-label="Ort und Datum">
-        <span className="home-standfirst__place"><MapPin size={14} /> {PRAYER_SCHEDULE_META.city}</span>
-        <button className="home-standfirst__date" onClick={() => onNavigate('calendar')}>
+        <button className="home-standfirst__place" onClick={() => onNavigate('prayer')} aria-label={`Gebetsstandort prüfen: ${PRAYER_SCHEDULE_META.locationLabel}`}><MapPin size={14} /><span>{PRAYER_SCHEDULE_META.locationLabel}<small className="home-standfirst__place-detail">{PRAYER_SCHEDULE_META.locationSource === 'device' ? 'Gespeicherter Standort' : 'Standardstandort · prüfen'}</small><small className="home-standfirst__place-compact">{PRAYER_SCHEDULE_META.locationSource === 'device' ? 'Gespeichert' : 'Voreingestellt'}</small></span></button>
+        <button className="home-standfirst__date" onClick={() => onNavigate('calendar')} aria-label={`${germanDate}, ${islamicDate} – Islamischen Kalender öffnen`}>
           <CalendarDays size={15} />
-          <span>{islamicDate}</span>
+          <span className="home-standfirst__date-copy"><strong className="home-standfirst__date-long">{germanDate}</strong><strong className="home-standfirst__date-short">{compactGermanDate}</strong><small>{islamicDate}</small></span>
         </button>
       </section>
 
-      {/* No usable timetable means there is no next prayer to name. Rendering
-          the arch anyway would put a prayer and a countdown on screen that the
-          app does not actually know. */}
+      {/* No usable timetable means there is no next prayer to name. */}
       {nextPrayer ? (
-      <section className="prayer-hero prayer-hero--v2" aria-label="Nächstes Gebet">
-        <div className="prayer-hero__content">
+      <section className="home-prayer-focus" aria-label="Nächstes Gebet">
+        <div className="home-prayer-focus__content">
           <MihrabArch
-            overline={nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}
+            className="home-prayer-arch"
+            overline={nextPrayer.tomorrow ? 'Nächstes Gebet · morgen' : 'Nächstes Gebet'}
             title={nextPrayer.prayer.label}
             titleArabic={nextPrayer.prayer.arabic}
             value={nextPrayer.prayer.time}
             meta={`${nextPrayer.tomorrow ? 'morgen in ' : 'in '}${formatPrayerRemaining(nextPrayer.remaining)}`}
             progress={nextPrayer.progress}
-            height={214}
-            sky
-            footer={<PremiumImage src="/premium-assets/high-res-objects/dome-v2.webp" className="ds-arch__silhouette" fallback={<MosqueScene />} />}
+            height={230}
+            scene={currentScene}
           />
-          <div className="prayer-mini-times">
+          {nextPrayer.tomorrow && <span className="overline">Heutiger Gebetsplan</span>}
+          <div className="home-prayer-times" aria-label="Heutige Gebetszeiten">
             {PRAYER_SCHEDULE.map((prayer) => (
-              <span className={prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
+              <span className={!nextPrayer.tomorrow && prayer.id === nextPrayer.prayer.id ? 'is-current' : ''} key={prayer.id}>
                 <PrayerVisual visual={prayer.visual} />
                 <small>{prayer.compactLabel}</small>
                 <strong className="ds-num">{prayer.time}</strong>
               </span>
             ))}
           </div>
-          <span className="prayer-source-note">{PRAYER_SCHEDULE_META.sourceLabel} · {PRAYER_SCHEDULE_META.methodLabel}</span>
-          <button className="gold-button" onClick={() => onNavigate('prayer')}>Alle Gebetszeiten <ChevronRight size={18} /></button>
         </div>
       </section>
       ) : (
         <section className="prayer-hero prayer-hero--v2" aria-label="Gebetszeiten nicht verfügbar">
           <div className="prayer-hero__content">
-            <span className="prayer-source-note">Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Öffne die Gebetszeiten und aktualisiere sie.</span>
+            <span className="overline">{currentTimetable ? 'Nächsten Tag vorbereiten' : 'Deine Gebetszeiten'}</span>
+            <h2>{currentTimetable ? 'Die nächsten Zeiten fehlen noch.' : 'Zeiten für deinen Standort laden'}</h2>
+            <span className="prayer-source-note">{currentTimetable ? 'Die heutigen Zeiten sind gespeichert. Für das nächste Gebet liegt noch kein verlässlicher Folgetagsplan vor.' : 'Hier erscheinen deine Gebetszeiten, sobald ein aktueller Plan verfügbar ist. Es werden keine Ersatzzeiten angezeigt.'}</span>
             <button className="gold-button" onClick={() => onNavigate('prayer')}>Gebetszeiten prüfen <ChevronRight size={18} /></button>
           </div>
         </section>
       )}
+      {currentTimetable && <button className="home-prayer-note" onClick={() => onNavigate('prayer')}><span>{PRAYER_SCHEDULE_META.source === 'cache' ? 'AlAdhan · heute gespeichert' : 'AlAdhan · berechnete Zeiten'}<small>{PRAYER_SCHEDULE_META.timezone} · Berechnung prüfen</small></span><ChevronRight size={16} /></button>}
 
-      <section className="content-section">
-        <div className="section-heading"><div><span className="overline">Deine Reise</span><h2>Spirituelle Werkzeuge</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Alles ansehen <ChevronRight size={16} /></button></div>
-        <div className="journey-grid">
-          <button className="journey-card journey-card--quran" onClick={openLastRead}>
-            <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
-            <span><small>{quranProgress.hasProgress ? (quranProgress.offline ? 'Offline weiterlesen' : 'Zuletzt gelesen') : 'Quran beginnen'}</small><strong>{quranProgress.englishName}</strong><em>{quranProgress.hasProgress ? `Ayah ${quranProgress.ayahNumber}${quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''}` : 'Noch kein Lesestand'}</em></span>
+          <button className="journey-card journey-card--quran" data-home-section="continue" onClick={openLastRead} aria-label={`${quranProgress.hasProgress ? 'Weiterlesen' : 'Quran beginnen'}: ${quranProgress.englishName}`}>
+            <PremiumImage src="/premium-assets/high-res-objects/home-quran-illustrated-v1.webp" fallback={<QuranObject />} />
+            <span><small>{quranProgress.hasProgress ? (quranProgress.offline ? 'Offline weiterlesen' : 'Zuletzt gelesen') : 'Quran beginnen'}</small><strong>{quranProgress.englishName}</strong><em>{quranProgress.hasProgress ? `Ayah ${quranProgress.ayahNumber} von ${quranProgress.numberOfAyahs}` : 'Noch kein Lesestand'}</em><span className="home-reading-progress" aria-hidden="true"><span style={{ width: `${quranPercent}%` }} /></span><span className="journey-card__action">{quranProgress.hasProgress ? 'Weiterlesen' : 'Jetzt beginnen'} <ChevronRight size={16} /></span></span>
           </button>
+      <section className="content-section" data-home-section="journey">
+        <div className="section-heading"><div><span className="overline">Dein Alltag</span><h2>Deine täglichen Begleiter</h2></div></div>
+        <div className="journey-grid">
           <button className="journey-card" onClick={() => onNavigate('dhikr')}>
-            <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} />
+            <PremiumImage src="/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp" fallback={<RosetteObject />} />
             <span><small>Heute gezählt</small><strong>Dhikr</strong><em>{dhikrTotal} Wiederholungen</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('qibla')}>
-            <PremiumImage src="/premium-assets/high-res-objects/qibla-compass-v2.webp" fallback={<QiblaObject />} />
+            <PremiumImage src="/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp" fallback={<QiblaObject />} />
             <span><small>Richtung Mekka</small><strong>Qibla</strong><em>Kompass starten</em></span>
           </button>
         </div>
       </section>
 
-      <section className="content-section">
-        <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Dein täglicher Begleiter</h2></div></div>
+      <section className="content-section" data-home-section="discover">
+        <div className="section-heading"><div><span className="overline">Entdecken</span><h2>Wissen & Inspiration</h2></div><button className="text-button" onClick={() => onNavigate('learn')}>Zum Lernen <ChevronRight size={16} /></button></div>
         <div className="quick-grid quick-grid--v2">
-          {quickActions.map(({ label, eyebrow, icon: Icon, accent, target }, index) => (
+          {quickActions.map(({ label, eyebrow, detail, icon: Icon, art, accent, target }, index) => (
             <motion.button
               key={label}
               className={`quick-card quick-card--${accent}`}
-              onClick={() => target === 'reader' ? openLastRead() : target ? onNavigate(target) : undefined}
+              data-art={target}
+              onClick={() => onNavigate(target)}
               whileTap={{ scale: reduceMotion ? 1 : .985 }}
               initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }}
               animate={{ opacity: 1, y: 0 }}
               transition={itemTransition(index)}
             >
-              <span className="quick-card__icon"><Icon size={25} /></span><span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><ChevronRight className="quick-card__arrow" size={18} />
+              <span className="quick-card__art">
+                <PremiumImage src={art} className="quick-card__art-image" fallback={<Icon size={25} />} />
+              </span>
+              <span className="quick-card__eyebrow">{eyebrow}</span><strong>{label}</strong><span className="quick-card__detail">{detail}</span><ChevronRight className="quick-card__arrow" size={18} />
             </motion.button>
           ))}
         </div>
       </section>
 
-      <section className="continue-card continue-card--v2 glass-card">
-        <div className="continue-card__cover"><PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} /></div>
-        <div className="continue-card__body"><span className="overline">{quranProgress.hasProgress ? (quranProgress.offline ? 'Offline verfügbar' : 'Zuletzt gelesen') : 'Quran beginnen'}</span><h3>{quranProgress.englishName}</h3><p>{quranProgress.hasProgress ? `Ayah ${quranProgress.ayahNumber}${quranProgress.numberOfAyahs ? ` von ${quranProgress.numberOfAyahs}` : ''} · ${quranPercent}%` : 'Noch kein gespeicherter Lesestand'}</p><div className="reading-progress"><span style={{ width: `${quranPercent}%` }} /></div></div>
-        <button className="play-button" aria-label={quranProgress.hasProgress ? 'Weiterlesen' : 'Quran lesen'} onClick={openLastRead}><Play size={20} fill="currentColor" /></button>
-      </section>
-
-      <section className="inspiration-grid inspiration-grid--v2">
+      <section className="inspiration-grid inspiration-grid--v2" data-home-section="inspiration">
         <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
-          <PremiumImage src="/premium-assets/high-res-objects/mihrab-arch-v2.webp" className="verse-card__art" fallback={<LanternObject />} />
+          <PremiumImage src="/premium-assets/high-res-objects/ayah-focus-bg-v1.webp" className="verse-card__art" fallback={<LanternObject />} />
           <div className="card-title-row"><span><Sparkles size={16} /> Ayah im Fokus</span><span><BookHeart size={18} /></span></div>
           <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
           <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
@@ -463,16 +407,10 @@ function PremiumHome({
         </button>
       </section>
 
-      <button className="ai-preview" onClick={() => onNavigate('assistant')}>
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v2.webp" className="ai-preview__mark" fallback={<NurMark />} />
-        <span><small>Nur Assistent</small><strong>Lokaler Quellenmodus</strong><p>Antwortet nur auf unterstützte Themen mit sichtbarem Quellenhinweis – ohne erfundene religiöse Antworten.</p></span>
-        <span className="ai-preview__action"><MessageCircleQuestion size={20} /></span>
-      </button>
-
-      <section className="content-section recommendations">
-        <div className="section-heading"><div><span className="overline">Empfohlen</span><h2>Heute für dich</h2></div></div>
+      <section className="content-section recommendations" data-home-section="recommendations">
+        <div className="section-heading"><div><span className="overline">Mehr entdecken</span><h2>Weitere Bereiche</h2></div></div>
         <div className="recommendation-list">
-          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><MoonStar size={22} /></span><span><small>Fasten-Assistent</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
+          <button className="recommendation-card" onClick={() => onNavigate('legacy:fasting')}><span className="recommendation-card__icon"><MoonStar size={22} /></span><span><small>Fastenplan</small><strong>Fastentage & Erinnerungen planen</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('legacy:ummah')}><span className="recommendation-card__icon"><Globe2 size={22} /></span><span><small>Ummah-Übersicht</small><strong>Regionen und Gemeinschaften entdecken</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('mosques')}><span className="recommendation-card__icon"><MapPin size={22} /></span><span><small>Moschee-Suche</small><strong>Moscheen in deiner Nähe</strong></span><ChevronRight size={20} /></button>
           <button className="recommendation-card" onClick={() => onNavigate('collections')}><span className="recommendation-card__icon"><BookHeart size={22} /></span><span><small>Meine Sammlung</small><strong>Favoriten und Lesezeichen</strong></span><ChevronRight size={20} /></button>
@@ -483,19 +421,19 @@ function PremiumHome({
 }
 
 function BottomNavigation({ active, onChange }: { active: PrimaryTab; onChange: (tab: PrimaryTab) => void }) {
-  const items: Array<{ id: PrimaryTab; label: string; icon: LucideIcon }> = [
-    { id: 'home', label: 'Start', icon: Home },
-    { id: 'prayer', label: 'Gebet', icon: Clock3 },
-    { id: 'quran', label: 'Quran', icon: BookOpen },
-    { id: 'learn', label: 'Lernen', icon: GraduationCap },
-    { id: 'profile', label: 'Mehr', icon: LayoutGrid },
+  const items: Array<{ id: PrimaryTab; label: string }> = [
+    { id: 'home', label: 'Start' },
+    { id: 'prayer', label: 'Gebet' },
+    { id: 'quran', label: 'Quran' },
+    { id: 'learn', label: 'Lernen' },
+    { id: 'profile', label: 'Mehr' },
   ];
 
   return (
     <nav className="bottom-nav" aria-label="Hauptnavigation">
-      {items.map(({ id, label, icon: Icon }) => (
+      {items.map(({ id, label }) => (
         <button key={id} className={active === id ? 'bottom-nav__item bottom-nav__item--active' : 'bottom-nav__item'} onClick={() => onChange(id)} aria-current={active === id ? 'page' : undefined}>
-          <span><Icon size={20} /></span><small>{label}</small>
+          <span><NavigationIcon name={id} /></span><small>{label}</small>
         </button>
       ))}
     </nav>
@@ -533,7 +471,7 @@ export default function App() {
     ? 'prayer'
     : ['quran', 'reader', 'ayah'].includes(activeTab)
       ? 'quran'
-      : ['learn', 'duas', 'names', 'assistant', 'wudu', 'salah'].includes(activeTab)
+      : isLearningCategoryTab(activeTab) || ['learn', 'prayer-learning', 'duas', 'names', 'wudu', 'salah'].includes(activeTab)
         ? 'learn'
         : ['profile', 'mosques', 'collections', 'account', 'notes', 'calendar', 'dhikr'].includes(activeTab)
           ? 'profile'
@@ -637,7 +575,13 @@ export default function App() {
       }
 
       const entry = readBrowserNavigation<NavigationSnapshot>(event.state);
-      if (!entry || !isNavigationSnapshot(entry.snapshot)) return;
+      if (!entry) return;
+      if (!isNavigationSnapshot(entry.snapshot)) {
+        const home = buildNavigationSnapshot({ activeTab: 'home', navigationHistory: [] });
+        replaceBrowserNavigation(home, 0);
+        applyNavigationSnapshot(home);
+        return;
+      }
       applyNavigationSnapshot(entry.snapshot);
     };
 
@@ -732,6 +676,22 @@ export default function App() {
     applyNavigationSnapshot(readerSnapshot);
   };
 
+  useEffect(() => {
+    const openWidget = (event: Event) => {
+      const id: unknown = (event as CustomEvent).detail;
+      if (!isWidgetId(id)) return;
+      const target = WIDGET_ACTIONS[id].destination;
+      if (target === 'reader') {
+        const position = id === 'daily-inspiration' ? { surahNumber: 112, ayahNumber: 1 } : readQuranLastRead();
+        openReader(position.surahNumber, position.ayahNumber);
+      } else if (target !== 'routines' && target !== 'quran' && target !== 'stats' && target !== 'design') {
+        navigate(target);
+      }
+    };
+    window.addEventListener('nur:open-widget', openWidget);
+    return () => window.removeEventListener('nur:open-widget', openWidget);
+  });
+
   const openSavedDua = (id: string) => moveTo('duas', true, {
     selectedDuaId: id,
     selectedNameId: null,
@@ -787,7 +747,7 @@ export default function App() {
   const screen = isLegacyTab(activeTab)
     ? (
       <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-        <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} />
+        <LegacyFeatureScreen featureId={getLegacyFeatureId(activeTab)} onBack={goBack} onOpenQuranReference={openReader} />
       </Suspense>
     )
     : activeTab === 'home'
@@ -813,15 +773,28 @@ export default function App() {
                       : activeTab === 'profile'
                         ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
                         : activeTab === 'account'
-                        ? <AccountScreen onBack={goBack} />
+                        ? <AccountScreen onBack={goBack} onOpenLegal={() => navigate('legal')} />
                         : activeTab === 'notes'
                         ? <NotesScreen onBack={goBack} onOpenAccount={() => navigate('account')} />
                         : activeTab === 'prayer'
-                          ? <PrayerScreen onBack={goBack} />
+                          ? <PrayerScreen
+                              onBack={goBack}
+                              openCalendar={openSavedCalendarDate}
+                              openDhikr={() => navigate('dhikr')}
+                              openDuas={() => navigate('duas')}
+                              openFastingPlan={() => navigate('legacy:fasting')}
+                              openLearn={() => navigate('prayer-learning')}
+                              openMosques={() => navigate('mosques')}
+                              openQibla={() => navigate('qibla')}
+                            />
                           : activeTab === 'calendar'
                             ? <CalendarScreen onBack={goBack} initialDateKey={selectedCalendarDate} />
+                            : isLearningCategoryTab(activeTab)
+                              ? <LearnScreen initialLearningCategory={getLearningCategoryId(activeTab)} onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} onOpenNames={() => navigate('names')} onOpenQuranReference={openReader} />
                             : activeTab === 'learn'
-                              ? <LearnScreen onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} />
+                              ? <LearnScreen onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} onOpenNames={() => navigate('names')} onOpenQuranReference={openReader} />
+                              : activeTab === 'prayer-learning'
+                                ? <LearnScreen directPrayerCourse directPrayerBackLabel={navigationHistory.at(-1) === 'home' ? 'Zurück zu Start' : navigationHistory.at(-1) === 'prayer' ? 'Zurück zu Gebet' : 'Zurück'} onBack={goBack} onOpenPrayer={() => navigate('prayer')} onOpenQibla={() => navigate('qibla')} onOpenNames={() => navigate('names')} onOpenQuranReference={openReader} />
                               : activeTab === 'duas'
                                 ? <DuasScreen onBack={goBack} initialDuaId={selectedDuaId} />
                                 : activeTab === 'names'
@@ -839,11 +812,7 @@ export default function App() {
                                           onOpenHadith={openSavedHadith}
                                           onOpenCalendarDate={openSavedCalendarDate}
                                         />
-                                      : (
-                                        <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
-                                          <AssistantScreen onBack={goBack} />
-                                        </Suspense>
-                                      );
+                                      : <PremiumHome onNavigate={navigate} onOpenReader={openReader} />;
 
   const screenKey = `${activeTab}-${activeTab === 'reader' ? `${selectedSurahNumber}-${selectedAyahNumber}` : activeTab === 'duas' ? selectedDuaId ?? '' : activeTab === 'names' ? selectedNameId ?? '' : activeTab === 'calendar' ? selectedCalendarDate ?? '' : activeTab === 'hadith' ? selectedHadithId ?? 'daily' : ''}`;
 
@@ -880,7 +849,9 @@ export default function App() {
             the tab bar at 60ms intervals. */}
         <AnimatePresence mode="wait">
           <motion.div key={screenKey} ref={restoreScreenScroll} onScroll={rememberScroll} className="screen-transition-frame">
-            {screen}
+            <Suspense fallback={<div className="screen-lazy-fallback" aria-busy="true" />}>
+              {screen}
+            </Suspense>
           </motion.div>
         </AnimatePresence>
         {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={navigatePrimary} /> : null}

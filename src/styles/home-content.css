@@ -8,10 +8,6 @@
 .quick-card--cream{background:linear-gradient(145deg,rgba(141,109,57,.42),rgba(0,27,22,.9))}
 .quick-card--emerald{background:linear-gradient(145deg,rgba(13,87,67,.7),rgba(0,27,22,.9))}
 
-.continue-card {display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;padding:15px;border-radius: 28px}
-.continue-card__cover{display:grid;width:64px;height:78px;place-items:center;align-content:center;gap:5px;border:1px solid var(--line-strong);border-radius:18px;color:var(--gold-bright);background: linear-gradient(135deg, rgba(226, 191, 119, 0.13), transparent), #07372b;box-shadow:inset 5px 0 rgba(0,0,0,.13)}
-.continue-card__cover span{font-family:Amiri,serif;font-size:.82rem}.continue-card__body{min-width:0}.reading-progress{height:5px;margin-top:10px}.reading-progress span{width:42%}.play-button{width:44px;height:44px;border-radius:50%}
-
 .inspiration-grid{display:grid;gap:10px}.verse-card,
 .hadith-card { padding: 22px; border-radius: 28px; }
 .verse-card{border:1px solid rgba(226,191,119,.65);color:#173329;background:radial-gradient(circle at 100% 0%,rgba(226,191,119,.38),transparent 14rem),linear-gradient(145deg, #fff8ea, #f6ebd6);box-shadow:var(--shadow)}

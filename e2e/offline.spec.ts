@@ -3,7 +3,7 @@ import { openApp } from './appReady';
 
 /**
  * The app promises to keep working without a connection: a service worker, a
- * fallback prayer schedule and four surahs bundled offline. A prayer app is
+ * fallback prayer schedule and all 114 surahs bundled offline. A prayer app is
  * used in places with no signal, so that promise is worth proving rather than
  * assuming.
  *
@@ -41,8 +41,11 @@ test('opens a bundled surah with no connection', async ({ page, context }) => {
   // The Arabic is bundled and the German rendering is fetched, so with no
   // connection the Surah is still readable and the screen has to say why the
   // meaning is missing rather than leave a blank where it used to be.
-  await expect(page.getByText('Deutsch fehlt')).toBeVisible();
-  await expect(page.getByText(/braucht dafür einmal eine Verbindung/)).toBeVisible();
+  const verse = page.locator('.reference-reader-screen article').first();
+  for (const section of ['.reference-reader-pronunciation', '.reference-reader-translation']) {
+    await expect(verse.locator(section)).toHaveClass(/is-unavailable/);
+    await expect(verse.locator(section)).toContainText('Beim ersten Öffnen ist eine Verbindung nötig.');
+  }
 });
 
 test('reports a failure instead of inventing mosques when offline', async ({ page, context }) => {

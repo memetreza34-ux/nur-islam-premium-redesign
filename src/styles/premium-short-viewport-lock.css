@@ -1,9 +1,5 @@
 /* Short-viewport / landscape visual guardrail. */
 
-.reference-assistant-input {
-  bottom: auto;
-}
-
 @media (max-height: 680px) {
   .reference-splash {
     min-height: calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom))) !important;
@@ -16,11 +12,13 @@
   }
 
   .reference-splash__mosque {
-    bottom: -54px !important;
-    width: 320px !important;
-    height: 232px !important;
-    opacity: .16 !important;
+    inset: auto 0 -54px !important;
+    width: 100% !important;
+    height: 54% !important;
+    opacity: 1 !important;
   }
+
+  .reference-splash__brand { top: 8% !important; }
 
   .reference-onboarding__visual {
     min-height: 248px !important;
@@ -197,7 +195,8 @@
 
 @media (max-height: 520px) {
   .reference-splash__mosque {
-    opacity: .11 !important;
+    height: 50% !important;
+    opacity: .82 !important;
   }
 
   .reference-splash__brand .overline {

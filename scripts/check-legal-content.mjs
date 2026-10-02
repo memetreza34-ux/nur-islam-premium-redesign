@@ -87,6 +87,29 @@ for (const promise of ['exportAccountData', 'deleteCloudData']) {
   }
 }
 
+// Cloud progress can reveal religious practice. The privacy copy, the UI and
+// the service boundary must all keep the explicit Art. 9 consent gate intact.
+for (const required of [
+  'Artikel 9 Absatz 2 Buchstabe a DSGVO',
+  'versioniert dokumentierte Einwilligung',
+  'Empfänger, Auftragsverarbeitung und Drittländer',
+  '§ 25 Absatz 2 Nummer 2 TDDDG',
+  'Keine automatisierten Entscheidungen und keine KI-Funktion',
+]) {
+  if (!legal.includes(required)) {
+    throw new Error(`Required privacy safeguard is missing from the legal copy: ${required}`);
+  }
+}
+for (const required of [
+  'SENSITIVE_CLOUD_CONSENT_VERSION',
+  'requireSensitiveCloudConsent',
+  'recordSensitiveCloudConsent',
+]) {
+  if (!backend.includes(required)) {
+    throw new Error(`Sensitive cloud consent gate is missing from the backend service: ${required}`);
+  }
+}
+
 // The local Premium package deliberately uses local_nur_* keys. Cloud backup
 // accepts only nur_* and premium_* keys, so the private journal and the other
 // Premium state stay device-bound unless a future explicit sync flow is built.
@@ -114,11 +137,15 @@ for (const claim of prohibitedLegalClaims) {
 for (const required of [
   'nicht pauschal behauptet',
   'Generative Outputs können anderen Outputs ähneln',
-  'bloße technische Abrufbarkeit einer Aufnahme wird nicht als Rechtefreigabe behandelt',
+  'Die Nutzung richtet sich nach den Bedingungen von Al Quran Cloud',
+  'das Copyright verbleibt beim Rezitator',
 ]) {
   if (!legal.includes(required)) {
     throw new Error(`Hardened legal wording is missing required marker: ${required}`);
   }
+}
+if (legal.includes('hisnmuslim.com') || legal.includes('Hisn al-Muslim')) {
+  throw new Error('Deaktiviertes Hisn-al-Muslim-Audio ist noch in den ausgelieferten Rechtstexten genannt.');
 }
 
 // Payment is intentionally deferred. Until a real provider is wired, the legal

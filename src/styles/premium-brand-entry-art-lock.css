@@ -3,67 +3,102 @@
 .reference-splash {
   isolation: isolate;
   overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 24%, rgba(242, 215, 154, .12), transparent 15rem),
+    radial-gradient(circle at 50% 75%, rgba(13, 87, 67, .34), transparent 21rem),
+    linear-gradient(176deg, #043429 0%, #001e18 48%, #00100d 100%) !important;
 }
 
 .reference-splash__mosque {
   position: absolute !important;
-  z-index: 0;
-  right: -46px;
-  bottom: -8px;
-  width: 390px !important;
-  height: 292px !important;
-  opacity: .22 !important;
+  z-index: 1;
+  inset: auto 0 -42px;
+  display: grid;
+  width: 100%;
+  height: 57%;
+  place-items: end center;
+  opacity: 1;
   overflow: visible;
+  pointer-events: none;
 }
 
 .reference-splash__mosque::before {
   content: '';
   position: absolute;
   z-index: -1;
-  right: 6%;
-  bottom: 8%;
-  width: 80%;
-  height: 68%;
+  right: 8%;
+  bottom: 2%;
+  width: 84%;
+  height: 48%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(226, 191, 119, .18), rgba(13, 87, 67, .07) 48%, transparent 73%);
-  filter: blur(14px);
+  background: radial-gradient(ellipse, rgba(226, 191, 119, .18), rgba(13, 87, 67, .08) 47%, transparent 72%);
+  filter: blur(18px);
   pointer-events: none;
 }
 
-.reference-splash__mosque > img {
-  object-fit: contain !important;
-  object-position: right bottom !important;
-  filter: drop-shadow(0 28px 26px rgba(0,0,0,.48)) saturate(.88) contrast(1.04) !important;
-  -webkit-mask-image: linear-gradient(0deg, #000 0%, #000 60%, rgba(0,0,0,.62) 80%, transparent 100%);
-  mask-image: linear-gradient(0deg, #000 0%, #000 60%, rgba(0,0,0,.62) 80%, transparent 100%);
+.reference-splash__mosque-image,
+.reference-splash__mosque-image > img,
+.reference-splash__mosque-image > .premium-image__fallback,
+.reference-splash__mosque-image > svg {
+  width: min(92vw, 410px);
+  height: 100%;
+}
+
+.reference-splash__mosque-image > img {
+  object-fit: contain;
+  object-position: center bottom;
+  transform: scale(1.34);
+  transform-origin: center bottom;
+  filter: drop-shadow(0 28px 30px rgba(0, 0, 0, .54)) saturate(.94) contrast(1.025);
 }
 
 .reference-splash__brand {
-  position: relative;
+  position: absolute;
   z-index: 3;
+  top: 13%;
+  right: 20px;
+  left: 20px;
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.reference-splash__copy {
+  display: grid;
+  justify-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.reference-splash__mark-stage {
+  position: relative;
+  display: grid;
+  width: 104px;
+  height: 104px;
+  place-items: center;
 }
 
 .reference-splash__mark {
   position: relative;
-  width: 92px !important;
-  height: 92px !important;
+  width: 104px;
+  height: 104px;
   overflow: visible;
 }
 
-.reference-splash__mark::before {
+.reference-splash__mark-stage::before {
   content: '';
   position: absolute;
   z-index: -1;
-  inset: -18%;
+  inset: -14%;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(242, 215, 154, .22), rgba(226, 191, 119, .06) 48%, transparent 72%);
-  filter: blur(10px);
+  background: radial-gradient(circle, rgba(242, 215, 154, .2), rgba(226, 191, 119, .055) 48%, transparent 72%);
+  filter: blur(12px);
   pointer-events: none;
 }
 
 .reference-splash__mark > img {
-  object-fit: contain !important;
-  filter: drop-shadow(0 19px 24px rgba(0,0,0,.44)) saturate(1.03) contrast(1.035) !important;
+  object-fit: contain;
+  filter: drop-shadow(0 18px 25px rgba(0, 0, 0, .42));
 }
 
 .reference-splash__brand h1 {
@@ -72,15 +107,38 @@
 }
 
 .reference-splash__loader {
-  position: relative;
+  position: absolute;
   z-index: 4;
+  bottom: max(28px, env(safe-area-inset-bottom));
+  width: 84px;
+  height: 2px;
   overflow: hidden;
   border-radius: 999px;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,.25);
+  background: rgba(255, 255, 255, .08);
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, .25);
 }
 
 .reference-splash__loader span {
-  box-shadow: 0 0 10px rgba(242, 215, 154, .3);
+  width: 100%;
+  transform-origin: left center;
+  background: linear-gradient(90deg, #b08b42, #f2d79a);
+  box-shadow: 0 0 12px rgba(242, 215, 154, .34);
+  animation: none;
+}
+
+.reference-splash__dawn {
+  position: absolute;
+  z-index: 0;
+  right: 7%;
+  bottom: 36%;
+  left: 7%;
+  height: 42%;
+  border: 1px solid rgba(242, 215, 154, .15);
+  border-bottom: 0;
+  border-radius: 50% 50% 0 0 / 68% 68% 0 0;
+  box-shadow: inset 0 18px 60px rgba(242, 215, 154, .025), 0 -22px 70px rgba(226, 191, 119, .035);
+  transform-origin: center bottom;
+  pointer-events: none;
 }
 
 /* Error state remains visually part of the same brand family. */
@@ -116,38 +174,40 @@
   opacity: .72;
 }
 
-[data-theme='light'] .reference-splash__mosque > img,
+[data-theme='light'] .reference-splash__mosque-image > img,
 [data-theme='light'] .reference-system-error__logo > img {
   filter: drop-shadow(0 17px 20px rgba(62,45,20,.2)) saturate(.94) contrast(1.02) !important;
 }
 
 @media (max-width: 390px) {
   .reference-splash__mosque {
-    right: -74px;
-    width: 360px !important;
-    height: 274px !important;
+    inset: auto 0 -48px !important;
+    width: 100% !important;
+    height: 56% !important;
   }
 
+  .reference-splash__mark-stage,
   .reference-splash__mark {
-    width: 84px !important;
-    height: 84px !important;
+    width: 96px !important;
+    height: 96px !important;
   }}
 
 @media (max-width: 350px) {
   .reference-splash__mosque {
-    right: -96px;
-    width: 330px !important;
-    height: 254px !important;
-    opacity: .19 !important;
+    inset: auto 0 -50px !important;
+    width: 100% !important;
+    height: 54% !important;
+    opacity: 1 !important;
   }
 
+  .reference-splash__mark-stage,
   .reference-splash__mark {
     width: 78px !important;
     height: 78px !important;
   }}
 
 @media (prefers-reduced-motion: no-preference) {
-  .reference-splash__mark::before {
+  .reference-splash__mark-stage::before {
     animation: nurSplashGlow 4.8s ease-in-out infinite alternate;
   }}
 
@@ -157,6 +217,6 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reference-splash__mark::before {
+  .reference-splash__mark-stage::before {
     animation: none !important;
   }}

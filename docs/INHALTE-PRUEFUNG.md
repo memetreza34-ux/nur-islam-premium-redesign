@@ -13,9 +13,9 @@ ist, entscheidet die Prüfung selbst.
 
 | | |
 |---|---|
-| Einträge insgesamt | 322 |
-| davon ohne Einzelnachweis | 166 |
-| davon für diese App verfasst | 70 |
+| Einträge insgesamt | 482 |
+| davon ohne Einzelnachweis | 159 |
+| davon für diese App verfasst | 249 |
 
 ## Zuerst prüfen
 
@@ -77,11 +77,11 @@ Bestand der App, jeder Eintrag mit Quellenangabe.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
-| 1 | Bei Kummer und Trauer | Ahmad 1/391 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
+| 1 | Bei Kummer und Trauer | Ahmad 1/391 | übernommen | ☐ |
 | 2 | Bei schwerer Not | Sahih al-Bukhari 6346 · Sahih Muslim 2730 | übernommen | ☐ |
 | 3 | Gegen Sorgen und Faulheit | Sahih al-Bukhari 2893 | übernommen | ☐ |
-| 4 | Wenn etwas zu schwer fällt | Ibn Hibban 974 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
-| 5 | Bitte um Barmherzigkeit | Al-Hakim 1/545 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
+| 4 | Wenn etwas zu schwer fällt | Ibn Hibban 974 | übernommen | ☐ |
+| 5 | Bitte um Barmherzigkeit | Al-Hakim 1/545 | übernommen | ☐ |
 | 6 | Der Meister der Vergebung | Sahih al-Bukhari 6306 | übernommen | ☐ |
 | 7 | Schutz vor allem Übel · dreimal | Abu Dawud 5088 · At-Tirmidhi 3388 | übernommen | ☐ |
 | 8 | Bitte um Wohlbefinden | Abu Dawud 5074 | übernommen | ☐ |
@@ -92,8 +92,8 @@ Bestand der App, jeder Eintrag mit Quellenangabe.
 | 13 | Bitte um Vergebung | Sahih al-Bukhari 6307 | übernommen | ☐ |
 | 14 | Gutes im Diesseits und Jenseits | Quran 2:201 · Sahih al-Bukhari 4522 | übernommen | ☐ |
 | 15 | Bitte um Rechtleitung | Sahih Muslim 2721 | übernommen | ☐ |
-| 16 | Für nützliches Wissen | Ibn Majah 925 · im Altbestand als sahih gekennzeichnet | übernommen | ☐ |
-| 17 | Befreiung von Schulden | At-Tirmidhi 3563 · im Altbestand als hasan gekennzeichnet | übernommen | ☐ |
+| 16 | Für nützliches Wissen | Ibn Majah 925 | übernommen | ☐ |
+| 17 | Befreiung von Schulden | At-Tirmidhi 3563 | übernommen | ☐ |
 | 18 | Bitte um Versorgung | Sahih Muslim 2697 | übernommen | ☐ |
 | 19 | Schutz vor dem bösen Blick | Sahih al-Bukhari 3371 | übernommen | ☐ |
 | 20 | Beim Verlassen des Hauses | Abu Dawud 5095 | übernommen | ☐ |
@@ -114,22 +114,47 @@ Bestand der App, jeder Eintrag mit Quellenangabe.
 
 ## Sunnah im Alltag · Fehler und Reue
 
-Jeder Eintrag führt den Beleg mit, der im Altbestand hinterlegt war. Der Wortlaut der Belege ist mitzuprüfen.
+Alltagspraxis und Reue wurden am 03.09.2026 mit Quellen, Begriffserklärungen und didaktischen Beispielen überarbeitet. Der Abschnitt zu schweren Verfehlungen bleibt Altbestand. Alle Einträge benötigen fachliche Prüfung; Quellenprüfung ist keine Freigabe.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
-| 1 | Schlafen und Aufwachen | Der Prophet ﷺ sagte: \'Wenn du zu Bett gehst, vollziehe die… | übernommen | ☐ |
-| 2 | Essen und Trinken | Der Prophet ﷺ sagte: \'Nenne den Namen Allahs, iss mit dein… | übernommen | ☐ |
-| 3 | Haus betreten und verlassen | Der Prophet ﷺ sagte: \'Wenn ein Mann sein Haus betritt und … | übernommen | ☐ |
-| 4 | Lächeln | Der Prophet ﷺ sagte: \'Dein Lächeln im Gesicht deines Brude… | übernommen | ☐ |
-| 5 | Gutes Sprechen oder Schweigen | Der Prophet ﷺ sagte: \'Wer an Allah und den Jüngsten Tag gl… | übernommen | ☐ |
-| 6 | Verwendung des Miswak | Der Prophet ﷺ sagte: \'Wenn es nicht zu schwer für meine Um… | übernommen | ☐ |
+| 1 | Zur Ruhe kommen | Sahih al-Bukhari 6311 | hier verfasst | ☐ |
+| 2 | Bewusst essen | Sahih al-Bukhari 5376 | hier verfasst | ☐ |
+| 3 | Allah beim Heimkommen erwähnen | Sahih Muslim 2018a | hier verfasst | ☐ |
+| 4 | Freundlich begegnen | Jamiʿ at-Tirmidhi 1956 · hasan nach Darussalam | hier verfasst | ☐ |
+| 5 | Mit Worten Verantwortung übernehmen | Sahih al-Bukhari 6018 | hier verfasst | ☐ |
+| 6 | Die Zähne mit Miswak reinigen | Sahih al-Bukhari 887 | hier verfasst | ☐ |
 | 7 | Shirk (Beigesellung) | Koran (4:48): \'Wahrlich, Allah vergibt nicht, dass Ihm etw… | übernommen | ☐ |
 | 8 | Zauberei (Sihr) | Der Prophet ﷺ zählte Zauberei zu den sieben zerstörerischen… | übernommen | ☐ |
 | 9 | Mord | Koran (5:32): \'...wer einen Menschen tötet... so ist es, a… | übernommen | ☐ |
 | 10 | Zinsnehmen (Riba) | Koran (2:275): \'...Allah hat den Handel erlaubt und den Zi… | übernommen | ☐ |
 | 11 | Verzehr des Waisenvermögens | Koran (4:10): \'Diejenigen, die den Besitz der Waisen unger… | übernommen | ☐ |
-| 12 | Die Tür der Reue ist offen | Koran (39:53): \'Sprich: O Meine Diener, die ihr euch gegen… | übernommen | ☐ |
+| 12 | Hoffnung behalten | Quran 39:53–54 | hier verfasst | ☐ |
+| 13 | Das Fehlverhalten beenden | Quran 3:135 · Umkehr | hier verfasst | ☐ |
+| 14 | Bereuen und sich neu ausrichten | Dar al-Ifta · Bedingungen der Reue | hier verfasst | ☐ |
+| 15 | Rechte anderer wiederherstellen | Sahih al-Bukhari 2449 · Dar al-Ifta, Bedingungen der Reue | hier verfasst | ☐ |
+| 16 | Um Vergebung bitten | Riyad as-Salihin 13 · Überlieferung aus al-Bukhari | hier verfasst | ☐ |
+| 17 | Nach einem Rückfall erneut umkehren | Dar al-Ifta · Erneute Umkehr nach einem Rückfall | hier verfasst | ☐ |
+
+## Grundlagenpfad · vier ergänzende Lesebereiche ⚠️
+
+Einführungen und Kapiteltexte zu Hadith, Hajj/Umrah, Sunnah und Reue. Quellenabgleich und Grenzen sind in docs/FOUNDATION-SUPPLEMENTS.md dokumentiert. Definitionen, Beispiele und Einordnung gemeinsam fachlich prüfen.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Was ist ein Hadith? | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 2 | Eine Quelle richtig einordnen | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 3 | Hadithe lesen und finden | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 4 | Hajj, Umrah und Ihram verstehen | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 5 | Vor der Reise klären | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 6 | Umrah: vier Stationen | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 7 | Hajj: der zeitliche Ablauf | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 8 | Was Sunnah im Alltag bedeutet | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 9 | Essen, Zuhause und Schlafen | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 10 | Umgang mit Menschen und Körperpflege | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 11 | Tawbah und Istighfar unterscheiden | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 12 | Schritt für Schritt zurückfinden | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
+| 13 | Schwere Verfehlungen einordnen | Quellenmatrix: FOUNDATION-SUPPLEMENTS.md | hier verfasst | ☐ |
 
 ## Hajj, Umrah und heilige Stätten ⚠️
 
@@ -149,9 +174,12 @@ Der einzige Bereich, für den es keine Vorlage gab — diese Texte sind für die
 | 10 | Tawaf al-Ifada | — (keine) | hier verfasst | ☐ |
 | 11 | Die Tage von Tashriq | — (keine) | hier verfasst | ☐ |
 | 12 | Tawaf al-Wada | — (keine) | hier verfasst | ☐ |
-| 13 | Makkah | Quran 2:144 | hier verfasst | ☐ |
-| 14 | Madinah | — (keine) | hier verfasst | ☐ |
-| 15 | Jerusalem | Quran 17:1 | hier verfasst | ☐ |
+| 13 | Makkah | — (keine) | hier verfasst | ☐ |
+| 14 | Makkah | — (keine) | hier verfasst | ☐ |
+| 15 | Madinah | — (keine) | hier verfasst | ☐ |
+| 16 | Madinah | — (keine) | hier verfasst | ☐ |
+| 17 | Madinah | — (keine) | hier verfasst | ☐ |
+| 18 | Jerusalem | — (keine) | hier verfasst | ☐ |
 
 ## Islam-Quiz
 
@@ -222,40 +250,175 @@ Die Fragen tragen keine Einzelnachweise. Zu prüfen sind Frage, richtige Antwort
 
 ## Wissensbibliothek
 
-Zwölf Themen mit je mehreren Abschnitten. Zu prüfen ist der gesamte Abschnittstext, nicht nur die Überschrift.
+Elf Themen mit je mehreren Abschnitten. Zu prüfen ist der gesamte Abschnittstext, nicht nur die Überschrift.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
 | 1 | Was ist Islam? | — (keine) | übernommen | ☐ |
-| 2 | Die 25 Propheten im Islam | — (keine) | übernommen | ☐ |
-| 3 | Die 5 Säulen des Islam | — (keine) | übernommen | ☐ |
-| 4 | Die 6 Glaubensgrundsätze | — (keine) | übernommen | ☐ |
-| 5 | Was ist Salah? | — (keine) | übernommen | ☐ |
-| 6 | Was ist Zakah? | — (keine) | übernommen | ☐ |
-| 7 | Was ist Sawm? | — (keine) | übernommen | ☐ |
-| 8 | Was ist Hajj? | — (keine) | übernommen | ☐ |
-| 9 | Was ist Sunnah? | — (keine) | übernommen | ☐ |
-| 10 | Die 4 Rechtsschulen (Madhahib) | — (keine) | übernommen | ☐ |
-| 11 | Charakter & Ethik (Akhlaq) | — (keine) | übernommen | ☐ |
-| 12 | Wissen im Islam | — (keine) | übernommen | ☐ |
+| 2 | Die 5 Säulen des Islam | — (keine) | übernommen | ☐ |
+| 3 | Die 6 Glaubensgrundsätze | — (keine) | übernommen | ☐ |
+| 4 | Was ist Salah? | — (keine) | übernommen | ☐ |
+| 5 | Was ist Zakah? | — (keine) | übernommen | ☐ |
+| 6 | Was ist Sawm? | — (keine) | übernommen | ☐ |
+| 7 | Was ist Hajj? | — (keine) | übernommen | ☐ |
+| 8 | Was ist Sunnah? | — (keine) | übernommen | ☐ |
+| 9 | Die 4 Rechtsschulen (Madhahib) | — (keine) | übernommen | ☐ |
+| 10 | Charakter & Ethik (Akhlaq) | — (keine) | übernommen | ☐ |
+| 11 | Wissen im Islam | — (keine) | übernommen | ☐ |
 
 ## Propheten
 
-Je Eintrag sind Einordnung, Beschreibung, Kernpunkte und Lehren zu prüfen.
+25 Katalogeinträge, 25 ausführliche Kursorientierungen mit Wissensgrenze und 97 Kurskapitel. Je Kapitel sind Erzählung, Merksätze und Quran-Stellen gemeinsam zu prüfen. Bei Dhul-Kifl ist die unterschiedliche gelehrte Einordnung ausdrücklich Teil der Prüfung.
 
 | Nr. | Inhalt | Quelle | Herkunft | geprüft |
 |---:|---|---|---|:---:|
-| 1 | Adam | — (keine) | übernommen | ☐ |
-| 2 | Nuh | — (keine) | übernommen | ☐ |
-| 3 | Ibrahim | — (keine) | übernommen | ☐ |
-| 4 | Musa | — (keine) | übernommen | ☐ |
-| 5 | Isa | — (keine) | übernommen | ☐ |
-| 6 | Yusuf | — (keine) | übernommen | ☐ |
-| 7 | Yunus | — (keine) | übernommen | ☐ |
-| 8 | Ayyub | — (keine) | übernommen | ☐ |
-| 9 | Dawud | — (keine) | übernommen | ☐ |
-| 10 | Sulayman | — (keine) | übernommen | ☐ |
-| 11 | Muhammad | — (keine) | übernommen | ☐ |
+| 1 | Einführung · Adam | Quran 2:30–39 (Al-Baqara) · Quran 20:115–123 (Ta-Ha) | hier verfasst | ☐ |
+| 2 | Einführung · Idris | Quran 19:56–57 (Maryam) · Quran 21:85–86 (Al-Anbiya) | hier verfasst | ☐ |
+| 3 | Einführung · Nuh | Quran 11:25–49 (Hud) · Quran 71:1–28 (Nuh) | hier verfasst | ☐ |
+| 4 | Einführung · Hud | Quran 7:65–72 (Al-Araf) · Quran 11:50–60 (Hud) | hier verfasst | ☐ |
+| 5 | Einführung · Salih | Quran 7:73–79 (Al-Araf) · Quran 11:61–68 (Hud) | hier verfasst | ☐ |
+| 6 | Einführung · Ibrahim | Quran 2:124–132 (Al-Baqara) · Quran 21:51–73 (Al-Anbiya) | hier verfasst | ☐ |
+| 7 | Einführung · Lut | Quran 7:80–84 (Al-Araf) · Quran 11:77–83 (Hud) | hier verfasst | ☐ |
+| 8 | Einführung · Ismail | Quran 2:125–129 (Al-Baqara) · Quran 19:54–55 (Maryam) | hier verfasst | ☐ |
+| 9 | Einführung · Ishaq | Quran 11:69–73 (Hud) · Quran 37:112–113 (As-Saffat) | hier verfasst | ☐ |
+| 10 | Einführung · Yaqub | Quran 12:83–98 (Yusuf) | hier verfasst | ☐ |
+| 11 | Einführung · Yusuf | Quran 12:4–101 (Yusuf) | hier verfasst | ☐ |
+| 12 | Einführung · Ayyub | Quran 21:83–84 (Al-Anbiya) · Quran 38:41–44 (Sad) | hier verfasst | ☐ |
+| 13 | Einführung · Shuʿayb | Quran 7:85–93 (Al-Araf) · Quran 11:84–95 (Hud) | hier verfasst | ☐ |
+| 14 | Einführung · Musa | Quran 20:9–98 (Ta-Ha) · Quran 28:3–46 (Al-Qasas) | hier verfasst | ☐ |
+| 15 | Einführung · Harun | Quran 20:29–36 (Ta-Ha) · Quran 20:90–94 (Ta-Ha) | hier verfasst | ☐ |
+| 16 | Einführung · Dhul-Kifl | Quran 21:85–86 (Al-Anbiya) · Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 17 | Einführung · Dawud | Quran 2:251 (Al-Baqara) · Quran 38:17–26 (Sad) | hier verfasst | ☐ |
+| 18 | Einführung · Sulayman | Quran 27:15–44 (An-Naml) · Quran 34:12–14 (Saba) | hier verfasst | ☐ |
+| 19 | Einführung · Ilyas | Quran 37:123–132 (As-Saffat) | hier verfasst | ☐ |
+| 20 | Einführung · Al-Yasaʿ | Quran 6:86 (Al-Anam) · Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 21 | Einführung · Yunus | Quran 21:87–88 (Al-Anbiya) · Quran 37:139–148 (As-Saffat) | hier verfasst | ☐ |
+| 22 | Einführung · Zakariyya | Quran 3:38–41 (Al Imran) · Quran 19:2–11 (Maryam) | hier verfasst | ☐ |
+| 23 | Einführung · Yahya | Quran 19:7–15 (Maryam) · Quran 3:39 (Al Imran) | hier verfasst | ☐ |
+| 24 | Einführung · Isa | Quran 3:45–55 (Al Imran) · Quran 5:110–120 (Al-Maida) | hier verfasst | ☐ |
+| 25 | Einführung · Muhammad | Quran 33:40 (Al-Ahzab) · Quran 21:107 (Al-Anbiya) | hier verfasst | ☐ |
+| 26 | Kursorientierung · Adams Geschichte verbindet den Ursprung des Men… | Grenze: Der Kurs nennt keine Zeitangaben, geografisch… | hier verfasst | ☐ |
+| 27 | Kursorientierung · Der Quran berichtet über Idris nur in wenigen V… | Grenze: Ort, Zeit, Beruf und eine ausführliche Lebens… | hier verfasst | ☐ |
+| 28 | Kursorientierung · Nuh wird als beharrlicher Warner gezeigt, der s… | Grenze: Die Kursdarstellung bleibt bei den Quran-Pass… | hier verfasst | ☐ |
+| 29 | Kursorientierung · Hud wird zum mächtigen Volk ʿAd gesandt. Seine … | Grenze: Archäologische Zuordnungen, genaue Orte und D… | hier verfasst | ☐ |
+| 30 | Kursorientierung · Salihs Geschichte richtet den Blick auf Thamud,… | Grenze: Der Kurs verzichtet auf Namen, Zusatzgeschich… | hier verfasst | ☐ |
+| 31 | Kursorientierung · Ibrahims Geschichte gehört zu den umfangreichst… | Grenze: Wo der Quran eine Person nicht ausdrücklich b… | hier verfasst | ☐ |
+| 32 | Kursorientierung · Luts Geschichte behandelt eine Gemeinschaft, di… | Grenze: Die Darstellung bleibt sachlich und benutzt d… | hier verfasst | ☐ |
+| 33 | Kursorientierung · Ismail wird mit dem Bau der Kaaba, Verlässlichk… | Grenze: Der Kurs sagt nicht, der Quran nenne Ismail a… | hier verfasst | ☐ |
+| 34 | Kursorientierung · Ishaq erscheint im Quran als überraschende froh… | Grenze: Eine ausführliche Kindheit, ein eigener Wirku… | hier verfasst | ☐ |
+| 35 | Kursorientierung · Yaqubs Geschichte verbindet die Weitergabe des … | Grenze: Der Kurs übernimmt nur Familienangaben und Er… | hier verfasst | ☐ |
+| 36 | Kursorientierung · Sure Yusuf erzählt eine zusammenhängende Geschi… | Grenze: Spätere Namen und Ausschmückungen werden nich… | hier verfasst | ☐ |
+| 37 | Kursorientierung · Ayyub wird in schwerer Bedrängnis gezeigt, ohne… | Grenze: Diagnosen, Zeitangaben und dramatische Zusatz… | hier verfasst | ☐ |
+| 38 | Kursorientierung · Shuʿaybs Botschaft verbindet die Anbetung Allah… | Grenze: Eine Gleichsetzung mit außerquranischen Perso… | hier verfasst | ☐ |
+| 39 | Kursorientierung · Musa ist im Quran besonders häufig und in viele… | Grenze: Der Kurs verdichtet mehrere Suren, kennzeichn… | hier verfasst | ☐ |
+| 40 | Kursorientierung · Harun wird als Prophet und Partner seines Brude… | Grenze: Der Kurs ergänzt keine eigenständige Harun-Bi… | hier verfasst | ☐ |
+| 41 | Kursorientierung · Dhul-Kifl wird im Quran nur zweimal kurz und po… | Grenze: Sein Prophetentum wird nicht als unumstritten… | hier verfasst | ☐ |
+| 42 | Kursorientierung · Dawud wird mit Herrschaft, Weisheit, dem Zabur,… | Grenze: Der Kurs trennt den Quran-Bericht von spätere… | hier verfasst | ☐ |
+| 43 | Kursorientierung · Sulayman erhält Wissen, ein außergewöhnliches K… | Grenze: Märchenhafte Ausschmückungen und nicht belegt… | hier verfasst | ☐ |
+| 44 | Kursorientierung · Ilyas wird als Gesandter gezeigt, der sein Volk… | Grenze: Orte, Zeiten, Verwandtschaften und spätere Er… | hier verfasst | ☐ |
+| 45 | Kursorientierung · Al-Yasaʿ wird im Quran zweimal namentlich und l… | Grenze: Herkunft, Wirkungsort und konkrete Taten blei… | hier verfasst | ☐ |
+| 46 | Kursorientierung · Yunus’ Geschichte verbindet einen voreiligen Au… | Grenze: Der Kurs verwendet die Quran-Beschreibung und… | hier verfasst | ☐ |
+| 47 | Kursorientierung · Zakariyya wird als fürsorglicher Betreuer Marya… | Grenze: Der Kurs bleibt bei den Quran-Angaben zu Fami… | hier verfasst | ☐ |
+| 48 | Kursorientierung · Yahya wird schon vor seiner Geburt namentlich a… | Grenze: Berichte über sein späteres Leben und seinen … | hier verfasst | ☐ |
+| 49 | Kursorientierung · Isa wird im Quran als Messias, Wort von Allah, … | Grenze: Der Kurs formuliert christologische Unterschi… | hier verfasst | ☐ |
+| 50 | Kursorientierung · Muhammad ﷺ wird im Quran als Gesandter Allahs, … | Grenze: Jahreszahlen und ausführliche Sira-Ereignisse… | hier verfasst | ☐ |
+| 51 | Kapitel · Erschaffung und Verantwortung | Quran 2:30–34 (Al-Baqara) | hier verfasst | ☐ |
+| 52 | Kapitel · Prüfung im Garten | Quran 2:35–36 (Al-Baqara) · Quran 7:19–23 (Al-Araf) | hier verfasst | ☐ |
+| 53 | Kapitel · Reue und neue Rechtleitung | Quran 2:37–39 (Al-Baqara) · Quran 20:115–123 (Ta-Ha) | hier verfasst | ☐ |
+| 54 | Kapitel · Wahrhaftiger Prophet | Quran 19:56 (Maryam) | hier verfasst | ☐ |
+| 55 | Kapitel · Hoher Rang und Geduld | Quran 19:57 (Maryam) · Quran 21:85–86 (Al-Anbiya) | hier verfasst | ☐ |
+| 56 | Kapitel · Was der Quran offenlässt | Quran 19:56–57 (Maryam) | hier verfasst | ☐ |
+| 57 | Kapitel · Der beharrliche Aufruf | Quran 71:1–20 (Nuh) | hier verfasst | ☐ |
+| 58 | Kapitel · Arche, Spott und Flut | Quran 11:36–44 (Hud) | hier verfasst | ☐ |
+| 59 | Kapitel · Familie und persönliche Verantwortung | Quran 11:42–47 (Hud) | hier verfasst | ☐ |
+| 60 | Kapitel · Frieden und bleibende Lehre | Quran 11:48–49 (Hud) | hier verfasst | ☐ |
+| 61 | Kapitel · Hud und das Volk ʿAd | Quran 7:65–69 (Al-Araf) · Quran 11:50–52 (Hud) | hier verfasst | ☐ |
+| 62 | Kapitel · Ablehnung und Vertrauen | Quran 7:66–68 (Al-Araf) · Quran 11:53–57 (Hud) | hier verfasst | ☐ |
+| 63 | Kapitel · Rettung und Ende der Überheblichkeit | Quran 7:70–72 (Al-Araf) · Quran 69:6–8 (Al-Haqqa) | hier verfasst | ☐ |
+| 64 | Kapitel · Aufruf an Thamud | Quran 7:73 (Al-Araf) · Quran 11:61 (Hud) | hier verfasst | ☐ |
+| 65 | Kapitel · Die Kamelstute als Zeichen | Quran 7:73–74 (Al-Araf) · Quran 11:64 (Hud) | hier verfasst | ☐ |
+| 66 | Kapitel · Übertretung und Folge | Quran 7:75–79 (Al-Araf) · Quran 91:11–15 (Ash-Shams) | hier verfasst | ☐ |
+| 67 | Kapitel · Ein klares Argument für Tawhid | Quran 6:74–83 (Al-Anam) | hier verfasst | ☐ |
+| 68 | Kapitel · Konfrontation mit dem Götzendienst | Quran 21:51–70 (Al-Anbiya) | hier verfasst | ☐ |
+| 69 | Kapitel · Prüfungen und Verantwortung | Quran 2:124 (Al-Baqara) | hier verfasst | ☐ |
+| 70 | Kapitel · Kaaba und Bittgebete | Quran 2:125–129 (Al-Baqara) · Quran 14:35–41 (Ibrahim) | hier verfasst | ☐ |
+| 71 | Kapitel · Die schwere Familienprüfung | Quran 37:100–111 (As-Saffat) | hier verfasst | ☐ |
+| 72 | Kapitel · Warnung vor offenem Fehlverhalten | Quran 7:80–82 (Al-Araf) | hier verfasst | ☐ |
+| 73 | Kapitel · Die Gäste und die zugespitzte Prüfung | Quran 11:77–81 (Hud) | hier verfasst | ☐ |
+| 74 | Kapitel · Rettung und persönliche Verantwortung | Quran 7:83–84 (Al-Araf) · Quran 11:81–83 (Hud) · Quran 66:1… | hier verfasst | ☐ |
+| 75 | Kapitel · Mit Ibrahim an der Kaaba | Quran 2:125–129 (Al-Baqara) | hier verfasst | ☐ |
+| 76 | Kapitel · Verlässlichkeit und Prophetentum | Quran 19:54 (Maryam) | hier verfasst | ☐ |
+| 77 | Kapitel · Gebet und Zakat in der Familie | Quran 19:55 (Maryam) | hier verfasst | ☐ |
+| 78 | Kapitel · Was nicht festgelegt wird | Quran 37:100–111 (As-Saffat) | hier verfasst | ☐ |
+| 79 | Kapitel · Frohe Botschaft im hohen Alter | Quran 11:69–73 (Hud) | hier verfasst | ☐ |
+| 80 | Kapitel · Prophet und Gesegneter | Quran 37:112–113 (As-Saffat) | hier verfasst | ☐ |
+| 81 | Kapitel · Teil einer Kette der Rechtleitung | Quran 6:83–84 (Al-Anam) · Quran 21:72–73 (Al-Anbiya) | hier verfasst | ☐ |
+| 82 | Kapitel · Glaube an die nächste Generation weitergeben | Quran 2:132–133 (Al-Baqara) | hier verfasst | ☐ |
+| 83 | Kapitel · Yusufs Traum und väterliche Fürsorge | Quran 12:4–6 (Yusuf) | hier verfasst | ☐ |
+| 84 | Kapitel · Trauer und schöne Geduld | Quran 12:83–87 (Yusuf) | hier verfasst | ☐ |
+| 85 | Kapitel · Wiedersehen und erfüllte Hoffnung | Quran 12:93–100 (Yusuf) | hier verfasst | ☐ |
+| 86 | Kapitel · Traum, Eifersucht und Trennung | Quran 12:4–20 (Yusuf) | hier verfasst | ☐ |
+| 87 | Kapitel · Versuchung und Integrität | Quran 12:21–35 (Yusuf) | hier verfasst | ☐ |
+| 88 | Kapitel · Gefängnis, Einladung und Traumdeutung | Quran 12:36–42 (Yusuf) | hier verfasst | ☐ |
+| 89 | Kapitel · Rehabilitierung und Verantwortung | Quran 12:43–57 (Yusuf) | hier verfasst | ☐ |
+| 90 | Kapitel · Wiedersehen und Vergebung | Quran 12:58–98 (Yusuf) | hier verfasst | ☐ |
+| 91 | Kapitel · Erfüllung des Traums | Quran 12:99–101 (Yusuf) | hier verfasst | ☐ |
+| 92 | Kapitel · Bedrängnis und ehrliches Dua | Quran 21:83 (Al-Anbiya) | hier verfasst | ☐ |
+| 93 | Kapitel · Hilfe und Wiederherstellung | Quran 21:84 (Al-Anbiya) · Quran 38:42–43 (Sad) | hier verfasst | ☐ |
+| 94 | Kapitel · Ein ausgezeichneter Diener | Quran 38:41–44 (Sad) | hier verfasst | ☐ |
+| 95 | Kapitel · Aufruf an Madyan | Quran 7:85–86 (Al-Araf) | hier verfasst | ☐ |
+| 96 | Kapitel · Reform ohne Doppelmoral | Quran 11:84–88 (Hud) | hier verfasst | ☐ |
+| 97 | Kapitel · Druck, Drohung und Standhaftigkeit | Quran 7:88–93 (Al-Araf) · Quran 11:89–95 (Hud) | hier verfasst | ☐ |
+| 98 | Kapitel · Rettung als Kind und Aufwachsen im Palast | Quran 28:3–13 (Al-Qasas) | hier verfasst | ☐ |
+| 99 | Kapitel · Fehler, Flucht und Jahre in Madyan | Quran 28:14–28 (Al-Qasas) | hier verfasst | ☐ |
+| 100 | Kapitel · Berufung und Bitte um Harun | Quran 20:9–36 (Ta-Ha) · Quran 28:29–35 (Al-Qasas) | hier verfasst | ☐ |
+| 101 | Kapitel · Vor Pharao und den Zauberern | Quran 20:42–76 (Ta-Ha) | hier verfasst | ☐ |
+| 102 | Kapitel · Auszug und Rettung am Meer | Quran 20:77–79 (Ta-Ha) · Quran 26:52–68 (Ash-Shuara) | hier verfasst | ☐ |
+| 103 | Kapitel · Führung und die Prüfung mit dem Kalb | Quran 20:80–98 (Ta-Ha) | hier verfasst | ☐ |
+| 104 | Kapitel · Musa als Lernender | Quran 18:60–82 (Al-Kahf) | hier verfasst | ☐ |
+| 105 | Kapitel · Musas Bitte um Unterstützung | Quran 20:29–36 (Ta-Ha) | hier verfasst | ☐ |
+| 106 | Kapitel · Prophet und Bruder | Quran 19:51–53 (Maryam) | hier verfasst | ☐ |
+| 107 | Kapitel · Gemeinsamer Auftrag an Pharao | Quran 20:42–48 (Ta-Ha) | hier verfasst | ☐ |
+| 108 | Kapitel · Harun und die Krise um das Kalb | Quran 20:90–94 (Ta-Ha) | hier verfasst | ☐ |
+| 109 | Kapitel · Unter den Geduldigen | Quran 21:85–86 (Al-Anbiya) | hier verfasst | ☐ |
+| 110 | Kapitel · Unter den Ausgezeichneten | Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 111 | Kapitel · Warum die Einordnung vorsichtig bleibt | Quran 21:85–86 (Al-Anbiya) · Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 112 | Kapitel · Sieg über Jalut und Beginn der Herrschaft | Quran 2:246–251 (Al-Baqara) | hier verfasst | ☐ |
+| 113 | Kapitel · Der Zabur | Quran 4:163 (An-Nisa) · Quran 17:55 (Al-Isra) | hier verfasst | ☐ |
+| 114 | Kapitel · Lobpreis und Verarbeitung von Eisen | Quran 21:78–80 (Al-Anbiya) · Quran 34:10–11 (Saba) | hier verfasst | ☐ |
+| 115 | Kapitel · Gerechtes Urteil und Umkehr | Quran 38:17–26 (Sad) | hier verfasst | ☐ |
+| 116 | Kapitel · Wissen, Dank und Verantwortung | Quran 27:15–19 (An-Naml) | hier verfasst | ☐ |
+| 117 | Kapitel · Der Wiedehopf und die Königin von Saba | Quran 27:20–44 (An-Naml) | hier verfasst | ☐ |
+| 118 | Kapitel · Wind, Dschinn und außergewöhnliche Herrschaft | Quran 34:12–13 (Saba) · Quran 38:30–40 (Sad) | hier verfasst | ☐ |
+| 119 | Kapitel · Sein Tod und die Grenze des Verborgenen | Quran 34:14 (Saba) | hier verfasst | ☐ |
+| 120 | Kapitel · Ein Gesandter zu seinem Volk | Quran 37:123–126 (As-Saffat) | hier verfasst | ☐ |
+| 121 | Kapitel · Ablehnung und bewahrtes Andenken | Quran 37:127–132 (As-Saffat) | hier verfasst | ☐ |
+| 122 | Kapitel · Grenzen der Biografie | Quran 6:85 (Al-Anam) · Quran 37:123–132 (As-Saffat) | hier verfasst | ☐ |
+| 123 | Kapitel · Unter den Rechtgeleiteten | Quran 6:83–87 (Al-Anam) | hier verfasst | ☐ |
+| 124 | Kapitel · Unter den Ausgezeichneten | Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 125 | Kapitel · Was sicher offenbleibt | Quran 6:86 (Al-Anam) · Quran 38:48 (Sad) | hier verfasst | ☐ |
+| 126 | Kapitel · Aufbruch und das belastete Schiff | Quran 37:139–142 (As-Saffat) | hier verfasst | ☐ |
+| 127 | Kapitel · Dua in den Finsternissen | Quran 21:87–88 (Al-Anbiya) | hier verfasst | ☐ |
+| 128 | Kapitel · Rettung und erneuter Auftrag | Quran 37:143–148 (As-Saffat) | hier verfasst | ☐ |
+| 129 | Kapitel · Das Volk, das glaubte | Quran 10:98 (Yunus) | hier verfasst | ☐ |
+| 130 | Kapitel · Fürsorge für Maryam | Quran 3:37–38 (Al Imran) | hier verfasst | ☐ |
+| 131 | Kapitel · Das leise Dua | Quran 19:2–6 (Maryam) | hier verfasst | ☐ |
+| 132 | Kapitel · Frohe Botschaft von Yahya | Quran 19:7–11 (Maryam) · Quran 3:39–41 (Al Imran) | hier verfasst | ☐ |
+| 133 | Kapitel · Eine besondere Ankündigung | Quran 19:7–9 (Maryam) | hier verfasst | ☐ |
+| 134 | Kapitel · Weisheit schon als Kind | Quran 19:12–13 (Maryam) | hier verfasst | ☐ |
+| 135 | Kapitel · Reinheit und Güte zu den Eltern | Quran 19:13–15 (Maryam) | hier verfasst | ☐ |
+| 136 | Kapitel · Bestätigung und Rechtschaffenheit | Quran 3:39 (Al Imran) | hier verfasst | ☐ |
+| 137 | Kapitel · Ankündigung und Geburt ohne Vater | Quran 3:45–47 (Al Imran) · Quran 19:16–36 (Maryam) | hier verfasst | ☐ |
+| 138 | Kapitel · Injil, Botschaft und Zeichen | Quran 3:48–51 (Al Imran) · Quran 5:110 (Al-Maida) | hier verfasst | ☐ |
+| 139 | Kapitel · Die Jünger und die Bitte um den Tisch | Quran 3:52–53 (Al Imran) · Quran 5:111–115 (Al-Maida) | hier verfasst | ☐ |
+| 140 | Kapitel · Isa ist Gesandter, nicht Gott | Quran 4:171–172 (An-Nisa) · Quran 5:72–75 (Al-Maida) | hier verfasst | ☐ |
+| 141 | Kapitel · Nicht getötet, sondern erhoben | Quran 4:157–158 (An-Nisa) | hier verfasst | ☐ |
+| 142 | Kapitel · Der Offenbarungsauftrag: Lesen | Quran 96:1–5 (Al-Alaq) | hier verfasst | ☐ |
+| 143 | Kapitel · Gesandter für alle Menschen | Quran 7:158 (Al-Araf) | hier verfasst | ☐ |
+| 144 | Kapitel · Barmherzigkeit und guter Charakter | Quran 21:107 (Al-Anbiya) · Quran 68:4 (Al-Qalam) · Quran 3:… | hier verfasst | ☐ |
+| 145 | Kapitel · Ein Vorbild im Vertrauen auf Allah | Quran 33:21 (Al-Ahzab) | hier verfasst | ☐ |
+| 146 | Kapitel · Die Höhle während der Auswanderung | Quran 9:40 (At-Tawba) | hier verfasst | ☐ |
+| 147 | Kapitel · Siegel der Propheten | Quran 33:40 (Al-Ahzab) · Quran 18:110 (Al-Kahf) | hier verfasst | ☐ |
 
 ## Ummah-Übersicht ⚠️
 
@@ -427,6 +590,17 @@ Hier verfasst. Je Punkt sind alle vier angegebenen Positionen zu prüfen, und ob
 | 6 | Werden die Hände vor der Verbeugung noch einmal gehoben? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
 | 7 | Gehört ein Qunut-Bittgebet zum Fajr-Gebet? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
 | 8 | Wie wird im letzten Sitzen gesessen? | — (keine Belegstelle; beschreibende Übersicht) | hier verfasst | ☐ |
+
+## Katalog der vier sunnitischen Rechtsschulen ⚠️
+
+Neue Zusammenfassungen, nicht fachlich freigegeben. Je Schule sind Lebensdaten, Entstehung, Methodik, Verbreitung und die Einordnung der Institutionen zu prüfen. Die verlinkten Institutionen sind keine zentralen Vertretungen einer Rechtsschule.
+
+| Nr. | Inhalt | Quelle | Herkunft | geprüft |
+|---:|---|---|---|:---:|
+| 1 | Hanafitisch: Geschichte, Methodik, Verbreitung und Praxis | https://islamansiklopedisi.org.tr/hanefi-mezhebi · https://academic.oup.com/reference/62361/reference-article-abstract/554576007 | hier verfasst | ☐ |
+| 2 | Malikitisch: Geschichte, Methodik, Verbreitung und Praxis | https://islamansiklopedisi.org.tr/maliki-mezhebi · https://habous.gov.ma/2012-05-28-10-40-28/45-%D8%A7%D9%84%D9%85%D8%B0%D9%87%D8%A8-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%83%D9%8A-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8.html | hier verfasst | ☐ |
+| 3 | Schafiitisch: Geschichte, Methodik, Verbreitung und Praxis | https://islamansiklopedisi.org.tr/safii-mezhebi · https://azhar.eg/observer-en/Al-Azhar-Observatory-for-Combating-Extremismd/ArtMID/3472/ArticleID/100212/Irrational-Religiosity-A-Manifestation-of-False-Piety | hier verfasst | ☐ |
+| 4 | Hanbalitisch: Geschichte, Methodik, Verbreitung und Praxis | https://islamansiklopedisi.org.tr/hanbeli-mezhebi · https://www.dar-alifta.org/en/article/details/111/shariah-law | hier verfasst | ☐ |
 
 ## Kalendertermine
 

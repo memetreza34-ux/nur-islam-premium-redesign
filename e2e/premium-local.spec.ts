@@ -15,7 +15,7 @@ test.beforeEach(async ({ page }) => {
 test('opens Premium from Home and renders statistics without an update loop', async ({ page }) => {
   await openApp(page);
 
-  const widgets = page.getByRole('region', { name: 'Premium Widgets' });
+  const widgets = page.getByRole('region', { name: 'Deine Widgets' });
   await expect(widgets).toBeVisible();
   await widgets.getByRole('button', { name: 'Anpassen' }).click();
 
@@ -33,7 +33,7 @@ test('opens Premium from Home and renders statistics without an update loop', as
 test('creates a local routine and persists its daily completion', async ({ page }) => {
   await openApp(page);
 
-  await page.getByRole('region', { name: 'Premium Widgets' }).getByRole('button', { name: 'Anpassen' }).click();
+  await page.getByRole('region', { name: 'Deine Widgets' }).getByRole('button', { name: 'Anpassen' }).click();
   const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
   await premium.getByRole('button', { name: 'Routinen', exact: true }).click();
 

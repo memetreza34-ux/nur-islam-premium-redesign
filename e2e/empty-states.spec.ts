@@ -49,16 +49,13 @@ test('Sammlung: an untouched app says the collection is waiting', async ({ page 
 
 test('Moscheen: offline reports the failure instead of an empty list', async ({ page, context }) => {
   await openApp(page);
-  await context.setOffline(true);
-
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
-  await page.waitForTimeout(400);
+  await expect(page.getByRole('heading', { name: 'Mehr', exact: true })).toBeVisible();
+  await context.setOffline(true);
   await page.getByRole('button').filter({ hasText: 'Moscheen' }).first().click();
-  await page.waitForTimeout(1500);
 
   // Either a stated error or cached results — never a blank area.
-  const stated = await page.locator('.reference-empty-result, .reference-mosque-live-status, .reference-mosque-list').count();
-  expect(stated).toBeGreaterThan(0);
+  await expect(page.locator('.reference-empty-result, .reference-mosque-live-status, .reference-mosque-list').first()).toBeVisible();
 });
 
 test('Notizen: an empty list says so rather than showing a bare editor', async ({ page }) => {

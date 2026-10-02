@@ -24,8 +24,14 @@ requireTokens(domains.get('learning'), 'Learning', [
   '#07372b',
   '#00120f',
   'rgba(226,191,119,.14)',
-  'rgba(145,168,158,.8)',
   '#fff8ea',
+]);
+const designSystem = await read('src/styles/nur-design-system.css');
+const learningDescription = designSystem.match(/\.reference-prayer-learning-hub \.learning-intro__description\s*\{([^}]+)\}/)?.[1] ?? '';
+requireTokens(learningDescription, 'Readable learning introduction', [
+  'color: var(--ds-cream)',
+  'font-size: 14px',
+  'line-height: 1.65',
 ]);
 
 requireTokens(domains.get('devotional'), 'Duas / Names', [
@@ -33,15 +39,15 @@ requireTokens(domains.get('devotional'), 'Duas / Names', [
   'rgba(226, 191, 119, .12)',
   'color: #f2d79a !important',
   'color: rgba(145, 168, 158, .8) !important',
-  'dua-hands-v2.webp?v=20260808-release-hardening',
+  'dua-hands-v2.webp?v=20260826-original-art',
 ]);
 
 requireTokens(domains.get('worship'), 'Prayer / Qibla', [
   'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
   'color: #f2d79a !important',
   'rgba(145, 168, 158, .81)',
-  'dome-v2.webp?v=20260808-release-hardening',
-  'kaaba-v2.webp?v=20260808-release-hardening',
+  'dome-v2.webp?v=20260826-original-art',
+  'kaaba-v2.webp?v=20260826-original-art',
 ]);
 
 requireTokens(domains.get('discovery'), 'Mosque / Calendar / Collections', [
@@ -49,16 +55,16 @@ requireTokens(domains.get('discovery'), 'Mosque / Calendar / Collections', [
   'color: #f2d79a !important',
   'rgba(145, 168, 158, .8)',
   'mosque',
-  'sun-emblem-v2.webp?v=20260808-release-hardening',
-  'calendar-chip-v2.webp?v=20260808-release-hardening',
-  'bookmark-v2.webp?v=20260808-release-hardening',
+  'sun-emblem-v2.webp?v=20260826-original-art',
+  'calendar-object-v1.webp',
+  'bookmark-v3.webp',
 ]);
 
 requireTokens(domains.get('daily'), 'Daily Ayah / Hadith', [
   'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
   'rgba(226,191,119,.13)',
   'rgba(145,168,158,.8)',
-  'lantern-v2.webp?v=20260808-release-hardening',
+  'lantern-v3.webp',
 ]);
 
 requireTokens(domains.get('quran'), 'Quran', [

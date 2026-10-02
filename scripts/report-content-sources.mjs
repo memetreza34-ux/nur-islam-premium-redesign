@@ -32,6 +32,7 @@ const quiz = await read('src/data/quizData.ts');
 const pilgrimage = await read('src/data/pilgrimageData.ts');
 const knowledgeTopics = await read('src/data/knowledgeData.ts');
 const prophets = await read('src/data/prophetData.ts');
+const prophetCourses = await read('src/data/prophetCourseData.ts');
 
 // Entries are counted from their id lines so the numbers follow the data rather
 // than a hand-maintained constant.
@@ -66,7 +67,10 @@ const pilgrimageEntries = countMatches(pilgrimage, /^\s{4}id:\s*'/gm);
 const pilgrimageRefs = countMatches(pilgrimage, /^\s+reference:\s*'/gm);
 
 const knowledgeCount = countMatches(knowledgeTopics.slice(0, knowledgeTopics.indexOf('GLOSSARY_TERMS')), /^\s{4}id:\s*'/gm);
-const prophetCount = countMatches(prophets, /^\s{4}id:\s*'/gm);
+const prophetCount = countMatches(prophets, /id: '[^']+', name: '[^']+', arabic: '[^']+'/g);
+const prophetSources = countMatches(prophets, /^\s+quranReferences:\s*\[/gm);
+const prophetChapterCount = countMatches(prophetCourses, /\{ id: '[^']+', title: '[^']+', summary:/g);
+const prophetChapterSources = countMatches(prophetCourses, /quranReferences: \['Quran /g);
 
 const rows = [
   { area: 'Duas', items: duaEntries, withSource: duaSources },
@@ -79,7 +83,8 @@ const rows = [
   { area: 'Pilgrimage stations', items: pilgrimageEntries, withSource: pilgrimageRefs },
   { area: 'Quiz questions', items: quizQuestions, withSource: 0 },
   { area: 'Knowledge topics', items: knowledgeCount, withSource: 0 },
-  { area: 'Prophets', items: prophetCount, withSource: 0 },
+  { area: 'Prophets', items: prophetCount, withSource: prophetSources },
+  { area: 'Prophet chapters', items: prophetChapterCount, withSource: prophetChapterSources },
 ];
 
 const pad = (value, width) => String(value).padEnd(width);

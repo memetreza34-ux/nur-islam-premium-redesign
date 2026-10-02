@@ -151,12 +151,10 @@ textarea:focus-visible {
   line-height: 1;
 }
 
-:where(
-  .glass-card,
+:where(.glass-card,
   .continue-card--v2,
   .verse-card,
   .hadith-card,
-  .ai-preview,
   .recommendation-card,
   .prayer-time-row,
   .calendar-event-card,
@@ -167,8 +165,7 @@ textarea:focus-visible {
   .reference-reader-verse,
   .reference-source-card,
   .reference-reflection-card,
-  .reference-mosque-live-status
-) {
+  .reference-mosque-live-status) {
   border-radius: var(--radius-card);
 }
 
@@ -224,7 +221,7 @@ textarea:focus-visible {
 
 /* Keep the Quran daily card on the same current Mihrab asset as the final art layer. */
 .reference-quran-verse::after {
-  background-image: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260808-release-hardening') !important;
+  background-image: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260826-original-art') !important;
 }
 
 .section-heading h2,

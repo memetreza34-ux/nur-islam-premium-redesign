@@ -19,7 +19,6 @@
 @import './styles/reference-core-screens.css';
 @import './styles/reference-prayer-calendar.css';
 @import './styles/reference-discovery.css';
-@import './styles/reference-assistant.css';
 @import './styles/reference-reading.css';
 @import './styles/reference-interaction-fixes.css';
 @import './styles/reference-onboarding.css';
@@ -95,7 +94,7 @@
 @import './styles/premium-visual-runtime-lock.css';
 @import './styles/premium-profile-brand-lock.css';
 @import './styles/premium-learning-art-lock.css';
-@import './styles/premium-account-notes-assistant-lock.css';
+@import './styles/premium-account-notes-lock.css';
 @import './styles/premium-mobile-modal-input-lock.css';
 @import './styles/premium-motion-performance-lock.css';
 @import './styles/premium-system-surfaces-lock.css';
@@ -104,8 +103,13 @@
 @import './styles/premium-readable-type-lock.css';
 @import './styles/premium-reference-geometry-lock.css';
 
-/* Design system: one scale per decision. Loaded last so it settles the layers above. */
+/* Design system settles historical layers; the scoped Learn layout follows. */
 @import './styles/nur-design-system.css';
+@import './styles/learn-library-redesign.css';
+@import './styles/overlay-navigation-clearance.css';
+@import './styles/legal-premium.css';
+@import './styles/about-premium.css';
+@import './styles/mosque-finder-hero.css';
 
 /* Small lock corrections that keep grid geometry while removing fake actions. */
 .reference-prayer-learning-actions > button > svg {
@@ -383,5 +387,206 @@
 
   .premium-home--v2 .welcome-hero__visual > img {
     transform: translate(8px, 2px) scale(1.44) !important;
+  }
+}
+
+/* Help center: one calm path from automation status to action and data flow. */
+.reference-profile-modal--support {
+  width: min(100%, 560px);
+  gap: 10px;
+}
+
+.reference-support-section {
+  display: grid;
+  gap: 8px;
+  margin-top: 5px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(226, 191, 119, .15);
+}
+
+.reference-support-section__heading {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.reference-support-section__heading > span {
+  color: #f7e9c9;
+  font: 650 .69rem/1.2 Inter, sans-serif;
+  letter-spacing: .01em;
+}
+
+.reference-support-section__heading > small {
+  color: #8ca99d;
+  font: 500 .52rem/1.3 Inter, sans-serif;
+}
+
+.reference-support-status,
+.reference-support-actions,
+.reference-support-data__steps,
+.reference-support-faq {
+  display: grid;
+  gap: 7px;
+}
+
+.reference-support-status > div,
+.reference-support-actions > button {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 9px;
+  min-height: 54px;
+  padding: 8px 10px;
+  border: 1px solid rgba(226, 191, 119, .16);
+  border-radius: 16px;
+  color: #fff8ea;
+  background: rgba(0, 18, 15, .28);
+  text-align: left;
+}
+
+.reference-support-status svg,
+.reference-support-actions > button > svg:first-child {
+  color: #e2bf77;
+}
+
+.reference-support-status span,
+.reference-support-actions span {
+  display: grid;
+  min-width: 0;
+  gap: 2px;
+}
+
+.reference-support-status strong,
+.reference-support-actions strong,
+.reference-support-data strong,
+.reference-support-trust strong {
+  font: 650 .61rem/1.3 Inter, sans-serif;
+}
+
+.reference-support-status small,
+.reference-support-actions small,
+.reference-support-data small,
+.reference-support-trust small {
+  color: #91a89e;
+  font: 450 .51rem/1.45 Inter, sans-serif;
+}
+
+.reference-support-status em {
+  padding: 4px 7px;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 999px;
+  color: #c8d7d0;
+  font: 650 .46rem/1 Inter, sans-serif;
+  font-style: normal;
+}
+
+.reference-support-status em.is-ready {
+  border-color: rgba(226, 191, 119, .36);
+  color: #f2d79a;
+  background: rgba(226, 191, 119, .08);
+}
+
+.reference-support-actions > button {
+  border-color: rgba(226, 191, 119, .2);
+  background: linear-gradient(135deg, rgba(13, 87, 67, .5), rgba(0, 27, 22, .55));
+  cursor: pointer;
+  transition: border-color .18s ease, transform .18s ease, background .18s ease;
+}
+
+.reference-support-actions > button > svg:last-child {
+  color: #e2bf77;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .reference-support-actions > button:hover {
+    border-color: rgba(242, 215, 154, .42);
+    background: linear-gradient(135deg, rgba(17, 100, 76, .58), rgba(0, 35, 28, .62));
+    transform: translateY(-1px);
+  }
+}
+
+.reference-support-data__steps {
+  counter-reset: data-path;
+}
+
+.reference-support-data__steps article {
+  position: relative;
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 9px;
+  padding: 9px 10px;
+  border-left: 1px solid rgba(226, 191, 119, .24);
+  background: linear-gradient(90deg, rgba(226, 191, 119, .055), transparent 72%);
+}
+
+.reference-support-data__steps article b {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  border: 1px solid rgba(226, 191, 119, .28);
+  border-radius: 50%;
+  color: #e2bf77;
+  font: 650 .52rem/1 Inter, sans-serif;
+}
+
+.reference-support-data__steps article span,
+.reference-support-trust span {
+  display: grid;
+  gap: 3px;
+}
+
+.reference-support-trust {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 9px;
+  padding: 10px;
+  border: 1px solid rgba(226, 191, 119, .2);
+  border-radius: 16px;
+  color: #fff8ea;
+  background: rgba(226, 191, 119, .055);
+}
+
+.reference-support-trust > svg {
+  margin-top: 2px;
+  color: #e2bf77;
+}
+
+.reference-support-faq details {
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .14);
+  border-radius: 15px;
+  background: rgba(0, 18, 15, .24);
+}
+
+.reference-support-faq summary {
+  min-height: 44px;
+  padding: 12px 36px 10px 11px;
+  color: #f7e9c9;
+  font: 600 .58rem/1.35 Inter, sans-serif;
+  cursor: pointer;
+}
+
+.reference-support-faq details > p {
+  padding: 0 11px 12px;
+  color: #a0b5ac;
+  font-size: .53rem;
+}
+
+@media (max-width: 430px) {
+  .reference-profile-modal--support {
+    width: 100%;
+  }
+
+  .reference-support-section__heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .reference-support-status > div,
+  .reference-support-actions > button {
+    grid-template-columns: 27px minmax(0, 1fr) auto;
   }
 }

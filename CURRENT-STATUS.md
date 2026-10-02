@@ -1,6 +1,6 @@
 # Nur Islam Premium – aktueller Release-Status
 
-**Stand:** 17. August 2026  
+**Stand:** 29. August 2026
 **Repository:** `memetreza34-ux/nur-islam-premium-redesign`  
 **Release-Candidate-Branch:** `premium-design-finish`  
 **Produktstand mit lokalem Premium-Paket:** Merge `2f258619ee46c95b11a15a3826b89c18d35c53b0`
@@ -8,6 +8,18 @@
 > Dieses Dokument ist die **Single Source of Truth für den aktuellen Implementierungs- und Release-Status**. Langfristige Ideen und ältere Masterpläne dürfen nicht als Aussage über den heutigen Ist-Stand gelesen werden.
 
 ## 1. Aktuelles Ziel
+
+Release-Vorbereitung 03.09.2026: Interne Freigabe-, Endprüfungs- und Migrationshinweise sind aus der normalen Lernoberfläche entfernt. Quellen, Grenzen von Umschrift/Illustrationen, unterschiedliche Überlieferungsbewertungen und der Hinweis auf ein unvollständiges Impressum bleiben erhalten. Die Entfernung ist keine fachliche Freigabe. Details und verbleibende Blocker: [RELEASE-PREPARATION-2026-09-03.md](docs/RELEASE-PREPARATION-2026-09-03.md).
+
+Designstand 03.09.2026: „Die vier Rechtsschulen“ ist eine eigene Kategorie im Zwei-Spalten-Raster „Dein Grundlagenpfad“. Der doppelte Zugang unter „Weitere Funktionen“ entfällt. Kataloginhalte, Quellen und Rückkehr zur vorherigen Scrollposition bleiben erhalten.
+
+Bereinigung 03.09.2026: Wissensbibliothek, Die Gefährten, Frauen im Islam und Islam-Quiz sind aus der Lernnavigation entfernt. Bestehende lokale Speicherdaten bleiben unangetastet.
+
+Grundlagenpfad 03.09.2026: Auch Hadith-Sammlung, Hajj & Umrah, Sunnah im Alltag und Fehler & Reue stehen nun als eigene Kacheln im Zwei-Spalten-Raster (14 Kategorien). Die separate Liste „Weitere Funktionen“ entfällt. Alle vier Bereiche haben eine Einführung, eine einklappbare Kapitelübersicht und direkt lesbare Kapitel. Zwölf Praxiseinträge sind mit Bedeutung, Erklärung, Beispiel und konkretem Quellenlink erweitert. Hadith-Suche/Favoriten und Scroll-Rückkehr bleiben erhalten. Hajj-Formen und Sa’i-Zuordnung sind präzisiert, die unbelegte Fußregel beim Heimkommen entfernt. Quellen, Grenzen und offener fachlicher Prüfstatus: [FOUNDATION-SUPPLEMENTS.md](docs/FOUNDATION-SUPPLEMENTS.md).
+
+Designstand 28.08.2026: Qibla hat einen plastischen SVG-Kompass mit Smaragd-Zifferblatt, Goldrand und dezenter Lichtanimation, ohne Kaaba-Bitmap. Sensorgeführter Zeiger, nordorientierter Fallback und lesbare Hinweise bleiben erhalten. Gestaltung und Grenzen: [QIBLA-COMPASS.md](docs/QIBLA-COMPASS.md).
+
+Designstand 28.08.2026: Wudu hat eine einzelne lesbare Schrittkarte mit acht neuen 3D-Cartoonbildern, deutscher Aussprachehilfe und klarer Trennung zwischen arabischen Bezeichnungen und gesprochenem Wortlaut. Herkunft und Grenzen: [WUDU-VISUAL-GUIDE.md](docs/WUDU-VISUAL-GUIDE.md). Keine KI-Funktion ergänzt; fachliche Freigabe bleibt offen.
 
 Der Produktumfang ist nach dem bewusst ergänzten lokalen Premium-Komfortpaket wieder **eingefroren**. Bis zur Release-Freigabe werden keine weiteren großen Produktmodule ergänzt.
 
@@ -32,6 +44,12 @@ Arbeitsunterlagen:
 
 ### Produkt und UI
 
+- 02.09.2026: Neuer [Rechtsschulen-Katalog](docs/MADHHAB-CATALOGUE.md) unter Lernen mit vier Detailseiten und institutionellen Fach-/Startseitenlinks. Separat nachgeladen; bisherige Gebetsvergleiche unverändert. Religiöse Fachfreigabe bleibt offen.
+- 29.08.2026: Der Gebetskurs für Fajr, Dhuhr, Asr, Maghrib und Isha verwendet sieben dokumentierte 3D-Cartoon-Haltungsbilder. Die Schrittübersicht steht oberhalb der Abbildung; arabischer Wortlaut, deutsche Aussprachehilfe und Bedeutung sind sichtbar getrennt. Aussprachebilder und -texte sind Lernhilfen, keine fachliche Freigabe. Vollständiger Projektcheck und 103 Browser-Tests bestanden; 2 plattformbedingte Tests sind bewusst übersprungen.
+- 28.08.2026: Wudu-Einstieg mit eigener dokumentierter Waschungsillustration. Überschrift, Erklärung und Bild haben getrennte Bereiche; die gemeinsame Einführung der Ratgeber bricht lange Überschriften nicht mehr mitten im Wort um. Schritte, Quellenhinweise und lokaler Fortschritt bleiben unverändert.
+- 28.08.2026: Lernseiten-Einstieg mit dokumentierter 3D-Gebetsteppich-Illustration statt altem Mihrab-Motiv. Getrennte Bild-/Titelbereiche, vollbreiter Beschreibungstext und Fortschritt; Kurs und Schnellzugriffe unverändert. Das alte Bild bleibt ausschließlich für andere bestehende Einsatzorte erhalten.
+- 27.08.2026: Fünf dokumentierte Gebetslandschaften auf Start- und Gebetsseite, passend zur aktuellen Tagesphase in der Standort-Zeitzone; Gebetsname, Uhrzeit und Fortschrittsbogen bleiben auf das nächste Pflichtgebet bezogen. Details: [Gebetslandschaften](./docs/PRAYER-LANDSCAPES.md). Keine KI-/Assistentenfunktion hinzugefügt.
+
 - Mobile-first PWA mit Dark- und Light-Theme.
 - Fünf Hauptbereiche plus zahlreiche Sekundärscreens.
 - Premium-Designsystem in Emerald/Gold/Cream.
@@ -41,6 +59,8 @@ Arbeitsunterlagen:
 
 ### Quran
 
+- 28.08.2026: „Ayah des Tages“ verwendet dieselbe helle Karten- und Bildgestaltung wie „Ayah im Fokus“ auf Start. Die frühere separate Moschee-Dekoration ist dort entfernt; Vers, Bedeutung, Quelle und Detailnavigation bleiben unverändert.
+- 28.08.2026: Offener Lesefortschrittsbogen ohne Außenkasten, dekorativer Landschaftshintergrund und 3D-Buchminiatur beim Verzeichnis. Bestehende Bilder unverändert wiederverwendet und im Herkunftsnachweis dokumentiert; Lesestand, Suche und Favoriten bleiben erhalten.
 - Alle 114 Suren mit arabischem Uthmani-Text sind lokal/offline gebündelt.
 - Die deutsche Übersetzung Bubenheim & Elyas wird surenweise online geladen und lokal gecacht.
 - Lesefortschritt, exakte Ayah-Navigation und Favoriten/Lesezeichen sind implementiert.
@@ -83,11 +103,9 @@ Premium-Daten verwenden einen getrennten `local_nur_*`-Namensraum. Das generisch
 
 **Noch nicht implementiert/aktiv:** echte Zahlung, Abo-Verlängerung und serverseitig bestätigtes Premium-Entitlement. Die Premium-Oberfläche ist daher momentan eine technisch testbare Produktfunktion und noch kein bezahltes Zugangsmodell.
 
-### Nur Assistent
+### Kein Assistent / keine generative KI-Funktion
 
-- kein frei generierendes religiöses LLM.
-- lokaler, quellengebundener Antwortmodus.
-- nicht unterstützte religiöse Fragen werden abgelehnt statt erfunden beantwortet.
+Seit 27.08.2026 ist der lokale Nur-Assistent auf Betreiberwunsch vollständig entfernt: keine Chatoberfläche, Antwortlogik oder Navigation. Der Fastenplan bleibt eine feste Kalender- und Erinnerungsfunktion. KI-generierte statische Illustrationen bleiben mit Herkunftsnachweis erhalten. Technische Entfernung ist keine rechtliche Freigabe. Details: `docs/ASSISTANT-REMOVAL.md`.
 
 ### PWA und Persistenz
 
@@ -124,6 +142,7 @@ Diese Angaben dürfen nicht erfunden werden. `NUR_RELEASE=true npm run check` mu
 Die Legal-Copy wurde zusätzlich gehärtet:
 
 - keine pauschale Behauptung zum deutschen Urheberrecht bei KI-generierten Bildern;
+- die sechzehn neu generierten Laufzeitbilder und die code-native SVG-Marke sind mit Prompt beziehungsweise Konstruktionsart, Werkzeug, Einsatzort und SHA-256 in [`docs/IMAGE-ASSET-PROVENANCE.md`](./docs/IMAGE-ASSET-PROVENANCE.md) dokumentiert; ein automatischer Check schützt den Nachweis vor stiller Abweichung;
 - technische Abrufbarkeit von Audio wird ausdrücklich nicht als Rechtefreigabe behandelt;
 - lokale Premium-Daten und ihre Cloud-Backup-Grenze werden beschrieben;
 - der aktuelle Stand sagt ausdrücklich, dass **noch keine Zahlung** entgegengenommen wird und die Texte vor Aktivierung eines Zahlungswegs erneut angepasst/geprüft werden müssen.
@@ -151,9 +170,9 @@ Die aktuelle Recherche ist in [`docs/AUDIO-RIGHTS-AUDIT.md`](./docs/AUDIO-RIGHTS
 
 **Islamic Network / Al Quran Cloud:** Die aktuell veröffentlichten Terms beschreiben die Einbindung von Rezitationen und erlauben nach ihrem Wortlaut auch die Einbindung in kommerzielle Produkte. Gleichzeitig verbleiben Copyrights bei den Rezitatoren und die Terms weisen darauf hin, dass eine Entfernung verlangt werden kann. Das ist eine dokumentierte Nutzungsgrundlage, wird aber nicht als unbeschränkte eigene Rechtefreigabe behandelt.
 
-**Hisn al-Muslim:** Für die verwendeten Audioaufnahmen wurde bei der aktuellen öffentlichen Prüfung keine eindeutige Weiterverwendungs-/Einbettungslizenz gefunden. Dieser Teil bleibt offen.
+**Hisn al-Muslim:** Für die Audioaufnahmen wurde keine eindeutige Weiterverwendungs-/Einbettungslizenz gefunden. Die Aufrufe wurden deshalb für Version 1 aus Produktcode, Datenschutzangaben und CSP entfernt. Die Gebetsformeln bleiben mit Arabisch, deutscher Aussprachehilfe, Bedeutung und Quellen sichtbar.
 
-Vor Release muss die konkrete Audio-Nutzung final rechtlich bestätigt **oder** die jeweils unsichere Audiofunktion deaktiviert/entfernt werden.
+Für Version 1 ist nur Quran-Audio über Islamic Network aktiv. Vor späteren Veröffentlichungen müssen die dann aktuellen Bedingungen erneut geprüft werden.
 
 ### P0 – reale Geräte
 
@@ -239,3 +258,10 @@ V1 ist erst fertig, wenn alle relevanten Aussagen belegt sind:
 - kein als „fertig“ markierter Punkt beruht nur auf einer Annahme.
 
 Bis dahin ist `premium-design-finish` ein **fortgeschrittener Release Candidate**, aber kein freigegebener öffentlicher Produktionsrelease.
+# 29.08.2026 – Gebetskurs visuell und sprachlich überarbeitet
+
+- Sieben zusammengehörige 3D-Cartoonbilder ersetzen die kleinen Haltungszeichen im Gebetskurs.
+- Fajr, Dhuhr, Asr, Maghrib und Isha behalten ihre korrekten Rakʿah-Abläufe und erhalten passende Tageszeitbilder.
+- Die Schrittauswahl steht vor dem Bild; Arabisch, deutsche Aussprachehilfe und Bedeutung sind klar getrennt.
+- Die Aussprachehilfe ist ausdrücklich eine Näherung. Aufnahmen und fachliche Prüfung bleiben für korrektes Lernen wichtig.
+- Bildherkunft, Prompts, Quelldateien und Prüfsummen sind dokumentiert; eine religiöse oder rechtliche Freigabe wird nicht behauptet.

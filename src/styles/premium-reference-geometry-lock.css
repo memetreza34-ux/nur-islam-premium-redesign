@@ -5,11 +5,8 @@
    reference artwork on its approved fit/anchor even when older layers declare
    local overrides. */
 
-html:not([data-theme='light']) :where(
-  .reference-account-screen,
-  .reference-notes-screen,
-  .reference-assistant-screen
-) {
+html:not([data-theme='light']) :where(.reference-account-screen,
+  .reference-notes-screen) {
   --utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99));
   --utility-surface-soft: rgba(7, 55, 43, .82);
   --utility-border: rgba(226, 191, 119, .15);
@@ -24,12 +21,6 @@ html:not([data-theme='light']) :where(
     radial-gradient(circle at 8% 18%, rgba(226, 191, 119, .14), transparent 10rem),
     radial-gradient(circle at 100% 100%, rgba(13, 87, 67, .13), transparent 12rem),
     linear-gradient(145deg, #0d5743, #07372b 60%, #00120f) !important;
-}
-
-.reference-assistant-greeting {
-  background:
-    radial-gradient(circle at 14% 50%, rgba(226, 191, 119, .12), transparent 7rem),
-    linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .98)) !important;
 }
 
 .app-shell--detail .reference-screen-header {
@@ -70,14 +61,12 @@ html:not([data-theme='light']) :where(
   .reference-standby-stage
 ) { border-radius: 42px !important; }
 
-:where(
-  .glass-card,
+:where(.glass-card,
   .journey-card,
   .quick-card,
   .continue-card--v2,
   .verse-card,
   .hadith-card,
-  .ai-preview,
   .recommendation-card,
   .prayer-time-row,
   .calendar-event-card,
@@ -99,7 +88,6 @@ html:not([data-theme='light']) :where(
   .reference-account-security,
   .reference-notes-storage,
   .reference-note-editor,
-  .reference-assistant-greeting,
   .reference-quiz-card,
   .reference-quiz-result,
   .reference-zakat-calculator,
@@ -117,11 +105,9 @@ html:not([data-theme='light']) :where(
   .reference-learning-plan-modal,
   .calendar-modal,
   .reference-mosque-detail-modal,
-  .reference-prayer-course-complete > section
-) { border-radius: 28px !important; }
+  .reference-prayer-course-complete > section) { border-radius: 28px !important; }
 
-:where(
-  .icon-button,
+:where(.icon-button,
   .play-button,
   .gold-button,
   .reference-inline-button,
@@ -143,7 +129,6 @@ html:not([data-theme='light']) :where(
   .reference-install-prompt__close,
   .reference-install-prompt__action,
   .reference-input-search,
-  .reference-assistant-input,
   .reference-profile-logout,
   .reference-profile-modal__icon,
   .reference-choice,
@@ -160,10 +145,6 @@ html:not([data-theme='light']) :where(
   .reference-note-editor__heading > button,
   .reference-note-editor > input,
   .reference-note-editor > textarea,
-  .reference-assistant-suggestions button,
-  .reference-assistant-safety,
-  .reference-assistant-info-list > span,
-  .reference-assistant-input > button[type='submit'],
   .reference-onboarding__topbar > button,
   .reference-onboarding__permissions > button,
   .reference-onboarding__back,
@@ -172,27 +153,15 @@ html:not([data-theme='light']) :where(
   .reference-legacy-search,
   .reference-fasting-reminder-settings input,
   .reference-zakat-calculator input,
-  .toast
-) { border-radius: 18px !important; }
+  .toast) { border-radius: 18px !important; }
 
-:where(
-  .reference-profile-row__icon,
+:where(.reference-profile-row__icon,
   .reference-notes-storage > svg:first-child,
-  .reference-assistant-suggestions button > span,
-  .reference-chat-message__mark,
-  .reference-chat-message__source,
   .reference-onboarding__visual-icon,
-  .reference-onboarding__permissions > button > span:first-child
-) { border-radius: 13px !important; }
+  .reference-onboarding__permissions > button > span:first-child) { border-radius: 13px !important; }
 
-.reference-chat-message--assistant { border-radius: 18px 18px 18px 6px !important; }
-.reference-chat-message--user { border-radius: 18px 18px 6px 18px !important; }
-
-:where(
-  .reference-account-tabs > button.is-active,
-  .reference-notes-storage > button,
-  .reference-assistant-input > button[type='submit']
-) {
+:where(.reference-account-tabs > button.is-active,
+  .reference-notes-storage > button) {
   border-color: rgba(242, 215, 154, .24) !important;
   color: #001b16 !important;
   background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
@@ -231,12 +200,16 @@ html:not([data-theme='light']) :where(
 }
 
 :where(
-  .reference-splash__mosque > img,
-  .premium-home--v2 .welcome-hero__visual > img,
-  .reference-mosque-hero > .premium-image > img
+  .premium-home--v2 .welcome-hero__visual > img
 ) {
   object-fit: contain !important;
   object-position: right bottom !important;
+}
+:where(
+  .reference-splash__mosque-image > img
+) {
+  object-fit: contain !important;
+  object-position: center bottom !important;
 }
 :where(
   .reference-quran-continue__book > img,
@@ -245,16 +218,13 @@ html:not([data-theme='light']) :where(
   object-fit: contain !important;
   object-position: center bottom !important;
 }
-:where(
-  .reference-splash__mark > img,
+:where(.reference-splash__mark > img,
   .reference-system-error__logo > img,
   .reference-dhikr-counter__tasbih > img,
   .reference-qibla-stage__compass > img,
   .brand-lockup__mark > img,
-  .ai-preview__mark > img,
   .reference-profile-greeting__logo > img,
-  .reference-install-prompt__logo > img
-) {
+  .reference-install-prompt__logo > img) {
   object-fit: contain !important;
   object-position: center !important;
 }
@@ -284,42 +254,45 @@ html:not([data-theme='light']) :where(
 
 
 
-html:not([data-theme='light']) .reference-reader-verse {
-  border-color: rgba(141, 109, 57, .3) !important;
-  color: #17382e !important;
-  background:
-    radial-gradient(circle at 88% 4%, rgba(255, 255, 255, .5), transparent 10rem),
-    linear-gradient(145deg, #fff8ea 0%, #f3e6cf 58%, #ead4ad 100%) !important;
-  box-shadow: 0 16px 34px rgba(0, 0, 0, .24), inset 0 1px 0 rgba(255, 255, 255, .72) !important;
+/* Quran reading surface: Arabic, pronunciation and meaning share one calm card. */
+html:not([data-theme='light']) .reference-reader-screen--dynamic .reference-reader-verse {
+  overflow: hidden;
+  gap: 0 !important;
+  padding: 0 !important;
+  border-color: rgba(226, 191, 119, .2) !important;
+  color: #f5efe3 !important;
+  background: radial-gradient(circle at 92% 0%, rgba(214, 168, 76, .09), transparent 13rem), linear-gradient(145deg, #0b382c, #06251e 58%, #041b16) !important;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, .24), inset 3px 0 0 rgba(214, 168, 76, .42) !important;
+  transform: none !important;
 }
 html:not([data-theme='light']) .reference-reader-screen--dynamic .reference-reader-verse.is-active {
-  border-color: rgba(141, 109, 57, .58) !important;
-  background:
-    radial-gradient(circle at 88% 4%, rgba(255, 255, 255, .7), transparent 10rem),
-    linear-gradient(145deg, #fffaf0 0%, #f6ead5 62%, #edd9b5 100%) !important;
-  box-shadow: 0 18px 38px rgba(0, 0, 0, .27), 0 0 0 1px rgba(226, 191, 119, .1), inset 0 1px 0 rgba(255, 255, 255, .78) !important;
+  border-color: rgba(230, 190, 108, .5) !important;
+  background: radial-gradient(circle at 90% 0%, rgba(214, 168, 76, .13), transparent 14rem), linear-gradient(145deg, #0d4032, #072a21 60%, #051e18) !important;
+  box-shadow: 0 20px 46px rgba(0, 0, 0, .3), inset 3px 0 0 #d6a84c !important;
 }
-html:not([data-theme='light']) .reference-reader-verse header > span {
-  border-color: rgba(107, 78, 31, .22) !important;
-  color: #8d6d39 !important;
-  background: rgba(141, 109, 57, .075) !important;
+.reference-reader-screen--dynamic .reference-reader-verse > header { min-height: 50px; padding: 9px 14px 8px 16px; border-bottom: 1px solid rgba(226, 191, 119, .1); }
+html:not([data-theme='light']) .reference-reader-verse header > span { border-color: rgba(226, 191, 119, .24) !important; color: #ebc66f !important; background: rgba(214, 168, 76, .08) !important; }
+html:not([data-theme='light']) .reference-reader-verse header button { color: rgba(226, 235, 229, .56) !important; }
+html:not([data-theme='light']) .reference-reader-verse header button.is-saved { color: #ebc66f !important; }
+html:not([data-theme='light']) .reference-reader-verse > .reference-reader-arabic { margin: 0 !important; padding: 19px 18px 21px !important; color: #fff9ee !important; line-height: 2.05 !important; text-shadow: 0 5px 18px rgba(0, 0, 0, .2) !important; }
+.reference-reader-verse__reading { display: grid; border-top: 1px solid rgba(226, 191, 119, .12); }
+.reference-reader-verse__reading > section { display: grid; gap: 6px; padding: 13px 18px 14px; }
+.reference-reader-verse__reading > section + section { border-top: 1px solid rgba(226, 191, 119, .09); }
+.reference-reader-verse__reading small { color: #d6a84c; font-size: .48rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.reference-reader-verse__reading p { margin: 0; }
+.reference-reader-pronunciation { background: rgba(214, 168, 76, .055); }
+.reference-reader-pronunciation p { color: #f0dba9; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-weight: 600; line-height: 1.45; }
+.reference-reader-translation p { color: rgba(235, 239, 234, .78); font-size: .72rem; line-height: 1.65; }
+.reference-reader-verse__reading .is-unavailable p { color: rgba(205, 216, 209, .5); font-family: inherit; font-size: .64rem; font-style: italic; font-weight: 400; }
+.reference-reader-screen--dynamic .reference-reader-verse > footer { min-height: 44px; padding: 8px 16px 9px; border-top: 1px solid rgba(226, 191, 119, .1); }
+html:not([data-theme='light']) .reference-reader-verse footer,
+html:not([data-theme='light']) .reference-reader-verse footer button { color: rgba(226, 191, 119, .7) !important; }
+[data-theme='light'] .reference-reader-pronunciation { background: rgba(141, 109, 57, .05); }
+[data-theme='light'] .reference-reader-pronunciation p { color: #75541f; }
+[data-theme='light'] .reference-reader-translation p { color: rgba(25, 55, 45, .78); }
+@media (max-width: 370px) {
+  .reference-reader-verse__reading > section { padding-inline: 15px; }
 }
-html:not([data-theme='light']) .reference-reader-verse header button { color: rgba(39, 67, 56, .68) !important; }
-html:not([data-theme='light']) .reference-reader-verse header button.is-saved { color: #8d6d39 !important; }
-html:not([data-theme='light']) .reference-reader-verse > p {
-  color: #102d24 !important;
-  text-shadow: 0 5px 15px rgba(121, 87, 35, .065) !important;
-}
-html:not([data-theme='light']) .reference-reader-verse blockquote {
-  padding: 12px 13px !important;
-  border: 1px solid rgba(93, 72, 39, .1) !important;
-  border-radius: 18px !important;
-  color: rgba(33, 58, 49, .82) !important;
-  background: rgba(255, 255, 255, .28) !important;
-}
-html:not([data-theme='light']) .reference-reader-screen--dynamic .reference-reader-verse blockquote small { color: #8d6d39 !important; }
-html:not([data-theme='light']) .reference-reader-verse footer { color: #7d5c29 !important; }
-html:not([data-theme='light']) .reference-reader-verse footer button { color: #75541f !important; }
 
 /* Pills, circular progress controls, avatars and round ornaments deliberately
    keep their own 999px/50% geometry and are not part of this lock. */

@@ -95,9 +95,8 @@
   }
 
   .brand-lockup__mark > img,
-  .reference-splash__mark > img,
-  .reference-onboarding__brand > .premium-image > img,
-  .reference-assistant-greeting > .premium-image > img {
+.reference-splash__mark > img,
+.reference-onboarding__brand > .premium-image > img {
     filter: drop-shadow(0 8px 12px rgba(0, 0, 0, .28)) !important;
   }
 
@@ -111,9 +110,8 @@
 /* Graceful rendering where backdrop-filter is unavailable. */
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
   .bottom-nav,
-  .app-shell--detail .reference-screen-header,
-  .reference-assistant-input,
-  .glass-card {
+.app-shell--detail .reference-screen-header,
+.glass-card {
     background-color: rgba(0, 27, 22, .97) !important;
   }
 
@@ -127,14 +125,13 @@
 /* Users who ask the OS for less transparency get the same hierarchy without glass. */
 @media (prefers-reduced-transparency: reduce) {
   .bottom-nav,
-  .app-shell--detail .reference-screen-header,
-  .glass-card,
-  .reference-assistant-input,
-  .reference-profile-modal,
-  .reference-dua-modal,
-  .reference-name-modal,
-  .reference-mosque-detail-modal,
-  .calendar-modal {
+.app-shell--detail .reference-screen-header,
+.glass-card,
+.reference-profile-modal,
+.reference-dua-modal,
+.reference-name-modal,
+.reference-mosque-detail-modal,
+.calendar-modal {
     -webkit-backdrop-filter: none !important;
     backdrop-filter: none !important;
   }

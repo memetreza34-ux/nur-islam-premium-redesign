@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { KAABA, calculateBearing, calculateDistance } from '../screens/QiblaScreen';
+import { KAABA, calculateBearing, calculateDistance, shortestAngleDelta } from '../screens/QiblaScreen';
 
 // A wrong qibla points people the wrong way in prayer, so this is checked two
 // independent ways: against published bearings for well-known cities, and
@@ -15,6 +15,12 @@ const CITIES = {
   capeTown: { latitude: -33.9249, longitude: 18.4241 },
   istanbul: { latitude: 41.0082, longitude: 28.9784 },
 };
+
+describe('compass motion', () => {
+  it.each([[359, 1, 2], [1, 359, -2], [136, 137, 1], [137, 136, -1], [0, 180, -180]])('takes the shortest turn from %s° to %s°', (from, to, delta) => {
+    expect(shortestAngleDelta(from, to)).toBe(delta);
+  });
+});
 
 describe('qibla bearing', () => {
   it('uses the Kaaba as its target', () => {

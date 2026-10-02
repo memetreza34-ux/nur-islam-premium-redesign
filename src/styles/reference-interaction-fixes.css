@@ -12,7 +12,7 @@
   appearance: none;
 }
 
-.reference-daily-card-button .card-title-row > span:last-child {
+.reference-daily-card-button .card-title-row > span + span {
   display: grid;
   width: 32px;
   height: 32px;

@@ -1,6 +1,6 @@
 # Nur Islam – Audio-/Quellenrechte Audit
 
-**Stand:** 17. August 2026  
+**Stand:** 3. September 2026
 **Zweck:** Arbeitsnachweis für die spätere qualifizierte Rechtsprüfung. Dies ist keine Rechtsberatung und keine pauschale Rechtefreigabe.
 
 ## 1. Islamic Network / Al Quran Cloud – Quran-Rezitation
@@ -27,7 +27,7 @@ Das ist eine deutlich bessere dokumentierte Nutzungsgrundlage als eine bloß tec
 
 Für den geplanten 0,99-€-Premium-Pfad sollte Quran-Audio nicht künstlich hinter die Premium-Paywall verschoben werden. Der religiöse Kern einschließlich Quran bleibt unabhängig davon frei; die Premium-Funktionen sind Komfort-/Personalisierungsfunktionen.
 
-Vor öffentlichem kommerziellem Release sollte eine qualifizierte Rechtsprüfung bestätigen, ob die konkrete Einbindung unter den dann aktuellen Terms ausreichend ist. Bei Unsicherheit kann die Audiofunktion ohne Verlust der übrigen App deaktiviert werden.
+Für Version 1 bleibt ausschließlich dieses Quran-Audio aktiv. Die App streamt es erst nach einem bewussten Antippen, nennt den Rezitator und führt Al Quran Cloud in Datenschutz und Lizenzen auf. Die Bedingungen müssen bei späteren Veröffentlichungen erneut geprüft werden.
 
 ## 2. Hisn al-Muslim – Gebetsformel-/Dhikr-Audio
 
@@ -44,22 +44,19 @@ Die Website stellt Inhalte und eine Entwickler-API bereit. In den bei dieser Pr�
 
 Dieser Punkt bleibt offen. Die technische Abrufbarkeit und die Existenz einer API werden nicht als Audio-Rechtefreigabe behandelt.
 
-Vor öffentlichem Release ist daher eine der folgenden Lösungen nötig:
-
-1. belastbare Audio-Nutzungserlaubnis/Lizenz dokumentieren; oder
-2. die betroffenen Hisn-al-Muslim-Audioaufrufe für den Release deaktivieren/entfernen.
+Für Version 1 wurde deshalb der sichere Weg umgesetzt: Alle Hisn-al-Muslim-Audioaufrufe und die zugehörigen Anbieterhinweise wurden aus dem ausgelieferten Produkt entfernt. Arabischer Wortlaut, deutsche Aussprachehilfe, Bedeutung und Belegstellen bleiben erhalten.
 
 Die Text-/Hadith-/Dua-Inhalte sind separat vom konkreten Audio-Recht zu betrachten.
 
 ## 3. Release-Entscheidung
 
-Aktueller sicherer Release-Pfad:
+Umgesetzter Release-Pfad:
 
 - Islamic-Network-/Al-Quran-Cloud-Quelle und aktuelle Terms dokumentiert halten;
 - Quran-Audio nicht als exklusives Premium-Gut vermarkten;
-- Hisn-al-Muslim-Audio bis zu eindeutiger Rechteklärung als offenen P0-Punkt behandeln;
+- kein Hisn-al-Muslim-Audio ausliefern, solange keine eindeutige Erlaubnis dokumentiert ist;
 - vor Aktivierung einer Zahlung die dann aktuellen Terms erneut prüfen;
-- bei unklarer Rechtslage Audio abschalten statt den gesamten Release zu blockieren oder eine Rechtefreigabe zu behaupten.
+- bei unklarer Rechtslage Audio abgeschaltet lassen statt eine Rechtefreigabe zu behaupten.
 
 ## 4. Was dieses Audit nicht behauptet
 

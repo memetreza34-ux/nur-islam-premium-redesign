@@ -2,15 +2,12 @@
   --compact-touch-target: 44px;
 }
 
-:where(
-  .reference-quran-favorite,
+:where(.reference-quran-favorite,
   .reference-name-state,
   .reference-name-list--complete .reference-name-heart,
   .calendar-month-nav > button,
   .calendar-entry-row > button,
   .favorite-button,
-  .reference-qibla-location button,
-  .reference-assistant-input button,
   .reference-install-prompt__close,
   .reference-prayer-reminder-banner__close,
   .reference-prayer-complete-replay,
@@ -44,18 +41,15 @@
   justify-content: center;
 }
 
-:where(
-  .reference-quran-favorite,
+:where(.reference-quran-favorite,
   .reference-name-state,
   .reference-name-list--complete .reference-name-heart,
   .calendar-month-nav > button,
   .calendar-entry-row > button,
   .favorite-button,
   .reference-qibla-location button,
-  .reference-assistant-input button,
   .reference-install-prompt__close,
-  .reference-prayer-reminder-banner__close
-) {
+  .reference-prayer-reminder-banner__close) {
   border-radius: 13px;
 }
 
@@ -76,71 +70,58 @@
   grid-template-columns: var(--compact-touch-target) minmax(0, 1fr) var(--compact-touch-target) !important;
 }
 
-.reference-assistant-input {
-  grid-template-columns: minmax(0, 1fr) var(--compact-touch-target) var(--compact-touch-target) !important;
-}
-
 .reference-prayer-reminder-banner {
   grid-template-columns: 44px minmax(0, 1fr) auto var(--compact-touch-target) !important;
 }
 
 /* Preserve the visual icon size while enlarging the actual hit area. */
-:where(
-  .reference-quran-favorite,
+:where(.reference-quran-favorite,
   .reference-name-state,
   .reference-name-list--complete .reference-name-heart,
   .calendar-month-nav > button,
   .calendar-entry-row > button,
   .favorite-button,
   .reference-qibla-location button,
-  .reference-assistant-input button,
   .reference-install-prompt__close,
-  .reference-prayer-reminder-banner__close
-) > svg {
+  .reference-prayer-reminder-banner__close) > svg {
   width: 18px;
   height: 18px;
 }
 
 @media (hover: hover) {
-  :where(
-    .reference-quran-favorite,
-    .reference-name-state,
-    .reference-name-list--complete .reference-name-heart,
-    .calendar-month-nav > button,
-    .calendar-entry-row > button,
-    .favorite-button,
-    .reference-qibla-location button,
-    .reference-assistant-input button,
-    .reference-install-prompt__close,
-    .reference-install-prompt__action,
-    .reference-prayer-reminder-banner__close,
-    .reference-prayer-reminder-banner__open,
-    .reference-dua-card__top button,
-    .reference-dua-card footer button,
-    .reference-nearby-label button
-  ):hover {
+  :where(.reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-install-prompt__close,
+  .reference-install-prompt__action,
+  .reference-prayer-reminder-banner__close,
+  .reference-prayer-reminder-banner__open,
+  .reference-dua-card__top button,
+  .reference-dua-card footer button,
+  .reference-nearby-label button):hover {
     border-color: rgba(232, 199, 122, .4);
     background: rgba(214, 175, 55, .08);
   }}
 
 @media (hover: none) {
-  :where(
-    .reference-quran-favorite,
-    .reference-name-state,
-    .reference-name-list--complete .reference-name-heart,
-    .calendar-month-nav > button,
-    .calendar-entry-row > button,
-    .favorite-button,
-    .reference-qibla-location button,
-    .reference-assistant-input button,
-    .reference-install-prompt__close,
-    .reference-install-prompt__action,
-    .reference-prayer-reminder-banner__close,
-    .reference-prayer-reminder-banner__open,
-    .reference-dua-card__top button,
-    .reference-dua-card footer button,
-    .reference-nearby-label button
-  ):active {
+  :where(.reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-install-prompt__close,
+  .reference-install-prompt__action,
+  .reference-prayer-reminder-banner__close,
+  .reference-prayer-reminder-banner__open,
+  .reference-dua-card__top button,
+  .reference-dua-card footer button,
+  .reference-nearby-label button):active {
     transform: scale(.97);
   }}
 
@@ -152,31 +133,24 @@
     column-gap: 6px;
   }
 
-  .reference-assistant-input {
-    gap: 5px;
-  }
-
   .reference-prayer-reminder-banner {
     gap: 7px !important;
   }}
 
 @media (prefers-reduced-motion: reduce) {
-  :where(
-    .reference-quran-favorite,
-    .reference-name-state,
-    .reference-name-list--complete .reference-name-heart,
-    .calendar-month-nav > button,
-    .calendar-entry-row > button,
-    .favorite-button,
-    .reference-qibla-location button,
-    .reference-assistant-input button,
-    .reference-install-prompt__close,
-    .reference-install-prompt__action,
-    .reference-prayer-reminder-banner__close,
-    .reference-prayer-reminder-banner__open,
-    .reference-dua-card__top button,
-    .reference-dua-card footer button,
-    .reference-nearby-label button
-  ) {
+  :where(.reference-quran-favorite,
+  .reference-name-state,
+  .reference-name-list--complete .reference-name-heart,
+  .calendar-month-nav > button,
+  .calendar-entry-row > button,
+  .favorite-button,
+  .reference-qibla-location button,
+  .reference-install-prompt__close,
+  .reference-install-prompt__action,
+  .reference-prayer-reminder-banner__close,
+  .reference-prayer-reminder-banner__open,
+  .reference-dua-card__top button,
+  .reference-dua-card footer button,
+  .reference-nearby-label button) {
     transition: none !important;
   }}

@@ -29,7 +29,7 @@ const groups = [
     scope: '.reference-services-grid > button',
     startIndex: 34,
     features: [
-      ['fasting', 'Fasten-Assistent'],
+      ['fasting', 'Fastenplan'],
       ['ummah', 'Ummah-Übersicht'],
       ['places', 'Islamische Orte'],
       ['jumuah', 'Jumuah'],

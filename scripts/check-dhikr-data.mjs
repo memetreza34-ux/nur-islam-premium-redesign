@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 const root = process.cwd();
 const dataSource = await readFile(resolve(root, 'src/data/dhikrData.ts'), 'utf8');
 const screenSource = await readFile(resolve(root, 'src/screens/DhikrScreen.tsx'), 'utf8');
+const dailyStateSource = await readFile(resolve(root, 'src/services/dhikrDailyState.ts'), 'utf8');
 const stylesSource = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const hardeningStyles = await readFile(resolve(root, 'src/styles/functional-hardening.css'), 'utf8');
 
@@ -26,13 +27,10 @@ if (targetValues.length < 9 || targetValues.some((value) => !Number.isInteger(va
 }
 
 for (const required of [
-  'nur_dhikr_daily_v2',
+  'readDhikrDailyState',
   'nur_dhikr_active_routine',
   'todayKey()',
   'DHIKR_ROUTINES',
-  'DHIKR_TARGET_BY_KEY',
-  'DHIKR_TARGET_BY_KEY.has(key)',
-  'Math.min(DHIKR_TARGET_BY_KEY.get(key)',
   'statsOpen',
   'setStatsOpen(true)',
   'reference-dhikr-stats-modal',
@@ -41,6 +39,17 @@ for (const required of [
   'reference-dhikr-source',
 ]) {
   if (!screenSource.includes(required)) throw new Error(`Dhikr screen integration is missing: ${required}`);
+}
+
+for (const required of [
+  'DHIKR_ROUTINES.flatMap',
+  "localStorage.getItem('nur_dhikr_daily_v2')",
+  'parsed.date !== day',
+  'targetByKey.has(key)',
+  'Number.isFinite(value) && value >= 0',
+  'Math.min(targetByKey.get(key) ?? 0, Math.floor(value as number))',
+]) {
+  if (!dailyStateSource.includes(required)) throw new Error(`Dhikr daily-state validation is missing: ${required}`);
 }
 
 if (screenSource.includes("onClick={() => flash(`${totalToday} Wiederholungen heute`)}")) {

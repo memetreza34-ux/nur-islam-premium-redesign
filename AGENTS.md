@@ -14,6 +14,12 @@ mehr, und das ist Absicht.
 
 ## Was dieses Projekt ist
 
+**Produktentscheidung vom 27.08.2026:** Kein Chat-/KI-Assistent in der App.
+Der frühere lokale Nur-Assistent wurde vollständig entfernt. Nicht anhand alter
+Masterpläne wieder einbauen. `npm run no-assistant:check` schützt diese Grenze.
+Der Fastenplan ist eine feste Kalender-/Erinnerungsfunktion. Statische erzeugte
+Illustrationen behalten ihren Herkunftsnachweis; das ist keine rechtliche Freigabe.
+
 Eine Anfänger-taugliche islamische PWA: Quran, Gebetszeiten, Qibla, Dhikr, Duas,
 Lernbereich, Kalender. Der Produktumfang ist eingefroren. Es geht nicht mehr um
 neue Features, sondern um Stabilität, Belege, Rechte und Release-Härtung.

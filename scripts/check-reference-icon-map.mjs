@@ -12,7 +12,6 @@ const [
   prayer,
   calendar,
   duas,
-  assistant,
   more,
   mosque,
   learn,
@@ -29,7 +28,6 @@ const [
   read('src/screens/PrayerScreen.tsx'),
   read('src/screens/CalendarScreen.tsx'),
   read('src/screens/DuasScreen.tsx'),
-  read('src/screens/AssistantScreen.tsx'),
   read('src/screens/MoreScreen.tsx'),
   read('src/screens/MosqueScreen.tsx'),
   read('src/screens/LearnScreen.tsx'),
@@ -54,11 +52,12 @@ function featureObject(source, id) {
 }
 
 requireFragments(app, 'Primary navigation', [
-  "{ id: 'home', label: 'Start', icon: Home }",
-  "{ id: 'prayer', label: 'Gebet', icon: Clock3 }",
-  "{ id: 'quran', label: 'Quran', icon: BookOpen }",
-  "{ id: 'learn', label: 'Lernen', icon: GraduationCap }",
-  "{ id: 'profile', label: 'Mehr', icon: LayoutGrid }",
+  "{ id: 'home', label: 'Start' }",
+  "{ id: 'prayer', label: 'Gebet' }",
+  "{ id: 'quran', label: 'Quran' }",
+  "{ id: 'learn', label: 'Lernen' }",
+  "{ id: 'profile', label: 'Mehr' }",
+  '<NavigationIcon name={id} />',
   '<BellRing size={20} />',
   "onNavigate('prayer')",
   '<Menu size={20} />',
@@ -69,12 +68,10 @@ requireFragments(app, 'Primary navigation', [
 // structural churn. Their implementation is guarded below and must remain real
 // lucide-react components rather than custom SVG drawings or novelty AI glyphs.
 for (const [label, icon] of [
-  ['Quran lesen', 'NurQuranIcon'],
   ['Beten lernen', 'NurMihrabIcon'],
   ['99 Namen Allahs', 'NurRosetteIcon'],
   ['Islam Quiz', 'NurQuizIcon'],
   ['Duas', 'NurDuaIcon'],
-  ['Nur Assistent', 'NurAssistantIcon'],
 ]) {
   const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
   if (!pairing.test(app)) {
@@ -95,7 +92,6 @@ requireFragments(nurIcons, 'Lucide-backed Nur icons', [
   'return <Bookmark {...sharedProps(props)} />;',
   'return <Clock3 {...sharedProps(props)} />;',
   'return <CircleHelp {...sharedProps(props)} />;',
-  'return <MessageSquare {...sharedProps(props)} />;',
   'strokeWidth: 1.75',
 ]);
 
@@ -155,10 +151,6 @@ requireFragments(duas, 'Dua controls', [
   '<Filter size={17} />',
 ]);
 
-requireFragments(assistant, 'Assistant header', [
-  'aria-label="Informationen zum Quellenmodus"',
-  '<ShieldCheck size={20} />',
-]);
 
 requireFragments(more, 'More / Profile header', [
   'aria-label="Einstellungen"',
@@ -177,15 +169,14 @@ requireFragments(learn, 'Learning controls', [
   'aria-label="Lernplan öffnen"',
   '<Settings size={20} />',
   '<GraduationCap size={18} />',
-  '<Droplets size={22} />',
-  '<Compass size={22} />',
+  'wudu-washing-v1.webp" fallback={<Droplets />}',
+  'learn-salah-v3.webp" fallback={<BookOpen />}',
+  'home-qibla-illustrated-v1.webp" fallback={<Compass />}',
 ]);
 
 const legacyIconMap = {
   'hadith-library': 'Library',
-  knowledge: 'BookOpenCheck',
   prophets: 'ScrollText',
-  quiz: 'CircleHelp',
   hajj: 'Route',
   sunnah: 'Bookmark',
   sins: 'ShieldCheck',
@@ -220,11 +211,9 @@ for (const requirement of [
 }
 const importedLayers = [...styleIndex.matchAll(/@import '\.\/styles\/([^']+)';/g)]
   .map((match) => match[1]);
-if (importedLayers.at(-1) !== 'nur-design-system.css') {
-  throw new Error('The design system must remain the last stylesheet import.');
-}
-if (importedLayers.at(-2) !== 'premium-reference-geometry-lock.css') {
-  throw new Error('The final 1.75 Lucide lock must load directly before the design system.');
+const finalLayers = ['premium-reference-geometry-lock.css', 'nur-design-system.css', 'learn-library-redesign.css', 'overlay-navigation-clearance.css', 'legal-premium.css', 'about-premium.css', 'mosque-finder-hero.css'];
+if (JSON.stringify(importedLayers.slice(-finalLayers.length)) !== JSON.stringify(finalLayers)) {
+  throw new Error('Final icon geometry and scoped layer order must remain intact.');
 }
 
 console.log('Reference icon map verified: primary navigation and shortcut hubs use calm semantic Lucide icons, custom SVG primitives and generic AI novelty glyphs are blocked, and the final stylesheet enforces uniform 1.75 rounded strokes.');

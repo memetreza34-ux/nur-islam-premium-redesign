@@ -1,12 +1,8 @@
-/* Secondary-screen premium finish for parallel design work.
-   CSS-only: Dhikr, Duas, Names, Qibla, Mosque and Assistant. */
-
 .reference-dhikr-screen--complete,
 .reference-duas-screen--complete,
 .reference-names-screen--complete,
 .reference-qibla-screen,
-.reference-mosque-screen--live,
-.reference-assistant-screen {
+.reference-mosque-screen--live {
   --secondary-surface: linear-gradient(145deg, rgba(12, 56, 43, .92), rgba(3, 23, 18, .985));
   --secondary-border: rgba(232, 199, 122, .16);
   --secondary-border-strong: rgba(247, 226, 178, .33);
@@ -22,8 +18,7 @@
 .reference-duas-screen--complete .reference-screen-header,
 .reference-names-screen--complete .reference-screen-header,
 .reference-qibla-screen .reference-screen-header,
-.reference-mosque-screen--live .reference-screen-header,
-.reference-assistant-screen .reference-screen-header {
+.reference-mosque-screen--live .reference-screen-header {
   min-height: 58px;
   padding-block: 4px 7px;
 }
@@ -32,8 +27,7 @@
 .reference-duas-screen--complete .reference-screen-header .icon-button,
 .reference-names-screen--complete .reference-screen-header .icon-button,
 .reference-qibla-screen .reference-screen-header .icon-button,
-.reference-mosque-screen--live .reference-screen-header .icon-button,
-.reference-assistant-screen .reference-screen-header .icon-button {
+.reference-mosque-screen--live .reference-screen-header .icon-button {
   border-color: rgba(232, 199, 122, .14);
   background: rgba(4, 27, 21, .72);
 }
@@ -237,86 +231,13 @@
   box-shadow: 0 35px 90px rgba(0, 0, 0, .57), inset 0 1px 0 rgba(255, 255, 255, .042) !important;
 }
 
-/* Assistant */
-.reference-assistant-greeting {
-  min-height: 146px;
-  border-color: var(--secondary-border-strong) !important;
-  border-radius: 28px !important;
-  background:
-    radial-gradient(circle at 8% 12%, rgba(232, 199, 122, .13), transparent 10rem),
-    linear-gradient(145deg, #104938, #05291f 59%, #021510) !important;
-  box-shadow: var(--secondary-shadow-strong) !important;
-}
-
-.reference-assistant-greeting h2 {
-  letter-spacing: -.03em;
-}
-
-.reference-assistant-greeting p {
-  color: var(--secondary-muted) !important;
-  line-height: 1.56;
-}
-
-.reference-assistant-suggestions > div:last-child {
-  gap: 8px;
-}
-
-.reference-assistant-suggestions > div:last-child > button {
-  min-height: 72px;
-  border-color: rgba(232, 199, 122, .13) !important;
-  border-radius: 19px !important;
-  background: var(--secondary-surface) !important;
-  box-shadow: 0 13px 30px rgba(0, 0, 0, .17), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
-}
-
-.reference-chat-thread {
-  gap: 10px;
-}
-
-.reference-chat-message {
-  border-radius: 19px !important;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, .13);
-}
-
-.reference-chat-message--assistant {
-  border: 1px solid rgba(232, 199, 122, .1);
-  background: var(--secondary-surface) !important;
-}
-
-.reference-chat-message--user {
-  border-radius: 19px 19px 6px 19px !important;
-}
-
-.reference-assistant-safety {
-  border-color: rgba(96, 193, 127, .16) !important;
-  border-radius: 18px !important;
-}
-
-.reference-assistant-input {
-  min-height: 62px;
-  padding: 8px 8px 8px 14px !important;
-  border-color: rgba(247, 226, 178, .2) !important;
-  border-radius: 21px !important;
-  background: rgba(3, 25, 19, .97) !important;
-  box-shadow: 0 20px 52px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .03) !important;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-}
-
-.reference-assistant-info-modal {
-  border-color: rgba(247, 226, 178, .29) !important;
-  border-radius: 28px !important;
-  box-shadow: 0 35px 90px rgba(0, 0, 0, .57), inset 0 1px 0 rgba(255, 255, 255, .042) !important;
-}
-
 /* Hover polish */
 @media (hover: hover) and (pointer: fine) {
   .reference-dhikr-step-tabs > button:hover,
-  .reference-dhikr-category-grid > button:hover,
-  .reference-dua-card--complete:hover,
-  .reference-name-list--complete > article:hover,
-  .reference-mosque-list--live > button:hover,
-  .reference-assistant-suggestions > div:last-child > button:hover {
+.reference-dhikr-category-grid > button:hover,
+.reference-dua-card--complete:hover,
+.reference-name-list--complete > article:hover,
+.reference-mosque-list--live > button:hover {
     border-color: rgba(247, 226, 178, .29) !important;
     transform: translateY(-1px);
   }
@@ -327,8 +248,7 @@
 [data-theme='light'] .reference-duas-screen--complete,
 [data-theme='light'] .reference-names-screen--complete,
 [data-theme='light'] .reference-qibla-screen,
-[data-theme='light'] .reference-mosque-screen--live,
-[data-theme='light'] .reference-assistant-screen {
+[data-theme='light'] .reference-mosque-screen--live {
   --secondary-surface: linear-gradient(145deg, rgba(255, 254, 249, .99), rgba(244, 238, 223, .98));
   --secondary-border: rgba(117, 87, 37, .14);
   --secondary-border-strong: rgba(117, 87, 37, .24);
@@ -350,9 +270,7 @@
 [data-theme='light'] .reference-qibla-location,
 [data-theme='light'] .reference-qibla-calibration,
 [data-theme='light'] .reference-qibla-tip,
-[data-theme='light'] .reference-mosque-list--live > button,
-[data-theme='light'] .reference-assistant-suggestions > div:last-child > button,
-[data-theme='light'] .reference-chat-message--assistant {
+[data-theme='light'] .reference-mosque-list--live > button {
   color: #17382c;
   background: var(--secondary-surface) !important;
   box-shadow: var(--secondary-shadow) !important;
@@ -362,24 +280,18 @@
 [data-theme='light'] .reference-names-screen--complete .reference-input-search,
 [data-theme='light'] .reference-mosque-screen--live .reference-input-search,
 [data-theme='light'] .reference-dua-filter-tabs > button,
-[data-theme='light'] .reference-name-filter-tabs > button,
-[data-theme='light'] .reference-assistant-input {
+[data-theme='light'] .reference-name-filter-tabs > button {
   color: #29483d;
   background: rgba(255, 252, 243, .78) !important;
-}
-
-[data-theme='light'] .reference-assistant-greeting p {
-  color: rgba(57, 78, 67, .72) !important;
 }
 
 /* Mobile */
 @media (max-width: 390px) {
   .reference-dhikr-screen--complete,
-  .reference-duas-screen--complete,
-  .reference-names-screen--complete,
-  .reference-qibla-screen,
-  .reference-mosque-screen--live,
-  .reference-assistant-screen {
+.reference-duas-screen--complete,
+.reference-names-screen--complete,
+.reference-qibla-screen,
+.reference-mosque-screen--live {
     gap: 13px;
   }
 
@@ -389,9 +301,8 @@
   }
 
   .reference-duas-hero,
-  .reference-names-hero,
-  .reference-mosque-hero,
-  .reference-assistant-greeting {
+.reference-names-hero,
+.reference-mosque-hero {
     border-radius: 25px !important;
   }
 
@@ -409,19 +320,14 @@
 
   .reference-qibla-stage {
     min-height: 420px;
-  }
-
-  .reference-chat-message {
-    max-width: 94%;
   }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-dhikr-step-tabs > button,
-  .reference-dhikr-category-grid > button,
-  .reference-dua-card--complete,
-  .reference-name-list--complete > article,
-  .reference-mosque-list--live > button,
-  .reference-assistant-suggestions > div:last-child > button {
+.reference-dhikr-category-grid > button,
+.reference-dua-card--complete,
+.reference-name-list--complete > article,
+.reference-mosque-list--live > button {
     transition: none !important;
     transform: none !important;
   }}
