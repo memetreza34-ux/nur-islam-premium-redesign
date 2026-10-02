@@ -3,9 +3,9 @@ name: Premium redesign check
 on:
   workflow_dispatch:
   push:
-    branches: [premium-home-redesign, premium-design-finish, final-design-release-pass]
+    branches: [design/claude-design-system, 'codex/**']
   pull_request:
-    branches: [main, premium-home-redesign, premium-design-finish]
+    branches: [design/claude-design-system, main]
 
 permissions:
   contents: read
