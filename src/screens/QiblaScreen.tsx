@@ -7,12 +7,14 @@ import {
   MapPin,
   Navigation,
   Settings,
+  Smartphone,
   TriangleAlert,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { bootstrapSharedPrayerTimes, loadPrayerLocation, savePrayerLocation } from '../services/prayerTimesService';
 import { KAABA, calculateBearing, calculateDistance, getDirectionLabel, normalizeDegrees, shortestAngleDelta } from '../services/qiblaGeometry';
 import type { Coordinates } from '../services/qiblaGeometry';
+import type { CompassVisualState } from '../shared/QiblaCompass';
 export { KAABA, calculateBearing, calculateDistance, shortestAngleDelta } from '../services/qiblaGeometry';
 const QiblaCompass = lazy(() => import('../shared/QiblaCompass').then(module => ({ default: module.QiblaCompass })));
 
@@ -50,8 +52,10 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const [sensorStatus, setSensorStatus] = useState<SensorStatus>('idle');
   const [sensorAccuracy, setSensorAccuracy] = useState<number | null>(null);
   const [toast, setToast] = useState<string | null>(null);
+  const [pulse, setPulse] = useState(false);
   const sensorTimeoutRef = useRef<number | null>(null);
   const toastTimeoutRef = useRef<number | null>(null);
+  const pulseTimeoutRef = useRef<number | null>(null);
   const previousNeedleRotationRef = useRef<number | null>(null);
   const unwrappedNeedleRotationRef = useRef(0);
   const wasAlignedRef = useRef(false);
@@ -71,24 +75,49 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
   const displayedNeedleRotation = unwrappedNeedleRotationRef.current;
   const remainingTurn = heading === null ? null : shortestAngleDelta(heading, direction);
   const uncertain = sensorAccuracy !== null && (sensorAccuracy < 0 || sensorAccuracy > 15);
-  const aligned = remainingTurn !== null && Math.abs(remainingTurn) <= 5 && !uncertain;
-  const alignmentProgress = remainingTurn === null ? 0 : Math.max(0, Math.round((1 - Math.min(Math.abs(remainingTurn), 180) / 180) * 100));
-  const accuracyLabel = heading === null
-    ? 'Bereit'
+  const deviceIsFlat = tilt !== null && Math.hypot(tilt.beta, tilt.gamma) <= 10;
+  const tiltWarning = tilt !== null && !deviceIsFlat;
+  const error = sensorStatus === 'denied' || sensorStatus === 'unsupported';
+  const turnDegrees = remainingTurn === null ? null : Math.round(Math.abs(remainingTurn));
+  const turnSide = remainingTurn !== null && remainingTurn > 0 ? 'rechts' : 'links';
+  const aligned = remainingTurn !== null && Math.abs(remainingTurn) <= 2 && !uncertain && !tiltWarning;
+  const near = remainingTurn !== null && Math.abs(remainingTurn) > 2 && Math.abs(remainingTurn) <= 5 && !uncertain && !tiltWarning;
+  const compassState: CompassVisualState = error ? 'error' : uncertain || tiltWarning ? 'uncertain' : aligned ? 'aligned' : near ? 'near' : heading === null ? 'ready' : 'turn';
+  const guidanceTitle = error
+    ? 'Kompass nicht verfügbar'
     : uncertain
-      ? 'Prüfen'
+      ? 'Sensor ungenau'
+      : tiltWarning
+        ? 'Handy flach halten'
+        : aligned
+          ? 'Qibla gefunden'
+          : near
+            ? 'Fast richtig'
+            : heading === null
+              ? 'Vor dem Start'
+              : 'Richtung anpassen';
+  const guidance = sensorStatus === 'denied'
+    ? 'Bitte Sensorzugriff erlauben'
+    : sensorStatus === 'unsupported'
+      ? 'Gerät bewegen oder Browserberechtigung prüfen'
+      : uncertain
+        ? 'Sensor ungenau – bitte neu ausrichten'
+        : tiltWarning
+          ? 'Lege das Handy möglichst waagerecht in die Hand'
+          : aligned
+            ? sensorAccuracy === null ? 'Richtung erreicht – Sensorpräzision nicht gemeldet' : 'Du bist korrekt ausgerichtet.'
+            : near
+              ? `Noch ${turnDegrees}° nach ${turnSide}`
+              : remainingTurn === null
+                ? 'Starte den Live-Kompass für eine aktuelle Ausrichtung'
+                : `${turnDegrees}° nach ${turnSide} drehen`;
+  const accuracyValue = heading === null
+    ? 'Nicht aktiv'
+    : uncertain
+      ? 'Ungenau'
       : sensorAccuracy === null
-        ? 'Live'
-        : sensorAccuracy <= 5
-          ? 'Sehr gut'
-          : 'Gut';
-  const guidance = remainingTurn === null
-    ? 'Handy flach halten'
-    : uncertain
-      ? 'Sensor ungenau – bitte neu ausrichten'
-      : aligned
-        ? 'Du blickst zur Kaaba'
-        : `${Math.round(Math.abs(remainingTurn))}° nach ${remainingTurn > 0 ? 'rechts' : 'links'} drehen`;
+        ? 'Nicht gemeldet'
+        : `±${Math.round(sensorAccuracy)}°`;
 
   const flash = (message: string) => {
     if (toastTimeoutRef.current !== null) window.clearTimeout(toastTimeoutRef.current);
@@ -143,12 +172,25 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
     window.removeEventListener('deviceorientationabsolute', handleOrientation as EventListener, true);
     window.removeEventListener('deviceorientation', handleOrientation as EventListener, true);
     if (toastTimeoutRef.current !== null) window.clearTimeout(toastTimeoutRef.current);
+    if (pulseTimeoutRef.current !== null) window.clearTimeout(pulseTimeoutRef.current);
   }, [clearSensorTimeout, handleOrientation]);
 
   useEffect(() => {
-    if (aligned && !wasAlignedRef.current && 'vibrate' in navigator) navigator.vibrate([30, 40, 30]);
-    wasAlignedRef.current = aligned;
-  }, [aligned]);
+    if (aligned && !wasAlignedRef.current) {
+      wasAlignedRef.current = true;
+      if ('vibrate' in navigator) navigator.vibrate(35);
+      if (!reduceMotion) {
+        if (pulseTimeoutRef.current !== null) window.clearTimeout(pulseTimeoutRef.current);
+        setPulse(true);
+        pulseTimeoutRef.current = window.setTimeout(() => {
+          setPulse(false);
+          pulseTimeoutRef.current = null;
+        }, 700);
+      }
+    } else if (remainingTurn === null || Math.abs(remainingTurn) > 5 || uncertain || tiltWarning) {
+      wasAlignedRef.current = false;
+    }
+  }, [aligned, remainingTurn, uncertain, tiltWarning, reduceMotion]);
 
   const startCompass = async () => {
     if (sensorStatus === 'active') {
@@ -237,7 +279,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
       flash('Kompass-Einstellungen konnten nicht geöffnet werden');
       return;
     }
-    controls.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    controls.scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' });
     window.setTimeout(() => controls.querySelector<HTMLButtonElement>('.reference-calibration-button')?.focus({ preventScroll: true }), 280);
   };
 
@@ -250,8 +292,6 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         : sensorStatus === 'unsupported'
           ? 'Kein Sensorsignal'
           : 'Kompass noch nicht gestartet';
-  const deviceIsFlat = tilt !== null && Math.hypot(tilt.beta, tilt.gamma) <= 10;
-
   return (
     <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
       <header className="reference-screen-header">
@@ -260,41 +300,45 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         <button className="icon-button" onClick={openCompassControls} aria-label="Kompass-Einstellungen öffnen"><Settings size={20} /></button>
       </header>
 
-      <section className="qibla-guide" aria-label="Richtung zur Kaaba" data-state={aligned ? 'aligned' : heading === null ? 'ready' : uncertain ? 'uncertain' : 'live'}>
+      <section className="qibla-guide" aria-label="Richtung zur Kaaba" data-state={compassState}>
         <div className="qibla-guide__topline">
           <span className="overline">Dein Weg zur Kaaba</span>
           <div className="qibla-guide__mode"><span data-live={heading !== null} />{heading === null ? 'Vorschau nach Norden' : 'Live-Kompass'}</div>
         </div>
 
-        <div className="qibla-guide__route-summary">
-          <span><MapPin size={14} />{locationLabel}</span>
-          <i aria-hidden="true" />
-          <strong>Kaaba · {Math.round(distance).toLocaleString('de-DE')} km</strong>
+        <div className="reference-qibla-location" aria-label="Standort und Entfernung zur Kaaba">
+          <span className="reference-qibla-location__icon"><MapPin size={20} /></span>
+          <span>
+            <small>{usingLiveLocation ? 'Gespeicherter Gerätestandort' : 'Standardstandort'} · Kaaba {Math.round(distance).toLocaleString('de-DE')} km</small>
+            <strong>{locationLabel}</strong>
+          </span>
+          <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label={locating ? 'Standort wird aktualisiert' : 'Standort aktualisieren'} disabled={locating}><LocateFixed size={18} /></button>
         </div>
 
         <div className="qibla-guide__stage">
           <Suspense fallback={<div className="qibla-dial" role="status">Kompass wird geladen …</div>}>
-            <QiblaCompass direction={direction} heading={heading} rotation={displayedNeedleRotation} aligned={aligned} />
+            <QiblaCompass direction={direction} heading={heading} rotation={displayedNeedleRotation} state={compassState} pulse={pulse} />
           </Suspense>
         </div>
 
         <div className="qibla-guide__reading">
           <span className="overline">Qibla-Richtung</span>
           <h2>{roundedDirection}° <span>{getDirectionLabel(direction)}</span></h2>
-          <p>{heading === null ? 'Von Norden aus gemessen' : deviceIsFlat ? `Handy liegt flach · Sensor ${accuracyLabel.toLowerCase()}` : 'Handy noch flacher halten'}</p>
+          <p>Von Norden aus gemessen</p>
         </div>
 
-        <div className="qibla-guide__guidance" data-aligned={aligned} role="status" aria-live="polite">
-          <span>{aligned ? <CircleCheck size={20} /> : <Navigation size={20} />}</span>
-          <div><small>{aligned ? 'Qibla gefunden' : heading === null ? 'Vor dem Start' : uncertain ? 'Kalibrierung nötig' : 'Folge dem Pfeil'}</small><strong>{guidance}</strong></div>
+        <div className="qibla-guide__guidance" data-state={compassState} role="status" aria-live="polite">
+          <span>{aligned ? <CircleCheck size={20} /> : error ? <TriangleAlert size={20} /> : <Navigation size={20} />}</span>
+          <div><strong>{guidanceTitle}</strong><small>{guidance}</small></div>
         </div>
 
-        {heading !== null ? (
-          <div className="qibla-guide__alignment" aria-label={`Ausrichtungsfortschritt ${alignmentProgress} Prozent`}>
-            <span><i style={{ width: `${alignmentProgress}%` }} /></span>
-            <small>{aligned ? 'Innerhalb der Zielzone von ±5°' : `${Math.round(Math.abs(remainingTurn ?? 0))}° bis zur Qibla`}</small>
-          </div>
-        ) : null}
+        <div className="qibla-guide__facts" aria-label="Kompassdaten">
+          <div><small>Ausrichtung</small><strong>{heading === null ? '—' : `${Math.round(heading)}°`}</strong></div>
+          <div><small>Drehung</small><strong>{remainingTurn === null || uncertain || tiltWarning ? '—' : aligned ? 'Gefunden' : `${turnDegrees}° ${turnSide}`}</strong></div>
+          <div><small>Genauigkeit</small><strong>{accuracyValue}</strong></div>
+        </div>
+
+        <div className="qibla-guide__tip"><Smartphone size={19} /><span><strong>Handy flach halten</strong><small>{deviceIsFlat ? 'Handy liegt flach' : 'Für eine verlässliche Richtung'}</small></span></div>
 
         <div className="reference-qibla-calibration" tabIndex={-1}>
           <button
@@ -308,12 +352,6 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
         </div>
       </section>
 
-      <section className="reference-qibla-location">
-        <span className="reference-qibla-location__icon"><MapPin size={20} /></span>
-        <span><small>{usingLiveLocation ? 'Gespeicherter Gerätestandort' : 'Standardstandort'}</small><strong>{locationLabel}</strong><em>{usingLiveLocation ? 'Wird auch für gemeinsame Gebetszeiten verwendet' : 'Standort noch nicht freigegeben'}</em></span>
-        <button className={locating ? 'is-loading' : ''} onClick={requestLocation} aria-label="Standort aktualisieren" disabled={locating}><LocateFixed size={18} /><span>{locating ? 'Suche …' : 'Aktualisieren'}</span></button>
-      </section>
-
       <section className="reference-qibla-tip qibla-help">
         <details>
           <summary><span><Compass size={20} /><span><strong>{sensorLabel}</strong><small>Tipps für ein genaueres Ergebnis</small></span></span><span>Öffnen</span></summary>
@@ -322,7 +360,7 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
             <li><strong>Störquellen entfernen</strong><span>Abstand zu Magneten, Metallhüllen und Lautsprechern halten.</span></li>
             <li><strong>Neu kalibrieren</strong><span>Das Gerät langsam in einer liegenden Acht bewegen.</span></li>
           </ol>
-          <p>Die Qibla-Berechnung selbst bleibt lokal; der gespeicherte Standort wird nur von den ausdrücklich ausgewiesenen Live-Diensten verwendet.</p>
+          <p>Die Qibla-Berechnung selbst bleibt lokal. Der gespeicherte Gerätestandort wird auch für gemeinsame Gebetszeiten verwendet und nur von den ausdrücklich ausgewiesenen Live-Diensten übertragen.</p>
         </details>
       </section>
 

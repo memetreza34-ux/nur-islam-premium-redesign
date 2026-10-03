@@ -26,14 +26,14 @@ for (const width of [320, 390, 768]) {
     await expect(page.locator('.qibla-dial img, .qibla-dial image')).toHaveCount(0);
     const dial = page.locator('.qibla-dial');
     await expect(dial.locator('.qibla-dial__rose')).toHaveCount(1);
-    await expect(dial.locator('.qibla-dial__qibla-counterweight')).toHaveCount(1);
+    await expect(dial.locator('.qibla-dial__qibla-counterweight')).toHaveCount(0);
     await expect(dial.locator('.qibla-dial__rim')).toHaveCount(1);
     await expect(dial.locator('.qibla-dial__qibla-pointer')).toHaveCount(1);
     await expect(dial.locator('.qibla-dial__qibla-pointer')).toBeVisible();
     await expect(dial.locator('.qibla-dial__kaaba-mark')).toBeVisible();
     await expect(dial.locator('.qibla-dial__scale text')).toHaveText(['N', 'O', 'S', 'W']);
     await expect(dial.locator('.qibla-dial__degree, .qibla-dial__needle, .qibla-dial__needle-north')).toHaveCount(0);
-    await expect(dial.locator('line.qibla-dial__tick')).toHaveCount(36);
+    await expect(dial.locator('line.qibla-dial__tick')).toHaveCount(72);
     await expect(dial.locator('.qibla-dial__device-marker')).toBeVisible();
     await expect(page.getByRole('img', { name: /Qibla-Kompass: 137 Grad/ })).toBeVisible();
     const rimStrokeWidth = await page.locator('.qibla-dial__rim').evaluate(el => parseFloat(getComputedStyle(el).strokeWidth));
@@ -48,7 +48,7 @@ for (const width of [320, 390, 768]) {
     const locationCard = page.locator('.reference-qibla-location');
     const locationButton = page.getByRole('button', { name: 'Standort aktualisieren', exact: true });
     await locationCard.scrollIntoViewIfNeeded();
-    await expect(locationButton.getByText('Aktualisieren', { exact: true })).toBeVisible();
+    await expect(locationButton).toBeVisible();
     const cardBox = (await locationCard.boundingBox())!;
     const buttonBox = (await locationButton.boundingBox())!;
     expect(buttonBox.x).toBeGreaterThanOrEqual(cardBox.x);
@@ -65,9 +65,14 @@ test('live direction, alignment and shortest rotation across north', async ({ pa
   await page.getByRole('button', { name: 'Live-Kompass starten', exact: true }).click();
   await orient(page, 100);
   await expect(page.getByText('37° nach rechts drehen', { exact: true })).toBeVisible();
+  await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'turn');
+  await orient(page, 134);
+  await expect(page.getByText('Noch 3° nach rechts', { exact: true })).toBeVisible();
+  await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'near');
   await orient(page, 137);
-  await expect(page.getByText('Du blickst zur Kaaba', { exact: true })).toBeVisible();
+  await expect(page.getByText('Richtung erreicht – Sensorpräzision nicht gemeldet', { exact: true })).toBeVisible();
   await expect(page.locator('.qibla-dial')).toHaveAttribute('data-aligned', 'true');
+  await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'aligned');
   await orient(page, 150);
   await expect(page.getByText('13° nach links drehen', { exact: true })).toBeVisible();
   await orient(page, 359);
@@ -98,6 +103,7 @@ test('denied permission does not simulate compass motion', async ({ page }) => {
   await page.getByRole('button', { name: 'Live-Kompass starten', exact: true }).click();
   await expect(page.getByText('Kompasszugriff verweigert', { exact: true })).toBeVisible();
   await expect(page.getByText('Vorschau nach Norden', { exact: true })).toBeVisible();
+  await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'error');
 });
 
 for (const reduced of [true, false]) {
@@ -113,7 +119,7 @@ for (const reduced of [true, false]) {
     await page.getByRole('button', { name: 'Live-Kompass starten', exact: true }).click();
     await orient(page, 137);
     await expect(page.locator('.qibla-dial')).toHaveAttribute('data-aligned', 'true');
-    await expect(page.getByText('Du blickst zur Kaaba', { exact: true })).toBeVisible();
+    await expect(page.getByText('Richtung erreicht – Sensorpräzision nicht gemeldet', { exact: true })).toBeVisible();
   });
 }
 
@@ -138,7 +144,10 @@ test('WebKit compass never confirms alignment with poor or invalid accuracy', as
       window.dispatchEvent(event);
     }, accuracy);
     await expect(page.locator('.qibla-dial')).toHaveAttribute('data-aligned', String(accuracy === 3));
-    if (accuracy !== 3) await expect(page.getByText('Sensor ungenau – bitte neu ausrichten', { exact: true })).toBeVisible();
+    if (accuracy !== 3) {
+      await expect(page.getByText('Sensor ungenau – bitte neu ausrichten', { exact: true })).toBeVisible();
+      await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'uncertain');
+    }
   }
 });
 
@@ -148,5 +157,6 @@ test('flatness guidance responds to device tilt', async ({ page }) => {
   await orient(page, 120, true, 2, 3);
   await expect(page.getByText(/Handy liegt flach/)).toBeVisible();
   await orient(page, 120, true, 24, 8);
-  await expect(page.getByText('Handy noch flacher halten', { exact: true })).toBeVisible();
+  await expect(page.getByText('Lege das Handy möglichst waagerecht in die Hand', { exact: true })).toBeVisible();
+  await expect(page.locator('.qibla-dial')).toHaveAttribute('data-state', 'uncertain');
 });

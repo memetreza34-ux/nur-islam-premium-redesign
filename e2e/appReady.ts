@@ -23,4 +23,5 @@ export async function openApp(page: Page) {
     { timeout: 30_000 },
   );
   await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+  await expect(page.getByRole('main', { name: 'Nur Islam wird geladen' })).toBeHidden({ timeout: 20_000 });
 }
