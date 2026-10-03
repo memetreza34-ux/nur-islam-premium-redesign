@@ -126,7 +126,7 @@ requireFragments(qibla, 'Qibla controls', [
   'aria-label="Kompass-Einstellungen öffnen"',
   '<Settings size={20} />',
   '<MapPin size={20} />',
-  'aria-label="Standort aktualisieren"',
+  "aria-label={locating ? 'Standort wird aktualisiert' : 'Standort aktualisieren'}",
   '<LocateFixed size={18} />',
 ]);
 

@@ -2,6 +2,7 @@ import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const source = await readFile(resolve(process.cwd(), 'src/screens/QiblaScreen.tsx'), 'utf8');
+const dial = await readFile(resolve(process.cwd(), 'src/shared/QiblaCompass.tsx'), 'utf8');
 
 const requiredFragments = [
   'DeviceOrientationEventConstructorWithPermission',
@@ -30,7 +31,7 @@ const requiredFragments = [
   "initialLocation.source === 'device'",
   "source: 'device'",
   'openCompassControls',
-  "scrollIntoView({ behavior: 'smooth', block: 'center' })",
+  "scrollIntoView({ behavior: reduceMotion ? 'auto' : 'smooth', block: 'center' })",
   'Kompass-Einstellungen öffnen',
   'sensorTimeoutRef',
   'clearSensorTimeout',
@@ -58,10 +59,22 @@ if (source.includes('removeOrientationListeners')) {
 const privacyFragments = [
   'Die Qibla-Berechnung selbst bleibt lokal',
   'ausdrücklich ausgewiesenen Live-Diensten',
-  'Wird auch für gemeinsame Gebetszeiten verwendet',
+  'wird auch für gemeinsame Gebetszeiten verwendet',
 ];
 for (const fragment of privacyFragments) {
   if (!source.includes(fragment)) throw new Error(`Qibla privacy/location disclosure is missing: ${fragment}`);
+}
+
+for (const fragment of [
+  "Math.abs(remainingTurn) <= 2",
+  "Math.abs(remainingTurn) <= 5",
+  "sensorStatus === 'denied' || sensorStatus === 'unsupported'",
+  "useReducedMotion()",
+]) {
+  if (!(source + dial).includes(fragment)) throw new Error(`Qibla state or motion contract is missing: ${fragment}`);
+}
+if (!dial.includes('Array.from({ length: 72 }') || dial.includes('qibla-dial__qibla-counterweight')) {
+  throw new Error('Qibla dial must have 72 ticks and a single Qibla pointer.');
 }
 
 console.log('Qibla verified: saved location is reused, iOS/Safari motion permission and WebKit compass headings are handled from the user-started control, live orientation is cleaned up on stop, timeout and unmount, late sensor events cannot keep stale listeners alive, settings reach real controls, and privacy wording remains explicit.');

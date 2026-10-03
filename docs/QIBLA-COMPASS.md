@@ -1,17 +1,16 @@
 # Qibla-Kompass
 
-Stand: 01.10.2026.
+Stand: 03.10.2026.
 
 ## Gestaltung
 
-Der Kompass ist ein ruhiges SVG-Instrument im Smaragd-Gold-Stil der App.
-Ein schmaler Messingring fasst das dunkle Zifferblatt mit 72 Teilstrichen und
-vier Gradwerten ein. Die kleinere zweifarbige Nadel zeigt Norden; ein breiterer
-goldener Zeiger führt zur Kaaba-Marke auf der Skala. Beide reagieren unabhängig
-auf die Geräteausrichtung.
-Glasreflexe, Schmuckgrafik und künstliche Lichtkegel entfallen.
-Richtungszahl, Gerätehaltung, Standort und Bedienhinweise stehen außerhalb
-des Zifferblatts, damit die Richtung im Mittelpunkt bleibt.
+Der Kompass ist ein SVG-Instrument im Smaragd-Creme-Gold-Stil der App, angelehnt
+an die vom Nutzer gelieferte Bildvorlage. Das helle Zifferblatt hat 72 Teilstriche,
+N/O/S/W und eine dezente Windrose. Ein einzelner goldener Zeiger führt zur
+Kaaba-Marke; die feste obere Marke steht für die Ausrichtung des Geräts.
+Standort und Entfernung stammen aus den vorhandenen Berechnungen und stehen
+oberhalb des Zifferblatts. Richtungszahl, Drehhinweis und Sensorstatus stehen
+darunter. Glasreflexe und dauernde Schmuckanimationen entfallen.
 
 Quelle der gesamten Kompassgrafik: eigener UI-Code in `src/shared/QiblaCompass.tsx`,
 keine heruntergeladene Grafik und keine Bitmap-Abhängigkeit. `kaaba-v2.webp` bleibt
@@ -23,16 +22,20 @@ bleibt ihr Platz reserviert. Das Startpaket bleibt unter seinem bisherigen Grö�
 
 ## Bewegung und Grenzen
 
-- Sanftes Einblenden; Nordnadel, Skala und Qibla-Marke folgen dem Gerätekompass mit 320 ms Übergang.
+- Sanftes Einblenden; Skala und Qibla-Zeiger folgen dem Gerätekompass mit 320 ms Übergang.
 - Keine dauernden Schmuckanimationen oder simulierten Sensorsignale.
 - Der kürzeste Winkelweg verhindert volle Umdrehungen beim Überqueren von Norden.
 - Ohne Sensorsignal steht Norden oben; die Anzeige behauptet keine Geräteausrichtung.
 - Relative Alpha-Werte ohne Erd-/Nordbezug werden nicht als Kompass akzeptiert.
   Hintergrund: [MDN – DeviceOrientationEvent.absolute](https://developer.mozilla.org/en-US/docs/Web/API/DeviceOrientationEvent/absolute).
-- Innerhalb von fünf Grad wechselt der Goldakzent zu einem hellen Grün.
+- Bei höchstens fünf Grad Restdrehung erscheint eine dezente grüne Annäherung,
+  bei höchstens zwei Grad eine kurze Bestätigung. Einmaliges Vibrationsfeedback
+  und ein einmaliger Ringimpuls begleiten die Bestätigung, sofern verfügbar.
   Das ist UI-Rückmeldung, keine Zusicherung der Messgenauigkeit. Bei gemeldeter
-  Sensorungenauigkeit über 15 Grad oder ungültiger negativer Genauigkeitsangabe
-  erscheint stattdessen ein Hinweis.
+  Sensorungenauigkeit über 15 Grad, ungültiger negativer Genauigkeitsangabe
+  oder starker Neigung gibt es keine Bestätigung. Fehlt eine Genauigkeitsangabe,
+  wird diese Einschränkung ausdrücklich angezeigt.
+- Rot ist auf verweigerten oder fehlenden Sensorzugriff beschränkt.
 - Reduzierte Bewegung schaltet die Übergänge ab.
 - Standort, Sensorberechtigung, Start/Stopp, Timeout und lokale Berechnung bleiben
   erhalten. Der Standort wird nicht ohne Nutzeraktion aktualisiert.
@@ -42,13 +45,8 @@ magnetische Störungen und plattformspezifische Abweichungen bleiben möglich.
 
 ## Prüfung
 
-`e2e/qibla-compass.spec.ts` prüft drei Bildschirmbreiten, Sensorbewegung und
-Nordübergang, verweigerte Berechtigung, fehlenden Nordbezug, reduzierte Bewegung,
-Standortwechsel und Darstellung bei blockierten Rasterbildern. Die Berechnung bleibt durch
-`src/services/qibla.test.ts` geschützt; zusätzliche Winkeldelta-Tests schützen
-die kurze Drehrichtung. Echte Hardwareprüfung bleibt offen.
-
-Prüflauf am 01.10.2026: Build, Typprüfung, `qibla:check` und `visual:check`
-bestanden. Die Browser-Tests konnten lokal nicht starten, weil die benötigte
-Playwright-Chromium-Version nicht installiert ist. Die Vorschau wurde bei 320
-und 390 Pixeln visuell geprüft; ein Test auf realer Sensorhardware bleibt offen.
+`e2e/qibla-compass.spec.ts` prüft drei Bildschirmbreiten, 72 Teilstriche,
+Annäherung und Ausrichtung, Sensorbewegung und Nordübergang, verweigerte
+Berechtigung, fehlenden Nordbezug, reduzierte Bewegung, Standortwechsel und
+Darstellung bei blockierten Rasterbildern. Die Berechnung bleibt durch
+`src/services/qibla.test.ts` geschützt. Echte Hardwareprüfung bleibt offen.
