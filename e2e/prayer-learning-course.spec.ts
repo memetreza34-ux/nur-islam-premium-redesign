@@ -10,7 +10,20 @@ async function openCourse(page: Page) {
   await expect(page.getByRole('heading', { name: 'Gebetskurs', exact: true })).toBeVisible();
 }
 
-for (const width of [320, 390, 768]) {
+async function checkSourceReadable(page: Page) {
+  const source = page.locator('.reference-rakah-source');
+  await source.scrollIntoViewIfNeeded();
+  await expect(source).toBeVisible();
+  const sourceBox = (await source.boundingBox())!;
+  const navigationBox = (await page.getByRole('navigation').boundingBox())!;
+  expect(sourceBox.y).toBeGreaterThanOrEqual(0);
+  expect(sourceBox.y + sourceBox.height).toBeLessThanOrEqual(navigationBox.y);
+  for (const selector of ['.reference-rakah-source', '.reference-rakah-wording__arabic', '.reference-rakah-wording__pronunciation', '.reference-rakah-wording__translation']) {
+    expect(await page.locator(selector).evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth))).toBe(true);
+  }
+}
+
+for (const width of [320, 390, 768, 1280]) {
   test(`posture, pronunciation and step chooser stay separate at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     await openCourse(page);
@@ -55,6 +68,54 @@ test('all five prayers have their correct rakah count and time artwork', async (
     await expect(page.locator('.reference-prayer-course-hero__time-art > img')).toHaveAttribute('src', new RegExp(`prayer-${image}-v1\\.webp`));
   }
 });
+
+for (const width of [320, 768, 1280]) {
+  test(`compared prayer wording, sources and limits are readable at ${width}px`, async ({ page }, testInfo) => {
+    await page.setViewportSize({ width, height: 900 });
+    await page.route('**/api.aladhan.com/**', route => route.abort());
+    await openCourse(page);
+    const chooser = page.locator('.reference-prayer-step-chooser');
+    await expect(page.locator('.reference-rakah-source')).toContainText('738');
+    for (const [title, reference] of [
+      ['Eröffnungs-Bittgebet (Sana)', '243'], ['Ruku (Verbeugung)', '262'],
+      ['Zuflucht suchen & Basmalah', '7267'], ['Sure Al-Fatihah', '5899'],
+      ['Eine weitere Sure', '112:1–4'],
+      ['Aufrichten aus dem Ruku', '789'], ['Sujud (Niederwerfung)', '262'],
+      ['Sitzen zwischen den Niederwerfungen', '897'], ['Zweite Niederwerfung', '262'],
+      ['Aufstehen zur nächsten Rakʿah', '789'],
+    ]) {
+      await chooser.locator('summary').click();
+      await chooser.getByRole('button').filter({ hasText: title }).click();
+      await expect(page.locator('.reference-rakah-source')).toContainText(reference);
+      if (title === 'Eröffnungs-Bittgebet (Sana)') await expect(page.locator('.reference-rakah-source')).toContainText('At-Tirmidhi erwähnt Kritik');
+      if (title === 'Sure Al-Fatihah') {
+        await expect(page.locator('.reference-rakah-wording')).toContainText('kein Vers der Sure');
+        await expect(page.locator('.reference-rakah-wording')).toContainText('Sinngemäße Bedeutung');
+      }
+      if (title === 'Zuflucht suchen & Basmalah') await expect(page.locator('.reference-rakah-wording')).toContainText('andere Auffassungen');
+      if (['Ruku (Verbeugung)', 'Sujud (Niederwerfung)', 'Zweite Niederwerfung'].includes(title)) await expect(page.locator('.reference-rakah-wording')).toContainText('keine feste Anzahl');
+      await checkSourceReadable(page);
+      if (title === 'Sure Al-Fatihah') await page.screenshot({ path: testInfo.outputPath(`prayer-quran-source-${width}.png`) });
+    }
+    await page.getByRole('button', { name: 'Rakʿah 2', exact: true }).click();
+    await expect(page.locator('.reference-rakah-source')).toContainText('27:30');
+    for (const [title, reference] of [
+      ['Tashahhud (At-Tahiyyat)', '1170'], ['Salawat auf den Propheten ﷺ', '3370'],
+      ['Bittgebet vor dem Salam', '588a'], ['Taslim (Abschluss)', '1320'],
+    ]) {
+      await chooser.locator('summary').click();
+      await chooser.getByRole('button').filter({ hasText: title }).click();
+      await expect(page.locator('.reference-rakah-source')).toContainText(reference);
+      await checkSourceReadable(page);
+      if (title === 'Bittgebet vor dem Salam') {
+        await expect(page.locator('.reference-rakah-wording')).toContainText('unterscheiden sich nach Rechtsschule');
+        await expect(chooser).not.toContainText('optional');
+        await page.screenshot({ path: testInfo.outputPath(`prayer-closing-source-${width}.png`) });
+      }
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+  });
+}
 
 test('a missing generated posture keeps the labelled fallback and wording usable', async ({ page }) => {
   await page.route('**/salah-posture-takbir-v1.webp*', route => route.abort());

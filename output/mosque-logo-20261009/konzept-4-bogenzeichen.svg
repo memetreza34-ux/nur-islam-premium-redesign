@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Nur Islam – Moscheebogen</title>
+  <desc id="desc">Reduziertes Moscheezeichen aus einem goldenen Kuppelbogen und zwei Minaretten auf dunklem Smaragdgrün</desc>
+  <rect width="180" height="180" rx="34" fill="#001B16"/>
+  <g stroke="#E2BF77" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M43 145V94c0-22 17-37 47-58 30 21 47 36 47 58v51" stroke-width="7"/>
+    <path d="M24 145V77c0-7 2-13 6-19 4 6 6 12 6 19v68M144 145V77c0-7 2-13 6-19 4 6 6 12 6 19v68" stroke-width="6"/>
+    <path d="M22 145h136" stroke-width="6"/>
+  </g>
+  <path d="M76 145v-24c0-8 5-16 14-24 9 8 14 16 14 24v24" stroke="#F5F0E6" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M90 35v-9" stroke="#E2BF77" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="90" cy="22" r="3" fill="#E2BF77"/>
+</svg>

@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
 import { WORSHIP_GUIDES, WORSHIP_GUIDE_BY_ID } from '../data/worshipGuideData';
+import { readGuideProgress, saveGuideCompletion, saveGuideStep } from '../services/worshipGuideProgress';
 import type { LucideIcon } from 'lucide-react';
 import {
   Bookmark,
@@ -9,6 +10,7 @@ import {
   ChevronLeft,
   ChevronRight,
   CircleCheck,
+  CircleAlert,
   Copy,
   Droplets,
   Footprints,
@@ -86,9 +88,9 @@ function ScreenHeader({ title, eyebrow, onBack }: { title: string; eyebrow: stri
   );
 }
 
-function Toast({ message }: { message: string | null }) {
+function Toast({ message, error = false }: { message: string | null; error?: boolean }) {
   const reduceMotion = useReducedMotion();
-  return <AnimatePresence>{message ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={{ duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] }}><CircleCheck size={18} /> {message}</motion.div> : null}</AnimatePresence>;
+  return <AnimatePresence>{message ? <motion.div className="toast" role="status" initial={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, x: '-50%', y: 0 }} exit={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 6 }} transition={{ duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] }}>{error ? <CircleAlert size={18} /> : <CircleCheck size={18} />} {message}</motion.div> : null}</AnimatePresence>;
 }
 
 export function AyahDetailScreen({ onBack }: { onBack: () => void }) {
@@ -182,31 +184,63 @@ const GUIDE_TABS: { id: string; label: string; icon: LucideIcon }[] = [
 
 export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: GuideMode; onBack: () => void }) {
   const [mode, setMode] = useState<string>(initialMode);
-  const [activeStep, setActiveStep] = useState(() => Math.max(0, readStoredNumber(`nur_guide_${initialMode}_step`, 0)));
+  const [{ activeStep, stored }, setGuideState] = useState(() => {
+    const stored = readGuideProgress(initialMode);
+    return { activeStep: stored.stepIndex, stored };
+  });
+  const [storageWarning, setStorageWarning] = useState<string | null>(null);
+  const [toastError, setToastError] = useState(false);
   const { toast, flash } = useToast();
   const reduceMotion = useReducedMotion();
 
   const guide = WORSHIP_GUIDE_BY_ID.get(mode) ?? WORSHIP_GUIDES[0];
   const steps = guide.steps;
   const icons = GUIDE_ICONS[guide.id] ?? [];
-  // Clamped against the guide actually shown: the stored index belongs to a
-  // list whose length differs per guide, and each one grew when the full data
-  // was migrated.
   const stepIndex = Math.min(activeStep, steps.length - 1);
 
   useEffect(() => {
-    try { localStorage.setItem(`nur_guide_${mode}_step`, String(stepIndex)); } catch { /* optional */ }
-  }, [mode, stepIndex]);
+    const sync = (event: StorageEvent) => {
+      const stepKey = `nur_guide_${guide.id}_step`;
+      if (event.key !== null && event.key !== stepKey && event.key !== `nur_guide_${guide.id}_complete`) return;
+      const stored = readGuideProgress(guide.id);
+      setGuideState(current => ({ activeStep: stored.stepValid && (event.key === null || event.key === stepKey) ? stored.stepIndex : current.activeStep, stored }));
+      setStorageWarning(null);
+    };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, [guide.id]);
 
   const changeMode = (next: string) => {
+    if (!WORSHIP_GUIDE_BY_ID.has(next)) return;
+    const stored = readGuideProgress(next);
     setMode(next);
-    setActiveStep(Math.max(0, readStoredNumber(`nur_guide_${next}_step`, 0)));
+    setGuideState({ activeStep: stored.stepIndex, stored });
+    setStorageWarning(null);
+  };
+
+  const selectStep = (index: number) => {
+    if (!Number.isInteger(index) || index < 0 || index >= steps.length) return;
+    const saved = saveGuideStep(guide.id, index);
+    setGuideState({ activeStep: index, stored: readGuideProgress(guide.id) });
+    setStorageWarning(saved ? null : 'Speicherung der Schrittposition nicht bestätigt. Du kannst weiterlernen; vorhandene unlesbare Daten bleiben unverändert.');
   };
 
   const completeGuide = () => {
-    try { localStorage.setItem(`nur_guide_${mode}_complete`, '1'); } catch { /* optional */ }
-    flash(`${guide.title} als abgeschlossen gespeichert`);
+    if (stepIndex !== steps.length - 1) return;
+    const saved = saveGuideCompletion(guide.id);
+    setGuideState(current => ({ ...current, stored: readGuideProgress(guide.id) }));
+    setToastError(!saved);
+    if (!saved) setStorageWarning('Speicherung nicht bestätigt. Der Abschluss konnte nicht lokal bestätigt werden; vorhandene unlesbare Daten bleiben unverändert.');
+    else setStorageWarning(null);
+    flash(saved ? `${guide.title} als abgeschlossen gespeichert` : 'Speicherung nicht bestätigt');
   };
+
+  const progressNotice = storageWarning ?? (!stored.stepValid || !stored.completionValid
+    ? 'Vorhandene Fortschrittsdaten sind nicht lesbar oder nicht zuordenbar und bleiben unverändert. Du kannst die Schritte trotzdem ansehen.'
+    : null);
+  const storageLabel = !stored.stepValid || !stored.completionValid ? 'Gespeicherter Fortschritt nicht lesbar'
+    : stored.completed ? 'Abschluss lokal gespeichert'
+      : stored.hasStep && stored.stepIndex === stepIndex ? 'Position lokal gespeichert' : 'Noch keine bestätigte Speicherung';
 
   const heroAsset = guide.id === 'wudu'
     ? '/premium-assets/high-res-objects/wudu-washing-v1.webp'
@@ -233,24 +267,24 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
           <p>{guide.intro}</p>
           <div aria-hidden="true"><PremiumImage src={heroAsset} className="worship-guide-intro__art" fallback={<Droplets size={48} />} priority /></div>
         </div>
-        <p className="worship-guide-intro__meta">{steps.length} Schritte · Fortschritt lokal gespeichert</p>
+        <p className="worship-guide-intro__meta">{steps.length} Schritte · {storageLabel}</p>
       </section>
 
+      {progressNotice ? <section className="reference-source-card" role="status"><CircleAlert size={19} /><span><strong>Speicherhinweis</strong><small>{progressNotice}</small></span></section> : null}
       <section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Wichtiger Hinweis</strong><small>Dieser Bereich ist ein verständlicher Überblick. Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen. Für verbindliche Praxisfragen sollte eine vertrauenswürdige Lehrperson vor Ort hinzugezogen werden.</small></span></section>
       <section className="reference-guide-progress"><span><strong>Schritt {stepIndex + 1}</strong><small>von {steps.length}</small></span><div><i style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} /></div></section>
 
       {guide.id === 'wudu' ? (
         <Suspense fallback={<p role="status">Schritte werden geladen …</p>}>
-          <WuduLesson steps={steps} stepIndex={stepIndex} onSelect={setActiveStep} onComplete={completeGuide} />
+          <WuduLesson steps={steps} stepIndex={stepIndex} onSelect={selectStep} onComplete={completeGuide} />
         </Suspense>
       ) : <section className="reference-guide-steps">
         {steps.map((step, index) => {
           const Icon = icons[index] ?? Sparkles;
           const active = index === stepIndex;
-          const complete = index < stepIndex;
           return (
-            <button key={step.title} className={`${active ? 'is-active' : ''}${complete ? ' is-complete' : ''}`} onClick={() => setActiveStep(index)}>
-              <span>{complete ? <CircleCheck size={20} /> : <Icon size={20} />}</span>
+            <button key={step.title} className={active ? 'is-active' : ''} onClick={() => selectStep(index)}>
+              <span><Icon size={20} /></span>
               <span>
                 <small>Schritt {index + 1}</small>
                 <strong>{step.title}</strong>
@@ -273,8 +307,8 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
         </section>
       ) : null}
 
-      {guide.id !== 'wudu' ? <div className="reference-guide-navigation"><button disabled={stepIndex === 0} onClick={() => setActiveStep((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? completeGuide() : setActiveStep((value) => Math.min(steps.length - 1, value + 1))}>{stepIndex === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div> : null}
-      <Toast message={toast} />
+      {guide.id !== 'wudu' ? <div className="reference-guide-navigation"><button disabled={stepIndex === 0} onClick={() => selectStep(stepIndex - 1)}><ChevronLeft size={18} /> Zurück</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? completeGuide() : selectStep(stepIndex + 1)}>{stepIndex === steps.length - 1 ? 'Abschließen' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div> : null}
+      <Toast message={toast} error={toastError} />
     </motion.main>
   );
 }

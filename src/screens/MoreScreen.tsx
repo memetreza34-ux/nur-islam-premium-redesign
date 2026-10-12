@@ -4,7 +4,6 @@ import {
   BellRing,
   BookOpen,
   BookOpenCheck,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleHelp,
@@ -216,7 +215,7 @@ function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: P
   );
 }
 
-export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavigate: (destination: MoreDestination) => void }) {
+export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDestination) => void }) {
   const [modal, setModal] = useState<ProfileAction | null>(null);
   const [notifications, setNotifications] = useState(readReminderEnabled);
   const [session, setSession] = useState<NurSession | null>(() => getCachedSession());
@@ -289,7 +288,7 @@ export function MoreScreen({ onBack, onNavigate }: { onBack: () => void; onNavig
   return (
     <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+        <span aria-hidden="true" />
         <div><span className="overline">Profil & Einstellungen</span><h1>Mehr</h1></div>
         <button className="icon-button" onClick={() => setModal('settings')} aria-label="Einstellungen"><Settings2 size={20} /></button>
       </header>

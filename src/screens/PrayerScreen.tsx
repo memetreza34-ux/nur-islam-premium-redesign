@@ -46,6 +46,7 @@ import { MihrabArch } from '../shared/MihrabArch';
 import { getCurrentPrayerScene } from '../shared/prayerBackdrops';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
 import { getHijriLabel } from '../services/hijriCalendar';
+import { prayerTimesFeedback } from '../services/prayerTimesFeedback';
 
 const PrayerCalendarSection = lazy(() => import('../shared/PrayerCalendarSection').then((module) => ({ default: module.PrayerCalendarSection })));
 
@@ -195,7 +196,6 @@ async function playReminderTone() {
 }
 
 type PrayerScreenProps = {
-  onBack: () => void;
   openCalendar: (dateKey: string) => void;
   openDhikr: () => void;
   openDuas: () => void;
@@ -206,7 +206,6 @@ type PrayerScreenProps = {
 };
 
 export function PrayerScreen({
-  onBack,
   openCalendar,
   openDhikr,
   openDuas,
@@ -444,20 +443,23 @@ export function PrayerScreen({
     setNow(new Date());
     await selectPrayerDate(localNoon());
     const result = await refresh();
-    flash(result === 'live' ? 'Live-Gebetszeiten aktualisiert' : 'Offline-Zeitplan wird weiter verwendet');
+    const message = prayerTimesFeedback(result, 'Gebetszeiten aktualisiert');
+    if (message) flash(message);
   };
 
   const handleLocation = async () => {
     await selectPrayerDate(localNoon());
     const result = await requestLocation();
-    flash(result === 'live' ? 'Gebetszeiten für deinen Standort geladen' : result === 'location-denied' ? 'Standort wurde nicht freigegeben' : 'Gespeicherter Zeitplan wird verwendet');
+    const message = prayerTimesFeedback(result, 'Gebetszeiten für deinen Standort geladen');
+    if (message) flash(message);
   };
 
   const applyPreferences = async () => {
     await selectPrayerDate(localNoon());
     const result = await updatePreferences({ method: draftMethod, school: draftSchool });
     setSettingsOpen(false);
-    flash(result === 'live' ? 'Berechnungseinstellung übernommen' : 'Einstellung gespeichert – Offline-Fallback aktiv');
+    const message = prayerTimesFeedback(result, 'Berechnungseinstellung übernommen');
+    if (message) flash(message);
   };
 
   const testTone = async () => {
@@ -488,10 +490,10 @@ export function PrayerScreen({
     : status === 'loading'
       ? 'Wird aktualisiert …'
       : status === 'cache'
-        ? 'Gespeicherte Live-Zeiten'
+        ? 'Gespeicherter Tagesstand'
         : status === 'location-denied'
           ? 'Standort nicht freigegeben'
-          : 'Offline-Fallback';
+          : 'Keine bestätigten Zeiten';
 
   const screenTransition = { duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] as const };
   const toastTransition = { duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] as const };
@@ -499,20 +501,20 @@ export function PrayerScreen({
   return (
     <motion.main className="screen prayer-screen reference-prayer-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+        <span aria-hidden="true" />
         <div><span className="overline">{hijriLabel}</span><h1>Gebetszeiten</h1></div>
         <button className="icon-button" onClick={handleRefresh} aria-label="Gebetszeiten aktualisieren" disabled={refreshing}><RefreshCw size={20} className={refreshing ? 'spin' : ''} /></button>
       </header>
 
       <section className={`reference-prayer-live-status is-${status}`} aria-live="polite">
         <span className="reference-prayer-live-status__dot" />
-        <span><strong>{statusLabel}</strong><small>{meta.sourceLabel} · {meta.timezone ?? 'lokale Zeitzone'}</small></span>
-        {error ? <em title={error}>Fallback aktiv</em> : null}
+        <span><strong>{statusLabel}</strong><small>{meta.sourceLabel} · {meta.timezone ?? 'Zeitzone nicht bestätigt'}</small></span>
+        {error ? <em title={error}>{status === 'location-denied' ? 'Standorthinweis' : 'Abruf fehlgeschlagen'}</em> : null}
       </section>
 
       <section className="prayer-location-card glass-card reference-prayer-location">
         <span className="prayer-location-card__icon"><Navigation size={20} /></span>
-        <span><small>{dateLabel}</small><strong>{meta.locationLabel}</strong></span>
+        <span><small>{dateLabel}</small><strong>{meta.locationLabel}{location.source === 'default' ? ' · Standardstandort' : ''}</strong></span>
         <button onClick={handleLocation} disabled={refreshing} className={refreshing ? 'is-loading' : ''}><LocateFixed size={16} /> {refreshing ? 'Lädt' : 'Standort'}</button>
       </section>
       <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>

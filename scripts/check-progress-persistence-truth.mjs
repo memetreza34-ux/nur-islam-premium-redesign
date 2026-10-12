@@ -5,6 +5,11 @@ const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const homeProgress = await read('src/services/homeQuranProgress.ts');
 const dhikrDailyState = await read('src/services/dhikrDailyState.ts');
+const learningProgress = await read('src/services/learningProgress.ts');
+const learningCourse = await read('src/screens/LearningCourseScreen.tsx');
+const guideProgress = await read('src/services/worshipGuideProgress.ts');
+const guideScreen = await read('src/screens/ReferenceReadingScreens.tsx');
+const learningHub = await read('src/screens/LearnScreen.tsx');
 
 const [app, quran, reader, duas, names, dhikr, collections, calendar, notes, account, backend] = await Promise.all([
   read('src/app/App.tsx'),
@@ -31,6 +36,59 @@ function forbidTokens(source, label, tokens) {
     if (source.includes(token)) throw new Error(`${label} still contains a synthetic/default persistence token: ${token}`);
   }
 }
+
+requireTokens(learningProgress, 'Knowledge course write acknowledgement', [
+  "LEARNING_PROGRESS_KEY = 'nur_learning_completed'",
+  'if (!current.valid) return null;',
+  'localStorage.getItem(LEARNING_PROGRESS_KEY) === value',
+  'localStorage.getItem(key) === lessonId',
+]);
+requireTokens(learningCourse, 'Knowledge course persistence feedback', [
+  'updateLearningCompletion(selectedLesson.id, true)',
+  'updateLearningCompletion(selectedLesson.id, false)',
+  'completionSaved ?',
+  'Speicherung nicht bestätigt',
+  'Abschlussstatus nicht verfügbar',
+  "x: '-50%'",
+]);
+forbidTokens(learningCourse, 'Knowledge course mount data preservation', [
+  'useEffect(() => writeStringSet',
+  'parsed.map(String)',
+]);
+
+requireTokens(guideProgress, 'Worship guide validated persistence', [
+  'WORSHIP_GUIDE_BY_ID.get(guideId)',
+  'Number.isInteger(stepIndex)',
+  'Number(step.raw) < guide.steps.length',
+  '!readGuideProgress(guideId).stepValid',
+  '!readGuideProgress(guideId).completionValid',
+  'localStorage.getItem(key) === value',
+]);
+requireTokens(guideScreen, 'Worship guide truthful feedback', [
+  'saveGuideStep(guide.id, index)',
+  'saveGuideCompletion(guide.id)',
+  'Speicherung nicht bestätigt',
+  'Noch keine bestätigte Speicherung',
+  'Gespeicherter Fortschritt nicht lesbar',
+  'error={toastError}',
+  "x: '-50%'",
+]);
+forbidTokens(guideScreen, 'Worship guide non-mutating mount and honest cursor', [
+  'localStorage.setItem(`nur_guide_',
+  'const complete = index < stepIndex',
+  "${complete ? ' is-complete' : ''}",
+]);
+requireTokens(learningHub, 'Explicit Wudu completion in learning hub', [
+  "readGuideProgress('wudu')",
+  'wuduProgress.completionValid && wuduProgress.completed',
+  'prayerCompletion.valid && wuduProgress.completionValid',
+  'PRAYER_LESSONS.some(lesson => lesson.id === id)',
+  'Abschlussstatus nicht vollständig lesbar',
+]);
+forbidTokens(learningHub, 'No synthetic completion from a visited Wudu position', [
+  "readStoredStep('nur_guide_wudu_step') >= 5",
+  "readStringSet('nur_prayer_learning_complete')",
+]);
 
 requireTokens(homeProgress, 'Home Quran progress data', [
   'hasProgress: boolean',
@@ -68,11 +126,13 @@ forbidTokens(quran, 'Quran catalog progress', [
 ]);
 
 requireTokens(reader, 'Quran reader validated persistence', [
-  'if (!bundle) return;',
+  'if (!bundle || bundle.meta.number !== surahNumber) return;',
   'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
   'surahNumber: bundle.meta.number',
   'ayahNumber: validatedAyah',
-  'setBookmarks((current) => new Set([...current].filter((ayahNumber) => ayahNumber <= data.meta.numberOfAyahs)))',
+  'readBookmarks(surahNumber, data.meta.numberOfAyahs)',
+  'localStorage.getItem(key) === value',
+  'ayahNumber <= surah.numberOfAyahs',
 ]);
 forbidTokens(reader, 'Quran reader validated persistence', [
   'surahNumber,\n        ayahNumber: activeAyah',

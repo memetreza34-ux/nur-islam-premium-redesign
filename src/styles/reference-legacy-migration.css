@@ -559,6 +559,10 @@
 }
 .reference-person-list strong { font-size: .92rem; }
 .reference-person-list small { color: #9db0a5; font-size: .76rem; line-height: 1.5; }
+.reference-person-list a { color: var(--gold-text); text-underline-offset: .2em; }
+.reference-person-list a:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.reference-people-screen .reference-legacy-hero::before,
+.reference-people-screen .reference-legacy-hero::after { right: 0; }
 .reference-person-list > button > svg { color: #d2ad5f; }
 
 .reference-person-detail {

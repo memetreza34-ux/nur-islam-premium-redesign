@@ -1,5 +1,7 @@
 # V1 Source Audit — Dhikr
 
+> **Historischer Stand, nicht aktuell:** Die heutige App hat sieben Routinen einschließlich freiem Zähler und verwendet für Schlaf-Dhikr Bukhari 6318. Die folgenden Aussagen über drei Routinen, fehlenden freien Zähler und die damalige 33/33/34-Auswahl dürfen nicht als heutiger Befund verwendet werden. Aktueller Einzelabgleich: [11.10.2026](DHIKR-SOURCE-AUDIT-2026-10-11.md).
+
 > Betrifft die v1-Blöcke `dhikr-counter-steps` und `dhikr-routines`.
 >
 > `source-audited-green` bedeutet: Wortlaut/Anlass/Zahl wurden gegen die angegebenen Primärquellen geprüft. Es ist keine erfundene menschliche Gelehrtenfreigabe.

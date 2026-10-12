@@ -5,7 +5,6 @@ import {
   BookmarkCheck,
   BookHeart,
   BookOpen,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   CloudDownload,
@@ -79,11 +78,9 @@ function persistSet(key: string, value: Set<number>) {
 }
 
 export function QuranScreen({
-  onBack,
   onOpenReader,
   onOpenAyah,
 }: {
-  onBack: () => void;
   onOpenReader: (surahNumber: number, ayahNumber?: number) => void;
   onOpenAyah: () => void;
 }) {
@@ -169,7 +166,7 @@ export function QuranScreen({
       transition={screenTransition}
     >
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+        <span aria-hidden="true" />
         <div><span className="overline">Quran-Bibliothek</span><h1>Quran</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Lieblingssuren`); }} aria-label="Lieblingssuren"><Heart size={20} /></button>
       </header>
@@ -200,7 +197,7 @@ export function QuranScreen({
 
       <section className="reference-prototype-note reference-quran-online-note">
         <ShieldCheck size={16} />
-        <span><strong>Drei Lesearten</strong><small>Lies jede Sure Vers für Vers oder als deutschen beziehungsweise arabischen Lesetext auf Buchseiten. Die letzte Seite wird automatisch gemerkt. Alle {OFFLINE_QURAN_SURAHS.length} Suren liegen arabisch auf dem Gerät; Aussprachehilfe und deutsche Übersetzung werden nach dem ersten Laden gespeichert.</small></span>
+        <span><strong>Drei Lesearten</strong><small>Lies jede Sure versweise oder auf Buchseiten. Alle {OFFLINE_QURAN_SURAHS.length} Suren sind arabisch mitgeliefert. Aussprachehilfe und deutsche Übersetzung werden separat geladen. Leseseiten und geladene Texte werden lokal gespeichert, sofern dein Browser Speicherung erlaubt. Gelöschte Browserdaten entfernen auch gespeicherte Texte und Lesestellen.</small></span>
       </section>
 
       <label className="reference-input-search">

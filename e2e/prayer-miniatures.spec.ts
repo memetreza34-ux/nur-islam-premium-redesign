@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
+import { prayerRequestFixture } from './fixtures/prayer-api';
 
 const ids = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
 test.use({ serviceWorkers: 'block' });
@@ -7,7 +8,7 @@ test.use({ serviceWorkers: 'block' });
 async function openPrayerList(page: Page) {
   await page.clock.setFixedTime(new Date('2026-08-28T14:00:00+02:00'));
   await page.route('https://api.aladhan.com/**', route => route.fulfill({
-    json: { code: 200, data: { timings: { Fajr: '04:10', Sunrise: '06:00', Dhuhr: '13:10', Asr: '17:00', Maghrib: '20:10', Isha: '22:10' }, meta: { timezone: 'Europe/Berlin', method: { name: 'Test fixture' }, school: 'Standard' } } },
+    json: prayerRequestFixture(route.request().url(), { Fajr: '04:10', Sunrise: '06:00', Dhuhr: '13:10', Asr: '17:00', Maghrib: '20:10', Isha: '22:10' }),
   }));
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Gebet', exact: true }).click();

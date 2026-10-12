@@ -1,9 +1,13 @@
 export type DhikrItem = {
   id: string;
   latin: string;
+  transliteration?: string;
   arabic: string;
   meaning: string;
   target: number;
+  itemSource?: string;
+  itemSourceUrl?: string;
+  itemNote?: string;
 };
 
 export type DhikrRoutine = {
@@ -12,6 +16,7 @@ export type DhikrRoutine = {
   shortTitle: string;
   description: string;
   source: string;
+  sourceUrl?: string;
   note?: string;
   items: DhikrItem[];
 };
@@ -28,6 +33,8 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     shortTitle: 'Nach Gebet',
     description: '33-mal Tasbih, 33-mal Tahmid, 33-mal Takbir und ein abschließender Tahlil.',
     source: 'Sahih Muslim 597a',
+    sourceUrl: 'https://sunnah.com/muslim:597a',
+    note: 'Der Zähler bildet eine Durchführung ab, nicht alle Gebete eines Tages. Für ein weiteres Gebet kannst du die Routine zurücksetzen. Der Fortschrittsbalken ist keine religiöse Bewertung.',
     items: [
       {
         id: 'subhanallah',
@@ -53,8 +60,9 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
       {
         id: 'tahlil-completion',
         latin: 'La ilaha illa Allah wahdahu la sharika lah',
+        transliteration: 'La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamdu, wa huwa ‘ala kulli shay’in qadir.',
         arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
-        meaning: 'Niemand hat das Recht, angebetet zu werden, außer Allah allein. Ihm gehören Herrschaft und Lob, und Er hat Macht über alle Dinge.',
+        meaning: 'Niemand hat das Recht, angebetet zu werden, außer Allah allein. Er hat keinen Partner. Ihm gehören Herrschaft und Lob, und Er hat Macht über alle Dinge.',
         target: 1,
       },
     ],
@@ -65,10 +73,12 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     shortTitle: 'Morgen',
     description: 'Ein umfassender Tasbih, dreimal gesprochen.',
     source: 'Sahih Muslim 2726a',
+    sourceUrl: 'https://sunnah.com/muslim:2726a',
     items: [
       {
         id: 'creation-praise',
         latin: 'SubhanAllahi wa bihamdihi, adada khalqihi …',
+        transliteration: 'SubhanAllahi wa bihamdihi, ‘adada khalqihi, wa rida nafsihi, wa zinata ‘arshihi, wa midada kalimatihi.',
         arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، عَدَدَ خَلْقِهِ، وَرِضَا نَفْسِهِ، وَزِنَةَ عَرْشِهِ، وَمِدَادَ كَلِمَاتِهِ',
         meaning: 'Allah sei gepriesen und gelobt – entsprechend der Zahl Seiner Schöpfung, Seinem Wohlgefallen, dem Gewicht Seines Thrones und der Tinte Seiner Worte.',
         target: 3,
@@ -81,7 +91,8 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     shortTitle: 'Vor Schlaf',
     description: 'Tasbih, Tahmid und Takbir vor dem Einschlafen.',
     source: 'Sahih al-Bukhari 6318',
-    note: 'Die Überlieferung enthält bei der Verteilung der 33/34 Zählungen eine bekannte Variante. Diese App zeigt die im Haupttext genannte 33er-Folge und kennzeichnet die Quelle sichtbar.',
+    sourceUrl: 'https://sunnah.com/bukhari:6318',
+    note: 'Diese Auswahl folgt dem Haupttext von Bukhari 6318: dreimal 33. Dieselbe Stelle nennt zusätzlich eine Variante mit 34 Tasbih. Andere Überlieferungen enthalten andere 33/34-Verteilungen; diese Auswahl erklärt sie nicht für ungültig.',
     items: [
       {
         id: 'sleep-allahu-akbar',
@@ -107,31 +118,33 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     ],
   },
   {
-    /**
-     * Das Gegenstück zum Morgen. Es fehlte — obwohl „Morgen und Abend“ im
-     * Quran und in der Überlieferung durchgehend als Paar vorkommen und die
-     * App den Morgen bereits führte.
-     */
     id: 'evening',
     title: 'Dhikr am Abend',
     shortTitle: 'Abend',
-    description: 'Das Gegenstück zum Morgen-Dhikr, gesprochen nach dem Nachmittag bis zum Einbruch der Nacht.',
-    source: 'Sunan Abu Dawud; Sunan at-Tirmidhi',
-    note: 'Die Zeitspanne wird unterschiedlich angegeben — verbreitet ist zwischen Asr und Maghrib.',
+    description: 'Eine Auswahl für den Abend; die Quellen legen hier keine gemeinsame minutengenaue Zeitspanne fest.',
+    source: 'Sahih Muslim 2723a, 2692, 2693 · Sunan Abi Dawud 5088',
+    note: 'Eine Auswahl, keine vollständig überlieferte gemeinsame Routine. Die Tahlil-Zahl aus Muslim 2693 ist nicht speziell an den Abend gebunden. Zeitliche Einordnungen können variieren.',
     items: [
       {
         id: 'evening-amsayna',
         latin: 'Amsayna wa amsal-mulku lillah',
-        arabic: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ',
-        meaning: 'Wir haben den Abend erreicht, und die Herrschaft gehört Allah.',
+        transliteration: 'Amsayna wa amsal-mulku lillah, wal-hamdu lillah. La ilaha illallahu wahdahu la sharika lah. Lahul-mulku wa lahul-hamdu wa huwa ‘ala kulli shay’in qadir. Allahumma as’aluka khayra hadhihil-laylati wa a‘udhu bika min sharri hadhihil-laylati wa sharri ma ba‘daha. Allahumma inni a‘udhu bika minal-kasali wa su’il-kibar. Allahumma inni a‘udhu bika min ‘adhabin fin-nari wa ‘adhabin fil-qabr.',
+        arabic: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ اللَّهُمَّ أَسْأَلُكَ خَيْرَ هَذِهِ اللَّيْلَةِ وَأَعُوذُ بِكَ مِنْ شَرِّ هَذِهِ اللَّيْلَةِ وَشَرِّ مَا بَعْدَهَا اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْكَسَلِ وَسُوءِ الْكِبَرِ اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابٍ فِي النَّارِ وَعَذَابٍ فِي الْقَبْرِ',
+        meaning: 'Wir sind in den Abend eingetreten, und alle Herrschaft gehört Allah; Ihm gebührt das Lob. Niemand ist der Anbetung würdig außer Allah allein, ohne Partner. Ihm gehören Herrschaft und Lob, und Er ist über alles mächtig. O Allah, ich bitte Dich um das Gute dieser Nacht und suche Zuflucht bei Dir vor ihrem Übel und dem Übel danach, vor Trägheit und den Beschwerden des Alters sowie vor der Strafe im Feuer und im Grab.',
         target: 1,
+        itemSource: 'Sahih Muslim 2723a',
+        itemSourceUrl: 'https://sunnah.com/muslim:2723a',
       },
       {
         id: 'evening-protection',
         latin: 'Bismillahil-ladhi la yadurru ma\'asmihi shay',
-        arabic: 'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ',
-        meaning: 'Im Namen Allahs, bei dessen Namen nichts schaden kann.',
+        transliteration: 'Bismillahil-ladhi la yadurru ma‘a-smihi shay’un fil-ardi wa la fis-sama’i wa huwas-sami‘ul-‘alim.',
+        arabic: 'بِسْمِ اللَّهِ الَّذِي لَا يَضُرُّ مَعَ اسْمِهِ شَيْءٌ فِي الْأَرْضِ وَلَا فِي السَّمَاءِ وَهُوَ السَّمِيعُ الْعَلِيمُ',
+        meaning: 'Im Namen Allahs, mit dessen Namen nichts auf der Erde und im Himmel schadet; Er ist der Allhörende, der Allwissende.',
         target: 3,
+        itemSource: 'Sunan Abi Dawud 5088',
+        itemSourceUrl: 'https://sunnah.com/abudawud:5088',
+        itemNote: 'Sahih nach al-Albani in der Online-Ausgabe. Die App leitet daraus keine medizinische Zusage und keinen Ersatz für Vorsichtsmaßnahmen ab.',
       },
       {
         id: 'evening-tasbih',
@@ -139,27 +152,29 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
         arabic: 'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ',
         meaning: 'Preis sei Allah, und Ihm gebührt das Lob.',
         target: 100,
+        itemSource: 'Sahih Muslim 2692',
+        itemSourceUrl: 'https://sunnah.com/muslim:2692',
       },
       {
         id: 'evening-tahlil',
         latin: 'La ilaha illallahu wahdahu la sharika lah',
-        arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ',
-        meaning: 'Es gibt keinen Gott außer Allah allein, Er hat keinen Partner.',
+        transliteration: 'La ilaha illallahu wahdahu la sharika lah, lahul-mulku wa lahul-hamdu, wa huwa ‘ala kulli shay’in qadir.',
+        arabic: 'لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ',
+        meaning: 'Niemand ist der Anbetung würdig außer Allah allein. Er hat keinen Partner; Ihm gehören Herrschaft und Lob, und Er ist über alles mächtig.',
         target: 10,
+        itemSource: 'Sahih Muslim 2693 · allgemeiner Tahlil, kein spezielles Abendritual',
+        itemSourceUrl: 'https://sunnah.com/muslim:2693',
       },
     ],
   },
   {
-    /**
-     * Die häufigste Frage nach einem Fehler ist, was man jetzt sagt. Bisher
-     * stand die Antwort in der App nur verstreut in den Duas.
-     */
     id: 'istighfar',
     title: 'Um Vergebung bitten',
     shortTitle: 'Vergebung',
-    description: 'Kurze Formeln der Umkehr, die zu jeder Zeit und an jedem Ort gesprochen werden können.',
-    source: 'Sahih al-Bukhari; Sahih Muslim',
-    note: 'Keine der Formeln ist an eine Zahl gebunden — die Zielwerte sind verbreitete Gewohnheiten, keine Vorschrift.',
+    description: 'Kurze Formeln, um Allah um Vergebung zu bitten; diese Auswahl behauptet keinen besonderen Pflichtzeitpunkt.',
+    source: 'Sahih al-Bukhari 6307 · Sunan Abi Dawud 1516',
+    sourceUrl: 'https://sunnah.com/bukhari:6307',
+    note: 'Die Zählerziele sind persönliche Merkhilfen, keine Pflicht oder Belohnungsgarantie. Abi Dawud 1516 nennt die vollständige Formel hundertmal in einer Sitzung; Bukhari 6307 berichtet von mehr als siebzig Bitten täglich.',
     items: [
       {
         id: 'astaghfirullah',
@@ -171,9 +186,13 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
       {
         id: 'rabbighfir',
         latin: 'Rabbighfir li wa tub ’alayya',
-        arabic: 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ',
-        meaning: 'Mein Herr, vergib mir und nimm meine Umkehr an.',
+        transliteration: 'Rabbighfir li wa tub ‘alayya, innaka antat-tawwabur-rahim.',
+        arabic: 'رَبِّ اغْفِرْ لِي وَتُبْ عَلَيَّ إِنَّكَ أَنْتَ التَّوَّابُ الرَّحِيمُ',
+        meaning: 'Mein Herr, vergib mir und nimm meine Umkehr an. Du bist der die Reue Annehmende, der Barmherzige.',
         target: 100,
+        itemSource: 'Sunan Abi Dawud 1516',
+        itemSourceUrl: 'https://sunnah.com/abudawud:1516',
+        itemNote: 'Sahih nach al-Albani in der Online-Ausgabe. Der arabische Text dieser Ausgabe endet mit ar-Rahim; die englische Wiedergabe ist dafür kein wortgleiches Gegenstück.',
       },
       {
         id: 'astaghfirullah-atub',
@@ -189,7 +208,9 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     title: 'Segenswünsche für den Propheten',
     shortTitle: 'Salawat',
     description: 'Segenswünsche für den Propheten ﷺ — besonders am Freitag verbreitet, an keinen Tag gebunden.',
-    source: 'Sunan Abu Dawud; Sunan an-Nasa’i',
+    source: 'Quran 33:56 · allgemeine Grundlage für Segenswünsche',
+    sourceUrl: 'https://quran.com/33/56',
+    note: 'Kurze persönliche Formulierungen, nicht der Wortlaut von Quran 33:56. Die Ziele 100 und 33 sind frei gewählte Zählerwerte, keine für diese Formeln belegten religiösen Vorgaben. Zum Freitagsbezug: Sunan Abi Dawud 1047, Sahih nach al-Albani in der Online-Ausgabe.',
     items: [
       {
         id: 'salawat-short',
@@ -213,6 +234,7 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
     shortTitle: 'Frei',
     description: 'Ein neutraler Zähler für persönlichen Dhikr ohne vorgegebene religiöse Anzahl.',
     source: 'Persönlicher Zähler · keine bestimmte Anzahl behauptet',
+    note: '100 ist ein persönlicher Zählerabschnitt, keine religiöse Vorgabe oder Pflicht zum Abschluss.',
     items: [
       {
         id: 'free-subhanallah',
@@ -220,6 +242,8 @@ export const DHIKR_ROUTINES: DhikrRoutine[] = [
         arabic: 'سُبْحَانَ اللَّهِ',
         meaning: 'Allah ist frei von jedem Mangel.',
         target: 100,
+        itemSource: 'Sahih Muslim 597a · Tasbih-Formel, nicht die frei gewählte Zielzahl',
+        itemSourceUrl: 'https://sunnah.com/muslim:597a',
       },
     ],
   },

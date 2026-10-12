@@ -11,8 +11,8 @@
  * Kalenderbildschirm sagt das ausdrücklich; die Abweichung beträgt in der
  * Praxis bis zu einem Tag.
  *
- * Wo die Begehung selbst unter Gelehrten unterschiedlich bewertet wird —
- * Mawlid, Mitte Sha'ban —, ist das im Text vermerkt statt weggelassen.
+ * Unsicher datierte oder unterschiedlich bewertete Sonderanlässe werden nicht
+ * als religiöse Termine vorgeschlagen. Das ist keine Bewertung der Begehung.
  */
 
 export type IslamicEvent = {
@@ -34,7 +34,7 @@ export const ISLAMIC_EVENTS: readonly IslamicEvent[] = [
     month: 1,
     days: [1],
     meaning: 'Beginn des neuen Hijri-Jahres und des heiligen Monats Muharram.',
-    practice: 'Ein Tag für Reue, Dua, Dankbarkeit und gute Vorsätze.',
+    practice: 'Kalenderbeginn; daraus wird kein besonderes Ritual für diesen Tag abgeleitet.',
     fasting: false,
   },
   {
@@ -56,33 +56,6 @@ export const ISLAMIC_EVENTS: readonly IslamicEvent[] = [
     fasting: true,
   },
   {
-    id: 'mawlid',
-    title: 'Geburt des Propheten ﷺ',
-    month: 3,
-    days: [12],
-    meaning: 'Ein verbreitet bekannter historischer Termin zur Geburt des Propheten ﷺ; die Art der Begehung wird unter Gelehrten unterschiedlich bewertet.',
-    practice: 'Salawat senden, seine Sunnah lernen und sich an belegtes Wissen halten.',
-    fasting: false,
-  },
-  {
-    id: 'isra-miraj',
-    title: 'Isra und Miʿraj',
-    month: 7,
-    days: [27],
-    meaning: 'Erinnert an die Nachtreise und Himmelfahrt des Propheten ﷺ; das genaue Datum ist nicht sicher belegt.',
-    practice: 'Surah al-Isra lesen, über das Gebet lernen, unbelegte Sonderrituale meiden.',
-    fasting: false,
-  },
-  {
-    id: 'mid-shaban',
-    title: 'Mitte Shaʿban',
-    month: 8,
-    days: [15],
-    meaning: 'Ein bekannter Termin vor Ramadan; besondere Handlungen dazu werden unterschiedlich bewertet.',
-    practice: 'Allgemein: Reue, Dua und Vorbereitung auf den Ramadan.',
-    fasting: false,
-  },
-  {
     id: 'ramadan',
     title: 'Ramadan beginnt',
     month: 9,
@@ -95,18 +68,18 @@ export const ISLAMIC_EVENTS: readonly IslamicEvent[] = [
     id: 'last-ten-ramadan',
     title: 'Letzte zehn Nächte des Ramadan',
     month: 9,
-    days: [21, 22, 23, 24, 25, 26, 28, 29, 30],
+    days: [21, 22, 23, 24, 25, 26, 27, 28, 29, 30],
     meaning: 'Die wichtigsten Nächte des Ramadan, in denen Laylat al-Qadr gesucht wird.',
     practice: 'Mehr Quran, Dua, Nachtgebet, Dhikr und Iʿtikaf, wenn möglich.',
     fasting: true,
   },
   {
     id: 'laylat-al-qadr',
-    title: 'Laylat al-Qadr',
+    title: 'Laylat al-Qadr suchen',
     month: 9,
-    days: [27],
-    meaning: 'Die Nacht der Bestimmung ist besser als tausend Monate; sie wird in den letzten ungeraden Nächten gesucht.',
-    practice: 'Nachtgebet, Dua, Quran und die Bitte: Allahumma innaka ʿafuwwun tuhibbul-ʿafwa faʿfu ʿanni.',
+    days: [21, 23, 25, 27, 29],
+    meaning: 'Kein festes Datum: Laylat al-Qadr wird in den letzten zehn Nächten gesucht, besonders in den ungeraden. Quelle: Sahih al-Bukhari 2017.',
+    practice: 'Nachtgebet und Dua. Die angezeigte Hijri-Nacht beginnt am vorherigen Abend mit Sonnenuntergang.',
     fasting: true,
   },
   {
@@ -120,7 +93,7 @@ export const ISLAMIC_EVENTS: readonly IslamicEvent[] = [
   },
   {
     id: 'first-ten-dhul-hijjah',
-    title: 'Erste zehn Tage von Dhul-Hijjah',
+    title: 'Erste Tage von Dhul-Hijjah',
     month: 12,
     days: [1, 2, 3, 4, 5, 6, 7],
     meaning: 'Sehr gesegnete Tage für gute Taten, Dhikr und Fasten.',
@@ -165,12 +138,12 @@ export const ISLAMIC_EVENTS: readonly IslamicEvent[] = [
   },
 ];
 
-/** An diesen drei Tagen jedes Hijri-Monats ist der Mond voll. */
+/** Fastentage um die Monatsmitte; keine exakte astronomische Vollmondangabe. */
 export const WHITE_DAYS = [13, 14, 15] as const;
 
 export const WHITE_DAYS_EVENT = {
   title: 'Weiße Tage',
-  meaning: 'Die Tage mit Vollmond in jedem islamischen Monat.',
+  meaning: 'Der 13., 14. und 15. Tag des Hijri-Monats; keine exakte Vollmondvorhersage.',
   practice: 'Das Fasten an diesen drei Tagen wird empfohlen.',
 } as const;
 

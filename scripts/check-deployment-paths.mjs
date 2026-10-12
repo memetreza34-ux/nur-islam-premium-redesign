@@ -110,11 +110,9 @@ if (main.includes('ReferenceArtworkHost')) {
 }
 
 for (const requirement of [
-  "versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION)",
-  "const VISUAL_VERSION = '20260826-original-art';",
   "resolveAppPath('manifest.webmanifest')",
 ]) {
-  if (!main.includes(requirement)) throw new Error(`Main preload path is not deployment-safe: ${requirement}`);
+  if (!main.includes(requirement)) throw new Error(`Main manifest path is not deployment-safe: ${requirement}`);
 }
 
 for (const requirement of [
@@ -152,10 +150,10 @@ if (worker.includes("'/index.html'") || worker.includes("'/premium-assets/") || 
   throw new Error('Service worker still contains root-absolute app-shell paths.');
 }
 
-for (const color of ['#042a21', '#001b16', '#00120f', '#e2bf77', '#f2d79a', '#fff8ea']) {
-  if (!appIcon.includes(color)) throw new Error(`PWA SVG app icon is missing reference palette color: ${color}`);
+for (const color of ['#001b16', '#e2bf77', '#f5f0e6']) {
+  if (!appIcon.toLowerCase().includes(color)) throw new Error(`PWA SVG app icon is missing reference palette color: ${color}`);
 }
-if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Halbmond und Stern')) {
+if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Goldene Moschee mit zwei Minaretten und einem hellen Tor auf dunklem Smaragdgrün')) {
   throw new Error('PWA SVG app icon must keep the Nur Islam identity metadata.');
 }
 
@@ -188,7 +186,7 @@ if (!hasIcon('./nur-app-icon-192.png', '192x192', 'image/png', 'any')) {
 if (!hasIcon('./nur-app-icon-512.png', '512x512', 'image/png', 'any')) {
   throw new Error('PWA manifest must keep the scoped 512x512 PNG install icon.');
 }
-if (!hasIcon('./nur-app-icon-512.png', '512x512', 'image/png', 'maskable')) {
+if (!hasIcon('./nur-app-icon-maskable-512.png', '512x512', 'image/png', 'maskable')) {
   throw new Error('PWA manifest must keep the scoped 512x512 maskable PNG icon.');
 }
 

@@ -131,4 +131,4 @@ export const MADHHAB_DIFFERENCES_BY_STEP = MADHHAB_DIFFERENCES.reduce((map, diff
  * Einordnung nicht von der Sache getrennt gepflegt wird.
  */
 export const MADHHAB_DISCLAIMER =
-  'Übersicht der überwiegenden Praxis in den vier sunnitischen Rechtsschulen, nicht abschließend und keine Rechtsauskunft. Alle vier stehen auf demselben Boden; die Unterschiede betreffen die Ausführung, nicht die Gültigkeit. Was für dich gilt, klärst du am besten mit einer qualifizierten Lehrperson.';
+  'Übersicht der überwiegenden Praxis in den vier sunnitischen Rechtsschulen, nicht abschließend und keine Rechtsauskunft. Die Schulen können Handlungen unterschiedlich einordnen; daraus folgt keine pauschale Gültigkeitszusage für jede Ausführung. Für die eigene Praxis sind die Regeln der zugrunde gelegten Rechtsschule maßgeblich.';

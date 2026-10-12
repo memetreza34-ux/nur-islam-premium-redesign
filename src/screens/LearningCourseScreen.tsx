@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpen,
   Check,
@@ -17,6 +17,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
+import { readLearningProgress, readLearningPosition, updateLearningCompletion, writeLearningPosition } from '../services/learningProgress';
 import {
   getCategoryLessons,
   getLearningCategory,
@@ -35,31 +36,8 @@ const completionParticles = Array.from({ length: 10 }, (_, index) => ({
   delay: (index % 5) * .04,
 }));
 
-function readStringSet(key: string) {
-  try {
-    const raw = localStorage.getItem(key);
-    const parsed = raw ? JSON.parse(raw) as unknown : [];
-    return new Set(Array.isArray(parsed) ? parsed.map(String) : []);
-  } catch {
-    return new Set<string>();
-  }
-}
-
-function writeStringSet(key: string, value: Set<string>) {
-  try { localStorage.setItem(key, JSON.stringify([...value])); } catch { /* optional */ }
-}
-
 export function readLastLesson(categoryId: LearningCategoryId, lessons: LearningLesson[]) {
-  try {
-    const candidate = localStorage.getItem(`nur_learning_last_${categoryId}`);
-    return lessons.some((lesson) => lesson.id === candidate) ? candidate as string : lessons[0]?.id ?? '';
-  } catch {
-    return lessons[0]?.id ?? '';
-  }
-}
-
-function writeLastLesson(categoryId: LearningCategoryId, lessonId: string) {
-  try { localStorage.setItem(`nur_learning_last_${categoryId}`, lessonId); } catch { /* optional */ }
+  return readLearningPosition(categoryId, lessons).lessonId;
 }
 
 export function LearningCourseScreen({
@@ -71,16 +49,22 @@ export function LearningCourseScreen({
 }) {
   const category = useMemo(() => getLearningCategory(categoryId), [categoryId]);
   const lessons = useMemo(() => getCategoryLessons(categoryId), [categoryId]);
-  const [selectedLessonId, setSelectedLessonId] = useState(() => readLastLesson(categoryId, lessons));
-  const [completed, setCompleted] = useState(() => readStringSet('nur_learning_completed'));
+  const [resume, setResume] = useState(() => readLearningPosition(categoryId, lessons));
+  const selectedLessonId = resume.lessonId;
+  const [progress, setProgress] = useState(readLearningProgress);
+  const completed = progress.completed;
+  const [progressWarning, setProgressWarning] = useState<string | null>(() => progress.valid ? null : 'Vorhandener Lernfortschritt nicht lesbar. Die gespeicherten Daten bleiben unverändert.');
+  const [resumeWarning, setResumeWarning] = useState<string | null>(() => resume.valid ? null : 'Gespeicherte Lektionsposition nicht lesbar oder nicht zuordenbar. Der vorhandene Wert bleibt unverändert.');
+  const [completionSaved, setCompletionSaved] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [courseMapOpen, setCourseMapOpen] = useState(false);
   const [completionOpen, setCompletionOpen] = useState(false);
-  const [toast, setToast] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ message: string; failed: boolean } | null>(null);
+  const toastTimerRef = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
 
   const closeDialog = useCallback(() => { setCompletionOpen(false); }, []);
-  const screenDialog = useDialog(completionOpen, closeDialog, 'Kurs abgeschlossen');
+  const screenDialog = useDialog(completionOpen, closeDialog, 'Verständnisfrage beantwortet');
 
   const selectedLesson = lessons.find((lesson) => lesson.id === selectedLessonId) ?? lessons[0];
   const categoryCompleted = lessons.filter((lesson) => completed.has(lesson.id)).length;
@@ -88,22 +72,23 @@ export function LearningCourseScreen({
   const lessonIndex = Math.max(0, lessons.findIndex((lesson) => lesson.id === selectedLesson?.id));
   const answerCorrect = selectedAnswer === selectedLesson?.question.correctIndex;
 
-  useEffect(() => writeStringSet('nur_learning_completed', completed), [completed]);
-  useEffect(() => {
-    if (!selectedLesson) return;
-    writeLastLesson(categoryId, selectedLesson.id);
-  }, [categoryId, selectedLesson]);
+  useEffect(() => () => { if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current); }, []);
 
-  const flash = (message: string) => {
-    setToast(message);
-    window.setTimeout(() => setToast(null), 2200);
+  const flash = (message: string, failed = false) => {
+    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
+    setToast({ message, failed });
+    toastTimerRef.current = window.setTimeout(() => setToast(null), 4000);
   };
 
   const scrollToCourseTop = () => document.querySelector<HTMLElement>('.screen-transition-frame')?.scrollTo(0, 0);
 
   const selectLesson = (lesson: LearningLesson) => {
-    setSelectedLessonId(lesson.id);
+    const valid = writeLearningPosition(categoryId, lesson.id);
+    setResume({ lessonId: lesson.id, valid });
+    setResumeWarning(valid ? null : 'Lektion geöffnet; Speicherung der letzten Lektionsposition für spätere Sitzungen nicht bestätigt.');
     setSelectedAnswer(null);
+    setCompletionOpen(false);
+    setCompletionSaved(false);
     setCourseMapOpen(false);
     scrollToCourseTop();
   };
@@ -120,7 +105,10 @@ export function LearningCourseScreen({
       return;
     }
 
-    setCompleted((current) => new Set(current).add(selectedLesson.id));
+    const result = updateLearningCompletion(selectedLesson.id, true);
+    setCompletionSaved(Boolean(result));
+    if (result) setProgress(result);
+    setProgressWarning(result ? null : 'Speicherung nicht bestätigt. Vorhandene Daten wurden nicht absichtlich ersetzt; ein Schreibversuch kann ohne überprüfbares Rücklesen erfolgreich gewesen sein.');
     setCompletionOpen(true);
     navigator.vibrate?.([45, 30, 70]);
   };
@@ -128,12 +116,10 @@ export function LearningCourseScreen({
   const resetLesson = () => {
     if (!selectedLesson) return;
     setSelectedAnswer(null);
-    setCompleted((current) => {
-      const next = new Set(current);
-      next.delete(selectedLesson.id);
-      return next;
-    });
-    flash('Lektionsfortschritt zurückgesetzt');
+    const result = updateLearningCompletion(selectedLesson.id, false);
+    if (result) setProgress(result);
+    setProgressWarning(result ? null : 'Zurücksetzen des Lernfortschritts nicht gespeichert oder nicht überprüfbar.');
+    flash(result ? 'Lektionsfortschritt zurückgesetzt' : 'Zurücksetzen nicht bestätigt', !result);
   };
 
   const openNextLesson = () => {
@@ -144,7 +130,7 @@ export function LearningCourseScreen({
 
   const shareLesson = async () => {
     if (!selectedLesson) return;
-    const sourceList = selectedLesson.sources.map((source) => source.reference).join(' · ');
+    const sourceList = selectedLesson.sources.map((source) => `${source.reference}${source.url ? ` (${source.url})` : ''}`).join(' · ');
     const text = `${selectedLesson.title}\n${selectedLesson.summary}\nQuellen: ${sourceList}`;
     try {
       if (navigator.share) await navigator.share({ title: `Nur Islam · ${selectedLesson.title}`, text });
@@ -152,8 +138,8 @@ export function LearningCourseScreen({
         await navigator.clipboard.writeText(text);
         flash('Lektionsübersicht kopiert');
       }
-    } catch {
-      flash('Teilen wurde abgebrochen');
+    } catch (error) {
+      flash(error instanceof Error && error.name === 'AbortError' ? 'Teilen wurde abgebrochen' : 'Lektionsübersicht konnte nicht geteilt oder kopiert werden', true);
     }
   };
 
@@ -176,6 +162,8 @@ export function LearningCourseScreen({
         <button className="icon-button" onClick={shareLesson} aria-label="Lektion teilen"><Share2 size={19} /></button>
       </header>
 
+      {progressWarning || resumeWarning ? <p className="learning-course-v2__sources-notice" role="status">{[progressWarning, resumeWarning].filter(Boolean).join(' ')}</p> : null}
+
       <section className={`learning-course-v2__intro is-${categoryId}`} aria-labelledby="learning-course-title">
         <div className="learning-course-v2__intro-copy">
           <span className="overline">Kursziel</span>
@@ -191,7 +179,7 @@ export function LearningCourseScreen({
       <section className="learning-course-v2__path" aria-label="Kursplan">
         <button className="learning-course-v2__plan-toggle" onClick={() => setCourseMapOpen((open) => !open)} aria-expanded={courseMapOpen}>
           <span className="learning-course-v2__plan-icon"><Route size={20} /></span>
-          <span><strong>Kursplan</strong><small>{categoryCompleted} von {lessons.length} abgeschlossen · der Reihe nach lernen</small></span>
+          <span><strong>Kursplan</strong><small>{progress.valid ? `${categoryCompleted} von ${lessons.length} abgeschlossen · der Reihe nach lernen` : 'Gespeicherter Fortschritt nicht lesbar · der Reihe nach lernen'}</small></span>
           <ChevronDown className={courseMapOpen ? 'is-open' : ''} size={19} aria-hidden="true" />
         </button>
         <AnimatePresence initial={false}>
@@ -224,7 +212,7 @@ export function LearningCourseScreen({
               als sei die Lektion noch nicht fertig geschrieben. Gemeint ist der
               Fortschritt des Lesenden, und der heißt schlicht: noch nicht
               gelesen. */}
-            {completed.has(selectedLesson.id) ? 'Abgeschlossen' : 'Noch nicht gelesen'}</span></div>
+            {progress.valid ? completed.has(selectedLesson.id) ? 'Abgeschlossen' : 'Verständnisfrage offen' : 'Abschlussstatus nicht verfügbar'}</span></div>
         </header>
 
         <section className="learning-course-v2__reading" aria-label="Lektionsinhalt">
@@ -244,7 +232,7 @@ export function LearningCourseScreen({
             <span className="overline">Auf einen Blick</span>
             <h3 id="learning-details-title">Das gehört zu diesem Thema</h3>
             <div>
-              {selectedLesson.detailItems.map((item) => <article key={item.title}><strong>{item.title}</strong><p>{item.text}</p></article>)}
+              {selectedLesson.detailItems.map((item) => <article key={item.title}><strong>{item.title}</strong><p lang={item.lang} dir={item.lang === 'ar' ? 'rtl' : undefined}>{item.text}</p></article>)}
             </div>
           </section>
         ) : null}
@@ -279,7 +267,7 @@ export function LearningCourseScreen({
         <div>
           {selectedLesson.sources.map((source) => (
             <article key={`${source.label}-${source.reference}`}>
-              <span>{source.label}</span><strong>{source.reference}</strong><p>{source.note}</p>
+              <span>{source.label}</span><strong>{source.url ? <a href={source.url} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit' }}>{source.reference}</a> : source.reference}</strong><p>{source.note}</p>
             </article>
           ))}
         </div>
@@ -302,15 +290,15 @@ export function LearningCourseScreen({
                 {!reduceMotion ? completionParticles.map((particle) => <motion.i key={particle.id} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, .9, 0], scale: [0, .9, .45], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: .82, delay: particle.delay, ease: [0.22, 1, 0.36, 1] }} />) : null}
                 <motion.span initial={{ scale: reduceMotion ? 1 : .82 }} animate={{ scale: reduceMotion ? 1 : [1, 1.045, 1] }} transition={{ duration: reduceMotion ? 0 : .42 }}><CircleCheck size={43} /></motion.span>
               </div>
-              <span className="hero-pill">Lektion abgeschlossen</span><h2>{selectedLesson.title}</h2><p>Du hast die Verständnisfrage richtig beantwortet. Der Fortschritt wurde lokal gespeichert.</p>
-              <div className="reference-learning-completion-stats"><span><strong>{categoryCompleted}</strong><small>von {lessons.length} in {category.title}</small></span><span><strong>{categoryProgress}%</strong><small>Kategoriefortschritt</small></span></div>
+              <span className="hero-pill">{completionSaved ? 'Lektion abgeschlossen' : 'Richtig beantwortet'}</span><h2>{selectedLesson.title}</h2><p>Du hast die Verständnisfrage richtig beantwortet. {completionSaved ? 'Der Fortschritt wurde lokal gespeichert.' : 'Speicherung nicht bestätigt. Dein gespeicherter Fortschritt wird hier nicht als erhöht angezeigt.'}</p>
+              <div className="reference-learning-completion-stats"><span><strong>{progress.valid ? categoryCompleted : '—'}</strong><small>von {lessons.length} in {category.title}</small></span><span><strong>{progress.valid ? `${categoryProgress}%` : '—'}</strong><small>Kategoriefortschritt</small></span></div>
               <div className="reference-learning-completion-actions"><button onClick={() => setCompletionOpen(false)}>Nochmal lesen</button>{lessons[lessonIndex + 1] ? <button className="gold-button" onClick={openNextLesson}>Weiterlernen <ChevronRight size={17} /></button> : <button className="gold-button" onClick={() => { setCompletionOpen(false); onBack(); }}>Fertig <CircleCheck size={17} /></button>}</div>
             </motion.section>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+      <AnimatePresence>{toast ? <motion.div className="toast" role="status" initial={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, x: '-50%', y: 0 }} exit={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 6 }} transition={microTransition}>{toast.failed ? <X size={18} /> : <CircleCheck size={18} />} {toast.message}</motion.div> : null}</AnimatePresence>
     </motion.main>
   );
 }

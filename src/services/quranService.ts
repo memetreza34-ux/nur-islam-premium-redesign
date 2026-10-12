@@ -47,7 +47,7 @@ const memoryCache = new Map<string, unknown>();
 
 /**
  * Alle 114 Suren liegen im arabischen Uthmani-Text offline vor. Aussprachehilfe
- * und deutsche Übersetzung werden pro Sure geladen und im Browser gespeichert.
+ * und deutsche Übersetzung werden pro Sure geladen; Browser-Cache ist optional.
  */
 export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);
 export const OFFLINE_QURAN_SURAH_SET = new Set<number>(OFFLINE_QURAN_SURAHS);
@@ -84,25 +84,48 @@ function assertSurahNumber(number: number) {
   }
 }
 
-async function loadJson<T>(url: string): Promise<T> {
+async function loadJson<T>(url: string, validate: (data: unknown) => T): Promise<T> {
   if (memoryCache.has(url)) return memoryCache.get(url) as T;
 
   const response = await fetch(url, { headers: { Accept: 'application/json' } });
   if (!response.ok) throw new Error(`Quran-Daten konnten nicht geladen werden (${response.status}).`);
 
-  const data = await response.json() as T;
+  const data = validate(await response.json());
   memoryCache.set(url, data);
   return data;
 }
 
 export async function fetchSurahs(): Promise<Surah[]> {
-  const surahs = await loadJson<Surah[]>(`${DATA_BASE}/surahs.json`);
-  if (surahs.length !== 114) throw new Error('Die lokale Surenliste ist unvollständig.');
-  return surahs;
+  return loadJson<Surah[]>(`${DATA_BASE}/surahs.json`, (data) => {
+    if (!Array.isArray(data) || data.length !== 114 || data.some((surah, index) => (
+      !surah || surah.number !== index + 1 || !Number.isInteger(surah.numberOfAyahs) || surah.numberOfAyahs < 1
+      || ['name', 'englishName', 'englishNameTranslation'].some(key => typeof surah[key] !== 'string' || !surah[key].trim())
+      || !['Meccan', 'Medinan'].includes(surah.revelationType)
+    ))) throw new Error('Die lokale Surenliste ist unvollständig oder ungültig.');
+    return data;
+  });
 }
 
-async function fetchOfflineSurahDetail(number: number, language: 'ar'): Promise<SurahDetail> {
-  return loadJson<SurahDetail>(`${DATA_BASE}/${language}/${number}.json`);
+async function fetchOfflineSurahDetail(number: number, language: 'ar', meta: Surah): Promise<SurahDetail> {
+  return loadJson<SurahDetail>(`${DATA_BASE}/${language}/${number}.json`, (data) => {
+    const detail = data as SurahDetail | null;
+    if (!detail || detail.number !== meta.number || detail.numberOfAyahs !== meta.numberOfAyahs) {
+      throw new Error('Die lokale Quran-Datei stimmt nicht mit dem Surenverzeichnis überein.');
+    }
+    validateAyahs(detail.ayahs, meta);
+    return detail;
+  });
+}
+
+function validateAyahs(ayahs: QuranAyah[], meta: Surah) {
+  if (!Array.isArray(ayahs) || ayahs.length !== meta.numberOfAyahs) {
+    throw new Error('Die Quran-Datei dieser Sure ist unvollständig.');
+  }
+  ayahs.forEach((ayah, index) => {
+    if (!ayah || ayah.numberInSurah !== index + 1 || typeof ayah.text !== 'string' || !ayah.text.trim()) {
+      throw new Error(`Ayah ${index + 1} ist in der Quran-Quelle unvollständig.`);
+    }
+  });
 }
 
 function getOnlineRequestUrl(number: number, edition: string) {
@@ -113,14 +136,10 @@ function validateEdition(edition: QuranApiEdition | undefined, meta: Surah, iden
   if (!edition || edition.edition?.identifier !== identifier || !Array.isArray(edition.ayahs)) {
     throw new Error(`Die Quran-Quelle lieferte die Edition ${identifier} nicht vollständig.`);
   }
-  if (edition.number !== meta.number || edition.ayahs.length !== meta.numberOfAyahs) {
+  if (edition.number !== meta.number || edition.numberOfAyahs !== meta.numberOfAyahs) {
     throw new Error('Die online geladenen Quran-Daten stimmen nicht mit dem Surenverzeichnis überein.');
   }
-  edition.ayahs.forEach((ayah, index) => {
-    if (ayah.numberInSurah !== index + 1 || typeof ayah.text !== 'string' || !ayah.text.trim()) {
-      throw new Error(`Ayah ${index + 1} ist in der Quran-Quelle unvollständig.`);
-    }
-  });
+  validateAyahs(edition.ayahs, meta);
   return edition;
 }
 
@@ -142,7 +161,7 @@ async function readOnlineCache(url: string, meta: Surah, edition: string) {
   try {
     const cache = await caches.open(ONLINE_CACHE_NAME);
     const response = await cache.match(url);
-    if (!response) return null;
+    if (!response?.ok) return null;
     const payload = await response.json() as QuranApiResponse;
     return parseOnlineEdition(payload, meta, edition);
   } catch {
@@ -192,12 +211,8 @@ export async function fetchSurahBundle(number: number): Promise<QuranSurahBundle
   const meta = surahs.find((surah) => surah.number === number);
   if (!meta) throw new Error('Sure wurde in der lokalen Liste nicht gefunden.');
 
-  // Arabic renders first from the bundle. The two supporting reading layers are
-  // independent so one failed endpoint does not hide the other.
-  const arabic = await fetchOfflineSurahDetail(number, 'ar');
-  if (arabic.ayahs.length !== meta.numberOfAyahs) {
-    throw new Error('Die lokale Quran-Datei dieser Sure ist unvollständig.');
-  }
+  // Supporting layers cannot replace the bundled Arabic or hide each other.
+  const arabic = await fetchOfflineSurahDetail(number, 'ar', meta);
 
   const [transliteration, translation] = await Promise.all([
     fetchReadingLayer(meta, ONLINE_TRANSLITERATION_EDITION),

@@ -111,7 +111,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Eingesetzte Dienste und was an sie übermittelt wird',
     paragraphs: [
       'AlAdhan (api.aladhan.com) – Gebetszeiten. Übermittelt werden Breiten- und Längengrad, Datum, Berechnungsmethode und Asr-Schule.',
-      'Al Quran Cloud (api.alquran.cloud) – Quran-Aussprachehilfe in Lateinschrift und deutsche Übersetzung. Beide sind nicht Teil der App, sondern werden beim Öffnen einer Sure abgerufen und danach im Browser gespeichert. Übermittelt werden Surennummer und Ausgabenkennung, keine personenbezogenen Daten; wie bei jedem Abruf verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse. Der arabische Text liegt vollständig in der App und wird nicht abgefragt.',
+      'Al Quran Cloud (api.alquran.cloud) – Quran-Aussprachehilfe in Lateinschrift und deutsche Übersetzung. Beide sind nicht als vollständiger Bestand mitgeliefert, sondern werden beim Öffnen einer Sure abgerufen. Speicherung im Browser-Cache ist optional und kann fehlschlagen. Die Anfrage enthält Surennummer und Ausgabenkennung, keine Konto- oder Standortdaten; der Anbieter verarbeitet dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse. Der arabische Text liegt vollständig in der App und wird nicht abgefragt.',
       'Islamic Network (cdn.islamic.network) – Rezitations-Aufnahmen im Gebetskurs, nur wenn du „Anhören“ antippst. Übermittelt wird die Versnummer; wie bei jedem Abruf verarbeitet der Anbieter dabei technisch notwendige Verbindungsdaten wie deine IP-Adresse. Ohne Antippen wird nichts geladen.',
       'OpenStreetMap über die öffentlichen Overpass-Dienste overpass-api.de und overpass.kumi.systems – Moschee-Suche. Übermittelt werden Breiten- und Längengrad sowie der Suchradius. Kartendaten stammen von OpenStreetMap-Mitwirkenden und stehen unter der Open Database License.',
       'Supabase (jmswsgwnvmvsfayeodcd.supabase.co) – nur bei angelegtem Konto: Anmeldung, Profil, Cloud-Sicherung und Cloud-Notizen. Das genutzte Projekt liegt in der Region EU-Nord (Stockholm).',
@@ -209,7 +209,7 @@ export const licenseSections: LegalSection[] = [
   {
     heading: 'Textquellen',
     paragraphs: [
-      'Arabischer Quran-Text: Ausgabe Uthmani über Al Quran Cloud.',
+      'Arabischer Quran-Text: lokaler Uthmani-Bestand. Herkunft und Editionsstand der konkreten Dateien sind noch nicht abschließend dokumentiert.',
       'Quran-Aussprachehilfe in Lateinschrift: Edition en.transliteration über Al Quran Cloud.',
       'Deutsche Quran-Übersetzung: Edition de.bubenheim (Bubenheim & Elyas) über Al Quran Cloud; nicht mit der App ausgeliefert.',
       'Herkunft und Nutzungsrechte der einzelnen Textbestände werden fortlaufend dokumentiert. Inhalte ohne belegte Quelle sind in der App als solche gekennzeichnet.',

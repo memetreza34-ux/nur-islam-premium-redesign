@@ -17,6 +17,7 @@ import { expect, test } from '@playwright/test';
 // not the guard.
 test.use({
   launchOptions: {
+    ...(process.env.NUR_E2E_CHROME_PATH ? { executablePath: process.env.NUR_E2E_CHROME_PATH } : {}),
     args: ['--disable-features=LocalNetworkAccessChecks,BlockInsecurePrivateNetworkRequests'],
   },
 });

@@ -1,8 +1,7 @@
-import { Suspense, lazy, useCallback, useRef, useState } from 'react';
+import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
   BookOpen,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   Compass,
@@ -23,6 +22,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
 import { LEARNING_CATEGORIES } from '../data/learningCategories';
+import { readLearningProgress } from '../services/learningProgress';
 import type { LearningCategoryId } from '../data/learningCategories';
 const LearningCourseScreen = lazy(() => import('./LearningCourseScreen')
   .then((module) => ({ default: module.LearningCourseScreen })));
@@ -41,6 +41,7 @@ import { PRAYER_LESSONS } from '../data/prayerLessons';
 import type { PrayerLessonId } from '../data/prayerLessons';
 import { PremiumImage } from '../shared/PremiumVisuals';
 import { WorshipGuideScreen } from './ReferenceReadingScreens';
+import { readGuideProgress } from '../services/worshipGuideProgress';
 
 const categoryIcons: Record<LearningCategoryId, LucideIcon> = {
   faith: ShieldCheck,
@@ -109,6 +110,18 @@ function readStringSet(key: string) {
   }
 }
 
+function readPrayerCompletion() {
+  try {
+    const raw = localStorage.getItem('nur_prayer_learning_complete');
+    if (raw === null) return { completed: new Set<string>(), valid: true };
+    const parsed: unknown = JSON.parse(raw);
+    if (!Array.isArray(parsed) || !parsed.every(id => typeof id === 'string' && id.trim().length > 0)) {
+      return { completed: new Set<string>(), valid: false };
+    }
+    return { completed: new Set<string>(parsed.filter(id => PRAYER_LESSONS.some(lesson => lesson.id === id))), valid: true };
+  } catch { return { completed: new Set<string>(), valid: false }; }
+}
+
 function readStoredStep(key: string) {
   try {
     const value = Number(localStorage.getItem(key));
@@ -146,6 +159,7 @@ export function LearnScreen({
   });
   const [learningPlanOpen, setLearningPlanOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
+  const [, refreshGuideProgress] = useState(0);
   const learningOverviewScroll = useRef(readStoredStep('nur_learning_overview_scroll_v1'));
   const learningScrollFrame = useRef<HTMLElement | null>(null);
   const reduceMotion = useReducedMotion();
@@ -153,10 +167,14 @@ export function LearnScreen({
   const closeDialog = useCallback(() => { setLearningPlanOpen(false); }, []);
   const screenDialog = useDialog(learningPlanOpen, closeDialog, 'Lernplan');
 
-  const completedPrayerLessons = readStringSet('nur_prayer_learning_complete');
-  const completedKnowledgeLessons = readStringSet('nur_learning_completed');
+  const prayerCompletion = readPrayerCompletion();
+  const completedPrayerLessons = prayerCompletion.completed;
+  const knowledgeState = readLearningProgress();
+  const completedKnowledgeLessons = knowledgeState.completed;
   const learnedNames = readStringSet('nur_name_learned');
-  const wuduFinished = readStoredStep('nur_guide_wudu_step') >= 5;
+  const wuduProgress = readGuideProgress('wudu');
+  const wuduFinished = wuduProgress.completionValid && wuduProgress.completed;
+  const coreStatusValid = prayerCompletion.valid && wuduProgress.completionValid;
   const completedCoreLessons = Math.min(6, completedPrayerLessons.size + (wuduFinished ? 1 : 0));
   const totalKnowledgeLessons = LEARNING_CATEGORIES.reduce((sum, category) => sum + category.lessonIds.length, 0);
   const completedKnowledgeCount = LEARNING_CATEGORIES.reduce(
@@ -164,7 +182,14 @@ export function LearnScreen({
     0,
   );
   const knowledgeProgress = Math.round((completedKnowledgeCount / totalKnowledgeLessons) * 100);
-  const coreProgress = Math.round((completedCoreLessons / 6) * 100);
+  const coreProgress = coreStatusValid ? Math.round((completedCoreLessons / 6) * 100) : 0;
+  useEffect(() => {
+    const sync = (event: StorageEvent) => {
+      if (event.key === null || event.key === 'nur_guide_wudu_complete' || event.key === 'nur_prayer_learning_complete') refreshGuideProgress(value => value + 1);
+    };
+    window.addEventListener('storage', sync);
+    return () => window.removeEventListener('storage', sync);
+  }, []);
   const nextKnowledgeCategory = LEARNING_CATEGORIES.find((category) =>
     category.lessonIds.some((lessonId) => !completedKnowledgeLessons.has(lessonId)),
   );
@@ -261,7 +286,7 @@ export function LearnScreen({
           <strong>{category.title}</strong>
           <em>{category.topics.join(' · ')}</em>
         </span>
-        <span className="reference-foundation-step__status"><small>{completedInCategory}/{category.lessonIds.length}</small><ChevronRight size={18} /></span>
+        <span className="reference-foundation-step__status"><small>{knowledgeState.valid ? `${completedInCategory}/${category.lessonIds.length}` : '—'}</small><ChevronRight size={18} /></span>
       </motion.button>
     );
   };
@@ -340,7 +365,7 @@ export function LearnScreen({
   return (
     <motion.main className="screen reference-learn-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+        <span aria-hidden="true" />
         <div><span className="overline">Nur Islam</span><h1>Lernen</h1></div>
         <button className="icon-button" onClick={() => setLearningPlanOpen(true)} aria-label="Lernplan öffnen"><Settings size={20} /></button>
       </header>
@@ -370,7 +395,7 @@ export function LearnScreen({
           <p className="learning-intro__description">Vom Wudu bis zur vollständigen Rakʿah — mit Haltung, arabischem Wortlaut und Aussprachehilfe.</p>
           <div className="reference-prayer-learning-hub__progress">
             <span><i style={{ width: `${coreProgress}%` }} /></span>
-            <strong>{completedCoreLessons}/6 Gebetsgrundlagen abgeschlossen</strong>
+            <strong>{coreStatusValid ? `${completedCoreLessons}/6 Gebetsgrundlagen abgeschlossen` : 'Abschlussstatus nicht vollständig lesbar'}</strong>
           </div>
           <button className="gold-button" onClick={() => setPrayerLesson(nextPrayer.id)}>
             <GraduationCap size={18} /> {completedPrayerLessons.size ? `${nextPrayer.label} weiterlernen` : 'Gebetskurs starten'} <ChevronRight size={17} />
@@ -426,11 +451,11 @@ export function LearnScreen({
       <section className="reference-learning-section reference-knowledge-curriculum">
         <div className="section-heading">
           <div><span className="overline">Danach weiterlernen</span><h2>Dein Grundlagenpfad</h2></div>
-          <span className="reference-knowledge-progress">{completedKnowledgeCount}/{totalKnowledgeLessons}</span>
+          <span className="reference-knowledge-progress">{knowledgeState.valid ? `${completedKnowledgeCount}/${totalKnowledgeLessons}` : '—'}</span>
         </div>
         <div className="reference-knowledge-overview">
           <span><i style={{ width: `${knowledgeProgress}%` }} /></span>
-          <small>{knowledgeProgress}% abgeschlossen · drei Kapitel führen vom Fundament zur Vertiefung</small>
+          <small>{knowledgeState.valid ? `${knowledgeProgress}% abgeschlossen · drei Kapitel führen vom Fundament zur Vertiefung` : 'Gespeicherter Lernfortschritt nicht lesbar. Die vorhandenen Daten bleiben unverändert.'}</small>
         </div>
         <nav className="learn-library-index" aria-label="Kapitel im Lernweg">
           {learningChapters.map((chapter, index) => (
@@ -476,7 +501,7 @@ export function LearnScreen({
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setLearningPlanOpen(false)}>
             <motion.section {...screenDialog.props} className="reference-category-modal reference-learning-plan-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
               <button className="reference-modal-close" onClick={() => setLearningPlanOpen(false)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Dein Grundlagenweg</h2><p>Vom Glauben über zentrale Begriffe bis zur Anwendung im Alltag. Dein Fortschritt wird nur lokal gespeichert.</p>
+              <span className="reference-category-modal__icon"><GraduationCap size={31} /></span><span className="overline">Dein Lernplan</span><h2>Dein Grundlagenweg</h2><p>Vom Glauben über zentrale Begriffe bis zur Anwendung im Alltag. Dein Lernfortschritt wird auf diesem Gerät gespeichert, sofern die lokale Speicherung funktioniert.</p>
               <div className="reference-learning-plan-list">
                 <span className={categoryIsComplete('faith') && categoryIsComplete('pillars') ? 'is-complete' : ''}><i>{categoryIsComplete('faith') && categoryIsComplete('pillars') ? <CircleCheck size={16} /> : 1}</i><strong>Glaube und fünf Säulen verstehen</strong></span>
                 <span className={categoryIsComplete('terms') ? 'is-complete' : ''}><i>{categoryIsComplete('terms') ? <CircleCheck size={16} /> : 2}</i><strong>Wichtige Begriffe sicher unterscheiden</strong></span>

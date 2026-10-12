@@ -444,7 +444,7 @@ export function PrayerLearningScreen({
                 </>
               )}
               <p className="reference-rakah-pronunciation-note">Näherung für deutschsprachige Anfänger. „dh“, „gh“ und „q“ haben im Deutschen keine genaue Entsprechung – nutze bei Quran-Abschnitten die Aufnahme und sonst eine qualifizierte Lehrperson.</p>
-              <p className="reference-rakah-wording__translation"><span>Bedeutung</span>{currentStep.translation}</p>
+              <p className="reference-rakah-wording__translation"><span>Sinngemäße Bedeutung</span>{currentStep.translation}</p>
               {/* Woher der Wortlaut stammt. Duas und Hadithe der App tragen das
                   längst; die Gebetsschritte standen bis hierher ohne Beleg. */}
               <p className="reference-rakah-source">

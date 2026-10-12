@@ -137,7 +137,64 @@ const BUDGETS_KB = {
   // bring the measured aggregate to 352 KB gzip. Learn, Prayer and More now
   // load on demand, bringing the entry back below its unchanged 95 KB guard;
   // the aggregate cap still counts those optional screens after they load.
-  js: 353,
+  // Quellenabgleich vom 11.10.2026: Einzelfundstellen und direkte Links für
+  // 60 Quizfragen, vollständige Dua-Bedeutungen und benannte Beleggrenzen.
+  // Gemessen: etwa 355 KB gzip ohne neue Abhängigkeit; Entry bleibt <95 KB.
+  // Wissensabgleich: 58 Einzelfundstellen, präzisierte Lerntexte und korrekte
+  // Metadaten für drei vorhandene Legacy-Screens; rund 2 KB zusätzlicher
+  // on-demand JS-Inhalt, keine neue Abhängigkeit. Gemessen jetzt 357 KB.
+  // Hadith-Abgleich: präzise Muslim-Varianten, Kontextgrenzen und fünf
+  // editionsbezogene Bewertungen einschließlich Teiltext. Gemessen 358 KB;
+  // keine Abhängigkeit, das separate 95-KB-Entry-Limit bleibt unverändert.
+  // Dua-Abgleich: direkte Quellen und sichtbare Auszug-/Variantenhinweise.
+  // Duas und Sammlung laden jetzt erst beim Öffnen: Entry von 96 auf 84 KB.
+  // Mehr Belegtext und separate Chunk-Kompression ergeben zusammen 362 KB;
+  // keine neue Abhängigkeit, Entry-Limit unverändert bei 95 KB.
+  // Personen-/Dhikr-Abgleich: Einzelfundstellen, benannte Varianten und volle
+  // Lesehilfen, dazu verifizierte Speicherung statt falscher Erfolgsaussage.
+  // Gemessen 364 KB gzip; keine Abhängigkeit, Entry bleibt rund 84 KB.
+  // Existing 75 individual Names references and their source-context notes are
+  // now available in the reading dialogs, with enumeration/translation limits.
+  // Measured +3 KB gzip; no new dependency. CSS and entry limits stay unchanged.
+  // Names 36–60: five related-source boundaries and precise grammatical/context
+  // notes add ~1 KB gzip of evidence text; no feature or dependency. The entry
+  // remains 88 KB with its unchanged 95 KB guard; CSS stays unchanged.
+  // Names 61–80: fuller source/gloss boundaries and loss-safe selection writes
+  // add ~1 KB gzip. Measured 369 KB total JS, entry 89 KB; no new dependency.
+  // Names 81–99: ten related/exclusion contexts and nine precise source notes
+  // add ~1 KB gzip. Measured 370 KB JS, entry 90 KB; no feature/dependency.
+  // The separate 95 KB entry, CSS and raw-chunk limits remain unchanged.
+  // Prayer source audit: exact references, attribution limits and qualified
+  // repetition notes add ~1 KB gzip. Measured 371 KB; entry guard unchanged.
+  // Quran verse attribution: exact opening-prefix split shared by display,
+  // copying and sharing, plus an explicitly unnumbered opening. Measured
+  // 372 KB JS gzip; no dependency or new feature, entry stays 91/95 KB.
+  // Faith-source corrections: compared references and their limits add ~1 KB
+  // to the on-demand learning chunk. No dependency or CSS; entry guard intact.
+  // Six pillars lessons: corrected conditions, 37 precise source entries and
+  // their attribution limits add ~2 KB gzip to the on-demand course. Measured
+  // JS 375 KB, entry unchanged at 92 KB; no dependency or added CSS.
+  // Confirmed course completion/cursor writes, protected malformed data and
+  // truthful warning states: measured aggregate JS 376 KB (+1 KB). Entry,
+  // CSS and raw chunk limits unchanged; shared metadata, no new dependency.
+  // Terminology audit: attributed technical references and corrected Makruh /
+  // Hadith meanings add ~1 KB to the lazy course. Measured JS 377 KB;
+  // no dependency/CSS, separate startup and raw chunk limits unchanged.
+  // Four devotional terms: precise sources and limits of intention, free Dua,
+  // remembrance and repentance add ~1 KB to the lazy course. JS measured 378
+  // KB; no new feature, dependency or stylesheet. Startup/raw limits retained.
+  // Eight remaining terminology lessons now have precise references and limits.
+  // Measured JS +1 KB; no new feature, dependency, CSS or entry-size allowance.
+  // Five existing practice lessons: compared evidence, actual course structure,
+  // school-specific purification limits and technical provider attribution.
+  // Measured JS 381 KB (+2); no new feature, dependency or CSS. Entry <95 KB.
+  // Confirmed guide writes and explicit completion instead of cursor-derived
+  // success: measured JS 382 KB (+1). Existing CSS/entry/raw guards retained.
+  // Four existing character lessons: compared links, source limits and explicit
+  // editorial tips. Measured JS 383 KB (+1); no CSS/dependency/startup change.
+  // Six community lessons: compared references, attribution of grades and
+  // consistent protection exceptions. Measured JS 385 KB (+2), no dependency.
+  js: 385,
   // One shared responsive art slot reserves a clean crop on all fourteen
   // learning cards. The scoped rules add about 1 KB gzip and no dependency.
   // The prayer companions now use six subject-specific local illustrations,
@@ -154,9 +211,44 @@ const BUDGETS_KB = {
   // The complete More directory exposes all existing areas through typed deep
   // links. It adds no dependency and keeps the entry below its separate limit.
   // Six WebP artworks remain outside this JS/CSS transfer budget.
-  // Measured together after the on-demand split: 475 KB gzip. Keep only a
-  // 1 KB rounding allowance over that snapshot.
-  total: 476,
+  // Der Quellenabgleich ergänzt ca. 3 KB gzip. Gesamt gemessen: ca. 478 KB;
+  // nur 1 KB Rundungsreserve, CSS- und First-Paint-Limits bleiben unverändert.
+  // Wissenskorrekturen: Gesamt gemessen 479 KB, dieses Limit bleibt ebenso
+  // unverändert wie CSS und das separate 95-KB-Entry-Limit.
+  // Strikte Prüfung der Antwortdaten (Datum, Standort, Methode, Asr und Monat)
+  // statt ungeprüfter Umbenennung; ~1 KB gzip zusätzlich. Keine neue Bibliothek,
+  // unveränderte Grenzen für Entry, CSS und JavaScript einzeln.
+  // Sichtbare Hadith-Quellen-/Bewertungsangaben: gemessen insgesamt 481 KB.
+  // Kein zusätzliches CSS; religiöse Belegangaben werden nicht weggespart.
+  // Nach Dua-Belegtexten und Lazy-Split gemessen: 362 + 123 = 485 KB.
+  // Aktueller Personen-/Dhikr-Abgleich: gemessen rund 364 + 123 = 487 KB.
+  // CSS- und 95-KB-Entry-Limits unverändert; keine Inhaltsbelege entfernt.
+  // Names 36–60 evidence text: measured 368 KB JS + 123 KB CSS = 491 KB.
+  // Names 61–80 and truthful storage failure handling: 369 + 123 = 492 KB.
+  // Names 81–99: measured 370 KB JS + unchanged 123 KB CSS.
+  // Compared prayer-source notes: 371 KB JS + unchanged 123 KB CSS.
+  // Opening correction: JS rounds to 372 KB; actual combined gzip still
+  // rounds to 494 KB. Retain the total limit (rounded parts are not additive).
+  // Reader storage audit: read-before-write, readback verification and visible
+  // failures add ~1 KB to the aggregate. Measured 495 KB; individual JS (372),
+  // CSS (123), entry (95) and raw-chunk limits are unchanged. No dependency.
+  // Faith lesson source links and context: measured JS 373 + CSS 123 KB.
+  // Allow one additional aggregate KB; keep entry, CSS and raw limits intact.
+  // Pillars source context: measured aggregate 498 KB, +2 KB over faith scope.
+  // No new feature/dependency; entry, CSS and raw chunk limits stay unchanged.
+  // Confirmed learning storage/warnings: measured total 499 KB (+1 KB),
+  // without new CSS/dependency and with the 95-KB startup limit retained.
+  // Compared devotional sources: measured total 501 KB (+2 KB). Rounded
+  // JS/CSS measurements differ from earlier rounding; no CSS/dependency added.
+  // Remaining terminology references/context: measured 502 KB aggregate (+1).
+  // CSS and startup allowance unchanged; no added feature or dependency.
+  // Practice evidence text raises rounded combined gzip to 503 KB (+1);
+  // rounded individual parts are not additive. Keep other limits unchanged.
+  // Confirmed worship-guide storage adds one aggregate KB: measured 504 KB.
+  // No new stylesheet, dependency or higher first-paint allowance.
+  // Character evidence/context: measured aggregate 506 KB (+2). Rounded
+  // component differences are not additive; CSS, entry and raw limits retained.
+  total: 508,
 };
 
 /**

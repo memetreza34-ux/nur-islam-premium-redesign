@@ -113,14 +113,8 @@
 
 .reference-name-list__copy strong,
 .reference-name-list__copy small {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  /* German compounds do not break on their own, so at 320px five meanings and
-     one name ended in an ellipsis rather than a word. The document is lang=de,
-     so the browser can hyphenate them instead of cutting them. */
   hyphens: auto;
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 
 .reference-name-list__copy strong {
@@ -130,6 +124,14 @@
 .reference-name-list__copy small {
   color: var(--muted-green);
   font-size: .49rem;
+  white-space: normal;
+}
+
+.reference-name-list--complete .reference-name-list__copy small {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible !important;
+  text-overflow: clip;
 }
 
 .reference-name-list--complete .reference-name-list__arabic {
@@ -221,6 +223,16 @@
 .reference-name-modal__notice svg {
   flex: 0 0 auto;
   color: var(--gold-soft);
+}
+
+.reference-name-source a {
+  color: var(--gold-text);
+  text-underline-offset: 3px;
+}
+
+.reference-name-source a:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
 }
 
 .reference-name-modal__actions {

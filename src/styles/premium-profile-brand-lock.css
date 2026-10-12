@@ -152,7 +152,7 @@
   pointer-events: none;
 }
 
-.reference-profile-modal > * {
+.reference-profile-modal > :not(.reference-modal-close) {
   position: relative;
   z-index: 2;
 }

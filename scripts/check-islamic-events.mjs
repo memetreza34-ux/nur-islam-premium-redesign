@@ -26,7 +26,7 @@ for (const match of block.matchAll(/id: '([a-z0-9-]+)',\s*title: '([^']+)',\s*mo
   });
 }
 
-if (events.length < 15) throw new Error(`Expected at least 15 Islamic events, found ${events.length}.`);
+if (events.length < 12) throw new Error(`Expected at least 12 Islamic events, found ${events.length}.`);
 
 for (const event of events) {
   if (event.month < 1 || event.month > 12) throw new Error(`${event.id} has an impossible Hijri month: ${event.month}`);
@@ -79,14 +79,12 @@ if (missed.length > 0) {
 // someone to fast on the wrong day, and on 10 Dhul-Hijjah fasting is actually
 // forbidden. Nothing in the app would have noticed.
 //
-// Only the dates that are not disputed are pinned here. Mawlid on 12 Rabiʿ I,
-// Isra and Miʿraj on 27 Rajab and the marker for Laylat al-Qadr on 27 Ramadan
-// are the widely used dates rather than settled ones, so they stay out — the
-// entries themselves say as much on screen.
+// No single date may be asserted for Laylat al-Qadr.
 const FIXED_DATES = {
   'islamic-new-year': [1, [1]],
   tasua: [1, [9]],
   ashura: [1, [10]],
+  'laylat-al-qadr': [9, [21, 23, 25, 27, 29]],
   ramadan: [9, [1]],
   'eid-al-fitr': [10, [1]],
   tarwiyah: [12, [8]],
@@ -102,6 +100,16 @@ for (const [id, [month, days]] of Object.entries(FIXED_DATES)) {
       `${id} sits on ${event.month}/${event.days.join(',')} but belongs on ${month}/${days.join(',')}.`,
     );
   }
+}
+
+for (const removed of ['mawlid', 'isra-miraj', 'mid-shaban']) {
+  if (events.some(event => event.id === removed)) {
+    throw new Error(`Uncertain or disputed occasion returned as a religious calendar recommendation: ${removed}`);
+  }
+}
+if (!source.includes('Kein festes Datum') || !source.includes('Sahih al-Bukhari 2017')
+  || !viewModel.includes("event.id === 'laylat-al-qadr'")) {
+  throw new Error('The Qadr search reminder must remain sourced, non-fixed and visible over the last-ten-nights entry.');
 }
 
 // Fasting must not be suggested on the days it is forbidden.

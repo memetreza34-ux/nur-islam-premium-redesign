@@ -8,7 +8,7 @@ import type { PilgrimageStation } from '../data/pilgrimageData';
 import { PROPHETS } from '../data/prophetData';
 import { PROPHET_COURSES } from '../data/prophetCourseData';
 import { PROPHET_COURSE_OVERVIEWS } from '../data/prophetCourseOverviews';
-import { QUIZ_CATEGORIES } from '../data/quizData';
+import { QUIZ_CATEGORIES, getQuizSourceUrl } from '../data/quizData';
 import { learningLegacyFeatures, quizFeature, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
 import type { LegacyFeatureId, LegacyFeatureItem } from '../data/legacyFeatures';
 import type { LucideIcon } from 'lucide-react';
@@ -51,6 +51,11 @@ import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule
 const MadhhabCatalogueFeature = lazy(() => import('./MadhhabCatalogue').then((module) => ({ default: module.MadhhabCatalogueFeature })));
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
+const retainedFeatures: Partial<Record<LegacyFeatureId, LegacyFeatureItem>> = {
+  knowledge: { id: 'knowledge', title: 'Wissensbibliothek', subtitle: 'Begriffe und Grundlagen', description: 'Sinngemäße Lerntexte mit Fundstellen.', icon: Library, art: '/premium-assets/high-res-objects/learning-hadith-v2.webp' },
+  sahabah: { id: 'sahabah', title: 'Gefährten des Propheten', subtitle: 'Personenübersicht', description: 'Namen und kurze Einordnungen, keine vollständigen Biografien.', icon: Library, art: '/premium-assets/high-res-objects/learning-hadith-v2.webp' },
+  women: { id: 'women', title: 'Frauen im Islam', subtitle: 'Personenübersicht', description: 'Namen und kurze Einordnungen, keine vollständigen Biografien.', icon: Library, art: '/premium-assets/high-res-objects/learning-hadith-v2.webp' },
+};
 
 const PROPHET_PROGRESS_KEY = 'nur_prophet_course_progress_v1';
 const PROPHET_RETURN_KEY = 'nur_prophet_course_return_v1';
@@ -215,6 +220,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
       <LegacyMotionMain>
         <FeatureHeader feature={feature} onBack={onBack} />
         <section className="reference-quiz-categories">
+          <p className="reference-topic-text">Jede Lernfrage nennt nach deiner Antwort eine Fundstelle. Fragen und Erklärungen sind sinngemäße Lerntexte, keine Fatwas. Der KI-gestützte Quellenabgleich ist keine religiöse Freigabe.</p>
           {QUIZ_CATEGORIES.map((entry) => {
             const best = bestScores[entry.id];
             return (
@@ -273,7 +279,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
           {selected === null ? null : (
             <p className="reference-quiz-explanation">
               <ShieldCheck size={16} />
-              <span>{question.explanation}</span>
+              <span>{question.explanation}<br /><a href={getQuizSourceUrl(question.source)} target="_blank" rel="noopener noreferrer">Quelle: {question.source}</a></span>
             </p>
           )}
           <button className="gold-button" disabled={selected === null} onClick={next}>{index === questions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
@@ -347,14 +353,20 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
   const guide = FOUNDATION_SUPPLEMENTS['hadith-library'];
   const [query, setQuery] = useState('');
   const [favorites, setFavorites] = useState(() => readSavedHadithIds());
+  const [storageError, setStorageError] = useState(false);
   const filtered = HADITH_LIBRARY.filter((item) => `${item.title} ${item.summary} ${item.source} ${item.context ?? ''}`.toLocaleLowerCase('de-DE').includes(query.trim().toLocaleLowerCase('de-DE')));
 
   const toggleFavorite = (id: string) => {
     const value = new Set(favorites);
     if (value.has(id)) value.delete(id);
     else value.add(id);
+    if (!writeSavedHadithIds(value)) {
+      setFavorites(readSavedHadithIds());
+      setStorageError(true);
+      return;
+    }
     setFavorites(value);
-    writeSavedHadithIds(value);
+    setStorageError(false);
   };
 
   return (
@@ -378,12 +390,13 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
       <p>Suche nach einem Thema oder einer Quellenangabe. Das Lesezeichen speichert den Eintrag lokal in deinem Browser.</p>
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <p className="foundation-guide-result" role="status">{filtered.length} von {HADITH_LIBRARY.length} Hadithen · {favorites.size} gespeichert</p>
+      {storageError ? <p className="foundation-hadith-context" role="alert">Änderung konnte nicht vollständig gespeichert werden. Prüfe den Browser-Speicher.</p> : null}
       <section className="reference-hadith-library">
         {filtered.map((item) => {
           const saved = favorites.has(item.id);
           return (
             <article key={item.id}>
-              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<small>{item.source}</small></div>
+              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<small>{item.source}</small>{item.grading ? <p className="foundation-hadith-context">{item.grading.text} <FoundationSource href={item.grading.sourceUrl}>Bewertungsquelle</FoundationSource>{item.grading.comparisonUrl ? <> · <FoundationSource href={item.grading.comparisonUrl}>Vergleichsquelle</FoundationSource></> : null}</p> : null}</div>
               <button onClick={() => toggleFavorite(item.id)} aria-label={saved ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={saved} className={saved ? 'is-saved' : ''}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>
             </article>
           );
@@ -884,23 +897,25 @@ function ProphetsFeature({
 }
 
 function PeopleListFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  // Sahabah and women in Islam carry a name, an honorific and a role, and
-  // nothing more in the source data. They are listed rather than made tappable:
-  // a detail view would open on three lines and promise a biography that does
-  // not exist.
   const isSahabah = feature.id === 'sahabah';
   const entries = isSahabah
-    ? SAHABAH.map((entry) => ({ id: entry.id, name: entry.name, note: `${entry.honorific} · ${entry.role}` }))
-    : WOMEN_IN_ISLAM.map((entry) => ({ id: entry.id, name: entry.name, note: entry.note }));
+    ? SAHABAH.map((entry) => ({ id: entry.id, name: entry.name, note: `${entry.honorific} · ${entry.role}`, sources: entry.sources, sourceNote: entry.sourceNote }))
+    : WOMEN_IN_ISLAM;
 
   return (
-    <LegacyMotionMain>
+    <LegacyMotionMain className="reference-people-screen">
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {entries.map((entry) => (
-            <article key={entry.id}><strong>{entry.name}</strong><small>{entry.note}</small></article>
+            <article key={entry.id}>
+              <strong>{entry.name}</strong><small>{entry.note}</small>
+              {entry.sourceNote && <small>{entry.sourceNote}</small>}
+              {entry.sources.length > 0 && <small>Quellen: {entry.sources.map((source, index) => (
+                <span key={source.url}>{index > 0 && ' · '}<a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></span>
+              ))}</small>}
+            </article>
           ))}
         </div>
       </section>
@@ -920,14 +935,16 @@ function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onB
           <span className="overline">Thema</span>
           <h2>{topic.title}</h2>
           <p className="reference-person-detail__intro">{topic.intro}</p>
+          <p className="reference-topic-text">Quelle: <a href={topic.sourceUrl} target="_blank" rel="noreferrer">{topic.source}</a></p>
         </section>
         {topic.sections.map((section) => (
           <section className="reference-legacy-section" key={section.subtitle}>
             <div className="section-heading"><div><span className="overline">{section.subtitle}</span></div></div>
             <p className="reference-topic-text">{section.text}</p>
+            {section.source ? <p className="reference-topic-text">Quelle: {section.sourceUrl ? <a href={section.sourceUrl} target="_blank" rel="noreferrer">{section.source}</a> : section.source}</p> : null}
           </section>
         ))}
-        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Dieser Überblick enthält nicht zu jeder Aussage einen Einzelnachweis.</p></section>
+        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Sinngemäße Lerntexte mit Fundstellen, keine wörtlichen Übersetzungen und keine Fatwa. Der KI-Quellenabgleich ist keine menschliche Fachfreigabe.</p></section>
       </LegacyMotionMain>
     );
   }
@@ -950,7 +967,7 @@ function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onB
         <div className="section-heading"><div><span className="overline">Glossar</span><h2>Begriffe</h2></div><span className="reference-legacy-count">{GLOSSARY_TERMS.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {GLOSSARY_TERMS.map((entry) => (
-            <article key={entry.term}><strong>{entry.term}</strong><small>{entry.definition}</small></article>
+            <article key={entry.term}><strong>{entry.term}</strong><small>{entry.definition}</small><small>Quelle: <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{entry.source}</a></small></article>
           ))}
         </div>
       </section>
@@ -1002,32 +1019,28 @@ function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
     <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Verteilung</span><h2>Weltweit</h2></div></div>
-        <p className="reference-topic-text">Wie sich die muslimische Weltbevölkerung auf die Regionen verteilt:</p>
+        <div className="section-heading"><div><span className="overline">Gemeinschaft</span><h2>Weltweit</h2></div></div>
+        <p className="reference-topic-text">Muslimische Gemeinschaften gibt es in vielen Regionen. Diese geografische Auswahl ist keine vollständige Übersicht und keine Rangliste.</p>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_REGIONS.map((region) => (
-            <article key={region.name}><strong>{region.name}</strong><small>{region.share}</small></article>
+            <article key={region.name}><strong>{region.name}</strong></article>
           ))}
         </div>
       </section>
 
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Länder</span><h2>Muslimischer Anteil</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
+        <div className="section-heading"><div><span className="overline">Länder</span><h2>Geografische Auswahl</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_COUNTRIES.map((country) => (
             <article key={country.id}>
               <strong>{country.name}</strong>
-              <small>{country.share} der Bevölkerung · {country.region}</small>
-              <small>{country.info}</small>
+              <small>{country.region}</small>
             </article>
           ))}
         </div>
       </section>
 
-      {/* The absolute figures are gone rather than promised. What is left still
-          carries no source, and the notice says so instead of announcing a fix
-          that has no date on it. */}
-      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Absolute Bevölkerungszahlen zeigt diese Übersicht nicht mehr: die übernommenen Werte trugen weder Quelle noch Stichjahr, und eine undatierte Bevölkerungszahl lässt sich nicht überprüfen. Auch die Anteile hier sind eine grobe Einordnung ohne Einzelnachweis, keine Statistik.</p></section>
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Keine Bevölkerungsstatistik: Unbelegte Prozentwerte, Bevölkerungszahlen und Rangbehauptungen wurden entfernt. Zahlen benötigen eine nachvollziehbare Quelle und ein Bezugsjahr.</p></section>
     </LegacyMotionMain>
   );
 }
@@ -1212,7 +1225,7 @@ export function LegacyFeatureScreen({
 }) {
   const feature = featureId === 'quiz'
     ? quizFeature
-    : allFeatures.find((item) => item.id === featureId) ?? learningLegacyFeatures[0];
+    : allFeatures.find((item) => item.id === featureId) ?? retainedFeatures[featureId] ?? learningLegacyFeatures[0];
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
   if (featureId === 'prophets') return <ProphetsFeature feature={feature} onBack={onBack} onOpenQuranReference={onOpenQuranReference} />;
   if (featureId === 'knowledge') return <KnowledgeFeature feature={feature} onBack={onBack} />;

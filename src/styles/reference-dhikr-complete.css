@@ -20,6 +20,11 @@
   line-height: 1.75;
 }
 
+.reference-dhikr-screen--complete .reference-dhikr-copy small {
+  display: block;
+  margin-top: 8px;
+}
+
 .reference-dhikr-step-tabs {
   display: flex;
   gap: 8px;
@@ -121,6 +126,16 @@
 .reference-dhikr-source strong {
   color: var(--cream-strong);
   font-size: .63rem;
+}
+
+.reference-dhikr-source a {
+  color: var(--gold-text);
+  text-underline-offset: .2em;
+}
+
+.reference-dhikr-source a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 
 .reference-dhikr-source em {

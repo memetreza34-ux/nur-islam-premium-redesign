@@ -1,9 +1,11 @@
 # Nur Islam – Herkunftsnachweis der Laufzeitbilder
 
-**Stand:** 29.09.2026
+**Stand:** 10.10.2026
 **Zweck:** Technischer Herkunfts- und Bearbeitungsnachweis für die in der App verwendeten Bildobjekte. Das Dokument ist keine Rechtsberatung und keine pauschale Rechtefreigabe.
 
 ## Herkunft
+
+Der vollflächige Landschaftseinstieg verwendet `nur-logo-emblem-transparent-v1.svg`, eine transparente Ableitung des gewählten Logos C. Kontur und Farben bleiben erhalten; der smaragdgrüne Hintergrund und die Füllungen der Öffnungen werden transparent. App- und Installations-Icons bleiben unverändert. Kein neuer Bildgenerierungsauftrag; Ableitung und SHA-256 stehen im Manifest.
 
 Die ursprüngliche Serie mit sechzehn unten aufgeführten Bildern wurde am 26.08.2026 mit der in Codex eingebauten OpenAI-Bildgenerierung aus ausschließlich neu formulierten Textprompts erzeugt. Es wurden **keine fremden Bilder, Referenzfotos, Markenlogos oder hochgeladenen Werke** als Eingabe verwendet.
 
@@ -59,7 +61,7 @@ WebP-Dateien eingebunden. Die Prophetenmotive zeigen ausdrücklich keine Persone
 | `mini-quiz-v1.webp` | Lernbuch und Antwortkarten | ältere Schnellkarte „Islam Quiz“; weiterhin in der Quiz-Übersicht | `cecdff8c8d40…` |
 | `mini-dua-v1.webp` | stilisierte Hände in Dua | Archivvorgänger der Schnellkarte „Duas“ | `dc21677cdf70…` |
 | `ayah-focus-bg-v1.webp` | ruhiges Elfenbeinrelief mit Mihrab | Hintergrund „Ayah im Fokus“ auf Start und „Ayah des Tages“ im Quran | `8598b7afb1fb…` |
-| `splash-mosque-v1.webp` | symmetrische Moschee mit zwei Minaretten | neue Startanimation | `55ebe82049d…` |
+| `splash-mosque-v1.webp` | symmetrische Moschee mit zwei Minaretten | Gebetsbereich; seit 06.10. nicht mehr auf dem Startbildschirm | `55ebe82049d…` |
 | `home-prayer-sky-v1.webp` | smaragdgrüne Himmelslandschaft mit Randlicht | seit 28.08. Quran-Lesebogen, ab App-Shell-Cache v23; nicht mehr in der Gebetskarte | `fcec44be72d2…` |
 | `learning-faith-v2.webp` | Quran auf Rehal und Lichterbogen | Allah und der Glaube | `4e1dfa1d6552…` |
 | `learning-pillars-v2.webp` | fünf verbundene Säulen | Die fünf Säulen | `62a2da1b2054…` |
@@ -198,7 +200,7 @@ rechtliche Freigabe.
 
 ## Code-native Vektormarke
 
-`nur-logo-emblem-v3.svg` wurde lokal als eigenständige geometrische SVG aus Pfaden und Farbverläufen konstruiert. Sie verwendet weder ein fremdes Bild noch eine generierte Rastervorlage. Dadurch bleibt das Nur-Logo auf jeder Displaydichte exakt scharf. Die vollständige Prüfsumme `b004f63db84d234aa1acb3c04b16440f8fe4e1c76a4bc97745b7dc190bc3a333` und der Einsatzort sind ebenfalls im maschinenlesbaren Manifest hinterlegt.
+`nur-logo-emblem-v3.svg` wurde am 10.10.2026 nach der ausdrücklichen Auswahl von Variante C als Vektor nachgezeichnet. Die Vorlage `output/logo-concepts-20261010-v2/c-geometrisch.png` stammt aus der eingebauten Bildgenerierung. Die spitze Kuppel, zwei integrierte Minarette und das helle Tor bleiben erhalten; Rasterverläufe wurden durch exakte App-Farben ersetzt. Die Vektorform verwendet Smaragdgrün, Gold und Elfenbein. Der Startbildschirm zeigt nur das Zeichen auf demselben dunklen Grund, ohne Namen oder weiteres Motiv. Auf Wunsch des Nutzers wurde das Zeichen vergrößert, die Spitze verstärkt und die Minarett-Öffnungen verbreitert und vereinfacht. App-Icon, Installations-PNGs und Apple-Touch-Icon nutzen dieselbe Vektorgeometrie. Die PNGs werden mit `scripts/render-logo-icons.swift` aus dem SVG erzeugt; das separate maskierbare Icon hat zusätzlich 20 % Sicherheitsabstand für unterschiedliche Plattformmasken. Das ist ein Herkunftsnachweis, keine Prüfung auf Marken-Einzigartigkeit. Die SVG-Prüfsumme `d07ab621e1a362917eaea051a489447bcab5fb30fe55bd2a92c4c56dc600105d` steht auch im JSON-Manifest.
 
 ## Gestaltungs- und Sicherheitsregeln der Prompts
 

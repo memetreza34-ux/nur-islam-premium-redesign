@@ -38,7 +38,6 @@ html:not([data-theme='light']) :where(.reference-account-screen,
 }
 
 :where(
-  .reference-splash,
   .welcome-hero,
   .prayer-hero--v2,
   .next-prayer-panel,
@@ -60,6 +59,8 @@ html:not([data-theme='light']) :where(.reference-account-screen,
   .reference-onboarding__visual,
   .reference-standby-stage
 ) { border-radius: 42px !important; }
+
+.reference-splash { border-radius: 0 !important; }
 
 :where(.glass-card,
   .journey-card,
@@ -206,20 +207,13 @@ html:not([data-theme='light']) :where(.reference-account-screen,
   object-position: right bottom !important;
 }
 :where(
-  .reference-splash__mosque-image > img
-) {
-  object-fit: contain !important;
-  object-position: center bottom !important;
-}
-:where(
   .reference-quran-continue__book > img,
   .reference-reader-hero > .premium-image > img
 ) {
   object-fit: contain !important;
   object-position: center bottom !important;
 }
-:where(.reference-splash__mark > img,
-  .reference-system-error__logo > img,
+:where(.reference-system-error__logo > img,
   .reference-dhikr-counter__tasbih > img,
   .reference-qibla-stage__compass > img,
   .brand-lockup__mark > img,

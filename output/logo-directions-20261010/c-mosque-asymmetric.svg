@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title">
+  <title id="title">Nur Islam – Moschee und Minarett</title>
+  <rect width="180" height="180" fill="#001B16"/>
+  <path fill="#E2BF77" d="M29 142V64h17v78H29Zm-4-79 12-21 12 21H25Z"/>
+  <path fill="#F5F0E6" d="M59 142V97c0-29 20-48 53-62 30 15 45 35 45 62v45H59Z"/>
+  <path fill="#001B16" d="M81 142v-28c0-14 10-24 27-36 17 12 27 22 27 36v28H81Z"/>
+  <path fill="#E2BF77" d="M96 142v-24c0-7 4-13 12-19 8 6 12 12 12 19v24H96Z"/>
+  <path d="M24 142h133" stroke="#E2BF77" stroke-width="6" stroke-linecap="round"/>
+</svg>

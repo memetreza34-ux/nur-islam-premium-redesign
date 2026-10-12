@@ -1,45 +1,62 @@
-# Quran-Bestand: was die App mitliefert und was nicht
+# Quran-Bestand: Herkunft, Nutzung und Verfügbarkeit
 
-## Die Entscheidung
+## Technischer Stand · 11.10.2026
 
-Die App liefert **den arabischen Uthmani-Text** mit und **keine deutsche
-Übersetzung**. Die deutsche Wiedergabe wird beim Öffnen einer Sure von Al Quran
-Cloud geladen (`de.bubenheim`) und im Browser des Nutzers zwischengespeichert.
+Die App liefert den arabischen Uthmani-Bestand mit 114 Suren mit. Deutsche
+Wiedergabe (`de.bubenheim`, Bubenheim & Elyas) und Umschrift
+(`en.transliteration`) werden pro Sure von Al Quran Cloud abgerufen, nicht als
+vollständiger Bestand mitgeliefert. Maßgeblicher Code:
+`src/services/quranService.ts`.
 
-Das ist kein technisches Detail, sondern der Grund, warum es hier keine offene
-Lizenzfrage gibt:
+Die unterstützenden Texte werden nach erfolgreichem Abruf im Browser-Cache
+abgelegt, soweit der Browser das zulässt. Fehlgeschlagene Cache-Schreibvorgänge
+werden toleriert. Deshalb garantiert einmaliges Öffnen **keine** spätere
+Offline-Verfügbarkeit. Ohne erreichbaren Anbieter und nutzbaren Cache kann der
+arabische Text angezeigt werden, während Bedeutung oder Umschrift fehlen.
 
-- **Arabischer Text** — kein geschütztes Werk, liegt vollständig offline vor
-  und macht den Reader ohne Verbindung nutzbar.
-- **Deutsche Übersetzung** — Bubenheim & Elyas ist ein geschütztes Werk. Sie
-  vollständig mitzuliefern hieße, dass die App sie selbst verbreitet; das
-  bräuchte die Erlaubnis des Rechteinhabers. Beim Abruf pro Sure liefert der
-  Anbieter den Text aus, der Browser des Lesers behält seine Kopie, und diese
-  App verteilt nichts davon.
+## Tatsächlich gelesene Anbieterbedingungen
 
-Der Preis ist ehrlich zu nennen: **ohne Verbindung ist beim ersten Öffnen einer
-Sure kein deutscher Text da**, nur der arabische. Einmal geöffnete Suren bleiben
-danach auch offline lesbar.
+Abrufdatum: 11.10.2026. Das ist ein Quellenabgleich, keine juristische Freigabe.
 
-## Was daraus folgt
+- [Al Quran Cloud: Nutzungsbedingungen](https://alquran.cloud/terms-and-conditions),
+  Stand 14.06.2026, Abschnitte II–V: mehrere Herkunftsquellen des arabischen
+  Bestands; Erhalt von Schriftzeichen; freie API mit Begrenzungen. Übersetzungen
+  behalten Rechteinhaber und Editionskennung; bei Wiederveröffentlichung wird
+  Übersetzerattribution verlangt. Der Anbieter gibt keine Rechts-, Genauigkeits-
+  oder Verfügbarkeitsgarantie. Daraus folgt keine produktbezogene Freigabe für
+  sämtliche Ausgaben, lokale Kopien oder kommerzielle Nutzung dieser App.
+- [Tanzil: Textlizenz](https://tanzil.net/docs/Text_License): CC BY 3.0,
+  unveränderte Kopien, erkennbare Tanzil-Quellenangabe mit Link und Übernahme des
+  Copyright-/Lizenzhinweises. Diese Bedingungen sind relevant, **falls** der
+  konkrete lokale Bestand von Tanzil stammt. Seine Herkunft ist damit noch
+  nicht nachgewiesen.
 
-| Frage | Stand |
-| --- | --- |
-| Arabischer Wortlaut | liegt offline vor, 114 Suren |
-| Deutsche Übersetzung | wird abgerufen, nicht mitgeliefert |
-| Lizenz arabischer Text | unkritisch |
-| Lizenz deutsche Übersetzung | **entfällt für diese App**, da nicht verbreitet |
-| Verfügbarkeit ohne Netz | Arabisch ja, Deutsch erst nach einmaligem Laden |
+Die früheren Aussagen „arabischer Text unkritisch“, „Lizenzfrage entfällt“ und
+„die App verbreitet nichts“ werden zurückgenommen. Ein API-Abruf statt einer
+mitgelieferten Übersetzung beantwortet die Nutzungsrechte nicht vollständig.
+Die abstrakte religiöse Schrift und eine konkrete redigierte digitale Ausgabe
+sind dabei nicht gleichzusetzen.
 
-## Was weiterhin zu prüfen bleibt
+## Bestätigter Anbieterabgleich
 
-- [ ] Die Nutzungsbedingungen von Al Quran Cloud für den Abruf im Produktivbetrieb.
-- [ ] Ob der arabische Bestand aus einer Quelle stammt, deren Herkunft
-      dokumentiert ist — die Textidentität ist das eine, die Herkunft der
-      konkreten Dateien das andere.
-- [ ] Die fachliche Freigabe des Quran-Bereichs. Sie ist von der Lizenzfrage
-      unabhängig und steht weiterhin aus.
+Der vollständige arabische Rohbestand wurde am 11.10.2026 gegen die tatsächlich
+abgerufene Ausgabe `quran-uthmani` abgeglichen: alle 6.236 Textfelder exakt
+identisch. [Vergleich und Verszuordnung](QURAN-TEXT-AUDIT-2026-10-11.md).
+Dieser Nachweis belegt Anbieteridentität, nicht den ursprünglichen Übernahmeweg,
+Nutzungsrechte oder unabhängige Fehlerfreiheit der Referenzausgabe.
 
-Die Aussage „der Text stimmt" und die Aussage „wir dürfen ihn verbreiten" sind
-zwei verschiedene Dinge. Diese Datei beantwortet nur die zweite, und zwar
-dadurch, dass die App die Übersetzung gar nicht erst verbreitet.
+## Konkret offen
+
+- Herkunft, Editionsstand und unveränderter Übernahmeweg der lokalen Dateien
+  belegen; daraus die zutreffenden Attributionen und Lizenzhinweise ableiten.
+- Für deutsche Ausgabe und Umschrift die konkreten Herkunfts-/Rechteangaben
+  einschließlich Abruf, Anzeige, Cache, Teilen und Produktnutzung festhalten.
+- Tatsächlichen Offline-/Fehlerzustand im Reader prüfen, statt aus vorhandenem
+  Cache-Code eine Erfolgsgarantie abzuleiten.
+- Vollständigen unabhängigen Editionsabgleich von der oben belegten Identität
+  mit einer Anbieterantwort unterscheiden; offene Abweichungen nicht durch
+  Normalisierung unsichtbar machen.
+
+Der Bestand wird durch diese Dokumentationskorrektur nicht verändert; es wird
+weder Rechtswidrigkeit noch eine abschließende rechtliche oder religiöse
+Freigabe behauptet.

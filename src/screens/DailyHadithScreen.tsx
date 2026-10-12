@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   BookOpen,
   Bookmark,
@@ -13,6 +13,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import {
   getDailyHadith,
   getHadithById,
+  getHadithShareText,
   readSavedHadithIds,
   writeSavedHadithIds,
 } from '../data/hadithData';
@@ -34,14 +35,28 @@ export function DailyHadithScreen({
   onBack: () => void;
   hadithId?: string | null;
 }) {
-  const entry = useMemo(() => getHadithById(hadithId) ?? getDailyHadith(), [hadithId]);
+  const isDaily = hadithId == null;
+  const [now, setNow] = useState(() => new Date());
+  const entry = isDaily ? getDailyHadith(now) : getHadithById(hadithId);
   const [savedIds, setSavedIds] = useState(readSavedHadithIds);
   const [toast, setToast] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
-  const saved = savedIds.has(entry.id);
-  const isDaily = !hadithId;
+  const saved = entry ? savedIds.has(entry.id) : false;
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
+
+  useEffect(() => {
+    if (!isDaily) return;
+    const refresh = () => setNow(new Date());
+    const timer = window.setInterval(refresh, 30000);
+    window.addEventListener('focus', refresh);
+    document.addEventListener('visibilitychange', refresh);
+    return () => {
+      window.clearInterval(timer);
+      window.removeEventListener('focus', refresh);
+      document.removeEventListener('visibilitychange', refresh);
+    };
+  }, [isDaily]);
 
   const flash = (message: string) => {
     setToast(message);
@@ -49,25 +64,42 @@ export function DailyHadithScreen({
   };
 
   const toggleSaved = () => {
+    if (!entry) return;
     const next = new Set(savedIds);
     if (next.has(entry.id)) next.delete(entry.id);
     else next.add(entry.id);
+    if (!writeSavedHadithIds(next)) {
+      setSavedIds(readSavedHadithIds());
+      flash('Änderung konnte nicht vollständig gespeichert werden');
+      return;
+    }
     setSavedIds(next);
-    writeSavedHadithIds(next);
     flash(next.has(entry.id) ? 'Hadith gespeichert' : 'Aus Sammlung entfernt');
   };
 
   const share = async () => {
+    if (!entry) return;
     try {
       const result = await shareOrCopy(
         `Nur Islam · ${entry.title}`,
-        `${entry.summary}\n\nQuelle: ${entry.source}`,
+        getHadithShareText(entry),
       );
       flash(result === 'shared' ? 'Hadith geteilt' : 'Hadith kopiert');
     } catch (error) {
       if ((error as DOMException)?.name !== 'AbortError') flash('Teilen war nicht möglich');
     }
   };
+
+  if (!entry) return (
+    <main className="screen reference-detail-screen">
+      <header className="reference-screen-header">
+        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+        <div><span className="overline">Deine Sammlung</span><h1>Hadith nicht verfügbar</h1></div>
+        <span className="reference-reading-header-spacer" aria-hidden="true" />
+      </header>
+      <p role="status">Der gespeicherte Verweis ist nicht mehr verfügbar. Es wird kein anderer Hadith als Ersatz angezeigt.</p>
+    </main>
+  );
 
   return (
     <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
@@ -99,6 +131,7 @@ export function DailyHadithScreen({
         <span>
           <strong>{entry.source}</strong>
           <small>Du liest eine sinngemäße Inhaltsangabe, nicht den Originalwortlaut des Hadiths.</small>
+          {entry.grading ? <small>{entry.grading.text} <a href={entry.grading.sourceUrl} target="_blank" rel="noopener noreferrer">Bewertungsquelle</a>{entry.grading.comparisonUrl ? <> · <a href={entry.grading.comparisonUrl} target="_blank" rel="noopener noreferrer">Vergleichsquelle</a></> : null}</small> : null}
         </span>
       </section>
 

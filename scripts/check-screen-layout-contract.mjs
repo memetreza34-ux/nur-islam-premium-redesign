@@ -28,6 +28,12 @@ for (const fileName of primaryScreens) {
   if (!source.includes('className="icon-button"') || !source.includes('aria-label=')) {
     throw new Error(`${fileName} is missing the shared labeled header control pattern.`);
   }
+  if (['PrayerScreen.tsx', 'QuranScreen.tsx', 'LearnScreen.tsx', 'MoreScreen.tsx'].includes(fileName)) {
+    const header = source.match(/<header className="reference-screen-header">([\s\S]*?)<\/header>/)?.[1];
+    if (!header || /onClick=\{onBack\}|aria-label="Zurück/.test(header)) {
+      throw new Error(`${fileName}: primary tabs must use bottom navigation, not a header Back button.`);
+    }
+  }
 }
 
 const app = await readFile(resolve(root, 'src/app/App.tsx'), 'utf8');

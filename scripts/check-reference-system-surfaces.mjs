@@ -67,13 +67,10 @@ requireTokens(entrySystem, 'Entry/system integration layer', [
 ]);
 
 requireTokens(brandEntryArt, 'Splash/brand art layer', [
-  '.reference-splash__mosque-image > img',
-  'object-fit: contain !important',
-  'object-position: center bottom',
-  'background: radial-gradient(ellipse, rgba(226, 191, 119, .18), rgba(13, 87, 67, .08) 47%, transparent 72%)',
-  '.reference-splash__mark > img',
-  'background: radial-gradient(circle, rgba(242, 215, 154, .2), rgba(226, 191, 119, .055) 48%, transparent 72%)',
-  'box-shadow: 0 0 12px rgba(242, 215, 154, .34)',
+  '.reference-splash__ayah',
+  'background: #001B16 !important',
+  'width: 100%',
+  'height: 100dvh',
   '.reference-system-error__logo > img',
   'background: radial-gradient(circle, rgba(226, 191, 119, .17), transparent 70%)',
 ]);
@@ -145,7 +142,7 @@ requireTokens(finalLock, 'Account/notes final utility material', [
 ]);
 
 requireTokens(finalLock, 'Final shell/brand/navigation override', [
-  '.reference-splash,',
+  '.reference-splash { border-radius: 0 !important; }',
   '.app-shell--detail .reference-screen-header',
   'background: linear-gradient(145deg, #001b16, #00120f) !important',
   'background: #fffcf3 !important',
@@ -153,8 +150,6 @@ requireTokens(finalLock, 'Final shell/brand/navigation override', [
   '.reference-onboarding__visual',
   'linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important',
   '.reference-onboarding__visual-icon,',
-  '.reference-splash__mosque-image > img',
-  '.reference-splash__mark > img,',
   '.reference-system-error__logo > img,',
   "[data-theme='light'] .app-shell--detail .reference-screen-header",
   "[data-theme='light'] .bottom-nav",
@@ -212,8 +207,6 @@ for (const selector of [
   '.reference-onboarding__actions .gold-button',
   '.reference-onboarding__visual-icon',
   '.reference-onboarding__permissions > button > span:first-child',
-  '.reference-splash__mosque-image > img',
-  '.reference-splash__mark > img',
   '.reference-system-error__logo > img',
 ]) {
   if (!finalLock.includes(selector)) throw new Error(`Final reference lock does not protect system/utility/profile/shell/brand surface: ${selector}`);

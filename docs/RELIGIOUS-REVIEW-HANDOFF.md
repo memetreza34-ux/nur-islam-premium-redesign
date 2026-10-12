@@ -9,9 +9,11 @@ Quellenbefunde: [`QUELLENPRUEFUNG-BEFUNDE.md`](./QUELLENPRUEFUNG-BEFUNDE.md)
 
 Die automatisch erzeugte Prüfliste weist aktuell aus:
 
-- **322 religiöse Einträge insgesamt**
-- **166 ohne Einzelnachweis**
-- **70 für diese App verfasst**
+- **478 Prüfpositionen insgesamt**
+- **79 ohne Einzelnachweis**
+- **309 hier verfasste Texte**
+
+Stand 11.10.2026: [KI-gestützter Quellenabgleich](AI-SOURCE-AUDIT-2026-10-11.md) für alle 60 Quizfragen und sechs Dua-Einträge abgeschlossen. Dies ist keine menschliche Endprüfung; kein Fachfreigabe-Status wurde vergeben. Die 99-Namen-Einzelbelege bleiben ein zusätzlicher Prüfauftrag.
 
 Ein vorhandener Quellenverweis bedeutet nur, dass eine Quelle angegeben ist. Er bestätigt nicht automatisch, dass die Quelle die konkrete Aussage trägt, die Übersetzung korrekt ist oder die praktische Regel richtig wiedergegeben wird.
 

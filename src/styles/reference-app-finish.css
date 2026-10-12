@@ -38,30 +38,6 @@ body {
   box-shadow: 0 28px 76px rgba(0, 0, 0, .42), inset 0 1px 0 rgba(255, 255, 255, .035);
 }
 
-.reference-splash::before,
-.reference-splash::after {
-  content: '';
-  position: absolute;
-  z-index: -3;
-  border: 1px solid rgba(232, 199, 122, .08);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.reference-splash::before {
-  width: 420px;
-  height: 420px;
-  top: -230px;
-  right: -205px;
-}
-
-.reference-splash::after {
-  width: 310px;
-  height: 310px;
-  bottom: -210px;
-  left: -180px;
-}
-
 .reference-splash__halo {
   position: absolute;
   z-index: -2;
@@ -89,26 +65,6 @@ body {
   bottom: 48px;
   opacity: .22;
   filter: saturate(.72) drop-shadow(0 24px 20px rgba(0, 0, 0, .45));
-}
-
-.reference-splash__brand {
-  display: grid;
-  justify-items: center;
-  gap: 5px;
-  text-align: center;
-}
-
-.reference-splash__mark,
-.reference-splash__mark img,
-.reference-splash__mark .premium-image__fallback,
-.reference-splash__mark svg {
-  width: 108px;
-  height: 108px;
-}
-
-.reference-splash__mark {
-  margin-bottom: 12px;
-  filter: drop-shadow(0 18px 26px rgba(0, 0, 0, .38));
 }
 
 .reference-splash h1,

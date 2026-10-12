@@ -200,7 +200,7 @@ function readWidgetView(id: PremiumWidgetId, now = new Date()): WidgetView {
 
   if (id === 'prayer' && nextPrayer) return { eyebrow: PRAYER_SCHEDULE_META.city, value: `${nextPrayer.prayer.label} · ${nextPrayer.prayer.time}`, detail: `${nextPrayer.tomorrow ? 'morgen ' : ''}in ${formatPrayerRemaining(nextPrayer.remaining)}` };
   if (id === 'quran') return { eyebrow: 'Zuletzt gelesen', value: `Sure ${lastRead.surahNumber} · Ayah ${lastRead.ayahNumber}`, detail: 'Weiterlesen' };
-  if (id === 'dhikr') return { eyebrow: 'Heute gezählt', value: `${readDhikrTotalToday(now)} Dhikr`, detail: 'lokal gespeichert' };
+  if (id === 'dhikr') return { eyebrow: 'Zählerstand heute', value: `${readDhikrTotalToday(now)} Dhikr`, detail: 'Stand auf diesem Gerät' };
   if (id === 'qibla') {
     const location = loadPrayerLocation();
     const reading = getQiblaWidgetReading(location);

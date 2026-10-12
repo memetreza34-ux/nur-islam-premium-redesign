@@ -30,7 +30,11 @@ for (const forbidden of [
 for (const requirement of [
   "useState(() => migrateNameSet('nur_name_favorites'))",
   "useState(() => migrateNameSet('nur_name_learned'))",
-  'localStorage.setItem(key, JSON.stringify([...migrated]))',
+  'if (!current.readable) return next;',
+  'localStorage.getItem(key) !== current.raw',
+  'matches.length === 1',
+  'JSON.stringify([...values, ...current.unresolved])',
+  'localStorage.getItem(key) !== raw',
 ]) {
   if (!names.includes(requirement)) throw new Error(`Name persistence integrity is missing: ${requirement}`);
 }
@@ -52,11 +56,14 @@ for (const requirement of [
   'function normalizePositiveInteger(value: unknown, fallback = 1)',
   "localStorage.getItem('nur_reader_font_size')",
   "localStorage.getItem('nur_reader_arabic_font')",
-  "localStorage.setItem('nur_reader_arabic_font', arabicFont)",
+  "writeConfirmed('nur_reader_arabic_font', next)",
   'Math.min(48, Math.max(26, Math.round(value)))',
   'normalizePositiveInteger(value, 0)',
   'value >= 1 && value <= 114',
-  'ayahNumber <= data.meta.numberOfAyahs',
+  'readBookmarks(surahNumber, data.meta.numberOfAyahs)',
+  'localStorage.getItem(key) === value',
+  'currentRaw !== expectedRaw',
+  '!bookmarks.readable || !writeConfirmed(key, raw, bookmarks.raw)',
   'Math.min(bundle.meta.numberOfAyahs, normalizePositiveInteger(initialAyahNumber))',
   'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
 ]) {

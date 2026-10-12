@@ -32,7 +32,7 @@ for (const width of [320, 390, 768]) {
     expect(image.y).toBeGreaterThanOrEqual(title.y + title.height);
     expect(text.x + text.width <= image.x || text.y + text.height <= image.y).toBe(true);
     expect(image.x + image.width).toBeLessThanOrEqual(card.x + card.width);
-    await expect(intro).toContainText('10 Schritte · Fortschritt lokal gespeichert');
+    await expect(intro).toContainText('10 Schritte · Noch keine bestätigte Speicherung');
     await intro.screenshot({ path: testInfo.outputPath(`wudu-${width}.png`) });
   });
 }

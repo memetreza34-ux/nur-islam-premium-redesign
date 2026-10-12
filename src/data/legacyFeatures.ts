@@ -66,7 +66,7 @@ export const quizFeature: LegacyFeatureItem = {
 
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Begriff · Fundstelle · Hadithe lesen und speichern', icon: Library, art: '/premium-assets/high-res-objects/learning-hadith-v2.webp' },
-  { id: 'madhhabs', title: 'Die vier Rechtsschulen', subtitle: 'Fiqh richtig einordnen', description: 'Hanafi, Maliki, Schafiʿi und Hanbali mit Geschichte, Methodik und geprüften Fachlinks.', icon: Scale, art: '/premium-assets/high-res-objects/learning-madhhabs-v2.webp' },
+  { id: 'madhhabs', title: 'Die vier Rechtsschulen', subtitle: 'Fiqh richtig einordnen', description: 'Hanafi, Maliki, Schafiʿi und Hanbali mit Geschichte, Methodik und Fachlinks.', icon: Scale, art: '/premium-assets/high-res-objects/learning-madhhabs-v2.webp' },
   { id: 'prophets', title: 'Die 25 Propheten', subtitle: '25 eigenständige Quran-Kurse', description: 'Jeder Prophet mit Kursplan, wichtigen Ereignissen, klaren Lehren und genauen Quran-Stellen.', icon: ScrollText, art: '/premium-assets/high-res-objects/learning-prophets-v2.webp' },
   { id: 'hajj', title: 'Hajj & Umrah', subtitle: 'Ablauf verstehen', description: 'Begriffe · Vorbereitung · Stationen', icon: Route, art: '/premium-assets/high-res-objects/kaaba-v2.webp' },
   { id: 'sunnah', title: 'Sunnah im Alltag', subtitle: 'Gute Gewohnheiten', description: 'Vorbild · Gewohnheiten · Beispiele', icon: Bookmark, art: '/premium-assets/high-res-objects/learning-sunnah-v2.webp' },

@@ -10,26 +10,20 @@ type VisualProps = {
 
 function versionPremiumAsset(src: string) {
   if (!src.includes('premium-assets/')) return src;
+  if (src.endsWith('/nur-logo-emblem-v3.svg')) return versionAppPath(src, '20261010-brand-c-v7');
   return versionAppPath(src, PREMIUM_ASSET_VERSION);
 }
 
 export function NurMark({ className = '', style }: VisualProps) {
   return (
-    <svg className={className} style={style} viewBox="0 0 96 96" aria-hidden="true">
-      <defs>
-        <linearGradient id="nur-gold" x1="12" y1="8" x2="82" y2="88" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#fff0c7" />
-          <stop offset=".45" stopColor="#e8c77e" />
-          <stop offset="1" stopColor="#9c7131" />
-        </linearGradient>
-        <radialGradient id="nur-green" cx="50%" cy="40%" r="70%">
-          <stop stopColor="#174f3e" />
-          <stop offset="1" stopColor="#06251e" />
-        </radialGradient>
-      </defs>
-      <path d="M48 5 59 17l16-1 2 16 13 9-8 14 5 15-15 6-7 15-15-6-14 8-9-13-16-2 1-16L3 50l11-12-3-16 16-4L37 6l11 8Z" fill="url(#nur-green)" stroke="url(#nur-gold)" strokeWidth="6" strokeLinejoin="round" />
-      <path d="M58 31a20 20 0 1 0 2 32 18 18 0 1 1-2-32Z" fill="url(#nur-gold)" />
-      <path d="m63 34 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9Z" fill="#fff5d8" />
+    <svg className={className} style={style} viewBox="0 0 180 180" aria-hidden="true">
+      <rect width="180" height="180" fill="#001B16" />
+      <g transform="translate(-10 -6) scale(.15948963)">
+        <path fill="#E2BF77" d="M627 238c-10 20-21 31-32 39 13 14 19 24 18 43-4 64-65 95-120 136-57 42-83 88-83 138 0 26 7 49 21 68-14 6-20 16-20 32v91c0 48-40 87-104 104 29-23 41-47 41-78V558c0-17 3-28 13-38v-13h-29c22-19 29-30 29-45 0-34-46-51-53-85-8 34-53 52-53 85 0 16 9 28 29 45h-29l-4 7c13 15 16 27 16 44v307c0 36-27 58-63 58v43h846v-43c-36 0-63-22-63-58V558c0-17 3-29 16-44l-4-7h-29c20-17 29-29 29-45 0-33-45-51-53-85-7 34-53 51-53 85 0 15 7 26 29 45h-29v13c10 10 13 21 13 38v253c0 31 12 55 41 78-64-17-104-56-104-104v-91c0-16-6-26-20-32 14-19 21-42 21-68 0-50-26-96-83-138-55-41-116-72-120-136 1-19 5-29 18-43-11-8-22-19-32-39Z"/>
+        <path fill="#001B16" d="M466 966V721c0-80 69-97 161-182 92 85 161 102 161 182v245H466Z"/>
+        <path fill="#001B16" d="M288 636v-73c0-12 8-22 20-22s20 10 20 22v73h-40Zm638 0v-73c0-12 8-22 20-22s20 10 20 22v73h-40Z"/>
+        <path fill="#F5F0E6" d="M530 966V766c0-65 52-90 97-133 45 43 97 68 97 133v200H530Z"/>
+      </g>
     </svg>
   );
 }

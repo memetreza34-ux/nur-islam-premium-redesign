@@ -195,9 +195,9 @@ const appleTouchGitBlob = createHash('sha1')
   .update(`blob ${appleTouch.length}\0`)
   .update(appleTouch)
   .digest('hex');
-const expectedAppleTouchGitBlob = '2523fbadbd995e8f54b1620a1b8e6c20924bf4d8';
+const expectedAppleTouchGitBlob = 'bed4578ef1e7865e67f1936fefd86f05a2b0e9b9';
 if (appleTouchGitBlob !== expectedAppleTouchGitBlob) {
-  throw new Error(`Apple touch icon drifted from the approved committed Git blob: ${appleTouchGitBlob}.`);
+  throw new Error(`Apple touch icon drifted from the current brand-art Git blob: ${appleTouchGitBlob}.`);
 }
 
 const designBoardDirectory = resolve(root, 'docs/design-references/chat');
@@ -285,9 +285,8 @@ if (!premiumVisuals.includes('event.currentTarget.hidden = true') || !premiumVis
 }
 
 const mainSource = await readFile(resolve(root, 'src/app/main.tsx'), 'utf8');
-const startupAssets = mainSource.match(/const STARTUP_ASSETS = \[([\s\S]*?)\];/)?.[1].match(/'[^']+'/g);
-if (JSON.stringify(startupAssets) !== JSON.stringify(["'nur-logo-emblem-v3.svg'", "'splash-mosque-v1.webp'"])) {
-  throw new Error('Startup must preload only the logo and splash artwork; below-fold Home images load on demand.');
+if (mainSource.includes('STARTUP_ASSETS') || mainSource.includes("link.as = 'image'")) {
+  throw new Error('Startup must not preload the removed opening logo or unrelated artwork; the prayer landscape loads through PremiumImage.');
 }
 const serviceWorker = await readFile(resolve(root, 'public/sw.js'), 'utf8');
 const stylesEntry = await readFile(resolve(root, 'src/styles.css'), 'utf8');
@@ -295,7 +294,6 @@ const styleEntries = await readdir(resolve(root, 'src/styles'));
 
 const versionAssertions = [
   ['PremiumVisuals', premiumVisuals],
-  ['main preload', mainSource],
   ['service worker', serviceWorker],
 ];
 for (const [label, source] of versionAssertions) {
@@ -310,8 +308,8 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v33-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must be v33 for the refreshed widget image set.');
+if (!serviceWorker.includes(`nur-islam-premium-v78-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must be v78 for compared community sources and consistent protection exceptions.');
 }
 for (const name of ['home-dhikr-illustrated-v1', 'widget-date-illustrated-v1', 'widget-inspiration-illustrated-v1', 'widget-routine-illustrated-v1', 'widget-quran-plan-illustrated-v1', 'widget-weekly-prayers-illustrated-v1', 'widget-favorites-illustrated-v1', 'widget-reminders-illustrated-v1', 'widget-friday-illustrated-v1']) {
   if (!serviceWorker.includes(`premiumAsset('${name}.webp')`)) {
@@ -362,5 +360,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v33 with refreshed images, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v78 with concept C vector brand mark retained outside the opening, no obsolete artwork host or global image-hiding CSS.`,
 );

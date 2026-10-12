@@ -1,8 +1,8 @@
 const VISUAL_VERSION = '20260826-original-art';
-const CACHE_NAME = `nur-islam-premium-v33-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v78-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
-const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${VISUAL_VERSION}`;
+const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${name === 'nur-logo-emblem-v3.svg' ? '20261010-brand-c-v7' : VISUAL_VERSION}`;
 const INDEX_URL = scoped('index.html');
 const PREMIUM_PATHNAME = new URL('premium-assets/', self.registration.scope).pathname;
 
@@ -13,9 +13,10 @@ const APP_SHELL = [
   scoped('nur-app-icon.svg'),
   scoped('nur-app-icon-192.png'),
   scoped('nur-app-icon-512.png'),
+  scoped('nur-app-icon-maskable-512.png'),
   scoped('premium-assets/high-res-objects/nur-logo-emblem.png'),
   premiumAsset('nur-logo-emblem-v3.svg'),
-  premiumAsset('splash-mosque-v1.webp'),
+  premiumAsset('nur-logo-emblem-transparent-v1.svg'),
   premiumAsset('mosque-heritage-v1.webp'),
   premiumAsset('mosque-finder-arch-v1.webp'),
   premiumAsset('quran-closed-v2.webp'),

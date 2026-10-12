@@ -98,13 +98,13 @@ const LIMITS = new Map([['Sahih Muslim', 3033], ['Jami at-Tirmidhi', 3956], ['Su
 const outOfRange = [];
 for (const [file, text] of sources) {
   for (const [collection, limit] of LIMITS) {
-    for (const match of text.matchAll(new RegExp(`${collection} (\\\\d+)`, 'g'))) {
+    for (const match of text.matchAll(new RegExp(`${collection} (\\d+)`, 'g'))) {
       if (Number(match[1]) > limit) outOfRange.push(`${collection} ${match[1]} (${file})`);
     }
   }
 }
 
-const shorten = (text) => text.replace(/\s+/g, ' ').slice(0, 400);
+const shorten = (text) => text.replace(/\s+/g, ' ').slice(0, 400).trim();
 const lines = [
   '# Prüfung der Hadith-Nummern',
   '',

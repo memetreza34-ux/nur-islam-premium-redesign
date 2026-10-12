@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title">
+  <title id="title">Nur Islam – Lichtportal</title>
+  <rect width="180" height="180" fill="#001B16"/>
+  <path fill="#E2BF77" d="M37 141V80c0-24 16-41 53-62 37 21 53 38 53 62v61H37Z"/>
+  <path fill="#001B16" d="M51 141V82c0-17 12-30 39-47 27 17 39 30 39 47v59H51Z"/>
+  <path fill="#F5F0E6" d="M69 141V98c0-12 7-21 21-32 14 11 21 20 21 32v43H69Z"/>
+  <path fill="#001B16" d="M81 141v-39c0-6 3-11 9-17 6 6 9 11 9 17v39H81Z"/>
+  <path fill="#E2BF77" d="M85 126v-15c0-4 2-8 5-11 3 3 5 7 5 11v15H85Z"/>
+  <path d="M26 143h128" stroke="#E2BF77" stroke-width="6" stroke-linecap="round"/>
+</svg>

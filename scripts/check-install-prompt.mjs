@@ -53,7 +53,7 @@ const checks = [
   [manifest.orientation === 'portrait-primary', 'manifest keeps the portrait-first mobile composition'],
   [hasManifestIcon('./nur-app-icon-192.png', '192x192', 'any'), 'manifest keeps the 192x192 PNG install icon'],
   [hasManifestIcon('./nur-app-icon-512.png', '512x512', 'any'), 'manifest keeps the 512x512 PNG install icon'],
-  [hasManifestIcon('./nur-app-icon-512.png', '512x512', 'maskable'), 'manifest keeps the 512x512 maskable PNG icon'],
+  [hasManifestIcon('./nur-app-icon-maskable-512.png', '512x512', 'maskable'), 'manifest keeps the padded 512x512 maskable PNG icon'],
   [icon192?.width === 192 && icon192?.height === 192, 'the 192 PNG file has real 192x192 dimensions'],
   [icon512?.width === 512 && icon512?.height === 512, 'the 512 PNG file has real 512x512 dimensions'],
   [serviceWorker.includes("scoped('nur-app-icon-192.png')"), 'service worker keeps the 192 install icon in the offline app shell'],

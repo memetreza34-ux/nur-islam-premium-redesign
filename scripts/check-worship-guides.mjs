@@ -18,7 +18,7 @@ const data = await readFile(resolve(root, 'src/data/worshipGuideData.ts'), 'utf8
 const screen = await readFile(resolve(root, 'src/screens/ReferenceReadingScreens.tsx'), 'utf8');
 const wuduLesson = await readFile(resolve(root, 'src/shared/WuduLesson.tsx'), 'utf8');
 const wuduArt = await readFile(resolve(root, 'src/data/wuduPresentation.ts'), 'utf8');
-for (const required of ['<WuduLesson', 'onSelect={setActiveStep}', 'onComplete={completeGuide}']) {
+for (const required of ['<WuduLesson', 'onSelect={selectStep}', 'saveGuideStep(guide.id, index)', 'onComplete={completeGuide}']) {
   if (!screen.includes(required)) throw new Error(`Wudu integration missing ${required}`);
 }
 for (const required of ['Aussprachehilfe', 'Arabische Bezeichnung', 'Arabischer Wortlaut', 'dir="rtl"', 'lang="ar"', 'step.description', 'step.arabic', 'step.transliteration']) {

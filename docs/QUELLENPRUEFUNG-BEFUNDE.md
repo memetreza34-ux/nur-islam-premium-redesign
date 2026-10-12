@@ -66,7 +66,9 @@ gegengelesen:
 `check-hadith-data.mjs` lässt jetzt keinen Eintrag ohne Nummer mehr durch
 (Budget 0) und weist zwei Einträge mit derselben Belegstelle als Dublette ab.
 
-### Duas — 31 von 34 Belegstellen verifiziert
+### Duas — ursprünglicher Stand: 31 von 34 Belegstellen verifiziert
+
+Nachtrag 11.10.2026: Die drei damals offenen Wortlaute sind mit Hisn al-Muslim 120, 139 und 88 abgeglichen und in der App verlinkt. Nummern-/Bewertungsunterschiede werden ausdrücklich benannt. Das ist kein unabhängiges Gutachten zu sämtlichen Überlieferungswegen; Einzelheiten im [KI-Quellenabgleich](AI-SOURCE-AUDIT-2026-10-11.md). Die folgende Liste dokumentiert den früheren Prüfstand.
 
 Alle geprüften Verweise stimmen. Ein Verdachtsfall löste sich beim Nachlesen
 auf: **Sahih al-Bukhari 2893** wirkt zunächst falsch (die Überlieferung handelt
@@ -239,7 +241,7 @@ eine nachschlagbare Belegstelle tragen. Offen bleiben:
 | Block | Einträge | warum offen |
 |---|---:|---|
 | Anleitungen zur Praxis | 102 | überwiegend normativ (Qasr, Nachholen, Sujud as-Sahw) — Fiqh |
-| Islam-Quiz | 60 | Frage, richtige Antwort und Erklärung gemeinsam zu prüfen |
+| Islam-Quiz | 60 | Am 11.10.2026 zusammen gegen Einzelfundstellen abgeglichen; keine Fachfreigabe, siehe KI-Quellenabgleich |
 | Gebetsablauf (Rakʿah) | 16 | Wortlaut, Umschrift und Zusammensetzung, schulabhängig |
 | Kalendertermine | 15 | Hijri-Datum und Bewertung der Begehung |
 | Hajj, Umrah, heilige Stätten | 15 | hier verfasst, ohne Vorlage |

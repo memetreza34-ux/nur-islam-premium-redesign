@@ -5,6 +5,7 @@ const root = process.cwd();
 const content = await readFile(resolve(root, 'src/data/islamicLearningContent.ts'), 'utf8');
 const categories = await readFile(resolve(root, 'src/data/learningCategories.ts'), 'utf8');
 const course = await readFile(resolve(root, 'src/screens/LearningCourseScreen.tsx'), 'utf8');
+const progress = await readFile(resolve(root, 'src/services/learningProgress.ts'), 'utf8');
 const learn = await readFile(resolve(root, 'src/screens/LearnScreen.tsx'), 'utf8');
 const styles = await readFile(resolve(root, 'src/styles/reference-learning-courses.css'), 'utf8');
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
@@ -60,7 +61,8 @@ for (const feature of requiredContentFeatures) {
 }
 
 const requiredCourseFeatures = [
-  'nur_learning_completed',
+  'readLearningProgress',
+  'updateLearningCompletion',
   'courseMapOpen',
   'answerQuestion',
   'selectedLesson.sources.map',
@@ -87,7 +89,7 @@ if (!learn.includes('99 Namen Allahs') || !learn.includes('onOpenNames')) {
 if (learn.includes('ist als nächster Ausbau vorgemerkt')) {
   throw new Error('Old placeholder learning modal is still active.');
 }
-if (!learn.includes('Dein Grundlagenpfad') || !learn.includes('reference-foundation-path') || !learn.includes('nur_learning_completed')) {
+if (!progress.includes("LEARNING_PROGRESS_KEY = 'nur_learning_completed'") || !learn.includes('Dein Grundlagenpfad') || !learn.includes('reference-foundation-path') || !learn.includes('readLearningProgress()') || !learn.includes('knowledgeState.completed')) {
   throw new Error('Learning overview does not expose sourced course progress.');
 }
 
@@ -98,4 +100,4 @@ if (!styleIndex.includes("reference-learning-courses.css")) {
   throw new Error('Interactive learning course stylesheet is not loaded.');
 }
 
-console.log('Learning curriculum verified: seven structured foundations, 44 non-duplicated sourced lessons, the complete 99 Names entry, quizzes, and persisted progress.');
+console.log('Learning curriculum structure verified: seven categories, 44 non-duplicated lessons with source fields, the 99 Names entry, quizzes and progress wiring. This check does not verify religious content or successful storage.');

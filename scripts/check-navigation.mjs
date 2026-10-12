@@ -12,7 +12,10 @@ const calendar = await readFile(resolve(root, 'src/screens/CalendarScreen.tsx'),
 const browserNavigation = await readFile(resolve(root, 'src/services/browserNavigation.ts'), 'utf8');
 
 const requiredAppFragments = [
-  "import { CollectionsScreen } from '../screens/CollectionsScreen';",
+  "const CollectionsScreen = lazy(() => import('../screens/CollectionsScreen')",
+  '.then((module) => ({ default: module.CollectionsScreen })));',
+  "const DuasScreen = lazy(() => import('../screens/DuasScreen')",
+  '.then((module) => ({ default: module.DuasScreen })));',
   "import { DailyHadithScreen } from '../screens/DailyHadithScreen';",
   "import { MosqueScreen } from '../screens/DiscoveryScreens';",
   'onOpenQuran={openQuran}',
@@ -71,7 +74,8 @@ if (collections.includes('OFFLINE_QURAN_SURAHS')) {
 
 for (const fragment of [
   'hadithId?: string | null',
-  'getHadithById(hadithId) ?? getDailyHadith()',
+  'isDaily ? getDailyHadith(now) : getHadithById(hadithId)',
+  'Hadith nicht verfügbar',
   'readSavedHadithIds',
   'writeSavedHadithIds(next)',
 ]) {

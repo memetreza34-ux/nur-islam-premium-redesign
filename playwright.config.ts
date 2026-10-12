@@ -11,6 +11,7 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
+  testIgnore: '**/fixtures/**',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
@@ -19,6 +20,9 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:4173',
     trace: 'on-first-retry',
+    launchOptions: process.env.NUR_E2E_CHROME_PATH
+      ? { executablePath: process.env.NUR_E2E_CHROME_PATH }
+      : undefined,
     // A prayer app is used in Germany by default; the shipped fallback
     // schedule is Berlin, so the locale and timezone match what users see.
     locale: 'de-DE',

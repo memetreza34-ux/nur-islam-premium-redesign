@@ -97,8 +97,10 @@ requireText(app, [
   'onOpenDua={openSavedDua}',
   'onOpenName={openSavedName}',
   'onOpenCalendarDate={openSavedCalendarDate}',
-  'Ayah im Fokus',
+  'Ayah des Tages',
+  'onOpenReader(dailyAyah.surahNumber, dailyAyah.ayahNumber)',
   'getDailyHadith(now)',
+  'getDailyAyah(now, PRAYER_SCHEDULE_META.timezone)',
   'selectedHadithId',
   'onOpenHadith={openSavedHadith}',
   "activeTab: 'quran'",
@@ -117,7 +119,7 @@ requireText(dhikrDailyState, [
 ], 'Validated daily Dhikr state shared with Home');
 requireText(homeProgress, [
   "localStorage.getItem('nur_quran_last_read')",
-  "public/data/quran/surahs.json?raw",
+  "../data/quranSurahs.json",
   'surahsByNumber.get(surahNumber)',
   'Number.isSafeInteger(ayahNumber)',
 ], 'Synchronous, validated Home Quran progress');
@@ -130,7 +132,7 @@ forbidText(app, [
   "showToast('Nur Islam')",
   'onOpenDuas=',
   'onOpenCalendar=',
-  'Ayah des Tages',
+  'Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“',
 ], 'Home and direct navigation');
 
 requireText(quran, [
@@ -234,7 +236,7 @@ requireText(readingScreens, [
   'copyAyah',
   'shareAyah',
   'completeGuide',
-  'nur_guide_${mode}_complete',
+  'saveGuideCompletion(guide.id)',
 ], 'Focused Ayah and worship guide actions');
 forbidText(readingScreens, [
   'setPlaying',
@@ -257,7 +259,9 @@ forbidText(readingScreens, [
 
 requireText(dailyHadith, [
   'hadithId?: string | null',
-  'getHadithById(hadithId) ?? getDailyHadith()',
+  'isDaily ? getDailyHadith(now) : getHadithById(hadithId)',
+  'Hadith nicht verfügbar',
+  'if (!writeSavedHadithIds(next))',
   'readSavedHadithIds',
   'writeSavedHadithIds(next)',
   'toggleSaved',
@@ -279,7 +283,8 @@ requireText(hadithData, [
   "const LEGACY_DAILY_HADITH_STORAGE_KEY = 'nur_daily_hadith_saved'",
   "saved.add('intentions')",
   'localDayNumber(date)',
-  'HADITH_LIBRARY[index]',
+  'export const DAILY_HADITH_IDS',
+  'DAILY_HADITH_POOL[index]',
   'A damaged legacy key must not prevent valid favorites',
 ], 'Hadith rotation and bookmark migration');
 

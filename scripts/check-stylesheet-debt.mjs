@@ -66,7 +66,7 @@ const BUDGET = {
   // replaced. Without that sweep this number would be ~2483.
   // The mosque-finder hero and restored responsive surfaces account for the
   // measured increase. Their override debt is recorded, not treated as solved.
-  importantRules: 2349,
+  importantRules: 2330,
   // Raised three times now, each for surface that did not exist: the prayer
   // sequence (Arabic wording, transliteration and German meaning for every
   // spoken step), the calendar's occasions, which now explain what a day is and
@@ -215,7 +215,7 @@ const BUDGET = {
     // Current source snapshot includes the new learning, legal/about and
     // mosque-finder surfaces. Keep this exact cap until consolidation reduces
     // it; the compiled transfer size is guarded separately by bundle:check.
-    totalBytes: 911_682,
+    totalBytes: 909_818,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

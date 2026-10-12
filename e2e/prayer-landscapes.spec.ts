@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
+import { prayerRequestFixture } from './fixtures/prayer-api';
 
 // Fixed test data only; never ships as a timetable.
 const timings = { Fajr: '04:10', Sunrise: '06:00', Dhuhr: '13:10', Asr: '17:00', Maghrib: '20:10', Isha: '22:10' };
@@ -8,7 +9,7 @@ test.use({ serviceWorkers: 'block' });
 async function openLandscapeApp(page: Page, time: string) {
   await page.clock.setFixedTime(new Date(`2026-08-27T${time}:00+02:00`));
   await page.route('https://api.aladhan.com/**', (route) => route.fulfill({
-    json: { code: 200, data: { timings, meta: { timezone: 'Europe/Berlin', method: { name: 'Test fixture' }, school: 'Standard' } } },
+    json: prayerRequestFixture(route.request().url(), timings),
   }));
   await page.goto('/?preview=1');
   await expect(page.getByRole('navigation')).toBeVisible();
@@ -85,7 +86,7 @@ test('open prayer layout still marks and unmarks the next prayer', async ({ page
 test('after Isha and midnight the scene stays dark while Fajr is next', async ({ page }) => {
   await openLandscapeApp(page, '23:00');
   await expect(page.locator('[data-prayer-scene="isha"]')).toBeVisible();
-  await expect(page.getByText('Nächstes Gebet · morgen', { exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Nächstes Gebet', exact: true }).getByText('Nächstes Gebet · morgen', { exact: true })).toBeVisible();
   await page.clock.setFixedTime(new Date('2026-08-28T00:01:00+02:00'));
   await page.reload();
   await expect(page.locator('[data-prayer-scene="isha"]')).toBeVisible();

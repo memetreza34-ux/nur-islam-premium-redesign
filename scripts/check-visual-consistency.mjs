@@ -263,8 +263,7 @@ const moreScreenUsage = app.match(/<MoreScreen[\s\S]*?\/>/);
 if (!moreScreenUsage) {
   throw new Error('The More hub screen is not rendered.');
 }
-if (!moreScreenUsage[0].includes('onBack={goBack}')
-  || !/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
+if (!/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
   throw new Error('More hub shortcuts are not connected to history-aware central app navigation.');
 }
 if (!app.includes('const [navigationHistory, setNavigationHistory] = useState<Tab[]>([])')

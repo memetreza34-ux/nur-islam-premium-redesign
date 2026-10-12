@@ -22,17 +22,20 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { getDailyHadith } from '../data/hadithData';
+import { getDailyAyah } from '../data/dailyAyah';
 import { readDhikrTotalToday } from '../services/dhikrDailyState';
 import { isWidgetId, WIDGET_ACTIONS } from '../services/widgetActions';
 import { readQuranLastRead } from '../services/premiumLocalService';
 import { LEARNING_CATEGORIES } from '../data/learningCategories';
 import type { LearningCategoryId } from '../data/learningCategories';
 import { CalendarScreen } from '../screens/CalendarScreen';
-import { CollectionsScreen } from '../screens/CollectionsScreen';
+const CollectionsScreen = lazy(() => import('../screens/CollectionsScreen')
+  .then((module) => ({ default: module.CollectionsScreen })));
 import { DailyHadithScreen } from '../screens/DailyHadithScreen';
 import { DhikrScreen } from '../screens/DhikrScreen';
 import { MosqueScreen } from '../screens/DiscoveryScreens';
-import { DuasScreen } from '../screens/DuasScreen';
+const DuasScreen = lazy(() => import('../screens/DuasScreen')
+  .then((module) => ({ default: module.DuasScreen })));
 import { InstallAppPrompt } from '../shared/InstallAppPrompt';
 import { MihrabArch } from '../shared/MihrabArch';
 import { NavigationIcon } from '../shared/NavigationIcon';
@@ -255,6 +258,7 @@ function PremiumHome({
   const currentScene = getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META.timezone);
   const currentTimetable = isSharedPrayerScheduleCurrent(now);
   const dailyHadith = getDailyHadith(now);
+  const dailyAyah = getDailyAyah(now, PRAYER_SCHEDULE_META.timezone);
   const quranPercent = quranProgress.hasProgress && quranProgress.numberOfAyahs
     ? Math.min(100, Math.max(1, Math.round((quranProgress.ayahNumber / quranProgress.numberOfAyahs) * 100)))
     : 0;
@@ -362,7 +366,7 @@ function PremiumHome({
         <div className="journey-grid">
           <button className="journey-card" onClick={() => onNavigate('dhikr')}>
             <PremiumImage src="/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp" fallback={<RosetteObject />} />
-            <span><small>Heute gezählt</small><strong>Dhikr</strong><em>{dhikrTotal} Wiederholungen</em></span>
+            <span><small>Zählerstand heute</small><strong>Dhikr</strong><em>{dhikrTotal} Wiederholungen</em></span>
           </button>
           <button className="journey-card" onClick={() => onNavigate('qibla')}>
             <PremiumImage src="/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp" fallback={<QiblaObject />} />
@@ -395,11 +399,11 @@ function PremiumHome({
       </section>
 
       <section className="inspiration-grid inspiration-grid--v2" data-home-section="inspiration">
-        <button className="verse-card verse-card--cream reference-daily-card-button" onClick={() => onNavigate('ayah')}>
+        <button className="verse-card verse-card--cream reference-daily-card-button" aria-label={`Ayah des Tages im Quran lesen: ${dailyAyah.source}`} onClick={() => onOpenReader(dailyAyah.surahNumber, dailyAyah.ayahNumber)}>
           <PremiumImage src="/premium-assets/high-res-objects/ayah-focus-bg-v1.webp" className="verse-card__art" fallback={<LanternObject />} />
-          <div className="card-title-row"><span><Sparkles size={16} /> Ayah im Fokus</span><span><BookHeart size={18} /></span></div>
-          <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
-          <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote><footer>Al-Ikhlas · 112:1</footer>
+          <div className="card-title-row"><span><Sparkles size={16} /> Ayah des Tages</span><span><BookHeart size={18} /></span></div>
+          <p className="arabic-verse" lang="ar" dir="rtl">{dailyAyah.arabic}</p>
+          <blockquote>Sinngemäße Bedeutung: „{dailyAyah.meaning}“</blockquote><footer>{dailyAyah.surahName} · {dailyAyah.source}</footer>
         </button>
         <button className="hadith-card glass-card reference-daily-card-button" onClick={() => onNavigate('hadith')}>
           <div className="card-title-row"><span><Quote size={16} /> Hadith des Tages</span></div>
@@ -753,7 +757,7 @@ export default function App() {
     : activeTab === 'home'
       ? <PremiumHome onNavigate={navigate} onOpenReader={openReader} />
       : activeTab === 'quran'
-        ? <QuranScreen onBack={goBack} onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
+        ? <QuranScreen onOpenReader={openReader} onOpenAyah={() => navigate('ayah')} />
         : activeTab === 'reader'
           ? <QuranReaderScreen surahNumber={selectedSurahNumber} initialAyahNumber={selectedAyahNumber} onBack={goBack} onOpenSurah={(number) => openReader(number, 1)} />
           : activeTab === 'ayah'
@@ -771,14 +775,13 @@ export default function App() {
                     : activeTab === 'qibla'
                       ? <QiblaScreen onBack={goBack} />
                       : activeTab === 'profile'
-                        ? <MoreScreen onBack={goBack} onNavigate={(destination) => navigate(destination)} />
+                        ? <MoreScreen onNavigate={(destination) => navigate(destination)} />
                         : activeTab === 'account'
                         ? <AccountScreen onBack={goBack} onOpenLegal={() => navigate('legal')} />
                         : activeTab === 'notes'
                         ? <NotesScreen onBack={goBack} onOpenAccount={() => navigate('account')} />
                         : activeTab === 'prayer'
                           ? <PrayerScreen
-                              onBack={goBack}
                               openCalendar={openSavedCalendarDate}
                               openDhikr={() => navigate('dhikr')}
                               openDuas={() => navigate('duas')}

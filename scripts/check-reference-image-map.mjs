@@ -115,8 +115,35 @@ requireFragments(onboarding, 'Onboarding', [
 ]);
 
 requireFragments(splash, 'Splash', [
-  'splash-mosque-v1.webp',
-  'nur-logo-emblem-v3.svg',
+  'aria-label="Nur Islam wird geladen"',
+  'getNextPrayer(now)',
+  'getDailyAyah(now, PRAYER_SCHEDULE_META.timezone)',
+  '{ayah.source}',
+  'getPrayerBackdrop(nextPrayer.prayer.id)',
+  'reference-splash__prayer-art',
+]);
+if (['reference-splash__loader', 'reference-splash__mosque', 'reference-splash__mark', 'nur-logo-emblem', 'ayah-focus-bg', 'reference-splash__ayah-art', '<picture>', 'rotate:'].some(fragment => splash.includes(fragment))) {
+  throw new Error('The opening must show the Ayah directly on the prayer landscape, without logo, separate Ayah artwork or progress bar.');
+}
+requireCssFit(brandEntryArt, 'Full-screen opening canvas', '.reference-splash {', [
+  'width: 100%',
+  'height: 100dvh',
+  'border-radius: 0',
+  'grid-template-rows: minmax(112px, 1fr) max-content minmax(112px, 1fr)',
+  'align-content: safe center',
+  'gap: 12px',
+  'position: relative',
+]);
+requireCssFit(brandEntryArt, 'Unframed opening prayer', '.reference-splash__prayer {', ['padding: 12px 0']);
+const prayerHeader = splash.slice(splash.indexOf('<header className="reference-splash__prayer"'), splash.indexOf('</header>'));
+if (prayerHeader.includes('reference-splash__prayer-art')) {
+  throw new Error('The prayer landscape belongs to the full opening canvas, not a framed header card.');
+}
+requireCssFit(brandEntryArt, 'Centered unframed opening Ayah', '.reference-splash__ayah {', [
+  'grid-row: 2',
+  'background: transparent',
+  'border: 0',
+  'box-shadow: none',
 ]);
 
 // The closed-book artwork was a bright object sitting behind the entry text,
@@ -242,17 +269,8 @@ requireCssFit(onboardingArt, 'Onboarding Tasbih companion', '.reference-onboardi
   'object-position: center !important',
 ]);
 
-requireCssFit(brandEntryArt, 'Splash mosque composition', '.reference-splash__mosque', [
-  'inset: auto 0 -42px',
-  'width: 100%',
-  'height: 57%',
-]);
-requireCssFit(brandEntryArt, 'Splash mosque crop', '.reference-splash__mosque-image > img {', [
-  'object-fit: contain',
-  'object-position: center bottom',
-]);
-requireCssFit(brandEntryArt, 'Splash Nur mark', '.reference-splash__mark > img', [
-  'object-fit: contain',
+requireCssFit(brandEntryArt, 'Splash logo backdrop', '.reference-splash {', [
+  'background: #001B16 !important',
 ]);
 requireCssFit(brandEntryArt, 'System error Nur mark', '.reference-system-error__logo > img', [
   'object-fit: contain !important',
@@ -266,13 +284,8 @@ requireCssAsset(discoveryCss, 'Collections ornament', '.reference-collection-sec
 requireCssAsset(worshipCss, 'Prayer hero', '.reference-next-prayer::before', 'dome-v2.webp?v=20260826-original-art');
 requireCssAsset(worshipCss, 'Qibla center', '.reference-qibla-stage::after', 'kaaba-v2.webp?v=20260826-original-art');
 
-requireCssFit(finalLock, 'Splash mosque final lock', '.reference-splash__mosque-image > img', [
-  'object-fit: contain !important',
-  'object-position: center bottom !important',
-]);
-requireCssFit(finalLock, 'Splash mark final lock', '.reference-splash__mark > img', [
-  'object-fit: contain !important',
-  'object-position: center !important',
+requireCssFit(finalLock, 'Full-screen opening radius lock', '.reference-splash {', [
+  'border-radius: 0 !important',
 ]);
 requireCssFit(finalLock, 'System error mark final lock', '.reference-system-error__logo > img', [
   'object-fit: contain !important',

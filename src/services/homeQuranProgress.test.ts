@@ -1,11 +1,15 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import surahsJson from '../../public/data/quran/surahs.json?raw';
+import { readFileSync } from 'node:fs';
+import surahs from '../data/quranSurahs.json';
 import { readHomeQuranProgress } from './homeQuranProgress';
-
-const surahs = JSON.parse(surahsJson) as Array<{ number: number; englishName: string; numberOfAyahs: number }>;
 
 describe('Home Quran progress', () => {
   beforeEach(() => { localStorage.clear(); vi.restoreAllMocks(); });
+
+  it('keeps bundled home metadata equal to the offline Quran index', () => {
+    const offlineIndex = JSON.parse(readFileSync('public/data/quran/surahs.json', 'utf8'));
+    expect(surahs).toEqual(offlineIndex);
+  });
 
   it('starts at Al-Faatiha without claiming saved progress', () => {
     expect(readHomeQuranProgress()).toMatchObject({ surahNumber: 1, ayahNumber: 1, numberOfAyahs: 7, hasProgress: false });

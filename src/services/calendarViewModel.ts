@@ -47,7 +47,8 @@ export function getCalendarEvent(date: Date): CalendarEvent | null {
   const hijriDay = getHijriDay(date);
   const hijriMonth = getHijriMonth(date);
   const fastingForbidden = isFastingForbidden(hijriMonth, hijriDay);
-  const [named] = findIslamicEvents(hijriMonth, hijriDay);
+  const namedEvents = findIslamicEvents(hijriMonth, hijriDay);
+  const named = namedEvents.find(event => event.id === 'laylat-al-qadr') ?? namedEvents[0];
 
   if (named) {
     return {

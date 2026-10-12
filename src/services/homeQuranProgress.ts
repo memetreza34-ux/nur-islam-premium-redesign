@@ -1,4 +1,4 @@
-import surahsJson from '../../public/data/quran/surahs.json?raw';
+import surahsJson from '../data/quranSurahs.json';
 import { OFFLINE_QURAN_SURAH_SET } from './quranService';
 import type { Surah } from './quranService';
 
@@ -11,7 +11,7 @@ type HomeQuranProgress = {
   hasProgress: boolean;
 };
 
-const surahs = JSON.parse(surahsJson) as Surah[];
+const surahs = surahsJson as Surah[];
 const surahsByNumber = new Map(surahs.map((surah) => [surah.number, surah]));
 
 function progressFor(surah: Surah, ayahNumber = 1, hasProgress = false): HomeQuranProgress {

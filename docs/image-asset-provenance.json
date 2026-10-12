@@ -444,7 +444,7 @@
       "path": "public/premium-assets/high-res-objects/splash-mosque-v1.webp",
       "sha256": "55ebe82049d24d3076fba9ba9e544520696d4720df785a233a5472bec49a6a72",
       "dimensions": "768x1152",
-      "use": "Opening animation: central rising mosque architecture",
+      "use": "Prayer-area illustration; retired from the opening animation on 06.10.2026",
       "prompt": "Use case: stylized-concept. Asset type: transparent hero illustration for the opening animation of a premium Islamic mobile app. Primary request: create an original, architecturally coherent mosque miniature that feels serene, refined and unmistakably premium. Subject: one symmetrical central emerald dome on a graceful prayer hall, two matching slender minarets, a small rhythm of rounded entrance arches and a stable stone base; accurate balanced proportions, clean silhouette. Style/medium: high-end stylized 3D architectural illustration with soft rounded enamel and carved-stone forms, original family-animation-quality polish, not an imitation of any named studio or artist, not photorealistic. Composition/framing: centered front three-quarter view, complete building visible, generous transparent padding on every side, designed to rise gently from the bottom of a portrait splash screen. Lighting/mood: soft predawn rim light, calm warm interior glow, contemplative and elegant. Color palette: deep emerald, warm ivory limestone, walnut-shadow tones and restrained antique gold. Materials/textures: matte carved limestone, glazed emerald dome, brushed antique-gold trim, subtle glass glow. Constraints: genuinely transparent background; no people, no crowd, no readable text, no Arabic calligraphy, no logos, no watermark; no floating parts; exactly two primary minarets; physically plausible attachment between dome, hall, arches and base. Avoid: crooked minarets, duplicated towers, excessive ornament, crescent symbols, fantasy palace, dramatic fog, particles, busy scenery, flat icon look."
     },
     {
@@ -1216,11 +1216,18 @@
   ],
   "vectorAssets": [
     {
+      "path": "public/premium-assets/high-res-objects/nur-logo-emblem-transparent-v1.svg",
+      "sha256": "2c6b5e317dbd647dab2413db8a8856fa7211ae582691eb10df40037d366f6f8c",
+      "dimensions": "180x180 viewBox",
+      "use": "Transparent version of the selected concept C mosque for the full-screen landscape opening only; install icons remain unchanged",
+      "origin": "Code-native derivative of public/premium-assets/high-res-objects/nur-logo-emblem-v3.svg. The original dome, minaret and ivory doorway paths and transform are retained. The emerald background rectangle is removed and the former emerald opening paths become alpha cutouts through an SVG mask. No new generation, external image or revised mark geometry."
+    },
+    {
       "path": "public/premium-assets/high-res-objects/nur-logo-emblem-v3.svg",
-      "sha256": "b004f63db84d234aa1acb3c04b16440f8fe4e1c76a4bc97745b7dc190bc3a333",
-      "dimensions": "120x120 viewBox",
-      "use": "App-wide Nur brand mark and opening animation",
-      "origin": "Code-native SVG authored locally from geometric paths and gradients; no external artwork or generated raster input."
+      "sha256": "d07ab621e1a362917eaea051a489447bcab5fb30fe55bd2a92c4c56dc600105d",
+      "dimensions": "180x180 viewBox",
+      "use": "App-wide Nur brand mark, logo-only opening screen and source for install icons",
+      "origin": "Code-native vector reconstruction of user-selected generated concept C: pointed dome, two integrated minarets and ivory doorway in the app palette. Source concept: output/logo-concepts-20261010-v2/c-geometrisch.png, generated with built-in imagegen; raster gradients removed and curves redrawn for scalable app icons. User-approved refinement: enlarged silhouette, sturdier finial and wider simplified minaret apertures. All install PNGs are rendered from this SVG; the maskable PNG has a 20% additional inset for platform cropping."
     }
   ],
   "retiredAssets": [

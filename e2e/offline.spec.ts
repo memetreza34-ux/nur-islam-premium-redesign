@@ -44,7 +44,7 @@ test('opens a bundled surah with no connection', async ({ page, context }) => {
   const verse = page.locator('.reference-reader-screen article').first();
   for (const section of ['.reference-reader-pronunciation', '.reference-reader-translation']) {
     await expect(verse.locator(section)).toHaveClass(/is-unavailable/);
-    await expect(verse.locator(section)).toContainText('Beim ersten Öffnen ist eine Verbindung nötig.');
+    await expect(verse.locator(section)).toContainText('Eine Verbindung zur Quelle oder ein nutzbarer Browser-Cache ist nötig.');
   }
 });
 

@@ -30,6 +30,10 @@ for (const required of [
   'navigator.share',
   'return new Set(migrated);',
   "useState(() => readStringSet('nur_dua_favorites'))",
+  'localStorage.getItem(key) === serialized',
+  'Favoriten konnten nicht gespeichert werden',
+  'getDuaShareText(dua)',
+  "wasViewed ? 'Geöffnet' : 'Öffnen'",
 ]) {
   if (!screenSource.includes(required)) {
     throw new Error(`Complete Dua screen is missing required integration: ${required}`);
@@ -39,6 +43,8 @@ for (const required of [
 for (const forbidden of [
   'return new Set(migrated.length ? migrated : fallback);',
   "readStringSet('nur_dua_favorites', ['dua_guidance_1'])",
+  "wasViewed ? 'Gelesen'",
+  "useEffect(() => writeStringSet('nur_dua_favorites', favorites)",
 ]) {
   if (screenSource.includes(forbidden)) {
     throw new Error(`An intentionally empty stored Dua favorite list must remain empty: ${forbidden}`);
