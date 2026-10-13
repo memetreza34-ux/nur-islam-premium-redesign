@@ -19,6 +19,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage } from '../shared/PremiumVisuals';
 import { PrayerPostureImage } from '../shared/PrayerPostureImage';
 import { RecitationButton } from '../shared/RecitationButton';
+import { useStepNavigation } from '../shared/useStepNavigation';
 import {
   PRAYER_PRACTICE_TIPS,
   PRAYER_RAKATS_BY_ID,
@@ -152,6 +153,7 @@ export function PrayerLearningScreen({
   const [runMode, setRunMode] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
+  const { stepRef, revealStep } = useStepNavigation<HTMLElement>();
 
   const selectedPrayer = useMemo(
     () => PRAYER_LESSONS.find((prayer) => prayer.id === selectedPrayerId) ?? PRAYER_LESSONS[0],
@@ -199,6 +201,7 @@ export function PrayerLearningScreen({
     setSelectedPrayerId(id);
     setActiveStep(Math.max(0, readNumber(`nur_prayer_lesson_${id}_step`, 0)));
     setPracticeRakah(Math.max(1, Math.min(prayer.rakahs, readNumber(`nur_prayer_lesson_${id}_rakah`, 1))));
+    revealStep();
   };
 
   /** Moving between Rakʿah restarts the sequence — each one has its own steps. */
@@ -206,11 +209,13 @@ export function PrayerLearningScreen({
     setPracticeRakah(value);
     setActiveStep(0);
     setStepChooserOpen(false);
+    revealStep();
   };
 
   const selectStep = (index: number) => {
     setActiveStep(index);
     setStepChooserOpen(false);
+    revealStep();
   };
 
   const togglePreparation = (item: string) => {
@@ -239,6 +244,7 @@ export function PrayerLearningScreen({
   useEffect(() => { setRunMode(false); }, [selectedPrayerId]);
 
   const toggleRun = () => {
+    if (!runMode) revealStep();
     setRunMode((current) => {
       if (current) return false;
       // Ein Durchlauf beginnt am Anfang des Gebets, nicht mitten im Schritt,
@@ -258,23 +264,25 @@ export function PrayerLearningScreen({
 
   /** Walks the whole prayer: past the last step of a Rakʿah comes the next one. */
   const goToNextStep = () => {
-    if (!atLastStep) { setActiveStep(stepIndex + 1); return; }
+    if (!atLastStep) { setActiveStep(stepIndex + 1); revealStep(); return; }
     if (!isLastRakat) { selectRakah(practiceRakah + 1); return; }
     completeLesson();
   };
 
   const goToPreviousStep = () => {
-    if (stepIndex > 0) { setActiveStep(stepIndex - 1); return; }
+    if (stepIndex > 0) { setActiveStep(stepIndex - 1); revealStep(); return; }
     if (practiceRakah > 1) {
       const previous = rakats[practiceRakah - 2];
       setPracticeRakah(practiceRakah - 1);
       setActiveStep(Math.max(0, (previous?.steps.length ?? 1) - 1));
+      revealStep();
     }
   };
 
   const restartLesson = () => {
     setActiveStep(0);
     setPracticeRakah(1);
+    revealStep();
     setCompletedLessons((current) => {
       const next = new Set(current);
       next.delete(selectedPrayerId);
@@ -389,9 +397,9 @@ export function PrayerLearningScreen({
       ) : null}
 
       {currentStep ? (
-        <section className={`reference-rakah-step-detail${runMode ? ' is-running' : ''}`}>
+        <section ref={stepRef} aria-labelledby="prayer-step-title" className={`reference-rakah-step-detail${runMode ? ' is-running' : ''}`}>
           <div className="section-heading">
-            <div><span className="overline">Schritt {stepIndex + 1} von {steps.length}</span><h2>{currentStep.title}</h2></div>
+            <div><span className="overline">Schritt {stepIndex + 1} von {steps.length}</span><h2 id="prayer-step-title" tabIndex={-1}>{currentStep.title}</h2></div>
             <span className="reference-rakah-posture">{POSTURE_LABEL[currentStep.posture]}</span>
           </div>
           <div className="reference-prayer-lesson-progress"><span style={{ width: `${((stepIndex + 1) / steps.length) * 100}%` }} /></div>
@@ -474,6 +482,7 @@ export function PrayerLearningScreen({
                       </div>
                     ))}
                   </dl>
+                  <a href={difference.sourceUrl} target="_blank" rel="noreferrer">{difference.source}</a>
                 </div>
               ))}
               <p className="reference-madhhab__note">{MADHHAB_DISCLAIMER}</p>

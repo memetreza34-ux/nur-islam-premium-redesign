@@ -449,7 +449,7 @@ export function QuranReaderScreen({
                           <p>{pronunciation}</p>
                         </section>
                       ) : (
-                        <section className="reference-reader-pronunciation is-unavailable"><small>Aussprache</small><p>Nicht verfügbar: Eine Verbindung zur Quelle oder ein nutzbarer Browser-Cache ist nötig.</p></section>
+                        <section className="reference-reader-pronunciation is-unavailable"><small>Aussprache</small><p>Nicht verfügbar: Ein verwendbarer Anbietertext konnte weder geladen noch aus dem Browser-Cache bereitgestellt werden.</p></section>
                       )}
                       {german ? (
                         <section className="reference-reader-translation">
@@ -457,7 +457,7 @@ export function QuranReaderScreen({
                           <p>{german}</p>
                         </section>
                       ) : (
-                        <section className="reference-reader-translation is-unavailable"><small>Deutsche Übersetzung</small><p>Nicht verfügbar: Eine Verbindung zur Quelle oder ein nutzbarer Browser-Cache ist nötig.</p></section>
+                        <section className="reference-reader-translation is-unavailable"><small>Deutsche Übersetzung</small><p>Nicht verfügbar: Ein verwendbarer Anbietertext konnte weder geladen noch aus dem Browser-Cache bereitgestellt werden.</p></section>
                       )}
                     </div>
                     <footer><span>{bundle.meta.number}:{ayahNumber}</span><button onClick={(event) => { event.stopPropagation(); void shareAyah(index); }}><Share2 size={15} /> Teilen</button></footer>
@@ -477,7 +477,7 @@ export function QuranReaderScreen({
                     <motion.p key={`german-${flowPageIndex}`} className="reference-reader-flow__text is-german" initial={{ opacity: 0, x: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, x: 0 }} transition={toastTransition}>
                       {currentFlowPage.map((ayah) => <span id={`quran-ayah-${bundle.meta.number}-${ayah.numberInSurah}`} key={ayah.numberInSurah}>{ayah.text} <sup aria-label={`Vers ${ayah.numberInSurah}`}>{ayah.numberInSurah}</sup>{' '}</span>)}
                     </motion.p>
-                  ) : <p className="reference-reader-flow__empty">Deutsche Übersetzung nicht verfügbar: Eine Verbindung zur Quelle oder ein nutzbarer Browser-Cache ist nötig.</p>
+                  ) : <p className="reference-reader-flow__empty">Deutsche Übersetzung nicht verfügbar: Ein verwendbarer Anbietertext konnte weder geladen noch aus dem Browser-Cache bereitgestellt werden.</p>
                 ) : (
                   <motion.p key={`arabic-${flowPageIndex}`} className="reference-reader-flow__text is-arabic" dir="rtl" style={{ fontSize, fontFamily: arabicFont === 'system' ? 'system-ui, sans-serif' : undefined }} initial={{ opacity: 0, x: reduceMotion ? 0 : -8 }} animate={{ opacity: 1, x: 0 }} transition={toastTransition}>
                     {currentFlowPage.map((ayah) => <span id={`quran-ayah-${bundle.meta.number}-${ayah.numberInSurah}`} key={ayah.numberInSurah}>{ayah.text} <sup aria-label={`Vers ${ayah.numberInSurah}`}>﴿{ayah.numberInSurah}﴾</sup>{' '}</span>)}

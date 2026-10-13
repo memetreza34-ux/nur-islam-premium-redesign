@@ -36,7 +36,7 @@ function values(source, field) {
     .map((match) => match[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\'));
 }
 
-function literalArray(source, name) {
+function literalArray(source, name, record = false) {
   const file = ts.createSourceFile('content.ts', source, ts.ScriptTarget.Latest, true);
   const literal = (node) => {
     if (ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isParenthesizedExpression(node)) return literal(node.expression);
@@ -57,7 +57,7 @@ function literalArray(source, name) {
     for (const declaration of statement.declarationList.declarations) {
       if (declaration.name.getText(file) !== name || !declaration.initializer) continue;
       const result = literal(declaration.initializer);
-      if (!Array.isArray(result)) throw new Error(`${name}: expected a literal array.`);
+      if (record ? !result || Array.isArray(result) || typeof result !== 'object' : !Array.isArray(result)) throw new Error(`${name}: expected a literal ${record ? 'record' : 'array'}.`);
       return result;
     }
   }
@@ -145,14 +145,11 @@ areas.push({
 
 // --- Sunnah and repentance --------------------------------------------------
 const practice = await read('src/data/practiceData.ts');
-const practiceItems = [...practice.matchAll(
-  /title: '((?:[^'\\]|\\.)*)',\n\s+description: '(?:[^'\\]|\\.)*',\n\s+proof: '((?:[^'\\]|\\.)*)',/g,
-)];
+const practiceItems = [...literalArray(practice, 'SUNNAH_GROUPS').flatMap(group => group.items), ...literalArray(practice, 'REPENTANCE_GROUPS').flatMap(group => group.items)];
 areas.push({
-  name: 'Sunnah im Alltag · Fehler und Reue',
-  tier: 'C',
-  note: 'Alltagspraxis und Reue wurden am 03.09.2026 mit Quellen, Begriffserklärungen und didaktischen Beispielen überarbeitet. Der Abschnitt zu schweren Verfehlungen bleibt Altbestand. Alle Einträge benötigen fachliche Prüfung; Quellenprüfung ist keine Freigabe.',
-  rows: practiceItems.map(([, title, proof]) => ({ text: short(title), source: short(proof, 60), origin: proof.startsWith('Koran (') || title === 'Zauberei (Sihr)' ? CARRIED : WRITTEN })),
+  name: 'Sunnah im Alltag · Fehler und Reue', tier: 'C',
+  note: '17 Positionen einschließlich Bedeutungen und didaktischer Beispiele quellenbezogen bearbeitet am 13.10.2026; CONTENT-CLEARANCE-2026-10-13.md. Quellenabgleich ist keine religiöse Zertifizierung.',
+  rows: practiceItems.map(item => ({ text: [item.title, item.description, item.meaning, item.example].filter(Boolean).join(' — '), source: [item.proof, item.sourceUrl].filter(Boolean).join(' · '), origin: WRITTEN })),
 });
 
 const supplements = await read('src/data/foundationSupplementData.ts');
@@ -166,15 +163,11 @@ areas.push({
 
 // --- Pilgrimage -------------------------------------------------------------
 const pilgrimage = await read('src/data/pilgrimageData.ts');
-const stations = [...pilgrimage.matchAll(
-  /id: '[^']+',\n\s+(?:when|name): '(?:[^'\\]|\\.)*',\n\s+(?:title|city): '((?:[^'\\]|\\.)*)',\n\s+description: '(?:[^'\\]|\\.)*',(?:\n\s+reference: '((?:[^'\\]|\\.)*)',)?/g,
-)];
+const stations = [...literalArray(pilgrimage, 'UMRAH_STATIONS'), ...literalArray(pilgrimage, 'HAJJ_STATIONS'), ...literalArray(pilgrimage, 'HOLY_PLACES')];
 areas.push({
-  name: 'Hajj, Umrah und heilige Stätten',
-  tier: 'A',
-  priority: true,
-  note: 'Für die App verfasste Ablauftexte. Stationsbeschreibungen und Einordnung sind vorrangig gegen Quellen zu prüfen; sie ersetzen keine persönliche Beratung zu Pflichten oder Versäumnissen. Weitere hier verfasste Texte sind in den eigenen Bereichen dieser Mappe erfasst.',
-  rows: stations.map(([, title, reference]) => ({ text: short(title), source: reference ?? '— (keine)', origin: WRITTEN })),
+  name: 'Hajj, Umrah und heilige Stätten', tier: 'A', priority: true,
+  note: 'Ablauftexte mit Hadith- und Quran-Fundstellen ergänzt; keine Vollständigkeitszusage für eine individuelle Pilgerfahrt. Quellenreichweite und historische Orte: CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: stations.map(item => ({ text: [item.id, item.when, item.name, item.title, item.description, item.context, item.facts?.join(' · ')].filter(Boolean).join(' — '), source: [item.reference, item.sourceLabel, item.sourceUrl].filter(Boolean).join(' · ') || '— (keine)', origin: WRITTEN })),
 });
 
 // --- Quiz -------------------------------------------------------------------
@@ -239,7 +232,7 @@ areas.push({
 const lessons = literalArray(await read('src/data/islamicLearningContent.ts'), 'LEARNING_LESSONS');
 areas.push({
   name: 'Lernkurse · Texte, Merksätze und Kontrollfragen', tier: 'A', priority: true,
-  note: 'Jede Lektion mit Zusammenfassung, Absätzen, vorhandenen Detailtexten, Merksätzen, Frage samt Antwortoptionen und Erklärung. Sieben Glaubenslektionen, sechs Säulenlektionen, alle zwölf Begriffslektionen, fünf Praxislektionen, vier Charakterlektionen und sechs Gemeinschaftslektionen am 12.10.2026 in FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md, PILLARS-LEARNING-SOURCE-AUDIT-2026-10-12.md, DEVOTION-LEARNING-SOURCE-AUDIT-2026-10-12.md, TERMINOLOGY-LEARNING-SOURCE-AUDIT-2026-10-12.md, PRACTICE-LEARNING-SOURCE-AUDIT-2026-10-12.md, CHARACTER-LEARNING-SOURCE-AUDIT-2026-10-12.md und COMMUNITY-LEARNING-SOURCE-AUDIT-2026-10-12.md abgeglichen: 40/44 Lektionen; vier zu Seerah bleiben offen. Quellenzuordnung allein bestätigt keine Aussage. Keine menschliche Fachfreigabe.',
+  note: 'Jede Lektion mit Zusammenfassung, Absätzen, vorhandenen Detailtexten, Merksätzen, Frage samt Antwortoptionen und Erklärung. Sieben Glaubenslektionen, sechs Säulenlektionen, alle zwölf Begriffslektionen, fünf Praxislektionen, vier Charakterlektionen und sechs Gemeinschaftslektionen am 12.10.2026 in FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md, PILLARS-LEARNING-SOURCE-AUDIT-2026-10-12.md, DEVOTION-LEARNING-SOURCE-AUDIT-2026-10-12.md, TERMINOLOGY-LEARNING-SOURCE-AUDIT-2026-10-12.md, PRACTICE-LEARNING-SOURCE-AUDIT-2026-10-12.md, CHARACTER-LEARNING-SOURCE-AUDIT-2026-10-12.md und COMMUNITY-LEARNING-SOURCE-AUDIT-2026-10-12.md abgeglichen: 44/44 Lektionen mit dem Seerah-Nachtrag CONTENT-CLEARANCE-2026-10-13.md quellenbezogen bearbeitet. Quellenzuordnung allein bestätigt keine Aussage. Keine menschliche Fachfreigabe.',
   rows: lessons.flatMap(lesson => {
     const source = lesson.sources.map(item => `${item.label}: ${item.reference} (${item.note})${item.url ? ` · ${item.url}` : ''}`).join(' · ') || '— (keine)';
     const row = (field, text) => ({ text: `${lesson.id}/${field} · ${text}`, source, origin: WRITTEN });
@@ -261,20 +254,22 @@ areas.push({
 
 // --- Prophets ---------------------------------------------------------------
 const prophets = await read('src/data/prophetData.ts');
-const prophetEntries = [...prophets.matchAll(/id: '[^']+', name: '([^']+)', arabic: '[^']+'[\s\S]*?quranReferences: \[([^\]]+)\]/g)];
-const prophetCourses = await read('src/data/prophetCourseData.ts');
-const prophetChapters = [...prophetCourses.matchAll(/\{ id: '[^']+', title: '([^']+)'[\s\S]*?quranReferences: \[([^\]]+)\] \}/g)];
-const prophetOverviews = await read('src/data/prophetCourseOverviews.ts');
-const prophetOverviewRows = [...prophetOverviews.matchAll(/orientation: '([^']+)'[\s\S]*?boundary: '([^']+)'/g)];
+const prophetEntries = literalArray(prophets, 'PROPHETS');
+const prophetCourses = literalArray(await read('src/data/prophetCourseData.ts'), 'PROPHET_COURSES', true);
+const prophetOverviews = literalArray(await read('src/data/prophetCourseOverviews.ts'), 'PROPHET_COURSE_OVERVIEWS', true);
 areas.push({
-  name: 'Propheten',
-  tier: 'B',
-  note: `25 Katalogeinträge, ${prophetOverviewRows.length} ausführliche Kursorientierungen mit Wissensgrenze und ${prophetChapters.length} Kurskapitel. Je Kapitel sind Erzählung, Merksätze und Quran-Stellen gemeinsam zu prüfen. Bei Dhul-Kifl ist die unterschiedliche gelehrte Einordnung ausdrücklich Teil der Prüfung.`,
-  rows: [
-    ...prophetEntries.map(([, name, references]) => ({ text: `Einführung · ${name}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
-    ...prophetOverviewRows.map(([, orientation, boundary]) => ({ text: `Kursorientierung · ${short(orientation, 48)}`, source: `Grenze: ${short(boundary, 46)}`, origin: WRITTEN })),
-    ...prophetChapters.map(([, title, references]) => ({ text: `Kapitel · ${short(title, 52)}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
-  ],
+  name: 'Propheten', tier: 'B',
+  note: 'Katalog, gesamte Kursorientierungen, Einführungen und Kapitel einschließlich Merksätzen erfasst. Quellenbezogene Korrekturen und ihre Grenzen: CONTENT-CLEARANCE-2026-10-13.md. Lernlehren sind keine wörtlichen Quran-Zitate.',
+  rows: prophetEntries.flatMap(entry => {
+    const course = prophetCourses[entry.id], overview = prophetOverviews[entry.id];
+    const references = [...new Set(course.chapters.flatMap(chapter => chapter.quranReferences))].join(' · ');
+    return [
+      { text: `Katalog · ${entry.name}: ${entry.summary} · ${entry.focus} · Lernlehre: ${entry.lesson}`, source: entry.quranReferences.join(' · '), origin: WRITTEN },
+      { text: `Kursorientierung · ${entry.id}: ${overview.orientation} · ${overview.coursePath} · Grenze: ${overview.boundary} · Lernziele: ${overview.learningGoals.join(' · ')}`, source: references, origin: WRITTEN },
+      { text: `Kurseinführung · ${entry.id}: ${course.introduction}`, source: references, origin: WRITTEN },
+      ...course.chapters.map(chapter => ({ text: `${entry.id}/${chapter.id} · ${chapter.title}: ${chapter.summary} · ${chapter.paragraphs.join(' · ')} · Lernlehren: ${chapter.keyPoints.join(' · ')}`, source: chapter.quranReferences.join(' · '), origin: WRITTEN })),
+    ];
+  }),
 });
 
 // --- Ummah ------------------------------------------------------------------
@@ -310,33 +305,13 @@ areas.push({
 // wird — und „Wenn etwas schiefgeht“ sagt, was ein Versehen im Gebet nach sich
 // zieht. Das sind die Aussagen, bei denen eine Prüfung am meisten trägt.
 const guides = await read('src/data/worshipGuideData.ts');
-const guideBlock = guides.slice(guides.indexOf('WORSHIP_GUIDES: readonly'));
-const guideNames = new Map([
-  ['wudu', 'Wudu'], ['salah', 'Salah'], ['what-to-say', 'Wortlaut'],
-  ['mandatory', 'Pflichtteile'], ['mistakes', 'Häufige Fehler'], ['sahw', 'Wenn etwas schiefgeht'],
-  ['shahada', 'Die Shahada'], ['women', 'Frauen im Gebet'],
-  ['more-prayers', 'Weitere Gebete'], ['special-cases', 'Besondere Lagen'],
-  ['occasions', 'Zu besonderen Anlässen'],
+const guideRows = literalArray(guides, 'WORSHIP_GUIDES').flatMap(guide => [
+  { text: `${guide.id} · ${guide.title}: ${guide.intro} · Hinweise: ${guide.tips.join(' · ')}`, source: [...new Set(guide.steps.map(step => `${step.source ?? '— (keine)'} · ${step.sourceUrl ?? ''}`))].join(' | '), origin: WRITTEN },
+  ...guide.steps.map(step => ({ text: [guide.id, step.title, step.description, step.arabic, step.transliteration].filter(Boolean).join(' — '), source: [step.source, step.sourceUrl].filter(Boolean).join(' · ') || '— (keine)', origin: WRITTEN })),
 ]);
-const guideRows = [];
-for (const [, id] of guideBlock.matchAll(/^ {4}id: '([^']+)',$/gm)) {
-  const start = guideBlock.indexOf(`id: '${id}'`);
-  const rest = guideBlock.slice(start + 1);
-  const nextId = rest.search(/^ {4}id: '/m);
-  const section = nextId === -1 ? rest : rest.slice(0, nextId);
-  for (const title of values(section, 'title')) {
-    guideRows.push({
-      text: `${guideNames.get(id) ?? id}: ${title}`,
-      source: /arabic: '/.test(section) ? 'Wortlaut ohne Belegstelle' : '— (keine)',
-        origin: ['sahw', 'shahada', 'women', 'more-prayers', 'special-cases', 'occasions'].includes(id) ? WRITTEN : CARRIED,
-    });
-  }
-}
 areas.push({
-  name: 'Anleitungen zur Praxis',
-  tier: 'A',
-  priority: true,
-  note: 'Beschreiben, wie etwas getan wird. Sechs sind hier verfasst und besonders zu prüfen: „Wenn etwas schiefgeht“ (Sujud as-Sahw — was ein Versehen nach sich zieht und was nicht), „Die Shahada“ (Wortlaut und die Angaben zum Eintritt in den Islam) „Frauen im Gebet“, wo mehrere Punkte zwischen den Rechtsschulen verlaufen, sowie „Weitere Gebete“ und „Besondere Lagen“ — dort stehen Rakʿah-Zahlen und Erleichterungen (Qasr, Zusammenlegen, Nachholen), die unmittelbar befolgt werden, und „Zu besonderen Anlässen“ mit dem Ablauf des Toten- und des Eid-Gebets.',
+  name: 'Anleitungen zur Praxis', tier: 'A', priority: true,
+  note: 'Vollständige Einleitungen, Hinweise und Schritttexte einschließlich arabischem Wortlaut und Umschrift erfasst. Pauschale Gültigkeitsregeln begrenzt und Fundstellen sichtbar gemacht am 13.10.2026; CONTENT-CLEARANCE-2026-10-13.md.',
   rows: guideRows,
 });
 
@@ -345,44 +320,25 @@ areas.push({
 // damit zu den prüfbedürftigsten Inhalten der App — auch wenn sie beschreibend
 // formuliert sind und keine Belegstelle behaupten.
 const madhhab = await read('src/data/madhhabData.ts');
-const madhhabBlock = madhhab.slice(madhhab.indexOf('MADHHAB_DIFFERENCES: readonly'), madhhab.indexOf('export const MADHHAB_DIFFERENCES_BY_STEP'));
 areas.push({
-  name: 'Unterschiede der Rechtsschulen',
-  tier: 'A',
-  priority: true,
-  note: 'Hier verfasst. Je Punkt sind alle vier angegebenen Positionen zu prüfen, und ob die Frage überhaupt so trennscharf zwischen den Schulen verläuft. Innerhalb einer Schule gibt es zu mehreren dieser Punkte mehr als eine überlieferte Position; wo die Angabe das verkürzt, ist sie zu ergänzen.',
-  rows: values(madhhabBlock, 'question').map((question) => ({
-    text: question,
-    source: '— (keine Belegstelle; beschreibende Übersicht)',
-    origin: WRITTEN,
-  })),
+  name: 'Unterschiede der Rechtsschulen', tier: 'A', priority: true,
+  note: 'Alle vier Positionen je Vergleich erfasst. Geschlechts- und Variantenunterschiede ergänzt, Fajr-Qunut begrenzt; CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: literalArray(madhhab, 'MADHHAB_DIFFERENCES').map(item => ({ text: `${item.question} · ${Object.entries(item.positions).map(([school, text]) => `${school}: ${text}`).join(' · ')}`, source: `${item.source} · ${item.sourceUrl}`, origin: WRITTEN })),
 });
 
 const schoolCatalogue = await read('src/data/madhhabCatalogueData.ts');
 areas.push({
-  name: 'Katalog der vier sunnitischen Rechtsschulen',
-  tier: 'A',
-  priority: true,
-  note: 'Neue Zusammenfassungen, nicht fachlich freigegeben. Je Schule sind Lebensdaten, Entstehung, Methodik, Verbreitung und die Einordnung der Institutionen zu prüfen. Die verlinkten Institutionen sind keine zentralen Vertretungen einer Rechtsschule.',
-  rows: schoolCatalogue.split(/\n  \{\n    id:/).slice(1).map((school) => ({
-    text: `${values(school, 'title')[0]}: Geschichte, Methodik, Verbreitung und Praxis`,
-    source: values(school, 'href').join(' · '),
-    origin: WRITTEN,
-  })),
+  name: 'Katalog der vier sunnitischen Rechtsschulen', tier: 'A', priority: true,
+  note: 'Verknüpfte TDV-Fachartikel als Grundlage; thematisch unpassende Zusatzquellen und ungeprüfte Zahlenvergleiche entfernt. Keine zentrale Vertretung oder religiöse Zertifizierung.',
+  rows: literalArray(schoolCatalogue, 'MADHHAB_CATALOGUE').map(school => ({ text: `${school.title}: ${school.eponym} · ${school.dates} · ${school.origin} · ${school.short} · ${school.history.join(' · ')} · ${school.method.map(item => `${item.title}: ${item.text}`).join(' · ')} · ${school.spread} · ${school.practice}`, source: school.sources.map(item => `${item.title} · ${item.href}`).join(' · '), origin: WRITTEN })),
 });
 
 // --- Islamischer Kalender ---------------------------------------------------
 const events = await read('src/data/islamicEventsData.ts');
-const eventBlock = events.slice(events.indexOf('ISLAMIC_EVENTS'), events.indexOf('export const WHITE_DAYS'));
 areas.push({
-  name: 'Kalendertermine',
-  tier: 'D',
-  note: 'Aus dem Altbestand übernommen. Zu prüfen sind Hijri-Datum, Bedeutung und die angegebene Praxis — insbesondere dort, wo die Begehung unter Gelehrten unterschiedlich bewertet wird.',
-  rows: values(eventBlock, 'title').map((title) => ({
-    text: title,
-    source: '— (keine)',
-    origin: CARRIED,
-  })),
+  name: 'Kalendertermine', tier: 'D',
+  note: 'Datum, Bedeutung und Praxis erfasst; berechnete Termine sind keine Mondsichtungsbestätigung. Ramadan-Fasten getrennt von freiwilligen Hinweisen, Tashriq-Pilgerausnahme erläutert; CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: literalArray(events, 'ISLAMIC_EVENTS').map(item => ({ text: `${item.title} · Hijri ${item.month}/${item.days.join(',')}: ${item.meaning} · ${item.practice}`, source: `${item.source} · ${item.sourceUrl}`, origin: WRITTEN })),
 });
 
 // --- Report -----------------------------------------------------------------

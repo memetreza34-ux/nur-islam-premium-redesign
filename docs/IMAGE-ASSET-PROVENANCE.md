@@ -1,9 +1,11 @@
 # Nur Islam – Herkunftsnachweis der Laufzeitbilder
 
-**Stand:** 10.10.2026
+**Stand:** 13.10.2026
 **Zweck:** Technischer Herkunfts- und Bearbeitungsnachweis für die in der App verwendeten Bildobjekte. Das Dokument ist keine Rechtsberatung und keine pauschale Rechtefreigabe.
 
 ## Herkunft
+
+Am 13.10.2026 wurde eine zusammengehörige Moscheehof-Serie ausschließlich für die Anfangsanimation erstellt; die bisherigen Oasenbilder bleiben in den Gebetsansichten aktiv. Dhuhr wurde mit der eingebauten Codex-Bildgenerierung aus Text erzeugt und für den Textbereich einmal neu gerahmt. Vier Lichtvarianten verwenden ausschließlich diese eigene Vorlage. Alle Originale und vollständigen Prompts liegen in `output/imagegen/prayer-courtyard/`; die fünf ursprünglichen `prayer-*-v2.webp` und die anschließenden v3-Dateien in voller Originalauflösung sind im Manifest mit Hashes dokumentiert. v3 wird ohne Größenänderung mit `cwebp -q 95 -m 6 -sharp_yuv` kodiert; die globalen Abdunklungsflächen wurden für den Einstieg entfernt. Architektur ist fiktiv und dekorativ. Die v1-Oasenbilder bleiben aktiv; die verkleinerten v2-Dateien bleiben als Archiv erhalten. Details: [Moscheehof-Serie](PRAYER-COURTYARD-2026-10-13.md).
 
 Der vollflächige Landschaftseinstieg verwendet `nur-logo-emblem-transparent-v1.svg`, eine transparente Ableitung des gewählten Logos C. Kontur und Farben bleiben erhalten; der smaragdgrüne Hintergrund und die Füllungen der Öffnungen werden transparent. App- und Installations-Icons bleiben unverändert. Kein neuer Bildgenerierungsauftrag; Ableitung und SHA-256 stehen im Manifest.
 

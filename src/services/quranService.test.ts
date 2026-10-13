@@ -5,12 +5,12 @@ import surahs from '../data/quranSurahs.json';
 const arabic = JSON.parse(readFileSync('public/data/quran/ar/1.json', 'utf8'));
 const meta = surahs[0];
 const jsonResponse = (data: unknown) => new Response(JSON.stringify(data), { headers: { 'Content-Type': 'application/json' } });
-const onlineEdition = (identifier: string) => ({
+const onlineEdition = (identifier: string, number = 1) => ({
   code: 200,
   data: {
-    ...meta,
+    ...surahs[number - 1],
     edition: { identifier },
-    ayahs: Array.from({ length: 7 }, (_, index) => ({ numberInSurah: index + 1, text: `Test-Lesetext ${index + 1}` })),
+    ayahs: Array.from({ length: surahs[number - 1].numberOfAyahs }, (_, index) => ({ numberInSurah: index + 1, text: `Test-Lesetext ${index + 1}` })),
   },
 });
 
@@ -20,6 +20,7 @@ describe('Quran source and availability integrity', () => {
 
   function mockFetch(options: {
     index?: unknown;
+    surah?: number;
     local?: unknown;
     online?: (identifier: string) => unknown;
     failOnline?: boolean;
@@ -27,10 +28,10 @@ describe('Quran source and availability integrity', () => {
     const fetchMock = vi.fn(async (input: RequestInfo | URL, _options?: RequestInit) => {
       const url = String(input);
       if (url.endsWith('/surahs.json')) return jsonResponse(options.index === undefined ? surahs : options.index);
-      if (url.endsWith('/ar/1.json')) return jsonResponse(options.local === undefined ? arabic : options.local);
+      if (url.endsWith(`/ar/${options.surah ?? 1}.json`)) return jsonResponse(options.local === undefined ? arabic : options.local);
       if (url.startsWith('https://api.alquran.cloud/')) {
         if (options.failOnline) throw new Error('offline');
-        return jsonResponse(options.online?.(url.split('/').at(-1)!) ?? onlineEdition(url.split('/').at(-1)!));
+        return jsonResponse(options.online?.(url.split('/').at(-1)!) ?? onlineEdition(url.split('/').at(-1)!, options.surah ?? 1));
       }
       throw new Error(`Unexpected test request: ${url}`);
     });
@@ -54,6 +55,40 @@ describe('Quran source and availability integrity', () => {
       'https://api.alquran.cloud/v1/surah/1/de.bubenheim',
     ]);
     expect(cache.put).toHaveBeenCalledTimes(2);
+  });
+
+
+  it.each(['network', 'cache'])('rejects the confirmed truncated German 26:63 from %s and keeps Arabic', async origin => {
+    const local = JSON.parse(readFileSync('public/data/quran/ar/26.json', 'utf8'));
+    const broken = (identifier: string) => {
+      const payload = onlineEdition(identifier, 26);
+      if (identifier === 'de.bubenheim') payload.data.ayahs[62].text = 'Da gaben Wir Musa ein: "Schlag mit deinem Stock auf das Meer."';
+      return payload;
+    };
+    const { cache } = mockFetch({ surah: 26, local, online: broken });
+    if (origin === 'cache') cache.match.mockImplementation(async url => jsonResponse(broken(url.split('/').at(-1)!)));
+    const { fetchSurahBundle } = await import('./quranService');
+    const result = await fetchSurahBundle(26);
+    expect(result.arabic).toEqual(local);
+    expect(result.german).toBeNull();
+    expect(result.translationSource).toBe('unavailable');
+    expect(result.transliteration).not.toBeNull();
+    expect(cache.put.mock.calls.some(([url]) => url.endsWith('de.bubenheim'))).toBe(false);
+  });
+
+  it('can replace the rejected cached 26:63 with a corrected provider edition', async () => {
+    const local = JSON.parse(readFileSync('public/data/quran/ar/26.json', 'utf8'));
+    const { cache } = mockFetch({ surah: 26, local });
+    cache.match.mockImplementation(async url => {
+      const payload = onlineEdition(url.split('/').at(-1)!, 26);
+      payload.data.ayahs[62].text = 'Da gaben Wir Musa ein: "Schlag mit deinem Stock auf das Meer."';
+      return jsonResponse(payload);
+    });
+    const { fetchSurahBundle } = await import('./quranService');
+    const result = await fetchSurahBundle(26);
+    expect(result.translationSource).toBe('network');
+    expect(result.german?.ayahs[62].text).toBe('Test-Lesetext 63');
+    expect(cache.put.mock.calls.some(([url]) => url.endsWith('de.bubenheim'))).toBe(true);
   });
 
   it('keeps Arabic when both online layers fail', async () => {

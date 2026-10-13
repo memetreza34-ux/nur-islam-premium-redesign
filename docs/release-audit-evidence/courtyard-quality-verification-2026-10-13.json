@@ -1,0 +1,41 @@
+{
+  "date": "2026-10-13",
+  "scope": "Originalauflösung und schärferes WebP-Encoding; gezielte Abdunklung des Text- und Fußbereichs statt starkem Schleier über dem gesamten Hof.",
+  "previousRaster": "1200x800",
+  "currentRaster": "1536x1024",
+  "imageResizingRemoved": true,
+  "processing": "cwebp -q 95 -m 6 -sharp_yuv",
+  "totalAssetBytes": 1388376,
+  "fileHashes": {
+    "src/shared/prayerBackdrops.ts": "5c43d2b0905d93cc7b7c628b6f23e3230be395b717e3af72297f8e37cbb0db25",
+    "src/screens/PrayerLearningScreen.tsx": "b3ddb0d9fae558ca2f905ed7036fa80b0c1612a2f9d702a8b32ed0e6827dc873",
+    "src/screens/LearnScreen.tsx": "455b170057e4735baa9910a90d949ebdd84cd741c382794d2b178fd6c18fe8f7",
+    "src/styles/premium-brand-entry-art-lock.css": "b2abe1afed3315736a9a1e906d4fbf003dba5a5f258a2e2dd49288ddee2b9312",
+    "src/app/pwa.ts": "29a5652bed6dff3e8f513408df59ed1de7b0de3e8bebeea45b0e4b3f69f947e5",
+    "public/sw.js": "244f50738a71eeb468a5f9ae5a51030e36c7dbefecec253154540597ab186c81",
+    "docs/image-asset-provenance.json": "3d141718260d4d18d76fd0262b5cda4c00654f09b4e10bd05a24f36cdd09ae55",
+    "public/premium-assets/high-res-objects/prayer-fajr-v3.webp": "514a999c97aea7fe334b6019f48755ae82c6aa2b47ce41fbc1b3fd755060d225",
+    "public/premium-assets/high-res-objects/prayer-dhuhr-v3.webp": "ee6fc353e8313cb9ccf8205c37e007d3eec799eaefb56bd9a085772a9c75a210",
+    "public/premium-assets/high-res-objects/prayer-asr-v3.webp": "0234ab7587a6813a9e7cd08aa2d0834ddcf8ec96e924f20d38cea60c203bd73f",
+    "public/premium-assets/high-res-objects/prayer-maghrib-v3.webp": "4bcc7549d86e77c06ff480a4d4d4c5b7efbf3453102859218892f9b1fca55b14",
+    "public/premium-assets/high-res-objects/prayer-isha-v3.webp": "23f65349a5b17f9e5d558da4c9233fbe97793932c26357039fe2c5019f94aea1"
+  },
+  "check": {
+    "exitCode": 0,
+    "tests": 1041,
+    "log": "courtyard-quality-check-2026-10-13.log"
+  },
+  "browser": {
+    "exitCode": 0,
+    "tests": 36,
+    "log": "courtyard-quality-browser-2026-10-13.log",
+    "scope": "Einstieg, Bildwechsel, Start/Gebet, Lernen, Gebetskurs, Offline; kein appweiter Gesamtlauf."
+  },
+  "visualInspections": [
+    "courtyard-quality-pane-2026-10-13.jpg",
+    "courtyard-quality-phone-2026-10-13.jpg"
+  ],
+  "limits": "Keine 4K-Dateien; die nativen Quellen bleiben 1536x1024. Hohe Gerätepixel-Flächen können weiterhin Browservergrößerung benötigen.",
+  "pwaShellVersion": 83,
+  "published": false
+}

@@ -194,7 +194,12 @@ const BUDGETS_KB = {
   // editorial tips. Measured JS 383 KB (+1); no CSS/dependency/startup change.
   // Six community lessons: compared references, attribution of grades and
   // consistent protection exceptions. Measured JS 385 KB (+2), no dependency.
-  js: 385,
+  // Quellenkorrekturen: konkrete Guide-, Schul-, Hajj- und Kalenderbelege,
+  // Seerah-Nachtrag und Schutz vor unbrauchbaren Erinnerungszeiten.
+  // Gemessen 389 KB JS (+4), keine Abhängigkeit; Entry bleibt unter 95 KB.
+  // Separate opening/prayer artwork mappings restore the existing prayer assets
+  // while retaining the new splash series; measured aggregate rounds to 390 KB.
+  js: 390,
   // One shared responsive art slot reserves a clean crop on all fourteen
   // learning cards. The scoped rules add about 1 KB gzip and no dependency.
   // The prayer companions now use six subject-specific local illustrations,
@@ -248,7 +253,8 @@ const BUDGETS_KB = {
   // No new stylesheet, dependency or higher first-paint allowance.
   // Character evidence/context: measured aggregate 506 KB (+2). Rounded
   // component differences are not additive; CSS, entry and raw limits retained.
-  total: 508,
+  // Gleiche Quellenarbeit: gemessen rund 512 KB gesamt (+4), CSS unverändert.
+  total: 512,
 };
 
 /**

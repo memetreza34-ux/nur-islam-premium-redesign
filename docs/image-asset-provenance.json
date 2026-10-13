@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-08-26",
+  "recordedAt": "2026-10-13",
   "generator": {
     "provider": "OpenAI",
     "surface": "Codex built-in image generation",
@@ -21,7 +21,10 @@
       "use": "Hijri date widget; decorative undated calendar, not the authoritative date display.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b7b63693-c528-4e64-bead-20eb86166f69.png",
-      "inputImages": ["calendar-object-v1.webp", "home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "calendar-object-v1.webp",
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Rebuild an undated standing calendar as a transparent premium softly animated 3D object in the app's forest-green, ivory, walnut and restrained gold language; no readable text or numbers. Existing calendar was a subject reference; illustrated home Quran was the style reference."
     },
@@ -32,7 +35,9 @@
       "use": "Daily inspiration widget; blank verse card with bookmark, not religious source text.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-8aa3093a-65c0-437d-9e6c-d0413d75bdd1.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D blank ivory inspiration card with green bookmark on a walnut holder; forest-green, ivory, walnut and restrained gold palette; compact three-quarter object, no readable text. Illustrated home Quran used only as style reference."
     },
@@ -43,7 +48,9 @@
       "use": "Daily routine widget; blank task cards and check motif, not a live task state.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-484d0e05-6401-4547-9577-034abae42ca2.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D walnut task-card holder with three blank ivory cards and restrained gold check motif; compact readable silhouette, app-matched materials and no text. Illustrated home Quran used only as style reference."
     },
@@ -54,7 +61,9 @@
       "use": "Quran plan widget; Quran with a blank planning card, no generated scripture.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-ad08d011-ad9e-46e9-a8f5-bd33c16ec2a8.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D closed forest-green Quran beside a blank ivory reading-plan card, warm walnut and restrained gold; compact three-quarter silhouette, no scripture or readable text. Illustrated home Quran used only as style reference."
     },
@@ -65,7 +74,9 @@
       "use": "Weekly prayers widget; rolled mat and blank seven-part planner, not live progress.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-62d17d97-2893-4dfa-8dfb-4979f8f031c1.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D rolled deep-green prayer mat with ivory fringe beside a small walnut weekly planner notebook with seven blank divisions; rounded realistic materials, restrained brass, no text or extra objects. Illustrated home Quran used only as style reference."
     },
@@ -76,7 +87,9 @@
       "use": "Favorites widget; blank saved cards with ribbon, no user data embedded.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-8e81975a-74bf-45bc-a62b-ee61d577b6c8.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D two blank ivory saved cards with an emerald ribbon in a compact walnut holder; forest-green, ivory and restrained gold palette, no legible text. Illustrated home Quran used only as style reference."
     },
@@ -87,7 +100,9 @@
       "use": "Reminders widget; desk bell and blank schedule card, not an active notification.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-b1793828-fcb8-4341-ac54-31914a60738b.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D small brass desk bell with a blank ivory schedule card in a walnut holder; compact silhouette, app-matched green and gold palette, no text. Illustrated home Quran used only as style reference."
     },
@@ -98,7 +113,9 @@
       "use": "Friday preparation widget; arched prayer setting and mat, no asserted mosque identity.",
       "generatedAt": "2026-09-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-7f838eff-e5f2-4524-af5d-d616e6abd2aa.png",
-      "inputImages": ["home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; alpha preserved",
       "prompt": "Transparent premium softly animated 3D cream-and-emerald mosque arch with a folded deep-green prayer mat and small brass vessel; compact three-quarter silhouette, no identifiable real mosque, no text. Illustrated home Quran used only as style reference."
     },
@@ -271,7 +288,7 @@
       "path": "public/premium-assets/high-res-objects/prayer-fajr-v1.webp",
       "sha256": "ca780965003fb18261fe80a40cb7ec407a6684eebad94a802096371a67df9e37",
       "dimensions": "1200x800",
-      "use": "Start- und Gebetsseite: aktuelle lokale Morgendämmerung von Fajr bis Sonnenaufgang; kein Live-Wetter",
+      "use": "Aktive Oasenlandschaft auf Start/Gebet, im Lernbereich und in Gebetswidgets; am 13.10.2026 nach Korrektur der Einbindung wiederhergestellt. Neue Moscheehofbilder ausschließlich in der Anfangsanimation.",
       "generatedAt": "2026-08-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-34978286-6dd4-4e2b-974d-130fca8e2ed1.png",
       "inputImages": [],
@@ -282,7 +299,7 @@
       "path": "public/premium-assets/high-res-objects/prayer-dhuhr-v1.webp",
       "sha256": "3a83268fb2ca61e901abd45ecb81a69693d09cc04e5df1f213b5649bba6bb716",
       "dimensions": "1200x800",
-      "use": "Start- und Gebetsseite: aktuelle lokale Tageslichtphase von Sonnenaufgang bis Asr; kein Live-Wetter",
+      "use": "Aktive Oasenlandschaft auf Start/Gebet, im Lernbereich und in Gebetswidgets; am 13.10.2026 nach Korrektur der Einbindung wiederhergestellt. Neue Moscheehofbilder ausschließlich in der Anfangsanimation.",
       "generatedAt": "2026-08-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-4451a4f2-49ac-47bb-995d-4c4e07e9832b.png",
       "inputImages": [
@@ -298,7 +315,7 @@
       "path": "public/premium-assets/high-res-objects/prayer-asr-v1.webp",
       "sha256": "0007f475352ac8e33f28e155ad7c3e1b51e6e8226789082c4343dec2506d0051",
       "dimensions": "1200x800",
-      "use": "Start- und Gebetsseite: aktuelle lokale Nachmittagsphase von Asr bis Maghrib; kein Live-Wetter",
+      "use": "Aktive Oasenlandschaft auf Start/Gebet, im Lernbereich und in Gebetswidgets; am 13.10.2026 nach Korrektur der Einbindung wiederhergestellt. Neue Moscheehofbilder ausschließlich in der Anfangsanimation.",
       "generatedAt": "2026-08-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-288e7cc4-5505-4059-bafe-edfce0300bc8.png",
       "inputImages": [
@@ -314,7 +331,7 @@
       "path": "public/premium-assets/high-res-objects/prayer-maghrib-v1.webp",
       "sha256": "c33f7688a85ce40fc28bb5af07efbabf37beb5c1fbe007247b090fc411faafb7",
       "dimensions": "1200x800",
-      "use": "Start- und Gebetsseite: aktuelle lokale Abendphase von Maghrib bis Isha; kein Live-Wetter",
+      "use": "Aktive Oasenlandschaft auf Start/Gebet, im Lernbereich und in Gebetswidgets; am 13.10.2026 nach Korrektur der Einbindung wiederhergestellt. Neue Moscheehofbilder ausschließlich in der Anfangsanimation.",
       "generatedAt": "2026-08-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-cadf5aca-9ba6-4601-8648-b33f3d940745.png",
       "inputImages": [
@@ -330,7 +347,7 @@
       "path": "public/premium-assets/high-res-objects/prayer-isha-v1.webp",
       "sha256": "2a3218a61193307751af81ea07bac0ab13d0be0cbde07d7873e3970041218e74",
       "dimensions": "1200x800",
-      "use": "Start- und Gebetsseite: aktuelle lokale Nachtphase von Isha bis Fajr; kein Live-Wetter oder aktuelle Mondphase",
+      "use": "Aktive Oasenlandschaft auf Start/Gebet, im Lernbereich und in Gebetswidgets; am 13.10.2026 nach Korrektur der Einbindung wiederhergestellt. Neue Moscheehofbilder ausschließlich in der Anfangsanimation.",
       "generatedAt": "2026-08-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-5650ff08-aa98-4d64-9733-8b94778177b0.png",
       "inputImages": [
@@ -472,7 +489,9 @@
       "use": "Gebetskurs: Eröffnungstakbir; statische Lernhilfe, keine religiöse Freigabe",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-6cca1217-39ac-428b-b5f4-aec999a297a6.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für den Eröffnungstakbir: aufrecht stehend, beide offenen Hände neben den Schultern erhoben, Finger nach oben, Blick gesenkt. Vollständiger Körper, transparente Fläche, keine Schrift, Logos oder Wasserzeichen."
     },
@@ -483,7 +502,9 @@
       "use": "Gebetskurs: Verbeugung (Ruku); statische Lernhilfe, keine religiöse Freigabe",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2554f77c-6e22-4f7d-bd86-dd9902a2f643.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert in klarer Seitenansicht für Ruku: etwa 90 Grad an der Hüfte gebeugt, Rücken gerade, Kopf ausgerichtet, Hände auf den Knien, Füße flach. Keine Schrift, Logos oder Wasserzeichen."
     },
@@ -494,7 +515,9 @@
       "use": "Gebetskurs: Aufrichten und Aufstehen; Zielhaltung, keine religiöse Freigabe",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-e00ef342-8111-4494-9ca1-e96b5631405b.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für das vollständige Aufrichten: aufrecht stehend, Arme entspannt an den Seiten, Füße parallel, Blick gesenkt. Vollständiger Körper, transparente Fläche, keine Schrift, Logos oder Wasserzeichen."
     },
@@ -505,7 +528,9 @@
       "use": "Gebetskurs: Niederwerfung (Sujud); statische Lernhilfe, keine religiöse Freigabe",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-5dd2e6ca-867e-464b-9d82-14a47627894a.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert in klarer Seitenansicht für Sujud: Stirn und Nase an der Matte, Handflächen neben dem Kopf, Knie und gebeugte Zehen an der Matte, Hüfte angehoben. Keine Schrift, Logos oder Wasserzeichen."
     },
@@ -516,7 +541,9 @@
       "use": "Gebetskurs: Sitzen; allgemeine statische Lernhilfe, Rechtsschuldetails bleiben im Text",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c50cb359-2822-4de7-93d6-f1bcea7dae57.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für das aufrechte Sitzen zwischen den Niederwerfungen: gefaltete Beine, Hände flach auf den Oberschenkeln, gerader Oberkörper, Blick gesenkt. Keine erhobenen Finger, Schrift, Logos oder Wasserzeichen."
     },
@@ -527,7 +554,9 @@
       "use": "Gebetskurs: erste Richtung beim Taslim; der zweite Durchgang bleibt im Text beschriftet",
       "generatedAt": "2026-08-29",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-fde3bb2d-fcfc-4e58-b9ce-e22d35264751.png",
-      "inputImages": ["salah-posture-qiyam-v1 source generation as style and character reference"],
+      "inputImages": [
+        "salah-posture-qiyam-v1 source generation as style and character reference"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 512; alpha erhalten",
       "prompt": "Dieselbe originale 3D-Cartoon-Lernfigur und Gebetsmatte wie Qiyam, neu gerendert für den ersten Taslim: aufrecht sitzend, Hände auf den Oberschenkeln, Oberkörper nach vorn, Kopf klar zur eigenen rechten Schulter gedreht. Keine Pfeile, Schrift, Logos oder Wasserzeichen."
     },
@@ -736,7 +765,9 @@
       "use": "Fastenplan, Erinnerungen und Hadith: bereinigte Laterne ohne Alpha-Blockartefakte",
       "generatedAt": "2026-09-24",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-02237e15-2f85-4b2f-ae59-17479aee193f.png",
-      "inputImages": ["public/premium-assets/high-res-objects/lantern-v2.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/lantern-v2.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 512 0; Alpha erhalten",
       "prompt": "Archivarische Zusammenfassung: Vorhandene messing- und smaragdgrüne Laterne erhalten, braune Blockartefakte entfernen, echten transparenten Hintergrund schaffen; keine Schrift."
     },
@@ -791,7 +822,9 @@
       "use": "Startseite: Quran-Weiterlesenkarte; stilisierte Miniatur ohne eingebrannten Text",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-c411e327-1ae5-4e01-8946-14f0d4a25ebc.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Quran reading card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW Quran book on a simple low carved wooden rehal, closed with an emerald-green fabric cover, restrained warm brass cornerwork and a single abstract central geometric medallion; cream page edges visible. Match the reference's exact visual language: charming premium 3D storybook miniature, slightly elevated three-quarter camera angle, softly beveled handcrafted geometry, restrained ornament, satin brass rather than mirror gold, tactile emerald textile, warm cream stone details, warm light from upper left, soft grounded shadow. Center one isolated object, fully visible with generous transparent margins, strong legible silhouette at 100px card size. Genuinely transparent background and no floor scene or colored square. NO Arabic or Latin letters, no verses, no invented religious text, no people, no photorealism, no glossy AI render, no extra objects, no watermark."
     },
@@ -802,7 +835,9 @@
       "use": "Startseite: Dhikrkarte; Tasbih als passende Miniatur zum Beten-lernen-Motiv",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-4a285bb4-9f9f-4eea-8b05-d5f0c58ebaca.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Dhikr card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW isolated miniature of an elegant loop of emerald-green prayer beads with warm brushed-brass separators and one cream-and-emerald tassel; let the loop rest naturally on a low carved cream-stone pedestal like the prayer-learning reference. Match that image's charming premium 3D storybook miniature style, slightly elevated three-quarter view, softly beveled handcrafted geometry, restrained ornamental detail, satin brass, tactile emerald material and cream stone, warm light from upper left, soft grounded shadow. One centered object, fully visible with generous transparent margins, bold readable silhouette at 100px card size. Genuinely transparent background, no colored square or floor scene. No Arabic/Latin letters, no text, no people, no photorealism, no glossy metallic product photo, no extra symbols, no watermark."
     },
@@ -813,7 +848,9 @@
       "use": "Startseite: Qibla-Karte; generischer Kompass ohne behauptete Richtung",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1ea41144-81bc-4276-ac66-70296a631ebb.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Qibla card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW small directional compass on a compact carved cream-stone stand, with a deep emerald circular face, a restrained brass rim and one sculpted brass pointer. Match the reference prayer-learning object's charming premium 3D storybook-miniature language: softly beveled handcrafted geometry, slightly elevated three-quarter view, satin warm brass, cream stone with shallow Islamic geometric carving, rich but matte emerald, warm upper-left light, soft grounded shadow. The compass should be functional-looking but without any particular calculated bearing; generic north-up arrow only. One centered object, full silhouette with generous transparent margins, legible at 100px. Genuinely transparent background, no colored square, no map, no Arabic/Latin letters, no digits, no photorealistic product-shot look, no mirror shine, no watermark."
     },
@@ -824,7 +861,9 @@
       "use": "Nur Startseite: Quran-Weiterlesenkarte; kompaktes Buch auf Rehal rechts vom Lesestand",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-e8c03800-9679-4521-bcd1-73b3ee9fdbbc.png",
-      "inputImages": ["/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1fa60dd5-7139-46e4-8d6e-3e9a79b06886.png"],
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1fa60dd5-7139-46e4-8d6e-3e9a79b06886.png"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Use case: background-extraction. Asset type: small image in a dark emerald app home card. Image 1 is the edit target. Extract only the illustrated physical Quran book and its wooden rehal stand as a clean cutout. Make every area outside the physical object truly transparent alpha, with crisp natural antialiased edges and no dark vignette, drop shadow, floor, halo, or background pixels. Preserve the exact book angle, realistic premium stylized 3D materials, forest-green leather, warm wood, subtle brass trim, and exact cover text 'QURAN' verbatim. Do not introduce any other object, label or ornament. Keep the complete object within the canvas."
     },
@@ -857,7 +896,9 @@
       "use": "Startseite: 99 Namen; unbeschriftete Lerntafeln im Miniaturstil, tatsächliche Namen nur im App-Text",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-a0c39d63-8057-4b13-a825-0bef8e34328b.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page 99 Names of Allah learning card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW small freestanding illuminated teaching display: one elegant pointed cream-stone arch with satin brass trim, holding three overlapping emerald and ivory parchment plaques with repeated blank ornamental cartouches to suggest a collection of Names. This must not be a Quran book, a medallion or a prayer rug. Match the reference prayer-learning image's charming premium 3D storybook-miniature language, slightly elevated three-quarter view, softly beveled handcrafted geometry, warm left lighting, tactile emerald and cream, satin brass, soft grounded shadow. The arch and plaques should form one clear silhouette at 100px, centered and fully visible with transparent margins. Genuinely transparent background, no square/floor scene. The plaques are deliberately blank: NO Arabic/Latin letters, no names, no calligraphy, no invented sacred content, no digits, no photorealism, no glossy AI render, no watermark."
     },
@@ -868,7 +909,9 @@
       "use": "Startseite: 99 Namen; drei unbeschriftete Tafeln als eigenständige Miniatur, tatsächliche Namen nur im App-Text",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-2a59c7cf-ec00-4933-ad86-4ad65debed74.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Create a SINGLE premium stylized 3D miniature icon for an Islamic learning app's '99 Names of Allah' discovery card. Use the supplied prayer-learning artwork ONLY as a MATERIAL, LIGHTING, RENDERING, and COLOR PALETTE reference: emerald green velvet/enamel, warm brushed brass, carved ivory stone, restrained artisan details, soft warm studio light, slightly animated storybook 3D aesthetic, subtle shadow. Make a clearly DIFFERENT silhouette from the reference prayer niche/arch: an elegant fan-shaped arrangement of three small blank pointed-arch plaques or medallion tablets on a low carved ivory-and-brass display plinth, with a simple central luminous emerald gem or ornamental rosette. No large enclosing prayer arch, no prayer rug, no book, no mosque. The plaques are decorative and contain NO writing, NO letters, NO Arabic script, NO numbers, NO calligraphy, and NO religious claims. Object centered, isolated, transparent background, clear at 72px height, no scenery, no border, no text, square 1:1 composition with generous transparent margins. Keep design respectful and polished, avoid plastic or cartoon exaggeration."
     },
@@ -879,7 +922,9 @@
       "use": "Startseite: Islam-Quizkarte; stilisierte Frage- und Antworttafeln ohne eingebrannten Inhalt",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-7c328aa1-b3d3-42bb-ad1b-6798f89b62c6.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Islam Quiz learning card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW compact carved cream-stone bookstand holding a slightly tilted small emerald question card with ONE simple embossed gold question-mark symbol, next to three short ivory answer tiles with gold-rimmed empty circles, no words. Match the reference prayer-learning image's charming premium 3D storybook-miniature visual language: hand-crafted softly beveled geometry, slightly elevated three-quarter view, satin brass trim, warm cream stone, tactile emerald, warm upper-left light and soft grounded shadow. One cohesive object, full silhouette, generous transparent margins, readable at 100px. Genuinely transparent background, no floor scene or colored box. No other text, no Arabic/Latin letters, no invented religious content, no photorealism, no glossy AI look, no watermark."
     },
@@ -890,7 +935,9 @@
       "use": "Startseite: Duas-Karte; stilisierte Dua-Geste als Miniatur statt realistischer Hände",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-6b3fadf2-4446-4b85-a05f-eb2dca6f47c4.png",
-      "inputImages": ["public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 640 0; Alpha erhalten",
       "prompt": "Use case: stylized-concept. Asset type: transparent miniature illustration for the Nur Islam Start page Duas card. Image 1 is STYLE REFERENCE ONLY, not an edit target. Create a NEW gentle symbol of dua: two modestly cupped upward hands as smooth handcrafted warm-ivory sculpture, with simplified natural fingers and short emerald fabric sleeves, resting on a low carved cream-stone plinth with restrained satin-brass trim. The gesture must clearly read as supplication, not clapping or praying palms pressed together. Match the reference prayer-learning image's charming premium 3D storybook-miniature style: softly beveled illustrated shapes (not photoreal human skin), slightly elevated three-quarter view, tactile cloth, subtle geometric carving, warm upper-left light, soft grounded shadow. One clear centered silhouette fully visible with generous genuinely transparent margins, legible at 100px. No arch, no lantern, no extra symbols or objects, no text or letters, no photorealism, no plastic skin, no watermark."
     },
@@ -901,7 +948,9 @@
       "use": "Startseite: Beten lernen; teilweise ausgerollter Gebetsteppich, im Materialstil des Quran-Motivs",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-29b5e125-6b77-40fa-a8b2-1a994fbaa40b.png",
-      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D illustration of a tactile emerald prayer rug, partially unrolled diagonally with visible fringe and a readable woven mihrab motif. No book, stand, platform, people, writing or extra religious content; warm studio light, restrained gold thread, elevated three-quarter view."
     },
@@ -913,7 +962,9 @@
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-d44db837-ba2c-47aa-85d6-853a2e2a6b52.png",
       "editSourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-15b67885-7a60-49d9-b73e-19d2eff06213.png",
-      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D walnut organizer with several slim ivory study cards, emerald edges and subtle geometric embossing; tactile materials, elevated three-quarter view and warm studio light. Initially blank fronts, no invented sacred text.",
       "editPrompt": "Preserve the organizer; print exactly 99 NAMEN in dark emerald serif capitals on the front card and a small geometric rosette below. No other lettering or religious claims."
@@ -925,7 +976,9 @@
       "use": "Startseite: Islam Quiz; Fragekarte und drei leere Antwortkarten ohne erfundene Inhalte",
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-0383588c-b2fc-4476-9176-276b2c6c93fb.png",
-      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D walnut quiz tray with upright emerald card bearing one brass question mark and three blank ivory answer tiles with selection circles; warm light, tactile materials, compact three-quarter composition. No fake questions or religious content."
     },
@@ -937,7 +990,9 @@
       "generatedAt": "2026-09-26",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-1381d658-94ba-4750-85a3-035d625e2fcd.png",
       "editSourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-78ad336f-ec2e-4de0-aa98-09d39359995a.png",
-      "inputImages": ["public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp"
+      ],
       "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Style reference only: Quran-on-rehal artwork. New transparent premium 3D open ivory personal prayer notebook with emerald cloth cover and one brass lantern; tactile materials, warm light and three-quarter view; initially blank pages, no invented sacred text.",
       "editPrompt": "Preserve notebook and lantern; on the right page print exactly DUA in dark emerald serif type with a tiny gold rule, and add a small ornamental rosette to the left page. No other letters or false prayer lines."
@@ -960,7 +1015,9 @@
       "use": "Startseite: Duas; dieselbe Buch-und-Laternen-Komposition mit deutlich größerem DUA-Schriftzug",
       "generatedAt": "2026-09-27",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-55a6fcd1-707b-4624-abda-e74ae742c9fe.png",
-      "inputImages": ["public/premium-assets/high-res-objects/home-duas-v1.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/home-duas-v1.webp"
+      ],
       "processing": "cwebp -q 86 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Edit the existing transparent open ivory-and-emerald prayer notebook with brass lantern. Preserve the composition, objects and lighting; enlarge only the exact title DUA on the right page roughly 2.5 times so it remains readable as a small app-card illustration. No other text or new religious content; preserve genuine transparency."
     },
@@ -982,7 +1039,9 @@
       "use": "Quran-Lesen, Lernbereich und Widget: bereinigtes offenes Buch auf Rehal ohne Alpha-Blockartefakte",
       "generatedAt": "2026-09-24",
       "sourceFile": "/Users/arman/.codex/generated_images/01a0372b-3deb-7dd3-9311-fad1c7b8e83b/exec-44a04f30-abfe-4642-8e02-47c65712ec00.png",
-      "inputImages": ["public/premium-assets/high-res-objects/quran-open-v2.webp"],
+      "inputImages": [
+        "public/premium-assets/high-res-objects/quran-open-v2.webp"
+      ],
       "processing": "cwebp -q 88 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Archivarische Zusammenfassung: Offenes Buch auf Rehal und Ornamente erhalten, braune Blockartefakte entfernen; Transparenz, kein lesbarer erfundener religiöser Text."
     },
@@ -1212,6 +1271,151 @@
       ],
       "processing": "cwebp -q 82 -m 6 -alpha_q 100 -resize 768 0; Alpha erhalten",
       "prompt": "Archivarische Zusammenfassung: Gefalteter Gebetsteppich und blankes Lernheft mit drei Ziffern als Symbol der Schrittfolge. Ein Bild pro Motiv per eingebauter Bildgenerierung. Gemeinsamer Stil: hochwertige leicht animierte 3D-Materialwelt aus Smaragd, Elfenbein, Walnuss und sparsamem Messing; dreiviertel Perspektive, transparentes Alpha, ohne generierte religiöse Schrift, Personen oder Wasserzeichen."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-fajr-v2.webp",
+      "sha256": "1af417cc95877b9d5d841a88d0b4baa0a3c183e00a7210efa297fdd4ddf77cbd",
+      "dimensions": "1200x800",
+      "use": "Archiv der verkleinerten Moscheehof-Version vom 13.10.2026; durch native v3-Bilder ersetzt.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/fajr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE fajr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Fajr, PRE-SUNRISE dawn: deep cool indigo and muted emerald-blue sky, a very subtle pale rose/ivory glow low on the horizon, no sun disc. Soft low light on ivory stone, a few restrained warm courtyard lamps. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-fajr-v3.webp"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-dhuhr-v2.webp",
+      "sha256": "81cd7e690a3a91b15ba800853e515e802e839a6e31b3e31bacc80eeb33091d99",
+      "dimensions": "1200x800",
+      "use": "Archiv der verkleinerten Moscheehof-Version vom 13.10.2026; durch native v3-Bilder ersetzt.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/dhuhr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/master-draft.png"
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: precise-object-edit. This own generated image is the EDIT TARGET for an Islamic app opening background. Keep this exact fictional mosque design, emerald/ivory/brass palette and clear midday lighting. Change ONLY the framing: move the camera further back so the whole mosque and both minarets become a smaller distant structure in the bottom 30% of the image. All finials and towers must stay BELOW the 65%-height line; the dome should start near 75% height. Reduce empty courtyard foreground to the bottom 8%. The TOP 65% and the middle must be uninterrupted gently textured blue-green sky with no bright hotspots, giving a large quiet safe area for Arabic and German text. Center the dome and main arch so they remain recognizable when cropping this wide image to portrait. Keep a frontal symmetrical camera, same buildings, materials and quality. 3:2 landscape, one image. No text, UI, logos, people or watermark.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-dhuhr-v3.webp"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-asr-v2.webp",
+      "sha256": "1e8772380c19f4912443fe14e5ae088383b72e5503f3f7cf54f687d12120e1b4",
+      "dimensions": "1200x800",
+      "use": "Archiv der verkleinerten Moscheehof-Version vom 13.10.2026; durch native v3-Bilder ersetzt.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/asr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE asr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Asr, warm LATE AFTERNOON while the sun is STILL ABOVE the horizon: subdued golden light on the same ivory stone, soft longer shadows across the courtyard, muted blue-green sky, not orange sunset. Keep center sky smooth and not bright. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-asr-v3.webp"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-maghrib-v2.webp",
+      "sha256": "3ec163bb52dc01fc6ea00d35228cb44dda708e16e30fe7d799f34324e100714b",
+      "dimensions": "1200x800",
+      "use": "Archiv der verkleinerten Moscheehof-Version vom 13.10.2026; durch native v3-Bilder ersetzt.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/maghrib.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE maghrib version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Maghrib, AFTER SUNSET twilight: subdued dusty rose and violet near the low horizon, deep blue-green upper sky, no visible sun. Very subtle warm courtyard lamps begin glowing, stone gently shaded, no vivid saturated orange. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-maghrib-v3.webp"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-isha-v2.webp",
+      "sha256": "42bcbe79277a742d37d0744c2e6404eb29451df07fde43d263b389a4a14076d3",
+      "dimensions": "1200x800",
+      "use": "Archiv der verkleinerten Moscheehof-Version vom 13.10.2026; durch native v3-Bilder ersetzt.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/isha.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 85 -m 6 -resize 1200 800",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE isha version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Isha, FULL NIGHT: dark ink blue and deep emerald sky, very sparse subtle stars confined to the upper edges, softly lit ivory arches with restrained warm brass lamps. No moon added and no bright celestial object behind the text. The architecture must remain readable, not lost in black. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-isha-v3.webp"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-fajr-v3.webp",
+      "sha256": "514a999c97aea7fe334b6019f48755ae82c6aa2b47ce41fbc1b3fd755060d225",
+      "dimensions": "1536x1024",
+      "use": "Fiktionaler Moscheehof vor Sonnenaufgang, kühle Morgendämmerung; dekorativer Hintergrund ausschließlich in der Anfangsanimation.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/fajr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE fajr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Fajr, PRE-SUNRISE dawn: deep cool indigo and muted emerald-blue sky, a very subtle pale rose/ivory glow low on the horizon, no sun disc. Soft low light on ivory stone, a few restrained warm courtyard lamps. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-dhuhr-v3.webp",
+      "sha256": "ee6fc353e8313cb9ccf8205c37e007d3eec799eaefb56bd9a085772a9c75a210",
+      "dimensions": "1536x1024",
+      "use": "Derselbe fiktionale Moscheehof bei Tageslicht; dekorativer Hintergrund ausschließlich in der Anfangsanimation.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/dhuhr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/master-draft.png"
+      ],
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "prompt": "Use case: precise-object-edit. This own generated image is the EDIT TARGET for an Islamic app opening background. Keep this exact fictional mosque design, emerald/ivory/brass palette and clear midday lighting. Change ONLY the framing: move the camera further back so the whole mosque and both minarets become a smaller distant structure in the bottom 30% of the image. All finials and towers must stay BELOW the 65%-height line; the dome should start near 75% height. Reduce empty courtyard foreground to the bottom 8%. The TOP 65% and the middle must be uninterrupted gently textured blue-green sky with no bright hotspots, giving a large quiet safe area for Arabic and German text. Center the dome and main arch so they remain recognizable when cropping this wide image to portrait. Keep a frontal symmetrical camera, same buildings, materials and quality. 3:2 landscape, one image. No text, UI, logos, people or watermark.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-asr-v3.webp",
+      "sha256": "0234ab7587a6813a9e7cd08aa2d0834ddcf8ec96e924f20d38cea60c203bd73f",
+      "dimensions": "1536x1024",
+      "use": "Derselbe fiktionale Moscheehof bei warmem Nachmittagslicht; dekorativer Hintergrund ausschließlich in der Anfangsanimation.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/asr.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE asr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Asr, warm LATE AFTERNOON while the sun is STILL ABOVE the horizon: subdued golden light on the same ivory stone, soft longer shadows across the courtyard, muted blue-green sky, not orange sunset. Keep center sky smooth and not bright. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-maghrib-v3.webp",
+      "sha256": "4bcc7549d86e77c06ff480a4d4d4c5b7efbf3453102859218892f9b1fca55b14",
+      "dimensions": "1536x1024",
+      "use": "Derselbe fiktionale Moscheehof in der Abenddämmerung; dekorativer Hintergrund ausschließlich in der Anfangsanimation.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/maghrib.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE maghrib version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Maghrib, AFTER SUNSET twilight: subdued dusty rose and violet near the low horizon, deep blue-green upper sky, no visible sun. Very subtle warm courtyard lamps begin glowing, stone gently shaded, no vivid saturated orange. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json"
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/prayer-isha-v3.webp",
+      "sha256": "23f65349a5b17f9e5d558da4c9233fbe97793932c26357039fe2c5019f94aea1",
+      "dimensions": "1536x1024",
+      "use": "Derselbe fiktionale Moscheehof bei Nacht mit dezenten Hofleuchten; dekorativer Hintergrund ausschließlich in der Anfangsanimation.",
+      "generatedAt": "2026-10-13",
+      "sourceFile": "output/imagegen/prayer-courtyard/isha.png",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE isha version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Isha, FULL NIGHT: dark ink blue and deep emerald sky, very sparse subtle stars confined to the upper edges, softly lit ivory arches with restrained warm brass lamps. No moon added and no bright celestial object behind the text. The architecture must remain readable, not lost in black. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "promptSet": "output/imagegen/prayer-courtyard/prompts.json"
     }
   ],
   "vectorAssets": [

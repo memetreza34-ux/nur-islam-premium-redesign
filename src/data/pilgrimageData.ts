@@ -27,6 +27,8 @@ export type PilgrimageStation = {
   description: string;
   /** Quranstelle, wo eine eindeutige besteht. */
   reference?: string;
+  sourceLabel?: string;
+  sourceUrl?: string;
 };
 
 export type HolyPlace = {
@@ -50,13 +52,17 @@ export const UMRAH_STATIONS: readonly PilgrimageStation[] = [
     id: 'umrah-ihram',
     when: 'Vor dem Erreichen des Miqat',
     title: 'Ihram',
-    description: 'Der Miqat ist die festgelegte Grenze für den Eintritt in den Weihezustand. Die Vorbereitung umfasst die passende Kleidung; der Ihram ist aber mehr als Kleidung. Absicht und Talbiya, der Pilgerruf, gehören zum Beginn.',
+    description: 'Der Miqat bezeichnet eine festgelegte Grenze für den Eintritt in den Weihezustand. Für Anreisende mit Hajj- oder Umrah-Absicht nennt al-Bukhari 1524 bestimmte Grenzen. Wohnort, Reiseweg und Pilgerform beeinflussen den Beginn; Ihram ist nicht bloß Kleidung.',
+    sourceLabel: 'Sahih al-Bukhari 1524',
+    sourceUrl: 'https://sunnah.com/bukhari:1524',
   },
   {
     id: 'umrah-tawaf',
     when: 'Nach der Ankunft in Makkah',
     title: 'Tawaf',
     description: 'Tawaf heißt Umrundung: sieben Runden um die Kaaba, mit der Kaaba zur Linken. Beginn und Ende jeder Runde liegen auf Höhe des Schwarzen Steins.',
+    sourceLabel: 'Sahih al-Bukhari 1645',
+    sourceUrl: 'https://sunnah.com/bukhari:1645',
   },
   {
     id: 'umrah-sai',
@@ -64,12 +70,16 @@ export const UMRAH_STATIONS: readonly PilgrimageStation[] = [
     title: 'Sa’i zwischen Safa und Marwa',
     description: 'Sa’i ist der Weg zwischen Safa und Marwa. Beginn ist Safa, Ende nach sieben Strecken Marwa. Ein Hinweg zählt als eine Strecke, der Rückweg als die nächste — nicht zusammen als eine.',
     reference: 'Quran 2:158',
+    sourceLabel: 'Quran 2:158; al-Bukhari 1645; Muslim 1218a · Safa, Marwa und sieben Strecken',
+    sourceUrl: 'https://sunnah.com/bukhari:1645',
   },
   {
     id: 'umrah-halq',
     when: 'Zum Abschluss',
     title: 'Haarkürzung',
     description: 'Männer scheren oder kürzen das Haar; Frauen kürzen die Haarspitzen. Mit diesem abschließenden Schritt endet der Ihram der Umrah. Umfang und besondere Fälle erklärt die qualifizierte Begleitung.',
+    sourceLabel: 'Sahih Muslim 1218a; Abu Dawud 1985 (sahih nach al-Albani) · Haarkürzung',
+    sourceUrl: 'https://sunnah.com/abudawud:1985',
   },
 ];
 
@@ -79,18 +89,24 @@ export const HAJJ_STATIONS: readonly PilgrimageStation[] = [
     when: 'Je nach Pilgerform; bei Tamattuʿ zum Beginn der Hajj',
     title: 'Ihram',
     description: 'Bei Tamattuʿ beginnt nach der abgeschlossenen Umrah ein neuer Ihram für Hajj in Makkah. Bei Ifrad und Qiran kann der Ihram bereits seit dem Miqat bestehen.',
+    sourceLabel: 'Sahih al-Bukhari 1551',
+    sourceUrl: 'https://sunnah.com/bukhari:1551',
   },
   {
     id: 'hajj-mina',
     when: '8. Dhul-Hijjah',
     title: 'Mina',
     description: 'Aufenthalt und Übernachtung in Mina bereiten auf den folgenden Tag in Arafat vor.',
+    sourceLabel: 'Sahih Muslim 1218a · berichteter Hajj-Ablauf',
+    sourceUrl: 'https://sunnah.com/muslim:1218a',
   },
   {
     id: 'hajj-arafat',
     when: '9. Dhul-Hijjah',
     title: 'Das Stehen in Arafat',
     description: 'Der zentrale Aufenthalt in der Ebene von Arafat. Im üblichen Ablauf bleiben die Pilger bis Sonnenuntergang zum Gebet und Bittgebet dort.',
+    sourceLabel: 'Sahih Muslim 1218a · berichteter Hajj-Ablauf',
+    sourceUrl: 'https://sunnah.com/muslim:1218a',
   },
   {
     id: 'hajj-muzdalifah',
@@ -98,30 +114,40 @@ export const HAJJ_STATIONS: readonly PilgrimageStation[] = [
     title: 'Muzdalifah',
     description: 'Nach Sonnenuntergang führt der Weg von Arafat nach Muzdalifah für Gebete und den nächtlichen Aufenthalt.',
     reference: 'Quran 2:198',
+    sourceLabel: 'Sahih Muslim 1218a · berichteter Hajj-Ablauf',
+    sourceUrl: 'https://sunnah.com/muslim:1218a',
   },
   {
     id: 'hajj-jamarat',
     when: '10. Dhul-Hijjah',
     title: 'Steinigung, Opfer und Haarkürzung',
     description: 'Sieben Steinchen werden an der großen Jamrah al-Aqaba geworfen. Haarkürzung und, je nach Pilgerform, das Opfer gehören ebenfalls zu diesem Abschnitt.',
+    sourceLabel: 'Sahih Muslim 1218a · berichteter Hajj-Ablauf',
+    sourceUrl: 'https://sunnah.com/muslim:1218a',
   },
   {
     id: 'hajj-ifada',
     when: '10. Dhul-Hijjah oder danach',
     title: 'Tawaf al-Ifada',
-    description: 'Tawaf al-Ifada ist die Umrundung im Hajj-Ablauf. Bei Tamattuʿ folgt ein eigener Sa’i für Hajj. Bei Ifrad und Qiran kann dieser bereits vorher erfolgt sein.',
+    description: 'Tawaf al-Ifada gehört zum Hajj-Ablauf. Ob ein Sa’i noch auszuführen ist, hängt von der Pilgerform und den vorher ausgeführten Riten ab. Diese Übersicht gibt dazu keine individuelle Vollständigkeitszusage.',
+    sourceLabel: 'Dar al-Ifta · drei Pilgerformen; Muslim 1218a · Tawaf beim Hajj',
+    sourceUrl: 'https://dar-alifta.org/en/fatwa/details/6382/the-meaning-of-hajj-ifrad-qiran-and-tamattu',
   },
   {
     id: 'hajj-tashriq',
     when: '11. bis 13. Dhul-Hijjah',
     title: 'Die Tage von Tashriq',
-    description: 'Aufenthalt in Mina und Steinigung aller drei Jamarat. Eine frühere Abreise am 12. ist unter ihren Voraussetzungen vorgesehen.',
+    description: 'Die Tage nach dem Opferfest gehören zum weiteren Hajj-Ablauf in Mina. Quran 2:203 nennt das Gedenken Allahs und die mögliche Abreise nach zwei oder drei Tagen. Zeiten und Ausführung der weiteren Riten sind gesonderte Praxisregeln.',
+    sourceLabel: 'Quran 2:203 · Gedenken und Abreise nach zwei oder drei Tagen',
+    sourceUrl: 'https://quran.com/2/203',
   },
   {
     id: 'hajj-wada',
     when: 'Vor der Abreise',
     title: 'Tawaf al-Wada',
     description: 'Der Abschiedstawaf steht am Ende vor dem Verlassen Makkahs. Für Ausnahmen und persönliche Situationen ist fachliche Begleitung wichtig.',
+    sourceLabel: 'Sahih al-Bukhari 1755',
+    sourceUrl: 'https://sunnah.com/bukhari:1755',
   },
 ];
 

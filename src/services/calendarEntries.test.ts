@@ -1,5 +1,6 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
+import { getHijriDay, getHijriMonth } from './hijriCalendar';
 import {
   buildRollingFastingReminders,
   isManagedFastingReminder,
@@ -76,6 +77,23 @@ describe('rolling fasting reminders', () => {
     for (const reminder of buildRollingFastingReminders()) {
       expect(reminder.title).toMatch(/Montag|Donnerstag|Hijri-Tag/);
     }
+  });
+
+  it('never schedules voluntary fasting for Ramadan, Eid or Tashriq across two calendar years', () => {
+    enableFasting();
+    let remindersChecked = 0;
+    for (let offset = 0; offset < 740; offset += 30) {
+      for (const entry of buildRollingFastingReminders(new Date(2026, 0, 1 + offset))) {
+        const [year, month, day] = entry.date.split('-').map(Number);
+        const fastingDay = new Date(year, month - 1, day + 1, 12);
+        const hm = getHijriMonth(fastingDay), hd = getHijriDay(fastingDay);
+        expect(hm).not.toBe(9);
+        expect(hm === 10 && hd === 1).toBe(false);
+        expect(hm === 12 && hd >= 10 && hd <= 13).toBe(false);
+        remindersChecked++;
+      }
+    }
+    expect(remindersChecked).toBeGreaterThan(200);
   });
 
   it('reminds on the evening before the fasting day, not on the day itself', () => {

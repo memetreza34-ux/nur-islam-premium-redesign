@@ -191,7 +191,7 @@ test('the prophets category contains 25 complete Quran-grounded course plans', a
   await expect(page.getByRole('region', { name: 'Kursstatus' })).not.toContainText('Fachprüfung offen');
   await expect(page.getByRole('heading', { name: 'Bevor du beginnst', exact: true })).toBeVisible();
   await expect(page.locator('.reference-prophet-overview__goals p')).toHaveCount(3);
-  await expect(page.getByRole('heading', { name: 'Sicher im Quran belegt', exact: true })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Das Wesentliche im Kurs', exact: true })).toBeVisible();
   await expect(page.locator('.reference-prophet-overview__facts li')).toHaveCount(6);
   await expect(page.getByText(/Grenze des sicheren Wissens:/)).toBeVisible();
   const coursePlan = page.getByRole('region', { name: 'Kursplan für Muhammad' });

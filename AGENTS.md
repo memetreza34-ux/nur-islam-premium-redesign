@@ -71,28 +71,29 @@ Absicht schützt. Nicht die Prüfung löschen, um grün zu werden.
 ## Der Quran-Bestand
 
 Der arabische Text liegt vollständig offline vor. Die **deutsche Übersetzung
-wird abgerufen, nicht mitgeliefert** — das ist eine bewusste Rechtsentscheidung
-und der Grund, warum es hier keine offene Lizenzfrage gibt. Details und der
+wird abgerufen, nicht mitgeliefert**; daraus folgt keine automatische Lizenzfreigabe. Details und der
 Preis dieser Entscheidung stehen in `docs/QURAN-PROVENANCE.md`.
 
 Nicht rückgängig machen, ohne die Rechtefrage neu zu beantworten.
 
+## Inhaltsentscheidung abgeschlossen
+
+Der Betreiber hat den geprüften Inhaltsstand am 13.10.2026 im Chat für den Release
+angenommen: `docs/CONTENT-RELEASE-DECISION-2026-10-13.md`. Ein externer religiöser
+Prüfer ist keine Release-Voraussetzung. Keine App-Weitergabe veranlassen und keine
+Gelehrtenfreigabe erfinden. Quellenstand und Grenzen bleiben dokumentiert.
+
 ## Was noch offen ist
 
-Kein Code. Die verbleibenden Blocker brauchen Menschen:
+1. Impressumsdaten — `npm run check` mit `NUR_RELEASE=true` verweigert bis dahin.
+2. Datenschutzangaben für die tatsächliche Hosting-/Cloud-Konfiguration.
+3. Herkunft und Nutzungsrechte des Text-, Audio- und Bildmaterials.
+4. Tests auf echten Geräten.
+5. Funktionsabnahme der Cloud oder Entscheidung für einen Release ohne Cloud.
 
-1. Fachliche Freigabe der religiösen Inhalte — `docs/RELIGIOUS-HUMAN-REVIEW-PACK.md`
-   ist als Dokument gebaut, das man einem Imam geben kann. Ein Prüfer braucht
-   keinen Zugang zur App.
-2. Impressumsdaten — `npm run check` mit `NUR_RELEASE=true` verweigert bis dahin.
-3. Juristische Prüfung der Datenschutzerklärung.
-4. Herkunft und Rechte des Bildmaterials.
-5. Tests auf echten Geräten.
+## Aktuelle technische Grenzen
 
-## Ein Hinweis aus Erfahrung
-
-Am Gebetszeiten-Fallback stehen noch fest verdrahtete Berliner Uhrzeiten
-(`04:18`, `12:45` …), die wie echte Zeiten aussehen. Ein früherer Stand hatte sie
-durch Platzhalter ersetzt, weil ein Ersatzwert an falschem Ort oder Datum ein
-falsches Gebet anzeigt. Das ist ein offener, bewusst benannter Punkt — kein
-versehentliches Überbleibsel.
+Keine erfundenen Gebetszeiten: Fallback zeigt Platzhalter. Erinnerungen prüfen
+aktuellen Zeitplan, Zeitzone und gültige Uhrzeiten. Freiwillige Fastenvorschläge
+und ihr Scheduler schließen Ramadan, beide Eid-Tage und Tashriq gemeinsam aus.
+Veraltete Berichte nicht als Beweis für den aktuellen Code verwenden.

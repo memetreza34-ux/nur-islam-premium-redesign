@@ -163,12 +163,16 @@ export function PremiumImage({
   className = '',
   fallback,
   priority = false,
+  onLoad,
+  onError,
 }: {
   src: string;
   alt?: string;
   className?: string;
   fallback: React.ReactNode;
   priority?: boolean;
+  onLoad?: () => void;
+  onError?: () => void;
 }) {
   const versionedSrc = versionPremiumAsset(src);
   const eager = priority || /brand-lockup|welcome-hero|reference-.*hero/.test(className);
@@ -185,11 +189,13 @@ export function PremiumImage({
           event.currentTarget.hidden = false;
           const next = event.currentTarget.nextElementSibling as HTMLElement | null;
           if (next) next.hidden = true;
+          onLoad?.();
         }}
         onError={(event) => {
           event.currentTarget.hidden = true;
           const next = event.currentTarget.nextElementSibling as HTMLElement | null;
           if (next) next.hidden = false;
+          onError?.();
         }}
       />
       <span className="premium-image__fallback" hidden>{fallback}</span>

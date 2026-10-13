@@ -47,6 +47,8 @@ import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data
 import { FOUNDATION_SUPPLEMENTS } from '../data/foundationSupplementData';
 import { FoundationChapter, FoundationExample, FoundationGuideIntro, FoundationSource } from '../shared/FoundationGuide';
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
+import { isVoluntaryFastingDate } from '../services/fastingReminderService';
+import { getHijriDay } from '../services/hijriCalendar';
 import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule';
 const MadhhabCatalogueFeature = lazy(() => import('./MadhhabCatalogue').then((module) => ({ default: module.MadhhabCatalogueFeature })));
 
@@ -109,18 +111,13 @@ function formatDate(date: Date) {
 }
 
 function nextWeekday(target: number) {
-  const date = new Date();
-  const difference = (target - date.getDay() + 7) % 7 || 7;
-  date.setDate(date.getDate() + difference);
-  return date;
-}
-
-function getHijriDay(date: Date) {
-  try {
-    return Number(new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric' }).format(date));
-  } catch {
-    return 0;
+  const today = new Date();
+  for (let offset = 1; offset <= 45; offset++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + offset);
+    if (date.getDay() === target && isVoluntaryFastingDate(date)) return date;
   }
+  return null;
 }
 
 function findNextWhiteDay() {
@@ -129,7 +126,7 @@ function findNextWhiteDay() {
     const candidate = new Date(today);
     candidate.setDate(today.getDate() + offset);
     const hijriDay = getHijriDay(candidate);
-    if (hijriDay >= 13 && hijriDay <= 15) return { date: candidate, day: hijriDay };
+    if (hijriDay >= 13 && hijriDay <= 15 && isVoluntaryFastingDate(candidate)) return { date: candidate, day: hijriDay };
   }
   return null;
 }
@@ -331,12 +328,12 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Nächste Möglichkeiten</span><h2>Freiwillige Fastentage</h2></div></div>
         <div className="reference-fasting-grid">
-          <article><MoonStar size={22} /><small>Montag</small><strong>{formatDate(nextMonday)}</strong></article>
-          <article><MoonStar size={22} /><small>Donnerstag</small><strong>{formatDate(nextThursday)}</strong></article>
+          <article><MoonStar size={22} /><small>Montag</small><strong>{nextMonday ? formatDate(nextMonday) : 'Kein Termin im Zeitraum'}</strong></article>
+          <article><MoonStar size={22} /><small>Donnerstag</small><strong>{nextThursday ? formatDate(nextThursday) : 'Kein Termin im Zeitraum'}</strong></article>
           <article><Star size={22} /><small>Weißer Tag</small><strong>{whiteDay ? `${formatDate(whiteDay.date)} · ${whiteDay.day}. Hijri-Tag` : 'Nicht berechenbar'}</strong></article>
         </div>
       </section>
-      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können je nach Region und lokaler Mondsichtung abweichen.</p></section>
+      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können von örtlicher Mondsichtung abweichen. Ramadan, beide Eid-Tage und Tashriq sind aus diesen freiwilligen Vorschlägen und Erinnerungen ausgenommen. Die besondere Tashriq-Ausnahme für Pilger wird im Kalender erklärt.</p></section>
       <section className="reference-fasting-reminder-settings">
         <label><span><Clock3 size={17} /> Erinnerung am Vorabend</span><input type="time" value={reminderTime} onChange={(event) => setReminderTime(event.target.value)} /></label>
         <button className="reference-legacy-toggle" onClick={() => void toggle()} aria-pressed={reminders}>
@@ -699,11 +696,11 @@ function ProphetsFeature({
               <p key={goal}><span>{String(index + 1).padStart(2, '0')}</span>{goal}</p>
             ))}
           </div>
-          <section className="reference-prophet-overview__facts" aria-label={`Sicher belegte Kernaussagen zu ${prophet.name}`}>
+          <section className="reference-prophet-overview__facts" aria-label={`Kernaussagen und Lernlehren zu ${prophet.name}`}>
             <div>
-              <span className="overline">Direkt aus den Versen</span>
-              <h3>Sicher im Quran belegt</h3>
-              <p>Eine Kernaussage pro Kapitel. Die ausführliche Erklärung folgt darunter.</p>
+              <span className="overline">Quellen und Lernlehren</span>
+              <h3>Das Wesentliche im Kurs</h3>
+              <p>Eine Kernaussage pro Kapitel. Die Angaben verbinden sinngemäße Quelleninhalte und redaktionelle Lernlehren; sie sind keine wörtlichen Quran-Zitate.</p>
             </div>
             <ol>
               {courseEssentials.map((item, index) => (
@@ -1053,9 +1050,8 @@ function StationList({ stations }: { stations: readonly PilgrimageStation[] }) {
           <span className="reference-station-when">{index + 1} · {station.when}</span>
           <strong>{station.title}</strong>
           <p>{station.description}</p>
-          {/* Only where a clear verse exists. An entry without one shows
-              nothing rather than an invented reference. */}
           {station.reference ? <small><ShieldCheck size={14} /> {station.reference}</small> : null}
+          {station.sourceUrl ? <small><a href={station.sourceUrl} target="_blank" rel="noreferrer">{station.sourceLabel}</a></small> : null}
         </article>
       ))}
     </div>

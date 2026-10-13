@@ -119,7 +119,9 @@ requireFragments(splash, 'Splash', [
   'getNextPrayer(now)',
   'getDailyAyah(now, PRAYER_SCHEDULE_META.timezone)',
   '{ayah.source}',
-  'getPrayerBackdrop(nextPrayer.prayer.id)',
+  'getSplashBackdrop(currentScene)',
+  'isSharedPrayerScheduleCurrent(now)',
+  'getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META.timezone)',
   'reference-splash__prayer-art',
 ]);
 if (['reference-splash__loader', 'reference-splash__mosque', 'reference-splash__mark', 'nur-logo-emblem', 'ayah-focus-bg', 'reference-splash__ayah-art', '<picture>', 'rotate:'].some(fragment => splash.includes(fragment))) {
@@ -134,7 +136,8 @@ requireCssFit(brandEntryArt, 'Full-screen opening canvas', '.reference-splash {'
   'gap: 12px',
   'position: relative',
 ]);
-requireCssFit(brandEntryArt, 'Unframed opening prayer', '.reference-splash__prayer {', ['padding: 12px 0']);
+requireCssFit(brandEntryArt, 'Compact opening prayer above the Ayah', '.reference-splash__prayer {', ['align-self: end', 'padding: 0 0 28px']);
+requireFragments(splash, 'Visible opening status', ['reference-splash__status', 'role="status"', 'App wird geöffnet']);
 const prayerHeader = splash.slice(splash.indexOf('<header className="reference-splash__prayer"'), splash.indexOf('</header>'));
 if (prayerHeader.includes('reference-splash__prayer-art')) {
   throw new Error('The prayer landscape belongs to the full opening canvas, not a framed header card.');

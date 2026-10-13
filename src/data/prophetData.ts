@@ -12,14 +12,14 @@ export type ProphetEntry = {
 export const PROPHETS: readonly ProphetEntry[] = [
   {
     id: 'adam', name: 'Adam', arabic: 'آدم',
-    summary: 'Der erste Mensch und ein Prophet Allahs. Der Quran berichtet von seiner Erschaffung, seiner Prüfung, seiner Reue und neuer Rechtleitung.',
+    summary: 'Der Quran berichtet über Adam, das Lehren der Namen, die Prüfung im Garten, seine Reue und neue Rechtleitung.',
     focus: 'Erschaffung, Verantwortung und Reue',
     lesson: 'Ein Fehler muss nicht das Ende sein: Aufrichtige Reue führt zurück zu Allah.',
     quranReferences: ['Quran 2:30–39 (Al-Baqara)', 'Quran 20:115–123 (Ta-Ha)'],
   },
   {
     id: 'idris', name: 'Idris', arabic: 'إدريس',
-    summary: 'Der Quran bezeichnet Idris als wahrhaftig und als Propheten, der zu einem hohen Rang erhoben wurde. Weitere Lebensdetails werden nicht ausgeführt.',
+    summary: 'Der Quran bezeichnet Idris als wahrhaftig und als Propheten; 19:57 spricht von einer hohen Stätte. Die Art der Erhöhung wird hier nicht festgelegt.',
     focus: 'Wahrhaftigkeit und hoher Rang',
     lesson: 'Nur sicher Belegtes wird behauptet; Wahrhaftigkeit ist eine prophetische Eigenschaft.',
     quranReferences: ['Quran 19:56–57 (Maryam)', 'Quran 21:85–86 (Al-Anbiya)'],
@@ -127,7 +127,7 @@ export const PROPHETS: readonly ProphetEntry[] = [
     summary: 'Dawud erhielt Weisheit, Herrschaft und den Zabur. Der Quran verbindet seine Geschichte mit gerechtem Urteil, Anbetung und Umkehr.',
     focus: 'Offenbarung, Herrschaft und Gerechtigkeit',
     lesson: 'Macht braucht gerechtes Urteil und die Bereitschaft, Fehler zu erkennen.',
-    quranReferences: ['Quran 2:251 (Al-Baqara)', 'Quran 38:17–26 (Sad)'],
+    quranReferences: ['Quran 2:251 (Al-Baqara)', 'Quran 4:163 (An-Nisa)', 'Quran 38:17–26 (Sad)'],
   },
   {
     id: 'sulayman', name: 'Sulayman', arabic: 'سليمان', commonName: 'Salomo',
@@ -152,7 +152,7 @@ export const PROPHETS: readonly ProphetEntry[] = [
   },
   {
     id: 'yunus', name: 'Yunus', arabic: 'يونس', commonName: 'Jona',
-    summary: 'Yunus wurde von einem großen Fisch verschlungen. Er lobpries Allah und bekannte sein Unrecht; Allah rettete ihn und sandte ihn erneut zu seinem Volk.',
+    summary: 'Yunus wurde von einem großen Fisch verschlungen. Er lobpries Allah und bekannte sein Unrecht; Allah rettete ihn. Quran 37:147–148 nennt seine Sendung und den Glauben seines Volkes, ohne hier eine eindeutige zeitliche Zuordnung festzulegen.',
     focus: 'Bedrängnis, Dua, Rettung und Rückkehr',
     lesson: 'In tiefster Not bleibt Dua möglich, und ein Fehler muss eine gute Aufgabe nicht beenden.',
     quranReferences: ['Quran 21:87–88 (Al-Anbiya)', 'Quran 37:139–148 (As-Saffat)'],

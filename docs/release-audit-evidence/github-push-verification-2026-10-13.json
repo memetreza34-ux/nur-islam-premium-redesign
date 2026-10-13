@@ -1,0 +1,23 @@
+{
+  "recordedAt": "2026-10-13",
+  "branch": "design/claude-design-system",
+  "scope": "All current project changes, content/source audit, release documentation, prayer-step navigation, generated opening artwork and preserved original prayer landscapes.",
+  "check": {
+    "exitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "typeScript": "passed",
+    "build": "passed",
+    "sourceAssetAndReleaseGuards": "passed"
+  },
+  "fullBrowserRun": {
+    "exitCode": 0,
+    "passed": 285,
+    "skipped": 2,
+    "total": 287,
+    "workers": 2,
+    "browser": "Existing installed Google Chrome"
+  },
+  "stagedSecretScan": "passed; tracked files include the new documentation and image-source prompt records",
+  "publicRelease": false
+}

@@ -1,11 +1,13 @@
 # Nur Islam Premium – Release-Checkliste
 
-**Ziel:** Diese Liste trennt automatisch prüfbare Punkte von Punkten, die reale Betreiberangaben, physische Geräte oder qualifizierte fachliche Freigabe benötigen.
+**Aktueller Inhaltsstand 13.10.2026:** [Quellenprüfung und Bereinigung](CONTENT-CLEARANCE-2026-10-13.md). Die [Betreiberfreigabe vom 13.10.2026](CONTENT-RELEASE-DECISION-2026-10-13.md) ist dokumentiert. Kein externer religiöser Prüfer erforderlich.
+
+**Ziel:** Diese Liste trennt automatisch prüfbare Punkte von Punkten, die reale Betreiberangaben, physische Geräte oder geklärte Nutzungsrechte benötigen.
 
 Ergänzende Arbeitsunterlagen:
 
 - [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md) – aktueller Nachweis zur Islamic-Network-/Al-Quran-Cloud-Nutzung und offener Hisn-al-Muslim-Audiolizenz.
-- [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md) – priorisierter Handoff für die qualifizierte islamische Inhaltsprüfung.
+- [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md) – abgeschlossene Inhaltsentscheidung; kein externer Review-Auftrag.
 - [`REAL-DEVICE-QA.md`](./REAL-DEVICE-QA.md) – konkrete physische iPhone-/Android-Abnahmematrix.
 - [`RELEASE-OPERATIONS.md`](./RELEASE-OPERATIONS.md) – Beta-, Smoke-Test- und Rollback-Runbook.
 
@@ -48,27 +50,32 @@ Diese Funktionen verursachen in der aktuellen Form keine KI- oder nutzungsabhän
 
 Aktueller technischer Befund und Rechtsquellen: [`LEGAL-COMPLIANCE-AUDIT-2026-09-11.md`](./LEGAL-COMPLIANCE-AUDIT-2026-09-11.md).
 
-- [ ] echter Betreibername eingetragen
+- [x] Betreibername eingetragen: Mohammad Reza Rahimi (vorhandener Eintrag; Identität nicht separat bestätigt)
 - [ ] ladungsfähige Anschrift eingetragen
 - [ ] Kontakt-E-Mail eingetragen
-- [ ] Datenschutzerklärung/Impressum durch qualifizierte Stelle final geprüft
+- [ ] Impressum und Datenschutzangaben für den tatsächlichen Betrieb vervollständigt und bestätigt
 
 Solange `<<BITTE AUSFÜLLEN>>` in den Betreiberfeldern steht, muss `NUR_RELEASE=true npm run check` fehlschlagen.
 
-### Religiöser Fachreview
+### Religiöse Inhalte: Quellenkorrekturen und Betreiberentscheidung
 
-Der priorisierte Ablauf und das Beanstandungsformat stehen in [`RELIGIOUS-REVIEW-HANDOFF.md`](./RELIGIOUS-REVIEW-HANDOFF.md). Die vollständige automatisch erzeugte Liste steht in [`INHALTE-PRUEFUNG.md`](./INHALTE-PRUEFUNG.md).
+Die [Betreiberfreigabe vom 13.10.2026](CONTENT-RELEASE-DECISION-2026-10-13.md) schließt die Inhaltsentscheidung ab. Eine externe religiöse Abnahme ist keine Voraussetzung. Die vollständige automatisch erzeugte Liste steht in [`INHALTE-PRUEFUNG.md`](./INHALTE-PRUEFUNG.md).
 
-- [ ] Salah / Gebetspraxis geprüft
-- [ ] Sujud as-Sahw geprüft
-- [ ] Reisegebet / Qasr / Jamʿ geprüft
-- [ ] verpasste Gebete geprüft
-- [ ] frauenspezifische Gebetsfragen geprüft
-- [ ] Janazah / Eid geprüft
-- [ ] Madhhab-Unterschiede geprüft
-- [ ] Hajj / Umrah geprüft
+- [x] Salah / Gebetspraxis: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] Sujud as-Sahw: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] Reisegebet / Qasr / Jamʿ: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] verpasste Gebete: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] frauenspezifische Gebetsfragen: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] Janazah / Eid: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] Madhhab-Unterschiede: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
+- [x] Hajj / Umrah: Quellenkorrekturen dokumentiert (keine Fachzertifizierung)
 
-Automatisierte Quellen- und Content-Checks ersetzen diesen Fachreview nicht.
+Die oben genannten Bereiche wurden quellenbezogen bearbeitet; Details und Grenzen im Abschlussbericht.
+
+- [x] Betreiber hat den dokumentierten Inhaltsstand für den Release angenommen (13.10.2026).
+- [x] Pflicht zur externen religiösen Prüfung entfernt.
+
+Diese Betreiberentscheidung bescheinigt keine Gelehrtenprüfung und klärt keine Nutzungsrechte.
 
 ### Audio-/Nutzungsrechte
 
@@ -80,7 +87,7 @@ Aktueller Stand aus dem dokumentierten Rechte-Audit:
 Daher offen:
 
 - [ ] Islamic-Network-/Alafasy-Nutzung im konkreten Release rechtlich final bestätigen **oder** betroffene Audiofunktion deaktivieren
-- [ ] Hisn-al-Muslim-Audionutzung belastbar klären **oder** betroffene Audiofunktion deaktivieren
+- [x] Hisn-al-Muslim-Audio entfernt; keine solche Quelle im aktiven Releasebestand
 
 Technische Abrufbarkeit gilt nicht als Rechtefreigabe. Details: [`AUDIO-RIGHTS-AUDIT.md`](./AUDIO-RIGHTS-AUDIT.md).
 
@@ -134,7 +141,7 @@ Erst nach Abschluss der relevanten P0-Punkte:
 
 1. neuesten RC vollständig prüfen;
 2. Release-Check mit `NUR_RELEASE=true` grün bekommen;
-3. `premium-design-finish` kontrolliert nach `main` übernehmen;
+3. `design/claude-design-system` kontrolliert nach `main` übernehmen;
 4. Pages-/Produktionsdeployment beobachten;
 5. Smoke-Test durchführen;
 6. bei Releasefehlern auf die letzte bekannte grüne Version zurückrollen statt neue Features einzubauen.

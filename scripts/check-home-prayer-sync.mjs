@@ -74,7 +74,13 @@ if (!app.includes('getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_M
 }
 for (const id of ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
   const filename = `prayer-${id}-v1.webp`;
+  const openingFilename = `prayer-${id}-v3.webp`;
+  if (!backdrops.includes(openingFilename) || !worker.includes(openingFilename)) throw new Error(`Missing separate opening artwork or offline cache entry: ${id}`);
   if (!backdrops.includes(filename) || !worker.includes(filename)) throw new Error(`Missing prayer landscape or offline cache entry: ${id}`);
+}
+const splash = await readFile(resolve(root, 'src/screens/SplashScreen.tsx'), 'utf8');
+if (!splash.includes('getSplashBackdrop(currentScene)') || splash.includes('getPrayerBackdrop')) {
+  throw new Error('Only the opening may use the new mosque courtyard artwork through its separate mapping.');
 }
 for (const token of ['getPrayerBackdrop(scene)', '<AnimatePresence', 'useReducedMotion', 'ds-arch__veil', 'strokeDasharray={`${clamped} 100`}']) {
   if (!arch.includes(token)) throw new Error(`Prayer landscape must retain text protection, progress and accessible transitions: ${token}`);

@@ -41,6 +41,14 @@ for (const [, title, description] of steps) {
   if (description.trim().length < 20) throw new Error(`Guide step "${title}" has no usable description.`);
 }
 
+const sourceBlocks = [...data.matchAll(/^ {6}\{\n {8}title: '[\s\S]*?^ {6}\},/gm)];
+if (sourceBlocks.length !== steps.length) throw new Error('Every worship step must be included in the source check.');
+for (const [block] of sourceBlocks) {
+  if (!/^ {8}source: '[^\n]+',$/m.test(block) || !/^ {8}sourceUrl: 'https:\/\/[^\n]+',$/m.test(block)) {
+    throw new Error(`Worship step lacks a source label or HTTPS reference: ${block.split('\n')[1].trim()}`);
+  }
+}
+
 // The Arabic is the point of these guides, so its presence is measured rather
 // than assumed. "what-to-say" carries it on every step by definition.
 const arabicCount = (data.match(/^ {8}arabic: '/gm) ?? []).length;

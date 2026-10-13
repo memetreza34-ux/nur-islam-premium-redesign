@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { PremiumImage } from '../shared/PremiumVisuals';
+import { useStepNavigation } from '../shared/useStepNavigation';
 
 const WuduLesson = lazy(() => import('../shared/WuduLesson'));
 
@@ -183,6 +184,7 @@ const GUIDE_TABS: { id: string; label: string; icon: LucideIcon }[] = [
 ];
 
 export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: GuideMode; onBack: () => void }) {
+  const { stepRef, revealStep } = useStepNavigation<HTMLButtonElement>();
   const [mode, setMode] = useState<string>(initialMode);
   const [{ activeStep, stored }, setGuideState] = useState(() => {
     const stored = readGuideProgress(initialMode);
@@ -223,6 +225,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
     const saved = saveGuideStep(guide.id, index);
     setGuideState({ activeStep: index, stored: readGuideProgress(guide.id) });
     setStorageWarning(saved ? null : 'Speicherung der Schrittposition nicht bestätigt. Du kannst weiterlernen; vorhandene unlesbare Daten bleiben unverändert.');
+    if (guide.id !== 'wudu') revealStep();
   };
 
   const completeGuide = () => {
@@ -283,7 +286,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
           const Icon = icons[index] ?? Sparkles;
           const active = index === stepIndex;
           return (
-            <button key={step.title} className={active ? 'is-active' : ''} onClick={() => selectStep(index)}>
+            <button ref={active ? stepRef : undefined} key={step.title} className={active ? 'is-active' : ''} onClick={() => selectStep(index)}>
               <span><Icon size={20} /></span>
               <span>
                 <small>Schritt {index + 1}</small>
@@ -299,6 +302,8 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
           );
         })}
       </section>}
+
+      {guide.id !== 'wudu' && steps[stepIndex]?.source ? <section className="reference-source-card"><BookOpen size={19} /><span><strong>Quelle zu „{steps[stepIndex].title}“</strong><small>{steps[stepIndex].source}</small>{steps[stepIndex].sourceUrl ? <a href={steps[stepIndex].sourceUrl} target="_blank" rel="noreferrer">Fundstelle öffnen</a> : null}</span></section> : null}
 
       {guide.tips.length ? (
         <section className="reference-legacy-notice">

@@ -43,6 +43,7 @@ const ONLINE_TRANSLITERATION_EDITION = 'en.transliteration';
 const ONLINE_GERMAN_EDITION = 'de.bubenheim';
 const ONLINE_CACHE_NAME = 'nur-quran-online-v3';
 const ONLINE_TIMEOUT_MS = 12000;
+const INCOMPLETE_GERMAN_26_63 = 'Da gaben Wir Musa ein: "Schlag mit deinem Stock auf das Meer."';
 const memoryCache = new Map<string, unknown>();
 
 /**
@@ -149,6 +150,10 @@ function parseOnlineEdition(payload: QuranApiResponse, meta: Surah, identifier: 
   }
 
   const edition = validateEdition(payload.data, meta, identifier);
+  if (identifier === ONLINE_GERMAN_EDITION && meta.number === 26
+    && edition.ayahs[62]?.text.trim() === INCOMPLETE_GERMAN_26_63) {
+    throw new Error('Der deutsche Anbietertext zu 26:63 ist unvollständig.');
+  }
 
   return {
     ...meta,

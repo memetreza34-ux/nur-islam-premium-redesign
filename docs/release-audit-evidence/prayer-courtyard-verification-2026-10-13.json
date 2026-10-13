@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-13",
+  "scope": "Fünf neue dekorative Lichtstimmungen desselben fiktionalen Moscheehofs, neue v2-Dateinamen; bestehende Gebetszeit- und Szenenzuordnung unverändert.",
+  "generator": "Built-in Codex image_gen; precise model not exposed by tool",
+  "prompts": "../../output/imagegen/prayer-courtyard/prompts.json",
+  "fileHashes": {
+    "src/shared/prayerBackdrops.ts": "4c8aaee4fa657e8200e457b6f0a28781ec070122773530523aed85607ffe105d",
+    "src/screens/PrayerLearningScreen.tsx": "3ac5a92c5380f9e18f0a95a1b854c7a9b019e1b2831b8e078f23a18a063fe578",
+    "src/screens/LearnScreen.tsx": "d4ed7979ffcf13bd0ff99601adb3f03bd020939a0763c74b3e6b44cb2bd42321",
+    "public/sw.js": "6f0d7e3e5050076679cce8f11dd0354dbbd381857466bf4eab56fed670b84658",
+    "src/app/pwa.ts": "50ef0704c34076b8414a9aa6d5eda1b6b6aa02c0d9062196561f4ea0f1ad7a22",
+    "docs/image-asset-provenance.json": "3d984168219d4d35c8905c194a611610a207081d6e941e91533b9172884ac96f",
+    "public/premium-assets/high-res-objects/prayer-fajr-v2.webp": "1af417cc95877b9d5d841a88d0b4baa0a3c183e00a7210efa297fdd4ddf77cbd",
+    "public/premium-assets/high-res-objects/prayer-dhuhr-v2.webp": "81cd7e690a3a91b15ba800853e515e802e839a6e31b3e31bacc80eeb33091d99",
+    "public/premium-assets/high-res-objects/prayer-asr-v2.webp": "1e8772380c19f4912443fe14e5ae088383b72e5503f3f7cf54f687d12120e1b4",
+    "public/premium-assets/high-res-objects/prayer-maghrib-v2.webp": "3ec163bb52dc01fc6ea00d35228cb44dda708e16e30fe7d799f34324e100714b",
+    "public/premium-assets/high-res-objects/prayer-isha-v2.webp": "42bcbe79277a742d37d0744c2e6404eb29451df07fde43d263b389a4a14076d3"
+  },
+  "assets": {
+    "count": 5,
+    "dimensions": "1200x800",
+    "format": "WebP",
+    "totalBytes": 382310
+  },
+  "check": {
+    "exitCode": 0,
+    "tests": 1041,
+    "log": "prayer-courtyard-check-2026-10-13.log"
+  },
+  "browser": {
+    "exitCode": 0,
+    "tests": 36,
+    "log": "prayer-courtyard-browser-2026-10-13.log",
+    "scope": "Einstieg, fünf lokale Tagesphasen auf Start/Gebet, Lernübersicht, Gebetskurs, fehlende Bilder/Daten, reduzierte Bewegung, Offline. Kein neuer appweiter Gesamtlauf."
+  },
+  "pwaShellVersion": 82,
+  "religiousTextChanged": false,
+  "published": false,
+  "visualInspections": [
+    "prayer-courtyard-series-2026-10-13.jpg",
+    "prayer-courtyard-opening-phone-2026-10-13.jpg",
+    "prayer-courtyard-dhuhr-prayer-320-2026-10-13.png",
+    "prayer-courtyard-isha-prayer-320-2026-10-13.png"
+  ]
+}

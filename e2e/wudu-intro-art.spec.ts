@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import type { Page } from '@playwright/test';
+import { WORSHIP_GUIDES } from '../src/data/worshipGuideData';
 
 test.use({ serviceWorkers: 'block', reducedMotion: 'reduce' });
 
@@ -23,7 +24,7 @@ for (const width of [320, 390, 768]) {
     await expect.poll(() => art.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
     const card = (await intro.boundingBox())!;
     const title = (await heading.boundingBox())!;
-    const text = (await intro.getByText('Wudu ist die rituelle Waschung vor dem Gebet. Sie reinigt Körper und Geist.', { exact: true }).boundingBox())!;
+    const text = (await intro.getByText(WORSHIP_GUIDES.find(guide => guide.id === 'wudu')!.intro, { exact: true }).boundingBox())!;
     const image = (await art.boundingBox())!;
     const subtitleMetrics = await subtitle.evaluate(element => ({ height: element.getBoundingClientRect().height, lineHeight: parseFloat(getComputedStyle(element).lineHeight) }));
     expect(subtitleMetrics.height).toBeLessThanOrEqual(subtitleMetrics.lineHeight + 1);

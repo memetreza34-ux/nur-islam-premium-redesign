@@ -3,6 +3,7 @@ import { ChevronDown, ChevronLeft, ChevronRight, Droplets } from 'lucide-react';
 import type { WorshipStep } from '../data/worshipGuideData';
 import { WUDU_PRESENTATION } from '../data/wuduPresentation';
 import { PremiumImage } from './PremiumVisuals';
+import { useStepNavigation } from './useStepNavigation';
 
 type Props = {
   steps: WorshipStep[];
@@ -12,15 +13,14 @@ type Props = {
 };
 
 export default function WuduLesson({ steps, stepIndex, onSelect, onComplete }: Props) {
-  const heading = useRef<HTMLHeadingElement>(null);
+  const { stepRef, revealStep } = useStepNavigation<HTMLElement>();
   const overview = useRef<HTMLDetailsElement>(null);
   const step = steps[stepIndex];
   const presentation = WUDU_PRESENTATION[stepIndex];
   const select = (index: number) => {
     if (overview.current) overview.current.open = false;
     onSelect(index);
-    heading.current?.focus({ preventScroll: true });
-    heading.current?.scrollIntoView({ block: 'start', behavior: 'instant' });
+    revealStep();
   };
 
   return (
@@ -31,10 +31,10 @@ export default function WuduLesson({ steps, stepIndex, onSelect, onComplete }: P
           {steps.map((item, index) => <li key={item.title}><button aria-label={`Schritt ${index + 1}: ${item.title}`} aria-current={index === stepIndex ? 'step' : undefined} onClick={() => select(index)}><span className="wudu-lesson__step-number">{index + 1}</span><span>{item.title}{index === stepIndex ? <small>Aktueller Schritt</small> : null}</span><ChevronRight size={16} aria-hidden="true" /></button></li>)}
         </ol>
       </details>
-      <article className="wudu-lesson__card" aria-labelledby="wudu-step-title">
+      <article ref={stepRef} className="wudu-lesson__card" aria-labelledby="wudu-step-title">
         <header>
           <p className="wudu-lesson__eyebrow">Schritt {stepIndex + 1} von {steps.length}</p>
-          <h2 id="wudu-step-title" ref={heading} tabIndex={-1}>{step.title}</h2>
+          <h2 id="wudu-step-title" tabIndex={-1}>{step.title}</h2>
           <p className="wudu-lesson__cue">{presentation.cue}</p>
         </header>
         {presentation.image ? (
@@ -46,6 +46,7 @@ export default function WuduLesson({ steps, stepIndex, onSelect, onComplete }: P
         <div className="wudu-lesson__instruction">
           <h3>{stepIndex === 9 ? 'Sinngemäße Bedeutung' : 'So geht’s'}</h3>
           <p>{step.description}</p>
+          {step.sourceUrl ? <p className="wudu-lesson__note"><a href={step.sourceUrl} target="_blank" rel="noreferrer">{step.source}</a></p> : null}
         </div>
         {step.arabic ? (
           <section className="wudu-lesson__wording" aria-label={presentation.arabicRole === 'term' ? 'Arabische Bezeichnung und Aussprache' : 'Arabischer Wortlaut und Aussprache'}>
@@ -70,7 +71,7 @@ export default function WuduLesson({ steps, stepIndex, onSelect, onComplete }: P
           <section aria-label="Quellen zum Abschlusswortlaut">
             <h3>Was ist belegt?</h3>
             <p className="wudu-lesson__note">Das Glaubensbekenntnis bis „Sein Diener und Gesandter“ steht in <a href="https://sunnah.com/muslim:234b" target="_blank" rel="noreferrer">Sahih Muslim 234b</a>. Es wird nach dem Wudu empfohlen; es ist keine Pflicht.</p>
-            <p className="wudu-lesson__note">Die anschließende Bitte „O Allah, mache mich zu den Reumütigen …“ steht in <a href="https://sunnah.com/tirmidhi:55" target="_blank" rel="noreferrer">Jamiʿ at-Tirmidhi 55</a>. Ihre Überlieferung wird unterschiedlich bewertet: Ibn Hajar stufte den Zusatz als schwach ein, al-Albani als authentisch. <a href="https://islamqa.info/en/answers/45730" target="_blank" rel="noreferrer">Einordnung der unterschiedlichen Bewertungen</a>. Der Zusatz ist nicht Teil des Wortlauts in Sahih Muslim 234b. Du kannst beim dort belegten Glaubensbekenntnis bleiben.</p>
+            <p className="wudu-lesson__note">Diese Lernfassung endet beim Wortlaut aus Muslim 234b. Der Zusatz aus Tirmidhi 55 wird unterschiedlich bewertet und ist hier ausgelassen.</p>
           </section>
         ) : null}
         <div className="wudu-lesson__actions">

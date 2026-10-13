@@ -35,7 +35,7 @@ for (const width of [320, 768, 1280]) {
     await expect(page.locator('.reference-screen-header .overline')).toHaveText('Arabisch offline');
     await expect(page.locator('.reference-reader-verse')).toHaveCount(7);
     for (const selector of ['.reference-reader-pronunciation', '.reference-reader-translation']) {
-      await expect(first.locator(selector)).toContainText('nutzbarer Browser-Cache');
+      await expect(first.locator(selector)).toContainText('Ein verwendbarer Anbietertext konnte weder geladen noch aus dem Browser-Cache bereitgestellt werden.');
       await expect(first.locator(selector)).not.toContainText('Beim ersten Öffnen');
     }
     await first.scrollIntoViewIfNeeded();

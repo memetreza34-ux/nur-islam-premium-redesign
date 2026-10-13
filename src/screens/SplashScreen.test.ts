@@ -39,11 +39,13 @@ it('shows the real next obligatory prayer and local Ayah without fetching', asyn
   expect(fetch).not.toHaveBeenCalled();
 });
 it.each([
-  ['04:00', 'fajr'], ['08:00', 'dhuhr'], ['14:00', 'asr'], ['17:00', 'maghrib'], ['19:00', 'isha'],
-])('maps %s to the existing %s prayer landscape', async (time, prayer) => {
+  ['04:00', 'isha'], ['05:00', 'fajr'], ['06:59', 'fajr'], ['07:00', 'dhuhr'],
+  ['14:00', 'dhuhr'], ['16:00', 'asr'], ['17:59', 'asr'], ['18:00', 'maghrib'],
+  ['19:00', 'maghrib'], ['20:00', 'isha'],
+])('maps %s to the current %s opening scene', async (time, prayer) => {
   vi.setSystemTime(new Date(`2026-10-10T${time}:00+02:00`));
   await act(async () => root.render(createElement(SplashScreen)));
-  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain(`prayer-${prayer}-v1.webp`);
+  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain(`prayer-${prayer}-v3.webp`);
 });
 it.each(['fallback', 'stale'] as const)('does not invent a time with %s data', async state => {
   if (state === 'fallback') PRAYER_SCHEDULE_META.source = 'fallback';
@@ -73,5 +75,18 @@ it('only shows tomorrow after a verified following timetable is available', asyn
   });
   expect(host.textContent).toContain('Nächstes Gebet · morgen');
   expect(host.textContent).toContain('Fajr05:00');
-  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain('prayer-fajr-v1.webp');
+  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain('prayer-isha-v3.webp');
+});
+
+it('keeps the current background separate from the next prayer and updates at the boundary', async () => {
+  vi.setSystemTime(new Date('2026-10-10T17:59:00+02:00'));
+  await act(async () => root.render(createElement(SplashScreen)));
+  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain('prayer-asr-v3.webp');
+  expect(host.querySelector('[data-testid="splash-prayer"]')?.textContent).toContain('Maghrib18:00');
+  await act(async () => {
+    vi.setSystemTime(new Date('2026-10-10T18:01:00+02:00'));
+    vi.advanceTimersByTime(30000);
+  });
+  expect(host.querySelector('.reference-splash__prayer-art img')?.getAttribute('src')).toContain('prayer-maghrib-v3.webp');
+  expect(host.querySelector('[data-testid="splash-prayer"]')?.textContent).toContain('Isha20:00');
 });

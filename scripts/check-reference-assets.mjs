@@ -100,11 +100,11 @@ const recoveredAssets = [
   'mini-dua-v2.webp',
   'mini-dua-v3.webp',
   'ayah-focus-bg-v1.webp',
-  'prayer-fajr-v1.webp',
-  'prayer-dhuhr-v1.webp',
-  'prayer-asr-v1.webp',
-  'prayer-maghrib-v1.webp',
-  'prayer-isha-v1.webp',
+  'prayer-fajr-v3.webp',
+  'prayer-dhuhr-v3.webp',
+  'prayer-asr-v3.webp',
+  'prayer-maghrib-v3.webp',
+  'prayer-isha-v3.webp',
   'prayer-mini-fajr-v1.webp',
   'prayer-mini-sunrise-v1.webp',
   'prayer-mini-dhuhr-v1.webp',
@@ -308,8 +308,8 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v78-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must be v78 for compared community sources and consistent protection exceptions.');
+if (!serviceWorker.includes(`nur-islam-premium-v86-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must be v86 for opening artwork matching the current prayer phase independently of the next-prayer notice.');
 }
 for (const name of ['home-dhikr-illustrated-v1', 'widget-date-illustrated-v1', 'widget-inspiration-illustrated-v1', 'widget-routine-illustrated-v1', 'widget-quran-plan-illustrated-v1', 'widget-weekly-prayers-illustrated-v1', 'widget-favorites-illustrated-v1', 'widget-reminders-illustrated-v1', 'widget-friday-illustrated-v1']) {
   if (!serviceWorker.includes(`premiumAsset('${name}.webp')`)) {
@@ -360,5 +360,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v78 with concept C vector brand mark retained outside the opening, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v86 with concept C vector brand mark retained outside the opening, no obsolete artwork host or global image-hiding CSS.`,
 );

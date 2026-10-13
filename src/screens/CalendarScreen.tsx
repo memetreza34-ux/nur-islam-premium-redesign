@@ -226,8 +226,9 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
           <h3>{selectedEvent.title}</h3><p>{selectedEvent.subtitle}</p>
           {selectedEvent.meaning ? <p className="calendar-event-card__meaning">{selectedEvent.meaning}</p> : null}
           {selectedEvent.practice ? <p className="calendar-event-card__practice"><Sparkles size={13} /> {selectedEvent.practice}</p> : null}
-          {selectedEvent.fasting ? <span className="fasting-chip"><Sparkles size={14} /> Freiwilliges Fasten</span> : null}
+          {selectedEvent.fasting ? <span className="fasting-chip"><Sparkles size={14} /> {selectedEvent.fastingKind === 'ramadan' ? 'Ramadan-Fasten' : 'Freiwilliges Fasten'}</span> : null}
           <span className="reference-calendar-event__source"><ShieldCheck size={14} /> {selectedEvent.sourceNote}</span>
+          {selectedEvent.sourceUrl ? <p><a href={selectedEvent.sourceUrl} target="_blank" rel="noreferrer">{selectedEvent.source}</a></p> : null}
         </section>
       ) : null}
 

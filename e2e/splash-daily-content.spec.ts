@@ -4,6 +4,8 @@ import { prayerRequestFixture } from './fixtures/prayer-api';
 
 const now = new Date('2026-10-10T14:00:00+02:00');
 const ayah = getDailyAyah(now, 'Europe/Berlin');
+// The installed clock runs between API calls; pause at a later instant.
+const clockStart = new Date(now.getTime() - 60_000);
 test.use({ serviceWorkers: 'block' });
 
 for (const [name, width, height] of [
@@ -12,7 +14,7 @@ for (const [name, width, height] of [
 ] as const) {
   test(`opening fits ${name} and keeps daily content on Home`, async ({ page }) => {
     await page.setViewportSize({ width, height });
-    await page.clock.install({ time: now });
+    await page.clock.install({ time: clockStart });
     await page.clock.pauseAt(now);
     await page.route('https://api.aladhan.com/**', route => route.fulfill({
       json: prayerRequestFixture(route.request().url()),
@@ -23,14 +25,15 @@ for (const [name, width, height] of [
     await expect(page.getByTestId('splash-prayer')).toContainText('Asr16:00');
     await expect(page.getByTestId('splash-ayah')).toContainText(ayah.source);
     const prayerArt = splash.locator('.reference-splash__prayer-art img');
-    await expect(prayerArt).toHaveAttribute('src', /prayer-asr-v1\.webp/);
-    await expect(prayerArt).toHaveJSProperty('naturalWidth', 1200);
+    await expect(prayerArt).toHaveAttribute('src', /prayer-dhuhr-v3\.webp/);
+    await expect(prayerArt).toHaveJSProperty('naturalWidth', 1536);
     await expect(splash.locator('.reference-splash__mark, .reference-splash__brand')).toHaveCount(0);
     await expect(page.getByTestId('splash-ayah').locator('img')).toHaveCount(0);
     await expect(page.getByTestId('splash-ayah')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await expect(page.getByTestId('splash-ayah')).toHaveCSS('background-image', 'none');
     await expect(page.getByTestId('splash-ayah')).toHaveCSS('border-width', '0px');
-    await expect(splash.locator('.reference-splash__arabic')).toHaveCSS('color', 'rgb(245, 240, 230)');
+    await expect(splash.locator('.reference-splash__arabic')).toHaveCSS('color', 'rgb(0, 27, 22)');
+    expect(await splash.evaluate(node => getComputedStyle(node, '::before').display)).toBe('none');
     await expect(page.getByTestId('splash-prayer')).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
     await expect(page.getByTestId('splash-prayer')).toHaveCSS('border-width', '0px');
     await page.clock.runFor(600);
@@ -44,10 +47,19 @@ for (const [name, width, height] of [
     expect(background!.height).toBe(canvas!.height);
     const nodes = [page.getByTestId('splash-prayer'), page.getByTestId('splash-ayah')];
     const bounds = await Promise.all(nodes.map(node => node.boundingBox()));
-    expect(bounds[0]!.y + bounds[0]!.height).toBeLessThanOrEqual(bounds[1]!.y);
+    if (height <= 520 && width >= 480) {
+      expect(bounds[0]!.x + bounds[0]!.width).toBeLessThanOrEqual(bounds[1]!.x);
+    } else {
+      expect(bounds[0]!.y + bounds[0]!.height).toBeLessThanOrEqual(bounds[1]!.y);
+    }
     if (height > 650) expect(Math.abs(bounds[1]!.y + bounds[1]!.height / 2 - height / 2)).toBeLessThanOrEqual(3);
     expect(bounds[1]!.x + bounds[1]!.width).toBeLessThanOrEqual(width);
     if (height > 520) expect(bounds[1]!.y + bounds[1]!.height).toBeLessThanOrEqual(height);
+    const status = splash.getByRole('status');
+    await expect(status).toContainText('App wird geöffnet');
+    const statusBox = (await status.boundingBox())!;
+    expect(statusBox.y).toBeGreaterThanOrEqual(bounds[1]!.y + bounds[1]!.height);
+    expect(statusBox.y + statusBox.height).toBeLessThanOrEqual(height);
     await page.screenshot({ path: `output/playwright/entry-daily-${name}.png`, fullPage: true });
     await page.clock.resume();
     await expect(splash).toBeHidden();
@@ -61,7 +73,7 @@ for (const [name, width, height] of [
 }
 
 test('unavailable times do not prevent startup or show a fabricated prayer', async ({ page }) => {
-  await page.clock.install({ time: now });
+  await page.clock.install({ time: clockStart });
   await page.clock.pauseAt(now);
   await page.route('https://api.aladhan.com/**', route => route.abort());
   await page.goto('/?preview=1');
@@ -74,7 +86,7 @@ test('unavailable times do not prevent startup or show a fabricated prayer', asy
 });
 
 test('missing decorative images leave readable content and do not delay startup', async ({ page }) => {
-  await page.clock.install({ time: now });
+  await page.clock.install({ time: clockStart });
   await page.clock.pauseAt(now);
   await page.route('https://api.aladhan.com/**', route => route.fulfill({
     json: prayerRequestFixture(route.request().url()),
@@ -93,7 +105,7 @@ test('missing decorative images leave readable content and do not delay startup'
 
 test('all five Ayahs fit a narrow phone, including the longest wording', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 568 });
-  await page.clock.install({ time: now });
+  await page.clock.install({ time: clockStart });
   await page.clock.pauseAt(now);
   await page.route('https://api.aladhan.com/**', route => route.fulfill({
     json: prayerRequestFixture(route.request().url()),

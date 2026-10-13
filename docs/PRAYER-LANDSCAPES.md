@@ -1,5 +1,7 @@
 # Fünf Gebetslandschaften
 
+Aktueller Stand 13.10.2026: Die bisherige Oasenserie bleibt auf Start/Gebet, im Lernbereich und in Gebetswidgets aktiv. Der [zusammengehörige Moscheehof](PRAYER-COURTYARD-2026-10-13.md) wird ausschließlich in der Anfangsanimation gezeigt. Die zwischenzeitlich zu breite Einbindung wurde korrigiert. Zuordnung und Zeitberechnung bleiben erhalten.
+
 Stand: 27.08.2026. Auf Betreiberwunsch gestaltet, keine Änderung der Gebetsberechnung.
 
 ## Gestaltung und Zuordnung

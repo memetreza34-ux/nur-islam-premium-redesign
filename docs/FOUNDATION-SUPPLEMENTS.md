@@ -1,6 +1,6 @@
 # Vier ergänzende Bereiche im Grundlagenpfad
 
-Stand: 03.09.2026. Religiös-fachliche Freigabe: **offen**.
+Historischer Strukturstand: 03.09.2026. Aktuelle Quellenkorrekturen für Stationen, schwere Verfehlungen und Praxis stehen im [Abschlussbericht vom 13.10.2026](CONTENT-CLEARANCE-2026-10-13.md). Keine religiöse Zertifizierung; auf Betreiberwunsch kein externer App-Prüfer.
 
 ## Struktur
 

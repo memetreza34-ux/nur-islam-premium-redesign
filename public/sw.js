@@ -1,5 +1,5 @@
 const VISUAL_VERSION = '20260826-original-art';
-const CACHE_NAME = `nur-islam-premium-v78-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v86-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${name === 'nur-logo-emblem-v3.svg' ? '20261010-brand-c-v7' : VISUAL_VERSION}`;
@@ -91,6 +91,11 @@ const APP_SHELL = [
   premiumAsset('prayer-asr-v1.webp'),
   premiumAsset('prayer-maghrib-v1.webp'),
   premiumAsset('prayer-isha-v1.webp'),
+  premiumAsset('prayer-fajr-v3.webp'),
+  premiumAsset('prayer-dhuhr-v3.webp'),
+  premiumAsset('prayer-asr-v3.webp'),
+  premiumAsset('prayer-maghrib-v3.webp'),
+  premiumAsset('prayer-isha-v3.webp'),
   premiumAsset('prayer-mini-fajr-v1.webp'),
   premiumAsset('prayer-mini-sunrise-v1.webp'),
   premiumAsset('prayer-mini-dhuhr-v1.webp'),

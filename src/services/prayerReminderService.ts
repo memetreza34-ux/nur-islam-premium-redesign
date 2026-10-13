@@ -1,4 +1,4 @@
-import { OBLIGATORY_PRAYER_IDS, PRAYER_SCHEDULE } from './prayerSchedule';
+import { getPrayerClock, isSharedPrayerScheduleCurrent, OBLIGATORY_PRAYER_IDS, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META, prayerTimeToMinutes } from './prayerSchedule';
 import type { PrayerScheduleItem } from './prayerSchedule';
 
 export type PrayerReminderDetail = {
@@ -18,18 +18,6 @@ const CHECK_INTERVAL_MS = 20000;
 const APP_BASE = import.meta.env.BASE_URL;
 const PRAYER_TARGET_URL = `${APP_BASE}?open=prayer`;
 const OBLIGATORY_REMINDER_IDS = new Set<string>(OBLIGATORY_PRAYER_IDS);
-
-function dateKey(date = new Date()) {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-function timeToMinutes(time: string) {
-  const [hours, minutes] = time.split(':').map(Number);
-  return hours * 60 + minutes;
-}
 
 function readStringSet(key: string) {
   try {
@@ -52,18 +40,14 @@ function readEnabledReminderSet() {
   return valid;
 }
 
-function firedStorageKey(date = new Date()) {
-  return `nur_prayer_reminders_fired_${dateKey(date)}`;
-}
-
-async function showPrayerNotification(prayer: PrayerScheduleItem) {
+async function showPrayerNotification(prayer: PrayerScheduleItem, scheduleDate: string) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return false;
 
   const options: NotificationOptions = {
     body: `Es ist Zeit für ${prayer.label}. Öffne Nur Islam, um deinen Gebets-Tracker zu aktualisieren.`,
     icon: `${APP_BASE}nur-app-icon-192.png`,
     badge: `${APP_BASE}nur-app-icon-192.png`,
-    tag: `nur-prayer-${dateKey()}-${prayer.id}`,
+    tag: `nur-prayer-${scheduleDate}-${prayer.id}`,
     data: { type: 'prayer-reminder', prayerId: prayer.id, url: PRAYER_TARGET_URL },
     silent: false,
   };
@@ -96,22 +80,27 @@ function emitInAppReminder(prayer: PrayerScheduleItem) {
 }
 
 async function checkPrayerReminders(now = new Date()) {
+  if (!isSharedPrayerScheduleCurrent(now)) return;
+  const clock = getPrayerClock(now, PRAYER_SCHEDULE_META.timezone);
+  if (!clock) return;
   const enabled = readEnabledReminderSet();
   if (!enabled.size) return;
 
-  const firedKey = firedStorageKey(now);
+  const firedKey = `nur_prayer_reminders_fired_${clock.dateKey}`;
   const fired = readStringSet(firedKey);
-  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+  const currentMinutes = clock.minutes;
 
   for (const prayer of PRAYER_SCHEDULE) {
     if (!prayer.obligatory || !enabled.has(prayer.id) || fired.has(prayer.id)) continue;
-    const difference = currentMinutes - timeToMinutes(prayer.time);
+    const prayerMinutes = prayerTimeToMinutes(prayer.time);
+    if (!Number.isFinite(prayerMinutes)) continue;
+    const difference = currentMinutes - prayerMinutes;
     if (difference < 0 || difference > REMINDER_WINDOW_MINUTES) continue;
 
     fired.add(prayer.id);
     writeStringSet(firedKey, fired);
     emitInAppReminder(prayer);
-    await showPrayerNotification(prayer);
+    await showPrayerNotification(prayer, clock.dateKey);
   }
 }
 

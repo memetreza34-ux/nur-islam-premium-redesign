@@ -54,7 +54,8 @@ test('all eight cartoon images load while previous and next keep one active step
   const sources = page.getByRole('region', { name: 'Quellen zum Abschlusswortlaut', exact: true });
   await expect(sources.getByRole('link', { name: 'Sahih Muslim 234b', exact: true })).toHaveAttribute('href', 'https://sunnah.com/muslim:234b');
   await expect(sources).toContainText('unterschiedlich bewertet');
-  await expect(sources).toContainText('Du kannst beim dort belegten Glaubensbekenntnis bleiben.');
+  await expect(sources).toContainText('ist hier ausgelassen');
+  await expect(page.locator('.wudu-lesson__arabic')).not.toContainText('اجْعَلْنِي');
   expect(await page.evaluate(() => localStorage.getItem('nur_guide_wudu_complete'))).toBeNull();
   await page.getByRole('button', { name: 'Abschließen', exact: true }).click();
   expect(await page.evaluate(() => localStorage.getItem('nur_guide_wudu_complete'))).toBe('1');

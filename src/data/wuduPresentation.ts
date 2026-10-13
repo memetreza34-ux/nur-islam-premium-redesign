@@ -23,7 +23,6 @@ export const WUDU_PRESENTATION: readonly WuduPresentation[] = [
     pronunciation: [
       'Asch-hadu an laa ilaaha illallaah, wahdahu laa schariika lah.',
       "Wa asch-hadu anna Muhammadan 'abduhu wa rasuuluh.",
-      "Allaahumma-dsch'alnii minat-tawwaabiin, wa-dsch'alnii minal-mutatah-hiriin.",
     ],
   },
 ];

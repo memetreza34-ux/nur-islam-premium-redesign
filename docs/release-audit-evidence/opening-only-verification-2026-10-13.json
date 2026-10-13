@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-10-13",
+  "scope": "Restore original v1 prayer landscapes everywhere outside the opening animation. Retain v3 courtyard images only through getSplashBackdrop.",
+  "serviceWorkerCache": "v85",
+  "unitTests": {
+    "passed": 1041,
+    "files": 59
+  },
+  "technicalChecks": {
+    "initialCheckExitCode": 1,
+    "initialFailure": "Final JS bundle budget: rounded 390 KB vs 389 KB. Earlier guards, tests, TypeScript and build passed.",
+    "budgetCorrection": "JS allowance 390 KB for separate image mappings; total allowance remains 512 KB, entry remains 95 KB.",
+    "budgetRecheckExitCode": 0
+  },
+  "browserChecks": {
+    "initial": {
+      "passed": 35,
+      "failed": 1,
+      "total": 36,
+      "exitCode": 1
+    },
+    "initialFailure": "Prayer-boundary test used an unscoped data-prayer-scene selector shared by the opening animation; it selected the opening instead of the prayer arch.",
+    "correction": "All prayer-landscape selectors scoped to .ds-arch; no application timer/transition behavior changed.",
+    "landscapeRecheck": {
+      "passed": 9,
+      "failed": 0,
+      "exitCode": 0
+    },
+    "combinedUniquePassed": 36
+  },
+  "visualChecks": {
+    "prayer": "Actual app at 127.0.0.1:3000, restored prayer-asr-v1.webp landscape, screenshot restored-prayer-landscape-2026-10-13.jpg",
+    "opening": "Temporary dev-only splash preview retained prayer-maghrib-v3.webp; screenshot opening-only-courtyard-2026-10-13.jpg; temporary tab closed."
+  },
+  "diffCheckExitCode": 0,
+  "published": false
+}

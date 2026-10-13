@@ -2,13 +2,13 @@
 
 ## Status und Maßstab
 
-**In Bearbeitung, keine Gesamtfreigabe.** Eine KI kann Aussagen und Quellen vergleichen, aber keine menschliche Fachfreigabe, eigene Fatwa oder physische Geräteprüfung ersetzen. „Quelle zugeordnet“ bedeutet nicht „Aussage abgeglichen“. Ältere Berichte geben Prüfhinweise, beweisen aber keine unveränderten heutigen Inhalte.
+**Quellenkorrekturdurchgang vom 13.10.2026 abgeschlossen; keine religiöse Zertifizierung oder öffentliche Releasefreigabe.** [Aktueller Abschlussbericht](CONTENT-CLEARANCE-2026-10-13.md). Auf Betreiberwunsch keine Weitergabe an Drittprüfer. Eine KI kann Aussagen und Quellen vergleichen, aber keine menschliche Fachfreigabe, eigene Fatwa oder physische Geräteprüfung ersetzen. „Quelle zugeordnet“ bedeutet nicht „Aussage abgeglichen“. Ältere Berichte geben Prüfhinweise, beweisen aber keine unveränderten heutigen Inhalte.
 
 Dieser Bericht verbindet Bestandsaufnahme und Einzelbefunde. Code- und Strukturtests erklären ungeprüfte religiöse Inhalte nicht für richtig.
 
 ## Bestandsaufnahme
 
-Die generierte [Prüfmappe](INHALTE-PRUEFUNG.md) erfasst **1.146 Positionen**, davon **91 ohne Einzelfundstelle im erfassten Bestand** und **862 hier verfasste Positionen**. Das sind weder 1.146 unabhängige Aussagen noch 91 erwiesene Fehler. Gemeinsame Lektionenbelege bestätigen nicht automatisch jeden Satz. Der Gebetskurs erfasst jetzt auch geerbte Varianten und vorhandene Quellenfelder; bloße Sammlungsnamen sind keine präzisen Inhaltsbelege.
+Die generierte [Prüfmappe](INHALTE-PRUEFUNG.md) erfasst **1.171 Positionen**, davon **24 ohne direkte Einzelfundstelle im erfassten Bestand** und **959 hier verfasste Positionen**. Das sind weder 1.171 unabhängige Aussagen noch 24 erwiesene Fehler. Gemeinsame Lektionenbelege bestätigen nicht automatisch jeden Satz. Der Gebetskurs erfasst jetzt auch geerbte Varianten und vorhandene Quellenfelder; bloße Sammlungsnamen sind keine präzisen Inhaltsbelege.
 
 Die vorige Mappe mit 478 Positionen war unvollständig: Wissensabschnitte, Glossar, Personen, vollständige Namenliste, Dhikr-Einzelschritte und große Teile der Lernlektionen fehlten. Die Erweiterung extrahiert statische Arrays mit dem TypeScript-Parser; unbekannte Ausdrücke führen zum Fehler statt zur stillen Auslassung. Weitere UI- und Dialogtexte fehlen noch.
 
@@ -16,23 +16,23 @@ Die vorige Mappe mit 478 Positionen war unvollständig: Wissensabschnitte, Gloss
 |---|---:|---|
 | Hadith-Sammlung | 20 | Alle Kurzfassungen, Einordnungen und vorhandenen Bewertungen im [aktuellen Einzelbericht](HADITH-SOURCE-AUDIT-2026-10-11.md) abgeglichen. Nummernvarianten und abweichende Bewertungsbezüge sichtbar; keine eigene Isnad-Prüfung. |
 | Duas | 34 | Alle Einträge im [aktuellen Einzelbericht](DUA-SOURCE-AUDIT-2026-10-11.md) abgeglichen; Auszüge, Varianten und Bewertungen gekennzeichnet. Keine unabhängige vollständige Druckausgaben-/Vokalisationszertifizierung. |
-| Sunnah und Reue | 17 | Quellenzugeordnet; erneuter Abgleich einschließlich UI-Ergänzungen offen. |
+| Sunnah und Reue | 17 | Volltexte, Bedeutungen und Beispiele im [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md) quellenbezogen bearbeitet; keine individuelle Schuldentscheidung. |
 | Grundlagen-Ergänzungen | 13 | Metadaten erfasst; eingebettete Bildschirmtexte noch nicht vollständig extrahiert. |
-| Hajj, Umrah, heilige Stätten | 18 | Quellenzugeordnet bzw. konkret fehlend; Ablauf-/Schulvergleich offen. |
+| Hajj, Umrah, heilige Stätten | 18 | Stationen belegt, Reichweite begrenzt; [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md). Keine vollständige Anleitung zu individuellen Versäumnisfolgen. |
 | Islam-Quiz | 60 | Frage, Antwort und Erklärung im [Einzelbericht](AI-SOURCE-AUDIT-2026-10-11.md) abgeglichen; keine Fachfreigabe. |
 | Wissensbibliothek | 58 | Elf Einleitungen, 41 Abschnitte, sechs Glossarbegriffe im [Quellenbericht](KNOWLEDGE-SOURCE-AUDIT-2026-10-11.md) abgeglichen und korrigiert. |
 | Gefährten / Frauen | 25 | Alle 15 [Gefährten-Kurztexte](COMPANION-SOURCE-AUDIT-2026-10-11.md) und zehn [Frauen-Kurztexte](WOMEN-SOURCE-AUDIT-2026-10-11.md) abgeglichen. Nicht mit vollständiger Biografie- oder historischer Primärquellenprüfung gleichzusetzen. |
 | 99 Namen | 99 | Alle erhalten und im [aktuellen Einzelbericht](NAMES-SOURCE-AUDIT-2026-10-11.md) untersucht. 75 direkte Belegzuordnungen, 24 Formen ohne direkten Einzelbeleg; keine pauschale Bestätigung der Auswahl oder aller Nuancen. 20 verwandte Kontexte und ein Ausschlusskontext (98: 11:87 spricht Shuayb an) ausdrücklich getrennt; 64/65/77 ohne zugeordneten verwandten Beleg. Auslegungs-/Ableitungsgrenzen im Dialog. |
 | Dhikr | 25 | Alle sieben Routinen und 18 Formeln im [Einzelbericht](DHIKR-SOURCE-AUDIT-2026-10-11.md) abgeglichen; vollständige Lesehilfen, Bedeutungen, persönliche Ziele und Beleggrenzen. Zähler-/Speicherwahrheit separat getestet; keine bestätigte Aussprache. |
-| Lernkurse | 465 | Sieben Glaubenslektionen (77 Positionen) im [Glaubensbericht](FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md), sechs Säulenlektionen (74) im [Säulenbericht](PILLARS-LEARNING-SOURCE-AUDIT-2026-10-12.md), vier Begriffslektionen zu Niyyah/Dua/Dhikr/Tawba (44) im [Einzelbericht](DEVOTION-LEARNING-SOURCE-AUDIT-2026-10-12.md), acht übrige Begriffslektionen (88) im [Begriffsbericht](TERMINOLOGY-LEARNING-SOURCE-AUDIT-2026-10-12.md), fünf Praxislektionen (46) im [Praxisbericht](PRACTICE-LEARNING-SOURCE-AUDIT-2026-10-12.md), vier Charakterlektionen (35) im [Charakterbericht](CHARACTER-LEARNING-SOURCE-AUDIT-2026-10-12.md) und sechs Gemeinschaftslektionen (66) im [Gemeinschaftsbericht](COMMUNITY-LEARNING-SOURCE-AUDIT-2026-10-12.md) abgeglichen: 40/44 Lektionen, 430 Positionen nach Inventarmaßstab. Vier Seerah-Lektionen (35 Positionen) offen. Keine vollständige theologische oder menschliche Fachfreigabe. |
+| Lernkurse | 465 | Sieben Glaubenslektionen (77 Positionen) im [Glaubensbericht](FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md), sechs Säulenlektionen (74) im [Säulenbericht](PILLARS-LEARNING-SOURCE-AUDIT-2026-10-12.md), vier Begriffslektionen zu Niyyah/Dua/Dhikr/Tawba (44) im [Einzelbericht](DEVOTION-LEARNING-SOURCE-AUDIT-2026-10-12.md), acht übrige Begriffslektionen (88) im [Begriffsbericht](TERMINOLOGY-LEARNING-SOURCE-AUDIT-2026-10-12.md), fünf Praxislektionen (46) im [Praxisbericht](PRACTICE-LEARNING-SOURCE-AUDIT-2026-10-12.md), vier Charakterlektionen (35) im [Charakterbericht](CHARACTER-LEARNING-SOURCE-AUDIT-2026-10-12.md) und sechs Gemeinschaftslektionen (66) im [Gemeinschaftsbericht](COMMUNITY-LEARNING-SOURCE-AUDIT-2026-10-12.md) abgeglichen: Mit dem [Seerah-Nachtrag](CONTENT-CLEARANCE-2026-10-13.md) jetzt 44/44 Lektionen und 465 Positionen quellenbezogen bearbeitet. Keine vollständige theologische oder menschliche Fachfreigabe. |
 | Tages-Ayah im Einstieg | 5 | Arabisch und kurze sinngemäße Bedeutung im [Einzelbericht](DAILY-AYAH-SOURCE-AUDIT-2026-10-11.md) abgeglichen; Rotation und lokale Textgleichheit getestet. |
-| Prophetenkurse | 147 | Katalog, Übersichten und Kapitel erfasst; Erzählungen, Schlüsse und Quellenreichweite offen. |
+| Prophetenkurse | 172 | Jetzt auch die 25 Kurseinführungen erfasst. Erzählung und redaktionelle Lernlehre getrennt; konkrete Fehler quellenbezogen korrigiert im [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md). |
 | Ummah | 17 | Unbelegte Statistik und Rangbehauptungen entfernt; geografische Auswahl, keine Demografie. |
 | Rakʿah-Daten | 17 | Wortlautbezüge und Quellenreichweite aller 17 Varianten im [Teilbericht](PRAYER-LEARNING-SOURCE-AUDIT-2026-10-11.md) untersucht; vier Quran-Schritte gegen tatsächlich gelesene Verse und normalisierte lokale Buchstabenfolge abgeglichen. Amin vom Quran getrennt, Samad-Bedeutung präzisiert, Ta’awwudh und Rezitation hinter dem Imam nicht universell vorgeschrieben. Zusammensetzung, Bewegungsdetails und vollständige Schulregeln bleiben offen. |
-| Wudu / Salah | 102 | Schritte erfasst; Wortlaut, Reihenfolge, Bedingungen und Schulvergleich offen. Gemeinsame Speichermechanik elf Praxisleitfäden und Wudu-Zähler im Lernhub separat im [Funktionsbericht](WORSHIP-GUIDE-STORAGE-AUDIT-2026-10-12.md) korrigiert und getestet; keine religiöse Inhaltsfreigabe daraus. |
-| Praxisunterschiede | 8 | Schulhinweise vorhanden; konkrete Positionen und Reichweite noch abzugleichen. |
-| Rechtsschulkatalog | 4 | Quellenliste erfasst; historische und methodische Details separat offen. |
-| Kalenderanlässe | 12 | Qadr-/Anlasskorrekturen belegt; übrige Empfehlungen und Kalendergrenzen offen. |
+| Wudu / Salah | 102 | Volltexte, Einleitungen und Tipps erfasst. Wortlaut, Bedingungen und Schulgrenzen im [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md) quellenbezogen korrigiert. Gemeinsame Speichermechanik separat getestet; keine religiöse Zertifizierung daraus. |
+| Praxisunterschiede | 8 | Alle vier Positionen je Vergleich erfasst, Varianten präzisiert und Fundstellen sichtbar; [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md). Keine individuelle Fatwa. |
+| Rechtsschulkatalog | 4 | Quellenbezogene Korrekturen und direkte Links im [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md); keine individuelle Fatwa. |
+| Kalenderanlässe | 12 | Quellen ergänzt und Fasten-Einordnung korrigiert, einschließlich separatem Scheduler; [Nachtrag](CONTENT-CLEARANCE-2026-10-13.md). |
 
 Der Quran-Bestand gehört nicht zum obigen Zähler: 114 Suren mit 6.236 arabischen
 Versen sowie die separat geladenen deutschen/Umschrift-Texte. Dienstvalidierung,
@@ -94,6 +94,9 @@ Ausgangspunkt: Routing in `src/app/App.tsx`, Legacy-Metadaten und Bildschirmdate
 15. **Glaubenskurs:** Alle sieben bestehenden Lektionen mit Zusammenfassungen, Absätzen, Details, Merksätzen und Kontrollfragen anhand konkret gelesener Quran-/Muslim-Stellen abgeglichen. Die Kursankündigung versprach eine nicht vorhandene Tawhid-Lektion; korrigiert, ohne neue Lektion hinzuzufügen. Aufgaben der Engel, genannte Bücher, Auferweckung, unbekannter Zeitpunkt und verantwortliches Handeln bei Qadar mit eigenen Fundstellen. Quellenlinks erscheinen im bestehenden Quellenbereich und Teiltext. Bewahrungszusage nicht als App-Dateizertifikat, frühere Einzelregeln nicht pauschal als heute verbindlich, theologische Gliederung nicht als vollständiger Traditionsvergleich ausgegeben. [Belege und Grenzen](FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md).
 
 ## Technische Absicherung
+
+- Abschluss 13.10.2026: [Quellenkorrekturen und Nachweise](CONTENT-CLEARANCE-2026-10-13.md). Vollcheck Exit 0: 1.041 Tests/59 Dateien. 285 aktive Browserfälle über vollständigen Lauf und gezielte Reparatur zweier Testuhr-Fehler bestätigt; zwei optionale Bildschirmaufnahmen übersprungen. Quellenpflicht für 91 Praxis-Schritte, vier aktuelle schmale Ansichten tatsächlich betrachtet. Keine Gelehrten-, Geräte-, Rechte- oder öffentliche Releasezertifizierung.
+
 
 - Charakter-Lernkurs 12.10.2026: vier Lektionen, 35 Positionen und 23
   Quellenfelder gegen 15 tatsächlich gelesene Fundstellen abgeglichen.
@@ -308,7 +311,7 @@ Browser-/Rechentests prüfen kein echtes Magnetometer und bestätigen nicht die 
 
 ## Noch erforderlich
 
-- Die übrigen vier Seerah-Lernlektionen (35 Positionen) sowie Gebets- und Prophetenkurse einzeln abgleichen. Die 99 Namenspositionen sind untersucht, aber 24 Formen bleiben ohne direkten Einzelbeleg: 20 verwandte Kontexte, ein Ausschlusskontext und drei ohne zugeordneten verwandten Beleg. Keine Authentifizierung der festen Auswahl, aller Auslegungen oder Aussprache daraus ableiten. Kurze Personenübersichten nicht als Bestätigung sämtlicher Erzählungen über diese Personen verwenden.
+- Seerah-, Leitfaden-, Schul- und Prophetenkorrekturen sind im Nachtrag vom 13.10.2026 dokumentiert. Ein Quellenabgleich bestätigt keine vollständige Tafsir-/Ausspracheprüfung. Die 99 Namenspositionen sind untersucht, aber 24 Formen bleiben ohne direkten Einzelbeleg: 20 verwandte Kontexte, ein Ausschlusskontext und drei ohne zugeordneten verwandten Beleg. Keine Authentifizierung der festen Auswahl, aller Auslegungen oder Aussprache daraus ableiten. Kurze Personenübersichten nicht als Bestätigung sämtlicher Erzählungen über diese Personen verwenden.
 - Geringen Kontrast der bestehenden Weiter-Schaltfläche im schmalen Lernkurs prüfen; Lesbarkeit von Quellen ist keine Gesamt-UI-Freigabe. Die nachgewiesenen Guide-/Hub-Speicherfehler sind im separaten Funktionsbericht korrigiert, nicht stellvertretend für alle Speicherwege.
 - Weitere Speicherwege der Gebets-/Prophetenkurse und mögliche gleichzeitige Tab-Änderungen weiter prüfen. Die reproduzierten Fehler des gemeinsamen Grundlagenkurses sind im [Speicherbericht](LEARNING-STORAGE-AUDIT-2026-10-12.md) korrigiert; daraus keine Speicherfreigabe aller App-Bereiche ableiten.
 - Fehlende und nur lektionenweise zugeordnete Quellen gegen Aussagen prüfen.

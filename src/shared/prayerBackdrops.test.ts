@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { PRAYER_SCHEDULE } from '../services/prayerSchedule';
-import { getCurrentPrayerScene, getPrayerBackdrop, PRAYER_BACKDROPS, type PrayerBackdropId } from './prayerBackdrops';
+import { getCurrentPrayerScene, getPrayerBackdrop, getSplashBackdrop, PRAYER_BACKDROPS, type PrayerBackdropId } from './prayerBackdrops';
 
 const times = ['04:10', '06:00', '13:10', '17:00', '20:10', '22:10'];
 const schedule = PRAYER_SCHEDULE.map((item, index) => ({ ...item, time: times[index] }));
@@ -12,11 +12,14 @@ describe('prayer landscape mapping', () => {
     expect(new Set(Object.values(PRAYER_BACKDROPS)).size).toBe(5);
     for (const prayer of PRAYER_SCHEDULE.filter((item) => item.obligatory)) {
       expect(getPrayerBackdrop(prayer.id as PrayerBackdropId)).toContain(`prayer-${prayer.id}-v1.webp`);
+      expect(getSplashBackdrop(prayer.id as PrayerBackdropId)).toContain(`prayer-${prayer.id}-v3.webp`);
+      expect(getSplashBackdrop(prayer.id as PrayerBackdropId)).not.toBe(getPrayerBackdrop(prayer.id as PrayerBackdropId));
     }
   });
 
   it('does not invent a scene for missing data or timezone', () => {
     expect(getPrayerBackdrop()).toBeUndefined();
+    expect(getSplashBackdrop()).toBeUndefined();
     expect(getCurrentPrayerScene(at('12:00'), schedule)).toBeUndefined();
     expect(getCurrentPrayerScene(at('12:00'), schedule, 'invalid')).toBeUndefined();
     expect(getCurrentPrayerScene(at('12:00'), [], 'Europe/Berlin')).toBeUndefined();

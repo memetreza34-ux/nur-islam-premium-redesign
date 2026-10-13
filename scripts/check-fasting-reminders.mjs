@@ -20,6 +20,8 @@ for (const requirement of [
   'weekday === 4',
   'hijriDay >= 13 && hijriDay <= 15',
   'previousDay(fastingDate)',
+  '!isVoluntaryFastingDate(fastingDate)',
+  'month !== 9 && !isFastingForbidden(month, day)',
   'writeCalendarEntries(next)',
   "window.addEventListener('focus', sync)",
   "document.addEventListener('visibilitychange', handleVisibility)",

@@ -10,6 +10,18 @@ export const PRAYER_BACKDROPS: Record<PrayerBackdropId, string> = {
   isha: '/premium-assets/high-res-objects/prayer-isha-v1.webp',
 };
 
+export const SPLASH_BACKDROPS: Record<PrayerBackdropId, string> = {
+  fajr: '/premium-assets/high-res-objects/prayer-fajr-v3.webp',
+  dhuhr: '/premium-assets/high-res-objects/prayer-dhuhr-v3.webp',
+  asr: '/premium-assets/high-res-objects/prayer-asr-v3.webp',
+  maghrib: '/premium-assets/high-res-objects/prayer-maghrib-v3.webp',
+  isha: '/premium-assets/high-res-objects/prayer-isha-v3.webp',
+};
+
+export function getSplashBackdrop(scene?: PrayerBackdropId) {
+  return scene ? SPLASH_BACKDROPS[scene] : undefined;
+}
+
 export function getPrayerBackdrop(scene?: PrayerBackdropId) {
   return scene ? PRAYER_BACKDROPS[scene] : undefined;
 }

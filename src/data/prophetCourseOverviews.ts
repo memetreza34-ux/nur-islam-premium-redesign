@@ -12,7 +12,7 @@ export type ProphetCourseOverview = {
  */
 export const PROPHET_COURSE_OVERVIEWS: Readonly<Record<string, ProphetCourseOverview>> = {
   adam: {
-    orientation: 'Adams Geschichte verbindet den Ursprung des Menschen mit Wissen, Verantwortung und freier Entscheidung. Sie erklärt zugleich, wie Hochmut zur Verweigerung führt und wie ein menschlicher Fehltritt durch aufrichtige Reue beantwortet werden kann.',
+    orientation: 'Adams Quran-Erzählung verbindet Wissen, Verantwortung, menschliches Handeln und Reue. Der Kurs unterscheidet den erzählten Wortlaut von eigenen Lernlehren und stellt keine vollständige theologische Lehre über Willensfreiheit auf.',
     coursePath: 'Du beginnst bei der Erschaffung und dem Wissen, das Adam gelehrt wurde. Danach folgen die Prüfung im Garten, die gemeinsame Verantwortung von Adam und seiner Frau sowie die Annahme der Reue und die Rechtleitung für das Leben auf der Erde.',
     boundary: 'Der Kurs nennt keine Zeitangaben, geografischen Einzelheiten oder späteren Legenden, die in den angegebenen Quran-Passagen nicht stehen.',
     learningGoals: ['Wissen und Verantwortung zusammen einordnen', 'Hochmut und menschlichen Fehltritt unterscheiden', 'Reue als bewusste Rückkehr verstehen'],
@@ -103,8 +103,8 @@ export const PROPHET_COURSE_OVERVIEWS: Readonly<Record<string, ProphetCourseOver
   },
   'dhul-kifl': {
     orientation: 'Dhul-Kifl wird im Quran nur zweimal kurz und positiv erwähnt. Er steht unter den Geduldigen und Ausgezeichneten; eine zusammenhängende Lebensgeschichte wird nicht erzählt.',
-    coursePath: 'Der Kurs liest beide Nennungen sorgfältig, erklärt die sicher genannten Eigenschaften und zeigt anschließend, warum die religiöse Einordnung Dhul-Kifls in der Auslegung nicht völlig einheitlich ist.',
-    boundary: 'Sein Prophetentum wird nicht als unumstrittene Quran-Aussage formuliert; der Kurs benennt ausdrücklich die unterschiedliche Gelehrteneinordnung.',
+    coursePath: 'Der Kurs liest beide Nennungen und erklärt die ausdrücklich genannten Eigenschaften. Anschließend wird die fehlende ausdrückliche Bezeichnung als Nabi oder Rasul in diesen Stellen benannt.',
+    boundary: 'Eine darüber hinausgehende Einordnung wird nicht als ausdrücklicher Wortlaut dieser Verse ausgegeben.',
     learningGoals: ['Beide Quran-Nennungen kennen', 'Geduld und Rechtschaffenheit als sichere Aussagen festhalten', 'Meinungsunterschiede transparent benennen'],
   },
   dawud: {
@@ -132,8 +132,8 @@ export const PROPHET_COURSE_OVERVIEWS: Readonly<Record<string, ProphetCourseOver
     learningGoals: ['Beide Nennungen zuordnen', 'Rechtleitung und Auszeichnung als Kern festhalten', 'Die Grenze fehlender Ereignisberichte respektieren'],
   },
   yunus: {
-    orientation: 'Yunus’ Geschichte verbindet einen voreiligen Aufbruch, tiefe Bedrängnis, ein prägnantes Dua, Rettung und einen erneuerten Auftrag. Sein Volk wird zudem als besondere Gemeinschaft erwähnt, deren rechtzeitiger Glaube nützte.',
-    coursePath: 'Du folgst dem Schiff, dem Losentscheid und dem großen Fisch, lernst das Dua in den Finsternissen, die Rettung und Versorgung an Land sowie die spätere Sendung und die Reaktion seines Volkes.',
+    orientation: 'Yunus’ Geschichte verbindet Aufbruch, Bedrängnis, Dua und Rettung. Die Verse nennen auch seine Sendung und den nützenden Glauben seines Volkes; der Kurs legt daraus keine vollständige historische Chronologie fest.',
+    coursePath: 'Du liest die Szenen mit Schiff, Losentscheid und Fisch, das Dua in den Finsternissen, Rettung und Versorgung an Land sowie die Angaben zu Sendung und Glauben seines Volkes.',
     boundary: 'Der Kurs verwendet die Quran-Beschreibung und ergänzt weder die Art des Fisches noch eine genaue Reisedauer.',
     learningGoals: ['Yunus’ Dua inhaltlich verstehen', 'Fehler, Korrektur und neuen Auftrag verbinden', 'Die Besonderheit der Umkehr seines Volkes erklären'],
   },

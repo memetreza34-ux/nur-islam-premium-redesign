@@ -215,7 +215,8 @@ const BUDGET = {
     // Current source snapshot includes the new learning, legal/about and
     // mosque-finder surfaces. Keep this exact cap until consolidation reduces
     // it; the compiled transfer size is guarded separately by bundle:check.
-    totalBytes: 909_818,
+    // Opening layout and image-dependent text contrast add 1,094 bytes in the existing owner.
+    totalBytes: 910_912,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

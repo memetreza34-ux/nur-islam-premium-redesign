@@ -24,7 +24,7 @@ for (const [id, name, time, value] of [
 ]) {
   test(`${name}: same landscape on Home and Prayer, readable on mobile`, async ({ page }, testInfo) => {
     await openLandscapeApp(page, time);
-    const arch = page.locator(`[data-prayer-scene="${id}"]`);
+    const arch = page.locator(`.ds-arch[data-prayer-scene="${id}"]`);
     await expect(arch).toBeVisible();
     await expect(arch.getByText(value, { exact: true })).toBeVisible();
     const homeFrame = page.getByRole('region', { name: 'Nächstes Gebet', exact: true });
@@ -85,31 +85,31 @@ test('open prayer layout still marks and unmarks the next prayer', async ({ page
 
 test('after Isha and midnight the scene stays dark while Fajr is next', async ({ page }) => {
   await openLandscapeApp(page, '23:00');
-  await expect(page.locator('[data-prayer-scene="isha"]')).toBeVisible();
+  await expect(page.locator('.ds-arch[data-prayer-scene="isha"]')).toBeVisible();
   await expect(page.getByRole('region', { name: 'Nächstes Gebet', exact: true }).getByText('Nächstes Gebet · morgen', { exact: true })).toBeVisible();
   await page.clock.setFixedTime(new Date('2026-08-28T00:01:00+02:00'));
   await page.reload();
-  await expect(page.locator('[data-prayer-scene="isha"]')).toBeVisible();
+  await expect(page.locator('.ds-arch[data-prayer-scene="isha"]')).toBeVisible();
 });
 
 test('running countdown changes the image at a prayer boundary without reload', async ({ page }) => {
   test.setTimeout(45_000);
   await openLandscapeApp(page, '20:09');
-  await expect(page.locator('[data-prayer-scene="asr"]')).toBeVisible();
+  await expect(page.locator('.ds-arch[data-prayer-scene="asr"]')).toBeVisible();
   await page.clock.setFixedTime(new Date('2026-08-27T20:11:00+02:00'));
   // Keep animation time real: advancing the mock RAF clock independently of
   // the browser's native animation timeline can strand an exiting SVG image.
-  await expect(page.locator('[data-prayer-scene="maghrib"]')).toBeVisible({ timeout: 35_000 });
-  await expect(page.locator('[data-prayer-scene="maghrib"] image')).toHaveCount(1);
-  await expect(page.locator('[data-prayer-scene="maghrib"]').getByText(timings.Isha, { exact: true })).toBeVisible();
+  await expect(page.locator('.ds-arch[data-prayer-scene="maghrib"]')).toBeVisible({ timeout: 35_000 });
+  await expect(page.locator('.ds-arch[data-prayer-scene="maghrib"] image')).toHaveCount(1);
+  await expect(page.locator('.ds-arch[data-prayer-scene="maghrib"]').getByText(timings.Isha, { exact: true })).toBeVisible();
 });
 
 test.describe('different device timezone', () => {
   test.use({ timezoneId: 'UTC' });
   test('the background uses the timetable timezone on both pages', async ({ page }) => {
     await openLandscapeApp(page, '18:00');
-    await expect(page.locator('[data-prayer-scene="asr"]')).toBeVisible();
+    await expect(page.locator('.ds-arch[data-prayer-scene="asr"]')).toBeVisible();
     await page.getByRole('navigation').getByRole('button', { name: 'Gebet', exact: true }).click();
-    await expect(page.locator('[data-prayer-scene="asr"]')).toBeVisible();
+    await expect(page.locator('.ds-arch[data-prayer-scene="asr"]')).toBeVisible();
   });
 });
