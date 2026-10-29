@@ -1,3 +1,4 @@
+import { DialogHeader } from './DialogHeader';
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react';
 import { CircleCheck, NotebookPen, Pencil, Plus, Trash2, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -114,8 +115,8 @@ export function CalendarDayNotes({ date, compact = false }: CalendarDayNotesProp
   return (
     <section className={`calendar-day-notes${compact ? ' calendar-day-notes--compact' : ''}`} aria-label={`Notizen für ${dateLabel}`}>
       <div className="calendar-day-notes__heading">
-        <span className="calendar-day-notes__title"><NotebookPen size={compact ? 16 : 19} aria-hidden="true" /><span>{compact ? 'Deine Notizen' : 'Notizen an diesem Tag'}</span>{selectedNotes.length > 0 ? <small>{selectedNotes.length}</small> : null}</span>
-        <button type="button" onClick={() => openEditor()}><Plus size={16} aria-hidden="true" /> Notiz hinzufügen</button>
+        <span className="calendar-day-notes__title"><NotebookPen size={compact ? 16 : 19} aria-hidden="true" /><span>{compact ? 'Notizen' : 'Notizen an diesem Tag'}</span>{selectedNotes.length > 0 ? <small>{selectedNotes.length}</small> : null}</span>
+        <button type="button" onClick={() => openEditor()} aria-label="Notiz hinzufügen" title="Notiz hinzufügen"><Plus size={18} aria-hidden="true" />{!compact ? 'Notiz hinzufügen' : null}</button>
       </div>
       {visibleNotes.length ? (
         <div className="calendar-day-notes__list">
@@ -126,14 +127,14 @@ export function CalendarDayNotes({ date, compact = false }: CalendarDayNotesProp
           ))}
           {compact && selectedNotes.length > 1 ? <span className="calendar-day-notes__more">+ {selectedNotes.length - 1} weitere {selectedNotes.length === 2 ? 'Notiz' : 'Notizen'} im Kalender</span> : null}
         </div>
-      ) : <p className="calendar-day-notes__empty">Gedanken oder Pläne für diesen Tag festhalten.</p>}
+      ) : !compact ? <p className="calendar-day-notes__empty">Gedanken oder Pläne für diesen Tag festhalten.</p> : null}
 
       {editorOpen ? createPortal(
         <div className="calendar-modal-backdrop calendar-note-backdrop" onMouseDown={(event) => { if (event.target === event.currentTarget) closeEditor(); }}>
-          <section {...editorDialog.props} className="calendar-note-dialog">
-            <div className="calendar-note-dialog__heading"><span><small>{dateLabel}</small><h2>{editingId ? 'Notiz bearbeiten' : 'Notiz hinzufügen'}</h2></span><button type="button" className="calendar-note-dialog__close" onClick={closeEditor} aria-label="Schließen"><X size={20} /></button></div>
+          <section {...editorDialog.props} className="calendar-note-dialog dialog-panel dialog-form">
+            <DialogHeader title={editingId ? 'Notiz bearbeiten' : 'Notiz hinzufügen'} subtitle={dateLabel} onClose={closeEditor} />
             <label htmlFor={textareaId}>Deine Notiz</label>
-            <textarea id={textareaId} ref={textareaRef} value={draft} onChange={(event) => { setDraft(event.target.value); setError(''); }} maxLength={1000} placeholder="Was möchtest du dir für diesen Tag merken?" rows={6} />
+            <textarea id={textareaId} ref={textareaRef} value={draft} onChange={(event) => { setDraft(event.target.value); setError(''); }} maxLength={1000} placeholder="Was möchtest du dir für diesen Tag merken?" rows={4} />
             <div className="calendar-note-dialog__hint"><span>Nur auf diesem Gerät · ohne Erinnerung</span><span>{draft.length}/1000</span></div>
             {error ? <p className="calendar-note-dialog__error" role="alert">{error}</p> : null}
             <button className="calendar-note-dialog__save" type="button" onClick={save}><CircleCheck size={18} /> Notiz speichern</button>

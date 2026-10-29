@@ -2,9 +2,9 @@ import AppKit
 import Foundation
 
 let root = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-let source = root.appendingPathComponent("public/nur-app-icon.svg")
+let source = root.appendingPathComponent("output/imagegen/brand-mosque-20261016/mosque-refined.png")
 guard let image = NSImage(contentsOf: source) else {
-  fatalError("Logo-SVG konnte nicht geladen werden")
+  fatalError("Ausgewähltes Moschee-Original konnte nicht geladen werden")
 }
 
 for (size, path, scale) in [
@@ -31,7 +31,7 @@ for (size, path, scale) in [
   NSGraphicsContext.saveGraphicsState()
   NSGraphicsContext.current = context
   context.imageInterpolation = .high
-  NSColor(srgbRed: 0, green: 27.0 / 255.0, blue: 22.0 / 255.0, alpha: 1).setFill()
+  NSColor(srgbRed: 0, green: 57.0 / 255.0, blue: 39.0 / 255.0, alpha: 1).setFill()
   NSRect(x: 0, y: 0, width: size, height: size).fill()
   let inset = Double(size) * (1 - scale) / 2
   image.draw(in: NSRect(x: inset, y: inset, width: Double(size) * scale, height: Double(size) * scale))

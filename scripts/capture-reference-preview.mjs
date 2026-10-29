@@ -119,13 +119,6 @@ try {
   await capture(page, '01f-ayah-detail');
   await returnHome(page);
 
-  const hadithCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Hadith des Tages' }).first();
-  await hadithCard.waitFor({ state: 'visible', timeout: 10_000 });
-  await hadithCard.click();
-  await page.locator('.reference-hadith-hero').waitFor({ state: 'visible', timeout: 10_000 });
-  await waitForStableUi(page);
-  await capture(page, '01g-hadith-detail');
-  await returnHome(page);
 
   const destinations = [
     ['Gebet', '02-prayer'],

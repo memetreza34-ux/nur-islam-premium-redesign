@@ -1,0 +1,66 @@
+{
+  "date": "2026-10-16",
+  "scope": "Home: Weitere Bereiche und Dein Tag im Blick",
+  "changes": [
+    "Vier lange Zeilen in einer gemeinsamen Karte mit bestehenden 3D-Motiven, 22px Serifentiteln und 13px Erklärungen.",
+    "Aufklappbare Tagesübersicht mit Kalenderbild und passender Kartenfläche; bleibt standardmäßig geschlossen.",
+    "Historische Empfehlungs-Stilregeln konsolidiert; fünf !important-Deklarationen und 967 CSS-Bytes entfernt."
+  ],
+  "verification": {
+    "release_check": "passed",
+    "unit_tests": 1047,
+    "test_files": 59,
+    "targeted_browser_tests_unique_passed": 29,
+    "matrix_viewports": [
+      [
+        320,
+        740
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ],
+      [
+        768,
+        1024
+      ],
+      [
+        1024,
+        768
+      ]
+    ],
+    "expanded_widgets_checked_widths": [
+      320,
+      390,
+      768
+    ],
+    "browser_runs": [
+      {
+        "log": "/tmp/nur-home-footer-e2e-20261016.log",
+        "passed": 28,
+        "failed": 1,
+        "failure": "Scroll-Rückkehr um 1px gerundet; maximale Abweichung im Test jetzt 1px."
+      },
+      {
+        "log": "/tmp/nur-home-footer-scroll-20261016.log",
+        "passed": 2,
+        "failed": 0
+      }
+    ],
+    "visual_review_phone_widths": [
+      320,
+      390
+    ],
+    "visual_review_tablet_width": 768,
+    "git_diff_check": "passed",
+    "physical_devices_verified": false
+  },
+  "screenshots": [
+    "home-lower-cards-phone-2026-10-16.jpg",
+    "home-lower-cards-tablet-2026-10-16.jpg"
+  ]
+}

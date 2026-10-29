@@ -1,0 +1,95 @@
+{
+  "date": "2026-10-15",
+  "assets": [
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-hands-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-hands-v1.webp",
+      "sha256": "1463551883af4b4250b2cd4a7713557a869dad12d4d9555a93d8112e30dbace6",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-mouth-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-mouth-v1.webp",
+      "sha256": "fb60975031923ca8a66a4595e1662bc4fd3b89fa913863819078e13428973dee",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-nose-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-nose-v1.webp",
+      "sha256": "2f63ffd579fe3bb82a95c1cbfefe4639141e9fcb6006f36bbdf4b9e842dddcc9",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-face-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-face-v1.webp",
+      "sha256": "7b70b98eb0a30e0664a819a164a0752d7f8ccbab96b67a71be4b614cb728092d",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-arms-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-arms-v1.webp",
+      "sha256": "ca6e78f61899ac08a7a7deb6cdd1c22a41b43b5cb572b8cd7e2bcdf4c7211cc6",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-head-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-head-v1.webp",
+      "sha256": "600876c41f868fc8a188ab0b821eb736f57e6bbceb0e31de111958093659c6e2",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-ears-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-ears-v1.webp",
+      "sha256": "1266e228b719416d6edf0081eae82542c3246f7b41dcf62d640b2da19d7527ac",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-step-feet-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/wudu-step-feet-v1.webp",
+      "sha256": "04528435feca631d0c9bfcf9ce3f4e2717af5bd73e75d8a88d2d62ae50344bc0",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-qiyam-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-qiyam-v1.webp",
+      "sha256": "de053972909eac9c5f884250442db0da4264aabfacc2e15df8222e97dcb3688a",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-takbir-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-takbir-v1.webp",
+      "sha256": "087555db39d74484c227a5ada1ccec453fc695c337b0455b3abcff2b2bdbd844",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-ruku-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-ruku-v1.webp",
+      "sha256": "e7e6841e496c0be3a1f5d770156540944d1563abfd70d1ca6ca00e646c66bb79",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-standing-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-standing-v1.webp",
+      "sha256": "ed3bc2011b1bb96b48ce99e625b2845be40c509f98c61a499639dd8eb29dac47",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-sujud-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-sujud-v1.webp",
+      "sha256": "9a224b93ce1eadd4f370a1092eed5c8083531eb5b6e3f6c60f0bedbe35242ec6",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-sitting-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-sitting-v1.webp",
+      "sha256": "d21bd7a8d4074bdce108605101bae11a919005c414cac933e263ee18d56602e3",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/salah-posture-taslim-v1.webp",
+      "archivePath": "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-taslim-v1.webp",
+      "sha256": "98b9fbf6bc69f2cfdcb647bfe96a4d4e0a3b8c667c7d01b9fe1c795f4bdc7c8e",
+      "reason": "Replaced by unified fixed-reference learning character v2, 2026-10-15."
+    }
+  ]
+}

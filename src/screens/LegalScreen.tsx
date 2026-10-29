@@ -1,3 +1,4 @@
+import { useScreenState } from '../shared/ScreenState';
 import { useState } from 'react';
 import {
   AlertTriangle,
@@ -65,7 +66,7 @@ const OFFICIAL_SOURCES: Record<LegalTab, Array<{ label: string; href: string }>>
 };
 
 export function LegalScreen({ onBack }: { onBack: () => void }) {
-  const [tab, setTab] = useState<LegalTab>('privacy');
+  const [tab, setTab] = useScreenState<LegalTab>('legal.tab', 'privacy');
   const reduceMotion = useReducedMotion();
   const active = TABS.find((entry) => entry.id === tab) ?? TABS[0];
   const intro = TAB_INTRO[active.id];

@@ -130,8 +130,7 @@
   isolation: isolate;
 }
 
-.verse-card__art,
-.reference-ayah-hero__art {
+.verse-card__art {
   inset: 0 !important;
   width: 100% !important;
   height: 100% !important;
@@ -139,8 +138,7 @@
   overflow: hidden;
 }
 
-.verse-card__art > img,
-.reference-ayah-hero__art > img {
+.verse-card__art > img {
   object-fit: cover !important;
   object-position: center 42% !important;
   filter: saturate(.78) contrast(1.08) !important;
@@ -250,26 +248,6 @@
 }
 
 /* ---------- Qibla ---------- */
-.reference-qibla-stage {
-  isolation: isolate;
-}
-
-.reference-qibla-stage__compass {
-  overflow: visible !important;
-}
-
-.reference-qibla-stage__compass > img {
-  object-fit: contain !important;
-  object-position: center !important;
-  filter: drop-shadow(0 24px 26px rgba(0, 0, 0, .5)) saturate(1.03) contrast(1.04) !important;
-}
-
-.reference-qibla-stage::after {
-  width: 90px !important;
-  height: 90px !important;
-  opacity: .9 !important;
-  filter: drop-shadow(0 14px 19px rgba(0, 0, 0, .5)) saturate(.98) contrast(1.05) !important;
-}
 
 /* ---------- Duas / Names ---------- */
 .reference-duas-hero,
@@ -371,24 +349,18 @@
   object-position: center !important;
   filter: drop-shadow(0 15px 17px rgba(0, 0, 0, .38)) saturate(1.01) !important;
 }
-.reference-prayer-learning-hub,
 .reference-prayer-course-hero,
-.reference-guide-hero,
 .reference-learning-course-hero {
   isolation: isolate;
 }
 
 .reference-learning-hero .premium-image,
-.reference-prayer-learning-hub > .premium-image,
-.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art),
-.reference-guide-hero > .premium-image {
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art) {
   overflow: visible;
 }
 
 .reference-learning-hero .premium-image::before,
-.reference-prayer-learning-hub > .premium-image::before,
-.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art)::before,
-.reference-guide-hero > .premium-image::before {
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art)::before {
   content: '';
   position: absolute;
   z-index: -1;
@@ -400,9 +372,7 @@
 }
 
 .reference-learning-hero .premium-image > img,
-.reference-prayer-learning-hub > .premium-image > img,
-.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art) > img,
-.reference-guide-hero > .premium-image > img {
+.reference-prayer-course-hero > .premium-image:not(.reference-prayer-course-hero__time-art) > img {
   object-fit: contain !important;
   object-position: center bottom !important;
   filter: drop-shadow(0 24px 24px rgba(0, 0, 0, .46)) saturate(.98) contrast(1.03) !important;
@@ -486,9 +456,7 @@
 [data-theme='light'] .premium-home--v2 .welcome-hero__visual > img,
 [data-theme='light'] .reference-mosque-hero > .premium-image > img,
 [data-theme='light'] .reference-learning-hero .premium-image > img,
-[data-theme='light'] .reference-prayer-learning-hub > .premium-image > img,
 [data-theme='light'] .reference-prayer-course-hero > .premium-image > img,
-[data-theme='light'] .reference-guide-hero > .premium-image > img,
 [data-theme='light'] .reference-onboarding__visual > .premium-image > img {
   filter: drop-shadow(0 19px 21px rgba(57, 43, 20, .2)) saturate(.94) contrast(1.02) !important;
 }
@@ -533,11 +501,6 @@
     right: -31px !important;
     width: 132px !important;
     height: 112px !important;
-  }
-
-  .reference-qibla-stage::after {
-    width: 76px !important;
-    height: 76px !important;
   }}
 
 @media (prefers-reduced-motion: reduce) {

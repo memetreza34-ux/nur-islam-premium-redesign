@@ -1,0 +1,23 @@
+[
+  {
+    "file": "mosque-icon-1024.png",
+    "width": 1024,
+    "height": 1024,
+    "hasAlpha": false,
+    "sha256": "91e122eb1784f59c1fac4d526c0bd0603f279e8c469954a668c3edf08115bdd4"
+  },
+  {
+    "file": "mosque-icon-512.png",
+    "width": 512,
+    "height": 512,
+    "hasAlpha": false,
+    "sha256": "fa900398000736e3a3c28eb8ce4b61e8dfef9e17375ac9ae47f8bf45c5081636"
+  },
+  {
+    "file": "mosque-icon-192.png",
+    "width": 192,
+    "height": 192,
+    "hasAlpha": false,
+    "sha256": "f0e4070d4ad91568e37168c7c7c488fe8d67a2816f16a94e731dc57a02e32fe0"
+  }
+]

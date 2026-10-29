@@ -21,7 +21,7 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const source = await readFile(resolve(root, 'src/data/hadithData.ts'), 'utf8');
-const screen = await readFile(resolve(root, 'src/screens/DailyHadithScreen.tsx'), 'utf8');
+const screen = await readFile(resolve(root, 'src/screens/SavedHadithScreen.tsx'), 'utf8');
 
 const library = source.slice(
   source.indexOf('export const HADITH_LIBRARY'),

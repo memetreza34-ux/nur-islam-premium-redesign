@@ -43,13 +43,17 @@ requireTokens(learningProgress, 'Knowledge course write acknowledgement', [
   'localStorage.getItem(LEARNING_PROGRESS_KEY) === value',
   'localStorage.getItem(key) === lessonId',
 ]);
-requireTokens(learningCourse, 'Knowledge course persistence feedback', [
-  'updateLearningCompletion(selectedLesson.id, true)',
-  'updateLearningCompletion(selectedLesson.id, false)',
-  'completionSaved ?',
-  'Speicherung nicht bestätigt',
-  'Abschlussstatus nicht verfügbar',
+requireTokens(learningCourse, 'Reading position feedback without completion', [
+  'readLearningPosition',
+  'writeLearningPosition',
+  'Speicherung der letzten Lektionsposition',
+  'Lektion auswählen',
   "x: '-50%'",
+]);
+forbidTokens(learningCourse, 'No completion writes from reading lessons', [
+  'updateLearningCompletion',
+  'completionSaved',
+  'Lektionsfortschritt zurücksetzen',
 ]);
 forbidTokens(learningCourse, 'Knowledge course mount data preservation', [
   'useEffect(() => writeStringSet',
@@ -61,33 +65,20 @@ requireTokens(guideProgress, 'Worship guide validated persistence', [
   'Number.isInteger(stepIndex)',
   'Number(step.raw) < guide.steps.length',
   '!readGuideProgress(guideId).stepValid',
-  '!readGuideProgress(guideId).completionValid',
   'localStorage.getItem(key) === value',
 ]);
-requireTokens(guideScreen, 'Worship guide truthful feedback', [
-  'saveGuideStep(guide.id, index)',
-  'saveGuideCompletion(guide.id)',
-  'Speicherung nicht bestätigt',
-  'Noch keine bestätigte Speicherung',
-  'Gespeicherter Fortschritt nicht lesbar',
-  'error={toastError}',
-  "x: '-50%'",
+requireTokens(guideScreen, 'Reading position without completion', [
+  'saveGuideStep(guide.id, index)', 'Speicherung der Schrittposition nicht bestätigt', 'stored.stepValid',
 ]);
-forbidTokens(guideScreen, 'Worship guide non-mutating mount and honest cursor', [
-  'localStorage.setItem(`nur_guide_',
-  'const complete = index < stepIndex',
-  "${complete ? ' is-complete' : ''}",
+forbidTokens(guideScreen, 'No completion writes or bars in guides', [
+  'saveGuideCompletion', 'completeGuide', 'completionValid', 'stored.completed', 'reference-guide-progress',
 ]);
-requireTokens(learningHub, 'Explicit Wudu completion in learning hub', [
-  "readGuideProgress('wudu')",
-  'wuduProgress.completionValid && wuduProgress.completed',
-  'prayerCompletion.valid && wuduProgress.completionValid',
-  'PRAYER_LESSONS.some(lesson => lesson.id === id)',
-  'Abschlussstatus nicht vollständig lesbar',
+forbidTokens(learningHub, 'Learning directory without completion or a duplicate course entry', [
+  'readPrayerCompletion', 'completedPrayerLessons', 'coreProgress', 'learn-library-prayer-entry',
 ]);
-forbidTokens(learningHub, 'No synthetic completion from a visited Wudu position', [
-  "readStoredStep('nur_guide_wudu_step') >= 5",
-  "readStringSet('nur_prayer_learning_complete')",
+const prayerLearning = await read('src/screens/PrayerLearningScreen.tsx');
+forbidTokens(prayerLearning, 'Prayer learning without completion tracking', [
+  'nur_prayer_learning_complete', 'completedLessons', 'completionOpen', 'courseProgress', 'is-complete',
 ]);
 
 requireTokens(homeProgress, 'Home Quran progress data', [
@@ -115,10 +106,11 @@ forbidTokens(app, 'Home Quran progress', [
 requireTokens(quran, 'Quran catalog progress', [
   'function readLastRead(): LastRead | null',
   'if (!raw) return null;',
-  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
   "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
   'const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1',
-  'lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0',
+  'title={`Sure ${readerSurahNumber}`}',
+  'meta={lastRead && lastSurah ? <span id="quran-resume-position">Ayah {lastAyah} von {lastSurah.numberOfAyahs}</span> : undefined}',
+  'progress={0}',
 ]);
 forbidTokens(quran, 'Quran catalog progress', [
   'const fallback = { surahNumber: 112, ayahNumber: 1',

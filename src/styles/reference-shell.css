@@ -15,14 +15,8 @@
   width: 100%;
 }
 
-/* Auf jedem Bildschirm mit Kopfzeile, nicht nur auf Detailseiten. Der
-   Gebetskurs, der Lernbereich und der Kalender tragen die Fußnavigation und
-   fielen deshalb aus dieser Regel — ausgerechnet die langen Seiten, auf denen
-   man zum Zurückgehen erst wieder ganz nach oben scrollen musste. */
 .reference-screen-header {
-  position: sticky;
-  z-index: 30;
-  top: max(7px, env(safe-area-inset-top));
+  position: static;
   margin: -2px -2px 2px;
   padding: 7px 3px;
   border: 1px solid rgba(226, 191, 119, .14);

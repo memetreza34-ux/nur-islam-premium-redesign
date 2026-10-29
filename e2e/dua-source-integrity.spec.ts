@@ -29,10 +29,13 @@ for (const width of [320, 768, 1280]) {
     for (const entry of entries) {
       await page.getByPlaceholder('Dua, Bedeutung oder Quelle suchen …').fill(entry.title);
       await page.locator('.reference-dua-card__content').click();
-      const dialog = page.getByRole('dialog');
-      await expect(dialog).toContainText(entry.source);
-      if (entry.sourceNote) await expect(dialog).toContainText(entry.sourceNote);
-      await expect(dialog.getByRole('link', { name: 'Fundstelle öffnen' })).toHaveAttribute('href', entry.sourceUrl!);
+      const dialog = page.locator('.reference-dua-modal');
+      await dialog.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+      const sourceInfo = page.locator('dialog.source-info-dialog');
+      await expect(sourceInfo).toContainText(entry.source);
+      if (entry.sourceNote) await expect(sourceInfo).toContainText(entry.sourceNote);
+      await expect(sourceInfo.getByRole('link', { name: 'Fundstelle öffnen' })).toHaveAttribute('href', entry.sourceUrl!);
+      await sourceInfo.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
       await dialog.getByRole('button', { name: 'Teilen', exact: true }).click();
       const shared = await page.evaluate(() => (window as unknown as { capturedShare: ShareData }).capturedShare.text);
       expect(shared).toContain(entry.sourceUrl);

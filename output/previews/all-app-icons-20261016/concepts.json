@@ -1,0 +1,64 @@
+[
+  {
+    "id": "arch",
+    "name": "Lichtbogen",
+    "src": "../app-icon-arch-20261016/app-icon-192.png",
+    "download": "../app-icon-arch-20261016/app-icon-1024.png",
+    "vector": "../app-icon-arch-20261016/app-icon.svg"
+  },
+  {
+    "id": "mosque",
+    "name": "Moschee · 3D",
+    "src": "../app-icon-mosque-20261016/mosque-icon-192.png",
+    "download": "../app-icon-mosque-20261016/mosque-icon-1024.png"
+  },
+  {
+    "id": "allah",
+    "name": "Bogen mit Allah",
+    "src": "../app-icon-arabic-arch-20261016/app-icon-192.png",
+    "download": "../app-icon-arabic-arch-20261016/app-icon-1024.png",
+    "vector": "../app-icon-arabic-arch-20261016/app-icon.svg"
+  },
+  {
+    "id": "nur",
+    "name": "Nūr im Bogen",
+    "src": "../app-icon-more-20261016/nur-icon-192.png",
+    "download": "../app-icon-more-20261016/nur-icon-1024.png",
+    "vector": "../app-icon-more-20261016/nur-icon.svg"
+  },
+  {
+    "id": "moon",
+    "name": "Lichtmond",
+    "src": "../app-icon-more-20261016/moon-icon-192.png",
+    "download": "../app-icon-more-20261016/moon-icon-1024.png",
+    "vector": "../app-icon-more-20261016/moon-icon.svg"
+  },
+  {
+    "id": "knowledge",
+    "name": "Licht & Wissen",
+    "src": "../app-icon-more-20261016/light-icon-192.png",
+    "download": "../app-icon-more-20261016/light-icon-1024.png",
+    "vector": "../app-icon-more-20261016/light-icon.svg"
+  },
+  {
+    "id": "old-arch",
+    "name": "Lichtbogen · früher",
+    "src": "../logo-directions-20261016/icon-a.svg",
+    "download": "../logo-directions-20261016/icon-a.svg",
+    "vector": "../logo-directions-20261016/icon-a.svg"
+  },
+  {
+    "id": "monogram",
+    "name": "N-Monogramm · früher",
+    "src": "../logo-directions-20261016/icon-b.svg",
+    "download": "../logo-directions-20261016/icon-b.svg",
+    "vector": "../logo-directions-20261016/icon-b.svg"
+  },
+  {
+    "id": "old-moon",
+    "name": "Mond & Licht · früher",
+    "src": "../logo-directions-20261016/icon-c.svg",
+    "download": "../logo-directions-20261016/icon-c.svg",
+    "vector": "../logo-directions-20261016/icon-c.svg"
+  }
+]

@@ -6,7 +6,6 @@
 .reference-prayer-live-status,
 .reference-prayer-location,
 .reference-prayer-progress,
-.reference-prayer-method,
 .reference-selected-date,
 .reference-calendar-event,
 .reference-calendar-month,
@@ -77,8 +76,7 @@
 }
 
 .reference-prayer-location,
-.reference-prayer-progress,
-.reference-prayer-method {
+.reference-prayer-progress{
   border-radius: 19px;
   background: linear-gradient(145deg, rgba(9, 48, 37, .86), rgba(3, 23, 18, .97));
 }
@@ -96,10 +94,6 @@
 .reference-next-prayer__icon {
   border-color: rgba(232, 199, 122, .2);
   background: rgba(232, 199, 122, .055);
-}
-
-.reference-prayer-method em {
-  color: rgba(157, 178, 168, .78);
 }
 
 /* Calendar */
@@ -247,35 +241,16 @@
 }
 
 /* Qibla and discovery surfaces */
-.reference-qibla-stage,
 .reference-qibla-location,
 .reference-mosque-detail-modal {
   border-color: rgba(232, 199, 122, .16) !important;
   box-shadow: 0 15px 34px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
 }
 
-.reference-qibla-stage {
-  border-radius: 29px !important;
-  background:
-    radial-gradient(circle at 50% 38%, rgba(232, 199, 122, .08), transparent 14rem),
-    linear-gradient(160deg, #0a4233, #04251d 58%, #02130f) !important;
-}
-
 .reference-qibla-location{
   border-radius: 19px !important;
   background: linear-gradient(145deg, rgba(8, 45, 34, .84), rgba(3, 22, 17, .97)) !important;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  .reference-quran-list--catalog > article:hover,
-  .reference-name-list--complete > article:hover,
-  .reference-dua-card--complete:hover,
-  .reference-category-card:hover,
-  .reference-dhikr-step-tabs button:hover,
-  .reference-dhikr-category-grid button:hover{
-    border-color: rgba(232, 199, 122, .25) !important;
-    background-color: rgba(232, 199, 122, .025) !important;
-  }}
 
 @media (max-width: 370px) {
   .reference-next-prayer {

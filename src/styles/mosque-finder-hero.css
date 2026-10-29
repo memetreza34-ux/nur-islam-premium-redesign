@@ -13,8 +13,8 @@
 
 .reference-mosque-screen--live .reference-mosque-hero > .premium-image {
   position: absolute !important;
-  inset: 0 !important;
-  width: 100% !important;
+  inset: 0 0 0 auto !important;
+  width: 48% !important;
   height: 100% !important;
   max-height: none !important;
   overflow: hidden !important;
@@ -26,8 +26,8 @@
   width: 100% !important;
   height: 100% !important;
   max-width: none !important;
-  object-fit: cover !important;
-  object-position: 61% center !important;
+  object-fit: contain !important;
+  object-position: right center !important;
   transform: none !important;
   transform-origin: center !important;
   opacity: 1 !important;
@@ -87,20 +87,6 @@
   backdrop-filter: blur(8px);
 }
 
-.reference-mosque-screen--live .reference-mosque-hero__caption {
-  position: absolute;
-  z-index: 3;
-  right: 12px;
-  bottom: 12px;
-  padding: 5px 8px;
-  border: 1px solid rgba(255, 248, 234, .25);
-  border-radius: 999px;
-  color: rgba(255, 248, 234, .95);
-  background: rgba(3, 23, 18, .76);
-  font-size: .68rem;
-  letter-spacing: .02em;
-  text-shadow: 0 1px 5px rgba(0, 0, 0, .8);
-}
 
 @media (max-width: 390px) {
   .reference-mosque-screen--live .reference-mosque-hero > div {

@@ -1,3 +1,5 @@
+import { useScreenState, useScreenRef } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useRef, useState } from 'react';
 import {
   BookOpenCheck,
@@ -102,7 +104,7 @@ function MadhhabDetail({ school, onBack }: { school: MadhhabEntry; onBack: () =>
           <div className="madhhab-context-grid"><div><MapPin size={18} /><h4>Historische Verbreitung</h4><p>{school.spread}</p></div><div><Scale size={18} /><h4>Was der Unterschied bedeutet</h4><p>{school.practice}</p></div></div>
         </section>
 
-        <section id="madhhab-quellen">
+        <SourceInfo title="Quellen und offizielle Startseiten"><section id="madhhab-quellen">
           <span className="overline">Zum Weiterlesen</span><h3>Quellen und offizielle Startseiten</h3>
           <p>Da eine historische Rechtsschule keine zentrale Organisation ist, gibt es keine „offizielle Homepage“ der Schule. Diese direkten Fachlinks stammen von anerkannten Institutionen und Nachschlagewerken.</p>
           <div className="madhhab-source-list">
@@ -115,7 +117,7 @@ function MadhhabDetail({ school, onBack }: { school: MadhhabEntry; onBack: () =>
               </div>
             ))}
           </div>
-        </section>
+        </section></SourceInfo>
       </article>
 
       <button className="madhhab-back-button" onClick={onBack}><ChevronLeft size={18} />Zurück zu allen vier Schulen</button>
@@ -126,8 +128,8 @@ function MadhhabDetail({ school, onBack }: { school: MadhhabEntry; onBack: () =>
 
 export function MadhhabCatalogueFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const reduceMotion = useReducedMotion();
-  const [selectedId, setSelectedId] = useState<MadhhabId | null>(null);
-  const returnScroll = useRef(0);
+  const [selectedId, setSelectedId] = useScreenState<MadhhabId | null>('madhhabs.selected', null);
+  const returnScroll = useScreenRef('madhhabs.catalogue-scroll', 0);
   const mainRef = useRef<HTMLElement>(null);
   const selected = MADHHAB_CATALOGUE.find((school) => school.id === selectedId) ?? null;
 

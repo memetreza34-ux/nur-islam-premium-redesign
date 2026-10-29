@@ -1,23 +1,25 @@
 const PREMIUM_ASSET_PREFIX = 'premium-assets/high-res-objects/';
 
 const PREMIUM_ASSET_ALIASES: Record<string, string> = {
-  'nur-logo-emblem.webp': 'nur-logo-emblem-v3.svg',
-  'nur-logo-emblem.png': 'nur-logo-emblem-v3.svg',
-  'nur-logo-emblem-v2.webp': 'nur-logo-emblem-v3.svg',
-  'mosque-gold.webp': 'mosque-heritage-v1.webp',
-  'mosque-gold.png': 'mosque-heritage-v1.webp',
-  'mosque.webp': 'mosque-heritage-v1.webp',
+  'qibla-compass.png': 'home-qibla-illustrated-v3.webp',
+  'nur-logo-emblem-v3.svg': 'nur-logo-mosque-3d-v1.webp',
+  'nur-logo-emblem.webp': 'nur-logo-mosque-3d-v1.webp',
+  'nur-logo-emblem.png': 'nur-logo-mosque-3d-v1.webp',
+  'nur-logo-emblem-v2.webp': 'nur-logo-mosque-3d-v1.webp',
+  'mosque-gold.webp': 'prayer-companion-mosque-v1.webp',
+  'mosque-gold.png': 'prayer-companion-mosque-v1.webp',
+  'mosque.webp': 'prayer-companion-mosque-v1.webp',
   // The older raster is truncated; retain its route with the intact replacement.
-  'mosque-gold-v2.webp': 'mosque-heritage-v1.webp',
-  'quran-closed.webp': 'quran-closed-v2.webp',
-  'quran-closed.png': 'quran-closed-v2.webp',
-  'quran-open.webp': 'quran-open-v3.webp',
-  'tasbih.webp': 'tasbih-v2.webp',
-  'qibla-compass.webp': 'qibla-compass-v2.webp',
-  'qibla.webp': 'qibla-compass-v2.webp',
-  'mihrab.webp': 'mihrab-v2.webp',
-  'lantern.webp': 'lantern-v3.webp',
-  'kaaba.webp': 'kaaba-v2.webp',
+  'mosque-gold-v2.webp': 'prayer-companion-mosque-v1.webp',
+  'quran-closed.webp': 'learn-hub-book-v1.webp',
+  'quran-closed.png': 'learn-hub-book-v1.webp',
+  'quran-open.webp': 'learn-hub-book-v1.webp',
+  'tasbih.webp': 'home-dhikr-illustrated-v3.webp',
+  'qibla-compass.webp': 'home-qibla-illustrated-v3.webp',
+  'qibla.webp': 'home-qibla-illustrated-v3.webp',
+  'mihrab.webp': 'home-learn-prayer-v5.webp',
+  'lantern.webp': 'home-duas-v5.webp',
+  'kaaba.webp': 'learn-hub-hajj-v1.webp',
 };
 
 function normalizedBaseUrl() {

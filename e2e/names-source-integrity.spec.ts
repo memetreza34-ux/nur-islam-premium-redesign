@@ -46,14 +46,17 @@ for (const width of [320, 768, 1280]) {
     await page.setViewportSize({ width, height: 900 });
     await page.route('**/api.aladhan.com/**', route => route.abort());
     await page.goto('/?preview=1');
-    await page.getByRole('button', { name: /^Heute entdecken 99 Namen/ }).click();
+    await page.getByRole('button', { name: /^99 Namen Allahs / }).click();
     await expect(page.locator('.reference-name-list__main')).toHaveCount(99);
-    await expect(page.locator('.reference-names-hero')).toContainText('Darussalam als Daʿif');
+    await page.getByRole('button', { name: 'Quellen anzeigen: Quellen zur Namensliste', exact: true }).click();
+    await expect(page.locator('dialog.source-info-dialog')).toContainText('Darussalam als Daʿif');
+    await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
     for (const id of Array.from({ length: 99 }, (_, i) => i + 1)) {
       await page.locator('.reference-name-list__main').nth(id - 1).click();
-      const dialog = page.getByRole('dialog');
+      const dialog = page.locator('.reference-name-modal');
       await expect(dialog).toBeVisible();
-      const source = dialog.locator('.reference-name-source');
+      await dialog.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+      const source = page.locator('dialog.source-info-dialog .reference-name-source');
       await expect(source).toContainText('Umschrift ist eine angenäherte Lesehilfe');
       if (id <= 13) {
         await expect(source.getByRole('link')).toHaveAttribute('href', `https://quran.com/59/${id < 3 ? 22 : id < 11 ? 23 : 24}`);
@@ -80,6 +83,7 @@ for (const width of [320, 768, 1280]) {
       if ([5, 22, 30, 35, 40, 48, 58, 63, 68, 70, 76, 81, 84, 85, 88, 90, 93, 95, 98, 99].includes(id)) {
         await dialog.screenshot({ path: testInfo.outputPath(`name-${id}-${width}.png`) });
       }
+      await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
       await dialog.getByRole('button', { name: 'Schließen', exact: true }).click();
       await expect(dialog).toBeHidden();
     }
@@ -99,12 +103,12 @@ for (const width of [320, 768, 1280]) {
       };
     });
     await page.goto('/?preview=1');
-    await page.getByRole('button', { name: /^Heute entdecken 99 Namen/ }).click();
+    await page.getByRole('button', { name: /^99 Namen Allahs / }).click();
     await expect(page.locator('.reference-name-heart').nth(47)).toHaveAttribute('aria-pressed', 'true');
     await expect(page.locator('.reference-name-heart').nth(64)).toHaveAttribute('aria-pressed', 'true');
     await expect(page.locator('.reference-name-state').nth(62)).toHaveAttribute('aria-pressed', 'true');
     await page.locator('.reference-name-list__main').first().click();
-    const dialog = page.getByRole('dialog');
+    const dialog = page.locator('.reference-name-modal');
     await dialog.getByRole('button', { name: 'Favorit', exact: true }).click();
     await expect(dialog.getByRole('status')).toContainText('nicht dauerhaft gespeichert');
     await expect(dialog.getByRole('status')).toBeVisible();
@@ -120,7 +124,7 @@ for (const width of [320, 768, 1280]) {
       localStorage.setItem('nur_name_learned', '{broken');
     });
     await page.goto('/?preview=1');
-    await page.getByRole('button', { name: /^Heute entdecken 99 Namen/ }).click();
+    await page.getByRole('button', { name: /^99 Namen Allahs / }).click();
     await expect(page.getByRole('status')).toContainText('nicht eindeutig zuordenbar');
     await expect(page.locator('.reference-name-progress')).toContainText('Kein bestätigter Lernstand');
     await expect(page.locator('.reference-name-heart').nth(47)).toHaveAttribute('aria-pressed', 'false');

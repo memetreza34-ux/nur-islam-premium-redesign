@@ -39,7 +39,7 @@ const [
   read('src/screens/QuranReaderScreen.tsx'),
   read('src/screens/QuranScreen.tsx'),
   read('src/screens/ReferenceReadingScreens.tsx'),
-  read('src/screens/DailyHadithScreen.tsx'),
+  read('src/screens/SavedHadithScreen.tsx'),
   read('src/data/hadithData.ts'),
   read('src/screens/LegacyFeatureScreens.tsx'),
   read('src/screens/CollectionsScreen.tsx'),
@@ -99,13 +99,11 @@ requireText(app, [
   'onOpenCalendarDate={openSavedCalendarDate}',
   'Ayah des Tages',
   'onOpenReader(dailyAyah.surahNumber, dailyAyah.ayahNumber)',
-  'getDailyHadith(now)',
   'getDailyAyah(now, PRAYER_SCHEDULE_META.timezone)',
   'selectedHadithId',
   'onOpenHadith={openSavedHadith}',
-  "activeTab: 'quran'",
-  "activeTab: 'reader' as const",
-  'pushBrowserNavigation(quranSnapshot)',
+  "activeTab: 'reader'",
+  'navigationHistory: [...navigationHistory, activeTab].slice(-24)',
   'pushBrowserNavigation(readerSnapshot)',
   "window.addEventListener('popstate'",
   'window.history.back()',
@@ -140,7 +138,6 @@ requireText(quran, [
   'setReloadToken((value) => value + 1)',
   'function readLastRead(): LastRead | null',
   'if (!raw) return null;',
-  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
   "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
   'const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1',
   'onOpenReader(readerSurahNumber, lastAyah)',
@@ -235,8 +232,8 @@ requireText(readingScreens, [
   'Quran entdecken',
   'copyAyah',
   'shareAyah',
-  'completeGuide',
-  'saveGuideCompletion(guide.id)',
+  'saveGuideStep(guide.id, index)',
+  "'Von vorn'",
 ], 'Focused Ayah and worship guide actions');
 forbidText(readingScreens, [
   'setPlaying',
@@ -259,21 +256,22 @@ forbidText(readingScreens, [
 
 requireText(dailyHadith, [
   'hadithId?: string | null',
-  'isDaily ? getDailyHadith(now) : getHadithById(hadithId)',
+  'hadithId ? getHadithById(hadithId) : undefined',
   'Hadith nicht verfügbar',
   'if (!writeSavedHadithIds(next))',
   'readSavedHadithIds',
   'writeSavedHadithIds(next)',
   'toggleSaved',
   'shareOrCopy',
-  'Hadith des Tages',
   'Gespeicherter Hadith',
   'Primärquelle',
-], 'Rotating daily Hadith actions');
+], 'Saved Hadith actions');
 forbidText(dailyHadith, [
+  'getDailyHadith',
+  'Hadith des Tages',
   "localStorage.setItem('nur_daily_hadith_saved'",
   'DAILY_HADITH_TEXT',
-], 'Rotating daily Hadith actions');
+], 'Saved Hadith actions');
 
 requireText(hadithData, [
   'export const HADITH_LIBRARY',
@@ -318,7 +316,7 @@ requireText(prayer, [
   "readSet('nur_prayer_notifications', [])",
   'obligatoryIds.includes',
   'prayer.obligatory && notifications.has(prayer.id)',
-  'prayer-alert--disabled',
+  'selectedIsToday && prayer.obligatory ?',
   'In-App-Erinnerung aktiviert; Systembenachrichtigungen sind nicht verfügbar',
 ], 'Prayer reminder controls');
 forbidText(prayer, [
@@ -455,4 +453,4 @@ requireText(installStyles, [
   '.reference-install-prompt__action:disabled',
 ], 'PWA install prompt styles');
 
-console.log('Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader preserves its Quran parent in browser/system history, the focused Ayah is honestly labelled, daily and legacy Hadith experiences share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');
+console.log('Functional hardening verified: Home and Quran use real persisted progress only, Home-to-Reader returns directly to its actual Home origin in browser/system history, the focused Ayah is honestly labelled, saved Hadith and library views share one source-labelled library and bookmark migration, empty Dua favorites stay empty, saved-content routing is exact, Quran reader progress is validated before persistence, Dhikr day rollover is coherent, Qibla sensor/listener cleanup is protected, reminders remain real, mosque URLs are safe, cloud deletion signs out locally, cloud backup excludes device-local state, note failures remain visible, and PWA install actions cannot remain dead.');

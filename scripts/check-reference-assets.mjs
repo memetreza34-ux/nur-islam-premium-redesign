@@ -57,6 +57,11 @@ for (const asset of requiredSpriteAssets) {
 }
 
 const recoveredDirectory = resolve(root, 'public/premium-assets/high-res-objects');
+const illustrationMigration = JSON.parse(await readFile(resolve(root, 'docs/ILLUSTRATION-REPLACEMENTS-2026-10-15.json'), 'utf8'));
+const illustrationRefresh = JSON.parse(await readFile(resolve(root, 'docs/PLAIN-ILLUSTRATION-REPLACEMENTS-2026-10-22.json'), 'utf8'));
+const currentArtworkName = (name) => illustrationRefresh.replacements[name] ?? name;
+const currentIllustrations = new Set([...Object.values(illustrationMigration.replacements).map(currentArtworkName), ...Object.values(illustrationRefresh.replacements)]);
+const archivedNames = new Set(illustrationMigration.archivedAssets.map((asset) => asset.formerPath.split('/').pop()));
 const recoveredAssets = [
   'nur-logo-emblem-v2.webp',
   'mosque-gold-v2.webp',
@@ -100,18 +105,24 @@ const recoveredAssets = [
   'mini-dua-v2.webp',
   'mini-dua-v3.webp',
   'ayah-focus-bg-v1.webp',
-  'prayer-fajr-v3.webp',
-  'prayer-dhuhr-v3.webp',
-  'prayer-asr-v3.webp',
-  'prayer-maghrib-v3.webp',
-  'prayer-isha-v3.webp',
-  'prayer-mini-fajr-v1.webp',
+  'splash-arcade-fajr-v1.webp',
+  'splash-arcade-dhuhr-v1.webp',
+  'splash-arcade-asr-v1.webp',
+  'splash-arcade-maghrib-v1.webp',
+  'splash-arcade-isha-v1.webp',
+  'prayer-mini-fajr-v2.webp',
   'prayer-mini-sunrise-v1.webp',
-  'prayer-mini-dhuhr-v1.webp',
-  'prayer-mini-asr-v1.webp',
-  'prayer-mini-maghrib-v1.webp',
-  'prayer-mini-isha-v1.webp',
-];
+  'prayer-mini-dhuhr-v2.webp',
+  'prayer-mini-asr-v2.webp',
+  'prayer-mini-maghrib-v2.webp',
+  'prayer-mini-isha-v2.webp',
+].filter((name) => !archivedNames.has(name));
+recoveredAssets.push(...currentIllustrations);
+recoveredAssets.push('quran-garden-hero-v2.webp');
+recoveredAssets.push('ayah-oasis-card-v1.webp');
+recoveredAssets.push(...['hands', 'mouth', 'nose', 'face', 'arms', 'head', 'ears', 'feet'].map((id) => `wudu-step-${id}-v2.webp`));
+recoveredAssets.push(...['standing', 'takbir', 'qiyam', 'ruku', 'sujud', 'sitting', 'taslim'].map((id) => `salah-posture-${id}-v2.webp`));
+recoveredAssets.push(...['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'].map((id) => `prayer-oasis-${id}-v2.webp`));
 
 /**
  * The four mosque rasters are the same truncated file: the RIFF header
@@ -195,7 +206,7 @@ const appleTouchGitBlob = createHash('sha1')
   .update(`blob ${appleTouch.length}\0`)
   .update(appleTouch)
   .digest('hex');
-const expectedAppleTouchGitBlob = 'bed4578ef1e7865e67f1936fefd86f05a2b0e9b9';
+const expectedAppleTouchGitBlob = '4cba3225f0ea7512ddc9101f6d0fbf1111025c21';
 if (appleTouchGitBlob !== expectedAppleTouchGitBlob) {
   throw new Error(`Apple touch icon drifted from the current brand-art Git blob: ${appleTouchGitBlob}.`);
 }
@@ -244,16 +255,88 @@ const sourceFiles = await collectTextFiles(resolve(root, 'src'));
 const sourceParts = await Promise.all(sourceFiles.map((path) => readFile(path, 'utf8')));
 const completeSource = sourceParts.join('\n');
 
+const serviceWorkerSource = await readFile(resolve(root, 'public/sw.js'), 'utf8');
+for (const asset of illustrationMigration.archivedAssets) {
+  const name = asset.formerPath.split('/').pop();
+  const stillShipped = await stat(resolve(root, asset.formerPath)).then(() => true, (error) => {
+    if (error.code === 'ENOENT') return false;
+    throw error;
+  });
+  if (stillShipped || completeSource.includes(`/premium-assets/high-res-objects/${name}`) || serviceWorkerSource.includes(`premiumAsset('${name}')`)) {
+    throw new Error(`Archived illustration must not be shipped, rendered or precached: ${name}`);
+  }
+  if (asset.replacedBy) await stat(resolve(root, asset.replacedBy));
+  else if (!asset.replacementStyle || !completeSource.includes(asset.replacementStyle)) throw new Error(`Archived illustration needs a current replacement: ${name}`);
+}
+
 const retainedUnreferencedAssets = new Set([
-  'quran-closed-v3.webp', 'quran-open-v2.webp', 'tasbih-v3.webp',
-  'qibla-compass-v3.webp', 'lantern-v2.webp', 'calendar-chip-v2.webp',
-  'bookmark-v2.webp', 'mini-prayer-learning-v1.webp',
-  'mini-names-v1.webp', 'mini-names-v2.webp', 'mini-names-v3.webp',
-  'mini-names-v4.webp', 'mini-names-v5.webp', 'mini-quiz-v2.webp',
-  'mini-quiz-v3.webp', 'mini-dua-v1.webp', 'mini-dua-v2.webp', 'mini-dua-v3.webp',
+  'quran-closed-v2.webp',
+  'quran-closed-v3.webp',
+  'quran-open-v2.webp',
+  'quran-open-v3.webp',
+  'mini-quran-v1.webp',
+  'home-quran-illustrated-v1.webp',
+  'widget-quran-plan-illustrated-v1.webp',
+  'mosque-heritage-v1.webp',
+  'mosque-finder-arch-v1.webp',
+  'tasbih-v2.webp',
+  'tasbih-v3.webp',
+  'home-dhikr-illustrated-v1.webp',
+  'qibla-compass-v2.webp',
+  'qibla-compass-v3.webp',
+  'qibla-v2.webp',
+  'home-qibla-illustrated-v1.webp',
+  'mihrab-v2.webp',
+  'mihrab-arch-v2.webp',
+  'mini-prayer-learning-v1.webp',
+  'home-learn-prayer-v2.webp',
+  'prayer-standby-v1.webp',
+  'widget-weekly-prayers-illustrated-v1.webp',
+  'widget-friday-illustrated-v1.webp',
+  'dua-hands-v2.webp',
+  'mini-dua-v1.webp',
+  'mini-dua-v2.webp',
+  'mini-dua-v3.webp',
+  'lantern-v2.webp',
+  'lantern-v3.webp',
+  'learning-repentance-v2.webp',
+  'sun-emblem-v2.webp',
+  'mini-names-v1.webp',
+  'mini-names-v2.webp',
+  'mini-names-v3.webp',
+  'mini-names-v4.webp',
+  'mini-names-v5.webp',
+  'home-names-v1.webp',
+  'mini-quiz-v1.webp',
+  'mini-quiz-v2.webp',
+  'mini-quiz-v3.webp',
+  'kaaba-v2.webp',
+  'dome-v2.webp',
+  'bookmark-v2.webp',
+  'bookmark-v3.webp',
+  'widget-inspiration-illustrated-v1.webp',
+  'widget-routine-illustrated-v1.webp',
+  'calendar-chip-v2.webp',
+  'calendar-object-v1.webp',
+  'widget-date-illustrated-v1.webp',
+  'widget-reminders-illustrated-v1.webp',
+  'learning-sunnah-v2.webp',
+  'zakat-scale-v1.webp',
+  'widget-favorites-illustrated-v1.webp',
+  'wudu-washing-v1.webp',
+  'learning-hadith-v2.webp',
+  'learning-madhhabs-v2.webp',
+  'learning-prophets-v2.webp',
+  'learn-hub-book-v1.webp', 'learn-hub-book-v1.webp',
+  'learn-hub-book-v1.webp', 'learn-hub-book-v1.webp', 'home-dhikr-illustrated-v3.webp',
+  'home-qibla-illustrated-v3.webp', 'home-duas-v5.webp', 'learn-hub-sunnah-v1.webp',
+  'learn-hub-terms-v1.webp', 'home-learn-prayer-v5.webp',
+  'home-names-v5.webp', 'home-names-v5.webp', 'home-names-v5.webp',
+  'home-names-v5.webp', 'home-names-v5.webp', 'home-quiz-v6.webp',
+  'home-quiz-v6.webp', 'home-duas-v5.webp', 'home-duas-v5.webp', 'home-duas-v5.webp',
 ]);
 for (const name of recoveredAssets) {
-  if (!completeSource.includes(name) && !retainedUnreferencedAssets.has(name) && !['mosque-v2.webp', 'qibla-v2.webp', 'mihrab-v2.webp'].includes(name)) {
+  if (!completeSource.includes(name) && !retainedUnreferencedAssets.has(name) && !['mosque-v2.webp', 'home-qibla-illustrated-v3.webp', 'home-learn-prayer-v5.webp'].includes(name)) {
     throw new Error(`Recovered asset is not wired in the app source: ${name}`);
   }
 }
@@ -308,33 +391,39 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v86-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must be v86 for opening artwork matching the current prayer phase independently of the next-prayer notice.');
+if (!serviceWorker.includes(`nur-islam-premium-v122-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must be v122 for the selected 3D mosque brand and current offline artwork.');
 }
-for (const name of ['home-dhikr-illustrated-v1', 'widget-date-illustrated-v1', 'widget-inspiration-illustrated-v1', 'widget-routine-illustrated-v1', 'widget-quran-plan-illustrated-v1', 'widget-weekly-prayers-illustrated-v1', 'widget-favorites-illustrated-v1', 'widget-reminders-illustrated-v1', 'widget-friday-illustrated-v1']) {
+for (const name of new Set([...currentIllustrations].map((name) => name.replace(/\.webp$/, '')))) {
   if (!serviceWorker.includes(`premiumAsset('${name}.webp')`)) {
     throw new Error(`New widget artwork must be available offline: ${name}.webp`);
   }
 }
-if (!serviceWorker.includes("premiumAsset('mosque-heritage-v1.webp')")) {
+if (!serviceWorker.includes("premiumAsset('prayer-oasis-sunrise-v1.webp')")) {
+  throw new Error('The sunrise timetable background must be cached offline.');
+}
+if (!serviceWorker.includes("premiumAsset('nur-logo-mosque-3d-v1.webp')")) {
+  throw new Error('The current 3D mosque logo must be cached offline.');
+}
+if (!serviceWorker.includes("premiumAsset('prayer-companion-mosque-v1.webp')")) {
   throw new Error('The onboarding mosque artwork must be available offline.');
 }
-if (!serviceWorker.includes("premiumAsset('mosque-finder-arch-v1.webp')")) {
+if (!serviceWorker.includes("premiumAsset('prayer-companion-mosque-v1.webp')")) {
   throw new Error('The Mosque Finder hero image must be available offline.');
 }
 for (const id of ['hands', 'mouth', 'nose', 'face', 'arms', 'head', 'ears', 'feet']) {
-  if (!serviceWorker.includes(`premiumAsset('wudu-step-${id}-v1.webp')`)) {
+  if (!serviceWorker.includes(`premiumAsset('wudu-step-${id}-v2.webp')`)) {
     throw new Error(`Wudu cartoon ${id} must be available offline.`);
   }
 }
-if (!serviceWorker.includes("premiumAsset('wudu-washing-v1.webp')")) {
+if (!serviceWorker.includes("premiumAsset('learn-hub-wudu-v1.webp')")) {
   throw new Error('Wudu illustration must be included in the offline shell.');
 }
-if (!serviceWorker.includes("premiumAsset('home-prayer-sky-v1.webp')")) {
-  throw new Error('Quran backdrop must be included in the offline shell.');
+if (!serviceWorker.includes("premiumAsset('quran-garden-hero-v2.webp')")) {
+  throw new Error('The Quran garden backdrop must be available in the offline shell.');
 }
 for (const id of ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']) {
-  if (!serviceWorker.includes(`premiumAsset('prayer-mini-${id}-v1.webp')`)) {
+  if (!serviceWorker.includes(`premiumAsset('prayer-mini-${id}-${id === 'sunrise' ? 'v1' : 'v2'}.webp')`)) {
     throw new Error(`Prayer miniature missing from offline shell: ${id}`);
   }
 }
@@ -360,5 +449,5 @@ if (stylesEntry.includes('premium-artwork-host-lock.css') || styleEntries.includ
 }
 
 console.log(
-  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v86 with concept C vector brand mark retained outside the opening, no obsolete artwork host or global image-hiding CSS.`,
+  `Reference artwork verified: sprite ${width}x${height}, ${requiredSpriteAssets.length} sprite mappings, ${recoveredAssets.length} recovered WebP assets, exact 180x180 Apple touch Git blob, ${designBoards.size} archived chat boards, shared visual version ${expectedVisualVersion}, PWA shell v122 with the selected 3D mosque brand mark including the door opening, no obsolete artwork host or global image-hiding CSS.`,
 );

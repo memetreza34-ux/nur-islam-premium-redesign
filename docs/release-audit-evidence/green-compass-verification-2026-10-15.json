@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-15",
+  "change": "One shared green QiblaCompass renders the live Qibla screen and the truthful north-oriented widget preview.",
+  "preserved": [
+    "Location-based bearing and distance",
+    "User-started live orientation",
+    "Direction, alignment, accuracy and tilt states",
+    "No arbitrary Qibla pointer near the Kaaba",
+    "Reduced-motion behavior"
+  ],
+  "cacheVersion": 100,
+  "checks": {
+    "npmRunCheck": "passed",
+    "unitTests": 1047,
+    "e2e": "18 passed (42.0s)",
+    "responsiveWidths": [
+      320,
+      390,
+      768
+    ]
+  },
+  "screenshots": [
+    "green-compass-visible-2026-10-15.jpg",
+    "green-compass-phone-2026-10-15.png"
+  ]
+}

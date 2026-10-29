@@ -67,7 +67,8 @@ requireTokens(entrySystem, 'Entry/system integration layer', [
 ]);
 
 requireTokens(brandEntryArt, 'Splash/brand art layer', [
-  '.reference-splash__ayah',
+  '.entry-portal',
+  '.entry-emblem',
   'background: #001B16 !important',
   'width: 100%',
   'height: 100dvh',
@@ -111,7 +112,6 @@ requireTokens(profileBase, 'Profile base surfaces', [
   '.reference-profile-row__icon',
   'border-radius: 13px',
   '.reference-profile-logout',
-  '.reference-choice',
   '.reference-settings-toggles > button',
   'border-radius: 18px',
   'linear-gradient(145deg, #0d5743, #07372b 64%, #00120f)',
@@ -175,11 +175,8 @@ for (const selector of [
   '.reference-dhikr-stats-modal',
   '.reference-prayer-settings-modal',
   '.prayer-completion-modal',
-  '.reference-learning-completion-modal',
-  '.reference-learning-plan-modal',
   '.calendar-modal',
   '.reference-mosque-detail-modal',
-  '.reference-prayer-course-complete > section',
   '.reference-input-search',
   '.reference-legacy-search',
   '.reference-fasting-reminder-settings input',
@@ -187,7 +184,6 @@ for (const selector of [
   '.reference-profile-list',
   '.reference-profile-logout',
   '.reference-profile-modal__icon',
-  '.reference-choice',
   '.reference-settings-toggles > button',
   '.reference-profile-row__icon',
   '.reference-account-form',
@@ -286,3 +282,14 @@ for (const staleProfile of [
 }
 
 console.log('Reference system surfaces verified: Splash/entry brand, compact one-line bottom navigation, shell/onboarding, system banners, modals, inputs, profile, account/notes utility surfaces, no-blur fallback use the emerald/gold/cream palette, protected icon weight and mobile-safe geometry with explicit light-theme preservation.');
+
+const dialogChrome = await read('src/styles/overlay-navigation-clearance.css');
+requireTokens(dialogChrome, 'Shared dialog and choice owner', [
+  '.dialog-panel.dialog-panel', '.dialog-header.dialog-header', '.dialog-header__close',
+  "font:600 26px/1.15 'Cormorant Garamond'", 'width:44px', 'height:44px',
+  '.reference-choice--active', 'border-radius:14px', 'background:rgba(226,191,119,.1)',
+]);
+const dialogScreens = ['MoreScreen', 'PrayerScreen', 'QuranReaderScreen', 'CalendarScreen', 'DuasScreen', 'NamesScreen', 'DhikrScreen', 'MosqueScreen'];
+for (const [index, screen] of (await Promise.all(dialogScreens.map(name => read(`src/screens/${name}.tsx`)))).entries()) {
+  if (!screen.includes('<DialogHeader') || !screen.includes('dialog-panel')) throw new Error(`${dialogScreens[index]} must retain the shared dialog chrome.`);
+}

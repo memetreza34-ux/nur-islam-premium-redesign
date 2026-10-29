@@ -26,7 +26,6 @@ if (styleIndex.indexOf("@import './styles/overlay-navigation-clearance.css';") <
 
 const expectedExistingOverlays = [
   [profile, '.reference-profile-modal'],
-  [learning, '.reference-learning-completion-backdrop'],
   [prayer, '.prayer-completion-backdrop'],
   [prayerTimes, '.reference-prayer-settings-backdrop'],
 ];
@@ -37,8 +36,6 @@ for (const [source, selector] of expectedExistingOverlays) {
 const requiredBackdropSelectors = [
   '.reference-modal-backdrop',
   '.reference-prayer-settings-backdrop',
-  '.reference-learning-completion-backdrop',
-  '.reference-prayer-course-complete',
   '.prayer-completion-backdrop',
   '.calendar-modal-backdrop',
 ];
@@ -49,7 +46,7 @@ for (const selector of requiredBackdropSelectors) {
 
 for (const requirement of [
   '--overlay-navigation-clearance',
-  'var(--ds-nav-height, 68px)',
+  'var(--ds-nav-height, 81px)',
   'padding-bottom: var(--overlay-navigation-clearance) !important',
   'max-height: calc(100dvh',
   'scroll-padding-bottom: 24px',
@@ -58,14 +55,13 @@ for (const requirement of [
   'display: none',
   'position: absolute !important',
   'right: 18px !important',
-  '@media (max-height: 680px)',
+  'calc(var(--ds-nav-height, 81px) + 16px + env(safe-area-inset-bottom))',
 ]) {
   if (!navigationClearance.includes(requirement)) throw new Error(`Bottom navigation guardrail is missing: ${requirement}`);
 }
 
 const requiredModalSelectors = [
   "> [role='dialog']",
-  '.reference-prayer-course-complete > section',
 ];
 for (const selector of requiredModalSelectors) {
   if (!overlay.includes(selector)) throw new Error(`Overlay safety does not cover modal: ${selector}`);
@@ -96,7 +92,6 @@ const closeSelectors = [
   '.reference-modal-close',
   '.reference-prayer-settings-modal__close',
   '.reference-mosque-detail-modal__close',
-  '.reference-learning-completion-modal__close',
   '.prayer-completion-modal__close',
 ];
 for (const selector of closeSelectors) {

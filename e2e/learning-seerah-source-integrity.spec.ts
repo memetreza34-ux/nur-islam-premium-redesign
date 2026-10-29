@@ -18,7 +18,7 @@ for (const width of [320, 768]) {
       await page.locator('.reference-foundation-step').filter({ hasText: 'Der Prophet ﷺ' }).click();
       for (const id of ids) {
         const lesson = getCategoryLessons('prophet').find(item => item.id === id)!;
-        await page.getByRole('button', { name: /Kursplan/ }).click();
+        await page.getByRole('button', { name: /Lektion auswählen/ }).click();
         await page.locator('.learning-course-v2__lessons').getByRole('button').filter({ hasText: lesson.title }).click();
         await expect(page.locator('.toast')).toHaveCount(0);
         const article = page.locator('.learning-course-v2__lesson');
@@ -35,14 +35,9 @@ for (const width of [320, 768]) {
         for (const point of lesson.keyPoints) await expect(page.locator('.learning-course-v2__takeaways')).toContainText(point);
         await article.getByText(lesson.paragraphs[2], { exact: true }).scrollIntoViewIfNeeded();
         await page.screenshot({ path: testInfo.outputPath(`${id}-reading-${width}.png`) });
-        const quiz = page.locator('.learning-course-v2__quiz');
-        await expect(quiz).toContainText(lesson.question.prompt);
-        for (const option of lesson.question.options) await expect(quiz).toContainText(option);
-        await quiz.getByRole('button', { name: `B ${lesson.question.options[1]}`, exact: true }).click();
-        await expect(quiz).toContainText(lesson.question.explanation);
-        await expect(quiz).toContainText(lesson.question.options[lesson.question.correctIndex]);
+        await expect(page.locator('.learning-course-v2__quiz')).toHaveCount(0);
         const sources = page.locator('.learning-course-v2__sources');
-        await sources.locator('summary').click();
+        await page.getByRole('button', { name: 'Quellen anzeigen: Quellen und wichtige Einordnung', exact: true }).click();
         await expect(sources.locator('article')).toHaveCount(lesson.sources.length);
         await expect(sources.getByRole('link')).toHaveCount(lesson.sources.length);
         for (const [index, source] of lesson.sources.entries()) {
@@ -61,6 +56,7 @@ for (const width of [320, 768]) {
         }
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
         await page.screenshot({ path: testInfo.outputPath(`${id}-sources-${width}.png`) });
+        await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
         await page.getByRole('button', { name: 'Lektion teilen', exact: true }).click();
         const shared = await page.evaluate(() => (window as unknown as { sharedLesson: string }).sharedLesson);
         expect(shared).toContain(lesson.summary);
@@ -68,7 +64,6 @@ for (const width of [320, 768]) {
           expect(shared).toContain(source.reference);
           expect(shared).toContain(source.url!);
         }
-        await sources.locator('summary').click();
       }
     });
   }

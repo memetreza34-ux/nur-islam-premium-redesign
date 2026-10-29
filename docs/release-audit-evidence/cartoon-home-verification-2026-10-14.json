@@ -1,0 +1,43 @@
+{
+  "verifiedAt": "2026-10-14",
+  "previewUrl": "http://127.0.0.1:3004/?preview=1",
+  "scope": "Six Home shortcut illustrations only; existing grouped wide row layout, text, navigation and other screens retained.",
+  "generation": "Built-in imagegen; user screenshot used as style input, new cartoon Dua hands used as own style anchor for the remaining five motifs.",
+  "promptSet": "output/imagegen/cartoon-home-icons-20261014/prompts.json",
+  "runtimeImages": {
+    "count": 6,
+    "dimensions": "512x512",
+    "alphaPreserved": true,
+    "totalBytes": 185914,
+    "loadedOnVisibleHome": true
+  },
+  "checks": {
+    "fullCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "fullCheckLog": "/tmp/nur-cartoon-home-final-check-20261014.log",
+    "browserTestsPassed": 21,
+    "browserTestsScope": ["e2e/core-flows.spec.ts", "e2e/offline.spec.ts"],
+    "browserLog": "/tmp/nur-cartoon-home-e2e-20261014.log",
+    "imageMapCheckAfterWhitelistDeduplicationExitCode": 0,
+    "roundedCombinedGzipKB": 513,
+    "combinedBudgetChange": "512 to 513 KB after measured failure; separate JS, CSS, entry and raw chunk limits retained."
+  },
+  "manual": {
+    "viewports": ["390x844", "320x740", "native 648x764"],
+    "smallPhoneSectionWidth": 300,
+    "smallPhoneSectionScrollWidth": 300,
+    "smallPhoneRowWidth": 298,
+    "imageAndTextDoNotOverlap": true,
+    "style": "Smooth rounded 3D cartoon objects; simplified hands without photographic skin textures.",
+    "screenshots": [
+      "cartoon-home-phone-2026-10-14.jpg",
+      "cartoon-home-small-phone-2026-10-14.jpg",
+      "cartoon-home-visible-2026-10-14.jpg"
+    ],
+    "viewportOverrideReset": true,
+    "previewKeptOpen": true
+  },
+  "serviceWorkerCacheVersion": "v91",
+  "published": false
+}

@@ -34,12 +34,6 @@
   backdrop-filter: blur(22px) saturate(1.06) !important;
 }
 
-@media (hover: hover) and (pointer: fine) {
-  .bottom-nav__item:hover > span {
-    translate: 0 -1px;
-    background: rgba(226, 191, 119, .045);
-  }}
-
 /* ---------- Input finish ---------- */
 input,
 textarea,
@@ -64,11 +58,7 @@ textarea::placeholder {
 
 /* ---------- Card top-light ---------- */
 .journey-card,
-.quick-card,
-.recommendation-card,
 .reference-category-card,
-.reference-core-access-grid button,
-.reference-services-grid > button,
 .reference-expanded-learning-grid > button,
 .reference-collection-grid > button,
 .reference-dua-card--complete,
@@ -83,7 +73,6 @@ textarea::placeholder {
 .reference-dua-modal,
 .reference-name-modal,
 .reference-mosque-detail-modal,
-.reference-learning-completion-modal,
 .reference-prayer-settings-modal,
 .calendar-modal,
 .reference-dhikr-stats-modal,
@@ -96,7 +85,6 @@ textarea::placeholder {
 .reference-dua-modal::-webkit-scrollbar,
 .reference-name-modal::-webkit-scrollbar,
 .reference-mosque-detail-modal::-webkit-scrollbar,
-.reference-learning-completion-modal::-webkit-scrollbar,
 .reference-prayer-settings-modal::-webkit-scrollbar,
 .calendar-modal::-webkit-scrollbar,
 .reference-dhikr-stats-modal::-webkit-scrollbar,
@@ -108,7 +96,6 @@ textarea::placeholder {
 .reference-dua-modal::-webkit-scrollbar-thumb,
 .reference-name-modal::-webkit-scrollbar-thumb,
 .reference-mosque-detail-modal::-webkit-scrollbar-thumb,
-.reference-learning-completion-modal::-webkit-scrollbar-thumb,
 .reference-prayer-settings-modal::-webkit-scrollbar-thumb,
 .calendar-modal::-webkit-scrollbar-thumb,
 .reference-dhikr-stats-modal::-webkit-scrollbar-thumb,
@@ -118,9 +105,6 @@ textarea::placeholder {
 }
 
 /* ---------- Press response ---------- */
-button:active:not(:disabled) {
-  filter: brightness(.98);
-}
 
 /* ---------- Light theme atmosphere ---------- */
 [data-theme='light'] .app-background--v2 {

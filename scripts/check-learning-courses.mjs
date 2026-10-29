@@ -61,17 +61,13 @@ for (const feature of requiredContentFeatures) {
 }
 
 const requiredCourseFeatures = [
-  'readLearningProgress',
-  'updateLearningCompletion',
   'courseMapOpen',
-  'answerQuestion',
+  'readLearningPosition',
+  'writeLearningPosition',
+  'Lektion auswählen',
   'selectedLesson.sources.map',
-  'selectedLesson.question.options.map',
-  'reference-learning-completion-backdrop',
-  'navigator.vibrate',
   'navigator.share',
   'Diese Inhalte sind kompakte Einführungen',
-  'der Reihe nach lernen',
 ];
 for (const feature of requiredCourseFeatures) {
   if (!course.includes(feature)) throw new Error(`Interactive learning course is missing: ${feature}`);
@@ -89,15 +85,22 @@ if (!learn.includes('99 Namen Allahs') || !learn.includes('onOpenNames')) {
 if (learn.includes('ist als nächster Ausbau vorgemerkt')) {
   throw new Error('Old placeholder learning modal is still active.');
 }
-if (!progress.includes("LEARNING_PROGRESS_KEY = 'nur_learning_completed'") || !learn.includes('Dein Grundlagenpfad') || !learn.includes('reference-foundation-path') || !learn.includes('readLearningProgress()') || !learn.includes('knowledgeState.completed')) {
-  throw new Error('Learning overview does not expose sourced course progress.');
+if (!learn.includes('aria-label="Lernbereiche"') || !learn.includes('reference-foundation-path') || !learn.includes('learn-library-section-heading')) {
+  throw new Error('The reading directory must keep direct area navigation and all lesson entries available without completion counts.');
 }
+for (const obsolete of ['learn-library-intro__path', 'Dein Grundlagenpfad', 'chapter.eyebrow', 'chapter.description']) {
+  if (learn.includes(obsolete)) throw new Error(`The compact reading directory must not restore redundant introductory copy: ${obsolete}`);
+}
+for (const forbidden of ['updateLearningCompletion', 'readLearningProgress', 'reference-learning-completion-backdrop', 'completionOpen', 'is-complete', 'learning-course-v2__quiz', 'Wissen prüfen', 'answerQuestion']) {
+  if (course.includes(forbidden)) throw new Error(`Reading lessons must not restore completion or end-of-lesson tests: ${forbidden}`);
+}
+if (learn.includes('knowledgeState') || learn.includes('reference-knowledge-overview')) throw new Error('Reading overview must not expose completion progress.');
 
-if (!styles.includes('.learning-course-v2__intro') || !styles.includes('.learning-course-v2__plan-toggle') || !styles.includes('.learning-course-v2__details') || !styles.includes('.learning-course-v2__quiz') || !styles.includes('.reference-learning-completion-modal')) {
+if (!styles.includes('.learning-course-v2__plan-toggle') || !styles.includes('.learning-course-v2__details')) {
   throw new Error('Interactive learning course styles are incomplete.');
 }
 if (!styleIndex.includes("reference-learning-courses.css")) {
   throw new Error('Interactive learning course stylesheet is not loaded.');
 }
 
-console.log('Learning curriculum structure verified: seven categories, 44 non-duplicated lessons with source fields, the 99 Names entry, quizzes and progress wiring. This check does not verify religious content or successful storage.');
+console.log('Learning curriculum structure verified: seven categories, 44 non-duplicated lessons with source fields, the 99 Names entry, reading-position restoration without end-of-lesson tests or completion tracking. This check does not verify religious content or successful storage.');

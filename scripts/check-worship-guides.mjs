@@ -18,14 +18,18 @@ const data = await readFile(resolve(root, 'src/data/worshipGuideData.ts'), 'utf8
 const screen = await readFile(resolve(root, 'src/screens/ReferenceReadingScreens.tsx'), 'utf8');
 const wuduLesson = await readFile(resolve(root, 'src/shared/WuduLesson.tsx'), 'utf8');
 const wuduArt = await readFile(resolve(root, 'src/data/wuduPresentation.ts'), 'utf8');
-for (const required of ['<WuduLesson', 'onSelect={selectStep}', 'saveGuideStep(guide.id, index)', 'onComplete={completeGuide}']) {
+for (const required of ['<WuduLesson', 'onSelect={selectStep}', 'saveGuideStep(guide.id, index)']) {
   if (!screen.includes(required)) throw new Error(`Wudu integration missing ${required}`);
 }
-for (const required of ['Aussprachehilfe', 'Arabische Bezeichnung', 'Arabischer Wortlaut', 'dir="rtl"', 'lang="ar"', 'step.description', 'step.arabic', 'step.transliteration']) {
+for (const obsolete of ['Andere Anleitung', 'GUIDE_TABS', 'reference-guide-topics']) {
+  if (screen.includes(obsolete)) throw new Error(`Guides must open directly without the retired topic switcher: ${obsolete}`);
+}
+if (screen.includes('saveGuideCompletion') || wuduLesson.includes('onComplete')) throw new Error('Guides must keep reading positions without completion tracking.');
+for (const required of ['Aussprachehilfe', "presentation.arabicRole === 'spoken'", 'Arabischer Wortlaut', 'dir="rtl"', 'lang="ar"', 'step.description', 'step.arabic', 'step.transliteration']) {
   if (!wuduLesson.includes(required)) throw new Error(`Wudu lesson missing ${required}`);
 }
 for (const id of ['hands', 'mouth', 'nose', 'face', 'arms', 'head', 'ears', 'feet']) {
-  if (!wuduArt.includes(`wudu-step-${id}-v1.webp`)) throw new Error(`Wudu image missing ${id}`);
+  if (!wuduArt.includes(`wudu-step-${id}-v2.webp`)) throw new Error(`Wudu image missing ${id}`);
 }
 
 const guideIds = [...data.matchAll(/^ {4}id: '([^']+)',$/gm)].map((match) => match[1]);

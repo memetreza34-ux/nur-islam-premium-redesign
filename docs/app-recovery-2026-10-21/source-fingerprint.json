@@ -1,0 +1,7 @@
+{
+  "src/app/AppSystemLayer.tsx": "6a157bf44e7e88d2dab2b7cb7abc1f41119d1d858893bb3ce6dbe860553b7fa4",
+  "src/shared/PremiumVisuals.tsx": "462ee2146ddb08d7c98dc13ae6858065e8e8d26689d2171f6bcb26276b166168",
+  "src/shared/brandLogoFallback.ts": "780ad75be2a9d5a3daf53fa364af5fce1ef9b019eefa6dd4143bab93c329345c",
+  "src/services/browserNavigation.ts": "759c1df61ab7b66260cc1b7644acabcbebe4b4aa98f55187ca51d032beec41b5",
+  "scripts/generate-brand-fallback.mjs": "0495adf888e85251c6f3312722efea52eb7e4c58babf9bd9ef760f601edab3f2"
+}

@@ -3,14 +3,14 @@ import { PremiumImage } from './PremiumVisuals';
 import { PrayerPostureFigure } from './PrayerPostureFigure';
 
 const POSTURE_IMAGE: Record<PrayerPosture, string> = {
-  takbir: 'takbir',
-  qiyam: 'qiyam',
-  ruku: 'ruku',
-  standing: 'standing',
-  rising: 'standing',
-  sujud: 'sujud',
-  sitting: 'sitting',
-  taslim: 'taslim',
+  takbir: 'salah-posture-takbir-v2.webp',
+  qiyam: 'salah-posture-qiyam-v2.webp',
+  ruku: 'salah-posture-ruku-v2.webp',
+  standing: 'salah-posture-standing-v2.webp',
+  rising: 'salah-posture-standing-v2.webp',
+  sujud: 'salah-posture-sujud-v2.webp',
+  sitting: 'salah-posture-sitting-v2.webp',
+  taslim: 'salah-posture-taslim-v2.webp',
 };
 
 const POSTURE_ALT: Record<PrayerPosture, string> = {
@@ -27,7 +27,7 @@ const POSTURE_ALT: Record<PrayerPosture, string> = {
 export function PrayerPostureImage({ posture, compact = false }: { posture: PrayerPosture; compact?: boolean }) {
   return (
     <PremiumImage
-      src={`/premium-assets/high-res-objects/salah-posture-${POSTURE_IMAGE[posture]}-v1.webp`}
+      src={`/premium-assets/high-res-objects/${POSTURE_IMAGE[posture]}`}
       alt={POSTURE_ALT[posture]}
       className={`salah-posture-image${compact ? ' salah-posture-image--compact' : ''}`}
       fallback={<PrayerPostureFigure posture={posture} labelled={!compact} />}

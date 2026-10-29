@@ -15,10 +15,6 @@
   color: var(--gold-bright);
 }
 
-.reference-qibla-stage__needle {
-  transition: transform .65s cubic-bezier(.22, 1, .36, 1);
-}
-
 .reference-qibla-location > button {
   transition: border-color .2s ease, background .2s ease, transform .2s ease;
 }

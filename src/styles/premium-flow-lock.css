@@ -19,85 +19,15 @@
   gap: 14px;
 }
 
-.reference-prayer-learning-hub {
-  position: relative;
-  min-height: 292px;
-  overflow: hidden;
-  padding: 22px;
-  border: 1px solid var(--flow-border-strong);
-  border-radius: 30px;
-  background:
-    radial-gradient(circle at 78% 20%, rgba(242, 205, 126, .18), transparent 11rem),
-    linear-gradient(145deg, #104f3c 0%, #062d22 56%, #02140f 100%);
-  box-shadow: 0 28px 66px rgba(0, 0, 0, .31), inset 0 1px 0 rgba(255, 255, 255, .04);
-}
 
-.reference-prayer-learning-hub::after {
-  position: absolute;
-  right: -70px;
-  bottom: -86px;
-  width: 230px;
-  height: 230px;
-  border: 1px solid rgba(232, 199, 122, .07);
-  border-radius: 50%;
-  box-shadow: 0 0 0 28px rgba(232, 199, 122, .018), 0 0 0 58px rgba(232, 199, 122, .012);
-  content: '';
-  pointer-events: none;
-}
 
-.reference-prayer-learning-hub__copy {
-  position: relative;
-  z-index: 3;
-  max-width: 70%;
-}
 
-.reference-prayer-learning-hub__copy h2 {
-  margin-top: 13px;
-  color: var(--flow-text);
-  font-size: clamp(2.35rem, 10vw, 3rem);
-  font-weight: 600;
-  line-height: .9;
-  letter-spacing: -.045em;
-}
 
-.reference-prayer-learning-hub__copy > p {
-  max-width: 245px;
-  margin-top: 12px;
-  color: rgba(175, 195, 185, .75);
-  font-size: .64rem;
-  line-height: 1.6;
-}
 
-.reference-prayer-learning-hub > .premium-image {
-  right: -36px;
-  bottom: -8px;
-  width: 210px;
-  height: 240px;
-  opacity: .9;
-  filter: drop-shadow(0 28px 26px rgba(0, 0, 0, .4));
-}
 
-.reference-prayer-learning-hub__progress {
-  gap: 7px;
-  margin-top: 16px;
-}
 
-.reference-prayer-learning-hub__progress > span {
-  height: 5px;
-  background: rgba(255, 255, 255, .065);
-}
 
-.reference-prayer-learning-hub__progress > span > i {
-  background: linear-gradient(90deg, #bd8530, #f0d594);
-  box-shadow: 0 0 16px rgba(232, 199, 122, .22);
-}
 
-.reference-prayer-learning-hub__copy > .gold-button {
-  min-height: 44px;
-  margin-top: 15px;
-  padding-inline: 14px;
-  border-radius: 14px;
-}
 
 .reference-prayer-learning-actions {
   display: grid;
@@ -136,12 +66,12 @@
 
 .reference-prayer-learning-actions > button strong {
   color: var(--flow-text);
-  font-size: .66rem;
+  font-size: .75rem;
 }
 
 .reference-prayer-learning-actions > button small {
   color: var(--flow-muted);
-  font-size: .48rem;
+  font-size: .75rem;
   line-height: 1.4;
 }
 
@@ -180,13 +110,6 @@
   border-radius: 14px;
   color: var(--flow-gold);
   background: rgba(232, 199, 122, .045);
-}
-
-.reference-knowledge-overview {
-  padding: 10px 12px;
-  border: 1px solid rgba(232, 199, 122, .1);
-  border-radius: 15px;
-  background: rgba(255, 255, 255, .02);
 }
 
 .reference-category-grid {
@@ -286,7 +209,7 @@
 .reference-profile-greeting p {
   margin-top: 6px;
   color: var(--flow-muted);
-  font-size: .52rem;
+  font-size: .75rem;
   line-height: 1.5;
 }
 
@@ -299,7 +222,7 @@
   border-radius: 14px;
   color: #17362b;
   background: linear-gradient(145deg, #f3dda8, #c79441);
-  font-size: .58rem;
+  font-size: .75rem;
   font-weight: 850;
 }
 
@@ -321,32 +244,6 @@
   align-items: end;
 }
 
-.reference-core-access-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.reference-core-access-grid > button {
-  min-height: 88px;
-  padding: 12px;
-  border-radius: 19px !important;
-}
-
-.reference-core-access-grid__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 13px !important;
-}
-
-.reference-core-access-grid > button strong {
-  color: var(--flow-text);
-  font-size: .64rem;
-}
-
-.reference-core-access-grid > button small {
-  color: var(--flow-muted);
-}
-
 .reference-profile-list {
   display: grid;
   gap: 7px;
@@ -366,36 +263,19 @@
 
 .reference-profile-row__copy strong {
   color: var(--flow-text);
-  font-size: .62rem;
+  font-size: .75rem;
 }
 
 .reference-profile-row__copy small {
   color: var(--flow-muted);
-  font-size: .48rem;
+  font-size: .75rem;
 }
 
 .reference-services-section__intro {
   margin: -2px 1px 1px;
   color: rgba(150, 172, 162, .68);
-  font-size: .49rem;
+  font-size: .75rem;
   line-height: 1.5;
-}
-
-.reference-services-grid {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 8px;
-}
-
-.reference-services-grid > button {
-  min-height: 86px;
-  padding: 11px;
-  border-radius: 19px !important;
-}
-
-.reference-services-grid__icon {
-  width: 40px;
-  height: 40px;
-  border-radius: 13px !important;
 }
 
 .reference-profile-logout {
@@ -403,8 +283,7 @@
   border-radius: 15px;
 }
 
-.reference-profile-modal,
-.reference-learning-plan-modal {
+.reference-profile-modal{
   border-color: rgba(232, 199, 122, .25) !important;
   border-radius: 27px !important;
   background:
@@ -458,7 +337,7 @@
 }
 
 .reference-onboarding__topbar > button {
-  min-height: 38px;
+  min-height: 44px;
   padding-inline: 12px;
   border-radius: 12px;
 }
@@ -514,7 +393,7 @@
   max-width: 385px;
   margin-top: 3px;
   color: rgba(166, 187, 177, .82);
-  font-size: .61rem;
+  font-size: .75rem;
 }
 
 .reference-onboarding__points {
@@ -532,7 +411,7 @@
   border-radius: 15px;
   color: rgba(238, 235, 224, .78);
   background: rgba(255, 255, 255, .018);
-  font-size: .48rem;
+  font-size: .75rem;
   line-height: 1.42;
 }
 
@@ -619,19 +498,9 @@
 
 /* ---------- Responsive ---------- */
 @media (max-width: 390px) {
-  .reference-prayer-learning-hub {
-    min-height: 280px;
-    padding: 19px;
-  }
 
-  .reference-prayer-learning-hub__copy {
-    max-width: 76%;
-  }
 
-  .reference-prayer-learning-hub > .premium-image {
-    right: -58px;
-    width: 198px;
-  }
+
 
   .reference-onboarding__visual {
     min-height: 314px;
@@ -667,8 +536,6 @@
     align-items: center;
   }
 
-  .reference-core-access-grid,
-  .reference-services-grid,
   .reference-category-grid {
     grid-template-columns: 1fr;
   }
@@ -698,9 +565,7 @@
 [data-theme='light'] .reference-prayer-learning-actions > button,
 [data-theme='light'] .reference-five-prayer-lessons > div:last-child > button,
 [data-theme='light'] .reference-expanded-learning-grid > button,
-[data-theme='light'] .reference-core-access-grid > button,
 [data-theme='light'] .reference-profile-row,
-[data-theme='light'] .reference-services-grid > button,
 [data-theme='light'] .reference-account-entry {
   color: #17372c;
   background: var(--flow-panel) !important;
@@ -710,16 +575,3 @@
 [data-theme='light'] .reference-profile-greeting {
   color: #17372c;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  .reference-prayer-learning-actions > button:hover,
-  .reference-five-prayer-lessons > div:last-child > button:hover,
-  .reference-category-card:hover,
-  .reference-expanded-learning-grid > button:hover,
-  .reference-core-access-grid > button:hover,
-  .reference-profile-row:hover,
-  .reference-services-grid > button:hover,
-  .reference-onboarding__permissions > button:hover {
-    border-color: rgba(232, 199, 122, .29) !important;
-    transform: translateY(-1px);
-  }}

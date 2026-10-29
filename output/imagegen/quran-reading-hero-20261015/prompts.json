@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-07a95c26-60a1-4e04-a54d-0a2fabd1e197.png",
+  "prompt": "Use case: stylized-concept. Create one premium full-bleed BACKGROUND for the Quran reading-progress hero of the Nur Islam app. Image 1 is our own approved Quran-book-on-stand illustration, use as SUBJECT AND MATERIAL STYLE reference. Clean adult matte 3D editorial illustration, restrained rounded shapes, smooth satin surfaces, warm natural walnut, deep emerald/teal, ivory page edges and subtle gold. Scene: a quiet softly lit reading space in deep emerald, simple smooth background wall and a low warm wood surface across the bottom. Place a small closed forest-green Quran book on its simple wooden X reading stand in the LOWER RIGHT side, roughly x=78%, y=74%, the whole book and stand fully visible inside x65%-92%, y58%-90%. A tasteful simple gold outline medallion on the cover but absolutely NO words, Arabic letters or invented calligraphy. Soft warm daylight from the upper left gently illuminates the book and lower surface. CRITICAL UI COMPOSITION: central x20%-72%, y12%-70% must remain calm, dark emerald and uncluttered for cream Surah name and reading-progress text added later. No objects behind the central text, no bright center spotlight. Give the scene subtle depth and side lighting rather than a flat color, but do not add ornate architectural decorations. Wide landscape 3:2 image, comfortable safe margins, designed to crop slightly to a wide arched card. Calm, mature, coherent with the reference illustration family, no photorealism, no childish cartoon. No palm trees, mosque, arch/frame within the image, people, extra books, candles, lanterns, floating ornaments, glitter, lens flare, UI, text, watermark or border.",
+  "inputImages": [
+    "output/imagegen/learning-rows-20261014/book.png"
+  ],
+  "inputRoles": [
+    "Own approved Quran book: subject and material/style reference"
+  ],
+  "processing": "cwebp -q 92 -m 6; native 1536x1024 preserved"
+}

@@ -11,8 +11,8 @@ describe('prayer landscape mapping', () => {
     expect(Object.keys(PRAYER_BACKDROPS)).toEqual(['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']);
     expect(new Set(Object.values(PRAYER_BACKDROPS)).size).toBe(5);
     for (const prayer of PRAYER_SCHEDULE.filter((item) => item.obligatory)) {
-      expect(getPrayerBackdrop(prayer.id as PrayerBackdropId)).toContain(`prayer-${prayer.id}-v1.webp`);
-      expect(getSplashBackdrop(prayer.id as PrayerBackdropId)).toContain(`prayer-${prayer.id}-v3.webp`);
+      expect(getPrayerBackdrop(prayer.id as PrayerBackdropId)).toContain(`prayer-oasis-${prayer.id}-v2.webp`);
+      expect(getSplashBackdrop(prayer.id as PrayerBackdropId)).toContain(`splash-arcade-${prayer.id}-v1.webp`);
       expect(getSplashBackdrop(prayer.id as PrayerBackdropId)).not.toBe(getPrayerBackdrop(prayer.id as PrayerBackdropId));
     }
   });

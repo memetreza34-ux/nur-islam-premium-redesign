@@ -1,6 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
 import {
   browserNavigationDepth,
+  clearBrowserNavigation,
   pushBrowserNavigation,
   readBrowserNavigation,
   replaceBrowserNavigation,
@@ -47,6 +48,28 @@ describe('browser navigation state', () => {
     const quranState = window.history.state;
     pushBrowserNavigation(snapshot('reader'));
     expect(readBrowserNavigation<Snapshot>(quranState)).toEqual({ depth: 1, snapshot: snapshot('quran') });
+  });
+
+  it('drops a failed view before reload while preserving stored progress and foreign state', () => {
+    window.history.replaceState({ scrollKey: 'abc' }, '', window.location.href);
+    replaceBrowserNavigation(snapshot('reader'), 3);
+    localStorage.setItem('nur_test_recovery_progress', 'saved');
+    const url = window.location.href;
+    try {
+      clearBrowserNavigation();
+      expect(readBrowserNavigation()).toBeNull();
+      expect(browserNavigationDepth()).toBe(0);
+      expect(window.history.state).toEqual({ scrollKey: 'abc' });
+      expect(window.location.href).toBe(url);
+      expect(localStorage.getItem('nur_test_recovery_progress')).toBe('saved');
+    } finally {
+      localStorage.removeItem('nur_test_recovery_progress');
+    }
+  });
+
+  it('can recover without an existing navigation entry', () => {
+    expect(() => clearBrowserNavigation()).not.toThrow();
+    expect(readBrowserNavigation()).toBeNull();
   });
 
   it('rejects malformed or foreign states safely', () => {

@@ -1,0 +1,44 @@
+{
+  "recordedAt": "2026-10-14",
+  "scope": "Four Home discovery shortcut images: learning prayer, 99 names, Quiz and Duas. Same compact 3D object direction as Dhikr/Qibla, with unrestricted object colors.",
+  "mode": "Codex built-in image_gen",
+  "promptSet": "output/imagegen/home-discovery-20261014/prompts.json",
+  "assets": [
+    "public/premium-assets/high-res-objects/home-learn-prayer-v3.webp",
+    "public/premium-assets/high-res-objects/home-names-v2.webp",
+    "public/premium-assets/high-res-objects/home-quiz-v3.webp",
+    "public/premium-assets/high-res-objects/home-duas-v3.webp"
+  ],
+  "imageDetails": {
+    "originals": "1254x1254 PNG, transparent",
+    "runtime": "512x512 WebP, alpha preserved",
+    "combinedRuntimeBytes": 172838,
+    "visualInspection": "Whole objects, numeral 99 and question mark correct; Dua hands have five digits each; no invented sacred wording."
+  },
+  "checks": {
+    "technicalCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "browserExitCode": 0,
+    "browserCasesPassed": 21,
+    "browserSpecs": [
+      "core-flows.spec.ts",
+      "offline.spec.ts"
+    ],
+    "diffCheckExitCode": 0,
+    "visualViewports": [
+      "648x764",
+      "390x844",
+      "320x740"
+    ],
+    "smallViewportOverflow": "Grid clientWidth and scrollWidth both 300; all four images loaded."
+  },
+  "screenshots": [
+    "discovery-art-visible-2026-10-14.jpg",
+    "discovery-art-phone-2026-10-14.jpg",
+    "discovery-art-small-phone-2026-10-14.jpg"
+  ],
+  "preview": "http://127.0.0.1:3001/?preview=1",
+  "serviceWorkerCache": "v88",
+  "published": false
+}

@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { TopicCardContent } from '../shared/TopicCardContent';
+import { TOPIC_SUMMARIES } from '../data/topicSummaries';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -138,7 +141,6 @@ const coreShortcutGroups: Array<{ title: string; shortcuts: CoreShortcut[] }> = 
     title: 'Wissen & Vertiefung',
     shortcuts: [
       { destination: 'ayah', title: 'Vers des Tages', description: 'Arabisch, Aussprache & Bedeutung', icon: BookOpenCheck },
-      { destination: 'hadith', title: 'Hadith des Tages', description: 'Quelle & Einordnung', icon: BookOpen },
       { destination: 'names', title: '99 Namen Allahs', description: 'Arabisch, Aussprache & Bedeutung', icon: NurRosetteIcon },
       ...directServiceFeatures.filter((feature) => feature.id === 'ummah').map(legacyShortcut),
       ...learningLegacyFeatures.map((feature) => ({
@@ -287,14 +289,14 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
 
   return (
     <motion.main className="screen reference-profile-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
+      <header className="reference-screen-header reference-screen-header--banner">
         <span aria-hidden="true" />
         <div><span className="overline">Profil & Einstellungen</span><h1>Mehr</h1></div>
         <button className="icon-button" onClick={() => setModal('settings')} aria-label="Einstellungen"><Settings2 size={20} /></button>
       </header>
 
       <section className="reference-profile-greeting">
-        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} /></span>
+        <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} /></span>
         <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Nur Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
         <span className="reference-profile-avatar">{initials}</span>
       </section>
@@ -311,14 +313,12 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
           {coreShortcutGroups.map((group, groupIndex) => (
             <section className="reference-core-access__group" key={group.title} aria-labelledby={`direct-access-${groupIndex}`}>
               <div className="reference-core-access__group-title"><h3 id={`direct-access-${groupIndex}`}>{group.title}</h3><span>{group.shortcuts.length}</span></div>
-              <div className="reference-core-access-grid">
+              <div className="reference-core-access-grid topic-list">
                 {group.shortcuts.map((shortcut, index) => {
                   const Icon = shortcut.icon;
                   return (
-                    <motion.button key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(groupIndex * 4 + index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                      <span className="reference-core-access-grid__icon"><Icon size={20} /></span>
-                      <span><strong>{shortcut.title}</strong><small>{shortcut.description}</small></span>
-                      <ChevronRight size={16} />
+                    <motion.button className="topic-card" key={shortcut.destination} onClick={() => onNavigate(shortcut.destination)} initial={{ opacity: 0, y: reduceMotion ? 0 : 6 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(groupIndex * 4 + index)}>
+                      <TopicCardContent title={shortcut.title} description={TOPIC_SUMMARIES[shortcut.destination.replace(/^(legacy:|learn:)/, '') as keyof typeof TOPIC_SUMMARIES] ?? shortcut.description} fallback={<Icon size={24} />} />
                     </motion.button>
                   );
                 })}
@@ -333,14 +333,12 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
       <section className="reference-profile-section reference-services-section">
         <span className="reference-profile-section__label">Islamische Dienste</span>
         <p className="reference-services-section__intro">Zusätzliche Werkzeuge, die keinem Hauptbereich doppelt zugeordnet sind.</p>
-        <div className="reference-services-grid">
+        <div className="reference-services-grid topic-list">
           {standaloneServiceFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <motion.button key={feature.id} onClick={() => onNavigate(`legacy:${feature.id}`)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)} whileTap={{ scale: reduceMotion ? 1 : .985 }}>
-                <span className="reference-services-grid__icon"><Icon size={21} /></span>
-                <span><small>{feature.id === 'standby' ? 'Gebetsanzeige' : feature.subtitle}</small><strong>{feature.id === 'standby' ? 'Standby' : feature.title}</strong></span>
-                <ChevronRight size={17} />
+              <motion.button className="topic-card" key={feature.id} onClick={() => onNavigate(`legacy:${feature.id}`)} initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }} animate={{ opacity: 1, y: 0 }} transition={itemTransition(index)}>
+                <TopicCardContent title={feature.title} description={TOPIC_SUMMARIES[feature.id as keyof typeof TOPIC_SUMMARIES] ?? feature.subtitle} fallback={<Icon size={24} />} />
               </motion.button>
             );
           })}
@@ -355,19 +353,19 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
       <AnimatePresence>
         {modal ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setModal(null)}>
-            <motion.section {...screenDialog.props} className={`reference-profile-modal${modal === 'support' ? ' reference-profile-modal--support' : ''}${modal === 'about' ? ' reference-profile-modal--about' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setModal(null)} aria-label="Schließen"><X size={18} /></button>
+            <motion.section {...screenDialog.props} className={`dialog-panel dialog-form reference-profile-modal${modal === 'support' ? ' reference-profile-modal--support' : ''}${modal === 'about' ? ' reference-profile-modal--about' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Nur' : modal === 'language' ? 'App-Sprache' : 'Einstellungen'} onClose={closeDialog} />
 
               {modal === 'language' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><Languages size={28} /></span><span className="overline">App-Sprache</span><h2>Deutsch</h2><p>Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache. Arabisch und Englisch werden erst freigeschaltet, wenn Navigation und religiöse Inhalte vollständig übersetzt und geprüft sind.</p>
+                  <p>Deutsch ist aktuell die einzige vollständig gepflegte App-Sprache. Arabisch und Englisch werden erst freigeschaltet, wenn Navigation und religiöse Inhalte vollständig übersetzt und geprüft sind.</p>
                   <div className="reference-choice-grid"><div className="reference-choice reference-choice--active reference-choice--static" aria-label="Deutsch ist ausgewählt"><Languages size={20} /><span>Deutsch</span><CircleCheck size={16} /></div></div>
                 </>
               ) : null}
 
               {modal === 'settings' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><Settings2 size={28} /></span><span className="overline">App-Einstellungen</span><h2>Einstellungen</h2><p>Diese Schalter sind direkt mit den aktiven Funktionen verbunden.</p>
+
                   <div className="reference-settings-toggles">
                     <button onClick={() => void toggleNotifications()}><span><BellRing size={19} /><span><strong>Gebetserinnerungen</strong><small>{notifications ? 'Mindestens ein Gebet ist aktiv' : 'Keine Gebetserinnerungen aktiv'}</small></span></span><em className={notifications ? 'is-on' : ''}><i /></em></button>
                     <button onClick={() => { setModal(null); onNavigate('account'); }}><span><Cloud size={19} /><span><strong>Cloud-Synchronisierung</strong><small>{session ? 'Konto verbunden · Backup verwalten' : 'Konto erforderlich'}</small></span></span><ChevronRight size={18} /></button>
@@ -377,9 +375,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
 
               {modal === 'support' ? (
                 <>
-                  <span className="reference-profile-modal__icon"><CircleHelp size={28} /></span>
-                  <span className="overline">Hilfe-Center</span>
-                  <h2>Hilfe, Funktionen & Datenschutz</h2>
+
                   <p>Hier siehst du den aktuellen Stand wichtiger Funktionen, findest die passenden Einstellungen und kannst Probleme direkt lösen.</p>
 
                   <section className="reference-support-section" aria-labelledby="support-automation-title">
@@ -427,7 +423,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
                 <div className="reference-about">
                   <header className="reference-about__hero">
                     <span className="reference-about__mark">
-                      <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} />
+                      <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} />
                     </span>
                     <span className="overline">Nur Islam · Version 0.3</span>
                     <h2>Eine App.<br />Dein muslimischer Alltag.</h2>

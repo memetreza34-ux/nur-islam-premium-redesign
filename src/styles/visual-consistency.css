@@ -56,7 +56,7 @@ body {
 }
 
 .reference-screen-header h1 {
-  overflow: hidden;
+  overflow: visible;
   margin: 0;
   color: var(--cream-strong);
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -64,15 +64,15 @@ body {
   font-weight: 650;
   line-height: 1;
   letter-spacing: -.025em;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .reference-screen-header .overline {
-  overflow: hidden;
+  overflow: visible;
   max-width: 100%;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-wrap: balance;
+  white-space: normal;
 }
 
 .icon-button,
@@ -128,9 +128,7 @@ textarea:focus-visible {
 
 .icon-button svg,
 .bottom-nav svg,
-.quick-card svg,
 .journey-card svg,
-.recommendation-card svg,
 .reference-screen-header svg,
 .reference-dhikr-category-grid svg,
 .reference-detail-actions svg,
@@ -147,39 +145,15 @@ textarea:focus-visible {
 
 
 .bottom-nav__item small {
-  font-size: .58rem;
+  font-size: .75rem;
   line-height: 1;
 }
 
-:where(.glass-card,
-  .continue-card--v2,
-  .verse-card,
-  .hadith-card,
-  .recommendation-card,
-  .prayer-time-row,
-  .calendar-event-card,
-  .learning-card,
-  .settings-section,
-  .profile-card,
-  .reference-quran-list,
-  .reference-reader-verse,
-  .reference-source-card,
-  .reference-reflection-card,
-  .reference-mosque-live-status) {
+:where(.glass-card, .continue-card--v2, .verse-card, .hadith-card, .prayer-time-row, .calendar-event-card, .learning-card, .settings-section, .profile-card, .reference-quran-list, .reference-reader-verse, .reference-source-card, .reference-reflection-card, .reference-mosque-live-status) {
   border-radius: var(--radius-card);
 }
 
-:where(
-  .welcome-hero,
-  .prayer-hero--v2,
-  .next-prayer-panel,
-  .learning-hero,
-  .reference-reader-hero,
-  .reference-guide-hero,
-  .reference-quran-continue,
-  .reference-dhikr-counter,
-  .reference-mosque-hero
-) {
+:where(.welcome-hero, .prayer-hero--v2, .next-prayer-panel, .learning-hero, .reference-reader-hero, .reference-quran-continue, .reference-dhikr-counter, .reference-mosque-hero) {
   border-radius: var(--radius-hero);
 }
 
@@ -221,7 +195,7 @@ textarea:focus-visible {
 
 /* Keep the Quran daily card on the same current Mihrab asset as the final art layer. */
 .reference-quran-verse::after {
-  background-image: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp?v=20260826-original-art') !important;
+  background-image: url('/premium-assets/high-res-objects/home-learn-prayer-v5.webp?v=20260826-original-art') !important;
 }
 
 .section-heading h2,
@@ -243,14 +217,14 @@ textarea:focus-visible {
 }
 
 .prayer-mini-times small {
-  font-size: .54rem;
+  font-size: .75rem;
 }
 
 .prayer-mini-times strong {
-  font-size: .61rem;
+  font-size: .75rem;
 }
 .reference-dhikr-category-grid strong {
-  font-size: .63rem;
+  font-size: .75rem;
   line-height: 1.15;
 }
 .reference-dhikr-category-grid small,
@@ -262,7 +236,7 @@ textarea:focus-visible {
 .reference-reader-verse footer button,
 .reference-reader-next small,
 .reference-reflection-card small {
-  font-size: .54rem;
+  font-size: .75rem;
   line-height: 1.35;
 }
 
@@ -272,13 +246,12 @@ textarea:focus-visible {
 .reference-source-card strong,
 .reference-reflection-card p,
 .reference-hadith-points span {
-  font-size: .6rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
 .reference-quran-list button,
 .reference-reader-next,
-.recommendation-card,
 .prayer-time-row,
 .calendar-event-card,
 .learning-card {
@@ -286,22 +259,10 @@ textarea:focus-visible {
 }
 
 .reference-quran-list button > svg,
-.recommendation-card > svg,
 .reference-reader-next > svg,
 .reference-mosque-list button > svg {
   justify-self: end;
 }
-
-@media (hover: hover) {
-  .icon-button:hover,
-  .bottom-nav__item:hover,
-  .quick-card:hover,
-  .journey-card:hover,
-  .recommendation-card:hover,
-  .reference-quran-list button:hover,
-  .reference-reader-next:hover {
-    border-color: rgba(232, 199, 122, .42);
-  }}
 
 @media (max-width: 370px) {
   :root {
@@ -334,7 +295,7 @@ textarea:focus-visible {
   }
 
   .bottom-nav__item small {
-    font-size: .55rem;
+    font-size: .75rem;
   }}
 
 @media (min-width: 760px) {
@@ -344,10 +305,8 @@ textarea:focus-visible {
 
 @media (prefers-reduced-motion: reduce) {
   .icon-button,
-  .bottom-nav__item,
-  .quick-card,
-  .journey-card,
-  .recommendation-card{
+.bottom-nav__item,
+.journey-card{
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }}

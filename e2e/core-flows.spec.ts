@@ -14,11 +14,20 @@ test.beforeEach(async ({ page }) => {
   await openApp(page);
 });
 
-test('opens on the home screen with a prayer schedule', async ({ page }) => {
+test('opens Home with a prayer schedule and an oasis daily Ayah', async ({ page }, testInfo) => {
   await expect(page.locator('.premium-home--v2')).toBeVisible();
   await expect(page.locator('.home-prayer-focus')).toBeVisible();
   const times = page.locator('text=/^([01]\\d|2[0-3]):[0-5]\\d$/');
   expect(await times.count()).toBeGreaterThanOrEqual(6);
+  const ayah = page.locator('.premium-home .verse-card--cream');
+  await expect(ayah.locator('img')).toHaveCount(1);
+  await expect(ayah).toHaveCSS('background-image', 'none');
+  await expect(ayah).toHaveCSS('background-color', 'rgb(246, 237, 220)');
+  await expect(page.locator('.hadith-card')).toHaveCount(0);
+  await ayah.scrollIntoViewIfNeeded();
+  await expect(ayah.locator('img')).toHaveAttribute('src', /ayah-oasis-card-v1\.webp/);
+  await expect.poll(() => ayah.locator('img').evaluate((image: HTMLImageElement) => image.naturalWidth)).toBe(1024);
+  await page.screenshot({ path: testInfo.outputPath('home-oasis-ayah.png') });
 });
 
 test('reaches every primary tab', async ({ page }) => {
@@ -35,28 +44,24 @@ test('opens the Quran reader and shows Arabic verses', async ({ page }) => {
   await expect(page.locator('[dir="rtl"]').first()).toBeVisible({ timeout: 15_000 });
 });
 
-test('keeps the Quran reader inside the Quran hierarchy when opened from Home', async ({ page }) => {
+test('returns directly to Home when the reader was opened from Home', async ({ page }) => {
   await page.locator('.journey-card--quran').click();
   await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
-  await page.getByRole('button', { name: 'Zurück zum Quran' }).click();
-  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole('heading', { name: 'Quran' })).toBeVisible();
+  await page.getByRole('button', { name: 'Zurück zu Start' }).click();
+  await expect(page.locator('.premium-home--v2')).toBeVisible({ timeout: 15_000 });
 });
 
-test('browser Back and Forward preserve the synthetic Quran parent from Home', async ({ page }) => {
+test('browser Back and Forward preserve the actual Home origin', async ({ page }) => {
   await page.locator('.journey-card--quran').click();
   await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
-  await page.goBack();
-  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
-  await expect(page.getByRole('heading', { name: 'Quran' })).toBeVisible();
   await page.goBack();
   await expect(page.locator('.premium-home--v2')).toBeVisible({ timeout: 15_000 });
   await page.goForward();
-  await expect(page.locator('.reference-quran-screen')).toBeVisible({ timeout: 15_000 });
+  await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
 });
 
 test('Home quiz keeps its title and survives browser Forward and reload', async ({ page }) => {
-  await page.getByRole('button', { name: /Wissen testen Islam Quiz/i }).click();
+  await page.getByRole('button', { name: /Islam Quiz/i }).click();
   await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
   await page.goBack();
   await expect(page.locator('.premium-home--v2')).toBeVisible();
@@ -67,7 +72,7 @@ test('Home quiz keeps its title and survives browser Forward and reload', async 
 });
 
 test('primary navigation resets the app-owned browser stack', async ({ page }) => {
-  await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
+  await page.locator('.home-companion-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
   await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
   await expect(page.locator('.reference-prayer-screen')).toBeVisible();
@@ -80,10 +85,10 @@ test('shows the Islamic calendar below prayer times and opens the full planner',
   await expect(page.locator('.prayer-calendar-section')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Islamische Tage & Termine' })).toBeVisible();
   expect(await page.locator('.prayer-calendar-day:not(.prayer-calendar-day--empty)').count()).toBeGreaterThanOrEqual(28);
-  await expect(page.getByText('Nächste wichtige Termine', { exact: true })).toBeVisible();
+  await expect(page.getByText('Nächste Termine', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'Kalender öffnen', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Kalender' })).toBeVisible();
-  await expect(page.getByText('Nächste wichtige Termine', { exact: true })).toBeVisible();
+  await expect(page.getByText('Nächste Termine', { exact: true })).toBeVisible();
 });
 
 test('offers the essential prayer companions and opens each destination', async ({ page }) => {
@@ -115,7 +120,7 @@ test('opens prayer learning directly and returns to the prayer screen', async ({
 });
 
 test('secondary devotional screens keep the correct primary tab active', async ({ page }) => {
-  await page.locator('.journey-card').filter({ hasText: 'Dhikr' }).click();
+  await page.locator('.home-companion-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
   await expect(page.getByRole('navigation').getByRole('button', { name: 'Mehr' })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
@@ -123,33 +128,20 @@ test('secondary devotional screens keep the correct primary tab active', async (
   await expect(page.getByRole('navigation').getByRole('button', { name: 'Lernen' })).toHaveAttribute('aria-current', 'page');
 });
 
-test('saves today’s Hadith and reopens that exact entry from Collections', async ({ page }) => {
-  const hadithCard = page.locator('.hadith-card').first();
-  await hadithCard.scrollIntoViewIfNeeded();
-  await hadithCard.click();
-  await expect(page.getByRole('heading', { name: 'Hadith des Tages' })).toBeVisible();
-  const hadithTitle = (await page.locator('.reference-hadith-hero .hero-pill').textContent())?.trim();
-  expect(hadithTitle).toBeTruthy();
-  await page.getByRole('button', { name: 'Speichern' }).click();
-  await expect(page.getByRole('button', { name: 'Gespeichert' })).toBeVisible();
-  const savedIds = await page.evaluate(() => {
-    const raw = localStorage.getItem('nur_daily_hadith_saved_ids');
-    return raw ? JSON.parse(raw) as string[] : [];
-  });
-  expect(savedIds).toHaveLength(1);
-  await page.getByRole('button', { name: 'Zurück' }).click();
-  await expect(page.locator('.premium-home')).toBeVisible();
+test('keeps saved Hadith accessible after removing the daily selection', async ({ page }) => {
+  await expect(page.locator('.hadith-card')).toHaveCount(0);
+  await page.evaluate(() => localStorage.setItem('nur_daily_hadith_saved_ids', JSON.stringify(['smile'])));
   const collectionsEntry = page.getByRole('button').filter({ hasText: 'Meine Sammlung' }).first();
   await collectionsEntry.scrollIntoViewIfNeeded();
   await collectionsEntry.click();
   await expect(page.locator('.reference-collections-screen')).toBeVisible();
-  const savedHadithRow = page.getByRole('button').filter({ hasText: hadithTitle! }).first();
-  await expect(savedHadithRow).toBeVisible();
-  await savedHadithRow.click();
+  await page.getByRole('button').filter({ hasText: 'Das Lächeln als Sadaqa' }).first().click();
   await expect(page.getByRole('heading', { name: 'Gespeicherter Hadith' })).toBeVisible();
-  await expect(page.locator('.reference-hadith-hero .hero-pill')).toHaveText(hadithTitle!);
+  await expect(page.locator('.reference-hadith-hero .hero-pill')).toHaveText('Das Lächeln als Sadaqa');
   await page.getByRole('button', { name: 'Zurück' }).click();
   await expect(page.locator('.reference-collections-screen')).toBeVisible();
+  await page.getByRole('navigation').getByRole('button', { name: 'Mehr', exact: true }).click();
+  await expect(page.getByRole('button', { name: 'Hadith des Tages Quelle & Einordnung', exact: true })).toHaveCount(0);
 });
 
 test('counts a dhikr and keeps it across a reload', async ({ page }) => {
@@ -279,4 +271,32 @@ test('reads a long surah from the local bundle instead of the network', async ({
 
   await modes.getByRole('button', { name: /Versweise/ }).click();
   await expect(page.locator('.reference-reader-verse').first()).toBeVisible();
+});
+
+
+test('Home extra areas have dedicated artwork and keep prayer tools in Prayer', async ({ page }, testInfo) => {
+  const extras = page.locator('[data-home-section="recommendations"]');
+  await expect(extras.getByRole('button')).toHaveCount(2);
+  await expect(extras.getByRole('button', { name: /Fastenplan|Moschee/ })).toHaveCount(0);
+  for (const [label, asset] of [['Ummah-Übersicht', 'home-extra-ummah-v2.webp'], ['Meine Sammlung', 'home-extra-collection-v2.webp']]) {
+    const image = extras.getByRole('button', { name: new RegExp(label) }).locator('img');
+    await expect(image).toHaveAttribute('src', new RegExp(asset));
+    await extras.getByRole('button', { name: new RegExp(label) }).scrollIntoViewIfNeeded();
+    await expect.poll(() => image.evaluate((node: HTMLImageElement) => node.naturalWidth)).toBe(512);
+  }
+  for (const width of [320, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    await extras.scrollIntoViewIfNeeded();
+    const bounds = (await extras.boundingBox())!;
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+    await page.screenshot({ path: testInfo.outputPath(`home-extra-areas-${width}.png`) });
+  }
+  await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
+  await expect(page.locator('.prayer-companions').getByRole('button')).toHaveCount(6);
+  await expect(page.locator('.prayer-companions').getByRole('button', { name: /^Fastenplan/ })).toBeVisible();
+  await expect(page.locator('.prayer-companions').getByRole('button', { name: /^Moscheen/ })).toBeVisible();
+  await page.getByRole('navigation').getByText('Lernen', { exact: true }).click();
+  await expect(page.locator('.learn-library-card img[src*="learn-hub-character-v1.webp"]')).toHaveCount(1);
+  await expect(page.locator('.learn-library-card img[src*="learn-hub-community-v1.webp"]')).toHaveCount(1);
 });

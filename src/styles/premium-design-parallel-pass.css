@@ -123,7 +123,7 @@
 }
 
 .reference-account-entry strong {
-  font-size: .68rem;
+  font-size: .75rem;
 }
 
 .reference-account-entry small {
@@ -133,26 +133,6 @@
 
 .reference-core-access {
   gap: 8px;
-}
-
-.reference-core-access-grid {
-  gap: 9px;
-}
-
-.reference-core-access-grid button {
-  min-height: 86px;
-  border-color: rgba(232, 199, 122, .15) !important;
-  border-radius: 19px !important;
-  background:
-    radial-gradient(circle at 8% 10%, rgba(232, 199, 122, .075), transparent 5.4rem),
-    var(--parallel-surface) !important;
-  box-shadow: 0 13px 30px rgba(0, 0, 0, .19), inset 0 1px 0 rgba(255, 255, 255, .026) !important;
-}
-
-.reference-core-access-grid__icon {
-  border-radius: 14px !important;
-  color: var(--parallel-gold-bright) !important;
-  background: linear-gradient(145deg, rgba(232, 199, 122, .105), rgba(232, 199, 122, .035)) !important;
 }
 
 .reference-profile-list {
@@ -182,15 +162,6 @@
   color: var(--parallel-muted);
 }
 
-.reference-services-grid > button {
-  border-color: rgba(232, 199, 122, .15) !important;
-  border-radius: 19px !important;
-  background:
-    radial-gradient(circle at 100% 0%, rgba(232, 199, 122, .05), transparent 7rem),
-    var(--parallel-surface) !important;
-  box-shadow: 0 13px 28px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .024) !important;
-}
-
 .reference-profile-modal {
   border-color: rgba(247, 226, 178, .3) !important;
   background:
@@ -200,16 +171,12 @@
   box-shadow: 0 34px 88px rgba(0, 0, 0, .56), inset 0 1px 0 rgba(255, 255, 255, .045) !important;
 }
 
-.reference-choice,
 .reference-settings-toggles > button {
   border-color: rgba(232, 199, 122, .14) !important;
   background: rgba(255, 255, 255, .022) !important;
 }
 
-.reference-choice--active {
-  border-color: rgba(247, 226, 178, .4) !important;
-  background: rgba(232, 199, 122, .08) !important;
-}
+
 
 .reference-choice--static {
   cursor: default;
@@ -237,7 +204,7 @@
 }
 
 .reference-collections-screen > .reference-filter-tabs button {
-  min-height: 42px;
+  min-height: 44px;
   padding-inline: 14px !important;
   border: 1px solid rgba(232, 199, 122, .12) !important;
   border-radius: 999px !important;
@@ -480,25 +447,6 @@
 }
 
 /* Hover polish only for devices that actually hover */
-@media (hover: hover) and (pointer: fine) {
-  .reference-account-entry:hover,
-  .reference-core-access-grid button:hover,
-  .reference-profile-row:hover,
-  .reference-services-grid > button:hover,
-  .reference-collection-grid > button:hover,
-  .reference-collection-rows > button:hover,
-  .reference-account-cloud-grid > button:hover,
-  .reference-notes-list > button:hover,
-  .calendar-entry-row:hover {
-    border-color: rgba(247, 226, 178, .3) !important;
-    transform: translateY(-1px);
-    box-shadow: 0 17px 38px rgba(0, 0, 0, .22), inset 0 1px 0 rgba(255, 255, 255, .03) !important;
-  }
-
-  .reference-calendar-grid .calendar-day:not(.calendar-day--empty):hover {
-    transform: translateY(-1px);
-  }
-}
 
 /* Light theme: warm ivory surfaces instead of washed-out green */
 [data-theme='light'] .reference-profile-screen,
@@ -538,9 +486,7 @@
 }
 
 [data-theme='light'] .reference-account-entry,
-[data-theme='light'] .reference-core-access-grid button,
 [data-theme='light'] .reference-profile-list,
-[data-theme='light'] .reference-services-grid > button,
 [data-theme='light'] .reference-collection-section,
 [data-theme='light'] .reference-collection-grid > button,
 [data-theme='light'] .reference-account-cloud-grid > button,
@@ -607,11 +553,6 @@
     height: 38px;
   }
 
-  .reference-core-access-grid button {
-    min-height: 80px;
-    padding: 9px !important;
-  }
-
   .reference-collection-section {
     padding: 12px;
     border-radius: 20px;
@@ -644,14 +585,6 @@
     height: 46px;
   }
 
-  .reference-core-access-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .reference-core-access-grid button {
-    min-height: 68px;
-  }
-
   .reference-account-cloud-grid {
     grid-template-columns: 1fr;
   }
@@ -662,15 +595,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .reference-account-entry,
-  .reference-core-access-grid button,
-  .reference-profile-row,
-  .reference-services-grid > button,
-  .reference-collection-grid > button,
-  .reference-collection-rows > button,
-  .reference-account-cloud-grid > button,
-  .reference-notes-list > button,
-  .reference-calendar-grid .calendar-day,
-  .calendar-entry-row {
+.reference-profile-row,
+.reference-collection-grid > button,
+.reference-collection-rows > button,
+.reference-account-cloud-grid > button,
+.reference-notes-list > button,
+.reference-calendar-grid .calendar-day,
+.calendar-entry-row {
     transition: none !important;
     transform: none !important;
   }}

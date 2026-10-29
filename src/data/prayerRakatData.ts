@@ -160,7 +160,7 @@ const SANA: RakatStep = {
  */
 const TA_AWWUDH_BASMALAH: RakatStep = {
   id: 'ta-awwudh-basmalah',
-  title: 'Zuflucht suchen & Basmalah',
+  title: 'Zuflucht suchen & Basmala',
   description: 'Hier zu Beginn der ersten Rezitation, leise. Anwendung und Wiederholung unterscheiden sich nach Rechtsschule:',
   posture: 'qiyam',
   arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
@@ -169,13 +169,13 @@ const TA_AWWUDH_BASMALAH: RakatStep = {
   translation: 'Ich suche Zuflucht bei Allah vor dem verfluchten Satan. Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
   repetitionNote: 'Hier in der ersten Rakʿah gezeigt; andere Auffassungen wiederholen die Zuflucht in jeder Rakʿah.',
-  source: 'Quran 16:98 (Aufforderung zur Zuflucht, kein wörtliches Verszitat); Quran 1:1 (Basmalah). Formel und Schulunterschiede: Dar al-Ifta, Fatwa 7267 vom 20.12.2022.',
+  source: 'Quran 16:98 (Aufforderung zur Zuflucht, kein wörtliches Verszitat); Quran 1:1 (Basmala). Formel und Schulunterschiede: Dar al-Ifta, Fatwa 7267 vom 20.12.2022.',
 };
 
 const BASMALAH: RakatStep = {
   id: 'basmalah',
-  title: 'Basmalah',
-  // Ob die Basmalah gesprochen wird und wie laut, ist genau der Punkt, an dem
+  title: 'Basmala',
+  // Ob die Basmala gesprochen wird und wie laut, ist genau der Punkt, an dem
   // die vier Schulen auseinandergehen — der Block darunter sagt es.
   description: 'Vor Al-Fatihah in jeder weiteren Rakʿah. Ob und wie laut, unterscheidet sich je nach Rechtsschule:',
   posture: 'qiyam',
@@ -184,7 +184,7 @@ const BASMALAH: RakatStep = {
   pronunciation: 'Bis-mil-laa-hir-rah-maa-nir-ra-hiim',
   translation: 'Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
-  source: 'Quran 1:1 (hier verwendete Verszählung); 27:30 (Basmalah im Vers). Keine allgemeine Aussage zur Gebetspraxis aller Rechtsschulen.',
+  source: 'Quran 1:1 (hier verwendete Verszählung); 27:30 (Basmala im Vers). Keine allgemeine Aussage zur Gebetspraxis aller Rechtsschulen.',
   audioAyahs: [1],
 };
 
@@ -198,10 +198,10 @@ const FATIHA: RakatStep = {
   pronunciation: 'Al-ham-du lil-laa-hi rab-bil-aa-la-miin\nAr-rah-maa-nir-ra-hiim\nMaa-li-ki jau-mid-diin\nIj-jaa-ka na-bu-du wa ij-jaa-ka nas-ta-iin\nIh-di-nas-si-raa-tal-mus-ta-qiim\nSi-raa-tal-la-dhii-na an-am-ta a-lai-him, ghai-ril-magh-duu-bi a-lai-him wa lad-daal-liin. Aa-miin.',
   translation: 'Alles Lob gehört Allah, dem Herrn der Welten, dem Allerbarmer, dem Barmherzigen, dem Herrscher am Tag des Gerichts. Dir allein dienen wir, und Dich allein bitten wir um Hilfe. Leite uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht den Weg derer, die Deinen Zorn erregt haben, und nicht den Weg der Irregehenden.',
   repetitions: 1,
-  repetitionNote: 'Die Basmalah steht im vorherigen Schritt. „Amin“ ist ein anschließendes Bittgebet, kein Vers der Sure.',
+  repetitionNote: 'Die Basmala steht im vorherigen Schritt. „Amin“ ist ein anschließendes Bittgebet, kein Vers der Sure.',
   source: 'Quran 1:2–7 (Wortlaut); Sahih al-Bukhari 756 (Al-Fatihah), 780 (Amin). Rezitation hinter dem Imam: Dar al-Ifta, Fatwa 5899 vom 09.02.1985.',
   // Die sieben Verse der Fatihah stehen am Anfang des Korans: 1 ist die
-  // Basmalah, 2 bis 7 der hier abgedruckte Wortlaut.
+  // Basmala, 2 bis 7 der hier abgedruckte Wortlaut.
   audioAyahs: [2, 3, 4, 5, 6, 7],
 };
 

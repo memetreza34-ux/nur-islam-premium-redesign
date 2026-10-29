@@ -94,10 +94,6 @@
   letter-spacing: -.025em;
 }
 
-.premium-home--v2 .journey-grid {
-  gap: 9px;
-}
-
 .premium-home--v2 .journey-card {
   min-height: 154px;
   border-color: rgba(232, 199, 122, .15) !important;
@@ -119,22 +115,6 @@
 .premium-home--v2 .journey-card small,
 .premium-home--v2 .journey-card em {
   color: var(--core-muted);
-}
-
-.premium-home--v2 .quick-grid--v2 {
-  gap: 9px;
-}
-
-.premium-home--v2 .quick-card {
-  min-height: 116px;
-  border-color: rgba(232, 199, 122, .145) !important;
-  border-radius: 20px !important;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
-}
-
-.premium-home--v2 .quick-card__icon {
-  border-radius: 14px !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .028);
 }
 
 .premium-home--v2 .continue-card--v2 {
@@ -176,24 +156,6 @@
   box-shadow: 0 16px 38px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
 }
 
-.premium-home--v2 .recommendation-list {
-  display: grid;
-  gap: 7px;
-}
-
-.premium-home--v2 .recommendation-card {
-  min-height: 68px;
-  border-color: rgba(232, 199, 122, .105) !important;
-  border-radius: 18px !important;
-  background: rgba(255, 255, 255, .018) !important;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .015);
-}
-
-.premium-home--v2 .recommendation-card__icon {
-  border-radius: 13px !important;
-  background: rgba(232, 199, 122, .05) !important;
-}
-
 /* ---------------- Prayer ---------------- */
 .reference-prayer-screen {
   gap: 15px;
@@ -227,14 +189,8 @@
   box-shadow: var(--core-shadow) !important;
 }
 
-.reference-prayer-location .prayer-location-card__icon {
-  border: 1px solid rgba(232, 199, 122, .17);
-  border-radius: 13px;
-  background: rgba(232, 199, 122, .05);
-}
-
 .reference-prayer-location > button {
-  min-height: 40px;
+  min-height: 44px;
   border-radius: 12px !important;
 }
 
@@ -281,21 +237,11 @@
   border-radius: 14px !important;
 }
 
-.reference-prayer-progress,
-.reference-prayer-method {
+.reference-prayer-progress{
   border-color: var(--core-border) !important;
   border-radius: 21px !important;
   background: var(--core-surface) !important;
   box-shadow: var(--core-shadow) !important;
-}
-
-.reference-prayer-method {
-  min-height: 82px;
-}
-
-.reference-prayer-method .method-card__icon {
-  border-radius: 14px !important;
-  background: rgba(232, 199, 122, .05) !important;
 }
 
 .reference-prayer-settings-modal,
@@ -308,16 +254,9 @@
   box-shadow: 0 35px 90px rgba(0, 0, 0, .57), inset 0 1px 0 rgba(255, 255, 255, .042) !important;
 }
 
-.reference-prayer-settings-group > div > button {
-  border-color: rgba(232, 199, 122, .12) !important;
-  border-radius: 15px !important;
-  background: rgba(255, 255, 255, .02) !important;
-}
 
-.reference-prayer-settings-group > div > button.is-active {
-  border-color: rgba(247, 226, 178, .35) !important;
-  background: rgba(232, 199, 122, .075) !important;
-}
+
+
 
 /* ---------------- Quran catalog + reader ---------------- */
 .reference-quran-screen--complete,
@@ -375,7 +314,7 @@
 }
 
 .reference-quran-screen--complete .reference-filter-tabs > button {
-  min-height: 42px;
+  min-height: 44px;
   border-color: rgba(232, 199, 122, .11) !important;
   background: rgba(4, 29, 22, .72) !important;
 }
@@ -411,7 +350,7 @@
 }
 
 .reference-reader-hero {
-  min-height: 225px !important;
+  min-height: 160px !important;
   border-color: var(--core-border-strong) !important;
   border-radius: 28px !important;
   background:
@@ -473,82 +412,11 @@
   padding-block: 4px 7px;
 }
 
-.reference-prayer-learning-hub {
-  min-height: 286px;
-  border-color: var(--core-border-strong) !important;
-  border-radius: 29px !important;
-  background:
-    radial-gradient(circle at 75% 18%, rgba(232, 199, 122, .14), transparent 12rem),
-    linear-gradient(145deg, #0d4636, #05281f 61%, #021510) !important;
-  box-shadow: var(--core-shadow-strong) !important;
-}
 
-.reference-prayer-learning-hub__copy h2 {
-  letter-spacing: -.035em;
-}
 
-.reference-prayer-learning-hub__copy p {
-  max-width: 280px;
-  color: var(--core-muted);
-  line-height: 1.55;
-}
 
-.reference-prayer-learning-hub > .premium-image {
-  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, .33));
-}
 
-.reference-prayer-learning-hub__progress > span {
-  height: 5px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .055);
-}
 
-.reference-prayer-learning-hub__progress > span > i {
-  border-radius: inherit;
-  box-shadow: 0 0 15px rgba(232, 199, 122, .17);
-}
-
-.reference-prayer-learning-actions {
-  gap: 8px;
-}
-
-.reference-prayer-learning-actions > button {
-  min-height: 74px;
-  border-color: rgba(232, 199, 122, .14) !important;
-  border-radius: 19px !important;
-  background: var(--core-surface) !important;
-  box-shadow: 0 13px 30px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .02) !important;
-}
-
-.reference-prayer-learning-actions > button > span:first-child {
-  border-radius: 13px !important;
-  background: rgba(232, 199, 122, .05) !important;
-}
-
-.reference-five-prayer-lessons > div:last-child {
-  overflow: hidden;
-  border: 1px solid rgba(232, 199, 122, .13);
-  border-radius: 22px;
-  background: var(--core-surface);
-  box-shadow: var(--core-shadow);
-}
-
-.reference-five-prayer-lessons > div:last-child > button {
-  min-height: 74px;
-  border-bottom-color: rgba(232, 199, 122, .075) !important;
-}
-
-.reference-five-prayer-lessons > div:last-child > button.is-complete {
-  background: rgba(76, 158, 101, .04) !important;
-}
-
-.reference-knowledge-overview {
-  padding: 10px 12px !important;
-  border: 1px solid rgba(232, 199, 122, .11) !important;
-  border-radius: 16px !important;
-  background: rgba(4, 29, 22, .62) !important;
-}
 
 .reference-category-grid {
   gap: 9px;
@@ -564,22 +432,8 @@
   box-shadow: 0 14px 32px rgba(0, 0, 0, .17), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
 }
 
-.reference-expanded-learning-grid {
-  gap: 8px;
-}
 
-.reference-expanded-learning-grid > button {
-  min-height: 74px;
-  border-color: rgba(232, 199, 122, .13) !important;
-  border-radius: 18px !important;
-  background: var(--core-surface) !important;
-  box-shadow: 0 13px 30px rgba(0, 0, 0, .17), inset 0 1px 0 rgba(255, 255, 255, .018) !important;
-}
 
-.reference-expanded-learning-grid__icon {
-  border-radius: 13px !important;
-  background: rgba(232, 199, 122, .05) !important;
-}
 
 .reference-knowledge-quote {
   border-color: rgba(232, 199, 122, .15) !important;
@@ -590,31 +444,8 @@
   box-shadow: var(--core-shadow) !important;
 }
 
-.reference-learning-plan-modal {
-  border-color: rgba(247, 226, 178, .29) !important;
-  border-radius: 27px !important;
-  background:
-    radial-gradient(circle at 86% 4%, rgba(232, 199, 122, .11), transparent 12rem),
-    linear-gradient(145deg, #114536, #05261d 63%, #02140f) !important;
-  box-shadow: 0 35px 90px rgba(0, 0, 0, .57), inset 0 1px 0 rgba(255, 255, 255, .042) !important;
-}
 
 /* Hover is deliberately limited to true pointer devices. */
-@media (hover: hover) and (pointer: fine) {
-  .premium-home--v2 .journey-card:hover,
-.premium-home--v2 .quick-card:hover,
-.premium-home--v2 .recommendation-card:hover,
-.reference-prayer-location:hover,
-.reference-quran-list--catalog > article:hover,
-.reference-reader-screen--dynamic .reference-reader-verse:hover,
-.reference-prayer-learning-actions > button:hover,
-.reference-five-prayer-lessons > div:last-child > button:hover,
-.reference-category-card:hover,
-.reference-expanded-learning-grid > button:hover {
-    border-color: rgba(247, 226, 178, .29) !important;
-    transform: translateY(-1px);
-  }
-}
 
 /* Warm light theme instead of flat white. */
 [data-theme='light'] .premium-home--v2,
@@ -636,10 +467,8 @@
 
 [data-theme='light'] .premium-home--v2 .journey-card,
 [data-theme='light'] .premium-home--v2 .continue-card--v2,
-[data-theme='light'] .premium-home--v2 .recommendation-card,
 [data-theme='light'] .reference-prayer-location,
 [data-theme='light'] .reference-prayer-progress,
-[data-theme='light'] .reference-prayer-method,
 [data-theme='light'] .reference-quran-library-status,
 [data-theme='light'] .reference-quran-list--catalog,
 [data-theme='light'] .reference-reader-controls > button,
@@ -666,15 +495,13 @@
 
 [data-theme='light'] .premium-home--v2 .journey-card small,
 [data-theme='light'] .premium-home--v2 .journey-card em,
-[data-theme='light'] .reference-prayer-location-privacy,
-[data-theme='light'] .reference-prayer-learning-hub__copy p {
+[data-theme='light'] .reference-prayer-location-privacy{
   color: rgba(57, 78, 67, .72) !important;
 }
 
 [data-theme='light'] .reference-quran-screen--complete .reference-input-search,
 [data-theme='light'] .reference-quran-screen--complete .reference-filter-tabs > button,
-[data-theme='light'] .reference-prayer-live-status,
-[data-theme='light'] .reference-knowledge-overview {
+[data-theme='light'] .reference-prayer-live-status {
   color: #29483d;
   background: rgba(255, 252, 243, .76) !important;
 }
@@ -697,10 +524,6 @@
     min-height: 142px;
   }
 
-  .premium-home--v2 .quick-card {
-    min-height: 108px;
-  }
-
   .reference-next-prayer {
     min-height: 310px !important;
     padding: 15px !important;
@@ -717,10 +540,6 @@
     border-radius: 25px !important;
   }
 
-  .reference-prayer-learning-hub {
-    min-height: 266px;
-    border-radius: 26px !important;
-  }
 
   .reference-category-card {
     min-height: 116px !important;
@@ -728,13 +547,8 @@
 }
 
 @media (max-width: 350px) {
-  .premium-home--v2 .journey-grid,
-  .premium-home--v2 .quick-grid--v2 {
-    grid-template-columns: 1fr;
-  }
 
-  .premium-home--v2 .journey-card,
-  .premium-home--v2 .quick-card {
+  .premium-home--v2 .journey-card {
     min-height: 98px;
   }
 
@@ -747,15 +561,10 @@
   .reference-font-control {
     min-height: 46px;
   }
-
-  .reference-prayer-learning-actions {
-    grid-template-columns: 1fr;
-  }}
+}
 
 @media (prefers-reduced-motion: reduce) {
   .premium-home--v2 .journey-card,
-.premium-home--v2 .quick-card,
-.premium-home--v2 .recommendation-card,
 .reference-prayer-location,
 .reference-quran-list--catalog > article,
 .reference-reader-screen--dynamic .reference-reader-verse,

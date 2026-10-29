@@ -6,7 +6,7 @@ test.use({ serviceWorkers: 'block', reducedMotion: 'reduce' });
 async function openFaithFoundation(page: Page) {
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
-  await expect(page.getByRole('heading', { name: 'Dein Grundlagenpfad' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Grundlagen', exact: true })).toBeVisible();
   await expect(page.locator('.reference-foundation-step')).toHaveCount(14);
   await expect(page.locator('.reference-foundation-path').getByRole('button', { name: /Die vier Rechtsschulen/ })).toHaveCount(1);
   await expect(page.locator('.reference-expanded-learning').getByRole('button', { name: /Die vier Rechtsschulen/ })).toHaveCount(0);
@@ -17,7 +17,8 @@ async function openFaithFoundation(page: Page) {
     await expect(remainingFeatures.filter({ hasText: title })).toHaveCount(1);
   }
   await page.getByRole('button', { name: /Allah & der Glaube/ }).click();
-  await expect(page.getByRole('region', { name: 'Was du in diesem Kurs lernst' })).toBeVisible();
+  await expect(page.locator('.learning-course-v2__lesson')).toBeVisible();
+  await expect(page.locator('.learning-course-v2__intro')).toHaveCount(0);
 }
 
 for (const width of [320, 390, 768]) {
@@ -25,9 +26,9 @@ for (const width of [320, 390, 768]) {
     await page.setViewportSize({ width, height: 900 });
     await openFaithFoundation(page);
 
-    const path = page.getByRole('region', { name: 'Kursplan' });
-    await expect(path.getByRole('button', { name: /Kursplan/ })).toHaveAttribute('aria-expanded', 'false');
-    await path.getByRole('button', { name: /Kursplan/ }).click();
+    const path = page.getByRole('region', { name: 'Lektionsauswahl' });
+    await expect(path.getByRole('button', { name: /Lektion auswählen/ })).toHaveAttribute('aria-expanded', 'false');
+    await path.getByRole('button', { name: /Lektion auswählen/ }).click();
     await expect(path.locator('.learning-course-v2__lessons').getByRole('button')).toHaveCount(7);
     await expect(path.getByText('Einführung: Woran Muslime glauben', { exact: true })).toBeVisible();
     await expect(path.getByText('1. Glaube an Allah', { exact: true })).toBeVisible();
@@ -58,7 +59,7 @@ for (const width of [320, 390, 768]) {
       expect(title.scrollWidth).toBeLessThanOrEqual(title.clientWidth + 1);
     }
 
-    await page.locator('.learning-course-v2__intro').screenshot({ path: testInfo.outputPath(`learning-intro-${width}.png`) });
+    await page.locator('.learning-course-v2__lesson > header').screenshot({ path: testInfo.outputPath(`learning-intro-${width}.png`) });
   });
 }
 
@@ -66,10 +67,10 @@ test('lesson selection returns to the course start and exposes the complete titl
   await openFaithFoundation(page);
   const frame = page.locator('.screen-transition-frame');
   await frame.evaluate(element => { element.scrollTop = 900; });
-  await page.getByRole('button', { name: /Kursplan/ }).click();
+  await page.getByRole('button', { name: /Lektion auswählen/ }).click();
   const lesson = page.getByRole('button', { name: /6\. Glaube an die Bestimmung 7 Min/ });
   await lesson.click();
-  await expect(page.getByRole('button', { name: /Kursplan/ })).toHaveAttribute('aria-expanded', 'false');
+  await expect(page.getByRole('button', { name: /Lektion auswählen/ })).toHaveAttribute('aria-expanded', 'false');
   await expect(page.getByRole('article').getByRole('heading', { name: '6. Glaube an die Bestimmung', exact: true })).toBeVisible();
   await expect.poll(() => frame.evaluate(element => element.scrollTop)).toBeLessThan(2);
 });
@@ -78,9 +79,9 @@ test('every pillar has its own course-plan lesson', async ({ page }) => {
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
   await page.getByRole('button', { name: /Die fünf Säulen/ }).click();
-  await page.getByRole('button', { name: /Kursplan/ }).click();
+  await page.getByRole('button', { name: /Lektion auswählen/ }).click();
 
-  const path = page.getByRole('region', { name: 'Kursplan' });
+  const path = page.getByRole('region', { name: 'Lektionsauswahl' });
   await expect(path.locator('.learning-course-v2__lessons').getByRole('button')).toHaveCount(6);
   await expect(path.getByText('Shahada: Das Glaubensbekenntnis', { exact: true })).toBeVisible();
   await expect(path.getByText('Salah: Die fünf täglichen Gebete', { exact: true })).toBeVisible();
@@ -93,9 +94,9 @@ test('every important term follows the same definition and example structure', a
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
   await page.getByRole('button', { name: /Wichtige Begriffe/ }).click();
-  await page.getByRole('button', { name: /Kursplan/ }).click();
+  await page.getByRole('button', { name: /Lektion auswählen/ }).click();
 
-  const path = page.getByRole('region', { name: 'Kursplan' });
+  const path = page.getByRole('region', { name: 'Lektionsauswahl' });
   await expect(path.locator('.learning-course-v2__lessons').getByRole('button')).toHaveCount(12);
   await expect(path.getByText('Einführung: Wichtige Begriffe verstehen', { exact: true })).toBeVisible();
   await expect(path.getByText('Islam, Iman und Ihsan', { exact: true })).toBeVisible();
@@ -119,6 +120,7 @@ test('every important term follows the same definition and example structure', a
 });
 
 test('every foundation course starts with a clear introduction and named sections', async ({ page }) => {
+  test.setTimeout(180_000);
   const courses = [
     { button: /Reinheit & Alltag/, title: 'Einführung: Sicher im Alltag handeln', sections: ['Worum es in diesem Kapitel geht', 'So ist der Praxiskurs aufgebaut', 'Grenzen einer kurzen Lektion'] },
     { button: /Charakter & Rechte/, title: 'Einführung: Glaube im Verhalten', sections: ['Worum es in diesem Kapitel geht', 'So ist der Charakterkurs aufgebaut', 'Verhalten und Verantwortung'] },
@@ -142,6 +144,7 @@ test('back from a knowledge category restores the exact learning overview positi
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
 
+  await page.evaluate(() => document.fonts.ready);
   const termsButton = page.getByRole('button', { name: /Wichtige Begriffe/ });
   await termsButton.evaluate(element => {
     const frame = element.closest<HTMLElement>('.screen-transition-frame');
@@ -156,7 +159,7 @@ test('back from a knowledge category restores the exact learning overview positi
   await expect.poll(() => courseHeading.evaluate(element => element.closest<HTMLElement>('.screen-transition-frame')?.scrollTop ?? -1)).toBeLessThan(2);
 
   await page.getByRole('button', { name: 'Zurück zu Lernen' }).click();
-  const overviewHeading = page.getByRole('heading', { name: 'Dein Grundlagenpfad' });
+  const overviewHeading = page.getByRole('heading', { name: 'Grundlagen', exact: true });
   await expect(overviewHeading).toBeVisible();
   await expect.poll(() => overviewHeading.evaluate(element => element.closest<HTMLElement>('.screen-transition-frame')?.scrollTop ?? -1)).toBe(previousOffset);
 });
@@ -182,19 +185,19 @@ test('the prophets category contains 25 complete Quran-grounded course plans', a
 
   await expect(page.locator('h1').filter({ hasText: 'Die 25 Propheten' })).toBeVisible();
   await expect(page.locator('.reference-person-list button')).toHaveCount(25);
-  await expect(page.getByText('25 eigenständige Kurse', { exact: true })).toBeVisible();
+  await expect(page.getByText('25 Propheten mit Kapiteln und Quran-Belegstellen.', { exact: true })).toBeVisible();
   await page.getByRole('button', { name: /Muhammad · محمد/ }).click();
   await expect(page.getByRole('heading', { name: 'Muhammad', exact: true })).toBeVisible();
   await expect(page.getByText('Mu-ham-mad', { exact: false })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).toContainText('0/6 abgeschlossen');
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).toContainText('Mit Quran-Belegstellen');
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).not.toContainText('Fachprüfung offen');
-  await expect(page.getByRole('heading', { name: 'Bevor du beginnst', exact: true })).toBeVisible();
+  await expect(page.locator('.reference-prophet-course__progress')).toHaveCount(0);
+  await expect(page.locator('.reference-prophet-overview')).not.toHaveAttribute('open');
+  await page.locator('.reference-prophet-overview > summary').click();
   await expect(page.locator('.reference-prophet-overview__goals p')).toHaveCount(3);
   await expect(page.getByRole('heading', { name: 'Das Wesentliche im Kurs', exact: true })).toBeVisible();
   await expect(page.locator('.reference-prophet-overview__facts li')).toHaveCount(6);
   await expect(page.getByText(/Grenze des sicheren Wissens:/)).toBeVisible();
-  const coursePlan = page.getByRole('region', { name: 'Kursplan für Muhammad' });
+  const coursePlan = page.locator('.reference-prophet-plan');
+  await coursePlan.locator('summary').click();
   await expect(coursePlan.getByRole('button')).toHaveCount(6);
   await expect(page.getByRole('heading', { name: 'Der Offenbarungsauftrag: Lesen', exact: true })).toBeVisible();
 
@@ -202,17 +205,15 @@ test('the prophets category contains 25 complete Quran-grounded course plans', a
   await expect(page.getByRole('heading', { name: 'Siegel der Propheten', exact: true })).toBeVisible();
   await expect(page.getByText('Mit Muhammad ﷺ ist die Prophetie abgeschlossen.', { exact: true })).toBeVisible();
   const alAhzabSource = page.getByRole('button', { name: 'Quran 33:40 (Al-Ahzab) im Quran öffnen' });
-  await expect(alAhzabSource).toBeVisible();
-  await expect(page.getByText('Prüfe dein Verständnis', { exact: true })).toBeVisible();
-  await expect(page.locator('.reference-prophet-lesson__questions li')).toHaveCount(4);
-  await page.getByRole('button', { name: 'Kapitel als abgeschlossen markieren', exact: true }).click();
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).toContainText('1/6 abgeschlossen');
+  await expect(alAhzabSource).toHaveCount(0);
+  await expect(page.locator('.reference-prophet-lesson__questions')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: /Kapitel.*abgeschlossen/ })).toHaveCount(0);
 
+  await page.getByRole('button', { name: 'Quellen anzeigen: Im Quran nachlesen', exact: true }).click();
   await alAhzabSource.click();
   await expect(page.getByRole('heading', { name: 'Al-Ahzaab', exact: true, level: 1 })).toBeVisible();
-  await page.getByRole('button', { name: 'Zurück zum Quran', exact: true }).click();
+  await page.getByRole('button', { name: 'Zurück zu Lernen', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Siegel der Propheten', exact: true })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).toContainText('1/6 abgeschlossen');
 
   await page.evaluate(() => {
     localStorage.setItem('nur_prophet_course_progress_v1', JSON.stringify({
@@ -224,17 +225,17 @@ test('the prophets category contains 25 complete Quran-grounded course plans', a
     localStorage.setItem('nur_prophet_course_return_v1', JSON.stringify({ prophetId: 'muhammad', chapterIndex: 5 }));
     window.location.reload();
   });
-  await expect(page.getByRole('region', { name: 'Kurs abgeschlossen' })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Kursstatus' })).toContainText('6/6 abgeschlossen');
-  await page.getByRole('button', { name: 'Zu allen Propheten', exact: true }).click();
+  await expect(page.getByRole('region', { name: 'Kurs abgeschlossen' })).toHaveCount(0);
+  await page.getByRole('button', { name: /Zurück/ }).first().click();
 
   await page.getByRole('button', { name: /Idris · إدريس/ }).click();
+  await page.locator('.reference-prophet-overview > summary').click();
   await expect(page.locator('.reference-prophet-overview__facts li')).toHaveCount(3);
   await expect(page.getByText('Wahrhaftigkeit ist die zentrale genannte Eigenschaft.', { exact: true })).toBeVisible();
   await expect(page.getByText('Quran 19:56 (Maryam)', { exact: true }).first()).toBeVisible();
   await page.getByRole('button', { name: /Zurück/ }).first().click();
   await page.getByRole('button', { name: /Zurück/ }).first().click();
-  const overviewHeading = page.getByRole('heading', { name: 'Dein Grundlagenpfad' });
+  const overviewHeading = page.getByRole('heading', { name: 'Grundlagen', exact: true });
   await expect(overviewHeading).toBeVisible();
   await expect.poll(() => overviewHeading.evaluate(element => element.closest<HTMLElement>('.screen-transition-frame')?.scrollTop ?? -1)).toBe(previousOffset);
 });

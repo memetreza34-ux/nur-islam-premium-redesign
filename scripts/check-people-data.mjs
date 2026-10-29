@@ -115,11 +115,9 @@ for (const requirement of [
   'reference-prophet-lesson__sources',
   'reference-prophet-overview__facts',
   'reference-prophet-overview__boundary',
-  'reference-prophet-lesson__questions',
   'nur_prophet_course_progress_v1',
-  'reference-prophet-status',
-  'reference-prophet-lesson__complete',
-  'reference-prophet-completion',
+  '<details className="reference-prophet-plan"',
+  '<details className="reference-prophet-overview"',
   'onOpenQuranReference',
 ]) {
   if (!screen.includes(requirement)) throw new Error(`People screens are missing: ${requirement}`);
@@ -132,3 +130,7 @@ if (/^\s+prophets: \[/m.test(screen)) {
 console.log(
   `People verified: all ${prophetEntries.length} Quran-named prophets have a detailed course orientation, sourced core-fact overview, knowledge boundary and ${chapterCount} sourced chapters; companions and women remain separate lists.`,
 );
+
+for (const forbidden of ['markCurrentChapterComplete', 'reference-prophet-completion', 'reference-prophet-lesson__complete']) {
+  if (screen.includes(forbidden)) throw new Error(`Prophet reading chapters must remain open without completion tracking: ${forbidden}`);
+}

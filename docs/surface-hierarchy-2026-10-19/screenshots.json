@@ -1,0 +1,92 @@
+[
+  {
+    "file": "more-390.jpg",
+    "viewport": [
+      390,
+      900
+    ],
+    "original_sha256": "c733f52ccd84a72ad5ef563b3af07ae7c9dc30ea12fdf285b33e9397c94d1630",
+    "output_sha256": "595b7cdb25da5c747a33f9d7f8999a64f63436003dba08abb4963daddd8271de"
+  },
+  {
+    "file": "names-intro-390.jpg",
+    "viewport": [
+      390,
+      900
+    ],
+    "original_sha256": "25c4c60e514b6765d21c63cd9d17afaa703c9dd6c4e6dbdc01f14eb2ae31dce8",
+    "output_sha256": "e85a430e8e6a15e0c3f9ae2e8725142f7aaa646e92590cf6d1b89f2ef2913f8f"
+  },
+  {
+    "file": "course-390.jpg",
+    "viewport": [
+      390,
+      900
+    ],
+    "original_sha256": "0a45a2c5991b23339bf7fb13b2b687b1c287a9bfe25a3971d74ec8a8a41a7d94",
+    "output_sha256": "c5d1d8e19b6f9d707f88c27b6098444901bc49354bd64efa9ac15694c6ee16b8"
+  },
+  {
+    "file": "course-takeaways-390.jpg",
+    "viewport": [
+      390,
+      900
+    ],
+    "original_sha256": "14a53cac73eead88c30551adb6e8f820d91240abb34ce1e3056312646f31d0ef",
+    "output_sha256": "34c005a8d0d03730de54116dbdef0dcb9bbe89871d9b9d4e7a71334c7a2559bd"
+  },
+  {
+    "file": "wudu-intro-390.jpg",
+    "viewport": [
+      390,
+      900
+    ],
+    "original_sha256": "1c4d0f78325c5584002ef0845ab1f75809ef4791aec1dec872168b635b4c7152",
+    "output_sha256": "a1f19d06edd81074458009c565e96bf93fe97539ea71a3222baddf7de11a8fbe"
+  },
+  {
+    "file": "more-768.jpg",
+    "viewport": [
+      768,
+      900
+    ],
+    "original_sha256": "7e3ef99babfd5047293daacc26fdb46266d7d1e81619ec265282921bc9140203",
+    "output_sha256": "7f4eea0e524767583a95dbfce8cb05e1f1c17cde0cc2a0ebdeadc95a879156b1"
+  },
+  {
+    "file": "names-intro-768.jpg",
+    "viewport": [
+      768,
+      900
+    ],
+    "original_sha256": "5f81bcea8aeac69bbf12c28833a337368347d111cd27c70c027af28902490ed5",
+    "output_sha256": "43cd0914b258dfa0f533b128782af52a14786e07e458490cab1bbd0e0b5d6418"
+  },
+  {
+    "file": "course-768.jpg",
+    "viewport": [
+      768,
+      900
+    ],
+    "original_sha256": "ede85c47fab88a44e1fa066958290d6a0cd3b75c5bde78d6e47f603e2ca33180",
+    "output_sha256": "33680c77d51cfaf85e513368580b0ac89487a7568eb6f40eba827a01d781b500"
+  },
+  {
+    "file": "course-takeaways-768.jpg",
+    "viewport": [
+      768,
+      900
+    ],
+    "original_sha256": "fb023ed480d379213ec732ca97f6b3e7252afbbf7a2b6e7086507fe65e62099e",
+    "output_sha256": "8b1cbfc35ed1de4335110ede5cb36b9cb3039c9f882980cce50da662317ac624"
+  },
+  {
+    "file": "wudu-intro-768.jpg",
+    "viewport": [
+      768,
+      900
+    ],
+    "original_sha256": "5e5da5c8781c397a9c09531ffe4b42041ec75e2acd2ef0e049932b6aea696cfb",
+    "output_sha256": "ab8ceb71522e5e14d0bd4c5535f409271960bf771121e880c2155d5149821951"
+  }
+]

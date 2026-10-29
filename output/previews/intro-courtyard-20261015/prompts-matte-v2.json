@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-15",
+  "purpose": "Updated separate animated preview, matched to the existing matte 3D app illustration family.",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: style-transfer.\nImage 1 is the EDIT TARGET, the mosque arcade composition already liked by the user. Image 2 is the PRIMARY STYLE REFERENCE, an existing approved Nur Islam app illustration. Match Image 2's smooth clean matte 3D material and simplified shape language much more faithfully.\nKeep Image 1's portrait framing, large quiet deep emerald wall in the middle, close ivory column on the extreme left, arch on the right, small glimpse of a teal dome outside at lower right, warm afternoon light and uncluttered floor. Preserve the central dark-green text-safe area x20%-80%, y12%-76%.\nRestyle the ENTIRE environment as a cohesive handcrafted 3D illustration using the same visual grammar as Image 2. Model the columns, capitals, arch and cornice as simple solid cream forms with rounded bevels and clean silhouettes, few broad geometric tiers, no carved microdetail. The central wall must be smooth satin emerald like the teal dome material in Image 2. Floor: a few large smooth warm cream slabs, with very soft clean reflections and broad shadows. Foliage: reduce to just a few clearly modeled matte olive-green leaves near the top-left margin and very small outside-right sprig. Simplify the dome and background architecture to the same sculpted 3D quality as Image 2.\nCRITICAL: remove ALL stone grain, marble veins, plaster noise, weathering, fine scratches, photographic leaf texture, tiny twigs, complex cast leaf shadows and realistic masonry. Every surface is smooth and untextured, with gentle studio-like gradients and ambient occlusion that describes the solid 3D shapes. Warm light should be broad and soft. No grain or added noise anywhere. Mature refined 3D illustration, restrained colors and proportions, not a children's toy, not a photorealistic architectural photograph, not flat vector art.\nDo not alter the spacious text-safe composition. No text, letters, UI, books, people, logos, symbols or new decorative objects. One finished portrait image.",
+  "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ffa3e60e-a4d8-4d96-8955-e8a534d3b389.png",
+  "inputImages": [
+    "output/previews/intro-courtyard-20261015/courtyard.png",
+    "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+  ],
+  "inputRoles": [
+    "Composition edit target",
+    "Primary material and shape style reference"
+  ],
+  "workspaceOriginal": "output/previews/intro-courtyard-20261015/courtyard-matte-v2.png",
+  "runtimePreview": "output/previews/intro-courtyard-20261015/courtyard-matte-v2.webp",
+  "processing": "cwebp -q 92 -m 6; preserve native 1024x1536",
+  "sha256": "79e4e18cba5e540198508da5421911ef60925fab342e45371b4a3911df196fec"
+}

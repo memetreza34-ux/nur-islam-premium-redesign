@@ -5,8 +5,7 @@
    reference artwork on its approved fit/anchor even when older layers declare
    local overrides. */
 
-html:not([data-theme='light']) :where(.reference-account-screen,
-  .reference-notes-screen) {
+html:not([data-theme='light']) :where(.reference-account-screen, .reference-notes-screen) {
   --utility-surface: linear-gradient(145deg, rgba(13, 87, 67, .94), rgba(0, 18, 15, .99));
   --utility-surface-soft: rgba(7, 55, 43, .82);
   --utility-border: rgba(226, 191, 119, .15);
@@ -37,132 +36,17 @@ html:not([data-theme='light']) :where(.reference-account-screen,
     linear-gradient(150deg, #0d5743, #07372b 64%, #00120f) !important;
 }
 
-:where(
-  .welcome-hero,
-  .prayer-hero--v2,
-  .next-prayer-panel,
-  .learning-hero,
-  .reference-prayer-learning-hub,
-  .reference-reader-hero,
-  .reference-guide-hero,
-  .reference-quran-continue,
-  .reference-dhikr-counter,
-  .reference-qibla-stage,
-  .reference-duas-hero,
-  .reference-names-hero,
-  .reference-mosque-hero,
-  .reference-ayah-hero,
-  .reference-hadith-hero,
-  .reference-profile-greeting,
-  .reference-account-hero,
-  .reference-legacy-hero,
-  .reference-onboarding__visual,
-  .reference-standby-stage
-) { border-radius: 42px !important; }
+:where(.welcome-hero, .prayer-hero--v2, .next-prayer-panel, .learning-hero, .reference-reader-hero, .reference-quran-continue, .reference-dhikr-counter, .reference-qibla-stage, .reference-duas-hero, .reference-names-hero, .reference-mosque-hero, .reference-ayah-hero, .reference-hadith-hero, .reference-profile-greeting, .reference-account-hero, .reference-legacy-hero, .reference-onboarding__visual, .reference-standby-stage) { border-radius: 42px !important; }
 
 .reference-splash { border-radius: 0 !important; }
 
-:where(.glass-card,
-  .journey-card,
-  .quick-card,
-  .continue-card--v2,
-  .verse-card,
-  .hadith-card,
-  .recommendation-card,
-  .prayer-time-row,
-  .calendar-event-card,
-  .learning-card,
-  .settings-section,
-  .profile-card,
-  .reference-quran-list,
-  .reference-reader-verse,
-  .reference-source-card,
-  .reference-reflection-card,
-  .reference-mosque-live-status,
-  .reference-calendar-month,
-  .reference-calendar-event,
-  .reference-collection-section,
-  .reference-profile-list,
-  .reference-account-entry,
-  .reference-account-form,
-  .reference-account-cloud-grid > button,
-  .reference-account-security,
-  .reference-notes-storage,
-  .reference-note-editor,
-  .reference-quiz-card,
-  .reference-quiz-result,
-  .reference-zakat-calculator,
-  .reference-fasting-reminder-settings,
-  .reference-prayer-reminder-banner,
-  .reference-calendar-reminder-banner,
-  .reference-install-prompt,
-  .reference-profile-modal,
-  .reference-dua-modal,
-  .reference-name-modal,
-  .reference-dhikr-stats-modal,
-  .reference-prayer-settings-modal,
-  .prayer-completion-modal,
-  .reference-learning-completion-modal,
-  .reference-learning-plan-modal,
-  .calendar-modal,
-  .reference-mosque-detail-modal,
-  .reference-prayer-course-complete > section) { border-radius: 28px !important; }
+:where(.glass-card, .journey-card, .continue-card--v2, .verse-card, .hadith-card, .prayer-time-row, .calendar-event-card, .learning-card, .settings-section, .profile-card, .reference-quran-list, .reference-reader-verse, .reference-source-card, .reference-reflection-card, .reference-mosque-live-status, .reference-calendar-month, .reference-calendar-event, .reference-collection-section, .reference-profile-list, .reference-account-entry, .reference-account-form, .reference-account-cloud-grid > button, .reference-account-security, .reference-notes-storage, .reference-note-editor, .reference-quiz-card, .reference-quiz-result, .reference-zakat-calculator, .reference-fasting-reminder-settings, .reference-prayer-reminder-banner, .reference-calendar-reminder-banner, .reference-install-prompt, .reference-profile-modal, .reference-dua-modal, .reference-name-modal, .reference-dhikr-stats-modal, .reference-prayer-settings-modal, .prayer-completion-modal, .calendar-modal, .reference-mosque-detail-modal) { border-radius: 28px !important; }
 
-:where(.icon-button,
-  .play-button,
-  .gold-button,
-  .reference-inline-button,
-  .reference-map-button,
-  .reference-mosque-location-button,
-  .reference-detail-actions button,
-  .reference-detail-actions a,
-  .reference-guide-tabs button,
-  .reference-reader-controls > button,
-  .reference-filter-tabs button,
-  .reference-modal-close,
-  .reference-prayer-settings-modal__close,
-  .reference-mosque-detail-modal__close,
-  .reference-learning-completion-modal__close,
-  .prayer-completion-modal__close,
-  .reference-network-status,
-  .reference-prayer-reminder-banner__open,
-  .reference-prayer-reminder-banner__close,
-  .reference-install-prompt__close,
-  .reference-install-prompt__action,
-  .reference-input-search,
-  .reference-profile-logout,
-  .reference-profile-modal__icon,
-  .reference-choice,
-  .reference-settings-toggles > button,
-  .reference-account-header-icon,
-  .reference-account-tabs,
-  .reference-account-tabs > button,
-  .reference-account-form label > div,
-  .reference-account-form label > input,
-  .reference-account-status,
-  .reference-account-logout,
-  .reference-notes-storage > button,
-  .reference-notes-list > button,
-  .reference-note-editor__heading > button,
-  .reference-note-editor > input,
-  .reference-note-editor > textarea,
-  .reference-onboarding__topbar > button,
-  .reference-onboarding__permissions > button,
-  .reference-onboarding__back,
-  .reference-onboarding__actions .gold-button,
-  .calendar-modal input,
-  .reference-legacy-search,
-  .reference-fasting-reminder-settings input,
-  .reference-zakat-calculator input,
-  .toast) { border-radius: 18px !important; }
+:where(.icon-button, .play-button, .gold-button, .reference-inline-button, .reference-map-button, .reference-mosque-location-button, .reference-detail-actions button, .reference-detail-actions a, .reference-guide-tabs button, .reference-reader-controls > button, .reference-filter-tabs button, .reference-modal-close, .reference-prayer-settings-modal__close, .reference-mosque-detail-modal__close, .prayer-completion-modal__close, .reference-network-status, .reference-prayer-reminder-banner__open, .reference-prayer-reminder-banner__close, .reference-install-prompt__close, .reference-install-prompt__action, .reference-input-search, .reference-profile-logout, .reference-profile-modal__icon, .reference-settings-toggles > button, .reference-account-header-icon, .reference-account-tabs, .reference-account-tabs > button, .reference-account-form label > div, .reference-account-form label > input, .reference-account-status, .reference-account-logout, .reference-notes-storage > button, .reference-notes-list > button, .reference-note-editor__heading > button, .reference-note-editor > input, .reference-note-editor > textarea, .reference-onboarding__topbar > button, .reference-onboarding__permissions > button, .reference-onboarding__back, .reference-onboarding__actions .gold-button, .calendar-modal input, .reference-legacy-search, .reference-fasting-reminder-settings input, .reference-zakat-calculator input, .toast) { border-radius: 18px !important; }
 
-:where(.reference-profile-row__icon,
-  .reference-notes-storage > svg:first-child,
-  .reference-onboarding__visual-icon,
-  .reference-onboarding__permissions > button > span:first-child) { border-radius: 13px !important; }
+:where(.reference-profile-row__icon, .reference-notes-storage > svg:first-child, .reference-onboarding__visual-icon, .reference-onboarding__permissions > button > span:first-child) { border-radius: 13px !important; }
 
-:where(.reference-account-tabs > button.is-active,
-  .reference-notes-storage > button) {
+:where(.reference-account-tabs > button.is-active, .reference-notes-storage > button) {
   border-color: rgba(242, 215, 154, .24) !important;
   color: #001b16 !important;
   background: linear-gradient(145deg, #f2d79a, #e2bf77) !important;
@@ -200,32 +84,19 @@ html:not([data-theme='light']) :where(.reference-account-screen,
   stroke-linejoin: round !important;
 }
 
-:where(
-  .premium-home--v2 .welcome-hero__visual > img
-) {
+:where(.premium-home--v2 .welcome-hero__visual > img) {
   object-fit: contain !important;
   object-position: right bottom !important;
 }
-:where(
-  .reference-quran-continue__book > img,
-  .reference-reader-hero > .premium-image > img
-) {
+:where(.reference-quran-continue__book > img, .reference-reader-hero > .premium-image > img) {
   object-fit: contain !important;
   object-position: center bottom !important;
 }
-:where(.reference-system-error__logo > img,
-  .reference-dhikr-counter__tasbih > img,
-  .reference-qibla-stage__compass > img,
-  .brand-lockup__mark > img,
-  .reference-profile-greeting__logo > img,
-  .reference-install-prompt__logo > img) {
+:where(.reference-system-error__logo > img, .reference-dhikr-counter__tasbih > img, .reference-qibla-stage__compass > img, .brand-lockup__mark > img, .reference-profile-greeting__logo > img, .reference-install-prompt__logo > img) {
   object-fit: contain !important;
   object-position: center !important;
 }
-:where(
-  .verse-card__art > img,
-  .reference-ayah-hero__art > img
-) {
+:where(.verse-card__art > img, .reference-ayah-hero__art > img) {
   object-fit: cover !important;
   object-position: center 42% !important;
 }
@@ -272,12 +143,12 @@ html:not([data-theme='light']) .reference-reader-verse > .reference-reader-arabi
 .reference-reader-verse__reading { display: grid; border-top: 1px solid rgba(226, 191, 119, .12); }
 .reference-reader-verse__reading > section { display: grid; gap: 6px; padding: 13px 18px 14px; }
 .reference-reader-verse__reading > section + section { border-top: 1px solid rgba(226, 191, 119, .09); }
-.reference-reader-verse__reading small { color: #d6a84c; font-size: .48rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
+.reference-reader-verse__reading small { color: #d6a84c; font-size: .75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; }
 .reference-reader-verse__reading p { margin: 0; }
 .reference-reader-pronunciation { background: rgba(214, 168, 76, .055); }
 .reference-reader-pronunciation p { color: #f0dba9; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1rem; font-weight: 600; line-height: 1.45; }
-.reference-reader-translation p { color: rgba(235, 239, 234, .78); font-size: .72rem; line-height: 1.65; }
-.reference-reader-verse__reading .is-unavailable p { color: rgba(205, 216, 209, .5); font-family: inherit; font-size: .64rem; font-style: italic; font-weight: 400; }
+.reference-reader-translation p { color: rgba(235, 239, 234, .78); font-size: .75rem; line-height: 1.65; }
+.reference-reader-verse__reading .is-unavailable p { color: rgba(205, 216, 209, .5); font-family: inherit; font-size: .75rem; font-style: italic; font-weight: 400; }
 .reference-reader-screen--dynamic .reference-reader-verse > footer { min-height: 44px; padding: 8px 16px 9px; border-top: 1px solid rgba(226, 191, 119, .1); }
 html:not([data-theme='light']) .reference-reader-verse footer,
 html:not([data-theme='light']) .reference-reader-verse footer button { color: rgba(226, 191, 119, .7) !important; }

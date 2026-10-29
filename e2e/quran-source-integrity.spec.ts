@@ -9,8 +9,11 @@ async function openReader(page: Page) {
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Quran', exact: true }).click();
   await expect(page.locator('.reference-quran-list--catalog article')).toHaveCount(114);
-  await expect(page.locator('.reference-quran-online-note')).toContainText('sofern dein Browser Speicherung erlaubt');
-  await expect(page.locator('.reference-quran-online-note')).not.toContainText('nach dem ersten Laden gespeichert');
+  await page.getByRole('button', { name: 'Quellen anzeigen: Lesen & Offline', exact: true }).click();
+  const help = page.getByRole('dialog', { name: 'Lesen & Offline', exact: true });
+  await expect(help).toContainText('sofern dein Browser Speicherung erlaubt');
+  await expect(help).not.toContainText('nach dem ersten Laden gespeichert');
+  await help.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
   await page.getByRole('button', { name: 'Lesen beginnen', exact: true }).click();
 }
 
@@ -20,6 +23,7 @@ test('loading notice separates local Arabic from pending supporting requests', a
   await openReader(page);
   await expect.poll(() => pending.length).toBe(2);
   await expect(page.locator('.reference-reader-loading')).toContainText('Arabisch wird aus den lokalen Dateien geladen');
+  await expect(page.locator('.reference-screen-header .overline')).toHaveText('Wird geladen');
   await expect(page.locator('.reference-reader-loading')).not.toContainText('andere Suren');
   for (const route of pending) await route.abort();
   await expect(page.locator('#quran-ayah-1-1 .reference-reader-arabic')).toHaveText(arabic.ayahs[0].text);
@@ -57,6 +61,7 @@ test('a misidentified local surah fails honestly and the retry loads a corrected
   }));
   await openReader(page);
   await expect(page.locator('.reference-reader-unavailable')).toContainText('Surenverzeichnis');
+  await expect(page.locator('.reference-screen-header .overline')).toHaveText('Quran');
   await expect(page.locator('.reference-reader-verse')).toHaveCount(0);
   invalid = false;
   await page.getByRole('button', { name: 'Erneut versuchen', exact: true }).click();

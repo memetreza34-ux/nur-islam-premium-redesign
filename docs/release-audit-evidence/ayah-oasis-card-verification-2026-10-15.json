@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-15",
+  "scope": "User requested a background image after reviewing the plain cream daily Ayah card. Added one matching quiet 3D oasis backdrop to Home and Quran daily cards, with text-safe cream center and restrained edge landscape.",
+  "asset": "public/premium-assets/high-res-objects/ayah-oasis-card-v1.webp",
+  "originalsAndPrompts": "output/imagegen/ayah-oasis-card-20261015/prompts.json",
+  "behavior": "Background is decorative (empty alt) and isolated beneath the original reading content. Full-width centered Arabic, meaning and source retained. Missing image leaves the cream fallback. Daily verse, meaning, source and reader navigation unchanged. Ayah detail remains unchanged.",
+  "checks": {
+    "full": "1047 tests, all source/assets/provenance guards, TypeScript, build and budget passed.",
+    "browser": "13 passed: Home daily card, Quran layout/readability/navigation including Ayah at 320/390/768, offline 4.",
+    "manual": "At 320,390,768 the loaded 1024px image exactly covers the card, with no card/document horizontal overflow and dark green text.",
+    "logs": [
+      "/tmp/nur-ayah-oasis-card-check-20261015.log",
+      "/tmp/nur-ayah-oasis-card-e2e-20261015.log"
+    ]
+  },
+  "pwaShell": "v114",
+  "evidence": [
+    "ayah-oasis-card-visible-2026-10-15.jpg",
+    "ayah-oasis-card-mobile-2026-10-15.json"
+  ],
+  "limits": [
+    "No physical-device test in this task."
+  ]
+}

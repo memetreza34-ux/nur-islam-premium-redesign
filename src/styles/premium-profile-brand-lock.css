@@ -77,17 +77,13 @@
 }
 
 /* ---------- Direct access / rows ---------- */
-.reference-core-access-grid button,
 .reference-profile-row,
-.reference-services-grid > button,
 .reference-account-entry {
   position: relative;
   isolation: isolate;
   overflow: hidden;
 }
 
-.reference-core-access-grid button::after,
-.reference-services-grid > button::after,
 .reference-account-entry::after {
   content: '';
   position: absolute;
@@ -101,8 +97,6 @@
   pointer-events: none;
 }
 
-.reference-core-access-grid button > *,
-.reference-services-grid > button > *,
 .reference-account-entry > * {
   position: relative;
   z-index: 1;
@@ -120,11 +114,6 @@
   opacity: 0;
   transition: opacity .18s ease;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  .reference-profile-row:hover::before {
-    opacity: 1;
-  }}
 
 .reference-profile-row > * {
   position: relative;
@@ -155,10 +144,6 @@
 .reference-profile-modal > :not(.reference-modal-close) {
   position: relative;
   z-index: 2;
-}
-
-.reference-profile-modal__icon {
-  box-shadow: 0 12px 25px rgba(0,0,0,.17), inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .reference-choice {

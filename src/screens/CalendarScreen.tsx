@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Bell,
@@ -63,8 +66,8 @@ function readFavorites() {
 
 export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () => void; initialDateKey?: string | null }) {
   const initialPosition = useMemo(() => getInitialCalendarPosition(initialDateKey), [initialDateKey]);
-  const [monthOffset, setMonthOffset] = useState(initialPosition.monthOffset);
-  const [selectedDay, setSelectedDay] = useState(initialPosition.selectedDay);
+  const [monthOffset, setMonthOffset] = useScreenState('calendar.month', initialPosition.monthOffset);
+  const [selectedDay, setSelectedDay] = useScreenState('calendar.day', initialPosition.selectedDay);
   const [favorites, setFavorites] = useState(readFavorites);
   const [entries, setEntries] = useState<PersonalCalendarEntry[]>(readCalendarEntries);
   const [notes, setNotes] = useState(readCalendarDayNotes);
@@ -202,10 +205,9 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
             );
           })}
         </div>
-        <div className="calendar-legend" aria-label="Kalenderlegende"><span><i className="calendar-dot calendar-dot--named" /> Wichtiger Termin</span><span><i className="calendar-dot calendar-dot--event" /> Fastenhinweis</span><span><i className="calendar-dot calendar-dot--personal" /> Termin oder Notiz</span><small>Groß: gregorianisch · klein: Hijri</small></div>
+        <div className="calendar-legend" aria-label="Kalenderlegende"><span><i className="calendar-dot calendar-dot--named" /> Wichtiger Termin</span><span><i className="calendar-dot calendar-dot--event" /> Fastenhinweis</span><span><i className="calendar-dot calendar-dot--personal" /> Termin oder Notiz</span><small>Groß: gregorianisch · klein: Hijri</small><SourceInfo title="Islamisches Datum"><p><strong>Berechnetes Hijri-Datum</strong></p><p>Das islamische Datum wird aus dem Kalender des Geräts berechnet. Der tatsächliche Monatsbeginn kann je nach örtlicher Mondsichtung oder zuständiger Stelle abweichen.</p></SourceInfo></div>
       </section>
 
-      <section className="reference-calendar-calculation-note"><ShieldCheck size={16} /><span><strong>Berechnetes Hijri-Datum</strong><small>Das islamische Datum wird aus dem Kalender des Geräts berechnet. Der tatsächliche Monatsbeginn kann je nach örtlicher Mondsichtung oder zuständiger Stelle abweichen.</small></span></section>
 
       <section className="selected-date-card glass-card reference-selected-date">
         <span className="selected-date-card__icon"><CalendarDays size={24} /></span>
@@ -227,15 +229,15 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
           {selectedEvent.meaning ? <p className="calendar-event-card__meaning">{selectedEvent.meaning}</p> : null}
           {selectedEvent.practice ? <p className="calendar-event-card__practice"><Sparkles size={13} /> {selectedEvent.practice}</p> : null}
           {selectedEvent.fasting ? <span className="fasting-chip"><Sparkles size={14} /> {selectedEvent.fastingKind === 'ramadan' ? 'Ramadan-Fasten' : 'Freiwilliges Fasten'}</span> : null}
-          <span className="reference-calendar-event__source"><ShieldCheck size={14} /> {selectedEvent.sourceNote}</span>
-          {selectedEvent.sourceUrl ? <p><a href={selectedEvent.sourceUrl} target="_blank" rel="noreferrer">{selectedEvent.source}</a></p> : null}
+          <SourceInfo title={`Quelle zu „${selectedEvent.title}“`}><span className="reference-calendar-event__source"><ShieldCheck size={14} /> {selectedEvent.sourceNote}</span>
+          {selectedEvent.sourceUrl ? <p><a href={selectedEvent.sourceUrl} target="_blank" rel="noreferrer">{selectedEvent.source}</a></p> : null}</SourceInfo>
         </section>
       ) : null}
 
       <CalendarDayNotes date={selectedDate} />
 
       <section className="calendar-upcoming-section">
-        <div className="section-heading"><div><span className="overline">Vorausblick</span><h2>Nächste wichtige Termine</h2></div></div>
+        <div className="section-heading"><div><h2>Nächste Termine</h2></div></div>
         <div className="calendar-upcoming-list">
           {upcomingDates.map(({ date, event }) => (
             <button key={`${getDateKey(date)}-${event.title}`} onClick={() => {
@@ -269,13 +271,12 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
       <AnimatePresence>
         {showAdd ? (
           <motion.div className="calendar-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setShowAdd(false)}>
-            <motion.section {...screenDialog.props} className="calendar-modal" initial={{ y: reduceMotion ? 0 : 16, opacity: 0, scale: reduceMotion ? 1 : .99 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: reduceMotion ? 0 : 8, opacity: 0, scale: reduceMotion ? 1 : .995 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
-              <div className="calendar-modal__header"><div><span className="overline">{new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(selectedDate)}</span><h2>Termin hinzufügen</h2></div><button className="icon-button" onClick={() => setShowAdd(false)} aria-label="Schließen"><X size={19} /></button></div>
+            <motion.section {...screenDialog.props} className="calendar-modal dialog-panel dialog-form" initial={{ y: reduceMotion ? 0 : 16, opacity: 0, scale: reduceMotion ? 1 : .99 }} animate={{ y: 0, opacity: 1, scale: 1 }} exit={{ y: reduceMotion ? 0 : 8, opacity: 0, scale: reduceMotion ? 1 : .995 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title="Termin hinzufügen" subtitle={new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(selectedDate)} onClose={closeDialog} />
               <label>Titel<input value={newTitle} onChange={(event) => setNewTitle(event.target.value)} maxLength={120} placeholder="z. B. Surah Al-Kahf lesen" autoFocus /></label>
               <label>Uhrzeit<input type="time" value={newTime} onChange={(event) => setNewTime(event.target.value)} /></label>
               <button className="calendar-reminder-row" onClick={() => setNewReminder((value) => !value)}><span><Bell size={18} /> Systemerinnerung {newReminder ? 'aktiv' : 'inaktiv'}</span><span className={newReminder ? 'mini-toggle mini-toggle--on' : 'mini-toggle'}><i /></span></button>
-              <small className="reference-calendar-reminder-help">Erinnerungen werden ausgelöst, solange die App/PWA aktiv ist. Für garantierte Zustellung bei vollständig beendeter App ist später native Push-Infrastruktur nötig.</small>
-              <button className="gold-button calendar-save-button" onClick={() => void saveEntry()}><CircleCheck size={18} /> Speichern</button>
+              <div className="dialog-actions"><SourceInfo title="Erinnerungen zu Terminen"><p>Erinnerungen werden ausgelöst, solange die App/PWA aktiv ist. Für garantierte Zustellung bei vollständig beendeter App ist später native Push-Infrastruktur nötig.</p></SourceInfo><button className="gold-button calendar-save-button" onClick={() => void saveEntry()}><CircleCheck size={18} /> Speichern</button></div>
             </motion.section>
           </motion.div>
         ) : null}

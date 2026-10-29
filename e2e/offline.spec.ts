@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test';
 import { openApp } from './appReady';
+import { prayerRequestFixture } from './fixtures/prayer-api';
 
 /**
  * The app promises to keep working without a connection: a service worker, a
@@ -12,7 +13,9 @@ import { openApp } from './appReady';
  */
 
 test.beforeEach(async ({ page }) => {
+  await page.route('https://api.aladhan.com/**', route => route.fulfill({ json: prayerRequestFixture(route.request().url()) }));
   await openApp(page);
+  await expect(page.locator('.home-prayer-times strong').first()).toHaveText(/^([01]\d|2[0-3]):[0-5]\d$/);
 });
 
 test('still shows a full prayer schedule with no connection', async ({ page, context }) => {
@@ -21,8 +24,8 @@ test('still shows a full prayer schedule with no connection', async ({ page, con
 
   await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
 
-  // Six times must appear from cache or the bundled fallback. An empty prayer
-  // card is the one outcome this app cannot afford.
+  // The confirmed timetable loaded above must remain available from cache.
+  // The app must never substitute invented fallback times.
   const times = page.locator('text=/^([01]\\d|2[0-3]):[0-5]\\d$/');
   expect(await times.count()).toBeGreaterThanOrEqual(6);
 });

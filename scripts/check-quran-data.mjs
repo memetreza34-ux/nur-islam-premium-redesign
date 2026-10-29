@@ -147,10 +147,14 @@ if (appSource.includes("surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 
 
 for (const required of [
   'fetchSurahs',
-  'OFFLINE_QURAN_SURAH_SET',
+  'OFFLINE_QURAN_SURAHS',
   'nur_quran_surah_favorites',
-  'Alle 114 Suren lesbar',
-  'CloudDownload',
+  'SourceInfo title="Lesen & Offline"',
+  'aria-label="Suren suchen"',
+  '!loading && !error && query.trim()',
+  "const filter = savedFilter === 'favorites' ? 'favorites' : 'all'",
+  'lang="ar" dir="rtl"',
+  'surah.numberOfAyahs} Ayat',
   'reloadToken',
   'setReloadToken((value) => value + 1)',
   'function readLastRead(): LastRead | null',
@@ -159,12 +163,17 @@ for (const required of [
   'onOpenReader(readerSurahNumber, lastAyah)',
   'onOpenReader(surah.number, 1)',
   'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
-  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
   "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
 ]) {
   if (!catalogSource.includes(required)) throw new Error(`Quran catalog integration is missing: ${required}`);
 }
 for (const forbidden of [
+  '<ReadingHelp',
+  'reference-quran-library-status',
+  'Alle · 114',
+  'Offline ·',
+  'Sure {surah.number} von 114',
+  'reference-quran-list__extent',
   'const fallback = { surahNumber: 112, ayahNumber: 1',
   'Math.max(4, (lastAyah / lastSurah.numberOfAyahs)',
 ]) {

@@ -1,0 +1,50 @@
+{
+  "verifiedAt": "2026-10-14",
+  "previewUrl": "http://127.0.0.1:3004/?preview=1",
+  "scope": "Complete learning overview: compact introduction and prayer entry, three preparation actions, five prayer rows, chapter navigation, fourteen foundation/depth entries.",
+  "preserved": "Course text, lesson order, navigation destinations, progress storage, posture illustrations and the original five prayer landscape source assets.",
+  "artwork": {
+    "newAssets": 11,
+    "newRuntimeBytes": 364668,
+    "runtimeDimensions": "512x512",
+    "alphaPreserved": true,
+    "mode": "Built-in imagegen; own Qibla and prayer rug used as style references.",
+    "promptSet": "output/imagegen/learning-rows-20261014/prompts.json",
+    "allFourteenLearningImagesLoaded": true,
+    "oldThirteenLearningAssetsRemovedFromShellCache": true,
+    "legacyFilesRetainedAsArchive": true,
+    "sharedAssetQueryVersion": "20260826-original-art"
+  },
+  "checks": {
+    "fullCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "fullCheckLog": "/tmp/nur-learning-rows-check-20261014.log",
+    "browserExitCode": 0,
+    "browserTestsPassed": 54,
+    "browserLog": "/tmp/nur-learning-rows-e2e-20261014.log",
+    "browserPort": 4174,
+    "browserScope": ["e2e/core-flows.spec.ts", "e2e/offline.spec.ts", "e2e/learning-intro-art.spec.ts", "e2e/learning-course-structure.spec.ts", "e2e/learning-progress-storage.spec.ts"],
+    "existingLayoutChecksUpdated": "Current image paths, left artwork/right text geometry, readable counters and isolated prayer landscape thumbnails.",
+    "provenanceCheckAfterScopeBookkeepingExitCode": 0,
+    "stylesheetBytesReduced": 12152,
+    "stylesheetOwner": "src/styles/learn-library-redesign.css",
+    "cssGzipBudgetLoweredToKB": 121,
+    "combinedGzipBudgetLoweredToKB": 511,
+    "budgetCheckAfterLoweringExitCode": 0
+  },
+  "manual": {
+    "viewports": ["390x844", "320x740", "native 648x764"],
+    "smallPhoneLists": 6,
+    "smallPhoneListWidth": 298,
+    "smallPhoneListScrollWidth": 298,
+    "allFourteenCardTextColumnsFit": true,
+    "smallPhoneMinimumArtTextAndTextStatusGap": 10,
+    "allThreeChaptersInspected": true,
+    "screenshots": ["learning-rows-intro-phone-2026-10-14.jpg", "learning-rows-practice-phone-2026-10-14.jpg", "learning-rows-chapter-1-phone-2026-10-14.jpg", "learning-rows-chapter-2-phone-2026-10-14.jpg", "learning-rows-chapter-3-phone-2026-10-14.jpg", "learning-rows-depth-phone-2026-10-14.jpg", "learning-rows-small-phone-2026-10-14.jpg", "learning-rows-visible-2026-10-14.jpg"],
+    "viewportOverrideReset": true,
+    "previewKeptOpen": true
+  },
+  "serviceWorkerCacheVersion": "v93",
+  "published": false
+}

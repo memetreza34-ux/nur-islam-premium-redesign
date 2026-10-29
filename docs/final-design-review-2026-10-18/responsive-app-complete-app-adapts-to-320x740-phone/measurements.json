@@ -1,0 +1,1268 @@
+[
+  {
+    "label": "Start",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebet",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "prayer-calendar-day",
+        "text": "1. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "2. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "3. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "4. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "5. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "6. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "7. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "8. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "9. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "10. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "11. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "12. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "13. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "14. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "15. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "16. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "17. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day is-selected is-today",
+        "text": "18. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "19. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "20. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "21. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "22. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "23. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "24. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "25. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "26. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "27. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "28. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "29. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "30. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "31. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Lernen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Mehr",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Start",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebetszeiten",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "prayer-calendar-day",
+        "text": "1. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "2. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "3. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "4. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "5. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "6. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "7. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "8. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "9. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "10. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "11. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "12. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "13. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "14. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "15. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "16. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "17. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day is-selected is-today",
+        "text": "18. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "19. Oktober 2026, Montagsfasten",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "20. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "21. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "22. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "23. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "24. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "25. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "26. Oktober 2026, Weiße Tage",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "27. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "28. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "29. Oktober 2026, Donnerstagsfasten",
+        "width": 39.296875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "30. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "prayer-calendar-day",
+        "text": "31. Oktober 2026",
+        "width": 39.28125,
+        "height": 44,
+        "tag": "BUTTON"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Lernen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Beten lernen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wudu lernen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Qibla",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Dhikr",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Duas",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Moscheen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Kalender",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "calendar-day",
+        "text": "1. Oktober 2026, Donnerstagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "2. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "3. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "4. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "5. Oktober 2026, Montagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "6. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "7. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "8. Oktober 2026, Donnerstagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "9. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "10. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "11. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "12. Oktober 2026, Montagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "13. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "14. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "15. Oktober 2026, Donnerstagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "16. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "17. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day calendar-day--selected calendar-day--today",
+        "text": "18. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "19. Oktober 2026, Montagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "20. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "21. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "22. Oktober 2026, Donnerstagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "23. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "24. Oktober 2026, Weiße Tage",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "25. Oktober 2026, Weiße Tage",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "26. Oktober 2026, Weiße Tage",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "27. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "28. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "29. Oktober 2026, Donnerstagsfasten",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "30. Oktober 2026",
+        "width": 35.4375,
+        "height": 44,
+        "tag": "BUTTON"
+      },
+      {
+        "selector": "calendar-day",
+        "text": "31. Oktober 2026",
+        "width": 35.421875,
+        "height": 44,
+        "tag": "BUTTON"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Fastenplan",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sammlung",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Allah & der Glaube",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die fünf Säulen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wichtige Begriffe",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Reinheit & Alltag",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Charakter & Rechte",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Miteinander & Verantwortung",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Der Prophet ﷺ",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Vers des Tages",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "99 Namen Allahs",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Ummah-Übersicht",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hadith-Sammlung",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die vier Rechtsschulen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die 25 Propheten",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hajj & Umrah",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sunnah im Alltag",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Fehler & Reue",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "MAKKAH, MADINAH & AL-AQSA",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "DAS FREITAGSGEBET",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "P > A",
+        "text": "Quran 62:9",
+        "width": 74.265625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Bukhari 934",
+        "width": 80.375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Muslim 846a",
+        "width": 85.546875,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "PLANUNGSHILFE",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "GEBETSANZEIGE",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Konto & Cloud",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Notizen",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Impressum & Datenschutz",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "NAV > A",
+        "text": "Art. 13 DSGVO",
+        "width": 120.703125,
+        "height": 30,
+        "tag": "A"
+      },
+      {
+        "selector": "NAV > A",
+        "text": "§ 25 TDDDG",
+        "width": 107.546875,
+        "height": 30,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Einstellungen Reminder, Konto und Cloud",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sprache Aktuell vollständig: Deutsch",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Über Nur Version und Produktprinzipien",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran-Leser",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Deutsch Buchseiten",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Arabisch Buchseiten",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wudu Schritt für Schritt",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebetsablauf",
+    "viewport": 320,
+    "documentWidth": 320,
+    "shellWidth": 320,
+    "navBottom": 740,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  }
+]

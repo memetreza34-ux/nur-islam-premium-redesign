@@ -1,11 +1,13 @@
+import { SourceInfo } from '../shared/SourceInfo';
+import { DialogHeader } from '../shared/DialogHeader';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { ReadingHelp } from '../shared/ReadingHelp';
 import {
   Bookmark,
   BookmarkCheck,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
-  CloudDownload,
   Copy,
   Database,
   LoaderCircle,
@@ -15,7 +17,6 @@ import {
   Settings2,
   X,
   Share2,
-  ShieldCheck,
   WifiOff,
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
@@ -144,11 +145,13 @@ export function QuranReaderScreen({
   surahNumber,
   initialAyahNumber = 1,
   onBack,
+  backLabel = 'Zurück zum Quran',
   onOpenSurah,
 }: {
   surahNumber: number;
   initialAyahNumber?: number;
   onBack: () => void;
+  backLabel?: string;
   onOpenSurah: (number: number) => void;
 }) {
   const [bundle, setBundle] = useState<QuranSurahBundle | null>(null);
@@ -365,7 +368,7 @@ export function QuranReaderScreen({
 
   const nextNumber = Math.min(114, surahNumber + 1);
   const nextAvailable = nextNumber !== surahNumber;
-  const readerLabel = bundle?.transliterationSource === 'unavailable' && bundle?.translationSource === 'unavailable'
+  const readerLabel = loading ? 'Wird geladen' : error || !bundle ? 'Quran' : bundle.transliterationSource === 'unavailable' && bundle?.translationSource === 'unavailable'
     ? 'Arabisch offline'
     : bundle?.transliterationSource === 'cache' && bundle?.translationSource === 'cache'
       ? 'Im Browser gespeichert'
@@ -376,7 +379,7 @@ export function QuranReaderScreen({
   return (
     <motion.main className="screen reference-reader-screen reference-reader-screen--dynamic" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zum Quran"><ChevronLeft size={20} /></button>
+        <button className="icon-button" onClick={onBack} aria-label={backLabel}><ChevronLeft size={20} /></button>
         <div><span className="overline">{readerLabel}</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
         <button className="icon-button" onClick={() => setSettingsOpen(true)} aria-label="Leseeinstellungen öffnen"><Settings2 size={20} /></button>
       </header>
@@ -389,13 +392,13 @@ export function QuranReaderScreen({
         <section className="reference-reader-unavailable">
           <WifiOff size={34} />
           <span><strong>Diese Sure konnte nicht geladen werden</strong><small>{error ?? 'Die lokale arabische Datei ist nicht verfügbar.'}</small></span>
-          <div className="reference-reader-unavailable__actions"><button onClick={() => setReloadToken((value) => value + 1)}><RefreshCw size={16} /> Erneut versuchen</button><button onClick={onBack}>Zur Surenliste</button></div>
+          <div className="reference-reader-unavailable__actions"><button onClick={() => setReloadToken((value) => value + 1)}><RefreshCw size={16} /> Erneut versuchen</button><button onClick={onBack}>{backLabel}</button></div>
         </section>
       ) : (
         <>
           <section className="reference-reader-hero">
-            <div><span className="hero-pill">Sure {bundle.meta.number}</span><h2>{bundle.meta.englishName}</h2><p>{bundle.meta.numberOfAyahs} Ayat</p><span className={`reference-reader-source-pill is-${bundle.source}`}>{bundle.source === 'offline' ? <Database size={13} /> : <CloudDownload size={13} />}{bundle.sourceLabel}</span></div>
-            <PremiumImage src="/premium-assets/high-res-objects/quran-open-v3.webp" fallback={<QuranObject />} />
+            <div><span className="hero-pill">Sure {bundle.meta.number}</span><h2>{bundle.meta.englishName}</h2><p>{bundle.meta.numberOfAyahs} Ayat</p><SourceInfo title="Qurantext & Speicherung"><p>{bundle.sourceLabel}</p></SourceInfo></div>
+            <PremiumImage src="/premium-assets/high-res-objects/learn-hub-book-v1.webp" fallback={<QuranObject />} />
             <span className="reference-reader-progress"><i style={{ width: `${progress}%` }} /></span>
           </section>
 
@@ -408,17 +411,13 @@ export function QuranReaderScreen({
             {readerMode !== 'german-flow' ? <div className="reference-font-control"><button onClick={() => changeFontSize(-2)} aria-label="Arabische Schrift verkleinern"><Minus size={16} /></button><strong>Aa</strong><button onClick={() => changeFontSize(2)} aria-label="Arabische Schrift vergrößern"><Plus size={16} /></button></div> : null}
           </section>
 
-          <section className="reference-reader-source">
-            <ShieldCheck size={17} />
-            <span>
-              <strong>{readerMode === 'verse' ? 'Arabisch · Aussprache · deutsche Übersetzung' : readerMode === 'german-flow' ? `Deutsche Übersetzung · ${bundle.translationLabel}` : 'Arabischer Originaltext'}</strong>
-              <small>{readerMode === 'verse' ? 'Die drei Texte stehen getrennt untereinander. Die Aussprachehilfe unterstützt das Mitlesen, ersetzt aber keine Tajwid-Anleitung.' : 'Buchseiten werden beim Weiterblättern lokal gemerkt, sofern dein Browser Speicherung erlaubt. Eine feste Lesestelle kannst du zusätzlich speichern. Gelöschte Browserdaten entfernen auch diese Einträge.'}</small>
-            </span>
-          </section>
+          <ReadingHelp title={readerMode === 'verse' ? 'Arabisch · Aussprache · Übersetzung' : readerMode === 'german-flow' ? `Deutsche Übersetzung · ${bundle.translationLabel}` : 'Arabischer Originaltext'}>
+            <p>{readerMode === 'verse' ? 'Die drei Texte stehen getrennt untereinander. Die Aussprachehilfe unterstützt das Mitlesen, ersetzt aber keine Tajwid-Anleitung.' : 'Buchseiten werden beim Weiterblättern lokal gemerkt, sofern dein Browser Speicherung erlaubt. Eine feste Lesestelle kannst du zusätzlich speichern. Gelöschte Browserdaten entfernen auch diese Einträge.'}</p>
+          </ReadingHelp>
 
           {arabicReading?.openingBasmalah && (readerMode === 'verse' || readerMode === 'arabic-flow' && flowPageIndex === 0) ? (
             <section className="reference-reader-basmalah" aria-label="Unnummerierter Surenbeginn">
-              <small>Basmalah · unnummerierter Surenbeginn</small>
+              <small>Basmala · unnummerierter Surenbeginn</small>
               <p className="reference-reader-arabic" dir="rtl" style={{ fontSize, fontFamily: arabicFont === 'system' ? 'system-ui, sans-serif' : undefined }}>{arabicReading.openingBasmalah}</p>
             </section>
           ) : null}
@@ -511,18 +510,15 @@ export function QuranReaderScreen({
           <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeSettings(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
             <motion.section
               {...settingsDialog.props}
-              className="reference-profile-modal reference-reader-settings-modal"
+              className="reference-profile-modal reference-reader-settings-modal dialog-panel dialog-form"
               initial={{ opacity: 0, y: reduceMotion ? 0 : 16 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: reduceMotion ? 0 : 10 }}
             >
-              <header>
-                <div><span className="overline">Lesen</span><h2>Leseeinstellungen</h2></div>
-                <button className="reference-modal-close" onClick={closeSettings} aria-label="Schließen"><X size={20} /></button>
-              </header>
+              <DialogHeader title="Leseeinstellungen" onClose={closeSettings} />
 
               <div className="reference-reader-setting">
-                <span><strong>Schriftgröße</strong><small>Gilt für den arabischen Text.</small></span>
+                <span><strong>Schriftgröße</strong></span>
                 <div className="reference-font-control">
                   <button onClick={() => changeFontSize(-2)} aria-label="Schrift verkleinern"><Minus size={16} /></button>
                   <strong>{fontSize}</strong>
@@ -531,14 +527,14 @@ export function QuranReaderScreen({
               </div>
 
               <div className="reference-reader-setting">
-                <span><strong>Arabische Schrift</strong><small>Amiri ist mitgeliefert; die Systemschrift nutzt die Schrift deines Geräts.</small></span>
+                <span><strong>Arabische Schrift</strong></span>
                 <div className="reference-choice-row">
                   <button className={arabicFont === 'amiri' ? 'is-active' : ''} onClick={() => changeArabicFont('amiri')} aria-pressed={arabicFont === 'amiri'}>Amiri</button>
                   <button className={arabicFont === 'system' ? 'is-active' : ''} onClick={() => changeArabicFont('system')} aria-pressed={arabicFont === 'system'}>System</button>
                 </div>
               </div>
 
-              <p className="reference-reader-settings-note">Die arabische Schriftgröße gilt in der versweisen und in der fortlaufenden arabischen Ansicht für alle Suren.</p>
+              <div className="dialog-actions"><SourceInfo title="Hinweise zu den Leseeinstellungen"><p>Änderungen werden direkt gespeichert.</p><p>Die arabische Schriftgröße gilt in der versweisen und in der fortlaufenden arabischen Ansicht für alle Suren.</p><p>Amiri ist mitgeliefert; die Systemschrift nutzt die Schrift deines Geräts.</p></SourceInfo><button className="gold-button" onClick={closeSettings}>Fertig</button></div>
             </motion.section>
           </motion.div>
         ) : null}

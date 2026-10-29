@@ -40,8 +40,8 @@
 
 .premium-home--v2 .brand-lockup,
 .premium-home--v2 .brand-bar__actions .icon-button {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border-radius: 14px;
 }
 
@@ -98,7 +98,7 @@
   display: inline-flex;
   margin-top: 6px;
   color: rgba(246, 223, 172, .86);
-  font-size: .63rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
@@ -118,16 +118,16 @@
 }
 
 .premium-home--v2 .prayer-mini-times small {
-  font-size: .45rem;
+  font-size: .75rem;
 }
 
 .premium-home--v2 .prayer-mini-times strong {
-  font-size: .52rem;
+  font-size: .75rem;
 }
 
 .premium-home--v2 .prayer-source-note {
   opacity: .58;
-  font-size: .43rem;
+  font-size: .75rem;
 }
 
 /* ---------- Home: content density ---------- */
@@ -137,10 +137,6 @@
 
 .premium-home--v2 .section-heading h2 {
   line-height: .98;
-}
-
-.premium-home--v2 .journey-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .premium-home--v2 .journey-card {
@@ -156,14 +152,6 @@
   color: rgba(161, 182, 172, .7);
 }
 
-.premium-home--v2 .quick-grid--v2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.premium-home--v2 .quick-grid--v2 .quick-card {
-  min-height: 138px;
-}
-
 .premium-home--v2 .continue-card--v2 {
   grid-template-columns: 62px minmax(0, 1fr) 42px;
   min-height: 94px;
@@ -175,10 +163,6 @@
   border: 1px solid rgba(232, 199, 122, .13);
   border-radius: 15px;
   background: rgba(232, 199, 122, .035);
-}
-
-.premium-home--v2 .recommendation-card {
-  transition: border-color .2s ease, transform .2s ease, background .2s ease;
 }
 
 /* ---------- Prayer screen ---------- */
@@ -208,17 +192,8 @@
   box-shadow: var(--lock-shadow) !important;
 }
 
-.reference-prayer-location .prayer-location-card__icon {
-  width: 42px;
-  height: 42px;
-  border: 1px solid rgba(232, 199, 122, .18);
-  border-radius: 14px;
-  color: var(--lock-gold);
-  background: rgba(232, 199, 122, .055);
-}
-
 .reference-prayer-location > button {
-  min-height: 38px;
+  min-height: 44px;
   padding-inline: 11px;
   border-radius: 12px;
 }
@@ -226,7 +201,7 @@
 .reference-prayer-location-privacy {
   margin: -5px 5px 0;
   color: rgba(148, 170, 160, .62);
-  font-size: .47rem;
+  font-size: .75rem;
   line-height: 1.5;
 }
 
@@ -313,13 +288,6 @@
   font-size: .77rem;
 }
 
-.reference-prayer-method {
-  min-height: 78px;
-  border-radius: 20px;
-  background: var(--lock-surface) !important;
-  box-shadow: var(--lock-shadow) !important;
-}
-
 /* ---------- Quran library ---------- */
 .reference-quran-screen--complete {
   gap: 13px;
@@ -395,13 +363,6 @@
   font-weight: 600;
 }
 
-.reference-quran-online-note {
-  padding: 11px 12px;
-  border-color: rgba(106, 190, 133, .13);
-  border-radius: 16px;
-  background: rgba(63, 156, 91, .045);
-}
-
 .reference-input-search {
   min-height: 52px;
   padding-inline: 14px;
@@ -427,7 +388,7 @@
 }
 
 .reference-quran-filter-tabs button {
-  min-height: 38px;
+  min-height: 44px;
   padding: 0 13px;
   border: 1px solid rgba(232, 199, 122, .1);
   border-radius: 999px;
@@ -475,7 +436,7 @@
 
 .reference-quran-list__copy strong {
   color: var(--lock-text);
-  font-size: .69rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list__arabic {
@@ -660,14 +621,6 @@
     left: 10px;
   }
 
-  
-
-  
-
-  .premium-home--v2 .journey-grid {
-    grid-template-columns: 1fr;
-  }
-
   .premium-home--v2 .journey-card {
     min-height: 132px;
   }
@@ -692,10 +645,6 @@
 
   .reference-quran-continue__copy {
     max-width: 76%;
-  }
-
-  .reference-quran-list__arabic {
-    display: none;
   }}
 
 /* ---------- Light appearance: intentional, not accidental inversion ---------- */
@@ -715,7 +664,6 @@
 
 [data-theme='light'] .reference-prayer-location,
 [data-theme='light'] .reference-prayer-progress,
-[data-theme='light'] .reference-prayer-method,
 [data-theme='light'] .reference-quran-library-status,
 [data-theme='light'] .reference-reader-next {
   color: #17372c;
@@ -741,17 +689,6 @@
 [data-theme='light'] .reference-quran-list__arabic {
   color: #3e5c50;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  .premium-home--v2 .quick-card:hover,
-.premium-home--v2 .journey-card:hover,
-.premium-home--v2 .recommendation-card:hover,
-.reference-prayer-screen .prayer-time-row:hover,
-.reference-quran-list--catalog > article:hover,
-.reference-reader-verse:hover {
-    border-color: rgba(232, 199, 122, .29);
-    transform: translateY(-1px);
-  }}
 
 @media (prefers-reduced-motion: reduce) {
   .premium-home--v2 *,

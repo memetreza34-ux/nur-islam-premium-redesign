@@ -57,7 +57,7 @@
   max-width: 245px;
   margin: 0;
   color: var(--muted-green);
-  font-size: .61rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -81,7 +81,7 @@
   color: var(--cream-strong);
   background: transparent;
   font: inherit;
-  font-size: .63rem;
+  font-size: .75rem;
 }
 
 .reference-input-search input::placeholder {
@@ -102,14 +102,14 @@
 
 .reference-filter-tabs button {
   flex: 0 0 auto;
-  min-height: 35px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid rgba(214, 175, 55, .15);
   border-radius: 11px;
   color: var(--muted-green);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
-  font-size: .55rem;
+  font-size: .75rem;
 }
 
 .reference-filter-tabs button.is-active {
@@ -151,7 +151,7 @@
   align-items: center;
   gap: 6px;
   color: var(--gold-soft);
-  font-size: .51rem;
+  font-size: .75rem;
 }
 
 .reference-dua-card__top button,
@@ -163,7 +163,7 @@
   color: var(--muted-green);
   background: transparent;
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
 }
 
 .reference-dua-card__top button.is-favorite {
@@ -195,7 +195,7 @@
 
 .reference-dua-card blockquote {
   color: var(--cream);
-  font-size: .61rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -206,7 +206,7 @@
 
 .reference-dua-card footer small {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
 }
 
 .reference-empty-result {
@@ -222,12 +222,12 @@
 
 .reference-empty-result strong {
   color: var(--cream);
-  font-size: .68rem;
+  font-size: .75rem;
 }
 
 .reference-empty-result small {
   color: var(--muted-green);
-  font-size: .51rem;
+  font-size: .75rem;
 }
 
 .reference-names-hero {
@@ -290,12 +290,12 @@
 }
 
 .reference-name-list strong {
-  font-size: .68rem;
+  font-size: .75rem;
 }
 
 .reference-name-list small {
   color: var(--muted-green);
-  font-size: .5rem;
+  font-size: .75rem;
 }
 
 .reference-name-heart {
@@ -344,7 +344,7 @@
   align-items: center;
   justify-content: space-between;
   color: var(--gold-soft);
-  font-size: .55rem;
+  font-size: .75rem;
 }
 
 .reference-nearby-label span,
@@ -396,7 +396,7 @@
 
 .reference-mosque-list strong {
   overflow: hidden;
-  font-size: .66rem;
+  font-size: .75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -405,7 +405,7 @@
 .reference-mosque-list em {
   overflow: hidden;
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .75rem;
   font-style: normal;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -413,7 +413,7 @@
 
 .reference-mosque-distance {
   color: var(--gold-soft);
-  font-size: .51rem;
+  font-size: .75rem;
 }
 
 .reference-mosque-list > button > svg {
@@ -482,7 +482,7 @@
 
 .reference-collection-grid small {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
 }
 
 .reference-collection-grid > button > svg {
@@ -526,12 +526,12 @@
 }
 
 .reference-collection-rows strong {
-  font-size: .65rem;
+  font-size: .75rem;
 }
 
 .reference-collection-rows small {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
 }
 
 .reference-collection-rows > button > svg {

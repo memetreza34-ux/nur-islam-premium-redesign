@@ -20,10 +20,12 @@ test('Duas keep Arabic, pronunciation, meaning and source without migration noti
   const dialog = page.getByRole('dialog');
   await expect(dialog).toBeVisible();
   await expect(dialog.locator('[dir="rtl"]')).toBeVisible();
-  for (const label of ['Transliteration', 'Sinngemäße Bedeutung', 'Quelle']) {
+  for (const label of ['Transliteration', 'Sinngemäße Bedeutung']) {
     await expect(dialog.getByText(label, { exact: true })).toBeVisible();
   }
-  await expect(dialog.locator('.reference-dua-modal__source strong')).not.toBeEmpty();
+  await dialog.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+  await expect(page.locator('dialog.source-info-dialog .reference-dua-modal__source strong')).not.toBeEmpty();
+  await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
   await expect(dialog).not.toContainText(editorialCopy);
 });
 

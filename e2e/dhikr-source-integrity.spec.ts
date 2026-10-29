@@ -5,7 +5,7 @@ test.use({ serviceWorkers: 'block', reducedMotion: 'reduce' });
 async function openDhikr(page: Page) {
   await page.route('**/api.aladhan.com/**', route => route.abort());
   await page.goto('/?preview=1');
-  await page.getByRole('button', { name: /^Zählerstand heute Dhikr/ }).click();
+  await page.locator('.home-companion-card').filter({ hasText: 'Dhikr' }).click();
   await expect(page.locator('.reference-dhikr-screen')).toBeVisible();
 }
 
@@ -29,7 +29,9 @@ for (const width of [320, 768, 1280]) {
         }
         const source = page.locator('.reference-dhikr-source').last();
         await source.scrollIntoViewIfNeeded();
-        await expect(source.getByRole('link')).toHaveAttribute('href', item.itemSourceUrl ?? routine.sourceUrl!);
+        await source.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+        await expect(page.locator('dialog.source-info-dialog').getByRole('link')).toHaveAttribute('href', item.itemSourceUrl ?? routine.sourceUrl!);
+        await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
         if (routine.note) await expect(source).toContainText(routine.note);
         if (item.itemNote) await expect(source).toContainText(item.itemNote);
         expect(await source.evaluate(element => element.scrollWidth <= element.clientWidth + 1)).toBe(true);

@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
@@ -77,3 +78,6 @@ it.each(['throw', 'discard'])('does not claim persisted statistics when storage 
   expect(host.querySelector('.reference-dhikr-stats-note')?.textContent).toContain('nur in dieser Sitzung');
   expect(host.querySelector('.reference-dhikr-stats-summary strong')?.textContent).toBe('1');
 });
+
+// Content assertions inspect the disclosure payload; browser tests cover its interaction.
+vi.mock('../shared/SourceInfo', () => ({ SourceInfo: ({ children }: { children: ReactNode }) => createElement('span', null, children) }));

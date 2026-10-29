@@ -22,29 +22,39 @@ afterEach(async () => {
 });
 const render = () => act(async () => root.render(createElement(LearningCourseScreen, { categoryId: 'faith', onBack() {} })));
 const click = (button: HTMLButtonElement) => act(async () => button.click());
-const correct = () => host.querySelector<HTMLButtonElement>('.learning-course-v2__quiz-options button')!;
 const buttonNamed = (text: string) => [...host.querySelectorAll<HTMLButtonElement>('button')].find(button => button.textContent?.includes(text))!;
 
-it('does not replace malformed progress just by opening a course', async () => {
-  localStorage.setItem('nur_learning_completed', '{broken');
+it.each(['{broken', '["faith-overview","pillars-hajj"]'])('preserves old completion data while reading: %s', async saved => {
+  localStorage.setItem('nur_learning_completed', saved);
   await render();
-  expect(localStorage.getItem('nur_learning_completed')).toBe('{broken');
+  await click(buttonNamed('Nächste Lektion'));
+  expect(localStorage.getItem('nur_learning_completed')).toBe(saved);
+  expect(host.querySelector('[role="dialog"]')).toBeNull();
+  expect(host.querySelector('.learning-course-v2__quiz-options')).toBeNull();
+  expect(host.querySelector('.learning-course-v2__lesson h2')?.textContent).toBe(getCategoryLessons('faith')[1].title);
+  expect(host.textContent).not.toMatch(/abgeschlossen|zurücksetzen/i);
 });
 
-it('does not claim completion was stored when a write fails', async () => {
+it('does not create completion or cursor values just by opening a lesson', async () => {
   await render();
-  const stored = localStorage;
-  vi.stubGlobal('localStorage', { getItem: stored.getItem.bind(stored), setItem: () => { throw new Error('Quota'); } });
-  await click(correct());
-  expect(host.querySelector('[role="dialog"]')?.textContent).not.toContain('Der Fortschritt wurde lokal gespeichert');
-  expect(host.textContent).toContain('Speicherung nicht bestätigt');
-  expect(stored.getItem('nur_learning_completed') ?? '').not.toContain(getCategoryLessons('faith')[0].id);
-});
-
-it('does not create completion or cursor values on mount', async () => {
-  await render();
+  expect(host.querySelector('.learning-course-v2__quiz-options')).toBeNull();
   expect(localStorage.getItem('nur_learning_completed')).toBeNull();
   expect(localStorage.getItem('nur_learning_last_faith')).toBeNull();
+});
+
+it('keeps all lessons available to read even with an old completed state', async () => {
+  localStorage.setItem('nur_learning_completed', JSON.stringify(getCategoryLessons('faith').map(lesson => lesson.id)));
+  await render();
+  await click(buttonNamed('Lektion auswählen'));
+  const lessons = host.querySelectorAll<HTMLButtonElement>('.learning-course-v2__lessons button');
+  expect(lessons).toHaveLength(7);
+  for (const lesson of lessons) {
+    expect(lesson.textContent).toContain('Min');
+    expect(lesson.disabled).toBe(false);
+    expect(lesson.classList.contains('is-complete')).toBe(false);
+  }
+  await click(lessons[6]);
+  expect(host.querySelector('.learning-course-v2__lesson h2')?.textContent).toBe(getCategoryLessons('faith')[6].title);
 });
 
 it('keeps obsolete cursor data and displays an honest fallback warning', async () => {
@@ -54,60 +64,23 @@ it('keeps obsolete cursor data and displays an honest fallback warning', async (
   expect(host.textContent).toContain('nicht lesbar oder nicht zuordenbar');
 });
 
-it('shows a confirmed completion and restores it after remount', async () => {
+it('remembers the reading position without marking a lesson complete', async () => {
   await render();
-  await click(correct());
-  expect(host.querySelector('[role="dialog"]')?.textContent).toContain('Der Fortschritt wurde lokal gespeichert');
-  expect(localStorage.getItem('nur_learning_completed')).toBe('["faith-overview"]');
+  await click(buttonNamed('Nächste Lektion'));
+  const next = getCategoryLessons('faith')[1];
+  expect(localStorage.getItem('nur_learning_last_faith')).toBe(next.id);
   await act(async () => root.render(null));
   await render();
-  expect(host.querySelector('.learning-course-v2__plan-toggle')?.textContent).toContain('1 von 7 abgeschlossen');
+  expect(host.querySelector('.learning-course-v2__lesson h2')?.textContent).toBe(next.title);
+  expect(localStorage.getItem('nur_learning_completed')).toBeNull();
 });
 
-it('preserves malformed data when a correct answer is attempted', async () => {
-  localStorage.setItem('nur_learning_completed', '{broken');
+it('keeps reading usable when storage is unavailable', async () => {
   await render();
-  await click(correct());
-  expect(localStorage.getItem('nur_learning_completed')).toBe('{broken');
-  expect(host.querySelector('[role="dialog"]')?.textContent).toContain('Speicherung nicht bestätigt');
-  expect(host.querySelector('.learning-course-v2__plan-toggle')?.textContent).toContain('Fortschritt nicht lesbar');
-});
-
-it('does not increase displayed completion after a silently discarded write', async () => {
-  await render();
-  const stored = localStorage;
-  vi.stubGlobal('localStorage', { getItem: stored.getItem.bind(stored), setItem: () => {} });
-  await click(correct());
-  expect(host.querySelector('[role="dialog"]')?.textContent).toContain('Speicherung nicht bestätigt');
-  expect(host.querySelector('.learning-course-v2__plan-toggle')?.textContent).toContain('0 von 7 abgeschlossen');
-});
-
-it('does not erase a completion or claim success after failed reset', async () => {
-  localStorage.setItem('nur_learning_completed', '["faith-overview"]');
-  await render();
-  const stored = localStorage;
-  vi.stubGlobal('localStorage', { getItem: stored.getItem.bind(stored), setItem: () => { throw new Error('Denied'); } });
-  await click(buttonNamed('Lektionsfortschritt zurücksetzen'));
-  expect(stored.getItem('nur_learning_completed')).toBe('["faith-overview"]');
-  expect(host.querySelector('.learning-course-v2__plan-toggle')?.textContent).toContain('1 von 7 abgeschlossen');
-  expect(host.querySelector('.toast')?.textContent).toContain('Zurücksetzen nicht bestätigt');
-  expect(host.querySelector('.toast svg')?.classList.contains('lucide-x')).toBe(true);
-});
-
-it('confirms explicit reset and preserves another course’s data', async () => {
-  localStorage.setItem('nur_learning_completed', '["faith-overview","pillars-hajj"]');
-  await render();
-  await click(buttonNamed('Lektionsfortschritt zurücksetzen'));
-  expect(localStorage.getItem('nur_learning_completed')).toBe('["pillars-hajj"]');
-  expect(host.querySelector('.toast')?.textContent).toContain('Lektionsfortschritt zurückgesetzt');
-});
-
-it('keeps explicit navigation usable while showing a cursor write warning', async () => {
-  await render();
-  const stored = localStorage;
-  vi.stubGlobal('localStorage', { getItem: stored.getItem.bind(stored), setItem: () => { throw new Error('Full'); } });
+  vi.stubGlobal('localStorage', { getItem: () => { throw new Error('Denied'); }, setItem: () => { throw new Error('Denied'); } });
+  expect(host.querySelector('.learning-course-v2__quiz-options')).toBeNull();
+  expect(host.querySelector('[role="dialog"]')).toBeNull();
   await click(buttonNamed('Nächste Lektion'));
   expect(host.querySelector('.learning-course-v2__lesson h2')?.textContent).toBe('1. Glaube an Allah');
   expect(host.textContent).toContain('Speicherung der letzten Lektionsposition');
-  expect(stored.getItem('nur_learning_last_faith')).toBeNull();
 });

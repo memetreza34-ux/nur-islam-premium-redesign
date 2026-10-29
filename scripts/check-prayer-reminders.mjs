@@ -45,7 +45,7 @@ for (const feature of [
   "readSet('nur_prayer_notifications', [])",
   'obligatoryIds.includes',
   'prayer.obligatory && notifications.has(prayer.id)',
-  'prayer-alert--disabled',
+  'selectedIsToday && prayer.obligatory ?',
   'In-App-Erinnerung aktiviert; Systembenachrichtigungen sind nicht verfügbar',
 ]) {
   if (!prayerScreen.includes(feature)) throw new Error(`Prayer reminder control is missing: ${feature}`);
@@ -98,7 +98,7 @@ if (!serviceWorker.includes("self.addEventListener('notificationclick'") || !ser
 if (!styles.includes('.reference-prayer-reminder-banner') || !styleIndex.includes('reference-prayer-reminders.css')) {
   throw new Error('Prayer reminder banner styles are missing or not loaded.');
 }
-if (!systemLayer.includes('nur-logo-emblem-v3.svg')) {
+if (!systemLayer.includes('nur-logo-mosque-3d-v1.webp')) {
   throw new Error('System error screen regressed to an invalid logo asset path.');
 }
 

@@ -1,0 +1,78 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "masterSource": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-08708707-34e6-4c8b-9489-9d1f5ce332fa.png",
+  "common": "Use case: identity-preserve. Image 1 is the ONLY character identity and rendering reference: our fixed Nur Islam learning figure. Preserve the EXACT SAME PERSON: same oval face and jaw, same eyebrows, normal-size brown eyes, nose, mouth, honey skin, short dark-brown three-wave hairstyle, adult head/body proportions. Do not make him younger, rounder-faced or give him enlarged cartoon eyes. Same deep emerald tunic with short stand collar, three small cream buttons and single subtle breast pocket, warm ivory loose trousers, bare feet. Same clean smooth matte 3D material, gentle broad soft light and plain untextured surfaces, matching the app's approved illustration family. No photorealistic skin, visible pores, hair strands, textile weave, noisy surface or shiny plastic. Natural coherent anatomy, five fingers per hand where visible. Genuine transparent alpha around a single character, square canvas, centered with comfortable margins. No words, arrows, labels, symbols, logos, UI, extra characters or background scenery.",
+  "tasks": [
+    {
+      "group": "wudu",
+      "id": "hands",
+      "action": "Waist-up view, same adult head and torso proportions as the reference, sleeves neatly rolled above the elbows for washing. At one simple ivory basin and small brushed-metal tap, he washes BOTH hands together under a modest stream, gently rubbing the back of one hand with the other. Hands and fingers clearly readable. A few simple translucent turquoise drops. Face fully visible, looking down calmly. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "mouth",
+      "action": "Waist-up view at a simple ivory basin and small tap. Same tunic, sleeves neatly rolled above the elbows. He brings a small amount of water in his cupped RIGHT hand to his lips for rinsing the mouth. His right hand gently touches the mouth without covering his whole face. Left hand rests naturally near basin edge. Keep exactly the reference face visible, eyes looking softly down. A few stylized translucent turquoise drops, not realistic spray. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "nose",
+      "action": "Waist-up view at a simple ivory basin and small tap. Sleeves neatly rolled above the elbows. He raises his cupped RIGHT hand holding a little water just BELOW his nostrils for rinsing the nose. No fingers inserted in the nose, no pinching, no pouring from above. Nose and same reference face clearly readable, a few simple turquoise droplets, left hand relaxed by the basin. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "face",
+      "action": "Waist-up view at a simple ivory basin and small tap. Sleeves neatly rolled above elbows. Both wet palms gently press against his cheeks as he washes the face. Eyes closed peacefully; the forehead, chin and nose remain visible between and above his hands. Preserve the exact reference face shape and hair, not a new cartoon child. A few simple turquoise drops on cheeks and hands. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "arms",
+      "action": "Waist-up at a simple ivory basin and small tap. Both sleeves neatly rolled above both elbows, so the elbow is exposed. He holds his RIGHT forearm horizontally over the basin, right palm facing upward. His LEFT hand gently washes/rubs the exposed right arm at and around the elbow, showing washing from wrist THROUGH the elbow. Clearly show exactly two arms and two hands, their natural anatomical connection, unobstructed elbow. A modest stream and a few turquoise drops. Face visible, looking down calmly. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "head",
+      "action": "Waist-up view over a simple ivory basin. Sleeves neatly rolled above elbows. With damp hands he wipes over the crown of his head: both open palms rest flat on his same sculpted short brown hair, one on each side near the front crown, fingers pointing back toward the back of his head. This is wiping with damp palms, no faucet stream over his head and no shower. Forehead and face clearly visible, eyes looking gently down, hands anatomically connected and relaxed. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "ears",
+      "action": "Waist-up frontal slightly three-quarter view over a simple ivory basin. Sleeves neatly rolled above elbows. He gently wipes both ears using the INDEX FINGERS at the visible inner folds/entrances of the ears and THUMBS behind the outer ears, with the remaining fingers loosely curved away from the ear. No deep insertion. Keep the SAME face and hair visible, relaxed expression, no enlarged ears, no extra fingers. Show a few tiny moisture drops only, no running water on the head. No prayer mat."
+    },
+    {
+      "group": "wudu",
+      "id": "feet",
+      "action": "Three-quarter full-body view of the SAME adult man seated securely on one plain low cream stool beside a low ivory wash basin with small tap. TUNIC SLEEVES rolled above elbows; right trouser hem rolled just ABOVE the ankle so the entire ankle is exposed. He bends gently forward, placing his RIGHT bare foot over/in the low basin and using his LEFT hand to wash the top of the foot, toes and the clearly exposed ankle; his right hand supports the right lower leg. The other left foot rests safely on the floor. Head and full same face visible in a natural downward gaze. Clearly show the action, exact same clothing/identity, only a little stylized turquoise water. No prayer mat."
+    },
+    {
+      "group": "salah",
+      "id": "takbir",
+      "action": "Full-body frontal prayer posture, upright on exactly the same simple teal rectangular mat with thin muted-gold border as Image 1. Both arms raised with open palms facing forward, hands beside the upper shoulders, fingers relaxed naturally and pointing upward. Sleeves down as in reference. Feet parallel close together, gaze lowered, same calm face. Entire mat, body, head, fingertips and bare feet inside frame. This depicts raising hands for opening Takbir, not cupping them in supplication."
+    },
+    {
+      "group": "salah",
+      "id": "qiyam",
+      "action": "Full-body frontal standing prayer posture on the EXACT same simple teal mat with thin muted-gold border. Stand upright, feet parallel close together, head gently bowed and gaze lowered. Fold hands calmly at the upper abdomen: the RIGHT palm rests over the LEFT hand/wrist. Arms relaxed, elbows close to body. Preserve exact face and clothing from reference, sleeves down. No book or other object, entire character and mat visible."
+    },
+    {
+      "group": "salah",
+      "id": "ruku",
+      "action": "Full-body side view facing LEFT, on the exact same simple teal mat with thin muted-gold border. Bow FORWARD FROM THE HIPS to approximately a right angle: back straight and horizontal, head and neck aligned with the back, eyes toward mat, legs straight but not rigidly locked, BOTH hands placed firmly on their corresponding knees, fingers naturally spread over the knees. Arms extend naturally from shoulders to knees. Not a squat or seated position. Same character nose/profile, same three-wave brown hairstyle, emerald tunic and ivory trousers with sleeves down, bare feet flat on mat. Entire person and mat with padding."
+    },
+    {
+      "group": "salah",
+      "id": "sujud",
+      "action": "Clear full-body SIDE VIEW facing LEFT in Muslim prayer PROSTRATION on the exact same simple teal mat and thin muted-gold border. Forehead AND nose touching the mat, BOTH palms flat on the mat beside the head/shoulders, elbows raised OFF the ground, upper arms lifted away from torso, knees on the mat, hips raised above shoulder level, toes bent forward touching the mat. Clearly readable natural posture, no floating forehead, no forehead on hands, no lying flat, no impossible limbs. Same exact character/profile, same emerald tunic and ivory trousers, sleeves down. Full body and full mat inside frame. Maintain compact genuine anatomy, both hands naturally visible or correctly occluded."
+    },
+    {
+      "group": "salah",
+      "id": "sitting",
+      "action": "Full-body gentle three-quarter view facing slightly LEFT. Sit upright in the prayer sitting posture on the same simple teal mat with thin muted-gold border: hips resting on folded left foot, right foot upright with toes bent toward the mat, knees bent and shins on mat. Torso straight, relaxed hands resting naturally on thighs near knees, fingers forward. Same exact face, lowered gaze, same clothing with sleeves down and barefoot. Do not kneel upright off the heels, do not sit cross-legged, no chair. Entire figure and mat inside frame."
+    },
+    {
+      "group": "salah",
+      "id": "taslim",
+      "action": "Full-body frontal view while seated upright on the same simple teal mat with thin muted-gold border, folded left foot under hips and right foot upright, hands resting on thighs. Turn ONLY the head to the character's RIGHT (toward the VIEWER'S LEFT), approximately 60 degrees, showing his rightward final prayer greeting. Torso remains facing forward; neck turn natural and gentle. Same face profile, same hairstyle and clothing, sleeves down. No raised hand, no waving, no smile at viewer. Entire figure and mat visible."
+    }
+  ]
+}

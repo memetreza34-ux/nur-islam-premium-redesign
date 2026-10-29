@@ -1,6 +1,6 @@
 import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { WORSHIP_GUIDES } from '../data/worshipGuideData';
-import { readGuideProgress, saveGuideCompletion, saveGuideStep } from './worshipGuideProgress';
+import { readGuideProgress, saveGuideStep } from './worshipGuideProgress';
 
 beforeEach(() => localStorage.clear());
 afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
@@ -8,14 +8,12 @@ afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
 describe('validated scalar progress for all existing worship guides', () => {
   it.each(WORSHIP_GUIDES.map(guide => [guide.id, guide.steps.length] as const))('%s stores only requested known fields', (id, count) => {
     localStorage.setItem('unrelated-personal-note', 'preserve');
-    expect(readGuideProgress(id)).toEqual({ stepIndex: 0, hasStep: false, stepValid: true, completed: false, completionValid: true });
+    expect(readGuideProgress(id)).toEqual({ stepIndex: 0, hasStep: false, stepValid: true });
     expect(localStorage.getItem(`nur_guide_${id}_step`)).toBeNull();
     expect(saveGuideStep(id, count - 1)).toBe(true);
-    expect(readGuideProgress(id).completed).toBe(false);
-    expect(saveGuideCompletion(id)).toBe(true);
-    expect(readGuideProgress(id)).toEqual({ stepIndex: count - 1, hasStep: true, stepValid: true, completed: true, completionValid: true });
+    expect(readGuideProgress(id)).toEqual({ stepIndex: count - 1, hasStep: true, stepValid: true });
     expect(localStorage.getItem(`nur_guide_${id}_step`)).toBe(String(count - 1));
-    expect(localStorage.getItem(`nur_guide_${id}_complete`)).toBe('1');
+    expect(localStorage.getItem(`nur_guide_${id}_complete`)).toBeNull();
     expect(localStorage.getItem('unrelated-personal-note')).toBe('preserve');
   });
   it.each(['', ' ', '5.5', '-1', 'Infinity', 'NaN', '10', '999', '05', 'future-step'])('preserves invalid or unknown position %j', raw => {
@@ -27,24 +25,16 @@ describe('validated scalar progress for all existing worship guides', () => {
     expect(saveGuideStep('wudu', 1)).toBe(false);
     expect(localStorage.getItem('nur_guide_wudu_step')).toBe(raw);
   });
-  it.each(['', 'true', '01', '{broken', 'future'])('preserves invalid or unknown completion %j', raw => {
+  it.each(['', '0', '1', 'true', '{broken', 'future'])('ignores retired completion data %j while storing only the reading position', raw => {
     localStorage.setItem('nur_guide_wudu_complete', raw);
-    expect(readGuideProgress('wudu').completionValid).toBe(false);
-    expect(readGuideProgress('wudu').completed).toBe(false);
-    expect(saveGuideCompletion('wudu')).toBe(false);
+    expect(readGuideProgress('wudu')).toEqual({ stepIndex: 0, hasStep: false, stepValid: true });
+    expect(saveGuideStep('wudu', 9)).toBe(true);
     expect(localStorage.getItem('nur_guide_wudu_complete')).toBe(raw);
-  });
-  it('accepts an explicit stored zero as incomplete and does not infer completion from position', () => {
-    localStorage.setItem('nur_guide_wudu_step', '9');
-    localStorage.setItem('nur_guide_wudu_complete', '0');
-    expect(readGuideProgress('wudu')).toMatchObject({ completed: false, completionValid: true, stepIndex: 9 });
-    expect(saveGuideCompletion('wudu')).toBe(true);
   });
   it('does not mutate unrecognized guide data', () => {
     localStorage.setItem('nur_guide_future_complete', 'custom');
-    expect(readGuideProgress('future')).toMatchObject({ stepValid: false, completionValid: false });
+    expect(readGuideProgress('future')).toMatchObject({ stepValid: false });
     expect(saveGuideStep('future', 0)).toBe(false);
-    expect(saveGuideCompletion('future')).toBe(false);
     expect(localStorage.getItem('nur_guide_future_complete')).toBe('custom');
     expect(localStorage.getItem('nur_guide_future_step')).toBeNull();
   });
@@ -58,7 +48,7 @@ describe('validated scalar progress for all existing worship guides', () => {
     expect(saveGuideStep('wudu', 2)).toBe(false);
     expect(localStorage.getItem('nur_guide_wudu_step')).toBe('newer-unknown-value');
   });
-  for (const [name, write] of [['step', () => saveGuideStep('wudu', 1)], ['completion', () => saveGuideCompletion('wudu')]] as const) {
+  for (const [name, write] of [['step', () => saveGuideStep('wudu', 1)]] as const) {
     it(`${name} rejects inaccessible reads without attempting writes`, () => {
       const setItem = vi.fn();
       vi.stubGlobal('localStorage', { getItem: () => { throw new Error('Denied'); }, setItem });
@@ -97,7 +87,7 @@ describe('validated scalar progress for all existing worship guides', () => {
     expect(saveGuideStep('wudu', 1)).toBe(true);
     expect(localStorage.getItem('nur_guide_wudu_complete')).toBe('{unknown');
     localStorage.setItem('nur_guide_salah_step', 'future');
-    expect(saveGuideCompletion('salah')).toBe(true);
+    expect(saveGuideStep('salah', 0)).toBe(false);
     expect(localStorage.getItem('nur_guide_salah_step')).toBe('future');
   });
 });

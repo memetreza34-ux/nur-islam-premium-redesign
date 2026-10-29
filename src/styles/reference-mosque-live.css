@@ -5,7 +5,7 @@
 .reference-mosque-location-button {
   display: inline-flex;
   width: fit-content;
-  min-height: 38px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 7px;
@@ -17,7 +17,7 @@
   background: linear-gradient(135deg, #efd394, #c9953a);
   box-shadow: 0 10px 24px rgba(0, 0, 0, .22);
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -65,13 +65,13 @@
 
 .reference-mosque-live-status strong {
   color: var(--cream-strong);
-  font-size: .59rem;
+  font-size: .75rem;
 }
 
 .reference-mosque-live-status small {
   overflow: hidden;
   color: var(--muted-green);
-  font-size: .46rem;
+  font-size: .75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -93,7 +93,6 @@
   min-height: 82px;
 }
 
-.reference-mosque-list--live > button:hover,
 .reference-mosque-list--live > button:focus-visible {
   background: rgba(232, 199, 122, .045);
 }
@@ -120,14 +119,14 @@
 .reference-mosque-loading strong,
 .reference-mosque-error strong {
   color: var(--cream-strong);
-  font-size: .72rem;
+  font-size: .75rem;
 }
 
 .reference-mosque-loading small,
 .reference-mosque-error small {
   max-width: 280px;
   color: var(--muted-green);
-  font-size: .51rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -141,7 +140,7 @@
 
 .reference-mosque-error button {
   display: inline-flex;
-  min-height: 40px;
+  min-height: 44px;
   align-items: center;
   gap: 7px;
   padding: 0 13px;
@@ -150,7 +149,7 @@
   color: var(--cream-strong);
   background: rgba(255, 255, 255, .04);
   cursor: pointer;
-  font-size: .5rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -181,8 +180,8 @@
   top: 13px;
   right: 13px;
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid rgba(232, 199, 122, .2);
   border-radius: 12px;
@@ -216,7 +215,7 @@
 
 .reference-mosque-detail-modal > p {
   color: var(--muted-green);
-  font-size: .6rem;
+  font-size: .75rem;
   line-height: 1.5;
 }
 
@@ -244,7 +243,7 @@
 
 .reference-mosque-detail-facts strong {
   color: var(--cream);
-  font-size: .54rem;
+  font-size: .75rem;
   font-weight: 650;
 }
 
@@ -257,7 +256,7 @@
 .reference-mosque-detail-actions button,
 .reference-mosque-detail-actions a {
   display: inline-flex;
-  min-height: 43px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 7px;
@@ -267,7 +266,7 @@
   color: var(--cream-strong);
   background: rgba(255, 255, 255, .035);
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 800;
   text-decoration: none;
 }

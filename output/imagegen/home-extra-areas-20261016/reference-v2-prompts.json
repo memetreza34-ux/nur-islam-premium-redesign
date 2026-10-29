@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16",
+  "generator": "Codex built-in image_gen",
+  "inputImages": [
+    "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/prayer-companion-fasting-v1.webp",
+    "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+  ],
+  "assets": [
+    {
+      "key": "ummah",
+      "prompt": "Create ONE new illustration that belongs EXACTLY to the same existing app artwork family as the TWO attached STYLE REFERENCES. Match their saturated dark emerald green, warm ivory, restrained warm ochre gold, clean sharp silhouette, believable softly rounded solid forms, gently polished painted surfaces, soft natural directional lighting, and modest detailed premium 3D illustration rendering. Match the date bowl and mosque in finish and complexity: neither flat nor crude puffy clay, neither photorealistic nor shiny chrome jewelry. Crisp at a small 56px UI size. Entire object centered in a square canvas with ~8 percent clean margins, isolated with TRUE TRANSPARENT ALPHA background. No rectangle, tile, scenery, floor or long cast shadow. No writing, labels, brand logo, eyes, faces, watermark. Subject: a small tasteful desktop GLOBE for a worldwide community. Dark emerald sphere with clear recognizable raised warm ivory continent silhouettes, presented at three-quarter angle showing Africa, Europe and western Asia. Thin low contrast meridian lines, one sturdy dark emerald curved axis support with a narrow warm ochre gold accent, and a simple low emerald oval foot. Compact balanced slightly tilted globe. Keep the stand slim, not a thick pale sausage. Land must read as recognizable continents rather than random blobs. Use exactly the reference mosque's ivory and green plus the bowl's restrained gold. This is a new subject; do not include the mosque, bowl, heart or books.",
+      "savedAsset": "public/premium-assets/high-res-objects/home-extra-ummah-v2.webp"
+    },
+    {
+      "key": "collection",
+      "prompt": "Create ONE new illustration that belongs EXACTLY to the same existing app artwork family as the TWO attached STYLE REFERENCES. Match their saturated dark emerald green, warm ivory, restrained warm ochre gold, clean sharp silhouette, believable softly rounded solid forms, gently polished painted surfaces, soft natural directional lighting, and modest detailed premium 3D illustration rendering. Match the date bowl and mosque in finish and complexity: neither flat nor crude puffy clay, neither photorealistic nor shiny chrome jewelry. Crisp at a small 56px UI size. Entire object centered in a square canvas with ~8 percent clean margins, isolated with TRUE TRANSPARENT ALPHA background. No rectangle, tile, scenery, floor or long cast shadow. No writing, labels, brand logo, eyes, faces, watermark. Subject: an elegant compact COLLECTION OF SAVED CARDS: three distinct flat ivory reference cards loosely stacked and slightly fanned, nestled in a low dark emerald organizer sleeve. A short warm gold bookmark ribbon folds neatly over the front card, with a V-cut tip. The card corners have a small realistic bevel, NOT swollen pillow shapes. A fine simple gold edge accent on the organizer echoes the bowl reference. The cards themselves are blank without typography or lines. Clear stable three-quarter view, strong ivory card silhouette above the deep green sleeve, visually as crisp and rich as the date bowl reference. No heart, book, globe, calendar, check mark or letters.",
+      "savedAsset": "public/premium-assets/high-res-objects/home-extra-collection-v2.webp"
+    }
+  ]
+}

@@ -108,13 +108,18 @@ for (const forbiddenNovelty of ['BrainCircuit', 'Sparkles']) {
 }
 
 requireFragments(app, 'Home semantic cards', [
-  '<MapPin size={22} />',
-  '<Globe2 size={22} />',
+  'home-extra-ummah-v2.webp',
+  'home-extra-collection-v2.webp',
+  '<Globe2 size={30} />',
 ]);
 
+const homeExtras = app.match(/<section className="content-section recommendations"[\s\S]*?<\/section>/)?.[0] ?? '';
+if (/legacy:fasting|onNavigate\('mosques'\)|learn-hub-(?:community|character)-v1/.test(homeExtras)) {
+  throw new Error('Home extra areas must not duplicate prayer tools or learning illustrations.');
+}
+
 requireFragments(quran, 'Quran header', [
-  'aria-label="Lieblingssuren"',
-  '<Heart size={20} />',
+  '<SourceInfo title="Lesen & Offline">',
 ]);
 
 requireFragments(dhikr, 'Dhikr header', [
@@ -133,8 +138,9 @@ requireFragments(qibla, 'Qibla controls', [
 requireFragments(prayer, 'Prayer controls', [
   'aria-label="Gebetszeiten aktualisieren"',
   '<RefreshCw size={20}',
-  '<Navigation size={20} />',
-  '<LocateFixed size={16} />',
+  '<MapPin size={18} aria-hidden="true" />',
+  'aria-label="Standort aktualisieren"',
+  '<LocateFixed size={18}',
   '<Settings2 size={15} /> Berechnung',
 ]);
 
@@ -166,12 +172,10 @@ requireFragments(mosque, 'Mosque controls', [
 ]);
 
 requireFragments(learn, 'Learning controls', [
-  'aria-label="Lernplan öffnen"',
-  '<Settings size={20} />',
-  '<GraduationCap size={18} />',
-  'wudu-washing-v1.webp" fallback={<Droplets />}',
-  'learn-salah-v3.webp" fallback={<BookOpen />}',
-  'home-qibla-illustrated-v1.webp" fallback={<Compass />}',
+  '<h1>Lernen</h1>',
+  'learn-hub-wudu-v1.webp" fallback={<Droplets />}',
+  'home-learn-prayer-v5.webp" fallback={<BookOpen />}',
+  'home-qibla-illustrated-v3.webp" fallback={<Compass />}',
 ]);
 
 const legacyIconMap = {

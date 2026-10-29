@@ -1,3 +1,5 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
@@ -196,7 +198,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-dhikr-counter">
         <div className="reference-dhikr-counter__glow" />
-        <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
+        <PremiumImage src="/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
         <button className="reference-dhikr-ring" style={{ '--dhikr-progress': `${itemProgress * 3.6}deg` } as CSSProperties} onClick={increment} aria-label={`${item.latin} zählen`}>
           <span><strong>{count}</strong><small>/ {item.target}</small></span>
         </button>
@@ -246,7 +248,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-dhikr-source">
         <ShieldCheck size={18} />
-        <span><small>Quellenhinweis</small><strong>{sourceUrl ? <a href={sourceUrl} target="_blank" rel="noreferrer">{sourceLabel}</a> : sourceLabel}</strong><p>{routine.description}</p>{item.itemNote ? <em>{item.itemNote}</em> : null}{routine.note ? <em>{routine.note}</em> : null}<p>Die Umschrift ist eine angenäherte Lesehilfe, keine genaue Lautschrift.</p></span>
+        <span><SourceInfo title="Quelle zum Dhikr"><strong>{sourceUrl ? <a href={sourceUrl} target="_blank" rel="noreferrer">{sourceLabel}</a> : sourceLabel}</strong></SourceInfo><p>{routine.description}</p>{item.itemNote ? <em>{item.itemNote}</em> : null}{routine.note ? <em>{routine.note}</em> : null}<p>Die Umschrift ist eine angenäherte Lesehilfe, keine genaue Lautschrift.</p></span>
       </section>
 
       <button className="reference-dhikr-routine-reset" onClick={resetRoutine}><ListRestart size={17} /> Gesamte ausgewählte Routine zurücksetzen</button>
@@ -254,11 +256,8 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {statsOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setStatsOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setStatsOpen(false)} aria-label="Statistik schließen"><X size={18} /></button>
-              <span className="reference-dhikr-stats-modal__icon"><BarChart3 size={26} /></span>
-              <span className="overline">Heute</span>
-              <h2>Deine Dhikr-Statistik</h2>
+            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title="Deine Dhikr-Statistik" subtitle="Heute" art="/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp" onClose={closeDialog} closeLabel="Statistik schließen" />
               <div className="reference-dhikr-stats-summary">
                 <span><strong>{totalToday}</strong><small>Summe aktueller Zählerstände</small></span>
                 <span><strong>{completedRoutines}</strong><small>Routinen abgeschlossen</small></span>

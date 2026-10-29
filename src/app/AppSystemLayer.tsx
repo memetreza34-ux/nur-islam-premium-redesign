@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { CalendarReminderDetail } from '../services/calendarReminderService';
 import type { PrayerReminderDetail } from '../services/prayerReminderService';
 import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
+import { clearBrowserNavigation } from '../services/browserNavigation';
 
 type ErrorBoundaryProps = { children: ReactNode };
 type ErrorBoundaryState = { failed: boolean };
@@ -24,12 +25,15 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
     return (
       <main className="reference-system-error">
         <div className="reference-system-error__halo" />
-        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" className="reference-system-error__logo" fallback={<NurMark />} />
+        <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="reference-system-error__logo" fallback={<NurMark />} />
         <span className="reference-system-error__icon"><ShieldAlert size={24} /></span>
         <span className="overline">Nur Islam</span>
         <h1>Die Ansicht konnte nicht geladen werden.</h1>
         <p>Deine lokal gespeicherten Fortschritte bleiben erhalten. Lade die App neu, um zur Startseite zurückzukehren.</p>
-        <button className="gold-button" onClick={() => window.location.reload()}><RefreshCw size={18} /> App neu laden</button>
+        <button className="gold-button" onClick={() => {
+          try { clearBrowserNavigation(); } catch { /* Reload remains available if history is blocked. */ }
+          window.location.reload();
+        }}><RefreshCw size={18} /> App neu laden</button>
       </main>
     );
   }

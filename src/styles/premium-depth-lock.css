@@ -61,7 +61,7 @@
 
 .reference-dua-filter-tabs > button,
 .reference-name-filter-tabs > button {
-  min-height: 38px;
+  min-height: 44px;
   padding-inline: 13px;
   border: 1px solid rgba(232, 199, 122, .1);
   border-radius: 999px;
@@ -113,8 +113,8 @@
 }
 
 .reference-calendar-month .calendar-month-nav > button {
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: 1px solid rgba(232, 199, 122, .16);
   border-radius: 14px;
   color: var(--depth-gold);
@@ -139,7 +139,7 @@
 
 .reference-calendar-screen .calendar-weekdays > span {
   color: rgba(232, 199, 122, .68);
-  font-size: .47rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .04em;
 }
@@ -156,11 +156,6 @@
   background: rgba(255, 255, 255, .018);
 }
 
-.reference-calendar-grid .calendar-day:not(.calendar-day--selected):not(.calendar-day--empty):hover {
-  border-color: rgba(232, 199, 122, .11);
-  background: rgba(232, 199, 122, .035);
-}
-
 .reference-calendar-grid .calendar-day--today:not(.calendar-day--selected) {
   border-color: rgba(232, 199, 122, .24);
   background: rgba(232, 199, 122, .045);
@@ -174,11 +169,11 @@
 }
 
 .reference-calendar-grid .calendar-day strong {
-  font-size: .6rem;
+  font-size: .75rem;
 }
 
 .reference-calendar-grid .calendar-day em {
-  font-size: .43rem;
+  font-size: .75rem;
 }
 
 .reference-calendar-calculation-note {
@@ -205,7 +200,7 @@
 }
 
 .reference-selected-date > button {
-  min-height: 38px;
+  min-height: 44px;
   padding-inline: 11px;
   border-radius: 12px;
 }
@@ -343,7 +338,7 @@
 }
 
 .reference-dhikr-reset {
-  min-height: 38px;
+  min-height: 44px;
   padding-inline: 12px;
   border: 1px solid rgba(232, 199, 122, .12);
   border-radius: 12px;
@@ -428,8 +423,7 @@
   box-shadow: 0 27px 62px rgba(0, 0, 0, .29), inset 0 1px 0 rgba(255, 255, 255, .04);
 }
 
-.reference-duas-hero::after,
-.reference-names-hero::after {
+.reference-duas-hero::after {
   position: absolute;
   right: -70px;
   bottom: -95px;
@@ -461,7 +455,7 @@
   max-width: 300px;
   margin-top: 12px;
   color: rgba(171, 192, 182, .76);
-  font-size: .62rem;
+  font-size: .75rem;
   line-height: 1.58;
 }
 
@@ -520,8 +514,8 @@
 }
 
 .reference-dua-card__top > button {
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 11px;
 }
 
@@ -633,7 +627,7 @@
 
 .reference-name-list__copy strong {
   color: var(--depth-text);
-  font-size: .69rem;
+  font-size: .75rem;
 }
 
 .reference-name-state,
@@ -664,51 +658,6 @@
 }
 
 /* ---------- Qibla ---------- */
-.reference-qibla-stage {
-  min-height: 470px;
-  overflow: hidden;
-  padding: 20px;
-  border: 1px solid var(--depth-border-strong) !important;
-  border-radius: 31px !important;
-  background:
-    radial-gradient(circle at 50% 35%, rgba(240, 203, 124, .13), transparent 14rem),
-    linear-gradient(160deg, #0c4938, #052a20 58%, #02130f) !important;
-  box-shadow: 0 30px 70px rgba(0, 0, 0, .32), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
-}
-
-.reference-qibla-stage__halo {
-  border-color: rgba(232, 199, 122, .09);
-  box-shadow: 0 0 0 34px rgba(232, 199, 122, .017), 0 0 0 72px rgba(232, 199, 122, .01);
-}
-
-.reference-qibla-stage__compass {
-  filter: saturate(.92) drop-shadow(0 30px 30px rgba(0, 0, 0, .42));
-}
-
-.reference-qibla-stage__needle {
-  color: var(--depth-gold-bright);
-  filter: drop-shadow(0 5px 9px rgba(0, 0, 0, .32));
-}
-
-.reference-qibla-stage__copy {
-  padding: 14px 16px;
-  border: 1px solid rgba(232, 199, 122, .16);
-  border-radius: 18px;
-  background: rgba(1, 16, 12, .36);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.reference-qibla-stage__copy h2 {
-  margin-top: 4px;
-  color: var(--depth-text);
-  font-size: 1.78rem;
-  line-height: .95;
-}
-
-.reference-qibla-stage__copy p {
-  color: var(--depth-muted);
-}
 
 .reference-qibla-location,
 .reference-qibla-calibration,
@@ -735,7 +684,7 @@
 }
 
 .reference-calibration-button {
-  min-height: 42px;
+  min-height: 44px;
   border-radius: 13px;
 }
 
@@ -789,7 +738,7 @@
 }
 
 .reference-mosque-location-button {
-  min-height: 42px;
+  min-height: 44px;
   margin-top: 14px;
   padding-inline: 12px;
   border: 1px solid rgba(232, 199, 122, .2);
@@ -843,7 +792,7 @@
 
 .reference-mosque-list--live > button strong {
   color: var(--depth-text);
-  font-size: .67rem;
+  font-size: .75rem;
 }
 
 .reference-mosque-list--live > button small,
@@ -944,7 +893,7 @@
 
 .reference-account-form label > span {
   color: rgba(232, 199, 122, .8);
-  font-size: .51rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -1103,10 +1052,6 @@
     padding: 19px;
   }
 
-  .reference-qibla-stage {
-    min-height: 445px;
-  }
-
   .reference-mosque-hero > div {
     max-width: 73%;
     padding: 19px;
@@ -1124,7 +1069,7 @@
 
 @media (max-width: 350px) {
   .reference-calendar-grid .calendar-day {
-    min-height: 43px;
+    min-height: 44px;
   }
 
   .reference-dhikr-step-tabs,
@@ -1140,10 +1085,6 @@
 
   .reference-dua-card__arabic {
     font-size: 1.35rem;
-  }
-
-  .reference-qibla-stage {
-    min-height: 420px;
   }
 
   .reference-mosque-hero {
@@ -1211,19 +1152,6 @@
 [data-theme='light'] .reference-reader-verse > p[dir='rtl'] {
   color: #36584b;
 }
-
-@media (hover: hover) and (pointer: fine) {
-  .calendar-entry-row:hover,
-.reference-dhikr-step-tabs > button:hover,
-.reference-dhikr-category-grid > button:hover,
-.reference-dua-card--complete:hover,
-.reference-name-list--complete > article:hover,
-.reference-mosque-list--live > button:hover,
-.reference-account-cloud-grid > button:hover,
-.reference-notes-list > button:hover {
-    border-color: rgba(232, 199, 122, .27) !important;
-    transform: translateY(-1px);
-  }}
 
 @media (prefers-reduced-motion: reduce) {
   .reference-calendar-screen *,

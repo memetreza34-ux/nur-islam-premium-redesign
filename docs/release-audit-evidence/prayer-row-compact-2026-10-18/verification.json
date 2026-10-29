@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-18",
+  "change": "Compact right-hand time and borderless action group; aligned time edges; complete prayer labels; balanced date wrapping",
+  "widths": [
+    320,
+    360,
+    390,
+    430,
+    768
+  ],
+  "browserTests": {
+    "passed": 10,
+    "finalRun": "browser-tests-final.log",
+    "note": "All ten tests passed on the final product state. The earlier floating-point measurement failure and its recheck are retained in the other logs."
+  },
+  "fullCheck": {
+    "passed": true,
+    "unitTests": 1141
+  },
+  "cssBytes": 884015,
+  "screenshotsUseMockPrayerTimes": true,
+  "realDeviceTesting": false,
+  "sha256": {
+    "src/screens/PrayerScreen.tsx": "d056848fda71e8c61ff3c701d380438fa9376acff7eb418ae7f3ebc56b7e0469",
+    "src/styles/nur-design-system.css": "37cd82f594fe27a04665c4601dca798854f8f702c5b9f8040e92a2cb3997b8fc",
+    "src/styles/prayer-list.css": "593e697738bd3d3954128746d0a45057640f42ed03008f288b0d908644f2b390",
+    "e2e/prayer-miniatures.spec.ts": "565fa95bb487dfb8a147c1a3ae00a713229b82f02979badf2673caa03e018610",
+    "scripts/check-core-screen-source.mjs": "3ca21fede14d222262ddbcfbcf692aa5d3d45d7485042c7b3d7c60933e78c126",
+    "scripts/check-stylesheet-debt.mjs": "4fa2b5035c918e2bbe4bb8c8c9e7a830ae8eedf2659cb39829620c521b69e37e"
+  }
+}

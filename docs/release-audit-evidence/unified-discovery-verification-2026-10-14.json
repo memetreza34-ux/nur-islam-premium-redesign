@@ -1,0 +1,47 @@
+{
+  "recordedAt": "2026-10-14",
+  "scope": "Four Home discovery icons restyled as one coordinated collection using the approved Dhikr illustration as a shared style reference.",
+  "toolMode": "Codex built-in image_gen edit",
+  "promptSet": "output/imagegen/unified-home-discovery-20261014/prompts.json",
+  "assets": [
+    "public/premium-assets/high-res-objects/home-learn-prayer-v4.webp",
+    "public/premium-assets/high-res-objects/home-names-v3.webp",
+    "public/premium-assets/high-res-objects/home-quiz-v4.webp",
+    "public/premium-assets/high-res-objects/home-duas-v4.webp"
+  ],
+  "visualDirection": "Tactile matte finish, warm ivory, muted forest/teal, restrained brass, matching soft lighting; natural skin tone retained.",
+  "imageDetails": {
+    "dimensions": "512x512",
+    "transparent": true,
+    "combinedBytes": 170430,
+    "inspected": "Whole subjects, readable 99 and question mark, plausible five digits per hand; no invented sacred text."
+  },
+  "checks": {
+    "technicalCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "browserExitCode": 0,
+    "browserCasesPassed": 21,
+    "browserSpecs": [
+      "core-flows.spec.ts",
+      "offline.spec.ts"
+    ],
+    "diffCheckExitCode": 0,
+    "visualViewports": [
+      "648x764",
+      "390x844",
+      "320x740"
+    ],
+    "smallViewport": "Grid clientWidth and scrollWidth both 300; all four images loaded.",
+    "temporaryViewportReset": true
+  },
+  "screenshots": [
+    "unified-discovery-visible-2026-10-14.jpg",
+    "unified-discovery-phone-2026-10-14.jpg",
+    "unified-discovery-small-phone-2026-10-14.jpg"
+  ],
+  "serviceWorkerCache": "v89",
+  "previousColorfulVariant": "Retained as archive; removed from current Home mapping and replaced in the offline cache.",
+  "preview": "http://127.0.0.1:3001/?preview=1",
+  "published": false
+}

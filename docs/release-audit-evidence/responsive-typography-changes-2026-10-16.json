@@ -1,0 +1,254 @@
+{
+  "policy": "At least 12 CSS pixels for visible utility text at default browser font size. Body-support tokens 14px, secondary copy 13px. No artificial shrinking on narrow screens.",
+  "declarations": 614,
+  "changes": [
+    {
+      "file": "src/styles/about-premium.css",
+      "declarations": 9
+    },
+    {
+      "file": "src/styles/base.css",
+      "declarations": 2
+    },
+    {
+      "file": "src/styles/calendar.css",
+      "declarations": 15
+    },
+    {
+      "file": "src/styles/filter-control-consistency.css",
+      "declarations": 2
+    },
+    {
+      "file": "src/styles/functional-hardening.css",
+      "declarations": 10
+    },
+    {
+      "file": "src/styles/home-content.css",
+      "declarations": 5
+    },
+    {
+      "file": "src/styles/home-hero.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/learn-library-redesign.css",
+      "declarations": 6
+    },
+    {
+      "file": "src/styles/learn.css",
+      "declarations": 5
+    },
+    {
+      "file": "src/styles/legal-premium.css",
+      "declarations": 11
+    },
+    {
+      "file": "src/styles/more.css",
+      "declarations": 4
+    },
+    {
+      "file": "src/styles/mosque-finder-hero.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/navigation.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/nur-design-system.css",
+      "declarations": 88
+    },
+    {
+      "file": "src/styles/prayer-list.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/prayer.css",
+      "declarations": 4
+    },
+    {
+      "file": "src/styles/premium-account-notes-lock.css",
+      "declarations": 9
+    },
+    {
+      "file": "src/styles/premium-brand-entry-art-lock.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/premium-depth-lock.css",
+      "declarations": 7
+    },
+    {
+      "file": "src/styles/premium-design-parallel-pass.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/premium-flow-lock.css",
+      "declarations": 11
+    },
+    {
+      "file": "src/styles/premium-local-features.css",
+      "declarations": 55
+    },
+    {
+      "file": "src/styles/premium-readable-type-lock.css",
+      "declarations": 4
+    },
+    {
+      "file": "src/styles/premium-reference-geometry-lock.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/premium-release-design.css",
+      "declarations": 6
+    },
+    {
+      "file": "src/styles/premium-responsive-accessibility-pass.css",
+      "declarations": 2
+    },
+    {
+      "file": "src/styles/premium-shell-parallel-pass.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/premium-system-surfaces-lock.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/premium-v2.css",
+      "declarations": 7
+    },
+    {
+      "file": "src/styles/premium-visual-lock.css",
+      "declarations": 6
+    },
+    {
+      "file": "src/styles/reference-app-finish.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/reference-calendar-dynamic.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/reference-content-integrity.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/reference-core-screens.css",
+      "declarations": 17
+    },
+    {
+      "file": "src/styles/reference-dhikr-complete.css",
+      "declarations": 6
+    },
+    {
+      "file": "src/styles/reference-discovery.css",
+      "declarations": 18
+    },
+    {
+      "file": "src/styles/reference-duas-complete.css",
+      "declarations": 12
+    },
+    {
+      "file": "src/styles/reference-exact.css",
+      "declarations": 5
+    },
+    {
+      "file": "src/styles/reference-home-exact.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/reference-install-prompt.css",
+      "declarations": 5
+    },
+    {
+      "file": "src/styles/reference-interaction-fixes.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/reference-learning-courses.css",
+      "declarations": 12
+    },
+    {
+      "file": "src/styles/reference-learning.css",
+      "declarations": 5
+    },
+    {
+      "file": "src/styles/reference-legacy-migration.css",
+      "declarations": 14
+    },
+    {
+      "file": "src/styles/reference-live-prayer-times.css",
+      "declarations": 20
+    },
+    {
+      "file": "src/styles/reference-more-hub.css",
+      "declarations": 4
+    },
+    {
+      "file": "src/styles/reference-mosque-live.css",
+      "declarations": 9
+    },
+    {
+      "file": "src/styles/reference-names-complete.css",
+      "declarations": 8
+    },
+    {
+      "file": "src/styles/reference-onboarding.css",
+      "declarations": 8
+    },
+    {
+      "file": "src/styles/reference-prayer-calendar.css",
+      "declarations": 34
+    },
+    {
+      "file": "src/styles/reference-prayer-dynamic.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/reference-prayer-learning-completion.css",
+      "declarations": 49
+    },
+    {
+      "file": "src/styles/reference-prayer-reminders.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/reference-profile.css",
+      "declarations": 7
+    },
+    {
+      "file": "src/styles/reference-quran-complete.css",
+      "declarations": 20
+    },
+    {
+      "file": "src/styles/reference-quran-online.css",
+      "declarations": 2
+    },
+    {
+      "file": "src/styles/reference-reading.css",
+      "declarations": 20
+    },
+    {
+      "file": "src/styles/reference-shared-prayer.css",
+      "declarations": 1
+    },
+    {
+      "file": "src/styles/reference-system-layer.css",
+      "declarations": 3
+    },
+    {
+      "file": "src/styles/release-hardening.css",
+      "declarations": 21
+    },
+    {
+      "file": "src/styles/visual-consistency.css",
+      "declarations": 7
+    },
+    {
+      "file": "src/styles.css",
+      "declarations": 9
+    }
+  ]
+}

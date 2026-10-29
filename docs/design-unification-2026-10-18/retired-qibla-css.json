@@ -1,0 +1,65 @@
+{
+  "reason": "reference-qibla-stage family is absent from every TypeScript/TSX source; active compass is QiblaCompass with qibla-dial family. Negation/selector-function rules were retained.",
+  "files": [
+    {
+      "path": "src/styles/premium-art-direction-lock.css",
+      "removedSelectors": 5,
+      "bytesRemoved": 632
+    },
+    {
+      "path": "src/styles/premium-core-screens.css",
+      "removedSelectors": 2,
+      "bytesRemoved": 256
+    },
+    {
+      "path": "src/styles/premium-depth-lock.css",
+      "removedSelectors": 9,
+      "bytesRemoved": 1372
+    },
+    {
+      "path": "src/styles/premium-readable-type-lock.css",
+      "removedSelectors": 1,
+      "bytesRemoved": 32
+    },
+    {
+      "path": "src/styles/premium-secondary-parallel-pass.css",
+      "removedSelectors": 3,
+      "bytesRemoved": 597
+    },
+    {
+      "path": "src/styles/premium-short-viewport-lock.css",
+      "removedSelectors": 13,
+      "bytesRemoved": 1123
+    },
+    {
+      "path": "src/styles/premium-visual-effects-lock.css",
+      "removedSelectors": 4,
+      "bytesRemoved": 119
+    },
+    {
+      "path": "src/styles/premium-visual-runtime-lock.css",
+      "removedSelectors": 4,
+      "bytesRemoved": 125
+    },
+    {
+      "path": "src/styles/premium-worship-art-lock.css",
+      "removedSelectors": 22,
+      "bytesRemoved": 2663
+    },
+    {
+      "path": "src/styles/reference-core-screens.css",
+      "removedSelectors": 11,
+      "bytesRemoved": 1704
+    },
+    {
+      "path": "src/styles/reference-functional-polish.css",
+      "removedSelectors": 1,
+      "bytesRemoved": 95
+    },
+    {
+      "path": "src/styles/reference-valid-assets-v2.css",
+      "removedSelectors": 6,
+      "bytesRemoved": 638
+    }
+  ]
+}

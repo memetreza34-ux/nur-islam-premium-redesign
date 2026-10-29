@@ -80,7 +80,7 @@
 
 .reference-account-hero small {
   color: #e8c77d !important;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .1em;
   text-transform: uppercase;
@@ -112,7 +112,7 @@
 
 .reference-account-tabs > button {
   display: inline-flex;
-  min-height: 42px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 7px;
@@ -150,7 +150,7 @@
 .reference-account-form label > span {
   padding-inline: 2px;
   color: rgba(226, 209, 174, .77);
-  font-size: .51rem;
+  font-size: .75rem;
   font-weight: 750;
   letter-spacing: .04em;
 }
@@ -231,7 +231,7 @@
 
 .reference-account-cloud-grid > button strong {
   color: var(--utility-text);
-  font-size: .73rem;
+  font-size: .75rem;
 }
 
 .reference-account-cloud-grid > button small {
@@ -321,18 +321,18 @@
 
 .reference-notes-storage strong {
   color: var(--utility-text);
-  font-size: .63rem;
+  font-size: .75rem;
 }
 
 .reference-notes-storage small {
   color: var(--utility-muted);
-  font-size: .49rem;
+  font-size: .75rem;
   line-height: 1.42;
 }
 
 .reference-notes-storage > button {
   display: inline-flex;
-  min-height: 38px;
+  min-height: 44px;
   align-items: center;
   justify-content: center;
   gap: 6px;
@@ -341,7 +341,7 @@
   border-radius: 11px !important;
   color: #17372c !important;
   background: linear-gradient(145deg, #f1d99e, #c99540) !important;
-  font-size: .48rem;
+  font-size: .75rem;
   font-weight: 800;
   white-space: nowrap;
 }
@@ -385,17 +385,17 @@
 
 .reference-notes-list > button strong {
   color: var(--utility-text);
-  font-size: .65rem;
+  font-size: .75rem;
 }
 
 .reference-notes-list > button small {
   color: var(--utility-muted);
-  font-size: .49rem;
+  font-size: .75rem;
 }
 
 .reference-notes-list > button em {
   color: rgba(232, 199, 122, .68);
-  font-size: .45rem;
+  font-size: .75rem;
   font-style: normal;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
@@ -444,8 +444,8 @@
 
 .reference-note-editor__heading > button {
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid rgba(232, 199, 122, .12) !important;
   border-radius: 11px !important;
@@ -501,14 +501,6 @@
 /* The microphone action was removed; the composer now has exactly two columns. */
 
 /* ---------- True pointer hover only ---------- */
-@media (hover: hover) and (pointer: fine) {
-  .reference-account-cloud-grid > button:not(:disabled):hover,
-.reference-notes-list > button:hover,
-.reference-notes-storage > button:not(:disabled):hover {
-    border-color: rgba(247, 226, 178, .28) !important;
-    transform: translateY(-1px);
-  }
-}
 
 /* ---------- Warm light theme ---------- */
 [data-theme='light'] .reference-account-screen,

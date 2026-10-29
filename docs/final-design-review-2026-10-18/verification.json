@@ -1,0 +1,50 @@
+{
+  "date": "2026-10-18",
+  "finalBrowserTests": 31,
+  "focusedBrowserTests": 21,
+  "fullCheckPassed": true,
+  "unitTests": 1141,
+  "sampledViews": 250,
+  "measurements": [
+    {
+      "format": "responsive-app-complete-app-adapts-to-1024x768-phone",
+      "views": 50,
+      "smallText": 0,
+      "clippedText": 0,
+      "lateralText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-320x740-phone",
+      "views": 50,
+      "smallText": 0,
+      "clippedText": 0,
+      "lateralText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-390x844-phone",
+      "views": 50,
+      "smallText": 0,
+      "clippedText": 0,
+      "lateralText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-768x1024-phone",
+      "views": 50,
+      "smallText": 0,
+      "clippedText": 0,
+      "lateralText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-844x390-phone",
+      "views": 50,
+      "smallText": 0,
+      "clippedText": 0,
+      "lateralText": 0
+    }
+  ],
+  "compressedScreenshots": 273,
+  "cssBytes": 883423,
+  "importantRules": 2229,
+  "realDevicesTested": false,
+  "earlierFailures": "Earlier runs and the tablet investigation are retained. An initial tablet measurement and the immediately following visible screenshot disagreed; the precise trigger is unconfirmed. The final test retries the same clock-within-viewport condition for up to five seconds. Two reading-size tests now use explicit synthetic paragraphs so unavailable provider responses do not masquerade as layout failures. An unbounded decode of lazy images in the new capture helper caused two timeouts and was bounded. A prayer-label overlap found in a focused run was fixed by increasing row spacing."
+}

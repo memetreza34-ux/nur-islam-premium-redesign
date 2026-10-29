@@ -1,0 +1,52 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "processing": "cwebp -q 92 -m 6 -alpha_q 100 -resize 192 192; transparent alpha retained",
+  "records": [
+    {
+      "id": "fajr",
+      "prompt": "Use case: stylized-concept. Create ONE isolated prayer-time icon for the mature Nur Islam app. Image 1 is our approved Dhuhr sun: PRIMARY STYLE reference. Match its simple rounded 3D shapes, matte satin materials, broad gentle shading, restrained warm gold tones and compact readable silhouette. Image 2 is our own prayer rug: supporting teal/ivory/gold palette and smooth material reference. A cohesive adult editorial app illustration, clearly readable at 32-44px, not photorealistic or childish. No face, no text, no Arabic, no watermark, no UI or card, no ornate rings or filigree, no chrome, no glossy gems, no sparkles or detached cast shadow, no glow halo. Center one compact symbol/group occupying about 78% of square canvas with truly TRANSPARENT background and clean alpha edges. FAJR / dawn before sunrise: a small softly rounded warm-ivory crescent above one simple low curved deep teal horizon/dune. A single small muted ivory four-point star beside the crescent. Crescent sits slightly upper-right relative to the dune, making a compact balanced grouped symbol. A very subtle cool muted blue dawn accent along the dune edge. NO sun disk, NO orange sunset, NO detailed scenery. Keep the crescent and one dune and tiny star simple, solid dimensional matte forms.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-5305de87-8c04-4477-83f8-ea7c6ec8aa25.png",
+      "workspaceOriginal": "output/imagegen/prayer-symbols-20261015/fajr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-mini-fajr-v2.webp",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-bb2c5b34-fc11-4d1b-abf0-e99acf4db78c.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ]
+    },
+    {
+      "id": "asr",
+      "prompt": "Use case: stylized-concept. Create ONE isolated prayer-time icon for the mature Nur Islam app. Image 1 is our approved Dhuhr sun: PRIMARY STYLE reference. Match its simple rounded 3D shapes, matte satin materials, broad gentle shading, restrained warm gold tones and compact readable silhouette. Image 2 is our own prayer rug: supporting teal/ivory/gold palette and smooth material reference. A cohesive adult editorial app illustration, clearly readable at 32-44px, not photorealistic or childish. No face, no text, no Arabic, no watermark, no UI or card, no ornate rings or filigree, no chrome, no glossy gems, no sparkles or detached cast shadow, no glow halo. Center one compact symbol/group occupying about 78% of square canvas with truly TRANSPARENT background and clean alpha edges. ASR / afternoon: a small warm honey-gold sun with 5 short rounded rays on its UPPER half, fully visible above one simple low gently sloping deep teal dune. Sun slightly to the right and clearly separated from the dune, so this is afternoon, not a half sun rising behind a horizon. Sun material and ray shapes exactly like our Dhuhr reference, muted gold rather than orange. One dune only, no clouds, no extra stars or ornaments. Compact balanced composition.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ce2f064a-e9f6-4f20-a027-d6aa239ee4cd.png",
+      "workspaceOriginal": "output/imagegen/prayer-symbols-20261015/asr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-mini-asr-v2.webp",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-bb2c5b34-fc11-4d1b-abf0-e99acf4db78c.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ]
+    },
+    {
+      "id": "maghrib",
+      "prompt": "Use case: stylized-concept. Create ONE isolated prayer-time icon for the mature Nur Islam app. Image 1 is our approved Dhuhr sun: PRIMARY STYLE reference. Match its simple rounded 3D shapes, matte satin materials, broad gentle shading, restrained warm gold tones and compact readable silhouette. Image 2 is our own prayer rug: supporting teal/ivory/gold palette and smooth material reference. A cohesive adult editorial app illustration, clearly readable at 32-44px, not photorealistic or childish. No face, no text, no Arabic, no watermark, no UI or card, no ornate rings or filigree, no chrome, no glossy gems, no sparkles or detached cast shadow, no glow halo. Center one compact symbol/group occupying about 78% of square canvas with truly TRANSPARENT background and clean alpha edges. MAGHRIB / sunset: a softly rounded muted coral-orange HALF sun sinking behind one simple low deep teal curved horizon/dune, with three short rounded muted gold rays above the sun and a quiet dusty mauve band just behind the horizon. Sun lower half hidden. Matte clean dimensional forms, a compact grouped sunset symbol, clearly distinct from the full raised afternoon sun. No cloud piles, no layers of elaborate scenery, no sparkles.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-75a04edb-d4f2-4f2e-9588-333ab077ee8c.png",
+      "workspaceOriginal": "output/imagegen/prayer-symbols-20261015/maghrib.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-mini-maghrib-v2.webp",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-bb2c5b34-fc11-4d1b-abf0-e99acf4db78c.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ]
+    },
+    {
+      "id": "isha",
+      "prompt": "Use case: stylized-concept. Create ONE isolated prayer-time icon for the mature Nur Islam app. Image 1 is our approved Dhuhr sun: PRIMARY STYLE reference. Match its simple rounded 3D shapes, matte satin materials, broad gentle shading, restrained warm gold tones and compact readable silhouette. Image 2 is our own prayer rug: supporting teal/ivory/gold palette and smooth material reference. A cohesive adult editorial app illustration, clearly readable at 32-44px, not photorealistic or childish. No face, no text, no Arabic, no watermark, no UI or card, no ornate rings or filigree, no chrome, no glossy gems, no sparkles or detached cast shadow, no glow halo. Center one compact symbol/group occupying about 78% of square canvas with truly TRANSPARENT background and clean alpha edges. ISHA / night: one elegant generously open crescent moon, warm ivory face and very restrained soft muted gold on its dimensional side edge, nearly front-on with a slight dimensional tilt. One small simple warm-ivory four-point star nestled in the open upper-right side of the crescent. No dune or horizon for this night symbol. Matte satin shading, no metallic rings, no glossy chrome, no extra twinkles, no blue glow. Clear single compact moon-and-star silhouette.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-6e9249a7-689e-4511-91a2-d3158135520e.png",
+      "workspaceOriginal": "output/imagegen/prayer-symbols-20261015/isha.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-mini-isha-v2.webp",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-bb2c5b34-fc11-4d1b-abf0-e99acf4db78c.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ]
+    }
+  ]
+}

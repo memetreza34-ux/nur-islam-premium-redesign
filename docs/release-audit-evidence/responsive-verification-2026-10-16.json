@@ -1,0 +1,1265 @@
+{
+  "date": "2026-10-16",
+  "viewports": [
+    [
+      320,
+      740
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1024,
+      768
+    ]
+  ],
+  "matrix": {
+    "surfaces_per_viewport": 50,
+    "surface_checks": 250,
+    "passed_tests": 5,
+    "measurement_directory": "responsive-final-2026-10-16"
+  },
+  "onboarding": {
+    "slides": 3,
+    "viewports": 3,
+    "passed_tests": 3
+  },
+  "release_check": {
+    "status": "passed",
+    "unit_tests": 1047,
+    "unit_test_files": 59,
+    "gzip_kb": 508,
+    "budget_kb": 511
+  },
+  "browser_suite": {
+    "unique_passed": 293,
+    "total_defined": 295,
+    "completed_in_stages": true,
+    "runs": [
+      {
+        "log": "/tmp/nur-responsive-suite-20261016.log",
+        "confirmed_in_run": 236,
+        "not_passed_in_run": 12
+      },
+      {
+        "log": "/tmp/nur-responsive-completion-20261016.log",
+        "confirmed_in_run": 14,
+        "not_passed_in_run": 2
+      },
+      {
+        "log": "/tmp/nur-responsive-matrix-20261016.log",
+        "confirmed_in_run": 3,
+        "not_passed_in_run": 5
+      },
+      {
+        "log": "/tmp/nur-responsive-matrix-final-20261016.log",
+        "confirmed_in_run": 5,
+        "not_passed_in_run": 0
+      },
+      {
+        "log": "/tmp/nur-responsive-remaining-20261016.log",
+        "confirmed_in_run": 50,
+        "not_passed_in_run": 1
+      }
+    ],
+    "scroll_regression_log": "/tmp/nur-scroll-final-20261016.log",
+    "excluded_opt_in_utilities": [
+      {
+        "file": "capture-screens.spec.ts",
+        "title": "captures every primary surface"
+      },
+      {
+        "file": "style-snapshot.spec.ts",
+        "title": "snapshots the computed styles"
+      }
+    ]
+  },
+  "physical_devices_verified": false,
+  "limitations": [
+    "Physical device keyboards, installation and sensor dialogs were not tested.",
+    "Seven-column calendars on 320px phones retain narrow cells with a 44px height."
+  ],
+  "confirmed_tests": [
+    {
+      "file": "compact-ui-polish.spec.ts",
+      "title": "compact portrait keeps Home useful and Notes clear, readable and balanced"
+    },
+    {
+      "file": "compact-ui-polish.spec.ts",
+      "title": "light calendar keeps navigation labels and day numbers comfortably readable"
+    },
+    {
+      "file": "content-integrity.spec.ts",
+      "title": "content corrections stay visible at 1280px"
+    },
+    {
+      "file": "content-integrity.spec.ts",
+      "title": "content corrections stay visible at 320px"
+    },
+    {
+      "file": "content-integrity.spec.ts",
+      "title": "content corrections stay visible at 768px"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "Home quiz keeps its title and survives browser Forward and reload"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "browser Back and Forward preserve the synthetic Quran parent from Home"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "closes a dialog with the Escape key"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "counts a dhikr and keeps it across a reload"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "keeps saved Hadith accessible after removing the daily selection"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "keeps the Quran reader inside the Quran hierarchy when opened from Home"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "offers the essential prayer companions and opens each destination"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "opens Home with a prayer schedule and an oasis daily Ayah"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "opens prayer learning directly and returns to the prayer screen"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "opens the Quran reader and shows Arabic verses"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "primary navigation resets the app-owned browser stack"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "reaches every primary tab"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "reads a long surah from the local bundle instead of the network"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "reports no console errors while navigating"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "secondary devotional screens keep the correct primary tab active"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "shows the Islamic calendar below prayer times and opens the full planner"
+    },
+    {
+      "file": "core-flows.spec.ts",
+      "title": "shows the imprint and privacy screen"
+    },
+    {
+      "file": "dhikr-source-integrity.spec.ts",
+      "title": "all eighteen Dhikr texts and source qualifications are readable at 1280px"
+    },
+    {
+      "file": "dhikr-source-integrity.spec.ts",
+      "title": "all eighteen Dhikr texts and source qualifications are readable at 320px"
+    },
+    {
+      "file": "dhikr-source-integrity.spec.ts",
+      "title": "all eighteen Dhikr texts and source qualifications are readable at 768px"
+    },
+    {
+      "file": "dhikr-source-integrity.spec.ts",
+      "title": "blocked storage keeps counts in the session without claiming device persistence"
+    },
+    {
+      "file": "dhikr-source-integrity.spec.ts",
+      "title": "manual step selection survives counting and reload with actual saved data"
+    },
+    {
+      "file": "dua-source-integrity.spec.ts",
+      "title": "Dua excerpts and exact references survive detail and sharing at 1280px"
+    },
+    {
+      "file": "dua-source-integrity.spec.ts",
+      "title": "Dua excerpts and exact references survive detail and sharing at 320px"
+    },
+    {
+      "file": "dua-source-integrity.spec.ts",
+      "title": "Dua excerpts and exact references survive detail and sharing at 768px"
+    },
+    {
+      "file": "dua-source-integrity.spec.ts",
+      "title": "Dua favorite survives reload only after actual storage succeeds"
+    },
+    {
+      "file": "dua-source-integrity.spec.ts",
+      "title": "blocked persistence does not fabricate saved favorites or reading progress"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Duas: a search with no matches says so"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Kalender: a day with no entries still renders its day view"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Moscheen: offline reports the failure instead of an empty list"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Namen: a search with no matches says so"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Notizen: an empty list says so rather than showing a bare editor"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Quran: a search with no matches says so"
+    },
+    {
+      "file": "empty-states.spec.ts",
+      "title": "Sammlung: an untouched app says the collection is waiting"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all faith lessons retain their source context at 1280px"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all faith lessons retain their source context at 320px"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all faith lessons retain their source context at 768px"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all pillars lessons retain their source context at 1280px"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all pillars lessons retain their source context at 320px"
+    },
+    {
+      "file": "faith-learning-source-integrity.spec.ts",
+      "title": "all pillars lessons retain their source context at 768px"
+    },
+    {
+      "file": "foundation-supplements.spec.ts",
+      "title": "Hadith search and local favorites remain functional"
+    },
+    {
+      "file": "foundation-supplements.spec.ts",
+      "title": "four foundation additions have readable chapters and restore the grid at 320px"
+    },
+    {
+      "file": "foundation-supplements.spec.ts",
+      "title": "four foundation additions have readable chapters and restore the grid at 768px"
+    },
+    {
+      "file": "foundation-supplements.spec.ts",
+      "title": "light reading theme retains readable contrast and full-width learning rows"
+    },
+    {
+      "file": "frame-guard.spec.ts",
+      "title": "refuses to render inside a frame owned by another site"
+    },
+    {
+      "file": "frame-guard.spec.ts",
+      "title": "still renders inside a same-origin frame"
+    },
+    {
+      "file": "hadith-source-integrity.spec.ts",
+      "title": "Hadith grading attribution survives library, saved detail and sharing at 1280px"
+    },
+    {
+      "file": "hadith-source-integrity.spec.ts",
+      "title": "Hadith grading attribution survives library, saved detail and sharing at 320px"
+    },
+    {
+      "file": "hadith-source-integrity.spec.ts",
+      "title": "Hadith grading attribution survives library, saved detail and sharing at 768px"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "Notizen: tapping the active tab returns to the hub"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "Notizen: the system back button returns to the hub"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "Nur Cloud: tapping the active tab returns to the hub"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "Nur Cloud: the system back button returns to the hub"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "a service feature opens the same way from the hub as from Home"
+    },
+    {
+      "file": "hub-navigation.spec.ts",
+      "title": "the complete directory exposes every main, prayer and learning area without duplicating services"
+    },
+    {
+      "file": "keyboard.spec.ts",
+      "title": "a dialog takes focus, holds it, and gives it back on Escape"
+    },
+    {
+      "file": "keyboard.spec.ts",
+      "title": "every primary tab can be reached and opened with the keyboard"
+    },
+    {
+      "file": "keyboard.spec.ts",
+      "title": "the focused control is visible"
+    },
+    {
+      "file": "layout-audit.spec.ts",
+      "title": "layout holds at 320px"
+    },
+    {
+      "file": "layout-audit.spec.ts",
+      "title": "layout holds at 375px"
+    },
+    {
+      "file": "layout-audit.spec.ts",
+      "title": "layout holds at 430px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character akhlaq-patience, akhlaq-mercy preserves content and sources at 1280px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character akhlaq-patience, akhlaq-mercy preserves content and sources at 320px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character akhlaq-patience, akhlaq-mercy preserves content and sources at 768px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character character-overview, akhlaq-sincerity preserves content and sources at 1280px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character character-overview, akhlaq-sincerity preserves content and sources at 320px"
+    },
+    {
+      "file": "learning-character-source-integrity.spec.ts",
+      "title": "character character-overview, akhlaq-sincerity preserves content and sources at 768px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community akhlaq-rights, community-money preserves meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community akhlaq-rights, community-money preserves meanings and sources at 320px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community akhlaq-rights, community-money preserves meanings and sources at 768px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-neighbors, community-speech preserves meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-neighbors, community-speech preserves meanings and sources at 320px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-neighbors, community-speech preserves meanings and sources at 768px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-overview, community-parents preserves meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-overview, community-parents preserves meanings and sources at 320px"
+    },
+    {
+      "file": "learning-community-source-integrity.spec.ts",
+      "title": "community community-overview, community-parents preserves meanings and sources at 768px"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "back from a knowledge category restores the exact learning overview position"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "every foundation course starts with a clear introduction and named sections"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "every important term follows the same definition and example structure"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "every pillar has its own course-plan lesson"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "knowledge course has a readable hierarchy at 320px"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "knowledge course has a readable hierarchy at 390px"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "knowledge course has a readable hierarchy at 768px"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "lesson selection returns to the course start and exposes the complete title"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "the foundations grid opens the complete 99 Names experience"
+    },
+    {
+      "file": "learning-course-structure.spec.ts",
+      "title": "the prophets category contains 25 complete Quran-grounded course plans"
+    },
+    {
+      "file": "learning-devotion-source-integrity.spec.ts",
+      "title": "four devotion lessons retain their meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-devotion-source-integrity.spec.ts",
+      "title": "four devotion lessons retain their meanings and sources at 320px"
+    },
+    {
+      "file": "learning-devotion-source-integrity.spec.ts",
+      "title": "four devotion lessons retain their meanings and sources at 768px"
+    },
+    {
+      "file": "learning-intro-art.spec.ts",
+      "title": "illustration failure leaves a readable intro and working course"
+    },
+    {
+      "file": "learning-intro-art.spec.ts",
+      "title": "learning art has its own space and course opens at 320px"
+    },
+    {
+      "file": "learning-intro-art.spec.ts",
+      "title": "learning art has its own space and course opens at 390px"
+    },
+    {
+      "file": "learning-intro-art.spec.ts",
+      "title": "learning art has its own space and course opens at 768px"
+    },
+    {
+      "file": "learning-intro-art.spec.ts",
+      "title": "learning overview follows three readable chapters without horizontal overflow"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice UI references match Wudu disclaimer and prayer settings at 1280px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice UI references match Wudu disclaimer and prayer settings at 320px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice UI references match Wudu disclaimer and prayer settings at 768px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-asking retains meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-asking retains meanings and sources at 320px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-asking retains meanings and sources at 768px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-ghusl-tayammum, fiqh-prayer-time retains meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-ghusl-tayammum, fiqh-prayer-time retains meanings and sources at 320px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice fiqh-ghusl-tayammum, fiqh-prayer-time retains meanings and sources at 768px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice practice-overview, fiqh-purity retains meanings and sources at 1280px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice practice-overview, fiqh-purity retains meanings and sources at 320px"
+    },
+    {
+      "file": "learning-practice-source-integrity.spec.ts",
+      "title": "practice practice-overview, fiqh-purity retains meanings and sources at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with discard at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with discard at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with discard at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with malformed at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with malformed at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with malformed at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with readback at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with readback at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with readback at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with throw at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with throw at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion is not falsely stored with throw at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion, resume and reset survive reload at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion, resume and reset survive reload at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "completion, resume and reset survive reload at 768px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "failed reset is preserved and its toast fits at 1280px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "failed reset is preserved and its toast fits at 320px"
+    },
+    {
+      "file": "learning-progress-storage.spec.ts",
+      "title": "failed reset is preserved and its toast fits at 768px"
+    },
+    {
+      "file": "learning-seerah-source-integrity.spec.ts",
+      "title": "seerah prophet-overview, seerah-revelation preserves meanings and sources at 320px"
+    },
+    {
+      "file": "learning-seerah-source-integrity.spec.ts",
+      "title": "seerah prophet-overview, seerah-revelation preserves meanings and sources at 768px"
+    },
+    {
+      "file": "learning-seerah-source-integrity.spec.ts",
+      "title": "seerah seerah-hijra, seerah-example preserves meanings and sources at 320px"
+    },
+    {
+      "file": "learning-seerah-source-integrity.spec.ts",
+      "title": "seerah seerah-hijra, seerah-example preserves meanings and sources at 768px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 1 preserves text, context and sharing at 1280px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 1 preserves text, context and sharing at 320px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 1 preserves text, context and sharing at 768px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 2 preserves text, context and sharing at 1280px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 2 preserves text, context and sharing at 320px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 2 preserves text, context and sharing at 768px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 3 preserves text, context and sharing at 1280px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 3 preserves text, context and sharing at 320px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 3 preserves text, context and sharing at 768px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 4 preserves text, context and sharing at 1280px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 4 preserves text, context and sharing at 320px"
+    },
+    {
+      "file": "learning-terminology-source-integrity.spec.ts",
+      "title": "terminology group 4 preserves text, context and sharing at 768px"
+    },
+    {
+      "file": "light-contrast.spec.ts",
+      "title": "no unreadable text in the light theme"
+    },
+    {
+      "file": "modal-centering.spec.ts",
+      "title": "centers prayer, profile and calendar dialogs clear of the bottom navigation"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names do not overwrite corrupt learning data or ambiguous legacy favorites at 1280px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names do not overwrite corrupt learning data or ambiguous legacy favorites at 320px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names do not overwrite corrupt learning data or ambiguous legacy favorites at 768px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve evidence boundaries and readable dialogs at 1280px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve evidence boundaries and readable dialogs at 320px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve evidence boundaries and readable dialogs at 768px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve stored marks and disclose failed writes at 1280px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve stored marks and disclose failed writes at 320px"
+    },
+    {
+      "file": "names-source-integrity.spec.ts",
+      "title": "Names preserve stored marks and disclose failed writes at 768px"
+    },
+    {
+      "file": "no-assistant.spec.ts",
+      "title": "Home and More offer no assistant; the fasting calendar still works"
+    },
+    {
+      "file": "no-assistant.spec.ts",
+      "title": "a legacy assistant URL cannot open a chat"
+    },
+    {
+      "file": "no-assistant.spec.ts",
+      "title": "an old assistant history entry returns safely to Home after reload"
+    },
+    {
+      "file": "offline.spec.ts",
+      "title": "opens a bundled surah with no connection"
+    },
+    {
+      "file": "offline.spec.ts",
+      "title": "recovers once the connection returns"
+    },
+    {
+      "file": "offline.spec.ts",
+      "title": "reports a failure instead of inventing mosques when offline"
+    },
+    {
+      "file": "offline.spec.ts",
+      "title": "still shows a full prayer schedule with no connection"
+    },
+    {
+      "file": "prayer-calendar.spec.ts",
+      "title": "a selected prayer-calendar day keeps its note through reload, editing and deletion"
+    },
+    {
+      "file": "prayer-calendar.spec.ts",
+      "title": "prayer calendar stays readable at 320px"
+    },
+    {
+      "file": "prayer-calendar.spec.ts",
+      "title": "prayer calendar stays readable at 390px"
+    },
+    {
+      "file": "prayer-calendar.spec.ts",
+      "title": "prayer calendar stays readable at 768px"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "Abendstimmung: same landscape on Home and Prayer, readable on mobile"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "Morgendämmerung: same landscape on Home and Prayer, readable on mobile"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "Nachmittagslicht: same landscape on Home and Prayer, readable on mobile"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "Nachthimmel: same landscape on Home and Prayer, readable on mobile"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "Tageslicht: same landscape on Home and Prayer, readable on mobile"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "after Isha and midnight the scene stays dark while Fajr is next"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "open prayer layout still marks and unmarks the next prayer"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "running countdown changes the image at a prayer boundary without reload"
+    },
+    {
+      "file": "prayer-landscapes.spec.ts",
+      "title": "the background uses the timetable timezone on both pages"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "a missing generated posture keeps the labelled fallback and wording usable"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "all five prayers have their correct rakah count and time artwork"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "compared prayer wording, sources and limits are readable at 1280px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "compared prayer wording, sources and limits are readable at 320px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "compared prayer wording, sources and limits are readable at 768px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "posture, pronunciation and step chooser stay separate at 1280px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "posture, pronunciation and step chooser stay separate at 320px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "posture, pronunciation and step chooser stay separate at 390px"
+    },
+    {
+      "file": "prayer-learning-course.spec.ts",
+      "title": "posture, pronunciation and step chooser stay separate at 768px"
+    },
+    {
+      "file": "prayer-miniatures.spec.ts",
+      "title": "failed miniature falls back without losing the prayer or controls"
+    },
+    {
+      "file": "prayer-miniatures.spec.ts",
+      "title": "six distinct miniatures without overlap at 320px"
+    },
+    {
+      "file": "prayer-miniatures.spec.ts",
+      "title": "six distinct miniatures without overlap at 390px"
+    },
+    {
+      "file": "prayer-miniatures.spec.ts",
+      "title": "six distinct miniatures without overlap at 768px"
+    },
+    {
+      "file": "prayer-month-plan.spec.ts",
+      "title": "prayer times support adjacent days and a compact monthly plan"
+    },
+    {
+      "file": "prayer-month-plan.spec.ts",
+      "title": "rejects a falsely dated month and recovers without fabricated rows at 1280px"
+    },
+    {
+      "file": "prayer-month-plan.spec.ts",
+      "title": "rejects a falsely dated month and recovers without fabricated rows at 320px"
+    },
+    {
+      "file": "prayer-month-plan.spec.ts",
+      "title": "rejects a falsely dated month and recovers without fabricated rows at 768px"
+    },
+    {
+      "file": "premium-local.spec.ts",
+      "title": "Premium entry sits in the More screen flow without covering shortcuts"
+    },
+    {
+      "file": "premium-local.spec.ts",
+      "title": "creates a local routine and persists its daily completion"
+    },
+    {
+      "file": "premium-local.spec.ts",
+      "title": "opens Premium from the compact Home overview and renders statistics without an update loop"
+    },
+    {
+      "file": "primary-tab-headers.spec.ts",
+      "title": "primary tabs have no redundant Back control and retain their header actions"
+    },
+    {
+      "file": "primary-tab-headers.spec.ts",
+      "title": "reader and prayer course retain their Back navigation"
+    },
+    {
+      "file": "profile-dialog-close.spec.ts",
+      "title": "About X receives pointer clicks, including after scrolling on browser-panel"
+    },
+    {
+      "file": "profile-dialog-close.spec.ts",
+      "title": "About X receives pointer clicks, including after scrolling on small-phone"
+    },
+    {
+      "file": "profile-dialog-close.spec.ts",
+      "title": "About X receives pointer clicks, including after scrolling on tablet"
+    },
+    {
+      "file": "profile-dialog-close.spec.ts",
+      "title": "profile dialogs retain X, Enter, Escape and Done closing"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "WebKit compass never confirms alignment with poor or invalid accuracy"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "denied permission does not simulate compass motion"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "dial motion respects reduced motion: false"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "dial motion respects reduced motion: true"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "flatness guidance responds to device tilt"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "live direction, alignment and shortest rotation across north"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "location update and vector compass work with all raster artwork unavailable"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "open Qibla dial is readable at 320px"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "open Qibla dial is readable at 390px"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "open Qibla dial is readable at 768px"
+    },
+    {
+      "file": "qibla-compass.spec.ts",
+      "title": "relative orientation is not presented as a north-referenced heading"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "daily Ayah keeps a quiet oasis backdrop and remains readable at 320px"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "daily Ayah keeps a quiet oasis backdrop and remains readable at 390px"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "daily Ayah keeps a quiet oasis backdrop and remains readable at 768px"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "missing book image falls back without affecting the reading action"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "new reader has no invented progress; search and favorites still work"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "open Quran arch and miniature stay readable at 320px"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "open Quran arch and miniature stay readable at 390px"
+    },
+    {
+      "file": "quran-open-design.spec.ts",
+      "title": "open Quran arch and miniature stay readable at 768px"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "confirmed bookmarks and markers survive reopening at 1280px"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "confirmed bookmarks and markers survive reopening at 320px"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "confirmed bookmarks and markers survive reopening at 768px"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 1280px (discard)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 1280px (throw)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 320px (discard)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 320px (throw)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 768px (discard)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "failed reader writes stay honest at 768px (throw)"
+    },
+    {
+      "file": "quran-reader-storage.spec.ts",
+      "title": "unreadable bookmark data and invalid saved markers are not cleared on opening"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "a misidentified local surah fails honestly and the retry loads a corrected file"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "a wrong translated edition never appears under the Bubenheim attribution"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "loading notice separates local Arabic from pending supporting requests"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "network reading layers do not claim browser storage when cache writes fail"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "openings stay separate from numbered, copied and shared verses at 1280px"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "openings stay separate from numbered, copied and shared verses at 320px"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "openings stay separate from numbered, copied and shared verses at 768px"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "unavailable supporting texts keep Arabic and truthful notices at 1280px"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "unavailable supporting texts keep Arabic and truthful notices at 320px"
+    },
+    {
+      "file": "quran-source-integrity.spec.ts",
+      "title": "unavailable supporting texts keep Arabic and truthful notices at 768px"
+    },
+    {
+      "file": "reduced-motion.spec.ts",
+      "title": "animations stop when the system asks for reduced motion"
+    },
+    {
+      "file": "release-copy.spec.ts",
+      "title": "Duas keep Arabic, pronunciation, meaning and source without migration notices"
+    },
+    {
+      "file": "release-copy.spec.ts",
+      "title": "all 99 Names remain available and explain the limits of the German meaning"
+    },
+    {
+      "file": "release-copy.spec.ts",
+      "title": "imprint and license limitations remain visible instead of implying approval"
+    },
+    {
+      "file": "release-copy.spec.ts",
+      "title": "learning grid stays complete without the editorial footer"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "complete app adapts to 1024x768"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "complete app adapts to 320x740"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "complete app adapts to 390x844"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "complete app adapts to 768x1024"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "complete app adapts to 844x390"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "onboarding fits 320x740"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "onboarding fits 768x1024"
+    },
+    {
+      "file": "responsive-app.spec.ts",
+      "title": "onboarding fits 844x390"
+    },
+    {
+      "file": "scroll-restoration.spec.ts",
+      "title": "a screen opened for the first time starts at its top"
+    },
+    {
+      "file": "scroll-restoration.spec.ts",
+      "title": "returning from a card lands where the reader left, not at the top"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "all five Ayahs fit a narrow phone, including the longest wording"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "missing decorative images leave readable content and do not delay startup"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "opening fits desktop and keeps daily content on Home"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "opening fits landscape and keeps daily content on Home"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "opening fits phone and keeps daily content on Home"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "opening fits small-phone and keeps daily content on Home"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "opening fits tablet and keeps daily content on Home"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "reduced motion still opens the app promptly"
+    },
+    {
+      "file": "splash-daily-content.spec.ts",
+      "title": "unavailable times do not prevent startup or show a fabricated prayer"
+    },
+    {
+      "file": "tab-switching.spec.ts",
+      "title": "a screen stays visible when tabs are switched faster than the animation"
+    },
+    {
+      "file": "tab-switching.spec.ts",
+      "title": "every primary tab settles visible on its own"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide discard write cannot claim completion at 1280px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide discard write cannot claim completion at 320px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide discard write cannot claim completion at 768px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide mount, explicit save, reload and cross-tab completion at 1280px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide mount, explicit save, reload and cross-tab completion at 320px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide mount, explicit save, reload and cross-tab completion at 768px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide throw write cannot claim completion at 1280px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide throw write cannot claim completion at 320px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "guide throw write cannot claim completion at 768px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "unknown guide data survives viewing, selection and completion at 1280px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "unknown guide data survives viewing, selection and completion at 320px"
+    },
+    {
+      "file": "worship-guide-storage.spec.ts",
+      "title": "unknown guide data survives viewing, selection and completion at 768px"
+    },
+    {
+      "file": "worship-source-integrity.spec.ts",
+      "title": "each selected practice step keeps its own source at 320px"
+    },
+    {
+      "file": "worship-source-integrity.spec.ts",
+      "title": "each selected practice step keeps its own source at 768px"
+    },
+    {
+      "file": "wudu-intro-art.spec.ts",
+      "title": "Wudu introduction is readable without overlapping artwork at 320px"
+    },
+    {
+      "file": "wudu-intro-art.spec.ts",
+      "title": "Wudu introduction is readable without overlapping artwork at 390px"
+    },
+    {
+      "file": "wudu-intro-art.spec.ts",
+      "title": "Wudu introduction is readable without overlapping artwork at 768px"
+    },
+    {
+      "file": "wudu-intro-art.spec.ts",
+      "title": "Wudu progress survives switching guide tabs"
+    },
+    {
+      "file": "wudu-intro-art.spec.ts",
+      "title": "missing Wudu artwork keeps readable text and working steps"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "Wudu lesson separates image, instructions and pronunciation at 320px"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "Wudu lesson separates image, instructions and pronunciation at 390px"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "Wudu lesson separates image, instructions and pronunciation at 768px"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "all eight cartoon images load while previous and next keep one active step"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "step chooser is frameless and closes after selection at 320px"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "step chooser is frameless and closes after selection at 768px"
+    },
+    {
+      "file": "wudu-lesson.spec.ts",
+      "title": "step overview selection survives reload and missing image keeps the text usable"
+    }
+  ]
+}

@@ -9,6 +9,7 @@ const files = new Map(await Promise.all([
   ['homeContent', 'src/styles/home-content.css'],
   ['prayer', 'src/styles/prayer.css'],
   ['prayerList', 'src/styles/prayer-list.css'],
+  ['prayerLayout', 'src/styles/nur-design-system.css'],
   ['calendar', 'src/styles/calendar.css'],
   ['learn', 'src/styles/learn.css'],
   ['more', 'src/styles/more.css'],
@@ -36,9 +37,7 @@ requireTokens('homeHero', [
   'border-radius: 18px',
 ]);
 requireTokens('homeContent', [
-  '.quick-card {',
   'border-radius: 28px',
-  'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
 ]);
 // The arch carries the next prayer and the day counter, so the tracker card
 // and the panel's inner parts are gone; the panel itself stays as its frame.
@@ -49,11 +48,19 @@ requireTokens('prayer', [
   'linear-gradient(145deg,#0d5743 0%,#07372b 45%,#00120f 100%)',
 ]);
 requireTokens('prayerList', [
-  '.prayer-time-row{',
-  'rgba(13,87,67,.74)',
-  'rgba(0,27,22,.82)',
   '.prayer-alert,.prayer-complete{',
   'border-radius:18px',
+]);
+requireTokens('prayerLayout', [
+  '.topic-card {',
+  '.topic-card .topic-card__title {',
+  '.topic-card .topic-card__description {',
+  '.prayer-schedule-list {',
+  'grid-template-columns: 40px minmax(0, 1fr) auto;',
+  '--tap-target: var(--ds-tap-min)',
+  'grid-column: 2; grid-row: 2;',
+  'grid-column: 3; grid-row: 1 / 3;',
+  '.prayer-time-row__backdrop {',
 ]);
 requireTokens('calendar', [
   '.calendar-page-header{',

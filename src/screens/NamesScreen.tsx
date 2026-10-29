@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookmarkCheck,
@@ -76,8 +79,8 @@ function writeSet(key: string, current: NameSelection, values: Set<string>): Nam
 
 export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => void; initialNameId?: string | null }) {
   const initialName = initialNameId ? NAMES_OF_ALLAH.find((entry) => String(entry.id) === initialNameId) ?? null : null;
-  const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState<NameFilter>('all');
+  const [query, setQuery] = useScreenState('names.query', '');
+  const [filter, setFilter] = useScreenState<NameFilter>('names.filter', 'all');
   const [favoriteSelection, setFavorites] = useState(() => migrateNameSet('nur_name_favorites'));
   const [learnedSelection, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
   const favorites = favoriteSelection.values;
@@ -157,8 +160,8 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
         <span className="hero-pill">Asma’ul Husna</span>
         <h2>Alle 99 Namen<br />an einem Ort.</h2>
         <p>Suche, favorisiere und markiere Namen, die du bereits gelernt hast.</p>
-        <p>Verbreitete traditionelle Lernliste. Die feste Auswahl und einzelne Namensformen werden unterschiedlich eingeordnet; nicht jeder Eintrag ist bereits mit einem eigenen Beleg geprüft.</p>
-        <p className="reference-name-source"><a href="https://sunnah.com/bukhari:7392" target="_blank" rel="noopener noreferrer">Bukhari 7392</a> und <a href="https://sunnah.com/muslim:2677a" target="_blank" rel="noopener noreferrer">Muslim 2677a</a> erwähnen 99 Namen, zählen sie aber nicht einzeln auf. Die Aufzählung in <a href="https://sunnah.com/tirmidhi:3507" target="_blank" rel="noopener noreferrer">Tirmidhi 3507</a> wird in der verlinkten Ausgabe von Darussalam als Daʿif eingestuft; at-Tirmidhi bezeichnet den Bericht als Gharib. Daraus folgt keine pauschale Ablehnung der einzeln anderweitig belegten Namen.</p>
+        <small>Traditionelle Lernliste</small>
+        <SourceInfo title="Quellen zur Namensliste"><p>Verbreitete traditionelle Lernliste. Die feste Auswahl und einzelne Namensformen werden unterschiedlich eingeordnet; nicht jeder Eintrag ist bereits mit einem eigenen Beleg geprüft.</p><p className="reference-name-source"><a href="https://sunnah.com/bukhari:7392" target="_blank" rel="noopener noreferrer">Bukhari 7392</a> und <a href="https://sunnah.com/muslim:2677a" target="_blank" rel="noopener noreferrer">Muslim 2677a</a> erwähnen 99 Namen, zählen sie aber nicht einzeln auf. Die Aufzählung in <a href="https://sunnah.com/tirmidhi:3507" target="_blank" rel="noopener noreferrer">Tirmidhi 3507</a> wird in der verlinkten Ausgabe von Darussalam als Daʿif eingestuft; at-Tirmidhi bezeichnet den Bericht als Gharib. Daraus folgt keine pauschale Ablehnung der einzeln anderweitig belegten Namen.</p></SourceInfo>
       </section>
 
       {storageIssues.length ? <div className="reference-name-modal__notice" role="status"><ShieldCheck size={16} /><span>{storageIssues.join(' ')}</span></div> : null}
@@ -207,17 +210,15 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
-            <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">Name {selected.id} von 99</span>
+            <motion.section {...nameDialog.props} className="reference-name-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={selected.latin} subtitle={`Name ${selected.id} von 99`} onClose={closeName} />
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
-              <h2>{selected.latin}</h2>
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
               {storageIssues.length ? <div className="reference-name-modal__notice" role="status"><ShieldCheck size={16} /><span>{storageIssues.join(' ')}</span></div> : null}
               <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Die deutsche Bedeutungsangabe ist eine kurze Erklärung. Sie gibt nicht alle Bedeutungsnuancen des arabischen Namens wieder.</span></div>
-              <div className="reference-name-modal__notice reference-name-source">
+              <SourceInfo title={`Quellen zu ${selected.latin}`}><div className="reference-name-modal__notice reference-name-source">
                 <span>{selectedEvidence ? <>Dokumentierte Fundstelle: {selectedEvidence.links.map((link, index) => <span key={link.url}>{index ? ' · ' : ''}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}<br />{selectedEvidence.note}</> : <>Für diese Namensform ist im aktuellen Prüfbestand keine direkte Einzelfundstelle dokumentiert. Das ist kein Urteil, dass die Bezeichnung falsch sei. Die traditionelle Listenform und mögliche Ableitungen sind gesondert zu prüfen.{relatedEvidence ? <><br />Verwandter Beleg, kein direkter Namensbeleg: <a href={relatedEvidence.url} target="_blank" rel="noopener noreferrer">{relatedEvidence.label}</a><br />{relatedEvidence.note}</> : null}</>}<br />Die Umschrift ist eine angenäherte Lesehilfe. Eine Fundstelle allein bestätigt nicht alle Bedeutungsnuancen oder die gesamte Lernliste.</span>
-              </div>
+              </div></SourceInfo>
               <div className="reference-name-modal__actions">
                 <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>

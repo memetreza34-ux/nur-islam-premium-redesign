@@ -66,7 +66,7 @@ const BUDGET = {
   // replaced. Without that sweep this number would be ~2483.
   // The mosque-finder hero and restored responsive surfaces account for the
   // measured increase. Their override debt is recorded, not treated as solved.
-  importantRules: 2330,
+  importantRules: 2045,
   // Raised three times now, each for surface that did not exist: the prayer
   // sequence (Arabic wording, transliteration and German meaning for every
   // spoken step), the calendar's occasions, which now explain what a day is and
@@ -216,7 +216,23 @@ const BUDGET = {
     // mosque-finder surfaces. Keep this exact cap until consolidation reduces
     // it; the compiled transfer size is guarded separately by bundle:check.
     // Opening layout and image-dependent text contrast add 1,094 bytes in the existing owner.
-    totalBytes: 910_912,
+    // Six Home shortcut rows replace the previous tile/mobile layouts in the same CSS owner; -180 bytes.
+    // Prayer companion rows replace tile and mobile variants in their existing CSS owner; -2700 bytes.
+    // Learning rows and full-width prayer landscapes consolidate the existing library CSS owner; -11542 bytes.
+    // Approved startup camera motion replaces the old daylight text override in the existing owner.
+    // Daily Ayah uses the full text width and shared typography in the existing owner.
+    // Requested Ayah background uses an isolated image layer in the existing card owner.
+    // Shared source-info control and native dialog in the existing learning owner; no new stylesheet or override.
+    // Stacked prayer labels and quiet landscape rows consolidate the mobile
+    // layout; compact completion artwork replaces the old rings and stat cards.
+    // Net saving from 881,647: 947 bytes.
+    // Quran catalogue drops repeated labels, length bars, and conflicting
+    // narrow-screen clipping rules: -2,101 bytes and -10 important rules.
+    // One shared pointer treatment replaces component hover/press rules:
+    // -15,084 bytes and -20 important rules.
+    // Shared topic cards replace 277 conflicting selectors across the existing owners.
+    // Reading lessons retire completion dialogs and their counter styles.
+    totalBytes: 786_952,
 };
 
 const names = (await readdir(styleDir)).filter((name) => name.endsWith('.css'));

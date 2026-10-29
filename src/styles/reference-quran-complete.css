@@ -3,57 +3,18 @@
   gap: 14px;
 }
 
-.reference-quran-library-status {
-  display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) auto;
-  align-items: center;
-  gap: 10px;
-  padding: 13px;
-  border: 1px solid rgba(214, 175, 55, .2);
-  border-radius: 17px;
-  background: linear-gradient(145deg, rgba(15, 53, 42, .93), rgba(4, 24, 19, .98));
-}
+.quran-focus .quran-reading-arch { --arch-responsive-height: 250px; max-width: 420px; margin-inline: auto; }
+.quran-focus .quran-reading-arch .ds-arch__content { padding: 42px 24px 24px; text-align: center; }
+.quran-focus .quran-reading-arch .ds-arch__veil { opacity: .36; }
+.quran-focus .quran-reading-arch .ds-arch__name { margin-top: 14px; font-size: 20px; }
+.quran-focus .quran-reading-arch .ds-arch__value--display { margin-top: 8px; font-size: clamp(28px, 8vw, 36px); overflow-wrap: anywhere; }
+.quran-focus .quran-reading-arch .ds-arch__meta { margin-top: 16px; font-size: 14px; }
+.quran-focus > .quran-resume { width: 100%; max-width: 420px; justify-self: center; }
 
-.reference-quran-library-status > span:first-child {
-  display: grid;
-  width: 40px;
-  height: 40px;
-  place-items: center;
-  border: 1px solid rgba(232, 199, 122, .25);
-  border-radius: 13px;
-  color: var(--gold-bright);
-  background: rgba(214, 175, 55, .07);
-}
+.reference-quran-screen > .reference-input-search { grid-template-columns: 22px minmax(0, 1fr); }
 
-.reference-quran-library-status > div {
-  display: grid;
-  min-width: 0;
-  gap: 2px;
-}
-
-.reference-quran-library-status small,
-.reference-quran-library-status em {
-  color: var(--muted-green);
-  font-size: .48rem;
-  font-style: normal;
-  line-height: 1.45;
-}
-
-.reference-quran-library-status strong {
-  color: var(--cream-strong);
-  font-size: .68rem;
-}
-
-.reference-quran-library-status__count {
-  color: var(--gold-bright);
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.05rem;
-  font-weight: 700;
-}
-
-.reference-quran-filter-tabs button {
-  flex: 0 0 auto;
-}
+.reference-quran-screen .reference-quran-filter-tabs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.reference-quran-screen .reference-quran-filter-tabs button { min-width: 0; }
 
 .reference-quran-catalog {
   display: grid;
@@ -67,15 +28,10 @@
   padding: 0 3px;
 }
 
-.reference-quran-results span {
-  color: var(--cream-strong);
-  font-size: .62rem;
-  font-weight: 700;
-}
 
 .reference-quran-results small {
   color: var(--muted-green);
-  font-size: .48rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list--catalog {
@@ -122,7 +78,7 @@
   border-radius: 11px;
   color: var(--gold-soft);
   background: rgba(214, 175, 55, .055);
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
@@ -140,12 +96,12 @@
 }
 
 .reference-quran-list__copy strong {
-  font-size: .65rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list__copy small {
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list__arabic {
@@ -165,7 +121,7 @@
   border-radius: 99px;
   color: var(--muted-green);
   background: rgba(255, 255, 255, .025);
-  font-size: .4rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
@@ -218,14 +174,14 @@
 .reference-reader-loading strong,
 .reference-reader-unavailable strong {
   color: var(--cream-strong);
-  font-size: .74rem;
+  font-size: .75rem;
 }
 
 .reference-reader-loading small,
 .reference-reader-unavailable small {
   max-width: 290px;
   color: var(--muted-green);
-  font-size: .52rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -235,14 +191,14 @@
 }
 
 .reference-reader-unavailable > button {
-  min-height: 42px;
+  min-height: 44px;
   padding: 0 17px;
   border: 0;
   border-radius: 12px;
   color: #10251e;
   background: linear-gradient(135deg, #efd394, #c9953a);
   cursor: pointer;
-  font-size: .55rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -270,13 +226,6 @@
 }
 
 @media (max-width: 370px) {
-  .reference-quran-library-status {
-    grid-template-columns: 38px minmax(0, 1fr);
-  }
-
-  .reference-quran-library-status__count {
-    display: none;
-  }
 
   .reference-quran-list--catalog > article {
     grid-template-columns: minmax(0, 1fr) 38px;
@@ -305,7 +254,7 @@
 
 .reference-reader-mode-tabs {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 6rem), 1fr));
   overflow: hidden;
   border: 1px solid rgba(226, 191, 119, .18);
   border-radius: 16px;
@@ -352,22 +301,21 @@
 
 .reference-reader-mode-tabs strong,
 .reference-reader-mode-tabs small {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: normal;
+  text-wrap: balance;
 }
 
 .reference-reader-mode-tabs strong {
-  font-size: .58rem;
+  font-size: .75rem;
 }
 
 .reference-reader-mode-tabs small {
   color: rgba(151, 172, 162, .72);
-  font-size: .43rem;
+  font-size: .75rem;
 }
 
 .reference-reader-modebar > .reference-font-control {
-  width: 108px;
+  width: 132px;
 }
 
 .reference-reader-flow {
@@ -385,7 +333,7 @@
 }
 .reference-reader-basmalah small {
   color: var(--gold-soft);
-  font-size: .7rem;
+  font-size: .75rem;
 }
 .reference-reader-basmalah p {
   margin: 8px 0 0;
@@ -413,7 +361,7 @@
 .reference-reader-flow > header small,
 .reference-reader-flow > footer {
   color: rgba(226, 191, 119, .72);
-  font-size: .5rem;
+  font-size: .75rem;
   letter-spacing: .06em;
 }
 
@@ -432,13 +380,13 @@
 
 .reference-reader-flow__page strong {
   color: #e2bf77;
-  font-size: .58rem;
+  font-size: .75rem;
   font-weight: 750;
 }
 
 .reference-reader-flow__page small {
   color: rgba(196, 210, 201, .58);
-  font-size: .44rem;
+  font-size: .75rem;
   letter-spacing: 0;
 }
 
@@ -449,8 +397,8 @@
 
 .reference-reader-flow__text.is-german {
   color: rgba(245, 239, 227, .88);
-  font-size: .84rem;
-  line-height: 1.92;
+  font-size: 1.0625rem;
+  line-height: 1.8;
   hyphens: auto;
 }
 
@@ -468,7 +416,7 @@
   margin-inline: .15em .3em;
   color: #e2bf77;
   font-family: Inter, system-ui, sans-serif;
-  font-size: .52em;
+  font-size: max(12px, .52em);
   font-weight: 700;
   line-height: 1;
 }
@@ -483,7 +431,7 @@
   margin: 0;
   padding: 42px 24px;
   color: rgba(196, 210, 201, .65);
-  font-size: .7rem;
+  font-size: .75rem;
   line-height: 1.6;
   text-align: center;
 }
@@ -511,14 +459,10 @@
   color: rgba(245, 239, 227, .82);
   background: rgba(5, 34, 27, .9);
   font: inherit;
-  font-size: .58rem;
+  font-size: .75rem;
   font-weight: 720;
   cursor: pointer;
   transition: border-color .18s ease, color .18s ease, background .18s ease, transform .18s ease;
-}
-
-.reference-reader-pagination > button:not(:disabled):active {
-  transform: translateY(1px);
 }
 
 .reference-reader-pagination > button:disabled {
@@ -592,6 +536,6 @@
 
   .reference-reader-pagination > button {
     padding-inline: 7px;
-    font-size: .52rem;
+    font-size: .75rem;
   }
 }

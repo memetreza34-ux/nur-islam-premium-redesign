@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { act, createElement } from 'react';
 import { createRoot, type Root } from 'react-dom/client';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
@@ -113,9 +114,9 @@ it('persists learning updates, restores them and preserves intentionally empty f
   expect(localStorage.getItem('nur_name_favorites')).toBe('[]');
 });
 
-it.each([0, 11, 22, 33, 44, 55, 66, 77, 88])('renders every name and its source boundary without hiding the unresolved forms (offset %s)', async (offset) => {
+it.each(NAMES_OF_ALLAH.map((_, index) => index))('renders every name and its source boundary without hiding the unresolved forms (offset %s)', async (offset) => {
   expect(NAMES_OF_ALLAH).toHaveLength(99);
-  for (const name of NAMES_OF_ALLAH.slice(offset, offset + 11)) {
+  for (const name of NAMES_OF_ALLAH.slice(offset, offset + 1)) {
     await act(async () => root.render(createElement(NamesScreen, { key: name.id, onBack() {}, initialNameId: String(name.id) })));
     expect(host.querySelectorAll('.reference-name-list__main')).toHaveLength(99);
     const dialog = host.querySelector('.reference-name-modal')!;
@@ -149,3 +150,6 @@ it('qualifies the enumeration with the exact collection and named grading publis
     'https://sunnah.com/bukhari:7392', 'https://sunnah.com/muslim:2677a', 'https://sunnah.com/tirmidhi:3507',
   ]);
 });
+
+// Content assertions inspect the disclosure payload; browser tests cover its interaction.
+vi.mock('../shared/SourceInfo', () => ({ SourceInfo: ({ children }: { children: ReactNode }) => createElement('span', null, children) }));

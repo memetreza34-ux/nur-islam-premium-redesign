@@ -18,7 +18,7 @@ for (const width of [320, 768, 1280]) {
       await page.locator('.reference-foundation-step').filter({ hasText: 'Reinheit & Alltag' }).click();
       for (const id of ids) {
         const lesson = getCategoryLessons('practice').find(item => item.id === id)!;
-        await page.getByRole('button', { name: /Kursplan/ }).click();
+        await page.getByRole('button', { name: /Lektion auswählen/ }).click();
         await page.locator('.learning-course-v2__lessons').getByRole('button').filter({ hasText: lesson.title }).click();
         const article = page.locator('.learning-course-v2__lesson');
         await expect(article).toContainText(lesson.summary);
@@ -28,13 +28,9 @@ for (const width of [320, 768, 1280]) {
           await expect(article).toContainText(detail.text);
         }
         for (const point of lesson.keyPoints) await expect(page.locator('.learning-course-v2__takeaways')).toContainText(point);
-        const quiz = page.locator('.learning-course-v2__quiz');
-        await expect(quiz).toContainText(lesson.question.prompt);
-        for (const option of lesson.question.options) await expect(quiz).toContainText(option);
-        await quiz.getByRole('button', { name: `B ${lesson.question.options[1]}`, exact: true }).click();
-        await expect(quiz).toContainText(lesson.question.explanation);
+        await expect(page.locator('.learning-course-v2__quiz')).toHaveCount(0);
         const sources = page.locator('.learning-course-v2__sources');
-        await sources.locator('summary').click();
+        await page.getByRole('button', { name: 'Quellen anzeigen: Quellen und wichtige Einordnung', exact: true }).click();
         await expect(sources.locator('article')).toHaveCount(lesson.sources.length);
         await expect(sources.getByRole('link')).toHaveCount(lesson.sources.filter(source => source.url).length);
         for (const [index, source] of lesson.sources.entries()) {
@@ -59,6 +55,7 @@ for (const width of [320, 768, 1280]) {
         expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
         await expect(page.locator('.toast')).toHaveCount(0);
         await page.screenshot({ path: testInfo.outputPath(`${id}-${width}.png`) });
+        await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
         await page.getByRole('button', { name: 'Lektion teilen', exact: true }).click();
         const shared = await page.evaluate(() => (window as unknown as { sharedLesson: string }).sharedLesson);
         expect(shared).toContain(lesson.summary);
@@ -66,7 +63,6 @@ for (const width of [320, 768, 1280]) {
           expect(shared).toContain(source.reference);
           if (source.url) expect(shared).toContain(source.url);
         }
-        await sources.locator('summary').click();
       }
     });
   }
@@ -76,19 +72,25 @@ for (const width of [320, 768, 1280]) {
     await page.goto('/?preview=1');
     await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
     await page.locator('.learn-library-actions').getByRole('button', { name: /Wudu/ }).click();
-    await expect(page.locator('.reference-guide-screen .reference-source-card')).toContainText('Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen');
+    await page.getByRole('button', { name: 'Quellen anzeigen: Hinweise zur Anleitung', exact: true }).click();
+    const guideInfo = page.getByRole('dialog', { name: 'Hinweise zur Anleitung', exact: true });
+    await expect(guideInfo).toContainText('Einzelheiten unterscheiden sich teilweise zwischen Rechtsschulen');
+    await guideInfo.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
     await page.getByRole('navigation').getByRole('button', { name: 'Gebet', exact: true }).click();
     await page.getByRole('button', { name: 'Berechnung', exact: true }).click();
     const dialog = page.getByRole('dialog', { name: 'Gebetszeiten-Einstellungen' });
-    await expect(dialog.getByRole('heading', { name: 'Berechnung anpassen', exact: true })).toBeVisible();
+    await expect(dialog.getByRole('heading', { name: 'Berechnung', exact: true })).toBeVisible();
     await expect(dialog).toContainText('Berechnungsmethode');
     await expect(dialog).toContainText('Asr-Berechnung');
     await expect(dialog.getByRole('button', { name: /Hanafi/ })).toBeVisible();
     await dialog.getByRole('button', { name: 'Schließen', exact: true }).click();
     const method = page.locator('.reference-prayer-method');
     await method.scrollIntoViewIfNeeded();
-    await expect(method).toContainText('Asr');
-    await expect(method).toContainText('Keine aktuellen Zeiten gespeichert');
+    await method.getByRole('button', { name: 'Quellen anzeigen: Berechnung & Quelle' }).click();
+    const sourceDialog = page.getByRole('dialog', { name: 'Berechnung & Quelle' });
+    await expect(sourceDialog).toContainText('Asr');
+    await expect(sourceDialog).toContainText('Keine aktuellen Zeiten gespeichert');
+    await sourceDialog.getByRole('button', { name: 'Quellen schließen' }).click();
     await expect(page.getByText('Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Aktualisiere die Daten oder gleiche mit einer örtlichen Moschee ab.', { exact: true })).toBeVisible();
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
   });

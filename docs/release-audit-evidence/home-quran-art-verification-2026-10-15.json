@@ -1,0 +1,28 @@
+{
+  "verifiedAt": "2026-10-15",
+  "scope": "Home Quran-resume card uses the existing coordinated plain book illustration instead of its older ornate artwork.",
+  "previewUrl": "http://127.0.0.1:3004/?preview=1",
+  "asset": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp",
+  "existingAssetReusedUnchanged": true,
+  "newImageGeneration": false,
+  "cardLayoutAndNavigationUnchanged": true,
+  "manual": {
+    "imageLoaded": true,
+    "viewports": ["390x844", "native 648x764"],
+    "screenshots": ["home-quran-art-phone-2026-10-15.jpg", "home-quran-art-visible-2026-10-15.jpg"],
+    "viewportOverrideReset": true,
+    "previewKeptOpen": true
+  },
+  "checks": {
+    "fullCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "fullCheckLog": "/tmp/nur-home-quran-art-check-20261015.log",
+    "browserExitCode": 0,
+    "browserTestsPassed": 21,
+    "browserScope": ["e2e/core-flows.spec.ts", "e2e/offline.spec.ts"],
+    "browserLog": "/tmp/nur-home-quran-art-e2e-20261015.log",
+    "gitDiffCheckExitCode": 0
+  },
+  "serviceWorkerCacheVersion": "v95",
+  "published": false
+}

@@ -199,7 +199,10 @@ const BUDGETS_KB = {
   // Gemessen 389 KB JS (+4), keine Abhängigkeit; Entry bleibt unter 95 KB.
   // Separate opening/prayer artwork mappings restore the existing prayer assets
   // while retaining the new splash series; measured aggregate rounds to 390 KB.
-  js: 390,
+  // The selected 3D logo now has a 726-byte inline WebP fallback. It survives
+  // failed image requests instead of switching to a different drawn mosque.
+  // Measured JS rounds to 391 KB; the total and entry limits stay unchanged.
+  js: 391,
   // One shared responsive art slot reserves a clean crop on all fourteen
   // learning cards. The scoped rules add about 1 KB gzip and no dependency.
   // The prayer companions now use six subject-specific local illustrations,
@@ -212,7 +215,7 @@ const BUDGETS_KB = {
   // The new legal/about, learning-library and mosque-finder surfaces bring the
   // built CSS to 123 KB gzip. CSS remains one shared stylesheet today, so this
   // cap reflects the measured delivered file rather than hiding it in chunks.
-  css: 123,
+  css: 121,
   // The complete More directory exposes all existing areas through typed deep
   // links. It adds no dependency and keeps the entry below its separate limit.
   // Six WebP artworks remain outside this JS/CSS transfer budget.
@@ -254,7 +257,8 @@ const BUDGETS_KB = {
   // Character evidence/context: measured aggregate 506 KB (+2). Rounded
   // component differences are not additive; CSS, entry and raw limits retained.
   // Gleiche Quellenarbeit: gemessen rund 512 KB gesamt (+4), CSS unverändert.
-  total: 512,
+  // Learning row consolidation reduces CSS to 121 KB and combined gzip to 511 KB.
+  total: 511,
 };
 
 /**

@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-15",
+  "scope": "Quran reading-progress hero uses its own emerald light surface with a warm upper-left glow, rendered as an inline SVG gradient",
+  "content": "Surah title, Arabic name, reading position, continue action and arch progress retained",
+  "artDirection": "No repeated book object or landscape in the reading-progress hero",
+  "discardedTrial": "output/imagegen/quran-reading-hero-20261015/rejected-quran-reading-hero-v1.webp; preserved outside the delivered app",
+  "cacheVersion": 107,
+  "checks": { "check": "passed; 1047 tests in 59 files, lint, build, budgets and guards", "browser": "21 passed; quran-open-design, prayer-landscapes and offline" },
+  "proof": "quran-light-surface-visible-2026-10-15.jpg"
+}

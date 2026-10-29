@@ -96,7 +96,7 @@ function BootRoot() {
     window.scrollTo(0, 0);
     if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('splash') === '1') return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 160 : 1600);
+    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 160 : 3000);
     return () => window.clearTimeout(timer);
   }, []);
 

@@ -17,18 +17,18 @@
   --cream: #f6ebd6;
   --cream-strong: #fff8ea;
   --muted: #b9b09f;
-  --muted-green: #91a89e;
+  --muted-green: #b1c3b9;
   --line: rgba(226, 191, 119, 0.22);
   --line-strong: rgba(226, 191, 119, 0.42);
   --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
   --shadow-soft: 0 16px 38px rgba(0, 0, 0, 0.24);
-  --radius-xl: 42px;
+  --radius-xl: 28px;
   --radius-lg: 28px;
 }
 
 * { box-sizing: border-box; }
-html { min-width: 320px; min-height: 100%; background: var(--bg-deep); }
-body { margin: 0; min-width: 320px; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; background: var(--bg-deep); }
+html { min-width: 0; min-height: 100%; background: var(--bg-deep); }
+body { margin: 0; min-width: 0; min-height: 100vh; min-height: 100dvh; overflow-x: hidden; background: var(--bg-deep); }
 button, input, select, textarea { font: inherit; }
 button { color: inherit; }
 button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
@@ -91,7 +91,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   align-items: center;
   gap: 7px;
   color: var(--gold-text);
-  font-size: 0.67rem;
+  font-size: .75rem;
   font-weight: 700;
   letter-spacing: 0.17em;
   text-transform: uppercase;
@@ -115,14 +115,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   cursor: pointer;
   transition: 180ms ease;
 }
-.icon-button { width: 42px; height: 42px; border-radius: 18px; }
-.icon-button:hover,
-.play-button:hover,
-.card-title-row button:hover {
-  border-color: var(--line-strong);
-  background: rgba(226, 191, 119, 0.1);
-  transform: translateY(-1px);
-}
+.icon-button { width: 48px; height: 48px; border-radius: 18px; }
 
 .hero-meta,
 .hero-main,
@@ -145,7 +138,7 @@ button:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3p
   border: 0;
   color: var(--gold);
   background: transparent;
-  font-size: 0.7rem;
+  font-size: .75rem;
   font-weight: 700;
   cursor: pointer;
 }

@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-16",
+  "generator": "Codex built-in image_gen",
+  "inputImages": [
+    "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp",
+    "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+  ],
+  "assets": [
+    {
+      "key": "ummah",
+      "prompt": "The two attached images are STYLE REFERENCES ONLY. Create ONE NEW matching cutout asset for the SAME app illustration family. Copy their exact simplified soft sculpted matte material, broad rounded forms, minimal surfaces and restrained shading, warm natural ivory/olive/teal color palette, NOT their subjects. This is a small UI illustration displayed at 56 px. Very simple bold shapes, no fine details or texture. No glossy or shiny metal, gold foil, metallic rim, gold outlines, thin wires, glitter, photorealistic material, busy details, black shadows, badge, backdrop, text, logos or watermark. GENUINELY TRANSPARENT background. Square canvas, entire object visible with clean margins, front three-quarter view, balanced compact silhouette. Adult calm understated 3D, not a toy with faces. Subject: a compact globe, a smooth muted teal blue spherical world with just 4 to 5 broad raised olive-green land shapes, cradled by one thick simple matte warm-ivory curved support and a low oval base. No gold, no latitude or longitude lines, no decorative grooves, no labels or tiny islands. Make it feel sculpted from the very same matte material as the beads and leaves in the references."
+    },
+    {
+      "key": "collection",
+      "prompt": "The two attached images are STYLE REFERENCES ONLY. Create ONE NEW matching cutout asset for the SAME app illustration family. Copy their exact simplified soft sculpted matte material, broad rounded forms, minimal surfaces and restrained shading, warm natural ivory/olive/teal color palette, NOT their subjects. This is a small UI illustration displayed at 56 px. Very simple bold shapes, no fine details or texture. No glossy or shiny metal, gold foil, metallic rim, gold outlines, thin wires, glitter, photorealistic material, busy details, black shadows, badge, backdrop, text, logos or watermark. GENUINELY TRANSPARENT background. Square canvas, entire object visible with clean margins, front three-quarter view, balanced compact silhouette. Adult calm understated 3D, not a toy with faces. Subject: a small muted teal saved-card tray holding THREE chunky warm-ivory cards. A single short matte ochre bookmark ribbon is draped over the front card. Simple smooth blank card surfaces with no decorative border lines, symbols, print or labels. Tray is one thick rounded sculpted shape; no wood textures, no metallic trim. Visual complexity and finish exactly like the folded ivory mat from the reference. No heart, no books, no calendar, no check mark."
+    }
+  ]
+}

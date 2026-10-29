@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-15",
+  "scope": "Approved garden motif recomposed: larger uninterrupted emerald wall behind all Quran progress text, smaller lower basin and fountain",
+  "asset": "public/premium-assets/high-res-objects/quran-garden-hero-v2.webp",
+  "originalsAndPrompts": "output/imagegen/quran-garden-wall-20261015/prompts.json",
+  "generation": "Built-in image_gen; own garden composition as edit target",
+  "cacheVersion": 109,
+  "checks": { "check": "passed; 1047 tests in 59 files, lint, build, budgets and guards", "browser": "12 passed; quran-open-design and offline" },
+  "textSafety": "Existing 320/390/768px browser checks now require all four text lines, including long Al-Muddaththir and reading position, to end within the upper 82 percent of the hero",
+  "proof": ["quran-garden-wall-visible-2026-10-15.jpg", "quran-garden-wall-320-2026-10-15.png"]
+}

@@ -1,0 +1,19 @@
+{
+  "date": "2026-10-15",
+  "change": "Rebalanced the plain cream daily Ayah cards on Home and Quran. Removed obsolete 68% content width that reserved room for the deleted artwork. Arabic and meaning centered at full width, meaning label separate from quotation, source separated in a readable 12px footer.",
+  "content": "Verse, meaning, source and navigation destinations unchanged. No image, texture, pattern or daily Hadith added.",
+  "checks": {
+    "full": "1047 tests passed; all source guards, TypeScript, build and bundle budget passed.",
+    "browser": "9 passed: Home daily Ayah plus Quran layout/readability/navigation tests, including plain Ayah at widths 320, 390, 768.",
+    "manual": "Current Ayah reviewed at 320, 390, 768: no document or card overflow; Arabic and meaning have equal full content width; label and source 12px.",
+    "logs": [
+      "/tmp/nur-ayah-card-check-20261015.log",
+      "/tmp/nur-ayah-card-e2e-20261015.log"
+    ]
+  },
+  "pwaShell": "v113",
+  "evidence": [
+    "ayah-card-balanced-visible-2026-10-15.jpg",
+    "ayah-card-balanced-mobile-2026-10-15.json"
+  ]
+}

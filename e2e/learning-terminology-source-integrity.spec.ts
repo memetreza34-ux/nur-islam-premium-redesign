@@ -24,7 +24,7 @@ for (const width of [320, 768, 1280]) {
     await page.locator('.reference-foundation-step').filter({ hasText: 'Wichtige Begriffe' }).click();
     for (const id of ids) {
     const lesson = getCategoryLessons('terms').find(item => item.id === id)!;
-    await page.getByRole('button', { name: /Kursplan/ }).click();
+    await page.getByRole('button', { name: /Lektion auswählen/ }).click();
     await page.locator('.learning-course-v2__lessons').getByRole('button').filter({ hasText: lesson.title }).click();
     const article = page.locator('.learning-course-v2__lesson');
     await expect(article).toContainText(lesson.summary);
@@ -34,14 +34,9 @@ for (const width of [320, 768, 1280]) {
       await expect(article).toContainText(detail.text);
     }
     for (const point of lesson.keyPoints) await expect(page.locator('.learning-course-v2__takeaways')).toContainText(point);
-    const quiz = page.locator('.learning-course-v2__quiz');
-    await expect(quiz).toContainText(lesson.question.prompt);
-    for (const option of lesson.question.options) await expect(quiz).toContainText(option);
-    const wrongIndex = lesson.question.options.findIndex((_, index) => index !== lesson.question.correctIndex);
-    await quiz.getByRole('button', { name: lesson.question.options[wrongIndex] }).click();
-    await expect(quiz).toContainText(lesson.question.explanation);
+    await expect(page.locator('.learning-course-v2__quiz')).toHaveCount(0);
     const sources = page.locator('.learning-course-v2__sources');
-    await sources.locator('summary').click();
+    await page.getByRole('button', { name: 'Quellen anzeigen: Quellen und wichtige Einordnung', exact: true }).click();
     await expect(sources.getByRole('link')).toHaveCount(lesson.sources.length);
     for (const source of lesson.sources) {
       const link = sources.getByRole('link', { name: source.reference, exact: true });
@@ -60,6 +55,7 @@ for (const width of [320, 768, 1280]) {
     await expect(page.locator('.toast')).toHaveCount(0);
     await sources.locator('article').last().scrollIntoViewIfNeeded();
     await page.screenshot({ path: testInfo.outputPath(`${id}-${width}.png`) });
+    await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
     await page.getByRole('button', { name: 'Lektion teilen', exact: true }).click();
     const shared = await page.evaluate(() => (window as unknown as { sharedLesson: string }).sharedLesson);
     expect(shared).toContain(lesson.title);
@@ -68,7 +64,6 @@ for (const width of [320, 768, 1280]) {
       expect(shared).toContain(source.reference);
       expect(shared).toContain(source.url);
     }
-    await sources.locator('summary').click();
     }
   });
   }

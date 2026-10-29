@@ -1,6 +1,6 @@
 /* Prayer + Dhikr + Qibla focal art. */
 .reference-next-prayer{display:grid;isolation:isolate;min-height:300px!important;align-content:start;grid-auto-rows:max-content}
-.reference-next-prayer::before,.next-prayer-panel::before{content:'';position:absolute;z-index:0;right:6px!important;bottom:6px!important;width:172px!important;height:136px!important;opacity:.17!important;background:url('/premium-assets/high-res-objects/dome-v2.webp?v=20260826-original-art') center bottom/contain no-repeat!important;filter:drop-shadow(0 25px 23px rgba(0,0,0,.47)) saturate(.92) contrast(1.035)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);pointer-events:none}
+.reference-next-prayer::before,.next-prayer-panel::before{content:'';position:absolute;z-index:0;right:6px!important;bottom:6px!important;width:172px!important;height:136px!important;opacity:.17!important;background:url('/premium-assets/high-res-objects/learn-hub-community-v1.webp?v=20260826-original-art') center bottom/contain no-repeat!important;filter:drop-shadow(0 25px 23px rgba(0,0,0,.47)) saturate(.92) contrast(1.035)!important;-webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.58) 17%,#000 38%,#000 100%);pointer-events:none}
 .reference-next-prayer::after{content:'';position:absolute;z-index:0;right:-76px;bottom:-92px;width:290px;height:290px;border-radius:50%;background:radial-gradient(circle,rgba(226,191,119,.1),rgba(38,125,91,.055) 44%,transparent 70%);filter:blur(9px);pointer-events:none}
 .reference-next-prayer>*:not(.next-prayer-panel__glow){position:relative;z-index:2}
 .reference-next-prayer>.next-prayer-panel__glow{position:absolute}
@@ -15,28 +15,15 @@
 .reference-dhikr-copy{max-width:330px}
 .reference-dhikr-copy small{max-width:290px;line-height:1.5;text-wrap:pretty}
 
-.reference-qibla-stage{isolation:isolate;min-height:492px!important;background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important}
-.reference-qibla-stage__halo{top:18px!important;width:316px!important;height:316px!important;border:1px solid rgba(226,191,119,.04);background:radial-gradient(circle,rgba(226,191,119,.11),transparent 67%)!important;box-shadow:0 0 0 24px rgba(226,191,119,.012),0 0 0 48px rgba(226,191,119,.007)}
-.reference-qibla-stage__compass{width:286px!important;height:286px!important;overflow:visible;filter:none!important}
-.reference-qibla-stage__compass>img{object-fit:contain!important;object-position:center!important;filter:drop-shadow(0 24px 24px rgba(0,0,0,.48)) saturate(1.02) contrast(1.04)!important}
-.reference-qibla-stage::after{z-index:2!important;width:82px!important;height:82px!important;opacity:.94!important;background:url('/premium-assets/high-res-objects/kaaba-v2.webp?v=20260826-original-art') center/contain no-repeat!important;filter:drop-shadow(0 14px 18px rgba(0,0,0,.5)) saturate(1.01) contrast(1.05)!important}
-.reference-qibla-stage__needle{z-index:4!important;color: #f2d79a !important;filter:drop-shadow(0 6px 9px rgba(0,0,0,.58))!important}
-.reference-qibla-stage__copy{z-index:4!important;margin-top:-3px!important}
-.reference-qibla-stage__copy h2{color:#fff8e9;font-size:1.78rem!important;text-shadow:0 9px 24px rgba(0,0,0,.28)}
-.reference-qibla-stage__copy p{max-width:300px;color: rgba(145, 168, 158, .81) !important;line-height:1.48}
-
-[data-theme='light'] .reference-next-prayer,[data-theme='light'] .reference-dhikr-counter,[data-theme='light'] .reference-qibla-stage{color:#fff8e9;border-color:rgba(181,142,68,.27)!important;box-shadow:0 22px 54px rgba(60,44,20,.13),inset 0 1px 0 rgba(255,255,255,.045)!important}
+[data-theme='light'] .reference-next-prayer,[data-theme='light'] .reference-dhikr-counter{color:#fff8e9;border-color:rgba(181,142,68,.27)!important;box-shadow:0 22px 54px rgba(60,44,20,.13),inset 0 1px 0 rgba(255,255,255,.045)!important}
 [data-theme='light'] .reference-next-prayer{background:radial-gradient(circle at 88% 16%,rgba(238,204,128,.15),transparent 12rem),linear-gradient(150deg,#0d4b3a,#05291f 57%,#021510)!important}
 [data-theme='light'] .reference-dhikr-counter{background:radial-gradient(circle at 50% 14%,rgba(226,191,119,.12),transparent 12rem),linear-gradient(160deg,#0b4434,#05271f 58%,#02130f)!important}
-[data-theme='light'] .reference-qibla-stage{background:radial-gradient(circle at 50% 28%,rgba(226,191,119,.13),transparent 14rem),radial-gradient(circle at 50% 83%,rgba(45,135,98,.09),transparent 13rem),linear-gradient(145deg,#0d5743,#07372b 62%,#00120f)!important}
-[data-theme='light'] .reference-next-prayer h2,[data-theme='light'] .reference-next-prayer .arabic-label,[data-theme='light'] .reference-dhikr-counter h2,[data-theme='light'] .reference-qibla-stage__copy h2{color:#fff8e9!important}
-[data-theme='light'] .reference-next-prayer p,[data-theme='light'] .reference-dhikr-copy small,[data-theme='light'] .reference-qibla-stage__copy p{color:rgba(181,202,191,.8)!important}
+[data-theme='light'] .reference-next-prayer h2,[data-theme='light'] .reference-next-prayer .arabic-label,[data-theme='light'] .reference-dhikr-counter h2{color:#fff8e9!important}
+[data-theme='light'] .reference-next-prayer p,[data-theme='light'] .reference-dhikr-copy small{color:rgba(181,202,191,.8)!important}
 
 @media(max-width:390px){
 .reference-next-prayer::before,.next-prayer-panel::before{right:4px!important;width:152px!important;height:120px!important}
-.reference-dhikr-counter{min-height:405px!important}.reference-dhikr-counter__glow{width:240px!important;height:240px!important}.reference-dhikr-counter__tasbih{top:8px!important;width:232px!important;height:232px!important;opacity:.34!important}.reference-dhikr-ring{width:184px!important;height:184px!important}
-.reference-qibla-stage{min-height:462px!important}.reference-qibla-stage__halo{width:296px!important;height:296px!important}.reference-qibla-stage__compass{width:270px!important;height:270px!important}.reference-qibla-stage::after{width:78px!important;height:78px!important}}
+.reference-dhikr-counter{min-height:405px!important}.reference-dhikr-counter__glow{width:240px!important;height:240px!important}.reference-dhikr-counter__tasbih{top:8px!important;width:232px!important;height:232px!important;opacity:.34!important}.reference-dhikr-ring{width:184px!important;height:184px!important}}
 @media(max-width:350px){
-.reference-dhikr-counter{min-height:390px!important}.reference-dhikr-counter__tasbih{width:220px!important;height:220px!important;opacity:.32!important}.reference-dhikr-ring{width:174px!important;height:174px!important}
-.reference-qibla-stage{min-height:430px!important}.reference-qibla-stage__halo{width:272px!important;height:272px!important}.reference-qibla-stage__compass{width:248px!important;height:248px!important}.reference-qibla-stage::after{width:70px!important;height:70px!important}}
-@media(prefers-reduced-motion:reduce){.reference-dhikr-ring,.reference-qibla-stage__compass>img,.reference-next-prayer::before{transition:none!important;animation:none!important}}
+.reference-dhikr-counter{min-height:390px!important}.reference-dhikr-counter__tasbih{width:220px!important;height:220px!important;opacity:.32!important}.reference-dhikr-ring{width:174px!important;height:174px!important}}
+@media(prefers-reduced-motion:reduce){.reference-dhikr-ring,.reference-next-prayer::before{transition:none!important;animation:none!important}}

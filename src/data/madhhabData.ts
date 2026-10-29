@@ -62,7 +62,7 @@ export const MADHHAB_DIFFERENCES: readonly MadhhabDifference[] = [
   },
   {
     stepId: 'basmalah',
-    question: 'Wird die Basmalah vor Al-Fatihah gesprochen?',
+    question: 'Wird die Basmala vor Al-Fatihah gesprochen?',
     positions: { hanafi: 'Leise vor Al-Fatihah.', maliki: 'Nach der vorherrschenden Position im Pflichtgebet unterlassen; andere Überlieferungen und freiwillige Gebete unterscheiden sich.', shafii: 'Als Teil der Fatihah; in laut rezitierten Gebeten hörbar, in leisen leise.', hanbali: 'Nach der maßgeblichen Position leise vor der Rezitation.' },
     source: 'TDV İslâm Ansiklopedisi · BESMELE',
     sourceUrl: 'https://islamansiklopedisi.org.tr/besmele',

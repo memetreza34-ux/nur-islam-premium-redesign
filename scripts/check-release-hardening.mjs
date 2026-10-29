@@ -258,7 +258,7 @@ requireText(html, [
   'viewport-fit=cover',
   'color-scheme" content="dark"',
   'meta name="theme-color" content="#001b16"',
-  'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png"',
+  'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png?v=20261016-mosque-3d-v1"',
 ], 'HTML accessibility/reference shell');
 
 requireText(migration, [

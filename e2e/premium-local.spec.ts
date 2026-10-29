@@ -12,11 +12,40 @@ test.beforeEach(async ({ page }) => {
   });
 });
 
-test('opens Premium from Home and renders statistics without an update loop', async ({ page }) => {
+test('opens Premium from the compact Home overview and renders statistics without an update loop', async ({ page }, testInfo) => {
   await openApp(page);
 
   const widgets = page.getByRole('region', { name: 'Deine Widgets' });
   await expect(widgets).toBeVisible();
+  await expect(widgets.locator('.premium-local-widget').first()).toBeHidden();
+  for (const width of [320, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    await widgets.locator('summary').scrollIntoViewIfNeeded();
+    const bounds = (await widgets.locator('summary').boundingBox())!;
+    expect(bounds.x).toBeGreaterThanOrEqual(0);
+    expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+    expect(bounds.height).toBeLessThanOrEqual(112);
+    await page.screenshot({ path: testInfo.outputPath(`widgets-closed-${width}.png`) });
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
+  await widgets.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  await expect(widgets.locator('.premium-local-widget').first()).toBeVisible();
+  for (const width of [320, 390, 768]) {
+    await page.setViewportSize({ width, height: 844 });
+    expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
+    const rows = await widgets.locator('.premium-local-widget').evaluateAll(elements => elements.map(element => {
+      const bounds = element.getBoundingClientRect();
+      return { left: bounds.left, right: bounds.right, height: bounds.height, clipped: element.scrollWidth > element.clientWidth };
+    }));
+    for (const row of rows) {
+      expect(row.left).toBeGreaterThanOrEqual(0);
+      expect(row.right).toBeLessThanOrEqual(width);
+      expect(row.height).toBeGreaterThanOrEqual(44);
+      expect(row.clipped).toBe(false);
+    }
+  }
+  await page.setViewportSize({ width: 390, height: 844 });
   await widgets.getByRole('button', { name: 'Anpassen' }).click();
 
   const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
@@ -33,7 +62,9 @@ test('opens Premium from Home and renders statistics without an update loop', as
 test('creates a local routine and persists its daily completion', async ({ page }) => {
   await openApp(page);
 
-  await page.getByRole('region', { name: 'Deine Widgets' }).getByRole('button', { name: 'Anpassen' }).click();
+  const widgets = page.getByRole('region', { name: 'Deine Widgets' });
+  await widgets.locator('summary').click();
+  await widgets.getByRole('button', { name: 'Anpassen' }).click();
   const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
   await premium.getByRole('button', { name: 'Routinen', exact: true }).click();
 
@@ -50,7 +81,11 @@ test('creates a local routine and persists its daily completion', async ({ page 
 
   await page.reload();
   await expect(page.getByRole('navigation')).toBeVisible({ timeout: 20_000 });
+  await expect(widgets.locator('.premium-local-widget').first()).toBeHidden();
+  await widgets.locator('summary').click();
   await expect(page.getByText('1/2 erledigt')).toBeVisible();
+  await widgets.locator('summary').click();
+  await expect(widgets.locator('.premium-local-widget').first()).toBeHidden();
 });
 
 test('Premium entry sits in the More screen flow without covering shortcuts', async ({ page }) => {

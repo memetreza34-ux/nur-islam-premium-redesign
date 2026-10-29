@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Alle bisherigen App-Icons</title>
+<style>
+:root{color-scheme:light;background:#f3eee3;color:#173b2e;font-family:Inter,Arial,sans-serif}*{box-sizing:border-box}body{margin:0}main{max-width:950px;margin:auto;padding:28px 22px}.eyebrow{font-size:10px;letter-spacing:.13em;text-transform:uppercase;color:#89692e}h1{font:500 40px/1.1 'Cormorant Garamond',Georgia,serif;margin:7px 0 9px}header p{font-size:12px;color:#5e6a5d;line-height:1.5;margin:0}.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}.option{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:13px;background:#faf8f1;border:2px solid #d9dacb;color:#214433;border-radius:21px;padding:20px 12px;font:500 13px/1.35 Inter,Arial,sans-serif;cursor:pointer;text-align:center}.option[aria-pressed=true]{border-color:#a57e37;background:#fffaf0}.option img{width:min(150px,100%);height:auto;aspect-ratio:1;display:block;border-radius:22.4%}.option span{min-height:2.7em;display:flex;align-items:center;justify-content:center}button:focus-visible,a:focus-visible{outline:3px solid #ac8137;outline-offset:3px}.context{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;padding:17px 20px;margin-top:18px;background:#143f31;color:#fff4df;border-radius:20px}.selected{display:flex;gap:12px;align-items:center}.selected>img{width:56px;height:56px;border-radius:22.4%}.selected-label{font-size:13px;font-weight:500;line-height:1.5}.selected-label small{font-size:10px;font-weight:400;color:#bbcab8;display:block}.downloads{display:flex;gap:7px}.downloads a{display:flex;min-width:48px;min-height:44px;align-items:center;justify-content:center;border:1px solid #718260;border-radius:10px;color:#f2d99d;text-decoration:none;font-size:12px}.hint{font-size:11px;color:#637160;margin:13px 0 0;line-height:1.5}@media(max-width:550px){main{padding:21px 14px}h1{font-size:32px}.gallery{gap:8px;margin-top:16px}.option{padding:10px 6px;gap:7px;border-radius:15px;font-size:10px}.option img{width:68px}.option span{min-height:2.7em}.context{padding:13px;gap:12px;border-radius:16px;margin-top:13px}.selected>img{width:48px;height:48px}.selected{gap:9px}.selected-label{font-size:12px}.downloads a{min-width:44px;font-size:11px}.hint{font-size:10px}}
+.downloads a[hidden]{display:none}
+</style>
+</head>
+<body>
+<main>
+<header><span class="eyebrow">App-Icon · Gesamtübersicht</span><h1>Alle bisherigen Entwürfe.</h1><p>Neun Varianten. Tippe zum Auswählen und Herunterladen.</p></header>
+<section class="gallery" id="gallery" aria-label="Alle neun Icon-Entwürfe"></section>
+<section class="context" aria-label="Ausgewählter Entwurf"><div class="selected"><img id="selected-icon" src="../app-icon-arch-20261016/app-icon-192.png" alt="Ausgewähltes App-Icon"><span class="selected-label"><span id="selected-name" aria-live="polite">Lichtbogen</span><small>Vorschau in App-Größe</small></span></div><nav class="downloads" aria-label="Ausgewähltes Icon herunterladen"><a id="download" href="../app-icon-arch-20261016/app-icon-1024.png" download>PNG</a><a id="vector" href="../app-icon-arch-20261016/app-icon.svg" download>SVG</a></nav></section>
+<p class="hint">Die drei früheren Entwürfe stehen in der unteren Reihe. <a href="alle-app-icons.zip" download style="color:inherit;text-underline-offset:3px">Alle zusammen herunterladen</a></p>
+</main>
+<script type="module">
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/cormorant-garamond/500.css';
+const concepts=await (await fetch('./concepts.json')).json();
+const gallery=document.querySelector('#gallery');
+function select(concept,button){
+gallery.querySelectorAll('button').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+document.querySelector('#selected-name').textContent=concept.name;
+const image=document.querySelector('#selected-icon');image.src=concept.src;image.alt=concept.name;
+const download=document.querySelector('#download');download.href=concept.download;download.textContent=concept.download.endsWith('.png')?'PNG':'SVG';
+const vector=document.querySelector('#vector');vector.hidden=!concept.vector||concept.vector===concept.download;if(concept.vector)vector.href=concept.vector;
+}
+concepts.forEach((concept,index)=>{
+const button=document.createElement('button');button.type='button';button.className='option';button.setAttribute('aria-label',concept.name);button.setAttribute('aria-pressed',String(index===0));
+const image=document.createElement('img');image.src=concept.src;image.alt='';image.width=192;image.height=192;
+const label=document.createElement('span');label.textContent=concept.name;button.append(image,label);button.addEventListener('click',()=>select(concept,button));gallery.append(button);
+});
+</script>
+</body>
+</html>

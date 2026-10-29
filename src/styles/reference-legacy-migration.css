@@ -5,14 +5,12 @@
   line-height: 1.6;
 }
 
-.reference-expanded-learning-grid,
-.reference-services-grid {
+.reference-expanded-learning-grid {
   display: grid;
   gap: 10px;
 }
 
-.reference-expanded-learning-grid > button,
-.reference-services-grid > button {
+.reference-expanded-learning-grid > button {
   width: 100%;
   min-height: 78px;
   display: grid;
@@ -29,7 +27,6 @@
 }
 
 .reference-expanded-learning-grid__icon,
-.reference-services-grid__icon,
 .reference-legacy-header-icon {
   width: 44px;
   height: 44px;
@@ -41,23 +38,20 @@
   border: 1px solid rgba(225, 194, 122, .22);
 }
 
-.reference-expanded-learning-grid > button > span:nth-child(2),
-.reference-services-grid > button > span:nth-child(2) {
+.reference-expanded-learning-grid > button > span:nth-child(2) {
   min-width: 0;
   display: grid;
   gap: 3px;
 }
 
-.reference-expanded-learning-grid small,
-.reference-services-grid small {
+.reference-expanded-learning-grid small {
   color: #d2ad5f;
-  font-size: .66rem;
+  font-size: .75rem;
   letter-spacing: .06em;
   text-transform: uppercase;
 }
 
-.reference-expanded-learning-grid strong,
-.reference-services-grid strong {
+.reference-expanded-learning-grid strong {
   font-family: var(--font-display, Georgia, serif);
   font-size: 1rem;
 }
@@ -65,7 +59,7 @@
 .reference-expanded-learning-grid em {
   overflow: hidden;
   color: #9db0a5;
-  font-size: .74rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.4;
   text-overflow: ellipsis;
@@ -138,8 +132,8 @@
   filter: drop-shadow(0 20px 20px rgba(0, 0, 0, .5));
 }
 
-.reference-legacy-hero:has(>img[src*='bookmark-v2.webp'])>img{display:none}
-.reference-legacy-hero:has(>img[src*='bookmark-v2.webp'])::before{content:'2,5%';position:absolute;z-index:2;top:50%;right:22px;transform:translateY(-50%);color:#e9c878;font:600 1.7rem var(--font-display,Georgia,serif);text-shadow:0 12px 24px rgba(0,0,0,.48)}
+.reference-legacy-hero:has(>img[src*='learn-hub-terms-v1.webp'])>img{display:none}
+.reference-legacy-hero:has(>img[src*='learn-hub-terms-v1.webp'])::before{content:'2,5%';position:absolute;z-index:2;top:50%;right:22px;transform:translateY(-50%);color:#e9c878;font:600 1.7rem var(--font-display,Georgia,serif);text-shadow:0 12px 24px rgba(0,0,0,.48)}
 
 .reference-legacy-section,
 .reference-quiz-card,
@@ -168,7 +162,7 @@
   border-radius: 999px;
   color: #e9c878;
   background: rgba(225, 194, 122, .1);
-  font-size: .72rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -233,7 +227,7 @@
 
 .reference-legacy-notice p {
   margin: 0;
-  font-size: .74rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -256,7 +250,7 @@
 }
 
 .reference-fasting-grid svg { grid-area: icon; color: #e9c878; }
-.reference-fasting-grid small { grid-area: small; color: #9db0a5; font-size: .7rem; }
+.reference-fasting-grid small { grid-area: small; color: #9db0a5; font-size: .75rem; }
 .reference-fasting-grid strong { grid-area: strong; font-size: .84rem; }
 
 .reference-legacy-toggle {
@@ -285,7 +279,7 @@
   gap: 2px;
 }
 
-.reference-legacy-toggle small { color: #9db0a5; font-size: .67rem; }
+.reference-legacy-toggle small { color: #9db0a5; font-size: .75rem; }
 .reference-legacy-toggle svg { color: #e9c878; }
 
 .reference-legacy-toggle em,
@@ -362,13 +356,13 @@
 
 .reference-hadith-library small {
   color: #8fa197;
-  font-size: .66rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
 .reference-hadith-library article > button {
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   display: grid;
   place-items: center;
   border: 1px solid rgba(225, 194, 122, .14);
@@ -398,7 +392,7 @@
   transition: width .25s ease;
 }
 
-.reference-quiz-card > small { color: #d2ad5f; font-size: .68rem; text-transform: uppercase; letter-spacing: .08em; }
+.reference-quiz-card > small { color: #d2ad5f; font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
 .reference-quiz-card > h2 { margin: 10px 0 18px; font-family: var(--font-display, Georgia, serif); font-size: 1.35rem; line-height: 1.25; }
 
 .reference-quiz-answers {
@@ -429,7 +423,7 @@
   border-radius: 9px;
   color: #d2ad5f;
   background: rgba(225, 194, 122, .09);
-  font-size: .72rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -485,10 +479,10 @@
   gap: 3px;
 }
 .reference-quiz-categories__copy strong { font-size: .95rem; }
-.reference-quiz-categories__copy small { color: var(--muted-green); font-size: .74rem; line-height: 1.4; }
+.reference-quiz-categories__copy small { color: var(--muted-green); font-size: .75rem; line-height: 1.4; }
 .reference-quiz-categories__copy em {
   color: var(--gold);
-  font-size: .68rem;
+  font-size: .75rem;
   font-style: normal;
   letter-spacing: .04em;
 }
@@ -584,7 +578,7 @@
 
 /* Holds the screen's height while the split chunk arrives, so the layout does
    not jump when it lands. */
-.screen-lazy-fallback { min-height: 60vh; }
+.screen-lazy-fallback { display: grid; min-height: 60vh; place-items: center; padding: 24px; color: var(--muted-green); font-size: 14px; }
 
 .reference-topic-text {
   margin: 0;
@@ -614,14 +608,14 @@
   align-items: start;
   padding-top: 4px;
   color: #9db0a5;
-  font-size: .74rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 .reference-practice-list small svg { margin-top: 3px; color: #d2ad5f; }
 
 .reference-station-when {
   color: #d2ad5f;
-  font-size: .66rem;
+  font-size: .75rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
@@ -629,15 +623,6 @@
 
 /* The base bar is a two-column grid, which turned five guides into three rows.
    A horizontal scroller keeps them on one line at any width. */
-.reference-guide-tabs--wide {
-  display: flex !important;
-  grid-template-columns: none !important;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-.reference-guide-tabs--wide::-webkit-scrollbar { display: none; }
-.reference-guide-tabs--wide > button { flex: 0 0 auto; white-space: nowrap; }
-
 .reference-guide-arabic {
   display: block;
   margin-top: 8px;
@@ -650,10 +635,7 @@
   display: block;
   margin-top: 2px;
   color: #d2ad5f;
-  font-size: .74rem;
+  font-size: .75rem;
   font-style: italic;
   line-height: 1.5;
 }
-
-/* The hero column is narrow enough that a single word wrapped mid-letter. */
-.reference-guide-hero .hero-pill { white-space: nowrap; }

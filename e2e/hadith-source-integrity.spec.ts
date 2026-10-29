@@ -21,9 +21,12 @@ for (const width of [320, 768, 1280]) {
     for (const entry of HADITH_LIBRARY.filter(item => item.grading)) {
       await page.getByPlaceholder('Hadithe durchsuchen').fill(entry.source);
       await expect(articles).toHaveCount(1);
-      await expect(articles).toContainText(entry.grading!.text);
-      await expect(articles.getByRole('link', { name: 'Bewertungsquelle' })).toHaveAttribute('href', entry.grading!.sourceUrl);
-      if (entry.grading!.comparisonUrl) await expect(articles.getByRole('link', { name: 'Vergleichsquelle' })).toHaveAttribute('href', entry.grading!.comparisonUrl);
+      await articles.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+      const info = page.locator('dialog.source-info-dialog');
+      await expect(info).toContainText(entry.grading!.text);
+      await expect(info.getByRole('link', { name: 'Bewertungsquelle' })).toHaveAttribute('href', entry.grading!.sourceUrl);
+      if (entry.grading!.comparisonUrl) await expect(info.getByRole('link', { name: 'Vergleichsquelle' })).toHaveAttribute('href', entry.grading!.comparisonUrl);
+      await info.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
       await articles.getByRole('button', { name: 'Als Favorit speichern', exact: true }).click();
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     }
@@ -32,10 +35,12 @@ for (const width of [320, 768, 1280]) {
     await page.getByRole('button').filter({ hasText: 'Meine Sammlung' }).first().click();
     for (const entry of HADITH_LIBRARY.filter(item => item.grading)) {
       await page.getByRole('button').filter({ hasText: entry.title }).first().click();
-      const source = page.locator('.reference-source-card');
+      await page.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+      const source = page.locator('dialog.source-info-dialog .reference-source-card');
       await expect(source).toContainText(entry.grading!.text);
       await expect(source.getByRole('link', { name: 'Bewertungsquelle' })).toHaveAttribute('href', entry.grading!.sourceUrl);
       if (entry.grading!.comparisonUrl) await expect(source.getByRole('link', { name: 'Vergleichsquelle' })).toHaveAttribute('href', entry.grading!.comparisonUrl);
+      await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
       await page.getByRole('button', { name: 'Teilen', exact: true }).click();
       const shared = await page.evaluate(() => (window as unknown as { capturedShare: ShareData }).capturedShare.text);
       expect(shared).toContain(entry.summary);

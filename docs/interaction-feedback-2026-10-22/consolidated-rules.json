@@ -1,0 +1,154 @@
+{
+  "stylesheetChanges": [
+    {
+      "file": "base.css",
+      "rules": 1
+    },
+    {
+      "file": "calendar.css",
+      "rules": 1
+    },
+    {
+      "file": "filter-control-consistency.css",
+      "rules": 2
+    },
+    {
+      "file": "home-content.css",
+      "rules": 1
+    },
+    {
+      "file": "home-hero.css",
+      "rules": 1
+    },
+    {
+      "file": "learn-library-redesign.css",
+      "rules": 1
+    },
+    {
+      "file": "legal-premium.css",
+      "rules": 1
+    },
+    {
+      "file": "navigation.css",
+      "rules": 2
+    },
+    {
+      "file": "nur-design-system.css",
+      "rules": 15
+    },
+    {
+      "file": "premium-account-notes-lock.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-atmosphere-details-lock.css",
+      "rules": 2
+    },
+    {
+      "file": "premium-core-parallel-pass.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-core-screens.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-depth-lock.css",
+      "rules": 2
+    },
+    {
+      "file": "premium-design-parallel-pass.css",
+      "rules": 2
+    },
+    {
+      "file": "premium-flow-lock.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-learning-reading-parallel-pass.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-legacy-parallel-pass.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-local-features.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-motion-performance-lock.css",
+      "rules": 2
+    },
+    {
+      "file": "premium-onboarding-art-lock.css",
+      "rules": 3
+    },
+    {
+      "file": "premium-profile-brand-lock.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-release-design.css",
+      "rules": 2
+    },
+    {
+      "file": "premium-secondary-parallel-pass.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-shell-parallel-pass.css",
+      "rules": 1
+    },
+    {
+      "file": "premium-visual-effects-lock.css",
+      "rules": 4
+    },
+    {
+      "file": "premium-visual-lock.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-interaction-fixes.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-live-prayer-times.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-more-hub.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-mosque-live.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-prayer-calendar.css",
+      "rules": 2
+    },
+    {
+      "file": "reference-prayer-dynamic.css",
+      "rules": 1
+    },
+    {
+      "file": "reference-quran-complete.css",
+      "rules": 1
+    },
+    {
+      "file": "touch-target-consistency.css",
+      "rules": 2
+    },
+    {
+      "file": "visual-consistency.css",
+      "rules": 1
+    },
+    {
+      "file": "visual-interaction-polish.css",
+      "rules": 2
+    }
+  ],
+  "inlineStyleRulesRemoved": 1,
+  "pressAnimationsRemoved": 5
+}

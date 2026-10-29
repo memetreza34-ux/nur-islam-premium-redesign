@@ -1,0 +1,89 @@
+[
+  {
+    "background": {
+      "bottom": 498.5703125,
+      "height": 347.390625,
+      "left": 10,
+      "right": 310,
+      "top": 151.1796875,
+      "width": 300,
+      "x": 10,
+      "y": 151.1796875
+    },
+    "card": {
+      "bottom": 498.5703125,
+      "height": 347.390625,
+      "left": 10,
+      "right": 310,
+      "top": 151.1796875,
+      "width": 300,
+      "x": 10,
+      "y": 151.1796875
+    },
+    "cardOverflow": false,
+    "documentWidth": 320,
+    "image": "/premium-assets/high-res-objects/ayah-oasis-card-v1.webp?v=20260826-original-art",
+    "ink": "rgb(23, 53, 43)",
+    "loaded": 1024,
+    "meaningWidth": 256,
+    "viewport": 320
+  },
+  {
+    "background": {
+      "bottom": 468.5625,
+      "height": 317.4921875,
+      "left": 13,
+      "right": 377,
+      "top": 151.0703125,
+      "width": 364,
+      "x": 13,
+      "y": 151.0703125
+    },
+    "card": {
+      "bottom": 468.5625,
+      "height": 317.4921875,
+      "left": 13,
+      "right": 377,
+      "top": 151.0703125,
+      "width": 364,
+      "x": 13,
+      "y": 151.0703125
+    },
+    "cardOverflow": false,
+    "documentWidth": 390,
+    "image": "/premium-assets/high-res-objects/ayah-oasis-card-v1.webp?v=20260826-original-art",
+    "ink": "rgb(23, 53, 43)",
+    "loaded": 1024,
+    "meaningWidth": 320,
+    "viewport": 390
+  },
+  {
+    "background": {
+      "bottom": 492.65625,
+      "height": 341.5859375,
+      "left": 140,
+      "right": 628,
+      "top": 151.0703125,
+      "width": 488,
+      "x": 140,
+      "y": 151.0703125
+    },
+    "card": {
+      "bottom": 492.65625,
+      "height": 341.5859375,
+      "left": 140,
+      "right": 628,
+      "top": 151.0703125,
+      "width": 488,
+      "x": 140,
+      "y": 151.0703125
+    },
+    "cardOverflow": false,
+    "documentWidth": 768,
+    "image": "/premium-assets/high-res-objects/ayah-oasis-card-v1.webp?v=20260826-original-art",
+    "ink": "rgb(23, 53, 43)",
+    "loaded": 1024,
+    "meaningWidth": 444,
+    "viewport": 768
+  }
+]

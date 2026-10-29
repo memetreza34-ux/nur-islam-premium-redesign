@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-22",
+  "generator": "Codex built-in imagegen; reference edits, transparent background",
+  "edits": [
+    {
+      "id": "names",
+      "old": "home-names-v4.webp",
+      "next": "home-names-v5.webp",
+      "prompt": "Use case: precise-object-edit. EDIT TARGET: the provided emerald 3D book icon. Remove ONLY the embossed gold 99 and the circular gold ring surrounding it from the cover. Replace that complete circular badge with continuous plain emerald book-cover material, keeping the existing recessed rectangular cover border. Preserve exactly the same book shape, proportions, three-quarter camera, rounded corners, spine gold bands, warm ivory page block, red ribbon bookmark, soft matte sculpted 3D material, lighting and framing. This must still look like the exact same object in our established app illustration family. Blank book cover: no replacement symbol, numbers, letters, words, calligraphy or question marks. No extra objects, background tile, scenery, border or watermark. Keep the isolated object centered with the same full silhouette and clean generous transparent margin. Preserve genuine transparent alpha background.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-b60369ba-b581-474a-bb80-e79d0609cccd.png"
+    },
+    {
+      "id": "quiz",
+      "old": "home-quiz-v5.webp",
+      "next": "home-quiz-v6.webp",
+      "prompt": "Use case: precise-object-edit. EDIT TARGET: the provided stack of three rounded 3D quiz cards. Remove ONLY the raised yellow-gold question mark including its dot from the front ivory card. Restore a completely clean, smooth, unmarked ivory card surface there. Preserve exactly the existing three-card stack, ivory front card, teal middle card, muted coral back card, shapes, soft rounded bevels, proportions, overlapping order, tilt, three-quarter perspective, matte sculpted materials, soft lighting, shadows and framing. Keep the established app illustration style identical. No substitute mark, no checkmark, no numbers, letters, text, writing, calligraphy or question marks on any card. Do not add anything. No background tile, scenery, frame or watermark. Keep the full isolated silhouette within the same generous clean margins on a genuinely transparent alpha background.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-42b2fd50-396f-45a1-a2cb-92d618c87520.png"
+    },
+    {
+      "id": "prophets",
+      "old": "learn-hub-prophets-v1.webp",
+      "next": "learn-hub-prophets-v2.webp",
+      "prompt": "Use case: precise-object-edit. EDIT TARGET: the provided 3D parchment scroll icon. Remove ONLY the raised teal numeral 25 from the middle of the scroll. Restore uninterrupted, softly shaded warm ivory parchment where the numeral was. Preserve the exact same open scroll, curved parchment sheet, walnut wooden rollers and finials, antique gold collars, diagonal three-quarter perspective, rounded forms, proportions, matte sculpted 3D materials, lighting, shadows and framing. Keep the established app illustration style identical. The parchment must be blank: no replacement illustration, numbers, letters, calligraphy, lines of pretend writing, question marks or religious text. No people, faces, new objects, background tile, scenery, border or watermark. Keep the complete isolated object in frame with the same generous clean transparent margin. Preserve genuine transparent alpha background.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-50cb2ae1-a12a-48c7-8240-d1bafd776598.png"
+    }
+  ]
+}

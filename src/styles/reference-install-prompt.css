@@ -53,7 +53,7 @@
 }
 
 .reference-install-prompt__copy .overline {
-  font-size: .46rem;
+  font-size: .75rem;
   letter-spacing: .12em;
 }
 
@@ -68,14 +68,14 @@
 
 .reference-install-prompt__copy small {
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .75rem;
   line-height: 1.35;
 }
 
 .reference-install-prompt__error {
   margin-top: 3px;
   color: #efc69d;
-  font-size: .45rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.35;
 }
@@ -93,7 +93,7 @@
   background: linear-gradient(135deg, #f0d394, #c9953a);
   box-shadow: 0 8px 17px rgba(89, 57, 12, .2), inset 0 1px 0 rgba(255, 255, 255, .42);
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
@@ -128,7 +128,7 @@
   align-items: center;
   gap: 8px;
   color: var(--cream);
-  font-size: .52rem;
+  font-size: .75rem;
 }
 
 .reference-install-prompt__ios svg {

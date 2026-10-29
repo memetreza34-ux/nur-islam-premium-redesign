@@ -1,0 +1,15 @@
+{
+  "mode": "built-in image_gen",
+  "generatedAt": "2026-10-18",
+  "assets": [
+    {
+      "name": "zakat-calculator",
+      "prompt": "Use case: stylized-concept. Asset type: transparent square 3D topic illustration for the Zakat calculator in an emerald, ivory and warm gold Islamic app. Input images are style references only, not edit targets: match their softly rounded matte 3D forms, restrained material detail, proportions and soft studio light. Create a new isolated small emerald calculator with cream keys and a blank cream display, alongside three simple warm gold coins, one standing and two stacked. Three-quarter view, entire object fully visible with generous transparent margin. Calm polished adult design, legible silhouette at 56px, subtle gold rim. No numbers, no lettering, no symbols, no religious text, no patterns, no background scenery, no floor plane, no glossy toy look, no watermark. 1024x1024 composition with real alpha transparency.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-36bd49eb-5ac8-4cd4-afee-103c0aa635d7.png",
+      "inputRoles": [
+        "Fasting illustration: palette, matte 3D finish and silhouette reference only",
+        "Quran illustration: palette and material reference only"
+      ]
+    }
+  ]
+}

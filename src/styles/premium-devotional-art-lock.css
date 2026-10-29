@@ -16,7 +16,7 @@
   width: 174px !important;
   height: 170px !important;
   opacity: .82 !important;
-  background: url('/premium-assets/high-res-objects/dua-hands-v2.webp?v=20260826-original-art') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/home-duas-v5.webp?v=20260826-original-art') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 21px 21px rgba(0, 0, 0, .42)) saturate(.98) contrast(1.025) !important;
   -webkit-mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);
   mask-image: linear-gradient(90deg, transparent 0%, rgba(0,0,0,.7) 18%, #000 37%, #000 100%);
@@ -43,7 +43,7 @@
 
 .reference-duas-hero p {
   max-width: 220px !important;
-  color: rgba(145, 168, 158, .8) !important;
+  color: var(--ds-muted) !important;
   text-wrap: pretty;
 }
 
@@ -123,6 +123,7 @@
 /* ---------- 99 Names hero ---------- */
 .reference-names-hero {
   isolation: isolate;
+  grid-template-columns: minmax(0, 1fr) 72px;
   min-height: 228px !important;
   padding: 24px 136px 24px 21px !important;
   background:
@@ -130,35 +131,19 @@
     linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important;
 }
 
-.reference-names-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  top: 50%;
-  right: 17px;
-  width: 116px;
-  height: 116px;
-  border: 1px solid rgba(244, 218, 160, .1);
-  border-radius: 50%;
-  box-shadow:
-    0 0 0 17px rgba(226, 191, 119, .026),
-    0 0 0 35px rgba(226, 191, 119, .014),
-    0 0 42px rgba(226, 191, 119, .06);
-  transform: translateY(-50%);
-  pointer-events: none;
-}
-
 .reference-names-hero__allah {
-  z-index: 2 !important;
-  top: 50% !important;
-  right: 26px !important;
-  max-width: none !important;
+  position: static;
+  grid-column: 2;
+  grid-row: 1 / 3;
+  align-self: center;
   color: #f2d79a !important;
-  font-size: 4.55rem !important;
+  font-size: 56px !important;
   line-height: 1 !important;
-  transform: translateY(-51%);
-  text-shadow: 0 17px 30px rgba(0, 0, 0, .42), 0 0 25px rgba(226, 191, 119, .08) !important;
+  transform: none;
 }
+.reference-names-hero > p { grid-column: 1 / -1; }
+.reference-names-hero > small { grid-column: 1; color: var(--ds-muted); font-size: 12px; }
+.reference-names-hero > .source-info { grid-column: 2; justify-self: end; }
 
 .reference-names-hero > h2,
 .reference-names-hero > p,
@@ -166,7 +151,8 @@
 .reference-names-hero > .overline {
   position: relative;
   z-index: 3 !important;
-  max-width: 225px !important;
+  max-width: 100% !important;
+  margin: 0;
 }
 
 .reference-names-hero p {
@@ -263,20 +249,6 @@
     height: 152px !important;
   }
 
-  .reference-names-hero {
-    padding-right: 112px !important;
-  }
-
-  .reference-names-hero::after {
-    right: 8px;
-    width: 100px;
-    height: 100px;
-  }
-
-  .reference-names-hero__allah {
-    right: 17px !important;
-    font-size: 4rem !important;
-  }
 }
 
 @media (max-width: 350px) {
@@ -291,20 +263,6 @@
     opacity: .73 !important;
   }
 
-  .reference-names-hero {
-    padding-right: 98px !important;
-  }
-
-  .reference-names-hero__allah {
-    right: 11px !important;
-    font-size: 3.55rem !important;
-  }
-
-  .reference-names-hero::after {
-    right: 3px;
-    width: 90px;
-    height: 90px;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

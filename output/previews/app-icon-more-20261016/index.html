@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Drei weitere App-Icons</title>
+<style>
+:root{color-scheme:light;background:#f3eee3;color:#173c2f;font-family:Inter,Arial,sans-serif}*{box-sizing:border-box}body{margin:0}main{max-width:940px;margin:auto;padding:28px 22px}.eyebrow{font-size:11px;color:#85682f;letter-spacing:.13em;text-transform:uppercase}h1{font:500 40px/1.05 'Cormorant Garamond',Georgia,serif;margin:8px 0 10px}header p{font-size:13px;line-height:1.55;color:#58685d;margin:0}.options{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:22px}.option{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;background:#faf8f0;color:#173c2f;border:2px solid #d8d9cb;border-radius:23px;padding:24px 18px;cursor:pointer;font:inherit}.option[aria-pressed=true]{border-color:#a57d37;background:#fffaf0}.option:focus-visible,a:focus-visible{outline:3px solid #a57d37;outline-offset:4px}.option img{width:150px;height:150px;flex-shrink:0;display:block;border-radius:22.4%}.text{display:grid;gap:5px}.name{font:600 29px/1.05 'Cormorant Garamond',Georgia,serif}.description{font-size:12px;line-height:1.5;color:#617061}.context{background:#133f31;color:#fff4df;padding:18px 20px;border-radius:21px;margin-top:18px}.context-head{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px}.selected{font-size:13px;font-weight:500}.downloads{display:flex;gap:6px}.downloads a{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:50px;border:1px solid #687d59;border-radius:10px;color:#f4dfad;font-size:12px;text-decoration:none}.samples{display:flex;align-items:flex-end;gap:24px;margin-top:12px}.sample{display:grid;justify-items:center;gap:6px;font-size:10px;color:#b8c7b8}.sample img{display:block;border-radius:22.4%}.note{font-size:11px;line-height:1.5;margin:15px 0 0;color:#687362}@media(max-width:660px){main{padding:22px 16px}h1{font-size:34px}.options{grid-template-columns:1fr;gap:10px;margin-top:18px}.option{flex-direction:row;text-align:left;padding:13px;gap:15px;border-radius:18px}.option img{width:82px;height:82px}.name{font-size:25px}.text{gap:4px}.context{padding:14px 16px;margin-top:14px}.samples{gap:22px;margin-top:8px}}
+</style>
+</head>
+<body>
+<main>
+<header><span class="eyebrow">App-Icon · Weitere Ideen</span><h1>Drei neue Richtungen.</h1><p>Ruhige Zeichen in Grün, Elfenbein und Gold. Tippe auf deinen Favoriten.</p></header>
+<section class="options" aria-label="Weitere Icon-Entwürfe">
+<button class="option" type="button" data-icon="nur" aria-pressed="true" aria-label="Nur im Bogen"><img src="nur-icon-192.png" alt="Arabisch Nur in einem goldenen Spitzbogen"><span class="text"><strong class="name">Nūr im Bogen</strong><span class="description">„نور“ bedeutet Licht.<br>Der Bogen verbindet es mit der App.</span></span></button>
+<button class="option" type="button" data-icon="moon" aria-pressed="false" aria-label="Lichtmond"><img src="moon-icon-192.png" alt="Helle Mondsichel mit einem goldenen Lichtstern"><span class="text"><strong class="name">Lichtmond</strong><span class="description">Eine klare Sichel.<br>Auch als kleines Icon gut erkennbar.</span></span></button>
+<button class="option" type="button" data-icon="light" aria-pressed="false" aria-label="Licht und Wissen"><img src="light-icon-192.png" alt="Abstraktes offenes Buch mit einem Lichtstern"><span class="text"><strong class="name">Licht & Wissen</strong><span class="description">Ein offenes Buch mit Licht.<br>Für Lernen und Orientierung.</span></span></button>
+</section>
+<section class="context" aria-label="Auswahl in App-Größe">
+<div class="context-head"><span class="selected" id="selected" aria-live="polite">Nūr im Bogen · App-Größe</span><nav class="downloads" aria-label="Ausgewähltes Icon herunterladen"><a id="png" href="nur-icon-1024.png" download>PNG</a><a id="svg" href="nur-icon.svg" download>SVG</a></nav></div>
+<div class="samples"><span class="sample"><img src="nur-icon-192.png" width="24" height="24" alt="24 Pixel">24 px</span><span class="sample"><img src="nur-icon-192.png" width="48" height="48" alt="48 Pixel">48 px</span><span class="sample"><img src="nur-icon-192.png" width="64" height="64" alt="64 Pixel">64 px</span></div>
+</section>
+<p class="note">Motivnamen zur Unterscheidung. Der endgültige App-Name bleibt offen.</p>
+</main>
+<script type="module">
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+const names={nur:'Nūr im Bogen',moon:'Lichtmond',light:'Licht & Wissen'};
+document.querySelectorAll('.option').forEach(button=>button.addEventListener('click',()=>{
+const id=button.dataset.icon;
+document.querySelectorAll('.option').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+document.querySelector('#selected').textContent=names[id]+' · App-Größe';
+document.querySelectorAll('.samples img').forEach(image=>image.src=id+'-icon-192.png');
+document.querySelector('#png').href=id+'-icon-1024.png';
+document.querySelector('#svg').href=id+'-icon.svg';
+}));
+</script>
+</body>
+</html>

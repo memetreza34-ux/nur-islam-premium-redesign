@@ -62,7 +62,7 @@
   border: 1px solid rgba(214, 175, 55, .2);
   border-radius: 9px;
   color: var(--gold-soft);
-  font-size: .48rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button strong,
@@ -73,12 +73,12 @@
 }
 
 .reference-dhikr-step-tabs button strong {
-  font-size: .56rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button small {
   color: var(--muted-green);
-  font-size: .45rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button.is-active {
@@ -118,14 +118,14 @@
 .reference-dhikr-source em {
   margin: 0;
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.55;
 }
 
 .reference-dhikr-source strong {
   color: var(--cream-strong);
-  font-size: .63rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-source a {
@@ -157,7 +157,7 @@
   color: var(--muted-green);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 

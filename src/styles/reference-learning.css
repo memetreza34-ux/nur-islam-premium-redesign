@@ -93,7 +93,7 @@
 
 .reference-category-card small {
   color: var(--muted-green);
-  font-size: .52rem;
+  font-size: .75rem;
 }
 
 .reference-knowledge-quote {
@@ -127,7 +127,7 @@
 
 .reference-knowledge-quote small {
   color: var(--gold);
-  font-size: .53rem;
+  font-size: .75rem;
 }
 
 .reference-modal-backdrop {
@@ -162,26 +162,14 @@
   top: 13px;
   right: 13px;
   display: grid;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid rgba(226, 191, 119, .2);
   border-radius: 12px;
   color: var(--cream);
   background: rgba(255, 255, 255, .035);
   cursor: pointer;
-}
-
-.reference-category-modal__icon {
-  display: grid;
-  width: 56px;
-  height: 56px;
-  place-items: center;
-  margin-bottom: 3px;
-  border: 1px solid rgba(226, 191, 119, .32);
-  border-radius: 17px;
-  color: var(--gold-bright);
-  background: rgba(214, 175, 55, .08);
 }
 
 .reference-category-modal h2,
@@ -197,13 +185,13 @@
 
 .reference-category-modal h3 {
   color: var(--gold-soft);
-  font-size: .72rem;
+  font-size: .75rem;
   font-weight: 600;
 }
 
 .reference-category-modal p {
   color: var(--muted-green);
-  font-size: .67rem;
+  font-size: .75rem;
   line-height: 1.58;
 }
 
@@ -218,7 +206,7 @@
   align-items: center;
   gap: 8px;
   color: var(--cream);
-  font-size: .59rem;
+  font-size: .75rem;
 }
 
 .reference-category-modal__meta svg {

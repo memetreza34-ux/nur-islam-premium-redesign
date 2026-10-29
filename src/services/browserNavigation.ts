@@ -55,3 +55,10 @@ export function pushBrowserNavigation<T>(snapshot: T) {
 export function browserNavigationDepth() {
   return readBrowserNavigation<unknown>()?.depth ?? 0;
 }
+
+export function clearBrowserNavigation() {
+  if (!isObject(window.history.state)) return;
+  const state = { ...window.history.state };
+  delete state[NAVIGATION_STATE_KEY];
+  window.history.replaceState(state, '', window.location.href);
+}

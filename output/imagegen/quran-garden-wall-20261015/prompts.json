@@ -1,0 +1,14 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-6b578325-0036-463c-84ac-52f8ed0eaadf.png",
+  "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET, our approved quiet matte 3D garden courtyard background for the Quran section of the Nur Islam app. Preserve its exact style, emerald wall, warm daylight from upper left, cream stone, water and gentle plants. The user likes this motif; change ONLY composition and scale to make all app text fit on the wall. CRITICAL: enlarge the uninterrupted dark emerald BACK WALL so the entire central x18%-82% area stays plain dark green from y0% through y83% of the image height. No stone horizontal edge, basin, water, plant or spout may enter that central text area before y83%. Make the water basin MUCH SMALLER and LOWER: a shallow narrow horizontal cream-stone basin across the very bottom, its top rim starts at y85%, water occupies y88%-96%, low front rim y96%-100%. Lower and shrink the right stone fountain so its highest point is no higher than y79%, staying within the far right 10% of the image; its gentle water stream flows only in the small lower basin. Keep plants smaller and pushed to the extreme outer left/right sides, all below y72%, never into central text zone. The basin must feel like a small low garden fountain at the foot of a large calm green wall, not a swimming pool. Keep soft warm sunlight and attractive subtle emerald-wall shadows but no strong detail behind copy. Wide 3:2 full-bleed landscape. Do not add any letters, UI, labels or actual app text. No book, people, palms, extra arches, patterns, border or watermark. One finished edited image.",
+  "inputImages": [
+    "output/imagegen/quran-garden-hero-20261015/garden.png"
+  ],
+  "inputRoles": [
+    "Own approved garden scene: composition-only edit target"
+  ],
+  "processing": "cwebp -q 92 -m 6; native 1536x1024 preserved"
+}

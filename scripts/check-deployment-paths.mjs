@@ -74,14 +74,14 @@ for (const requirement of [
 }
 
 const requiredAssetAliases = [
-  "'nur-logo-emblem.webp': 'nur-logo-emblem-v3.svg'",
-  "'nur-logo-emblem-v2.webp': 'nur-logo-emblem-v3.svg'",
-  "'mosque-gold.webp': 'mosque-heritage-v1.webp'",
-  "'mosque-gold-v2.webp': 'mosque-heritage-v1.webp'",
-  "'quran-closed.webp': 'quran-closed-v2.webp'",
-  "'tasbih.webp': 'tasbih-v2.webp'",
-  "'qibla-compass.webp': 'qibla-compass-v2.webp'",
-  "'kaaba.webp': 'kaaba-v2.webp'",
+  "'nur-logo-emblem.webp': 'nur-logo-mosque-3d-v1.webp'",
+  "'nur-logo-emblem-v2.webp': 'nur-logo-mosque-3d-v1.webp'",
+  "'mosque-gold.webp': 'prayer-companion-mosque-v1.webp'",
+  "'mosque-gold-v2.webp': 'prayer-companion-mosque-v1.webp'",
+  "'quran-closed.webp': 'learn-hub-book-v1.webp'",
+  "'tasbih.webp': 'home-dhikr-illustrated-v3.webp'",
+  "'qibla-compass.webp': 'home-qibla-illustrated-v3.webp'",
+  "'kaaba.webp': 'learn-hub-hajj-v1.webp'",
 ];
 for (const alias of requiredAssetAliases) {
   if (!paths.includes(alias)) throw new Error(`Premium asset alias is missing: ${alias}`);
@@ -150,11 +150,11 @@ if (worker.includes("'/index.html'") || worker.includes("'/premium-assets/") || 
   throw new Error('Service worker still contains root-absolute app-shell paths.');
 }
 
-for (const color of ['#001b16', '#e2bf77', '#f5f0e6']) {
-  if (!appIcon.toLowerCase().includes(color)) throw new Error(`PWA SVG app icon is missing reference palette color: ${color}`);
+if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Stilisierte 3D-Moschee') || !appIcon.includes('href="data:image/webp;base64,')) {
+  throw new Error('PWA SVG must embed the selected 3D mosque artwork with its accessible identity metadata.');
 }
-if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Goldene Moschee mit zwei Minaretten und einem hellen Tor auf dunklem Smaragdgrün')) {
-  throw new Error('PWA SVG app icon must keep the Nur Islam identity metadata.');
+if (/https?:\/\//.test(appIcon.replace('http://www.w3.org/2000/svg', ''))) {
+  throw new Error('The app icon must be self-contained for offline installation.');
 }
 
 if (manifest.id !== './' || manifest.start_url !== './' || manifest.scope !== './') {
@@ -193,10 +193,10 @@ if (!hasIcon('./nur-app-icon-maskable-512.png', '512x512', 'image/png', 'maskabl
 for (const requirement of [
   'meta name="theme-color" content="#001b16"',
   'href="%BASE_URL%manifest.webmanifest"',
-  'href="%BASE_URL%nur-app-icon.svg"',
-  'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png"',
+  'href="%BASE_URL%nur-app-icon.svg?v=20261016-mosque-3d-v1"',
+  'href="%BASE_URL%premium-assets/high-res-objects/nur-logo-emblem.png?v=20261016-mosque-3d-v1"',
 ]) {
   if (!html.includes(requirement)) throw new Error(`HTML reference/deployment token is missing: ${requirement}`);
 }
 
-console.log(`Deployment paths verified: current GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, exact SVG reference palette, reference PWA colors, shared visual version for core and legacy heroes, current mosque artwork plus legacy premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);
+console.log(`Deployment paths verified: current GitHub Actions runtimes, release-gated main-only Pages workflow, GitHub Pages base, matching v${workerCache[1]} service worker registration, cached reference Apple touch icon, scoped SVG + 192/512 PNG install icons, predictable standalone desktop window geometry, self-contained selected 3D mosque icon, reference PWA colors, shared visual version for core and legacy heroes, current mosque artwork plus legacy premium aliases, integrated screen artwork, preloads, manifest scope, and scoped offline cache.`);

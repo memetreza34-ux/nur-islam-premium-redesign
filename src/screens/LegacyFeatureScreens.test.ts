@@ -1,11 +1,12 @@
+import type { ReactNode } from 'react';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import { LegacyFeatureScreen } from './LegacyFeatureScreens';
 import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
 import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';
 import { HADITH_LIBRARY } from '../data/hadithData';
-import { DailyHadithScreen } from './DailyHadithScreen';
+import { SavedHadithScreen } from './SavedHadithScreen';
 
 describe('Retained content screens', () => {
   it('does not replace the requested companion list with the women list', () => {
@@ -63,7 +64,7 @@ describe('Retained content screens', () => {
   it('keeps the attributed Tirmidhi grading sources visible in the library and saved detail', () => {
     const library = renderToStaticMarkup(createElement(LegacyFeatureScreen, { featureId: 'hadith-library', onBack() {} }));
     for (const entry of HADITH_LIBRARY.filter(item => item.grading)) {
-      const detail = renderToStaticMarkup(createElement(DailyHadithScreen, { hadithId: entry.id, onBack() {} }));
+      const detail = renderToStaticMarkup(createElement(SavedHadithScreen, { hadithId: entry.id, onBack() {} }));
       for (const html of [library, detail]) {
         expect(html).toContain(`href="${entry.grading!.sourceUrl}"`);
         expect(html).toContain(entry.grading!.text);
@@ -72,3 +73,6 @@ describe('Retained content screens', () => {
     }
   });
 });
+
+// Content assertions inspect the disclosure payload; browser tests cover its interaction.
+vi.mock('../shared/SourceInfo', () => ({ SourceInfo: ({ children }: { children: ReactNode }) => createElement('span', null, children) }));

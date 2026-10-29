@@ -16,6 +16,14 @@ for (const width of [320, 390, 768]) {
     expect(await page.locator('.prayer-calendar-day:not(.prayer-calendar-day--empty)').count()).toBeGreaterThanOrEqual(28);
     await expect(page.locator('.prayer-calendar-grid > :last-child')).not.toHaveClass(/prayer-calendar-day--empty/);
 
+    const heading = calendar.locator('.prayer-calendar-section__heading');
+    const headingBox = (await heading.locator('div').boundingBox())!;
+    const calendarBox = (await calendar.boundingBox())!;
+    expect(headingBox.x + headingBox.width / 2).toBeCloseTo(calendarBox.x + calendarBox.width / 2, 0);
+    expect(await heading.locator('h2').evaluate(node => getComputedStyle(node).textAlign)).toBe('center');
+    await heading.scrollIntoViewIfNeeded();
+    await page.screenshot({ path: testInfo.outputPath(`calendar-heading-${width}.png`) });
+
     const firstDay = page.locator('.prayer-calendar-day:not(.prayer-calendar-day--empty)').first();
     await firstDay.click();
     await expect(firstDay).toHaveClass(/is-selected/);
@@ -23,8 +31,50 @@ for (const width of [320, 390, 768]) {
 
     const ledgerBox = (await page.locator('.prayer-calendar-ledger').boundingBox())!;
     const gridBox = (await page.locator('.prayer-calendar-grid').boundingBox())!;
+    await expect(calendar.locator('.prayer-calendar-section__heading button')).toHaveCount(0);
+    const openButton = calendar.getByRole('button', { name: 'Kalender öffnen', exact: true });
+    const openBox = (await openButton.boundingBox())!;
+    const sectionBox = (await calendar.boundingBox())!;
+    expect(openBox.y).toBeGreaterThanOrEqual(ledgerBox.y + ledgerBox.height);
+    expect(openBox.y - ledgerBox.y - ledgerBox.height).toBeLessThanOrEqual(18);
+    expect(openBox.width).toBeCloseTo(sectionBox.width, 0);
+    expect(openBox.height).toBeGreaterThanOrEqual(44);
     expect(gridBox.x).toBeGreaterThanOrEqual(ledgerBox.x);
     expect(gridBox.x + gridBox.width).toBeLessThanOrEqual(ledgerBox.x + ledgerBox.width + 1);
+    const notes = calendar.locator('.calendar-day-notes--compact');
+    await expect(notes.locator('.calendar-day-notes__empty')).toHaveCount(0);
+    const noteHeading = (await notes.locator('.calendar-day-notes__heading').boundingBox())!;
+    expect(noteHeading.height).toBeLessThanOrEqual(48);
+    await notes.screenshot({ path: testInfo.outputPath(`empty-notes-${width}.png`) });
+    const addNote = notes.getByRole('button', { name: 'Notiz hinzufügen', exact: true });
+    await addNote.click();
+    const editor = page.getByRole('dialog', { name: 'Notiz hinzufügen', exact: true });
+    await editor.getByLabel('Deine Notiz').fill('Eine Notiz für den ausgewählten Tag.');
+    await editor.getByRole('button', { name: 'Notiz speichern', exact: true }).click();
+    await expect(notes.getByRole('button', { name: /Notiz bearbeiten:/ })).toContainText('Eine Notiz für den ausgewählten Tag.');
+    const upcoming = calendar.getByRole('region', { name: 'Nächste Termine', exact: true });
+    await expect(upcoming.getByRole('listitem')).toHaveCount(3);
+    await expect(upcoming.locator('header .source-info')).toHaveCount(1);
+    for (const item of await upcoming.getByRole('listitem').all()) {
+      const geometry = await item.evaluate(element => {
+        const date = element.querySelector('time')!.getBoundingClientRect();
+        const copy = element.querySelector(':scope > span')!;
+        const title = copy.querySelector('strong')!;
+        const box = element.getBoundingClientRect();
+        const text = copy.getBoundingClientRect();
+        return { dateRight: date.right, textLeft: text.left, textRight: text.right, rowRight: box.right, overflow: copy.scrollWidth > copy.clientWidth, titleSize: getComputedStyle(title).fontSize, titleWhiteSpace: getComputedStyle(title).whiteSpace };
+      });
+      expect(geometry.dateRight).toBeLessThanOrEqual(geometry.textLeft);
+      expect(geometry.textRight).toBeLessThanOrEqual(geometry.rowRight);
+      expect(geometry.overflow).toBe(false);
+      expect(geometry.titleSize).toBe('14px');
+      expect(geometry.titleWhiteSpace).toBe('normal');
+    }
+    await upcoming.getByRole('button', { name: 'Quellen anzeigen: Islamisches Datum', exact: true }).click();
+    const info = page.getByRole('dialog', { name: 'Islamisches Datum', exact: true });
+    await expect(info).toContainText('Mondsichtung');
+    await info.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
+    await upcoming.screenshot({ path: testInfo.outputPath(`upcoming-${width}.png`) });
     await calendar.screenshot({ path: testInfo.outputPath(`prayer-calendar-${width}.png`) });
   });
 }

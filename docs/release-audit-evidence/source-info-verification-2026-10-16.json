@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-16",
+  "change": "Long religious source references use a shared 44px info trigger and native modal dialog; source text and links preserved",
+  "areas": [
+    "Wudu step sources and wording evidence",
+    "Prayer practice and school differences",
+    "Other worship guides",
+    "Learning lesson sources",
+    "Shared foundation guide references",
+    "Dua details",
+    "Dhikr references",
+    "Names list and per-name source context",
+    "Hadith library and saved detail",
+    "Calendar event references",
+    "Prophet chapters, people, knowledge, Hajj and places",
+    "School source bibliography"
+  ],
+  "unchanged": "Religious data files, privacy/storage warnings, layouts and illustrations",
+  "checks": {
+    "fullCheck": "passed: 59 test files, 1137 tests, TypeScript, build and bundle budget",
+    "browser": "34 passed; sources, exact links, preserved sharing, 99 Names boundaries, nested dialogs, Escape, focus return, 44px controls, viewports 320/390/768",
+    "bundle": "510 KB gzipped, within 511 KB"
+  },
+  "implementation": "src/shared/SourceInfo.tsx",
+  "cssOwner": "src/styles/reference-learning-courses.css; no new stylesheet, override layer or !important",
+  "screenshots": [
+    "docs/release-audit-evidence/source-info-wudu-closed-2026-10-16.png",
+    "docs/release-audit-evidence/source-info-wudu-open-2026-10-16.png"
+  ],
+  "logs": [
+    "/tmp/nur-source-info-check-20261016.log",
+    "/tmp/nur-source-info-e2e-20261016.log"
+  ]
+}

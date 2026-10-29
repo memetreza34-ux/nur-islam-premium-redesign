@@ -1,33 +1,27 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import type { CSSProperties } from 'react';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
+import { useEffect, useMemo, useState } from 'react';
 import {
   Bookmark,
   BookmarkCheck,
   BookHeart,
-  BookOpen,
   ChevronRight,
-  CircleCheck,
-  CloudDownload,
-  Filter,
-  Heart,
   LoaderCircle,
   RefreshCw,
   Search,
-  ShieldCheck,
   Sparkles,
   WifiOff,
 } from 'lucide-react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
-import { MihrabArch } from '../shared/MihrabArch';
+import { motion, useReducedMotion } from 'motion/react';
 import { PremiumImage } from '../shared/PremiumVisuals';
+import { MihrabArch } from '../shared/MihrabArch';
 import {
   fetchSurahs,
-  OFFLINE_QURAN_SURAH_SET,
   OFFLINE_QURAN_SURAHS,
 } from '../services/quranService';
 import type { Surah } from '../services/quranService';
 
-type QuranFilter = 'all' | 'offline' | 'favorites';
+type QuranFilter = 'all' | 'favorites';
 
 type LastRead = {
   surahNumber: number;
@@ -85,15 +79,14 @@ export function QuranScreen({
   onOpenAyah: () => void;
 }) {
   const [surahs, setSurahs] = useState<Surah[]>([]);
-  const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState<QuranFilter>('all');
+  const [query, setQuery] = useScreenState('quran.query', '');
+  const [savedFilter, setFilter] = useScreenState<QuranFilter>('quran.filter', 'all');
+  const filter = savedFilter === 'favorites' ? 'favorites' : 'all';
   const [favorites, setFavorites] = useState(() => readNumberSet('nur_quran_surah_favorites'));
   const [lastRead] = useState(readLastRead);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [reloadToken, setReloadToken] = useState(0);
-  const [toast, setToast] = useState<string | null>(null);
-  const toastTimerRef = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -115,23 +108,9 @@ export function QuranScreen({
   }, [reloadToken]);
 
   useEffect(() => persistSet('nur_quran_surah_favorites', favorites), [favorites]);
-  useEffect(() => () => {
-    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
-  }, []);
-
-  const flash = (message: string) => {
-    if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
-    setToast(message);
-    toastTimerRef.current = window.setTimeout(() => {
-      setToast(null);
-      toastTimerRef.current = null;
-    }, 2200);
-  };
-
   const visible = useMemo(() => {
     const normalized = query.trim().toLocaleLowerCase('de-DE');
     return surahs.filter((surah) => {
-      if (filter === 'offline' && !OFFLINE_QURAN_SURAH_SET.has(surah.number)) return false;
       if (filter === 'favorites' && !favorites.has(surah.number)) return false;
       if (!normalized) return true;
       return `${surah.number} ${surah.name} ${surah.englishName} ${surah.englishNameTranslation}`
@@ -156,7 +135,6 @@ export function QuranScreen({
   };
 
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
-  const toastTransition = { duration: reduceMotion ? 0 : .2, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <motion.main
@@ -165,52 +143,43 @@ export function QuranScreen({
       animate={{ opacity: 1, y: 0 }}
       transition={screenTransition}
     >
-      <header className="reference-screen-header">
+      <header className="reference-screen-header reference-screen-header--banner">
         <span aria-hidden="true" />
         <div><span className="overline">Quran-Bibliothek</span><h1>Quran</h1></div>
-        <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Lieblingssuren`); }} aria-label="Lieblingssuren"><Heart size={20} /></button>
+        <SourceInfo title="Lesen & Offline">
+          <p>Lies jede Sure versweise oder auf Buchseiten. Alle {OFFLINE_QURAN_SURAHS.length} Suren sind arabisch mitgeliefert. Aussprachehilfe und deutsche Übersetzung werden separat geladen. Leseseiten und geladene Texte werden lokal gespeichert, sofern dein Browser Speicherung erlaubt. Gelöschte Browserdaten entfernen auch gespeicherte Texte und Lesestellen.</p>
+        </SourceInfo>
       </header>
 
       <section className="quran-focus" aria-label="Quran-Lesestand">
-        {/* Same arch as Prayer, measuring the reading position instead of time. */}
         <MihrabArch
-          overline={lastRead ? 'Weiterlesen' : 'Quran beginnen'}
-          title={lastSurah ? `Sure ${readerSurahNumber}` : 'Sure 1'}
+          overline={lastRead ? 'Deine Lesestelle' : 'Quran lesen'}
+          title={`Sure ${readerSurahNumber}`}
           titleArabic={lastSurah?.name}
-          value={lastSurah?.englishName ?? 'Al-Faatiha'}
+          value={lastSurah?.englishName ?? (lastRead ? `Sure ${readerSurahNumber}` : 'Al-Faatiha')}
           valueAs="display"
-          meta={lastRead && lastSurah
-            ? `Ayah ${lastAyah} von ${lastSurah.numberOfAyahs}`
-            : 'Noch kein Lesestand'}
-          progress={lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0}
-          height={230}
-          backdropSrc="/premium-assets/high-res-objects/home-prayer-sky-v1.webp"
+          meta={lastRead && lastSurah ? <span id="quran-resume-position">Ayah {lastAyah} von {lastSurah.numberOfAyahs}</span> : undefined}
+          progress={0}
+          height={250}
+          className="quran-reading-arch"
+          backdropSrc="/premium-assets/high-res-objects/quran-garden-hero-v2.webp"
         />
-        <button className="gold-button" onClick={() => onOpenReader(readerSurahNumber, lastAyah)}>{lastRead ? 'Weiterlesen' : 'Lesen beginnen'} <ChevronRight size={16} /></button>
-      </section>
-
-      <section className="reference-quran-library-status glass-card">
-        <div aria-hidden="true"><PremiumImage src="/premium-assets/high-res-objects/mini-quran-v1.webp" className="quran-directory-art" fallback={<BookOpen size={21} />} /></div>
-        <div><small>Quran-Verzeichnis</small><strong>Alle 114 Suren lesbar</strong><em>Arabisch offline · Aussprache und deutsche Bedeutung mit Browser-Cache</em></div>
-        <span className="reference-quran-library-status__count">114</span>
-      </section>
-
-      <section className="reference-prototype-note reference-quran-online-note">
-        <ShieldCheck size={16} />
-        <span><strong>Drei Lesearten</strong><small>Lies jede Sure versweise oder auf Buchseiten. Alle {OFFLINE_QURAN_SURAHS.length} Suren sind arabisch mitgeliefert. Aussprachehilfe und deutsche Übersetzung werden separat geladen. Leseseiten und geladene Texte werden lokal gespeichert, sofern dein Browser Speicherung erlaubt. Gelöschte Browserdaten entfernen auch gespeicherte Texte und Lesestellen.</small></span>
+        <button className="gold-button quran-resume" onClick={() => onOpenReader(readerSurahNumber, lastAyah)} aria-describedby={lastRead && lastSurah ? 'quran-resume-position' : undefined}>
+          {lastRead ? 'Weiterlesen' : 'Lesen beginnen'}<ChevronRight size={18} aria-hidden="true" />
+        </button>
       </section>
 
       <label className="reference-input-search">
         <Search size={18} />
-        <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Nummer, Surenname oder Arabisch suchen …" />
-        <Filter size={17} />
+        <input aria-label="Suren suchen" value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Sure oder Nummer suchen …" />
       </label>
 
-      <div className="reference-filter-tabs reference-quran-filter-tabs" role="tablist" aria-label="Suren filtern">
-        <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Alle · 114</button>
-        <button className={filter === 'offline' ? 'is-active' : ''} onClick={() => setFilter('offline')}>Offline · {OFFLINE_QURAN_SURAHS.length}</button>
-        <button className={filter === 'favorites' ? 'is-active' : ''} onClick={() => setFilter('favorites')}>Favoriten · {favorites.size}</button>
+      <div className="reference-filter-tabs reference-quran-filter-tabs" role="group" aria-label="Suren filtern">
+        <button className={filter === 'all' ? 'is-active' : ''} aria-pressed={filter === 'all'} onClick={() => setFilter('all')}>Alle</button>
+        <button className={filter === 'favorites' ? 'is-active' : ''} aria-pressed={filter === 'favorites'} onClick={() => setFilter('favorites')}>Favoriten</button>
       </div>
+
+      {!loading && !error && query.trim() ? <div className="reference-quran-results" role="status"><small>{visible.length} {visible.length === 1 ? 'Sure gefunden' : 'Suren gefunden'}</small></div> : null}
 
       {loading ? (
         <div className="reference-quran-loading"><LoaderCircle size={24} className="is-spinning" /><strong>Surenliste wird geladen</strong></div>
@@ -218,17 +187,13 @@ export function QuranScreen({
         <div className="reference-empty-result"><WifiOff size={25} /><strong>Quran-Verzeichnis nicht verfügbar</strong><small>{error}</small><button className="reference-inline-button" onClick={() => setReloadToken((value) => value + 1)}><RefreshCw size={16} /> Erneut versuchen</button></div>
       ) : visible.length ? (
         <section className="reference-quran-catalog">
-          <div className="reference-quran-results"><span>{filter === 'all' ? 'Alle Suren' : filter === 'offline' ? 'Offline lesbar' : 'Lieblingssuren'}</span><small>{visible.length} Ergebnisse</small></div>
           <div className="reference-quran-list reference-quran-list--catalog">
             {visible.map((surah, index) => {
-              const offline = OFFLINE_QURAN_SURAH_SET.has(surah.number);
               const favorite = favorites.has(surah.number);
-              const ayahExtent = Math.max(8, Math.round((surah.numberOfAyahs / 286) * 100));
               return (
                 <motion.article
                   key={surah.number}
                   className="reference-quran-surah-card"
-                  style={{ '--surah-extent': `${ayahExtent}%` } as CSSProperties}
                   initial={{ opacity: 0, y: reduceMotion ? 0 : 7 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: reduceMotion ? 0 : .2, delay: reduceMotion ? 0 : Math.min(index * .006, .12), ease: [0.22, 1, 0.36, 1] }}
@@ -240,15 +205,12 @@ export function QuranScreen({
                   >
                     <span className="reference-quran-list__number" aria-hidden="true"><b>{surah.number}</b></span>
                     <span className="reference-quran-list__copy">
-                      <span className="reference-quran-list__index">Sure {surah.number} von 114</span>
                       <strong>{surah.englishName}</strong>
                       <small>
                         <span>{surah.numberOfAyahs} Ayat</span>
-                        <span className={offline ? 'reference-quran-availability is-available' : 'reference-quran-availability is-online'}>{offline ? 'Auf dem Gerät' : <><CloudDownload size={12} /> Online laden</>}</span>
+                        <span className="reference-quran-list__arabic" lang="ar" dir="rtl">{surah.name.replace('سُورَةُ ', '')}</span>
                       </small>
-                      <span className="reference-quran-list__extent" aria-hidden="true"><i /></span>
                     </span>
-                    <span className="reference-quran-list__arabic" dir="rtl"><small>سُورَة</small><strong>{surah.name.replace('سُورَةُ ', '')}</strong></span>
                   </button>
                   <button className={favorite ? 'reference-quran-favorite is-active' : 'reference-quran-favorite'} onClick={() => toggleFavorite(surah.number)} aria-label={`${surah.englishName} als Favorit markieren`} aria-pressed={favorite}>{favorite ? <BookmarkCheck size={18} /> : <Bookmark size={18} />}</button>
                 </motion.article>
@@ -257,18 +219,19 @@ export function QuranScreen({
           </div>
         </section>
       ) : (
-        <div className="reference-empty-result"><Search size={25} /><strong>Keine Sure gefunden</strong><small>Ändere Suche oder Filter.</small></div>
+        <div className="reference-empty-result">{filter === 'favorites' && !query.trim() ? <><BookHeart size={25} /><strong>Noch keine Lieblingssuren</strong><small>Tippe auf das Lesezeichen neben einer Sure.</small></> : <><Search size={25} /><strong>Keine Sure gefunden</strong><small>Ändere Suche oder Filter.</small></>}</div>
       )}
 
       <button className="verse-card verse-card--cream reference-daily-card-button quran-daily-ayah" onClick={onOpenAyah} aria-label="Ayah des Tages – Details öffnen">
-        <PremiumImage src="/premium-assets/high-res-objects/ayah-focus-bg-v1.webp" className="verse-card__art" fallback={<BookOpen />} />
+        <PremiumImage src="/premium-assets/high-res-objects/ayah-oasis-card-v1.webp" className="daily-ayah__backdrop" fallback={null} />
         <div className="card-title-row"><span><Sparkles size={16} /> Ayah des Tages</span><span><BookHeart size={18} /></span></div>
-        <p className="arabic-verse" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
-        <blockquote>Sinngemäße Bedeutung: „Sprich: Allah ist Einer.“</blockquote>
+        <p className="arabic-verse" lang="ar" dir="rtl">قُلْ هُوَ ٱللَّهُ أَحَدٌ</p>
+        <span className="daily-ayah__meaning-label">Sinngemäße Bedeutung</span>
+        <blockquote>Sprich: Allah ist Einer.</blockquote>
         <footer>Al-Ikhlas · 112:1</footer>
       </button>
 
-      <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 12, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .985 }} transition={toastTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
+
     </motion.main>
   );
 }

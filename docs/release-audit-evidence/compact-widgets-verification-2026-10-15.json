@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "change": "Home widgets are collapsed by default behind one native disclosure. Expanded widgets use one-column rows; previews, customization, routines and stored progress are preserved.",
+  "cacheVersion": 98,
+  "checks": {
+    "npmRunCheck": "passed",
+    "unitTests": 1047,
+    "e2e": "24 passed (57.7s)",
+    "responsiveWidths": [
+      320,
+      390,
+      768
+    ],
+    "keyboardToggle": "passed",
+    "routinePersistenceAfterReload": "passed",
+    "collapsedAfterReload": "passed"
+  },
+  "evidence": [
+    "compact-widgets-320-2026-10-15.png",
+    "compact-widgets-390-2026-10-15.png",
+    "compact-widgets-768-2026-10-15.png"
+  ]
+}

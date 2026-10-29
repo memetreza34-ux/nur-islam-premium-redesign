@@ -22,15 +22,18 @@ for (const width of [320, 768, 1280]) {
           await expect(card).toContainText(entry.honorific);
           await expect(card).toContainText(entry.role);
         }
-        if (entry.sourceNote) await expect(card).toContainText(entry.sourceNote);
-        await expect(card.getByRole('link')).toHaveCount(entry.sources.length);
+        await card.getByRole('button', { name: /^Quellen anzeigen:/ }).click();
+        const info = page.locator('dialog.source-info-dialog');
+        if (entry.sourceNote) await expect(info).toContainText(entry.sourceNote);
+        await expect(info.getByRole('link')).toHaveCount(entry.sources.length);
         for (const source of entry.sources) {
-          const link = card.getByRole('link', { name: source.label, exact: true });
+          const link = info.getByRole('link', { name: source.label, exact: true });
           await expect(link).toHaveAttribute('href', source.url);
           await expect(link).toHaveAttribute('target', '_blank');
           await expect(link).toHaveAttribute('rel', /noreferrer/);
           await expect(link).toBeVisible();
         }
+        await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
         expect(await card.evaluate(element => element.scrollWidth <= element.clientWidth + 1)).toBe(true);
       }
       expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);

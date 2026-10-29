@@ -1,0 +1,40 @@
+{
+  "recordedAt": "2026-10-14",
+  "scope": "Trial of compact Dhikr and Qibla 3D object illustrations on Home shortcut cards only. Other image mappings retained.",
+  "toolMode": "Codex built-in image_gen",
+  "promptSet": "output/imagegen/compact-shortcuts-20261014/prompts.json",
+  "assets": {
+    "dhikr": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v2.webp",
+    "qibla": "public/premium-assets/high-res-objects/home-qibla-illustrated-v2.webp",
+    "dimensions": "512x512",
+    "transparent": true,
+    "combinedBytes": 78606
+  },
+  "checks": {
+    "finalCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "browserCasesBeforeResponsivePolish": {
+      "passed": 21,
+      "exitCode": 0,
+      "specs": [
+        "core-flows.spec.ts",
+        "offline.spec.ts"
+      ]
+    },
+    "afterResponsivePolish": [
+      "Full technical check passed",
+      "Manual 390x844 and 320x740 visual inspection: full objects and readable labels",
+      "Dhikr and Qibla Home cards opened their respective screens and returned correctly"
+    ],
+    "diffCheckExitCode": 0
+  },
+  "serviceWorkerCache": "v87",
+  "preview": "http://127.0.0.1:3001/?preview=1",
+  "previewReason": "Existing port 3000 serves a different checkout at /Users/arman/Islam-Test/repos/nur-islam-premium-redesign; it was preserved. Changes are in the current task workspace.",
+  "screenshots": [
+    "compact-shortcuts-phone-2026-10-14.jpg",
+    "compact-shortcuts-small-phone-2026-10-14.jpg"
+  ],
+  "published": false
+}

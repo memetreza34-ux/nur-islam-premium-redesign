@@ -1,3 +1,5 @@
+import { TopicCardContent } from '../shared/TopicCardContent';
+import { ScreenStateProvider, useScreenState } from '../shared/ScreenState';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
@@ -159,21 +161,21 @@ const widgetIcons = {
 } satisfies Record<PremiumWidgetId, typeof MoonStar>;
 
 const widgetArtwork: Record<PremiumWidgetId, { src: string; alt: string }> = {
-  prayer: { src: '/premium-assets/high-res-objects/home-learn-prayer-v2.webp', alt: 'Grüner Gebetsteppich' },
-  quran: { src: '/premium-assets/high-res-objects/home-quran-illustrated-v1.webp', alt: 'Quran auf einem Rehal' },
-  dhikr: { src: '/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp', alt: 'Gebetskette' },
-  qibla: { src: '/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp', alt: 'Qibla-Kompass' },
-  'islamic-date': { src: '/premium-assets/high-res-objects/widget-date-illustrated-v1.webp', alt: 'Kalender ohne festes Datum' },
-  'daily-inspiration': { src: '/premium-assets/high-res-objects/widget-inspiration-illustrated-v1.webp', alt: 'Karte mit Lesezeichen' },
-  routine: { src: '/premium-assets/high-res-objects/widget-routine-illustrated-v1.webp', alt: 'Karten für die Tagesroutine' },
-  'quran-plan': { src: '/premium-assets/high-res-objects/widget-quran-plan-illustrated-v1.webp', alt: 'Quran mit Leseplan' },
-  'weekly-prayers': { src: '/premium-assets/high-res-objects/widget-weekly-prayers-illustrated-v1.webp', alt: 'Gebetsteppich mit Wochenplan' },
-  favorites: { src: '/premium-assets/high-res-objects/widget-favorites-illustrated-v1.webp', alt: 'Gesammelte Lesekarten' },
-  reminders: { src: '/premium-assets/high-res-objects/widget-reminders-illustrated-v1.webp', alt: 'Glocke und Erinnerungskarte' },
-  friday: { src: '/premium-assets/high-res-objects/widget-friday-illustrated-v1.webp', alt: 'Gebetsnische und Teppich für Jumuah' },
+  prayer: { src: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp', alt: 'Grüner Gebetsteppich' },
+  quran: { src: '/premium-assets/high-res-objects/learn-hub-book-v1.webp', alt: 'Quran auf einem Rehal' },
+  dhikr: { src: '/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp', alt: 'Gebetskette' },
+  qibla: { src: '/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp', alt: 'Qibla-Kompass' },
+  'islamic-date': { src: '/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp', alt: 'Kalender ohne festes Datum' },
+  'daily-inspiration': { src: '/premium-assets/high-res-objects/learn-hub-terms-v1.webp', alt: 'Lesekarten' },
+  routine: { src: '/premium-assets/high-res-objects/learn-hub-terms-v1.webp', alt: 'Karten für die Tagesroutine' },
+  'quran-plan': { src: '/premium-assets/high-res-objects/learn-hub-book-v1.webp', alt: 'Buch auf einem Lesepult' },
+  'weekly-prayers': { src: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp', alt: 'Gebetsteppich' },
+  favorites: { src: '/premium-assets/high-res-objects/learn-hub-character-v1.webp', alt: 'Herz mit Olivenzweig' },
+  reminders: { src: '/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp', alt: 'Kalender mit Häkchen' },
+  friday: { src: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp', alt: 'Gebetsteppich für Jumuah' },
 };
 
-const widgetArtUrl = (id: PremiumWidgetId) => versionAppPath(widgetArtwork[id].src, '20260929-widget-art-v2');
+const widgetArtUrl = (id: PremiumWidgetId) => versionAppPath(widgetArtwork[id].src, '20260826-original-art');
 
 function daysUntilFriday(date = new Date()) {
   return (5 - date.getDay() + 7) % 7;
@@ -218,6 +220,7 @@ function readWidgetView(id: PremiumWidgetId, now = new Date()): WidgetView {
 }
 
 function PremiumHomeWidgets({ onCustomize, onPreview }: { onCustomize: () => void; onPreview: (id: PremiumWidgetId) => void }) {
+  const [expanded, setExpanded] = useScreenState('widgets.expanded', false);
   const [tick, setTick] = useState(0);
   useEffect(() => {
     const sync = () => setTick((value) => value + 1);
@@ -234,11 +237,11 @@ function PremiumHomeWidgets({ onCustomize, onPreview }: { onCustomize: () => voi
   const settings = useMemo(() => readPremiumSettings(), [tick]);
   if (settings.widgets.length === 0) return null;
 
+
   const renderWidget = (id: PremiumWidgetId) => {
     if (!settings.widgets.includes(id)) return null;
-    const Icon = widgetIcons[id];
     const view = readWidgetView(id);
-    return <button key={id} onClick={() => onPreview(id)} className="premium-local-widget" data-widget={id}><Icon size={17} aria-hidden="true" /><img className="premium-local-widget__art" src={widgetArtUrl(id)} alt="" loading="lazy" aria-hidden="true" /><span><small>{view.eyebrow}</small><strong>{view.value}</strong><em>{view.detail}</em></span></button>;
+    return <button key={id} onClick={() => onPreview(id)} className="premium-local-widget" data-widget={id}><img className="premium-local-widget__art" src={widgetArtUrl(id)} alt="" loading="lazy" aria-hidden="true" /><span><small>{view.eyebrow}</small><strong>{view.value}</strong><em>{view.detail}</em></span></button>;
   };
 
   const freeWidgets = FREE_WIDGETS.map(renderWidget).filter(Boolean);
@@ -246,12 +249,16 @@ function PremiumHomeWidgets({ onCustomize, onPreview }: { onCustomize: () => voi
 
   return (
     <section className="premium-local-widgets" aria-label="Deine Widgets">
-      <div className="premium-local-widgets__heading">
-        <div><span><LayoutDashboard size={15} /> DEINE WIDGETS</span><h2>Dein Tag im Blick</h2></div>
-        <button onClick={onCustomize}>Anpassen</button>
-      </div>
+      <details className="premium-local-widgets__disclosure" open={expanded} onToggle={event => setExpanded(event.currentTarget.open)}>
+        <summary className="premium-local-widgets__heading topic-card">
+          <TopicCardContent title="Dein Tag im Blick" description="Deine Übersicht und persönliche Planung" art={widgetArtUrl('islamic-date')} fallback={<CalendarDays size={24} />} expandable />
+        </summary>
+        <div className="premium-local-widgets__content">
+          <div className="premium-local-widgets__tools"><strong>Deine Übersicht</strong><button onClick={onCustomize}>Anpassen</button></div>
       {freeWidgets.length ? <div className="premium-local-widget-group"><div><strong>Immer dabei</strong><small>Kostenlos</small></div><div className="premium-local-widgets__grid">{freeWidgets}</div></div> : null}
       {subscriptionWidgets.length ? <div className="premium-local-widget-group is-subscription"><div><strong><Crown size={13} /> Persönlich planen</strong><small>Im Abo · 0,99 € / Monat geplant</small></div><div className="premium-local-widgets__grid">{subscriptionWidgets}</div></div> : null}
+        </div>
+      </details>
     </section>
   );
 }
@@ -578,7 +585,7 @@ function PrayerWidgetPreview({ now }: { now: Date }) {
       {backdrop ? <img className="premium-prayer-widget__art" src={versionAppPath(backdrop, '20260929-widget-prayer-scene-v1')} alt="" /> : null}
       <span className="premium-prayer-widget__place"><MoonStar size={10} /> {PRAYER_SCHEDULE_META.city}<time>{currentTime}</time></span>
       <div className="premium-prayer-widget__header">
-        {nextPrayer ? <span className="is-next"><small>Nächstes Gebet · {nextPrayer.prayer.label}</small><time>{nextPrayer.prayer.time}</time></span> : <span><small>Aktuelle Uhrzeit</small><time>{currentTime}</time></span>}
+        {nextPrayer ? <span className="is-next"><small>Nächstes Gebet</small><time>{nextPrayer.prayer.time}</time></span> : <span><small>Aktuelle Uhrzeit</small><time>{currentTime}</time></span>}
       </div>
       {nextPrayer ? <div className="premium-prayer-widget__countdown">
         <span>{nextPrayer.tomorrow ? 'Morgen · ' : ''}noch {formatPrayerRemaining(nextPrayer.remaining)}</span>
@@ -803,7 +810,7 @@ export function PremiumSystemLayer() {
   return (
     <>
       {profileHost && !open && !previewWidget ? createPortal(<button className="premium-local-launcher" onClick={() => openPremium('overview')}><Crown size={19} /><span><strong>Nur Premium</strong><small>0,99 € · Komfortfunktionen ansehen</small></span></button>, profileHost) : null}
-      {homeHost ? createPortal(<PremiumHomeWidgets onCustomize={() => openPremium('home')} onPreview={(id) => { setOpen(false); setPreviewWidget(id); }} />, homeHost) : null}
+      {homeHost ? createPortal(<ScreenStateProvider stateKey="home-"><PremiumHomeWidgets onCustomize={() => openPremium('home')} onPreview={(id) => { setOpen(false); setPreviewWidget(id); }} /></ScreenStateProvider>, homeHost) : null}
       {open ? createPortal(<PremiumPanel initialTab={initialTab} onClose={closePremium} onPreview={(id) => { setOpen(false); setPreviewWidget(id); }} />, document.body) : null}
       {previewWidget ? createPortal(<WidgetPreviewPanel id={previewWidget} onClose={closePreview} onBuy={() => openPremium('overview')} onCustomize={() => openPremium('home')} onUse={() => useWidget(previewWidget)} />, document.body) : null}
       {reminderMessage ? <aside className="premium-local-reminder-banner" role="alert"><BellRing size={18} /><span><small>Premium-Erinnerung</small><strong>{reminderMessage}</strong></span><button onClick={() => setReminderMessage(null)} aria-label="Erinnerung schließen"><X size={16} /></button></aside> : null}

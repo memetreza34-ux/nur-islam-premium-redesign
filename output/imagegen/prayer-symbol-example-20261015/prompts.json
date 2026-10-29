@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "prompt": "Use case: stylized-concept. Create ONE isolated prayer-time icon for DHUHR / midday, for the mature Nur Islam app. Image 1 is our own prayer-rug illustration: MATERIAL AND STYLE reference, use its clean matte satin finish, restrained rounded edges, broad soft dimensional shading and warm ivory/teal/gold visual family. Image 2 is our own current oasis landscape series: PALETTE AND MOOD reference only. Subject: a single simple warm honey-gold sun, seen nearly front-on with a very slight dimensional tilt. A smooth shallow round sun disc with 8 evenly spaced short broad softly rounded sunrays, clean separate silhouette, warm light-gold center, slightly deeper muted ochre sides. Unmistakable sun at 32-48px display. Sophisticated compact 3D editorial app illustration, no human face, no childish expression, no photorealism. Adult understated object matching the reference family's materials. Not shiny chrome, not jewelry, not a glossy gemstone or gold medallion, no ornate rim, no bevelled rings, no razor-sharp spikes, no glitter or sparkles, no star decorations, no excessive glow, no landscape, no hills or clouds. One whole compact sun centered at about 75% of square canvas, ample transparent margins, no floor or detached cast shadow, no text or letters, no watermark, no UI, no surrounding card. Truly transparent background.",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-bb2c5b34-fc11-4d1b-abf0-e99acf4db78c.png",
+  "inputImages": [
+    "output/imagegen/cartoon-home-icons-20261014/prayer.png",
+    "output/imagegen/prayer-oasis-series-20261015/asr.png"
+  ],
+  "inputRoles": [
+    "Own prayer rug: material and style reference",
+    "Own oasis: palette and mood reference"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "recordedAt": "2026-10-14",
+  "scope": "Dhikr/Qibla and four Home discovery shortcuts displayed as full-width rows in two rounded groups with dividers. Existing six image assets, text and navigation targets retained.",
+  "implementation": [
+    "Existing design-system owner updated, previous tile/mobile geometry replaced",
+    "Images left, text in the middle, chevron right",
+    "One column at every screen width, wrapping text without horizontal overflow",
+    "Original 24px title size retained"
+  ],
+  "checks": {
+    "technicalCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "browserExitCode": 0,
+    "browserCasesPassed": 21,
+    "browserSpecs": [
+      "core-flows.spec.ts",
+      "offline.spec.ts"
+    ],
+    "diffCheckExitCode": 0,
+    "manualViewports": [
+      "648x764",
+      "390x844",
+      "320x740"
+    ],
+    "smallViewport": {
+      "panelClientWidth": 298,
+      "panelScrollWidth": 298,
+      "rowWidth": 298,
+      "minimumRowHeight": 100,
+      "maximumMeasuredRowHeight": 142.125,
+      "imageRight": 91,
+      "textLeft": 105
+    },
+    "temporaryViewportReset": true
+  },
+  "environment": {
+    "initialBrowserTestAttempt": "Could not start due to ENOSPC; only agent-created temporary browser-test result folders were removed, then rerun passed.",
+    "preview": "http://127.0.0.1:3004/?preview=1",
+    "reasonForPortChange": "The old port 3001 is now occupied by another local application; a dedicated strict-port Vite preview was started on 3004."
+  },
+  "screenshots": [
+    "home-rows-visible-2026-10-14.jpg",
+    "home-rows-phone-2026-10-14.jpg",
+    "home-rows-small-phone-2026-10-14.jpg"
+  ],
+  "serviceWorkerCache": "v90",
+  "published": false
+}

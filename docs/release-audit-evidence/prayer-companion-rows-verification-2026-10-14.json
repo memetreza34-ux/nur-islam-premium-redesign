@@ -1,0 +1,48 @@
+{
+  "verifiedAt": "2026-10-14",
+  "previewUrl": "http://127.0.0.1:3004/?preview=1",
+  "scope": "Six prayer companion shortcuts converted to grouped full-width rows; actions, labels, schedule and main prayer landscape retained.",
+  "artwork": {
+    "reusedUnchanged": ["home-learn-prayer-v5.webp", "home-qibla-illustrated-v3.webp", "home-duas-v5.webp", "home-dhikr-illustrated-v3.webp"],
+    "new": ["prayer-companion-mosque-v1.webp", "prayer-companion-fasting-v1.webp"],
+    "newRuntimeBytes": 65710,
+    "runtimeDimensions": "512x512",
+    "originalDimensions": "1254x1254",
+    "alphaPreserved": true,
+    "generation": "Built-in imagegen; own Home Kaaba and prayer rug used only as style references.",
+    "promptSet": "output/imagegen/prayer-companion-rows-20261014/prompts.json",
+    "allSixImagesLoadedOnVisiblePrayerPage": true,
+    "sharedAssetQueryVersion": "20260826-original-art"
+  },
+  "checks": {
+    "fullCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitTestFilesPassed": 59,
+    "fullCheckLog": "/tmp/nur-prayer-companion-rows-check-20261014.log",
+    "browserTestsPassed": 21,
+    "browserTestScope": ["e2e/core-flows.spec.ts", "e2e/offline.spec.ts"],
+    "allSixShortcutDestinationsCovered": true,
+    "browserExitCode": 0,
+    "browserLog": "/tmp/nur-prayer-companion-rows-isolated-e2e-20261014.log",
+    "browserTestPort": 4174,
+    "temporaryConfig": "/private/tmp/nur-prayer-rows-playwright.config.ts",
+    "discardedInitialAttempt": "Default port 4173 was occupied by an unrelated Word Imposter app. Test run interrupted with exit 130; no application result inferred from those failures.",
+    "stylesheetBytesReduced": 2700,
+    "stylesheetOwner": "src/styles/reference-prayer-dynamic.css",
+    "combinedBudgetLoweredToKB": 512,
+    "combinedBudgetCheckAfterLoweringExitCode": 0,
+    "gitDiffCheckExitCode": 0
+  },
+  "manual": {
+    "viewports": ["390x844", "390x896", "320x740", "native 648x764"],
+    "smallPhoneGridWidth": 298,
+    "smallPhoneGridScrollWidth": 298,
+    "smallPhoneImageToTextGap": 14,
+    "rowsRemainSingleColumn": true,
+    "screenshots": ["prayer-companion-rows-complete-phone-2026-10-14.jpg", "prayer-companion-rows-phone-2026-10-14.jpg", "prayer-companion-rows-small-phone-2026-10-14.jpg", "prayer-companion-rows-visible-2026-10-14.jpg"],
+    "viewportOverrideReset": true,
+    "previewKeptOpen": true
+  },
+  "serviceWorkerCacheVersion": "v92",
+  "published": false
+}

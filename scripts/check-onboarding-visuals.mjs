@@ -8,11 +8,11 @@ const art = await readFile(resolve(root, 'src/styles/premium-onboarding-art-lock
 const finalLock = await readFile(resolve(root, 'src/styles/premium-reference-geometry-lock.css'), 'utf8');
 
 const v2Assets = [
-  'mosque-heritage-v1.webp',
-  'qibla-compass-v2.webp',
-  'quran-closed-v2.webp',
-  'nur-logo-emblem-v3.svg',
-  'tasbih-v2.webp',
+  'prayer-companion-mosque-v1.webp',
+  'home-qibla-illustrated-v3.webp',
+  'learn-hub-book-v1.webp',
+  'nur-logo-mosque-3d-v1.webp',
+  'home-dhikr-illustrated-v3.webp',
 ];
 
 for (const asset of v2Assets) {
@@ -65,8 +65,8 @@ const styleRequirements = [
   'background: rgba(0, 27, 22, .78)',
   '.reference-onboarding__permissions > button > span:first-child',
   '.reference-onboarding__dots button {',
-  'width: 32px',
-  'height: 32px',
+  'width: 44px',
+  'height: 44px',
   '.reference-onboarding__dots button::after',
   'linear-gradient(90deg, #f2d79a, #e2bf77)',
   '.reference-onboarding__back',

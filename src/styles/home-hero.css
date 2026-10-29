@@ -28,7 +28,7 @@
   border-radius: 999px;
   color: var(--cream-strong);
   background: rgba(255, 255, 255, 0.08);
-  font-size: 0.68rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
@@ -78,7 +78,6 @@
   cursor: pointer;
   transition: 180ms ease;
 }
-.gold-button:hover { transform: translateY(-2px); filter: brightness(1.04); }
 .prayer-check {
   display: grid;
   justify-items: center;
@@ -89,7 +88,7 @@
   border-radius: 18px;
   color: var(--muted-green);
   background: rgba(255, 255, 255, 0.025);
-  font-size: 0.61rem;
+  font-size: .75rem;
   font-weight: 700;
   cursor: pointer;
 }
@@ -111,4 +110,4 @@
 @media (max-width: 380px) {
   .prayer-hero { min-height: 380px; padding: 21px; }
   .hero-main { margin-top: 35px; }
-  .prayer-check { font-size: 0.56rem; }}
+  .prayer-check { font-size: .75rem; }}

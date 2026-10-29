@@ -1,12 +1,5 @@
 /* Viewport-safe, centered modal system for every mobile dialog family. */
-:is(
-  .reference-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-learning-completion-backdrop,
-  .reference-prayer-course-complete,
-  .prayer-completion-backdrop,
-  .calendar-modal-backdrop
-) {
+:is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) {
   z-index: 160 !important;
   box-sizing: border-box;
   align-items: center !important;
@@ -19,23 +12,9 @@
   -webkit-overflow-scrolling: touch;
 }
 
-:is(
-  .reference-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-learning-completion-backdrop,
-  .reference-prayer-course-complete,
-  .prayer-completion-backdrop,
-  .calendar-modal-backdrop
-)::-webkit-scrollbar { display: none; }
+:is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop)::-webkit-scrollbar { display: none; }
 
-:is(
-  .reference-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-learning-completion-backdrop,
-  .prayer-completion-backdrop,
-  .calendar-modal-backdrop
-) > [role='dialog'],
-.reference-prayer-course-complete > section {
+:is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']{
   position: relative;
   isolation: isolate;
   box-sizing: border-box;
@@ -51,37 +30,13 @@
   -webkit-overflow-scrolling: touch;
 }
 
-:is(
-  .reference-learning-completion-modal,
-  .reference-prayer-course-complete > section,
-  .prayer-completion-modal
-) { width: min(100%, 390px); }
+:is( .prayer-completion-modal) { width: min(100%, 390px); }
 
-:is(
-  .reference-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-learning-completion-backdrop,
-  .prayer-completion-backdrop,
-  .calendar-modal-backdrop
-) > [role='dialog']::-webkit-scrollbar,
-.reference-prayer-course-complete > section::-webkit-scrollbar { display: none; width: 0; height: 0; }
+:is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']::-webkit-scrollbar{ display: none; width: 0; height: 0; }
 
-:is(
-  .reference-modal-backdrop,
-  .reference-prayer-settings-backdrop,
-  .reference-learning-completion-backdrop,
-  .prayer-completion-backdrop,
-  .calendar-modal-backdrop
-) > [role='dialog']::-webkit-scrollbar-thumb,
-.reference-prayer-course-complete > section::-webkit-scrollbar-thumb { background: transparent; }
+:is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']::-webkit-scrollbar-thumb{ background: transparent; }
 
-:is(
-  .reference-modal-close,
-  .reference-prayer-settings-modal__close,
-  .reference-mosque-detail-modal__close,
-  .reference-learning-completion-modal__close,
-  .prayer-completion-modal__close
-) {
+:is(.reference-modal-close, .reference-prayer-settings-modal__close, .reference-mosque-detail-modal__close, .prayer-completion-modal__close) {
   position: absolute !important;
   z-index: 12;
   top: 18px !important;
@@ -102,113 +57,61 @@
   -webkit-backdrop-filter: blur(16px);
 }
 
-:is(
-  .reference-profile-modal,
-  .reference-prayer-settings-modal,
-  .reference-mosque-detail-modal,
-  .reference-learning-completion-modal,
-  .reference-prayer-course-complete,
-  .prayer-completion-modal
-) h2 {
+:is(.reference-profile-modal, .reference-prayer-settings-modal, .reference-mosque-detail-modal) h2 {
   padding-right: 48px;
   text-wrap: balance;
 }
 
-:is(
-  .reference-choice-grid,
-  .reference-settings-toggles,
-  .reference-prayer-settings-group > div,
-  .reference-learning-completion-stats,
-  .reference-learning-completion-actions,
-  .prayer-completion-stats,
-  .prayer-completion-actions,
-  .reference-mosque-detail-actions
-) { min-width: 0; }
+:is(.reference-choice-grid, .reference-settings-toggles, .reference-prayer-settings-group > div, .prayer-completion-stats, .prayer-completion-actions, .reference-mosque-detail-actions) { min-width: 0; }
 
-:is(
-  .reference-choice,
-  .reference-settings-toggles > button,
-  .reference-prayer-settings-group button,
-  .reference-learning-completion-actions button,
-  .prayer-completion-actions > button,
-  .reference-mosque-detail-actions button,
-  .reference-mosque-detail-actions a
-) { min-height: 44px; }
+:is(.reference-choice, .reference-settings-toggles > button, .reference-prayer-settings-group button, .prayer-completion-actions > button, .reference-mosque-detail-actions button, .reference-mosque-detail-actions a) { min-height: 44px; }
 
 @media (max-width: 370px) {
-  :is(
-    .reference-modal-backdrop,
-    .reference-prayer-settings-backdrop,
-    .reference-learning-completion-backdrop,
-    .prayer-completion-backdrop,
-    .calendar-modal-backdrop
-  ) > [role='dialog'],
-  .reference-prayer-course-complete > section {
+  :is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']{
     padding-right: 17px;
     padding-left: 17px;
   }
 
-  :is(.reference-learning-completion-stats, .prayer-completion-stats) { gap: 6px; }
+  :is(.prayer-completion-stats) { gap: 6px; }
 }
 
 @media (max-width: 350px) {
-  :is(
-    .reference-learning-completion-actions,
-    .prayer-completion-actions,
-    .reference-mosque-detail-actions
-  ) { grid-template-columns: 1fr !important; }
+  :is(.reference-mosque-detail-actions) { grid-template-columns: 1fr !important; }
 }
 
 @media (max-height: 680px) {
-  :is(
-    .reference-modal-backdrop,
-    .reference-prayer-settings-backdrop,
-    .reference-learning-completion-backdrop,
-    .reference-prayer-course-complete,
-    .prayer-completion-backdrop,
-    .calendar-modal-backdrop
-  ) {
+  :is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) {
     align-items: center !important;
     padding-top: max(8px, env(safe-area-inset-top));
     padding-bottom: max(8px, env(safe-area-inset-bottom));
   }
 
-  :is(
-    .reference-modal-backdrop,
-    .reference-prayer-settings-backdrop,
-    .reference-learning-completion-backdrop,
-    .prayer-completion-backdrop,
-    .calendar-modal-backdrop
-  ) > [role='dialog'],
-  .reference-prayer-course-complete > section {
+  :is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']{
     max-height: calc(100dvh - max(16px, env(safe-area-inset-top)) - max(16px, env(safe-area-inset-bottom)));
     gap: 7px;
     padding-top: 17px;
     padding-bottom: 16px;
   }
+  .prayer-completion-burst { height: 80px; }
+  .prayer-completion-burst img { width: 80px; height: 80px; }
 
-  .reference-learning-completion-burst { width: 104px; height: 88px; }
-  .prayer-completion-burst { width: 132px; height: 132px; }
-  .prayer-completion-burst::before { width: 92px; height: 92px; }
-  .prayer-completion-burst::after { width: 118px; height: 118px; }
-
-  :is(
-    .reference-profile-modal__icon,
-    .reference-prayer-settings-modal__icon,
-    .reference-mosque-detail-modal__pin
-  ) {
+  :is(.reference-profile-modal__icon, .reference-prayer-settings-modal__icon, .reference-mosque-detail-modal__pin) {
     width: 46px;
     height: 46px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  :is(
-    .reference-modal-backdrop,
-    .reference-prayer-settings-backdrop,
-    .reference-learning-completion-backdrop,
-    .prayer-completion-backdrop,
-    .calendar-modal-backdrop
-  ) > [role='dialog'],
-  .reference-prayer-course-complete > section { scroll-behavior: auto; }
+  :is(.reference-modal-backdrop, .reference-prayer-settings-backdrop, .prayer-completion-backdrop, .calendar-modal-backdrop) > [role='dialog']{ scroll-behavior: auto; }
+}
+
+@media (max-height: 500px) and (min-width: 550px) {
+  .prayer-completion-backdrop > .prayer-completion-modal {
+    width: min(100%, 620px);
+    grid-template-columns: 96px minmax(0, 1fr);
+    column-gap: 18px;
+    padding-right: 68px;
+  }
+  .prayer-completion-burst { grid-row: 1 / 5; width: 96px; }
+  .prayer-completion-modal > :not(.prayer-completion-burst):not(button) { grid-column: 2; }
 }

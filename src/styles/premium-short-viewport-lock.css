@@ -25,26 +25,6 @@
     height: 104px !important;
   }
 
-  .reference-qibla-stage {
-    min-height: 405px !important;
-    padding-top: 22px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 278px !important;
-    height: 278px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 264px !important;
-    height: 264px !important;
-  }
-
-  .reference-qibla-stage__needle {
-    top: 50px !important;
-    height: 106px !important;
-  }
-
   .reference-dhikr-counter {
     min-height: 390px !important;
     padding-top: 22px !important;
@@ -91,7 +71,7 @@
 @media (orientation: landscape) and (max-height: 600px) {
   .app-shell:not(.app-shell--onboarding) {
     padding-top: max(8px, env(safe-area-inset-top)) !important;
-    padding-bottom: max(76px, calc(64px + env(safe-area-inset-bottom))) !important;
+    padding-bottom: 0 !important;
   }
 
   .app-shell--detail {
@@ -105,35 +85,6 @@
   .reference-screen-header {
     min-height: 48px !important;
     padding-block: 1px 4px !important;
-  }
-
-  
-
-  
-
-  
-
-  .reference-qibla-stage {
-    min-height: 350px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 236px !important;
-    height: 236px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 224px !important;
-    height: 224px !important;
-  }
-
-  .reference-qibla-stage__needle {
-    top: 44px !important;
-    height: 90px !important;
-  }
-
-  .reference-qibla-stage__copy {
-    margin-top: -2px !important;
   }
 
   .reference-dhikr-counter {
@@ -183,20 +134,6 @@
     gap: 4px !important;
   }
 
-  .reference-qibla-stage {
-    min-height: 320px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 210px !important;
-    height: 210px !important;
-  }
-
   .reference-dhikr-counter {
     min-height: 315px !important;
   }
@@ -218,7 +155,6 @@
 @media (prefers-reduced-motion: reduce) {
   .reference-splash,
   .reference-onboarding__visual,
-  .reference-qibla-stage,
   .reference-dhikr-counter,
   .reference-standby-stage {
     transition: none !important;

@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpenCheck,
@@ -59,8 +62,8 @@ async function copyText(text: string) {
 
 export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void; initialDuaId?: string | null }) {
   const initialDua = initialDuaId ? DUA_BY_ID.get(initialDuaId) ?? null : null;
-  const [filter, setFilter] = useState<DuaFilter>('all');
-  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useScreenState<DuaFilter>('duas.filter', 'all');
+  const [query, setQuery] = useScreenState('duas.query', '');
   const [favorites, setFavorites] = useState(() => readStringSet('nur_dua_favorites'));
   const [viewed, setViewed] = useState(() => {
     const current = readStringSet('nur_dua_viewed');
@@ -223,16 +226,15 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
-            <motion.section {...screenDialog.props} className="reference-dua-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">{DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title}</span>
-              <h2>{selected.title}</h2>
+            <motion.section {...screenDialog.props} className="reference-dua-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={selected.title} subtitle={DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title} onClose={closeDialog} />
               <p className="reference-dua-modal__arabic" dir="rtl">{selected.arabic}</p>
               <section><small>Transliteration</small><p>{selected.transliteration}</p></section>
               <section><small>Sinngemäße Bedeutung</small><p>{selected.translation}</p></section>
-              <div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quelle</small><strong>{selected.source}</strong></span></div>
+              <SourceInfo title={`Quelle zu „${selected.title}“`}><div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quelle</small><strong>{selected.source}</strong></span></div>
               {selected.sourceUrl ? <p><a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">Fundstelle öffnen</a></p> : null}
               {selected.sourceNote ? <section><small>Einordnung der Fundstelle</small><p>{selected.sourceNote}</p></section> : null}
+</SourceInfo>
               <div className="reference-dua-modal__actions">
                 <button className={favorites.has(selected.id) ? 'is-active' : ''} onClick={() => toggleFavorite(selected.id)}><Heart size={18} fill={favorites.has(selected.id) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button onClick={() => copyText(selected.arabic).then(() => flash('Arabischer Text kopiert')).catch(() => flash('Kopieren war nicht möglich'))}><Copy size={18} /> Kopieren</button>

@@ -1,0 +1,634 @@
+{
+  "date": "2026-10-15",
+  "scope": "Five main pages at 320 and 390 CSS pixels; live read-only layout measurements, not physical-device certification",
+  "observations": [
+    {
+      "name": "Start",
+      "documentWidth": 390,
+      "imageIssues": [],
+      "overflowControls": [],
+      "overflowText": [],
+      "smallControls": [],
+      "smallText": [
+        {
+          "left": 13,
+          "right": 154.609375,
+          "size": 11.5,
+          "text": "Berlin, DeutschlandStandardstandort · prüfenVoreingestellt"
+        },
+        {
+          "left": 33,
+          "right": 154.609375,
+          "size": 11.5,
+          "text": "Berlin, DeutschlandStandardstandort · prüfenVoreingestellt"
+        },
+        {
+          "left": 33,
+          "right": 154.609375,
+          "size": 10,
+          "text": "Standardstandort · prüfen"
+        },
+        {
+          "left": 228.234375,
+          "right": 377,
+          "size": 11.5,
+          "text": "Do., 15. Oktober 202615. Okt. 20264. Dschumada I 1448 AH"
+        },
+        {
+          "left": 264.234375,
+          "right": 377,
+          "size": 11.5,
+          "text": "Do., 15. Oktober 202615. Okt. 20264. Dschumada I 1448 AH"
+        },
+        {
+          "left": 264.234375,
+          "right": 377,
+          "size": 11,
+          "text": "Do., 15. Oktober 2026"
+        },
+        {
+          "left": 271.265625,
+          "right": 377,
+          "size": 9,
+          "text": "4. Dschumada I 1448 AH"
+        },
+        {
+          "left": 135.6640625,
+          "right": 254.3359375,
+          "size": 10.5,
+          "text": "Nächstes Gebet"
+        },
+        {
+          "left": 136.9453125,
+          "right": 253.046875,
+          "size": 11.5,
+          "text": "in 1 Std. 40 Min."
+        },
+        {
+          "left": 34.1640625,
+          "right": 52.5,
+          "size": 10.5,
+          "text": "Fajr"
+        },
+        {
+          "left": 88.2109375,
+          "right": 119.7734375,
+          "size": 10.5,
+          "text": "Sonne"
+        },
+        {
+          "left": 149.578125,
+          "right": 179.7421875,
+          "size": 10.5,
+          "text": "Dhuhr"
+        },
+        {
+          "left": 216.9609375,
+          "right": 233.703125,
+          "size": 10.5,
+          "text": "Asr"
+        },
+        {
+          "left": 265.4609375,
+          "right": 306.5234375,
+          "size": 10.5,
+          "text": "Maghrib"
+        },
+        {
+          "left": 336.4296875,
+          "right": 356.8984375,
+          "size": 10.5,
+          "text": "Isha"
+        },
+        {
+          "left": 13,
+          "right": 377,
+          "size": 11,
+          "text": "AlAdhan · berechnete ZeitenEurope/Berlin · Berechnung prüfen"
+        }
+      ],
+      "width": 390
+    },
+    {
+      "name": "Gebet",
+      "documentWidth": 390,
+      "imageIssues": [],
+      "overflowControls": [],
+      "overflowText": [],
+      "smallControls": [
+        {
+          "height": 40,
+          "label": "Standort",
+          "left": 281.4140625,
+          "right": 364,
+          "width": 82.5859375
+        },
+        {
+          "height": 36,
+          "label": "Monatsplan",
+          "left": 282.0859375,
+          "right": 377,
+          "width": 94.9140625
+        },
+        {
+          "height": 40,
+          "label": "Vorheriger Monat",
+          "left": 30,
+          "right": 70,
+          "width": 40
+        },
+        {
+          "height": 40,
+          "label": "Nächster Monat",
+          "left": 320,
+          "right": 360,
+          "width": 40
+        },
+        {
+          "height": 38,
+          "label": "Notiz hinzufügen",
+          "left": 221.5234375,
+          "right": 360,
+          "width": 138.4765625
+        }
+      ],
+      "smallText": [
+        {
+          "left": 102.6640625,
+          "right": 283.328125,
+          "size": 11.2,
+          "text": "4. Dschumada I 1448 AH"
+        },
+        {
+          "left": 46,
+          "right": 354,
+          "size": 10,
+          "text": "Live via AlAdhan · Europe/Berlin"
+        },
+        {
+          "left": 77,
+          "right": 269.4140625,
+          "size": 9.5,
+          "text": "Donnerstag, 15. Oktober 2026"
+        },
+        {
+          "left": 281.4140625,
+          "right": 364,
+          "size": 9.28,
+          "text": "Standort"
+        },
+        {
+          "left": 13,
+          "right": 377,
+          "size": 10,
+          "text": "Standort ist optional. Bei Nutzung werden die Gerätekoordinaten z"
+        },
+        {
+          "left": 107.7109375,
+          "right": 282.28125,
+          "size": 10.5,
+          "text": "Nächstes Pflichtgebet"
+        },
+        {
+          "left": 97,
+          "right": 293,
+          "size": 11.5,
+          "text": "noch 1 Std. 39 Min. · 0/5 heute"
+        },
+        {
+          "left": 13,
+          "right": 136.2421875,
+          "size": 11.2,
+          "text": "Tagesübersicht"
+        },
+        {
+          "left": 291.3984375,
+          "right": 377,
+          "size": 11.2,
+          "text": "Berechnung"
+        },
+        {
+          "left": 73,
+          "right": 317,
+          "size": 11.2,
+          "text": "15. Oktober"
+        },
+        {
+          "left": 73,
+          "right": 317,
+          "size": 8.16,
+          "text": "Heute · aktuelle Zeiten"
+        },
+        {
+          "left": 13,
+          "right": 80.7265625,
+          "size": 8.48,
+          "text": "Heute"
+        },
+        {
+          "left": 282.0859375,
+          "right": 377,
+          "size": 8.48,
+          "text": "Monatsplan"
+        },
+        {
+          "left": 77,
+          "right": 191.4375,
+          "size": 10,
+          "text": "Morgengebet"
+        },
+        {
+          "left": 77,
+          "right": 191.4375,
+          "size": 10,
+          "text": "Shuruq"
+        },
+        {
+          "left": 77,
+          "right": 191.4375,
+          "size": 10,
+          "text": "Mittagsgebet"
+        }
+      ],
+      "width": 390
+    },
+    {
+      "name": "Quran",
+      "documentWidth": 390,
+      "imageIssues": [],
+      "overflowControls": [],
+      "overflowText": [],
+      "smallControls": [
+        {
+          "height": 42,
+          "label": "Alle · 114",
+          "left": 15,
+          "right": 82.265625,
+          "width": 67.265625
+        },
+        {
+          "height": 42,
+          "label": "Offline · 114",
+          "left": 88.265625,
+          "right": 168.53125,
+          "width": 80.265625
+        },
+        {
+          "height": 42,
+          "label": "Favoriten · 0",
+          "left": 174.53125,
+          "right": 258.84375,
+          "width": 84.3125
+        }
+      ],
+      "smallText": [
+        {
+          "left": 123.046875,
+          "right": 262.953125,
+          "size": 11.2,
+          "text": "Quran-Bibliothek"
+        },
+        {
+          "left": 148.71875,
+          "right": 241.2734375,
+          "size": 10.5,
+          "text": "Weiterlesen"
+        },
+        {
+          "left": 139.0390625,
+          "right": 250.953125,
+          "size": 11.5,
+          "text": "Ayah 1 von 286"
+        },
+        {
+          "left": 82,
+          "right": 304,
+          "size": 9.5,
+          "text": "Quran-Verzeichnis"
+        },
+        {
+          "left": 82,
+          "right": 304,
+          "size": 10,
+          "text": "Arabisch offline · Aussprache und deutsche Bedeutung mit Browser-"
+        },
+        {
+          "left": 51,
+          "right": 364,
+          "size": 11.5,
+          "text": "Drei Lesearten"
+        },
+        {
+          "left": 51,
+          "right": 364,
+          "size": 10,
+          "text": "Lies jede Sure versweise oder auf Buchseiten. Alle 114 Suren sind"
+        },
+        {
+          "left": 15,
+          "right": 82.265625,
+          "size": 9.28,
+          "text": "Alle · 114"
+        },
+        {
+          "left": 88.265625,
+          "right": 168.53125,
+          "size": 9.28,
+          "text": "Offline · 114"
+        },
+        {
+          "left": 174.53125,
+          "right": 258.84375,
+          "size": 9.28,
+          "text": "Favoriten · 0"
+        },
+        {
+          "left": 16,
+          "right": 72,
+          "size": 11.2,
+          "text": "Alle Suren"
+        },
+        {
+          "left": 295.796875,
+          "right": 374,
+          "size": 11.2,
+          "text": "114 Ergebnisse"
+        },
+        {
+          "left": 88,
+          "right": 244,
+          "size": 8,
+          "text": "Sure 1 von 114"
+        },
+        {
+          "left": 88,
+          "right": 244,
+          "size": 9,
+          "text": "7 AyatAuf dem Gerät"
+        },
+        {
+          "left": 88,
+          "right": 114.2421875,
+          "size": 9,
+          "text": "7 Ayat"
+        },
+        {
+          "left": 121.2421875,
+          "right": 186.8515625,
+          "size": 8,
+          "text": "Auf dem Gerät"
+        }
+      ],
+      "width": 390
+    },
+    {
+      "name": "Lernen",
+      "documentWidth": 390,
+      "imageIssues": [],
+      "overflowControls": [],
+      "overflowText": [],
+      "smallControls": [],
+      "smallText": [
+        {
+          "left": 154.5859375,
+          "right": 231.40625,
+          "size": 11.2,
+          "text": "Nur Islam"
+        },
+        {
+          "left": 110,
+          "right": 360,
+          "size": 9.44,
+          "text": "Dein Lernbereich"
+        },
+        {
+          "left": 30,
+          "right": 64.390625,
+          "size": 10.4,
+          "text": "Beten"
+        },
+        {
+          "left": 92.390625,
+          "right": 165.3359375,
+          "size": 10.4,
+          "text": "Grundlagen"
+        },
+        {
+          "left": 193.3359375,
+          "right": 250.78125,
+          "size": 10.4,
+          "text": "Vertiefen"
+        },
+        {
+          "left": 110,
+          "right": 241.7109375,
+          "size": 9.44,
+          "text": "Gebet · Beginne hier"
+        },
+        {
+          "left": 30,
+          "right": 360,
+          "size": 10.88,
+          "text": "0/6 Gebetsgrundlagen abgeschlossen"
+        },
+        {
+          "left": 13,
+          "right": 377,
+          "size": 9.44,
+          "text": "Schritt für Schritt"
+        },
+        {
+          "left": 13,
+          "right": 192.2109375,
+          "size": 11.2,
+          "text": "Die fünf Pflichtgebete"
+        },
+        {
+          "left": 13,
+          "right": 182.4375,
+          "size": 11.2,
+          "text": "Danach weiterlernen"
+        },
+        {
+          "left": 333,
+          "right": 377,
+          "size": 11.52,
+          "text": "0/44"
+        },
+        {
+          "left": 26,
+          "right": 364,
+          "size": 11.52,
+          "text": "0% abgeschlossen · drei Kapitel führen vom Fundament zur Vertiefu"
+        },
+        {
+          "left": 30,
+          "right": 40.796875,
+          "size": 10.4,
+          "text": "01"
+        },
+        {
+          "left": 30,
+          "right": 42.90625,
+          "size": 10.4,
+          "text": "02"
+        },
+        {
+          "left": 30,
+          "right": 42.9921875,
+          "size": 10.4,
+          "text": "03"
+        },
+        {
+          "left": 13,
+          "right": 377,
+          "size": 10.4,
+          "text": "Kapitel 1 · Beginne hier"
+        }
+      ],
+      "width": 390
+    },
+    {
+      "name": "Mehr",
+      "documentWidth": 390,
+      "imageIssues": [],
+      "overflowControls": [],
+      "overflowText": [],
+      "smallControls": [],
+      "smallText": [
+        {
+          "left": 102.75,
+          "right": 283.2421875,
+          "size": 11.2,
+          "text": "Profil & Einstellungen"
+        },
+        {
+          "left": 90,
+          "right": 314,
+          "size": 9.44,
+          "text": "Assalamu Alaikum"
+        },
+        {
+          "left": 90,
+          "right": 314,
+          "size": 8.64,
+          "text": "Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist option"
+        },
+        {
+          "left": 324,
+          "right": 362,
+          "size": 9.28,
+          "text": "NU"
+        },
+        {
+          "left": 79,
+          "right": 335,
+          "size": 10.88,
+          "text": "Konto & Cloud"
+        },
+        {
+          "left": 59,
+          "right": 230.4921875,
+          "size": 10.08,
+          "text": "0,99 € · Komfortfunktionen ansehen"
+        },
+        {
+          "left": 13,
+          "right": 103.53125,
+          "size": 9.28,
+          "text": "Direktzugriff"
+        },
+        {
+          "left": 233.484375,
+          "right": 377,
+          "size": 8.64,
+          "text": "Alle Bereiche der App an einem Ort"
+        },
+        {
+          "left": 13,
+          "right": 107.703125,
+          "size": 10,
+          "text": "Hauptbereiche"
+        },
+        {
+          "left": 371.1796875,
+          "right": 377,
+          "size": 9,
+          "text": "4"
+        },
+        {
+          "left": 75,
+          "right": 153,
+          "size": 10.5,
+          "text": "Heute & nächstes Gebet"
+        },
+        {
+          "left": 261,
+          "right": 339,
+          "size": 10.5,
+          "text": "Zeiten, Plan & Tracker"
+        },
+        {
+          "left": 75,
+          "right": 153,
+          "size": 10.5,
+          "text": "Alle 114 Suren"
+        },
+        {
+          "left": 261,
+          "right": 339,
+          "size": 10.5,
+          "text": "Alle Kurse & Grundlagen"
+        },
+        {
+          "left": 13,
+          "right": 106.8046875,
+          "size": 10,
+          "text": "Gebet & Alltag"
+        },
+        {
+          "left": 371.1796875,
+          "right": 377,
+          "size": 9,
+          "text": "9"
+        }
+      ],
+      "width": 390
+    },
+    {
+      "name": "Start",
+      "documentWidth": 320,
+      "overflow": [],
+      "smallControls": 0,
+      "width": 320
+    },
+    {
+      "name": "Gebet",
+      "documentWidth": 320,
+      "overflow": [],
+      "smallControls": 36,
+      "width": 320
+    },
+    {
+      "name": "Quran",
+      "documentWidth": 320,
+      "overflow": [],
+      "smallControls": 3,
+      "width": 320
+    },
+    {
+      "name": "Lernen",
+      "documentWidth": 320,
+      "overflow": [],
+      "smallControls": 0,
+      "width": 320
+    },
+    {
+      "name": "Mehr",
+      "documentWidth": 320,
+      "overflow": [],
+      "smallControls": 0,
+      "width": 320
+    }
+  ]
+}
