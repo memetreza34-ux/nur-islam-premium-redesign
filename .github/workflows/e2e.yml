@@ -1,8 +1,6 @@
 name: End-to-end smoke
 
-# Kept out of the pre-push hook on purpose: it needs a browser and a built
-# server, which would add most of a minute to every local push. CI is the right
-# place for it.
+# The full browser suite runs in four groups; smoke remains the required gate.
 on:
   push:
     branches: [design/claude-design-system, 'codex/**']
@@ -18,9 +16,14 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  smoke:
+  browser:
+    name: Browser ${{ matrix.shard }}/4
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
@@ -28,12 +31,23 @@ jobs:
           node-version: 22
       - run: npm ci --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
-      - run: npm run e2e
+      - run: npm run e2e -- --shard=${{ matrix.shard }}/4
       - if: failure()
         uses: actions/upload-artifact@v7
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}
           path: |
             playwright-report
             test-results
           retention-days: 7
+
+  smoke:
+    if: ${{ always() }}
+    needs: browser
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Require every browser group to pass
+        env:
+          BROWSER_RESULT: ${{ needs.browser.result }}
+        run: test "$BROWSER_RESULT" = success
