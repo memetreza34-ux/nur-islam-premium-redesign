@@ -1,4 +1,6 @@
-# V1 Source Audit — Duas (34/34)
+# Historischer V1 Source Audit — Duas (34/34)
+
+> **Keine aktuelle Gesamtfreigabe.** Am 11.10.2026 waren unten als korrigiert bezeichnete Bedeutungen im aktuellen Code noch falsch; auch die behauptete Auszug-Kennzeichnung fehlte. Die erneute Prüfung korrigiert diese Abweichungen. Der alte Ledger und repräsentative Stichproben beweisen keinen vollständigen heutigen Abgleich aller 34 Einträge. Aktuelle Einzelbefunde werden gesondert dokumentiert.
 
 > Betrifft den v1-Block `duas`.
 >

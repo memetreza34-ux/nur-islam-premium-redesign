@@ -21,15 +21,13 @@ if (touchIndex < 0 || finalIndex < 0 || touchIndex > finalIndex) {
 }
 
 for (const requirement of [
-  '--compact-touch-target: 44px',
+  '--compact-touch-target: 48px',
   'width: var(--compact-touch-target) !important',
   'min-width: var(--compact-touch-target)',
   'height: var(--compact-touch-target) !important',
   'min-height: var(--compact-touch-target)',
   'width: 18px',
   'height: 18px',
-  '@media (hover: hover)',
-  '@media (hover: none)',
   '@media (max-width: 370px)',
   '@media (prefers-reduced-motion: reduce)',
 ]) {
@@ -54,7 +52,6 @@ for (const selector of [
   '.reference-nearby-label button',
   '.reference-prayer-complete-replay',
   '.reference-modal-close',
-  '.reference-learning-completion-modal__close',
   '.prayer-completion-modal__close',
   '.reference-prayer-settings-modal__close',
   '.reference-mosque-detail-modal__close',
@@ -74,7 +71,7 @@ for (const gridRule of [
   '.reference-prayer-reminder-banner',
   'grid-template-columns: 44px minmax(0, 1fr) auto var(--compact-touch-target) !important',
 ]) {
-  if (!touch.includes(gridRule)) throw new Error(`Parent grid is not aligned to 44px compact controls: ${gridRule}`);
+  if (!touch.includes(gridRule)) throw new Error(`Parent grid is not aligned to 48px compact controls: ${gridRule}`);
 }
 
 // Tripwire, not an invariant: these are the undersized baselines the central
@@ -82,8 +79,13 @@ for (const gridRule of [
 // change has to be looked at rather than assumed harmless. Updating an entry
 // here is the way to record that the look happened.
 //
-if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 36px') || !calendar.includes('width:38px') || !core.includes('width: 39px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
+if (!quran.includes('width: 36px') || !names.includes('width: 34px') || !prayerCalendar.includes('width: 44px') || !calendar.includes('width:44px') || !core.includes('width: 39px') || !installPrompt.includes('width: 28px') || !installPrompt.includes('min-height: 37px') || !prayerReminders.includes('width:29px') || !prayerReminders.includes('min-height:34px')) {
   throw new Error('Expected compact control baselines changed; review the centralized 44px overrides.');
 }
 
 console.log('Touch target consistency verified: compact Quran, Names, calendar, Dua, Dhikr, Qibla, install prompt, prayer reminder, prayer and modal controls use 44px hit areas, and their parent grids reserve matching columns.');
+
+const feedback = await readFile(resolve(root, 'src/styles/premium-motion-performance-lock.css'), 'utf8');
+for (const token of ['@media (hover: hover) and (pointer: fine)', ":not(:disabled):not([aria-disabled='true']):active", 'filter: brightness(.94)']) {
+  if (!feedback.includes(token)) throw new Error(`Shared touch feedback is missing: ${token}`);
+}

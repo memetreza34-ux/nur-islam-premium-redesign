@@ -2,7 +2,7 @@ import type { PremiumSettings } from './premiumLocalService';
 
 export function applyHomePreferences(home: HTMLElement, settings: PremiumSettings, host: HTMLElement | null) {
   home.classList.add('premium-home--personalized');
-  const fixed = ['.brand-bar', '.home-standfirst', '.home-prayer-focus, .prayer-hero', '.home-prayer-note'];
+  const fixed = ['.brand-bar', '.home-standfirst', '.home-prayer-focus, .prayer-hero'];
   fixed.forEach((selector, index) => {
     home.querySelectorAll<HTMLElement>(selector).forEach(node => { node.style.order = String(index); });
   });

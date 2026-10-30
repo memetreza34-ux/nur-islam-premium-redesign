@@ -39,7 +39,7 @@ const slides: OnboardingSlide[] = [
     eyebrow: 'Willkommen bei Nur',
     title: 'Ein ruhiger Ort für deinen Glauben.',
     description: 'Gebetszeiten, Quran, Dhikr und islamisches Wissen in einer klaren, hochwertigen App.',
-    image: '/premium-assets/high-res-objects/mosque-heritage-v1.webp',
+    image: '/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp',
     fallback: <MosqueScene />,
     icon: MoonStar,
     points: ['Wichtige Bereiche direkt erreichbar', 'Ruhiges Smaragd- und Gold-Design', 'Persönlicher Fortschritt auf deinem Gerät'],
@@ -48,7 +48,7 @@ const slides: OnboardingSlide[] = [
     eyebrow: 'Gebet & Richtung',
     title: 'Behalte deine Gebete im Blick.',
     description: 'Sieh Gebetszeiten, aktiviere Erinnerungen und finde die Qibla in einem einheitlichen Ablauf.',
-    image: '/premium-assets/high-res-objects/qibla-compass-v2.webp',
+    image: '/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp',
     fallback: <QiblaObject />,
     icon: Compass,
     points: ['Gebets-Tracker für fünf Pflichtgebete', 'Qibla-Kompass mit klarer Ausrichtung', 'Erinnerungen individuell einstellbar'],
@@ -57,7 +57,7 @@ const slides: OnboardingSlide[] = [
     eyebrow: 'Wissen & Alltag',
     title: 'Lerne, lies und gedenke Allahs.',
     description: 'Setze deine Quran-Lektüre fort, nutze Dhikr-Ziele und öffne verständliche Lernbereiche.',
-    image: '/premium-assets/high-res-objects/quran-closed-v2.webp',
+    image: '/premium-assets/high-res-objects/learn-hub-book-v1.webp',
     fallback: <QuranObject />,
     icon: Sparkles,
     points: ['Quran-Reader mit Lesezeichen', 'Dhikr-Zähler und tägliche Ziele', 'Wudu-, Salah- und Wissenslektionen'],
@@ -134,7 +134,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
       transition={screenTransition}
     >
       <header className="reference-onboarding__topbar">
-        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg" fallback={<NurMark />} priority /><strong>Nur</strong></span>
+        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} priority /><strong>Nur</strong></span>
         <button onClick={finish}>Überspringen</button>
       </header>
 
@@ -150,7 +150,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
           <div className={`reference-onboarding__visual reference-onboarding__visual--${index + 1}`}>
             <span className="reference-onboarding__halo" />
             <PremiumImage src={slide.image} fallback={slide.fallback} priority />
-            {index === 2 ? <span className="reference-onboarding__tasbih"><PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" fallback={<RosetteObject />} priority /></span> : null}
+            {index === 2 ? <span className="reference-onboarding__tasbih"><PremiumImage src="/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp" fallback={<RosetteObject />} priority /></span> : null}
             <span className="reference-onboarding__visual-icon"><SlideIcon size={20} /></span>
           </div>
 

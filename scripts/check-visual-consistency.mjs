@@ -17,7 +17,7 @@ async function collectFiles(directory, extensions) {
 const styleIndex = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 const guardrails = await readFile(resolve(root, 'src/styles/visual-consistency.css'), 'utf8');
 const geometryLock = await readFile(resolve(root, 'src/styles/premium-reference-geometry-lock.css'), 'utf8');
-const moreHubStyles = await readFile(resolve(root, 'src/styles/reference-more-hub.css'), 'utf8');
+const moreHubStyles = await readFile(resolve(root, 'src/styles/nur-design-system.css'), 'utf8');
 const base = await readFile(resolve(root, 'src/styles/base.css'), 'utf8');
 const navigation = await readFile(resolve(root, 'src/styles/navigation.css'), 'utf8');
 const navigationIcons = await readFile(resolve(root, 'src/shared/NavigationIcon.tsx'), 'utf8');
@@ -114,7 +114,7 @@ const requiredGuardrails = [
   '.premium-image > img:not([hidden])',
   'visibility: visible !important',
   '.premium-image > .premium-image__fallback[hidden]',
-  'mihrab-arch-v2.webp?v=20260826-original-art',
+  'home-learn-prayer-v5.webp?v=20260826-original-art',
   '@media (max-width: 370px)',
   'grid-template-columns: repeat(2, minmax(0, 1fr))',
   '@media (prefers-reduced-motion: reduce)',
@@ -144,14 +144,14 @@ for (const requirement of [
 }
 
 for (const requirement of [
-  '.reference-core-access-grid',
-  'grid-template-columns: repeat(2, minmax(0, 1fr))',
-  'min-height: 82px',
-  '.reference-core-access-grid__icon',
-  '@media (max-width: 370px)',
+  '.topic-list {',
+  'grid-template-columns: minmax(0, 1fr);',
+  'min-height: 96px;',
+  '.topic-card__art {',
+  '@media (max-width: 359px)',
 ]) {
   if (!moreHubStyles.includes(requirement)) {
-    throw new Error(`More hub visual structure is incomplete: ${requirement}`);
+    throw new Error(`Shared topic card structure is incomplete: ${requirement}`);
   }
 }
 
@@ -246,8 +246,8 @@ if (!app.includes("['quran', 'reader', 'ayah'].includes(activeTab)")) {
 if (!app.includes("['learn', 'prayer-learning', 'duas', 'names', 'wudu', 'salah'].includes(activeTab)")) {
   throw new Error('Learning-related secondary screens must keep Lernen active in the primary navigation.');
 }
-if (!app.includes('ayah-focus-bg-v1.webp" className="verse-card__art"')) {
-  throw new Error('Home daily Ayah card must use the original text-safe Ayah background.');
+if (app.includes('verse-card__art') || app.includes('Hadith des Tages') || !app.includes('className="daily-ayah__backdrop"') || !app.includes('ayah-oasis-card-v1.webp') || !await readFile(resolve(root, 'src/styles/nur-design-system.css'), 'utf8').then(css => css.includes('.verse-card.verse-card--cream { background: #f6eddc; }'))) {
+  throw new Error('Home must use the quiet oasis Ayah backdrop with a plain cream fallback, without legacy doorway artwork or a daily Hadith card.');
 }
 if (!app.includes("onNavigate('prayer')") || !app.includes('<BellRing size={20} />')) {
   throw new Error('Home header must keep the reference notification icon connected to the real prayer/reminder screen.');
@@ -263,8 +263,7 @@ const moreScreenUsage = app.match(/<MoreScreen[\s\S]*?\/>/);
 if (!moreScreenUsage) {
   throw new Error('The More hub screen is not rendered.');
 }
-if (!moreScreenUsage[0].includes('onBack={goBack}')
-  || !/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
+if (!/onNavigate=\{\(\w+\) => navigate\(\w+\)\}/.test(moreScreenUsage[0])) {
   throw new Error('More hub shortcuts are not connected to history-aware central app navigation.');
 }
 if (!app.includes('const [navigationHistory, setNavigationHistory] = useState<Tab[]>([])')
@@ -340,5 +339,5 @@ for (const assetPath of referencedPremiumAssets) {
 }
 
 console.log(
-  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last hero/card/control geometry plus compact 24/16/10 navigation and 1.75 Lucide lock, correct section-active semantics, Mihrab daily Ayah artwork, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
+  `Visual consistency verified: ${sourceFiles.length} TSX files, ${cssFiles.length} CSS layers, ${referencedPremiumAssets.size} referenced premium images, exact dark reference palette, final-last hero/card/control geometry plus compact 24/16/10 navigation and 1.75 Lucide lock, correct section-active semantics, plain cream Ayah cards, no CSS image-source swapping, no active image-hiding or fixed artwork-host layer, 44px touch targets, complete history-aware More hub navigation, narrow-screen layout, and reduced-motion support.`,
 );

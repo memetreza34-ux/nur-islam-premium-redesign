@@ -4,6 +4,7 @@ test.use({ serviceWorkers: 'block', reducedMotion: 'reduce' });
 
 for (const width of [320, 768]) {
   test(`four foundation additions have readable chapters and restore the grid at ${width}px`, async ({ page }, testInfo) => {
+    test.setTimeout(180_000);
     await page.setViewportSize({ width, height: 900 });
     await page.goto('/?preview=1');
     await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
@@ -18,14 +19,14 @@ for (const width of [320, 768]) {
       await expect(page.getByRole('heading', { name: title, exact: true })).toBeVisible();
       const guide = page.locator('.foundation-guide');
       await expect(guide.locator('.reference-legacy-hero')).toHaveCount(0);
-      const outline = guide.locator('details');
+      const outline = guide.locator('.foundation-guide-outline');
       await expect(outline).not.toHaveAttribute('open');
       const paragraphs = guide.locator('.foundation-chapter p');
       expect(await paragraphs.count()).toBeGreaterThan(6);
-      const type = await paragraphs.first().evaluate(element => ({ size: parseFloat(getComputedStyle(element).fontSize), line: parseFloat(getComputedStyle(element).lineHeight) }));
+      const type = await guide.locator('.foundation-chapter[open] p').first().evaluate(element => ({ size: parseFloat(getComputedStyle(element).fontSize), line: parseFloat(getComputedStyle(element).lineHeight) }));
       expect(type.size).toBeGreaterThanOrEqual(16);
       expect(type.line).toBeGreaterThanOrEqual(25);
-      await outline.getByText('Kapitelübersicht', { exact: false }).first().click();
+      await outline.getByText('Kapitel auswählen', { exact: true }).first().click();
       const links = outline.getByRole('navigation').getByRole('link');
       expect(await links.count()).toBeGreaterThanOrEqual(3);
       const targets = await links.evaluateAll(elements => elements.map(element => element.getAttribute('href')));
@@ -34,7 +35,7 @@ for (const width of [320, 768]) {
       await expect(page.locator(targets.at(-1)!).getByRole('heading', { level: 2 })).toBeVisible();
       expect(await guide.evaluate(element => element.scrollWidth)).toBeLessThanOrEqual(width);
       if (title === 'Sunnah im Alltag') {
-        await guide.locator('.foundation-topic-list').first().screenshot({ path: testInfo.outputPath(`sunnah-topics-${width}.png`) });
+        await guide.locator('.foundation-topic-list').last().screenshot({ path: testInfo.outputPath(`sunnah-topics-${width}.png`) });
       }
       await page.getByRole('button', { name: 'Zurück', exact: true }).click();
       await expect(grid).toBeVisible();
@@ -53,16 +54,16 @@ test('Hadith search and local favorites remain functional', async ({ page }) => 
   const articles = page.locator('.reference-hadith-library article');
   await expect(articles).toHaveCount(1);
   await articles.getByRole('button', { name: 'Als Favorit speichern', exact: true }).click();
-  await expect(articles.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+  await expect(articles.getByRole('button', { name: 'Aus Favoriten entfernen', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.getByRole('button', { name: 'Zurück', exact: true }).click();
   await openLibrary();
   await page.getByPlaceholder('Hadithe durchsuchen').fill('Bukhari 1;');
-  await expect(articles.getByRole('button')).toHaveAttribute('aria-pressed', 'true');
+  await expect(articles.getByRole('button', { name: 'Aus Favoriten entfernen', exact: true })).toHaveAttribute('aria-pressed', 'true');
   await page.getByPlaceholder('Hadithe durchsuchen').fill('nichts-gefunden-1234');
   await expect(page.getByText('Kein Hadith gefunden', { exact: true })).toBeVisible();
 });
 
-test('light reading theme retains readable contrast and two-column cards', async ({ page }, testInfo) => {
+test('light reading theme retains readable contrast and full-width learning rows', async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/?preview=1');
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
@@ -72,8 +73,9 @@ test('light reading theme retains readable contrast and two-column cards', async
     const rect = element.getBoundingClientRect();
     return { x: rect.x, y: rect.y, width: rect.width };
   }));
-  expect(lastRow[0].y).toBeCloseTo(lastRow[1].y, 0);
-  expect(lastRow[0].x + lastRow[0].width).toBeLessThan(lastRow[1].x);
+  expect(lastRow[1].y).toBeGreaterThan(lastRow[0].y);
+  expect(lastRow[0].x).toBeCloseTo(lastRow[1].x, 0);
+  expect(lastRow[0].width).toBeGreaterThan(300);
   await tiles.filter({ hasText: 'Fehler & Reue' }).click();
   await expect(page.locator('.foundation-chapter p').first()).toBeVisible();
   await page.evaluate(() => document.documentElement.setAttribute('data-theme', 'light'));

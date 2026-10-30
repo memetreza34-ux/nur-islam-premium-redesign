@@ -26,7 +26,7 @@ This matrix is the source-level visual contract for the premium redesign. It com
 
 | Screen / surface | Primary reference artwork | Crop / role | Primary semantic icon contract |
 | --- | --- | --- | --- |
-| Splash | `nur-logo-emblem-v3.svg` + `splash-mosque-v1.webp` | sharp Nur mark centered; mosque rises from center/bottom without overlapping copy | brand mark, no fake action |
+| Splash | next prayer landscape | prayer time above, Ayah centered directly on the full-screen landscape with a shared contrast gradient; no logo or separate Ayah background | verified shared timetable and daily verse; no fake action |
 | Onboarding 1 | `mosque-gold-v2.webp` | architectural, center/bottom | contextual slide icon |
 | Onboarding 2 | `qibla-compass-v2.webp` | centered circular hero | contextual slide icon |
 | Onboarding 3 | `quran-closed-v2.webp` + `tasbih-v2.webp` | Quran slightly left/bottom; Tasbih companion | contextual slide icon |

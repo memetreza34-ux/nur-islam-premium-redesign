@@ -1,6 +1,6 @@
 # V1 Source Audit — Prayer Time Methodology
 
-Status: **source-audited / GRÜN mit variant-aware Berechnungshinweis**
+Status: **alter Prüfbericht korrigiert am 11.10.2026; technische Teilprüfung, keine Gesamtfreigabe**
 
 > Technische/Quellenprüfung, keine Gelehrtenfreigabe.
 
@@ -17,22 +17,18 @@ Die API weist selbst darauf hin, dass berechnete Zeiten von lokaler Moschee oder
 
 ## Korrigierter Fehler
 
-Die App bezeichnete Diyanet/Methode 13 bisher als `experimentell`. Das entspricht der aktuellen offiziellen AlAdhan-Dokumentation nicht. Dort ist **Dubai / Methode 16** als experimental markiert, nicht Diyanet 13.
+Die frühere Behauptung dieses Berichts, Diyanet 13 werde nicht als experimentell bezeichnet, war falsch. Die am 11.10.2026 gelesene [Methoden-API](https://api.aladhan.com/v1/methods) nennt **Diyanet 13 und Dubai 16** jeweils experimentell. Die allgemeine [Methodenseite](https://aladhan.com/calculation-methods) lässt das Wort bei Diyanet weg. Die konkret zurückgegebenen API-Metadaten tragen die Kennzeichnung jedoch ebenfalls. Die App behält sie deshalb; die doppelte englische/deutsche Wiederholung im Methodentitel wurde beseitigt.
 
-Daher wurde ausschließlich die falsche Kennzeichnung entfernt:
-
-- `Diyanet İşleri Başkanlığı · API experimentell` → `Diyanet İşleri Başkanlığı`
-- `Diyanet (experimentell)` → `Diyanet`
-
-Die Methodennummer 13 selbst war korrekt und wurde nicht geändert.
+Der aktuelle Datums-, Parameter- und Quellenabgleich steht im [neuen Einzelbericht](PRAYER-TIMES-SOURCE-AUDIT-2026-10-11.md). Alte Aussagen über eine bereits vorgenommene Entfernung waren kein Beleg des heutigen Codes.
 
 ## Sicherheitslogik
 
 Der aktuelle Dienst hält folgende Grenzen ein:
 
-- keine persönlichen Live-Gebetszeiten ohne echten Gerätestandort;
-- der interne Berlin-Platzhalter darf nicht als Nutzerstandort live berechnet werden;
-- alte/default-basierte Caches werden nicht als persönliche Tageszeiten wiederverwendet;
+- Berlin ist ein ausdrücklich gekennzeichneter Standardstandort; für diese Stadt können API-Zeiten berechnet werden, auch ohne Gerätestandort;
+- eine solche Stadtabfrage ist keine Standortmessung und keine Aussage über den Aufenthaltsort des Nutzers;
+- bestätigte Tagesdaten dürfen für denselben Standort, Tag und dieselben Einstellungen als gespeichert wiederverwendet werden;
+- frühere Caches ohne die neue Antwortvalidierung werden nicht angezeigt; die gespeicherten Daten werden dabei nicht gelöscht;
 - Offline-Fallback enthält keine festen Uhrzeiten, sondern `—:—`;
 - ohne gültige Uhrzeiten gibt `getNextPrayer()` keinen scheinbaren Fajr-Fallback zurück;
 - Reminder werden nicht auf dem clockless Fallback ausgelöst;
@@ -44,4 +40,4 @@ Die App bietet bewusst Standard-/Hanafi-Asr als Auswahl. Sie behauptet nicht, ei
 
 ## Ergebnis
 
-`prayer-time-methodology` ist auf Source-Audit-Ebene abgeschlossen. Ein realer Feldvergleich mit örtlichen Referenzen bleibt Geräte-/Release-QA, nicht Teil dieser Quellenprüfung.
+Dieser historische Bericht belegt keine abgeschlossene Gesamtprüfung. Datums-/Metadatenprüfung und konkrete Fehler wurden bearbeitet; lokale Moscheevergleiche, reale Standortmessung, Geräteprüfungen und die übrigen im zentralen Bericht genannten Bereiche bleiben getrennt offen.

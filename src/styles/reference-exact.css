@@ -59,7 +59,7 @@ body {
 
 .overline {
   color: var(--gold-text);
-  font-size: .62rem;
+  font-size: .75rem;
   letter-spacing: .145em;
 }
 
@@ -87,12 +87,12 @@ body {
 
 .brand-lockup small {
   color: #d9b366;
-  font-size: .55rem;
+  font-size: .75rem;
 }
 
 .icon-button {
-  width: 39px;
-  height: 39px;
+  width: 44px;
+  height: 44px;
   border-radius: 13px;
   border-color: rgba(212, 175, 55, .22);
   background: rgba(14, 49, 39, .68);
@@ -159,15 +159,15 @@ body {
 }
 
 .prayer-mini-times small {
-  font-size: .48rem;
+  font-size: .75rem;
 }
 
 .prayer-mini-times strong {
-  font-size: .54rem;
+  font-size: .75rem;
 }
 
 .gold-button {
-  min-height: 43px;
+  min-height: 44px;
   border-radius: 13px;
   color: #10251e;
   background: linear-gradient(135deg, #f0d292, #d2a64f);
@@ -178,10 +178,6 @@ body {
   color: var(--cream-strong);
   font-size: 1.52rem;
   font-weight: 600;
-}
-
-.journey-grid {
-  gap: 8px;
 }
 
 .journey-card {
@@ -203,18 +199,6 @@ body {
   font-size: 1.02rem;
 }
 
-.quick-grid--v2 {
-  gap: 8px;
-}
-
-.quick-grid--v2 .quick-card {
-  min-height: 111px;
-  border-radius: 17px;
-  border-color: rgba(212, 175, 55, .2);
-  background: linear-gradient(150deg, rgba(17, 61, 47, .88), rgba(5, 28, 22, .96));
-  box-shadow: 0 12px 24px rgba(0, 0, 0, .18), inset 0 1px 0 rgba(255, 255, 255, .025);
-}
-
 .continue-card--v2 {
   border-radius: 19px;
 }
@@ -229,12 +213,6 @@ body {
   background: linear-gradient(108deg, #f4ead7, #ead4ab);
 }
 
-.recommendation-card {
-  border-radius: 16px;
-  border-color: rgba(212, 175, 55, .18);
-  background: linear-gradient(145deg, rgba(16, 55, 43, .78), rgba(4, 25, 20, .91));
-}
-
 
 
 
@@ -242,7 +220,7 @@ body {
 
 
 .bottom-nav__item small {
-  font-size: .5rem;
+  font-size: .75rem;
 }
 
 

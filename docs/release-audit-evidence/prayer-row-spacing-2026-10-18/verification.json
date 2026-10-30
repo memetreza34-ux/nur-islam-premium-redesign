@@ -1,0 +1,93 @@
+{
+  "date": "2026-10-18",
+  "request": "Gebetsliste wirkt eng; Namen, Beschreibungen und Uhrzeiten brauchen getrennten Platz.",
+  "changes": [
+    "Mobile actions occupy a separate row; 48px tap targets.",
+    "Full prayer names and 14px supporting labels.",
+    "No fake sunrise controls or spacer controls.",
+    "Hijri date may wrap rather than truncate.",
+    "Retired base row rules removed; same design-system owner."
+  ],
+  "checks": {
+    "browserTests": 10,
+    "unitTests": 1141,
+    "formats": [
+      320,
+      360,
+      390,
+      430,
+      768
+    ],
+    "textFitsOwnBoxes": true,
+    "textAndControlOverlap": false,
+    "sunriseActionCount": 0,
+    "longHeaderDate": "2026-10-18",
+    "fixtureNotice": "Browser evidence uses mocked API times for deterministic layout tests; these are not real prayer-time data."
+  },
+  "screenshots": [
+    {
+      "width": 320,
+      "file": "docs/release-audit-evidence/prayer-row-spacing-2026-10-18/prayer-320.png",
+      "sha256": "fd040cfff3fc2abe052de718d28d2a77eb97b109960d1fbac442350bd83732ab"
+    },
+    {
+      "width": 360,
+      "file": "docs/release-audit-evidence/prayer-row-spacing-2026-10-18/prayer-360.png",
+      "sha256": "5810a94fea56737e3e312b1adf76fe4e811e3fadd68178b4e943419fe72fa926"
+    },
+    {
+      "width": 390,
+      "file": "docs/release-audit-evidence/prayer-row-spacing-2026-10-18/prayer-390.png",
+      "sha256": "68731c36a7f3d025c5b2e07b156bef0f245568480f38022fc9f91f54e709ad85"
+    },
+    {
+      "width": 430,
+      "file": "docs/release-audit-evidence/prayer-row-spacing-2026-10-18/prayer-430.png",
+      "sha256": "a99033fb073df9d17062c2623a49b51d5a8d39ce795d0ca8c8604d40b19cf9f4"
+    },
+    {
+      "width": 768,
+      "file": "docs/release-audit-evidence/prayer-row-spacing-2026-10-18/prayer-768.png",
+      "sha256": "4e2dad1e83c547f031cf7fc81925dba447316a70efc2df027fa4477d1ae6808d"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "src/screens/PrayerScreen.tsx",
+      "sha256": "fee2dc30c0ecb9b7b3a25e8ac088693c417308776d4585b1f6c85bcafe1050f5"
+    },
+    {
+      "path": "src/styles/nur-design-system.css",
+      "sha256": "9388fb392a37ed370bdaed687e9d2aabe2910f2c91be4d29af32699c9051ed3c"
+    },
+    {
+      "path": "src/styles/prayer-list.css",
+      "sha256": "6ae243a83baebe6b02cdf50b870c1e0e40a91aa54e5dea0a95bb09ab5262aa72"
+    },
+    {
+      "path": "e2e/prayer-miniatures.spec.ts",
+      "sha256": "5481cb666f47a7c595f46c05668f231c032b39b915db83019a82799cc25fe35a"
+    },
+    {
+      "path": "scripts/check-prayer-reminders.mjs",
+      "sha256": "c3dd3c946a0cfd60f2ec8de663524c583f21549394d885b0430c1d6e55b6baf9"
+    },
+    {
+      "path": "scripts/check-functional-hardening.mjs",
+      "sha256": "a7e1bd0c3c17c900a250d0f5e14c5ee40c28ae4cec8679f3fb058f876174cb35"
+    },
+    {
+      "path": "scripts/check-core-screen-source.mjs",
+      "sha256": "eb6b41c0abaf8ce8823d7286e053148ec2473def859f3507e6cb354fdc581147"
+    },
+    {
+      "path": "scripts/check-stylesheet-debt.mjs",
+      "sha256": "06be36b2e076dfb6469401db3bbaaf0627ea6e68801098d98fed45bf1539c06d"
+    }
+  ],
+  "stylesheetRatchet": {
+    "bytes": 884288,
+    "importantRules": 2229,
+    "passed": true
+  }
+}

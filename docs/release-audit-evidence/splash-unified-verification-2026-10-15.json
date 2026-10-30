@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-15",
+  "scope": "Five unified matte 3D startup-only courtyard images; no prayer oasis or current/next prayer behavior changes.",
+  "assets": [
+    "splash-courtyard-fajr-v1.webp",
+    "splash-courtyard-dhuhr-v1.webp",
+    "splash-courtyard-asr-v1.webp",
+    "splash-courtyard-maghrib-v1.webp",
+    "splash-courtyard-isha-v1.webp"
+  ],
+  "runtime": "1536x1024 WebP, q92/m6, 5 assets total 463100 bytes",
+  "startupViewports": [
+    [
+      320,
+      568
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1280,
+      720
+    ],
+    [
+      568,
+      320
+    ]
+  ],
+  "check": "Passed: 1047 unit tests, TypeScript, all source/assets/provenance/budget guards and production build.",
+  "browser": "22 passed: startup 9, prayer landscapes 9, offline 4. Includes all five daily Ayah wordings on a narrow phone, missing artwork fallback and reduced motion.",
+  "logs": [
+    "/tmp/nur-splash-unified-check-20261015.log",
+    "/tmp/nur-splash-unified-e2e-20261015.log"
+  ],
+  "pwaShell": "v110",
+  "originalsAndPrompts": "output/imagegen/splash-courtyard-unified-20261015",
+  "limits": [
+    "No physical iPhone or Android device test in this task."
+  ]
+}

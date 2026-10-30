@@ -5,7 +5,8 @@ test('Home and More offer no assistant; the fasting calendar still works', async
   await openApp(page);
   await expect(page.getByRole('button', { name: /Assistent|Quellenmodus/i })).toHaveCount(0);
   await expect(page.getByRole('textbox', { name: /Frage/i })).toHaveCount(0);
-  await page.getByRole('button', { name: /Fastenplan.*Fastentage/ }).click();
+  await page.getByRole('navigation').getByText('Gebet', { exact: true }).click();
+  await page.locator('.prayer-companions').getByRole('button', { name: /^Fastenplan/ }).click();
   await expect(page.getByRole('heading', { name: 'Fastenplan', exact: true, level: 1 })).toBeVisible();
   await page.goBack();
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();

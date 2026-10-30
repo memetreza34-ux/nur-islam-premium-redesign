@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title">
+  <title id="title">Nur Islam – Moschee-Silhouette</title>
+  <rect width="180" height="180" fill="#001B16"/>
+  <path fill="#E2BF77" d="M29 139V82l8-16 8 16v57H29Zm106 0V82l8-16 8 16v57h-16Z"/>
+  <path fill="#F5F0E6" d="M49 139V99c0-26 17-42 41-53 24 11 41 27 41 53v40H49Z"/>
+  <path fill="#001B16" d="M76 139v-22c0-11 5-19 14-26 9 7 14 15 14 26v22H76Z"/>
+  <path fill="#E2BF77" d="M85 139v-20c0-7 2-12 5-16 3 4 5 9 5 16v20H85Z"/>
+  <path fill="#E2BF77" d="M88 36h4v12h-4z"/>
+  <circle cx="90" cy="30" r="4" fill="#E2BF77"/>
+  <path d="M25 139h130" stroke="#E2BF77" stroke-width="6" stroke-linecap="round"/>
+</svg>

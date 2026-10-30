@@ -1,0 +1,71 @@
+{
+  "createdAt": "2026-10-13",
+  "generator": "Built-in Codex image_gen; precise model not exposed by tool",
+  "masterDraft": {
+    "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-1c86a3c0-15a9-442f-bd9b-6f09011deec9.png",
+    "workspaceFile": "output/imagegen/prayer-courtyard/master-draft.png",
+    "prompt": "Use case: stylized-concept. Asset type: full-screen background artwork for the opening of Nur Islam, an emerald-and-gold Islamic learning app. Create ONE refined, calm illustration of a fictional mosque courtyard in clear midday light (Dhuhr). Landscape 3:2 composition, ideally 1536x1024. This will be the master image for five exactly matching time-of-day versions. Locked frontal camera, centered symmetrical courtyard, refined ivory limestone prayer-hall arches and restrained deep emerald details, a small elegant central dome, tiny aged brass accents. Architecture occupies the LOWER 30 percent and stays clearly recognizable in the CENTRAL PORTRAIT CROP; do not depend on objects at the extreme edges. Empty foreground courtyard, quiet soft matte stone, no busy tessellations. Upper and middle 65 percent is spacious smooth atmospheric sky in muted blue-green, reserved for crisp cream Arabic and German app text; no structures, sharp clouds, sun, or bright spot behind text. Clear soft noon daylight, subtle realistic shadows, sophisticated illustrated architectural rendering with gentle painterly softness, matching deep emerald #001B16, forest #0D5743, warm ivory #F5F0E6 and subdued antique gold #E2BF77. Keep the center calm and evenly toned. No people, no text, no calligraphy, no logos, no watermark, no UI, no picture frame, no collage, no lush tropical resort or oasis. Fictional architecture, not a claimed depiction of a real holy site."
+  },
+  "assets": [
+    {
+      "id": "fajr",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-4361263e-d826-421e-a1d2-ac405eb722ca.png",
+      "workspaceFile": "output/imagegen/prayer-courtyard/fajr.png",
+      "assetFile": "public/premium-assets/high-res-objects/prayer-fajr-v3.webp",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE fajr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Fajr, PRE-SUNRISE dawn: deep cool indigo and muted emerald-blue sky, a very subtle pale rose/ivory glow low on the horizon, no sun disc. Soft low light on ivory stone, a few restrained warm courtyard lamps. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "dimensions": "1536x1024"
+    },
+    {
+      "id": "dhuhr",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-a79b2c1f-ed5f-48dd-8e82-6b2021b23340.png",
+      "workspaceFile": "output/imagegen/prayer-courtyard/dhuhr.png",
+      "assetFile": "public/premium-assets/high-res-objects/prayer-dhuhr-v3.webp",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/master-draft.png"
+      ],
+      "prompt": "Use case: precise-object-edit. This own generated image is the EDIT TARGET for an Islamic app opening background. Keep this exact fictional mosque design, emerald/ivory/brass palette and clear midday lighting. Change ONLY the framing: move the camera further back so the whole mosque and both minarets become a smaller distant structure in the bottom 30% of the image. All finials and towers must stay BELOW the 65%-height line; the dome should start near 75% height. Reduce empty courtyard foreground to the bottom 8%. The TOP 65% and the middle must be uninterrupted gently textured blue-green sky with no bright hotspots, giving a large quiet safe area for Arabic and German text. Center the dome and main arch so they remain recognizable when cropping this wide image to portrait. Keep a frontal symmetrical camera, same buildings, materials and quality. 3:2 landscape, one image. No text, UI, logos, people or watermark.",
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "dimensions": "1536x1024"
+    },
+    {
+      "id": "asr",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-0a776a74-4ac9-4eab-833e-4f8c3a2315c7.png",
+      "workspaceFile": "output/imagegen/prayer-courtyard/asr.png",
+      "assetFile": "public/premium-assets/high-res-objects/prayer-asr-v3.webp",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE asr version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Asr, warm LATE AFTERNOON while the sun is STILL ABOVE the horizon: subdued golden light on the same ivory stone, soft longer shadows across the courtyard, muted blue-green sky, not orange sunset. Keep center sky smooth and not bright. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "dimensions": "1536x1024"
+    },
+    {
+      "id": "maghrib",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-4936afd4-aa4b-4141-b8b9-4d79cb9e345c.png",
+      "workspaceFile": "output/imagegen/prayer-courtyard/maghrib.png",
+      "assetFile": "public/premium-assets/high-res-objects/prayer-maghrib-v3.webp",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE maghrib version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Maghrib, AFTER SUNSET twilight: subdued dusty rose and violet near the low horizon, deep blue-green upper sky, no visible sun. Very subtle warm courtyard lamps begin glowing, stone gently shaded, no vivid saturated orange. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "dimensions": "1536x1024"
+    },
+    {
+      "id": "isha",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-0d769abc-ff0c-472c-adb0-aea49db6f839.png",
+      "workspaceFile": "output/imagegen/prayer-courtyard/isha.png",
+      "assetFile": "public/premium-assets/high-res-objects/prayer-isha-v3.webp",
+      "inputImages": [
+        "output/imagegen/prayer-courtyard/dhuhr.png"
+      ],
+      "prompt": "Use case: lighting-weather. The input is our OWN GENERATED fictional mosque courtyard and is the EDIT TARGET. Create ONE isha version for a matching five-image Nur Islam app series. CHANGE ONLY light, sky color, shadow strength and existing lamp illumination. Isha, FULL NIGHT: dark ink blue and deep emerald sky, very sparse subtle stars confined to the upper edges, softly lit ivory arches with restrained warm brass lamps. No moon added and no bright celestial object behind the text. The architecture must remain readable, not lost in black. INVARIANTS: exactly the same camera, framing, symmetry, building dimensions and positions, number of arches and minarets, central emerald dome, door, paving, plants, ivory/emerald/brass materials, and 3:2 aspect ratio as the reference. Do not move, add or remove architectural elements or change the artistic rendering style. Preserve spacious calm upper and middle sky reserved for cream Arabic and German UI text and the centered low mosque that stays in a portrait crop. Refined gentle architectural illustration, consistent emerald #001B16, forest #0D5743, ivory #F5F0E6, subdued antique gold #E2BF77. No people, no text, calligraphy, logos, watermark or UI. Match the reference precisely; this is a relighting edit, not a new scene.",
+      "processing": "cwebp -q 95 -m 6 -sharp_yuv; native resolution, no resizing",
+      "dimensions": "1536x1024"
+    }
+  ]
+}

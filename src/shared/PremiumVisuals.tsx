@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import { versionAppPath } from '../app/appPaths';
+import { BRAND_LOGO_FALLBACK } from './brandLogoFallback';
 
 const PREMIUM_ASSET_VERSION = '20260826-original-art';
 
@@ -10,26 +11,14 @@ type VisualProps = {
 
 function versionPremiumAsset(src: string) {
   if (!src.includes('premium-assets/')) return src;
+  if (src.endsWith('/nur-logo-mosque-3d-v1.webp')) return versionAppPath(src, '20261016-mosque-3d-v1');
   return versionAppPath(src, PREMIUM_ASSET_VERSION);
 }
 
 export function NurMark({ className = '', style }: VisualProps) {
   return (
-    <svg className={className} style={style} viewBox="0 0 96 96" aria-hidden="true">
-      <defs>
-        <linearGradient id="nur-gold" x1="12" y1="8" x2="82" y2="88" gradientUnits="userSpaceOnUse">
-          <stop stopColor="#fff0c7" />
-          <stop offset=".45" stopColor="#e8c77e" />
-          <stop offset="1" stopColor="#9c7131" />
-        </linearGradient>
-        <radialGradient id="nur-green" cx="50%" cy="40%" r="70%">
-          <stop stopColor="#174f3e" />
-          <stop offset="1" stopColor="#06251e" />
-        </radialGradient>
-      </defs>
-      <path d="M48 5 59 17l16-1 2 16 13 9-8 14 5 15-15 6-7 15-15-6-14 8-9-13-16-2 1-16L3 50l11-12-3-16 16-4L37 6l11 8Z" fill="url(#nur-green)" stroke="url(#nur-gold)" strokeWidth="6" strokeLinejoin="round" />
-      <path d="M58 31a20 20 0 1 0 2 32 18 18 0 1 1-2-32Z" fill="url(#nur-gold)" />
-      <path d="m63 34 2.8 5.7 6.2.9-4.5 4.4 1.1 6.2-5.6-3-5.6 3 1.1-6.2-4.5-4.4 6.2-.9Z" fill="#fff5d8" />
+    <svg className={className} style={style} viewBox="0 0 180 180" aria-hidden="true">
+      <image href={BRAND_LOGO_FALLBACK} width="180" height="180" />
     </svg>
   );
 }
@@ -169,18 +158,23 @@ export function PremiumImage({
   className = '',
   fallback,
   priority = false,
+  onLoad,
+  onError,
 }: {
   src: string;
   alt?: string;
   className?: string;
   fallback: React.ReactNode;
   priority?: boolean;
+  onLoad?: () => void;
+  onError?: () => void;
 }) {
   const versionedSrc = versionPremiumAsset(src);
-  const eager = priority || /brand-lockup|welcome-hero|reference-.*hero/.test(className);
+  const brandLogo = src.endsWith('/nur-logo-mosque-3d-v1.webp');
+  const eager = priority || brandLogo || /brand-lockup|welcome-hero|reference-.*hero/.test(className);
 
   return (
-    <span className={`premium-image ${className}`} data-premium-src={versionedSrc}>
+    <span className={`premium-image ${brandLogo ? 'premium-image--brand ' : ''}${className}`} data-premium-src={versionedSrc}>
       <img
         src={versionedSrc}
         alt={alt}
@@ -191,11 +185,13 @@ export function PremiumImage({
           event.currentTarget.hidden = false;
           const next = event.currentTarget.nextElementSibling as HTMLElement | null;
           if (next) next.hidden = true;
+          onLoad?.();
         }}
         onError={(event) => {
           event.currentTarget.hidden = true;
           const next = event.currentTarget.nextElementSibling as HTMLElement | null;
           if (next) next.hidden = false;
+          onError?.();
         }}
       />
       <span className="premium-image__fallback" hidden>{fallback}</span>

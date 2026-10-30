@@ -34,48 +34,38 @@ export type MadhhabDifference = {
   /** Die Frage, die die vier Antworten beantworten. */
   question: string;
   positions: Record<MadhhabId, string>;
+  source: string;
+  sourceUrl: string;
 };
 
 export const MADHHAB_DIFFERENCES: readonly MadhhabDifference[] = [
   {
     stepId: 'takbir',
     question: 'Wie hoch werden die Hände beim Takbir gehoben?',
-    positions: {
-      hanafi: 'Bis auf Ohrhöhe, die Daumen etwa an den Ohrläppchen.',
-      maliki: 'Bis auf Schulterhöhe.',
-      shafii: 'Bis auf Schulterhöhe.',
-      hanbali: 'Bis auf Schulter- oder Ohrhöhe; beides ist überliefert.',
-    },
+    positions: { hanafi: 'Männer bis Ohrhöhe, Frauen bis Schulterhöhe.', maliki: 'Für Männer wird Schulterhöhe beschrieben.', shafii: 'Für Männer wird Schulterhöhe beschrieben.', hanbali: 'Für Männer Schulter- oder Ohrhöhe; beide Ausführungen werden genannt.' },
+    source: 'TDV İslâm Ansiklopedisi · NAMAZ',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/namaz',
   },
   {
     stepId: 'takbir',
     question: 'Wo liegen die Hände danach im Stehen?',
-    positions: {
-      hanafi: 'Unterhalb des Nabels, die rechte Hand auf der linken.',
-      maliki: 'Verbreitet hängen die Arme locker an der Seite (Sadl); das Falten der Hände ist ebenfalls überliefert.',
-      shafii: 'Zwischen Brust und Nabel.',
-      hanbali: 'Unterhalb des Nabels.',
-    },
+    positions: { hanafi: 'Männer unter dem Nabel; Frauen auf der Brust, rechte Hand über der linken.', maliki: 'Sadl, also seitlich gelassene Arme, ist verbreitet. Handfalten wird je nach Gebetsart und Überlieferung eingeordnet.', shafii: 'Zwischen Brust und Nabel.', hanbali: 'Unter dem Nabel; auch eine Lage oberhalb wird überliefert.' },
+    source: 'TDV İslâm Ansiklopedisi · KIYAM',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/kiyam',
   },
   {
     stepId: 'sana',
     question: 'Wird nach dem Takbir ein Eröffnungsbittgebet gesprochen?',
-    positions: {
-      hanafi: 'Ja, „Subhanaka Allahumma …“.',
-      maliki: 'Nein; auf den Takbir folgt unmittelbar die Rezitation.',
-      shafii: 'Ja, überwiegend „Wajjahtu wajhiya …“.',
-      hanbali: 'Ja, „Subhanaka Allahumma …“.',
-    },
+    positions: { hanafi: 'Sübhâneke ist in der beschriebenen Lernfolge üblich.', maliki: 'In der beschriebenen Pflichtgebetsfolge folgt die Rezitation ohne Eröffnungsbittgebet.', shafii: 'Ein Eröffnungsbittgebet wird empfohlen; diese Übersicht legt keine einzige Fassung fest.', hanbali: 'Ein Eröffnungsbittgebet wird empfohlen; die überlieferte Fassung ist nicht auf eine einzige Variante begrenzt.' },
+    source: 'TDV İslâm Ansiklopedisi · NAMAZ',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/namaz',
   },
   {
     stepId: 'basmalah',
-    question: 'Wird die Basmalah vor Al-Fatihah gesprochen?',
-    positions: {
-      hanafi: 'Ja, leise, in jeder Rakʿah.',
-      maliki: 'Im Pflichtgebet wird sie nicht gesprochen.',
-      shafii: 'Ja; sie gilt als erster Vers der Fatihah und wird in den laut gebeteten Gebeten laut gesprochen.',
-      hanbali: 'Ja, leise.',
-    },
+    question: 'Wird die Basmala vor Al-Fatihah gesprochen?',
+    positions: { hanafi: 'Leise vor Al-Fatihah.', maliki: 'Nach der vorherrschenden Position im Pflichtgebet unterlassen; andere Überlieferungen und freiwillige Gebete unterscheiden sich.', shafii: 'Als Teil der Fatihah; in laut rezitierten Gebeten hörbar, in leisen leise.', hanbali: 'Nach der maßgeblichen Position leise vor der Rezitation.' },
+    source: 'TDV İslâm Ansiklopedisi · BESMELE',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/besmele',
   },
   {
     stepId: 'fatiha',
@@ -86,6 +76,8 @@ export const MADHHAB_DIFFERENCES: readonly MadhhabDifference[] = [
       shafii: 'Laut in den laut gebeteten Gebeten.',
       hanbali: 'Laut in den laut gebeteten Gebeten.',
     },
+    source: 'TDV İslâm Ansiklopedisi · AMIN',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/amin',
   },
   {
     stepId: 'ruku',
@@ -96,26 +88,22 @@ export const MADHHAB_DIFFERENCES: readonly MadhhabDifference[] = [
       shafii: 'Ja, vor dem Ruku und beim Aufrichten daraus.',
       hanbali: 'Ja, vor dem Ruku und beim Aufrichten daraus.',
     },
+    source: 'TDV İslâm Ansiklopedisi · TEKBIR',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/tekbir',
   },
   {
     stepId: 'rising-ruku',
     question: 'Gehört ein Qunut-Bittgebet zum Fajr-Gebet?',
-    positions: {
-      hanafi: 'Nein; das Qunut gehört zum Witr-Gebet.',
-      maliki: 'Ja, im Fajr — vor der Verbeugung der zweiten Rakʿah.',
-      shafii: 'Ja, im Fajr — nach dem Aufrichten aus der Verbeugung der zweiten Rakʿah.',
-      hanbali: 'Nicht regelmäßig; das Qunut ist Notlagen und dem Witr vorbehalten.',
-    },
+    positions: { hanafi: 'Kein regelmäßiges Fajr-Qunut; Qunut bei Notlagen wird gesondert behandelt. Witr hat eigene Regeln.', maliki: 'Empfohlen im Pflicht-Fajr, normalerweise vor dem Ruku der zweiten Einheit; bei Vergessen ist auch danach möglich.', shafii: 'Regelmäßig im Fajr nach dem Aufrichten aus dem Ruku der zweiten Einheit.', hanbali: 'Kein regelmäßiges Fajr-Qunut; Notlagen und Witr sind gesonderte Fälle.' },
+    source: 'Dar al-Ifta Ägypten · Fatwa 6532, Qunut im Fajr; malikitische Einordnung bei SeekersGuidance',
+    sourceUrl: 'https://www.dar-alifta.org/en/fatwa/details/6532/what-is-the-ruling-for-making-qunūt-in-dawn-prayers',
   },
   {
     stepId: 'tashahhud',
     question: 'Wie wird im letzten Sitzen gesessen?',
-    positions: {
-      hanafi: 'Iftirash: auf dem linken Fuß sitzend, in beiden Sitzen gleich.',
-      maliki: 'Tawarruk: das Gesäß am Boden, der linke Fuß unter dem rechten Bein — in beiden Sitzen.',
-      shafii: 'Iftirash im ersten Sitzen, Tawarruk im letzten.',
-      hanbali: 'Iftirash im ersten Sitzen, Tawarruk im letzten.',
-    },
+    positions: { hanafi: 'Männer Iftirash in beiden Sitzen; Frauen Tawarruk.', maliki: 'Tawarruk in beiden Sitzen.', shafii: 'Im ersten Sitzen Iftirash, im abschließenden Tawarruk.', hanbali: 'Iftirash und Tawarruk werden je nach Gebetsart unterschieden. Für Frauen werden auch andere Sitzweisen beschrieben; hier keine pauschale Regel für jedes letzte Sitzen.' },
+    source: 'TDV İslâm Ansiklopedisi · KADE',
+    sourceUrl: 'https://islamansiklopedisi.org.tr/kade',
   },
 ];
 
@@ -131,4 +119,4 @@ export const MADHHAB_DIFFERENCES_BY_STEP = MADHHAB_DIFFERENCES.reduce((map, diff
  * Einordnung nicht von der Sache getrennt gepflegt wird.
  */
 export const MADHHAB_DISCLAIMER =
-  'Übersicht der überwiegenden Praxis in den vier sunnitischen Rechtsschulen, nicht abschließend und keine Rechtsauskunft. Alle vier stehen auf demselben Boden; die Unterschiede betreffen die Ausführung, nicht die Gültigkeit. Was für dich gilt, klärst du am besten mit einer qualifizierten Lehrperson.';
+  'Übersicht der überwiegenden Praxis in den vier sunnitischen Rechtsschulen, nicht abschließend und keine Rechtsauskunft. Die Schulen können Handlungen unterschiedlich einordnen; daraus folgt keine pauschale Gültigkeitszusage für jede Ausführung. Für die eigene Praxis sind die Regeln der zugrunde gelegten Rechtsschule maßgeblich.';

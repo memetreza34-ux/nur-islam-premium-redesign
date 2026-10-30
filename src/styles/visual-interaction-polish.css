@@ -10,19 +10,7 @@
 
 
 
-:where(
-  .quick-card,
-  .journey-card,
-  .recommendation-card,
-  .reference-quran-list button,
-  .reference-reader-next,
-  .reference-profile-row,
-  .reference-services-grid button,
-  .reference-core-access-grid button,
-  .learning-card,
-  .calendar-event-card,
-  .prayer-time-row
-) {
+:where(.journey-card, .reference-quran-list button, .reference-reader-next, .reference-profile-row, .learning-card, .calendar-event-card, .prayer-time-row) {
   transition:
     transform 160ms ease,
     border-color 160ms ease,
@@ -31,17 +19,7 @@
     opacity 160ms ease;
 }
 
-:where(
-  .icon-button,
-  .play-button,
-  .adhan-button,
-  .prayer-alert,
-  .prayer-complete,
-  .gold-button,
-  .reference-inline-button,
-  .reference-map-button,
-  .reference-mosque-location-button
-) {
+:where(.icon-button, .play-button, .adhan-button, .prayer-alert, .prayer-complete, .gold-button, .reference-inline-button, .reference-map-button, .reference-mosque-location-button) {
   transition:
     transform 140ms ease,
     border-color 140ms ease,
@@ -55,61 +33,21 @@
   will-change: auto;
 }
 
-@media (hover: hover) {
-  :where(
-    .quick-card,
-    .journey-card,
-    .recommendation-card,
-    .reference-quran-list button,
-    .reference-reader-next,
-    .reference-profile-row,
-    .reference-services-grid button,
-    .reference-core-access-grid button,
-    .learning-card,
-    .calendar-event-card
-  ):hover {
-    transform: translateY(-1px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .035);
-  }}
-
-@media (hover: none) {
-  :where(
-    .quick-card,
-    .journey-card,
-    .recommendation-card,
-    .reference-quran-list button,
-    .reference-reader-next,
-    .reference-profile-row,
-    .reference-services-grid button,
-    .reference-core-access-grid button,
-    .learning-card,
-    .calendar-event-card,
-    .bottom-nav__item,
-    .icon-button,
-    .gold-button
-  ):active {
-    transform: scale(.985);
-  }}
-
 @media (prefers-reduced-motion: reduce) {
   .bottom-nav__item,
-  .bottom-nav__item::after,
-  .quick-card,
-  .journey-card,
-  .recommendation-card,
-  .reference-quran-list button,
-  .reference-reader-next,
-  .reference-profile-row,
-  .reference-services-grid button,
-  .reference-core-access-grid button,
-  .learning-card,
-  .calendar-event-card,
-  .prayer-time-row,
-  .icon-button,
-  .play-button,
-  .adhan-button,
-  .prayer-alert,
-  .prayer-complete,
-  .gold-button {
+.bottom-nav__item::after,
+.journey-card,
+.reference-quran-list button,
+.reference-reader-next,
+.reference-profile-row,
+.learning-card,
+.calendar-event-card,
+.prayer-time-row,
+.icon-button,
+.play-button,
+.adhan-button,
+.prayer-alert,
+.prayer-complete,
+.gold-button {
     transition: none !important;
   }}

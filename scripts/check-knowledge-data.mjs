@@ -9,10 +9,7 @@
  * instruction about practice without its basis is exactly what this app avoids
  * everywhere else.
  *
- * The Ummah figures carry no source and no reference year in the old data, so
- * the screen has to say so. Presenting an undated population number as fact is
- * the same fault as an unsourced Hadith, and it is the kind of caveat that gets
- * quietly dropped in a redesign.
+ * Unsupported demographic figures and rankings must not return to the screen.
  */
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
@@ -65,9 +62,14 @@ for (const requirement of [
   "if (featureId === 'ummah') return <UmmahFeature",
   '{item.proof}',
   // The figures may not be presented as a reliable statistic.
-  'weder Quelle noch Stichjahr',
+  'Unbelegte Prozentwerte, Bevölkerungszahlen und Rangbehauptungen wurden entfernt',
 ]) {
   if (!screen.includes(requirement)) throw new Error(`Knowledge screens are missing: ${requirement}`);
+}
+
+if (/\bshare\s*:|\binfo\s*:|\d+(?:[.,]\d+)?%/.test(ummah)
+  || /country\.(?:share|info)|region\.share/.test(screen)) {
+  throw new Error('Unsourced demographic values or country rankings returned to the Ummah overview.');
 }
 
 for (const gone of ['knowledge:', 'sunnah:', 'sins:', 'ummah:']) {
@@ -77,5 +79,5 @@ for (const gone of ['knowledge:', 'sunnah:', 'sins:', 'ummah:']) {
 }
 
 console.log(
-  `Knowledge verified: ${topics.length} topics with sections behind a detail view, ${practiceItems.length} Sunnah/repentance entries each carrying its proof, ${countries.length} countries with the missing source and reference year stated on screen.`,
+  `Knowledge structure verified: ${topics.length} topics, ${practiceItems.length} source-labelled practice entries, ${countries.length} countries without unsupported demographics. This is not a scholarly approval.`,
 );

@@ -7,11 +7,10 @@
   min-height: 58px;
   margin: -1px -2px 4px;
   padding: 7px 4px;
-  border-color: rgba(232, 199, 122, .14) !important;
-  border-radius: 18px !important;
-  background:
-    linear-gradient(145deg, rgba(5, 31, 24, .9), rgba(2, 18, 14, .88)) !important;
-  box-shadow: 0 14px 34px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: var(--ds-ink-800) !important;
+  box-shadow: none !important;
   backdrop-filter: blur(22px) saturate(1.08);
   -webkit-backdrop-filter: blur(22px) saturate(1.08);
 }
@@ -42,7 +41,7 @@
   box-shadow: 0 18px 44px rgba(0, 0, 0, .38), inset 0 1px 0 rgba(255, 255, 255, .035) !important;
   backdrop-filter: blur(18px);
   -webkit-backdrop-filter: blur(18px);
-  font-size: .66rem;
+  font-size: .75rem;
   line-height: 1.35;
 }
 
@@ -187,7 +186,7 @@
 .reference-onboarding__copy p {
   max-width: 340px;
   color: rgba(171, 191, 181, .8);
-  font-size: .66rem;
+  font-size: .75rem;
   line-height: 1.62;
 }
 
@@ -350,7 +349,7 @@
   
 
   .bottom-nav__item small {
-    font-size: .47rem;
+    font-size: .75rem;
   }
 
   .reference-install-prompt {
@@ -363,15 +362,6 @@
 
   .reference-onboarding__copy h1 {
     font-size: 1.86rem;
-  }}
-
-@media (hover: hover) and (pointer: fine) {
-  
-
-  .reference-onboarding__permissions > button:hover,
-  .reference-onboarding__topbar > button:hover,
-  .reference-install-prompt__action:hover {
-    transform: translateY(-1px);
   }}
 
 @media (prefers-reduced-motion: reduce) {

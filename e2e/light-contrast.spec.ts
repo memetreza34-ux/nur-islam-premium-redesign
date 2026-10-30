@@ -25,6 +25,10 @@ test('no unreadable text in the light theme', async ({ page }) => {
         while (node) {
           const style = getComputedStyle(node);
           if (style.backgroundImage && style.backgroundImage !== 'none') return null;
+          for (const pseudo of ['::before', '::after']) {
+            const overlay = getComputedStyle(node, pseudo);
+            if (overlay.content !== 'none' && overlay.content !== 'normal' && overlay.display !== 'none' && overlay.backgroundImage !== 'none') return null;
+          }
           const bg = style.backgroundColor;
           const alpha = Number((bg.match(/[\d.]+\)$/) ?? ['1'])[0].replace(')', ''));
           if (bg && bg !== 'rgba(0, 0, 0, 0)' && alpha > 0.5) return parse(bg);

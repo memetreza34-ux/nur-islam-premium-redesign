@@ -73,8 +73,14 @@ if (!app.includes('getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_M
   throw new Error('Landscape selection must use each own timetable and location timezone, separately from the next prayer.');
 }
 for (const id of ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha']) {
-  const filename = `prayer-${id}-v1.webp`;
+  const filename = `prayer-oasis-${id}-v2.webp`;
+  const openingFilename = `splash-arcade-${id}-v1.webp`;
+  if (!backdrops.includes(openingFilename) || !worker.includes(openingFilename)) throw new Error(`Missing separate opening artwork or offline cache entry: ${id}`);
   if (!backdrops.includes(filename) || !worker.includes(filename)) throw new Error(`Missing prayer landscape or offline cache entry: ${id}`);
+}
+const splash = await readFile(resolve(root, 'src/screens/SplashScreen.tsx'), 'utf8');
+if (!splash.includes('entry-portal') || splash.includes('getPrayerBackdrop') || splash.includes('getNextPrayer')) {
+  throw new Error('The opening is the logo reveal; live prayer timing and landscapes belong to Home and Prayer.');
 }
 for (const token of ['getPrayerBackdrop(scene)', '<AnimatePresence', 'useReducedMotion', 'ds-arch__veil', 'strokeDasharray={`${clamped} 100`}']) {
   if (!arch.includes(token)) throw new Error(`Prayer landscape must retain text protection, progress and accessible transitions: ${token}`);

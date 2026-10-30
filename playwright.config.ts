@@ -11,14 +11,18 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './e2e',
+  testIgnore: '**/fixtures/**',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 1 : 0,
   reporter: process.env.CI ? 'list' : 'line',
   timeout: 30_000,
   use: {
-    baseURL: 'http://localhost:4173',
+    baseURL: 'http://127.0.0.1:4174',
     trace: 'on-first-retry',
+    launchOptions: process.env.NUR_E2E_CHROME_PATH
+      ? { executablePath: process.env.NUR_E2E_CHROME_PATH }
+      : undefined,
     // A prayer app is used in Germany by default; the shipped fallback
     // schedule is Berlin, so the locale and timezone match what users see.
     locale: 'de-DE',
@@ -30,9 +34,9 @@ export default defineConfig({
   webServer: {
     // Preview serves the production build, so these exercise what ships
     // rather than the dev server.
-    command: 'VITE_BASE_PATH=/ npm run build && npm run preview -- --port=4173 --strictPort',
-    url: 'http://localhost:4173',
-    reuseExistingServer: !process.env.CI,
+    command: 'VITE_BASE_PATH=/ npm run build && npm run preview -- --host=127.0.0.1 --port=4174 --strictPort',
+    url: 'http://127.0.0.1:4174',
+    reuseExistingServer: false,
     timeout: 120_000,
   },
 });

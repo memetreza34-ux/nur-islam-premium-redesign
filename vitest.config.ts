@@ -9,6 +9,7 @@ process.env.TZ = 'Europe/Berlin';
 // a build config that only describes the build.
 export default defineConfig({
   test: {
+    maxWorkers: 2,
     environment: 'happy-dom',
     include: ['src/**/*.test.ts'],
     restoreMocks: true,

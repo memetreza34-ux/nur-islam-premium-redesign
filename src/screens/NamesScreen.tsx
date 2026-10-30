@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookmarkCheck,
@@ -14,6 +17,7 @@ import {
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { NAMES_OF_ALLAH } from '../data/namesOfAllahData';
 import type { NameOfAllah } from '../data/namesOfAllahData';
+import { getNameSourceEvidence, getRelatedNameSourceContext } from '../data/nameSourceEvidence';
 import { useDialog } from '../shared/useDialog';
 
 type NameFilter = 'all' | 'favorites' | 'learned';
@@ -21,54 +25,76 @@ type NameFilter = 'all' | 'favorites' | 'learned';
 const nameId = (name: NameOfAllah) => String(name.id);
 const validIds = new Set(NAMES_OF_ALLAH.map(nameId));
 
-function migrateNameSet(key: string, fallback: string[] = []) {
+type NameSelection = {
+  values: Set<string>;
+  raw: string | null;
+  unresolved: (string | number)[];
+  readable: boolean;
+  issue: string | null;
+};
+
+const unresolvedNotice = 'Einige ältere Markierungen sind nicht eindeutig zuordenbar. Sie bleiben gespeichert, werden aber nicht als zugeordnete Namen gezählt.';
+
+function migrateNameSet(key: string): NameSelection {
   try {
     const raw = localStorage.getItem(key);
-    const parsed = raw ? JSON.parse(raw) as unknown : fallback;
-    const values = Array.isArray(parsed) ? parsed : fallback;
+    const parsed: unknown = raw === null ? [] : JSON.parse(raw);
+    if (!Array.isArray(parsed) || parsed.some(value => typeof value !== 'string' && typeof value !== 'number')) throw new Error('Invalid name selection');
     const migrated = new Set<string>();
+    const unresolved: (string | number)[] = [];
 
-    values.forEach((value) => {
+    parsed.forEach((value: string | number) => {
       const candidate = String(value);
       if (validIds.has(candidate)) {
         migrated.add(candidate);
         return;
       }
 
-      const legacyMatch = NAMES_OF_ALLAH.find((entry) => entry.latin === candidate);
-      if (legacyMatch) migrated.add(nameId(legacyMatch));
+      const matches = NAMES_OF_ALLAH.filter((entry) => entry.latin === candidate);
+      if (matches.length === 1) migrated.add(nameId(matches[0]));
+      else unresolved.push(value);
     });
 
-    localStorage.setItem(key, JSON.stringify([...migrated]));
-    return migrated;
+    return { values: migrated, raw, unresolved, readable: true, issue: unresolved.length ? unresolvedNotice : null };
   } catch {
-    return new Set(fallback.filter((value) => validIds.has(value)));
+    return { values: new Set(), raw: null, unresolved: [], readable: false, issue: 'Vorhandene Markierungen konnten nicht gelesen werden. Sie werden nicht überschrieben; Änderungen gelten nur für diese Ansicht.' };
   }
 }
 
-function writeSet(key: string, value: Set<string>) {
+function writeSet(key: string, current: NameSelection, values: Set<string>): NameSelection {
+  const next = { ...current, values };
+  if (!current.readable) return next;
   try {
-    localStorage.setItem(key, JSON.stringify([...value]));
+    if (localStorage.getItem(key) !== current.raw) {
+      return { ...next, issue: 'Die gespeicherten Markierungen haben sich geändert. Neu öffnen, um sie einzulesen. Änderungen dieser Ansicht sind nicht gespeichert.' };
+    }
+    const raw = JSON.stringify([...values, ...current.unresolved]);
+    localStorage.setItem(key, raw);
+    if (localStorage.getItem(key) !== raw) throw new Error('Name selection not persisted');
+    return { ...next, raw, issue: current.unresolved.length ? unresolvedNotice : null };
   } catch {
-    // Lokale Speicherung bleibt in eingeschränkten Browsermodi optional.
+    return { ...next, issue: 'Änderungen konnten nicht dauerhaft gespeichert werden. Bereits gelesene Markierungen bleiben sichtbar; neue Änderungen gelten nur für diese Ansicht.' };
   }
 }
 
 export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => void; initialNameId?: string | null }) {
   const initialName = initialNameId ? NAMES_OF_ALLAH.find((entry) => String(entry.id) === initialNameId) ?? null : null;
-  const [query, setQuery] = useState('');
-  const [filter, setFilter] = useState<NameFilter>('all');
-  const [favorites, setFavorites] = useState(() => migrateNameSet('nur_name_favorites'));
-  const [learned, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
+  const [query, setQuery] = useScreenState('names.query', '');
+  const [filter, setFilter] = useScreenState<NameFilter>('names.filter', 'all');
+  const [favoriteSelection, setFavorites] = useState(() => migrateNameSet('nur_name_favorites'));
+  const [learnedSelection, setLearned] = useState(() => migrateNameSet('nur_name_learned'));
+  const favorites = favoriteSelection.values;
+  const learned = learnedSelection.values;
+  const storageIssues = [...new Set([favoriteSelection.issue, learnedSelection.issue].filter(Boolean))];
   const [selected, setSelected] = useState<NameOfAllah | null>(initialName);
   const closeName = useCallback(() => setSelected(null), []);
   const nameDialog = useDialog(Boolean(selected), closeName, selected?.latin);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimerRef = useRef<number | null>(null);
   const reduceMotion = useReducedMotion();
+  const selectedEvidence = selected ? getNameSourceEvidence(selected.id) : null;
+  const relatedEvidence = selected ? getRelatedNameSourceContext(selected.id) : null;
 
-  useEffect(() => writeSet('nur_name_favorites', favorites), [favorites]);
-  useEffect(() => writeSet('nur_name_learned', learned), [learned]);
   useEffect(() => () => {
     if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
   }, []);
@@ -99,22 +125,18 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
 
   const toggleFavorite = (name: NameOfAllah) => {
     const id = nameId(name);
-    setFavorites((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    const next = new Set(favorites);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setFavorites(writeSet('nur_name_favorites', favoriteSelection, next));
   };
 
   const toggleLearned = (name: NameOfAllah) => {
     const id = nameId(name);
-    setLearned((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    const next = new Set(learned);
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    setLearned(writeSet('nur_name_learned', learnedSelection, next));
   };
 
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] as const };
@@ -130,7 +152,7 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
         <div><span className="overline">Asma’ul Husna</span><h1>99 Namen Allahs</h1></div>
-        <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Favoriten`); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
+        <button className="icon-button" onClick={() => { setFilter('favorites'); flash(favoriteSelection.readable ? `${favorites.size} Favoriten` : 'Favoriten konnten nicht gelesen werden'); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
       </header>
 
       <section className="reference-names-hero">
@@ -138,11 +160,15 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
         <span className="hero-pill">Asma’ul Husna</span>
         <h2>Alle 99 Namen<br />an einem Ort.</h2>
         <p>Suche, favorisiere und markiere Namen, die du bereits gelernt hast.</p>
+        <small>Traditionelle Lernliste</small>
+        <SourceInfo title="Quellen zur Namensliste"><p>Verbreitete traditionelle Lernliste. Die feste Auswahl und einzelne Namensformen werden unterschiedlich eingeordnet; nicht jeder Eintrag ist bereits mit einem eigenen Beleg geprüft.</p><p className="reference-name-source"><a href="https://sunnah.com/bukhari:7392" target="_blank" rel="noopener noreferrer">Bukhari 7392</a> und <a href="https://sunnah.com/muslim:2677a" target="_blank" rel="noopener noreferrer">Muslim 2677a</a> erwähnen 99 Namen, zählen sie aber nicht einzeln auf. Die Aufzählung in <a href="https://sunnah.com/tirmidhi:3507" target="_blank" rel="noopener noreferrer">Tirmidhi 3507</a> wird in der verlinkten Ausgabe von Darussalam als Daʿif eingestuft; at-Tirmidhi bezeichnet den Bericht als Gharib. Daraus folgt keine pauschale Ablehnung der einzeln anderweitig belegten Namen.</p></SourceInfo>
       </section>
+
+      {storageIssues.length ? <div className="reference-name-modal__notice" role="status"><ShieldCheck size={16} /><span>{storageIssues.join(' ')}</span></div> : null}
 
       <section className="reference-name-progress glass-card">
         <span className="reference-name-progress__icon"><BookmarkCheck size={22} /></span>
-        <span><small>Dein Lernfortschritt</small><strong>{learned.size} von 99 gelernt</strong><em>{progress} % abgeschlossen</em></span>
+        <span><small>Dein Lernfortschritt</small><strong>{learnedSelection.readable ? `${learned.size} von 99 gelernt` : 'Gespeicherter Lernstand nicht lesbar'}</strong><em>{learnedSelection.readable ? `${progress} % abgeschlossen` : 'Kein bestätigter Lernstand'}</em></span>
         <div className="reference-name-progress__bar"><span style={{ width: `${progress}%` }} /></div>
       </section>
 
@@ -154,8 +180,8 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
 
       <div className="reference-filter-tabs reference-name-filter-tabs">
         <button className={filter === 'all' ? 'is-active' : ''} onClick={() => setFilter('all')}>Alle 99</button>
-        <button className={filter === 'favorites' ? 'is-active' : ''} onClick={() => setFilter('favorites')}>Favoriten · {favorites.size}</button>
-        <button className={filter === 'learned' ? 'is-active' : ''} onClick={() => setFilter('learned')}>Gelernt · {learned.size}</button>
+        <button className={filter === 'favorites' ? 'is-active' : ''} onClick={() => setFilter('favorites')}>Favoriten · {favoriteSelection.readable ? favorites.size : '?'}</button>
+        <button className={filter === 'learned' ? 'is-active' : ''} onClick={() => setFilter('learned')}>Gelernt · {learnedSelection.readable ? learned.size : '?'}</button>
       </div>
 
       {visible.length > 0 ? (
@@ -184,13 +210,15 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
-            <motion.section {...nameDialog.props} className="reference-name-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">Name {selected.id} von 99</span>
+            <motion.section {...nameDialog.props} className="reference-name-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={selected.latin} subtitle={`Name ${selected.id} von 99`} onClose={closeName} />
               <p className="reference-name-modal__arabic" dir="rtl">{selected.arabic}</p>
-              <h2>{selected.latin}</h2>
               <p className="reference-name-modal__meaning">{selected.meaning}</p>
+              {storageIssues.length ? <div className="reference-name-modal__notice" role="status"><ShieldCheck size={16} /><span>{storageIssues.join(' ')}</span></div> : null}
               <div className="reference-name-modal__notice"><ShieldCheck size={16} /><span>Die deutsche Bedeutungsangabe ist eine kurze Erklärung. Sie gibt nicht alle Bedeutungsnuancen des arabischen Namens wieder.</span></div>
+              <SourceInfo title={`Quellen zu ${selected.latin}`}><div className="reference-name-modal__notice reference-name-source">
+                <span>{selectedEvidence ? <>Dokumentierte Fundstelle: {selectedEvidence.links.map((link, index) => <span key={link.url}>{index ? ' · ' : ''}<a href={link.url} target="_blank" rel="noopener noreferrer">{link.label}</a></span>)}<br />{selectedEvidence.note}</> : <>Für diese Namensform ist im aktuellen Prüfbestand keine direkte Einzelfundstelle dokumentiert. Das ist kein Urteil, dass die Bezeichnung falsch sei. Die traditionelle Listenform und mögliche Ableitungen sind gesondert zu prüfen.{relatedEvidence ? <><br />Verwandter Beleg, kein direkter Namensbeleg: <a href={relatedEvidence.url} target="_blank" rel="noopener noreferrer">{relatedEvidence.label}</a><br />{relatedEvidence.note}</> : null}</>}<br />Die Umschrift ist eine angenäherte Lesehilfe. Eine Fundstelle allein bestätigt nicht alle Bedeutungsnuancen oder die gesamte Lernliste.</span>
+              </div></SourceInfo>
               <div className="reference-name-modal__actions">
                 <button className={favorites.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleFavorite(selected)}><Heart size={18} fill={favorites.has(nameId(selected)) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button className={learned.has(nameId(selected)) ? 'is-active' : ''} onClick={() => toggleLearned(selected)}><CircleCheck size={18} /> {learned.has(nameId(selected)) ? 'Gelernt' : 'Als gelernt markieren'}</button>

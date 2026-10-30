@@ -10,7 +10,7 @@ function fixture(dateKey = '2026-09-16', timezone = 'Europe/Berlin') {
   const schedule = originalSchedule.map((item, i) => ({ ...item, time: times[i] }));
   const meta: PrayerScheduleMeta = { ...originalMeta, dateKey, timezone, source: 'live' };
   registerPrayerScheduleContext(schedule, meta);
-  return { schedule, meta, dateKey, source: 'live' as const, fetchedAt: `${dateKey}T10:00:00Z`, location: DEFAULT_PRAYER_LOCATION, preferences: DEFAULT_PRAYER_PREFERENCES };
+  return { schedule, meta, dateKey, source: 'live' as const, validationVersion: 1 as const, fetchedAt: `${dateKey}T10:00:00Z`, location: DEFAULT_PRAYER_LOCATION, preferences: DEFAULT_PRAYER_PREFERENCES };
 }
 
 beforeEach(() => { localStorage.clear(); setFollowingPrayerDay(null); });
@@ -100,6 +100,18 @@ describe('Start cache isolation', () => {
     if (reason === 'fallback') value.source = 'fallback' as typeof value.source;
     if (reason === 'time') value.schedule[2].time = '25:00';
     if (reason === 'timezone') value.meta.timezone = 'Unknown/Zone';
+    localStorage.setItem('nur_prayer_times_latest', JSON.stringify(value));
+    expect(loadCachedPrayerTimes(now)).toBeNull();
+  });
+  it('rejects old caches without the strengthened response validation', () => {
+    const { validationVersion, ...oldCache } = fixture();
+    localStorage.setItem('nur_prayer_times_latest', JSON.stringify(oldCache));
+    expect(loadCachedPrayerTimes(now)).toBeNull();
+    expect(localStorage.getItem('nur_prayer_times_latest')).not.toBeNull();
+  });
+  it('rejects a cache whose metadata date contradicts its snapshot date', () => {
+    const value = fixture();
+    value.meta.dateKey = '2026-09-15';
     localStorage.setItem('nur_prayer_times_latest', JSON.stringify(value));
     expect(loadCachedPrayerTimes(now)).toBeNull();
   });

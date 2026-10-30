@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-labelledby="title desc">
+  <title id="title">Nur Islam – Moscheezeichen</title>
+  <desc id="desc">Eine symmetrische Moschee mit zentraler Kuppel und zwei Minaretten in Gold auf dunklem Smaragdgrün</desc>
+  <rect width="180" height="180" rx="34" fill="#001B16"/>
+  <g fill="#E2BF77">
+    <path d="M43 144V96h94v48H43Z"/>
+    <path d="M47 97c0-22 18-37 43-55 25 18 43 33 43 55H47Z"/>
+    <path d="M20 144V75h15v69H20Zm125 0V75h15v69h-15Z"/>
+    <path d="M17 75c5-6 9-11 10.5-18C29 64 33 69 38 75H17Zm125 0c5-6 9-11 10.5-18C154 64 158 69 163 75h-21Z"/>
+    <path d="M88 41V29h4v12h-4Z"/>
+    <circle cx="90" cy="25" r="3"/>
+    <path d="M17 144h146v5H17z"/>
+  </g>
+  <g fill="#001B16">
+    <path d="M78 144v-26c0-8 4-14 12-21 8 7 12 13 12 21v26H78Z"/>
+    <path d="M54 130v-16c0-5 3-9 9-14 6 5 9 9 9 14v16H54Zm54 0v-16c0-5 3-9 9-14 6 5 9 9 9 14v16h-18Z"/>
+    <path d="M20 91h15v3H20Zm125 0h15v3h-15ZM20 116h15v3H20Zm125 0h15v3h-15Z"/>
+  </g>
+</svg>

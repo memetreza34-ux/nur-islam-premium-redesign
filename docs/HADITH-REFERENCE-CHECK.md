@@ -24,8 +24,8 @@ Fehler melden, die keine sind, und ist deshalb unterlassen.
 
 ## Ergebnis
 
-- **25** verschiedene Bukhari-Nummern in `src/data` zitiert.
-- **25** davon existieren in der Ausgabe.
+- **32** verschiedene Bukhari-Nummern in `src/data` zitiert.
+- **32** davon existieren in der Ausgabe.
 - **Keine zitierte Nummer fehlt.**
 - Keine Muslim-, Tirmidhi- oder Ibn-Majah-Nummer liegt jenseits des Umfangs ihrer Sammlung.
 
@@ -62,7 +62,6 @@ alle nebeneinander, mit Namen.
 | 1924 | Ahmad Muhammad Shakir: Sahih · Al-Albani: Sahih · Bashar Awad Maarouf: Hasan Sahih · Zubair Ali Zai: Isnaad Hasan | hadithData.ts |
 | 1956 | Ahmad Muhammad Shakir: Sahih · Al-Albani: Sahih · Zubair Ali Zai: Isnaad Hasan | hadithData.ts |
 | 1987 | Ahmad Muhammad Shakir: Hasan · Al-Albani: Hasan · Bashar Awad Maarouf: Hasan Sahih · Zubair Ali Zai: Hasan | hadithData.ts |
-| 2317 | Ahmad Muhammad Shakir: Sahih · Al-Albani: Sahih · Bashar Awad Maarouf: Hasan · Zubair Ali Zai: Daif | hadithData.ts |
 | 3895 | Ahmad Muhammad Shakir: Sahih · Al-Albani: Sahih · Bashar Awad Maarouf: Hasan Sahih · Zubair Ali Zai: Hasan | hadithData.ts |
 
 ---
@@ -79,7 +78,7 @@ Stimmt mit der Angabe in der App überein: ☐
 
 ### Sahih al-Bukhari 3
 
-Zitiert in: islamicLearningContent.ts
+Zitiert in: islamicLearningContent.ts, pilgrimageData.ts
 
 > Narrated 'Aisha (the mother of the faithful believers):The commencement of the Divine Inspiration to Allah's Messenger (ﷺ) was in the form of good dreams which came true like bright daylight, and then the love of seclusion was bestowed upon him. He used to go in seclusion in the cave of Hira where he used to worship (Allah alone) continuously for many days before his desire to see his family. He u
 
@@ -87,7 +86,7 @@ Stimmt mit der Angabe in der App überein: ☐
 
 ### Sahih al-Bukhari 8
 
-Zitiert in: hadithData.ts
+Zitiert in: hadithData.ts, islamicLearningContent.ts
 
 > Narrated Ibn 'Umar: Allah's Messenger (ﷺ) said: Islam is based on (the following) five (principles): 1. To testify that none has the right to be worshipped but Allah and Muhammad is Allah's Messenger (ﷺ). 2. To offer the (compulsory congregational) prayers dutifully and perfectly. 3. To pay Zakat (i.e. obligatory charity) . 4. To perform Hajj. (i.e. Pilgrimage to Mecca) 5. To observe fast during t
 
@@ -109,6 +108,14 @@ Zitiert in: hadithData.ts
 
 Stimmt mit der Angabe in der App überein: ☐
 
+### Sahih al-Bukhari 52
+
+Zitiert in: islamicLearningContent.ts
+
+> Narrated An-Nu'man bin Bashir: I heard Allah's Messenger (ﷺ) saying, 'Both legal and illegal things are evident but in between them there are doubtful (suspicious) things and most of the people have no knowledge about them. So whoever saves himself from these suspicious things saves his religion and his honor. And whoever indulges in these suspicious things is like a shepherd who grazes (his anima
+
+Stimmt mit der Angabe in der App überein: ☐
+
 ### Sahih al-Bukhari 69
 
 Zitiert in: hadithData.ts
@@ -125,11 +132,43 @@ Zitiert in: duaData.ts
 
 Stimmt mit der Angabe in der App überein: ☐
 
+### Sahih al-Bukhari 631
+
+Zitiert in: islamicLearningContent.ts
+
+> Narrated Malik:We came to the Prophet (ﷺ) and stayed with him for twenty days and nights. We were all young and of about the same age. The Prophet (ﷺ) was very kind and merciful. When he realized our longing for our families, he asked about our homes and the people there and we told him. Then he asked us to go back to our families and stay with them and teach them (the religion) and to order them
+
+Stimmt mit der Angabe in der App überein: ☐
+
+### Sahih al-Bukhari 887
+
+Zitiert in: practiceData.ts
+
+> Narrated Abu Huraira:Allah's Messenger (ﷺ) said, "If I had not found it hard for my followers or the people, I would have ordered them to clean their teeth with Siwak for every prayer
+
+Stimmt mit der Angabe in der App überein: ☐
+
+### Sahih al-Bukhari 2017
+
+Zitiert in: islamicEventsData.ts
+
+> Narrated `Aisha:Allah's Messenger (ﷺ) said, "Search for the Night of Qadr in the odd nights of the last ten days of Ramadan
+
+Stimmt mit der Angabe in der App überein: ☐
+
+### Sahih al-Bukhari 2449
+
+Zitiert in: practiceData.ts
+
+> Narrated Abu Huraira:Allah's Messenger (ﷺ) said, "Whoever has oppressed another person concerning his reputation or anything else, he should beg him to forgive him before the Day of Resurrection when there will be no money (to compensate for wrong deeds), but if he has good deeds, those good deeds will be taken from him according to his oppression which he has done, and if he has no good deeds, th
+
+Stimmt mit der Angabe in der App überein: ☐
+
 ### Sahih al-Bukhari 2893
 
 Zitiert in: duaData.ts
 
-> Narrated Anas bin Malik:The Prophet (ﷺ) said to Abu Talha, "Choose one of your boy servants to serve me in my expedition to Khaibar." So, Abu Talha took me letting me ride behind him while I was a boy nearing the age of puberty. I used to serve Allah's Messenger (ﷺ) when he stopped to rest. I heard him saying repeatedly, "O Allah! I seek refuge with You from distress and sorrow, from helplessness 
+> Narrated Anas bin Malik:The Prophet (ﷺ) said to Abu Talha, "Choose one of your boy servants to serve me in my expedition to Khaibar." So, Abu Talha took me letting me ride behind him while I was a boy nearing the age of puberty. I used to serve Allah's Messenger (ﷺ) when he stopped to rest. I heard him saying repeatedly, "O Allah! I seek refuge with You from distress and sorrow, from helplessness
 
 Stimmt mit der Angabe in der App überein: ☐
 
@@ -165,6 +204,14 @@ Zitiert in: hadithData.ts
 
 Stimmt mit der Angabe in der App überein: ☐
 
+### Sahih al-Bukhari 5376
+
+Zitiert in: practiceData.ts
+
+> Narrated `Umar bin Abi Salama:I was a boy under the care of Allah's Messenger (ﷺ) and my hand used to go around the dish while I was eating. So Allah's Messenger (ﷺ) said to me, 'O boy! Mention the Name of Allah and eat with your right hand, and eat of the dish what is nearer to you." Since then I have applied those instructions when eating
+
+Stimmt mit der Angabe in der App überein: ☐
+
 ### Sahih al-Bukhari 5743
 
 Zitiert in: duaData.ts
@@ -183,7 +230,7 @@ Stimmt mit der Angabe in der App überein: ☐
 
 ### Sahih al-Bukhari 6018
 
-Zitiert in: hadithData.ts
+Zitiert in: hadithData.ts, islamicLearningContent.ts, practiceData.ts
 
 > Narrated Abu Huraira:Allah's Messenger (ﷺ) said, "Anybody who believes in Allah and the Last Day should not harm his neighbor, and anybody who believes in Allah and the Last Day should entertain his guest generously and anybody who believes in Allah and the Last Day should talk what is good or keep quiet. (i.e. abstain from all kinds of evil and dirty talk)
 
@@ -201,7 +248,7 @@ Stimmt mit der Angabe in der App überein: ☐
 
 Zitiert in: duaData.ts
 
-> Narrated Sulaiman bin Sarad:Two men abused each other in front of the Prophet (ﷺ) while we were sitting with him. One of the two abused his companion furiously and his face became red. The Prophet (ﷺ) said, "I know a word (sentence) the saying of which will cause him to relax if this man says it. Only if he said, "I seek refuge with Allah from Satan, the outcast.' " So they said to that (furious) 
+> Narrated Sulaiman bin Sarad:Two men abused each other in front of the Prophet (ﷺ) while we were sitting with him. One of the two abused his companion furiously and his face became red. The Prophet (ﷺ) said, "I know a word (sentence) the saying of which will cause him to relax if this man says it. Only if he said, "I seek refuge with Allah from Satan, the outcast.' " So they said to that (furious)
 
 Stimmt mit der Angabe in der App überein: ☐
 
@@ -215,9 +262,17 @@ Stimmt mit der Angabe in der App überein: ☐
 
 ### Sahih al-Bukhari 6307
 
-Zitiert in: duaData.ts
+Zitiert in: dhikrData.ts, duaData.ts
 
 > Narrated Abu Huraira:I heard Allah's Messenger (ﷺ) saying." By Allah! I ask for forgiveness from Allah and turn to Him in repentance more than seventy times a day
+
+Stimmt mit der Angabe in der App überein: ☐
+
+### Sahih al-Bukhari 6311
+
+Zitiert in: practiceData.ts
+
+> Narrated Al-Bara bin `Azib:Allah's Messenger (ﷺ) said to me, "When you want to go to bed, perform ablution as you do for prayer, then lie down on your right side and say: 'Allahumma aslamtu wajhi ilaika, wa fawwadtu 'amri ilaika wa alja'tu dhahri ilaika, raghbatan wa rahbatan ilaika, la malja'a wa la manja minka illa ilaika. Amantu bikitabik al-ladhi anzalta wa binabiyyika al-ladhi arsalta'. If yo
 
 Stimmt mit der Angabe in der App überein: ☐
 

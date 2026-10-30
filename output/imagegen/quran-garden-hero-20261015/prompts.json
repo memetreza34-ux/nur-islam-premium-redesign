@@ -1,0 +1,16 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-b48f83c9-5294-4a9b-8ba9-3fd8632f9479.png",
+  "prompt": "Use case: stylized-concept. Create ONE calm scenic BACKGROUND illustration for the Quran reading-progress hero in the mature Nur Islam app. Image 1 is our own app's object illustration: STYLE reference only, smooth matte satin 3D forms, restrained rounded edges, adult tasteful finish. Image 2 is our own oasis scene: COLOR AND RENDER STYLE reference only; do NOT repeat its desert, palms, dunes or lake layout. A DISTINCT scenic motif: a tranquil small garden courtyard, a shallow simple ivory-stone water basin across the lower quarter, a short gentle trickle into it from a low stone spout at far right, a few low rounded olive-green plants at the outer left and right, and a softly shaded deep emerald garden wall in the middle distance. A hint of a leafy garden beyond the outer side openings creates depth, but no large trees or cut-off trunks. Gentle warm late-morning side light from the upper left touches the stone and water, peaceful reflection, clear crafted shapes. CRITICAL COMPOSITION: wide 3:2 full-bleed landscape with central x22%-78%, y15%-66% calm, dark green and visually clear so cream Surah title and reading position can sit there later. Keep fountain, water texture, plants and other detail low or at the sides. Water basin feels part of an inviting environment, not a product photograph. Every focal object fully framed with safe margins; no half-cut foreground props. A visibly illustrated, understated 3D environment, not photographic, not a child's cartoon, no dense foliage microtexture. Deep teal/emerald, warm ivory stone, muted olive and restrained honey light. NO book, reading stand, palm trees, mosque building, extra arch/frame in the image, people, religious figures, text, Arabic calligraphy, patterns, UI, border, watermark, lanterns or sparkles. The result must be a real composed garden scene, not merely an abstract gradient.",
+  "inputImages": [
+    "output/imagegen/cartoon-home-icons-20261014/prayer.png",
+    "output/imagegen/prayer-oasis-framing-20261015/asr.png"
+  ],
+  "inputRoles": [
+    "Own prayer rug: material/style reference",
+    "Own oasis: palette/render style only; distinct scene requested"
+  ],
+  "processing": "cwebp -q 92 -m 6; native 1536x1024 preserved"
+}

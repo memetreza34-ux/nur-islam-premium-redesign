@@ -1,4 +1,4 @@
-/* Final presentation-only guardrail for viewport, focus and input quality. */
+
 
 html {
   scroll-padding-top: calc(78px + env(safe-area-inset-top));
@@ -14,6 +14,10 @@ input,
 select,
 textarea {
   -webkit-tap-highlight-color: transparent;
+}
+
+input, select, textarea {
+  font-size: max(16px, 1rem) !important;
 }
 
 button,
@@ -71,7 +75,7 @@ textarea:focus-visible,
   overflow-wrap: anywhere;
 }
 
-/* More stable readable headings across narrow devices. */
+
 .section-heading > div,
 .section-heading h2,
 .section-heading .overline {
@@ -91,7 +95,7 @@ textarea:focus-visible,
   text-wrap: balance;
 }
 
-/* Prevent long user/API values from forcing horizontal scrolling. */
+
 .reference-account-screen strong,
 .reference-account-screen small,
 .reference-notes-screen strong,
@@ -105,7 +109,7 @@ textarea:focus-visible,
   overflow-wrap: anywhere;
 }
 
-/* Smooth, discreet horizontal scrollers. */
+
 .reference-filter-tabs,
 .reference-learning-lesson-selector,
 .reference-prayer-course-selector,
@@ -134,7 +138,6 @@ textarea:focus-visible,
   scroll-snap-align: start;
 }
 
-/* Form surfaces */
 .reference-account-form input,
 .reference-note-editor input,
 .reference-note-editor textarea,
@@ -157,12 +160,10 @@ textarea:focus-visible,
   outline: 0 !important;
 }
 
-/* Modal viewport guardrails */
+
 .reference-modal-backdrop,
 .reference-prayer-settings-backdrop,
 .prayer-completion-backdrop,
-.reference-learning-completion-backdrop,
-.reference-prayer-course-complete,
 .calendar-modal-backdrop {
   padding-top: max(16px, env(safe-area-inset-top)) !important;
   padding-bottom: max(16px, env(safe-area-inset-bottom)) !important;
@@ -174,8 +175,6 @@ textarea:focus-visible,
 .reference-dhikr-stats-modal,
 .reference-prayer-settings-modal,
 .prayer-completion-modal,
-.reference-learning-completion-modal,
-.reference-learning-plan-modal,
 .calendar-modal {
   overscroll-behavior: contain;
   scrollbar-width: thin;
@@ -190,7 +189,7 @@ textarea:focus-visible,
   text-align: left;
 }
 
-/* Light theme global focus/background refinements. */
+
 [data-theme='light'] button:focus-visible,
 [data-theme='light'] input:focus-visible,
 [data-theme='light'] select:focus-visible,
@@ -241,8 +240,8 @@ textarea:focus-visible,
 
   .reference-screen-header .icon-button,
   .reference-reading-header-spacer {
-    width: 40px !important;
-    height: 40px !important;
+    width: 44px !important;
+    height: 44px !important;
   }
 
   .section-heading {
@@ -260,7 +259,7 @@ textarea:focus-visible,
   }
 }
 
-/* Minimum supported width. Avoid collapsing controls below useful touch size. */
+
 @media (max-width:350px) {
   .app-shell {
     padding-inline: 10px !important;
@@ -275,7 +274,7 @@ textarea:focus-visible,
   }
 
   .reference-screen-header .overline {
-    font-size: .5rem !important;
+    font-size: .75rem !important;
   }
 
   
@@ -285,7 +284,7 @@ textarea:focus-visible,
   .bottom-nav__item small {
     max-width: 100%;
     overflow: hidden;
-    font-size: 11px;
+    font-size: 12px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -294,7 +293,7 @@ textarea:focus-visible,
   .reference-dua-filter-tabs > button,
   .reference-name-filter-tabs > button,
   .reference-quran-filter-tabs > button {
-    min-height: 40px !important;
+    min-height: 44px !important;
     padding-inline: 11px !important;
   }
 
@@ -305,14 +304,31 @@ textarea:focus-visible,
   }
 }
 
-/* Larger viewports retain the phone-product feel without feeling undersized. */
-@media (min-width:760px) {
+@media (min-width:600px) {
   .app-shell:not(.app-shell--onboarding) {
-    width: min(100%, 540px) !important;
-    padding-inline: 26px !important;
+    width: min(100%, 900px) !important;
+    padding-left: max(24px, env(safe-area-inset-left)) !important;
+    padding-right: max(24px, env(safe-area-inset-right)) !important;
   }
 
-  
+  .reference-core-access__groups {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+    align-items: start;
+  }
+
+  .ds-arch {
+    max-width: 620px;
+    height: var(--arch-responsive-height, auto) !important;
+    aspect-ratio: 343 / 210;
+    margin-inline: auto;
+  }
+
+  .app-shell--onboarding {
+    width: min(100%, 700px);
+    margin-inline: auto;
+  }
 }
 
 @media (prefers-contrast:more) {

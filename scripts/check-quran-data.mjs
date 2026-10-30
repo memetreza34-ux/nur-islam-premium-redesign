@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import { checkAuditSnapshot } from './audit-quran-reference.mjs';
 
 const root = process.cwd();
 const dataRoot = resolve(root, 'public/data/quran');
@@ -27,8 +28,8 @@ for (let index = 0; index < surahs.length; index += 1) {
 
 const serviceSource = await readFile(resolve(root, 'src/services/quranService.ts'), 'utf8');
 // The offline bundle is the whole Quran, not a subset, so the declaration is
-// pinned to full coverage rather than parsed as a list. Every one of the 228
-// files below is then validated on every run.
+// pinned to full coverage rather than parsed as a list. All 114 Arabic files
+// below are then structurally validated on every run.
 if (!serviceSource.includes('export const OFFLINE_QURAN_SURAHS = Array.from({ length: 114 }, (_, index) => index + 1);')) {
   throw new Error('OFFLINE_QURAN_SURAHS must declare all 114 surahs as bundled offline.');
 }
@@ -73,6 +74,9 @@ try {
 if (totalAyahs !== 6236) {
   throw new Error(`Bundled Arabic text holds ${totalAyahs} ayahs; the 114-surah catalog describes 6236.`);
 }
+
+const fingerprintedFiles = await checkAuditSnapshot(root);
+console.log(`Quran reference snapshot unchanged: ${fingerprintedFiles} file fingerprints match the exact 6236-verse comparison dated 2026-10-11. No live comparison or rights approval is implied by this offline check.`);
 
 const onlineServiceFeatures = [
   "ONLINE_API_BASE = 'https://api.alquran.cloud/v1'",
@@ -143,10 +147,14 @@ if (appSource.includes("surahNumber: 112,\n    ayahNumber: 1,\n    englishName: 
 
 for (const required of [
   'fetchSurahs',
-  'OFFLINE_QURAN_SURAH_SET',
+  'OFFLINE_QURAN_SURAHS',
   'nur_quran_surah_favorites',
-  'Alle 114 Suren lesbar',
-  'CloudDownload',
+  'SourceInfo title="Lesen & Offline"',
+  'aria-label="Suren suchen"',
+  '!loading && !error && query.trim()',
+  "const filter = savedFilter === 'favorites' ? 'favorites' : 'all'",
+  'lang="ar" dir="rtl"',
+  'surah.numberOfAyahs} Ayat',
   'reloadToken',
   'setReloadToken((value) => value + 1)',
   'function readLastRead(): LastRead | null',
@@ -155,12 +163,17 @@ for (const required of [
   'onOpenReader(readerSurahNumber, lastAyah)',
   'onOpenReader(surah.number, 1)',
   'Math.min(lastRead.ayahNumber, lastSurah.numberOfAyahs)',
-  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
   "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
 ]) {
   if (!catalogSource.includes(required)) throw new Error(`Quran catalog integration is missing: ${required}`);
 }
 for (const forbidden of [
+  '<ReadingHelp',
+  'reference-quran-library-status',
+  'Alle · 114',
+  'Offline ·',
+  'Sure {surah.number} von 114',
+  'reference-quran-list__extent',
   'const fallback = { surahNumber: 112, ayahNumber: 1',
   'Math.max(4, (lastAyah / lastSurah.numberOfAyahs)',
 ]) {
@@ -201,4 +214,4 @@ if (!serviceWorker.includes("QURAN_CACHE_PREFIX = 'nur-quran-online-'") || !serv
   throw new Error('Service worker updates would delete cached online Quran surahs.');
 }
 
-console.log(`Quran verified: 114-surah catalog, ${offlineNumbers.length} Surahs in Arabic offline (${totalAyahs} ayahs), pronunciation and German meaning fetched independently per Surah, persistent browser cache, honest zero-progress first-use state, catalog retry, and range-validated exact last-read Ayah resume.`);
+console.log(`Quran structure and static integrations checked: 114-surah catalog, ${offlineNumbers.length} bundled Arabic files (${totalAyahs} ayahs), separate supporting-text requests, optional cache paths, progress validation and retry wiring. Runtime availability, translation accuracy, rights and physical-device behavior require separate evidence.`);

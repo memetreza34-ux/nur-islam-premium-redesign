@@ -1,6 +1,6 @@
 # V1 Source Audit — Daily Hadith Rotation
 
-Status: **source-audited / GRÜN**
+Status: **Historischer Teilbericht zum sieben Einträge umfassenden Tagespool.** Der erneute Abgleich aller 20 Sammlungseinträge und die Grenzen stehen im [aktuellen Bericht](HADITH-SOURCE-AUDIT-2026-10-11.md). Keine Gesamtfreigabe.
 
 > Dieser Status ist eine Quellenprüfung und **keine** erfundene Gelehrten- oder Human-Freigabe. Der bestehende religiöse Release-Gate bleibt unverändert, bis seine Strategie ausdrücklich entschieden wird.
 
@@ -10,11 +10,11 @@ Nur die folgenden sieben IDs rotieren automatisch auf Home:
 
 | ID | Aussage der App | Primärbelege | Audit |
 | --- | --- | --- | --- |
-| `intentions` | Der Wert einer Handlung hängt von der Absicht ab. | Sahih al-Bukhari 1; Sahih Muslim 1907 | GRÜN |
+| `intentions` | Taten und die jeweilige Absicht. | Sahih al-Bukhari 1; Sahih Muslim 1907a | Kurzfassung abgeglichen |
 | `mercy` | Wer anderen keine Barmherzigkeit zeigt, dem wird keine Barmherzigkeit gezeigt. | Sahih al-Bukhari 6013; Sahih Muslim 2319a | GRÜN |
 | `good-word` | Ein gutes Wort gilt als Wohltätigkeit. | Sahih al-Bukhari 2989; Sahih Muslim 1009 | GRÜN |
-| `anger` | Wirkliche Stärke zeigt sich darin, sich im Zorn zu beherrschen. | Sahih al-Bukhari 6114; Sahih Muslim 2609 | GRÜN |
-| `brother` | Vollständiger Glaube schließt ein, für andere das Gute zu wünschen, das man für sich selbst wünscht. | Sahih al-Bukhari 13; Sahih Muslim 45 | GRÜN |
+| `anger` | Wirkliche Stärke zeigt sich darin, sich im Zorn zu beherrschen. | Sahih al-Bukhari 6114; Sahih Muslim 2609a | Kurzfassung abgeglichen |
+| `brother` | Für den Bruder wünschen, was man sich selbst wünscht. | Sahih al-Bukhari 13; Sahih Muslim 45a | Kurzfassung abgeglichen |
 | `ease` | Erleichtert und erschwert nicht; gebt frohe Botschaft und schreckt nicht ab. | Sahih al-Bukhari 69; Sahih Muslim 1734 | GRÜN |
 | `cleanliness` | Reinheit besitzt im Glauben einen hohen Stellenwert. | Sahih Muslim 223 | GRÜN |
 
@@ -22,7 +22,7 @@ Nur die folgenden sieben IDs rotieren automatisch auf Home:
 
 - **7/7** rotierende Hadithe besitzen konkrete starke Referenzen.
 - Die deutschen Texte sind ausdrücklich als **sinngemäße Inhaltsangaben** gekennzeichnet.
-- Keine der sieben Kurzfassungen wurde im Audit stärker formuliert als der zugrunde liegende Text.
+- Der aktuelle Abgleich präzisiert insbesondere die Einordnung der Absicht; die frühere allgemeine Aussage über die Annahme jeder Handlung wurde nicht übernommen. Bei „Erleichtern“ wird die abweichende Formulierung in Muslim 1734 ausdrücklich genannt.
 - Kein schwach eingestufter Hadith befindet sich im automatischen Daily-Pool.
 - Der größere Legacy-Hadithbestand bleibt getrennt und wird nicht automatisch in die Rotation aufgenommen.
 

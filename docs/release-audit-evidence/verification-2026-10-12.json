@@ -1,0 +1,14 @@
+{
+  "date": "2026-10-12",
+  "commit": "6c380b978c00b15a3bf4920fa78bd04c887d7332",
+  "branch": "design/claude-design-system",
+  "check": { "exitCode": 0, "testFilesPassed": 58, "testsPassed": 1028, "typecheckPassed": true, "buildPassed": true, "bundleBudgetPassed": true },
+  "e2e": { "exitCode": 0, "passed": 279, "skipped": 2, "durationMinutes": 5.7, "workers": 6, "browser": "local Google Chrome", "build": "production" },
+  "strictLegalCheck": { "passed": false, "reason": "Operator street, city and email remain placeholders" },
+  "additionalReminderProbe": { "negativeCasesFailed": 2, "positiveControlPassed": 1, "temporaryTestRemoved": true, "productCodeChanged": false },
+  "npmAudit": { "affectedPackages": 3, "high": 1, "moderate": 2, "distinctAdvisories": 2, "productionOnlyAffectedPackages": 0 },
+  "supabase": { "defaultProjectRef": "jmswsgwnvmvsfayeodcd", "listedStatus": "INACTIVE", "listedRegion": "eu-north-1", "securityAdvisorHints": 0, "listMigrations": "connection timeout", "twoUserLiveTestExecuted": false, "productionConfigOverridesVerified": false },
+  "humanReligiousApprovalGranted": false,
+  "physicalDeviceTestsExecuted": false,
+  "published": false
+}

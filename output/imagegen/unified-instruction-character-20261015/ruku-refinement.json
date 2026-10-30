@@ -1,0 +1,7 @@
+{
+  "id": "ruku",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: precise-object-edit. Image 1 is the edit target, our fixed Nur Islam learning figure in bowing prayer posture. Keep exactly the SAME person, face/profile, hair, emerald tunic, cream trousers, hands, feet, mat, style, transparent background and generous framing. Correct ONLY the bow: lower the upper torso a little more so the spine from hips through shoulders is STRAIGHT AND PARALLEL TO THE MAT, with the shoulder and hip at the SAME HEIGHT, the neck/head continuing the straight back line. Show a true 90-degree bend at the hips in a clear SIDE VIEW facing left. Both palms rest on their corresponding knees, fingers naturally gripping knees; elbows straight but relaxed. Legs upright, feet flat. Do not squat or bend knees deeply. Preserve the grown-up smooth matte 3D illustration. One finished isolated square image with genuine transparent alpha, no text or UI.",
+  "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-b0cb5943-4f04-4759-bdbf-a7d8978acb17.png",
+  "editSource": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-f045b8dd-fc3f-46d4-921d-0a21b52763a0.png"
+}

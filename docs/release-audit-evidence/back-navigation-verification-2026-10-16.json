@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-16",
+  "scope": "Return to actual prior view with session UI state and scroll restoration",
+  "behavior": [
+    "Home reader Back returns directly to Home",
+    "Quran and Dua search/filter, names search/filter and collection filters survive app navigation",
+    "Learning overview, selected prayer and rakah survive Qibla detour",
+    "Home disclosure stays expanded",
+    "Focus returns to originating entry where available",
+    "Scroll waits for late content and yields to user input"
+  ],
+  "state_lifetime": "In-memory during this app session; no persistence of UI state after reload promised",
+  "verification": {
+    "unit_tests": 1141,
+    "unit_files": 61,
+    "latest_browser_tests": 31,
+    "latest_browser_result": "passed",
+    "additional_previous_browser_checks": 44,
+    "phone_width": 320,
+    "tablet_width": 768,
+    "physical_devices": false
+  },
+  "logs": [
+    "/tmp/nur-back-navigation-check-20261016.log",
+    "/tmp/nur-back-navigation-final-e2e-20261016.log"
+  ],
+  "browser_note": "Existing development tab could not be inspected because browser URL policy denied access. Local repository E2E tests were used for validation.",
+  "screenshots": [
+    "back-home-phone-2026-10-16.png",
+    "back-learning-tablet-2026-10-16.png"
+  ]
+}

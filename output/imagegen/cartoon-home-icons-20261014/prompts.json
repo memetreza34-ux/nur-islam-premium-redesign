@@ -1,0 +1,100 @@
+{
+  "createdAt": "2026-10-14",
+  "mode": "Built-in image_gen.imagegen; exact model not exposed by tool",
+  "scope": "Six Home shortcuts only. Original PNGs preserved; long row layout unchanged.",
+  "assets": [
+    {
+      "key": "dhikr",
+      "prompt": "Create one isolated mobile-app icon, transparent background. Match the clean simple 3D emoji/cartoon style of the attached cupped hands and the small icons in the screenshot (style references only, never copy the UI). Smooth rounded toy geometry, matte/satin colors, simple broad surfaces, soft clean shading, friendly compact readable silhouette. NO photorealism, NO fabric weave, NO stone texture, NO complex decorative patterns, NO photographic appearance, NO excessive microdetails. Colors can be natural but harmonious with a dark green and warm ivory app. Three-quarter elevated frontal view, crisp polished animated illustration, centered occupying about 80 percent of the square canvas, transparent margin all around. No background, no floor, no detached ground shadow. A simple loop of round olive-green tasbih beads resting on a small neatly folded warm cream cloth, a short golden-yellow tassel spilling toward the lower right. Oversized round smooth cartoon beads, minimal cloth folds, no realistic threads or ornate embroidered textures. Like the Tasbih icon in screenshot, with clean chunky geometry. No words.",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "Own new cartoon Dua icon as shared style reference",
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-b8a27a17-ec7a-43aa-9e1b-fa39a2b4148b.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/dhikr.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "key": "qibla",
+      "prompt": "Create one isolated mobile-app icon, transparent background. Match the clean simple 3D emoji/cartoon style of the attached cupped hands and the small icons in the screenshot (style references only, never copy the UI). Smooth rounded toy geometry, matte/satin colors, simple broad surfaces, soft clean shading, friendly compact readable silhouette. NO photorealism, NO fabric weave, NO stone texture, NO complex decorative patterns, NO photographic appearance, NO excessive microdetails. Colors can be natural but harmonious with a dark green and warm ivory app. Three-quarter elevated frontal view, crisp polished animated illustration, centered occupying about 80 percent of the square canvas, transparent margin all around. No background, no floor, no detached ground shadow. A simple recognizable Kaaba cube with rounded charcoal-black edges, a single golden-yellow band and small gold door, beside a small round gold-rimmed ivory compass leaning at its lower right. Compass has one simple red-and-teal needle and four short ticks, NO letters. A friendly emoji illustration with simplified surfaces, no stone or fabric textures, no complex Arabic decoration.",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "Own new cartoon Dua icon as shared style reference",
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-e9cc5214-4815-43a2-88ca-c092a924cdc1.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/qibla.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "key": "prayer",
+      "prompt": "Create one isolated mobile-app icon, transparent background. Match the clean simple 3D emoji/cartoon style of the attached cupped hands and the small icons in the screenshot (style references only, never copy the UI). Smooth rounded toy geometry, matte/satin colors, simple broad surfaces, soft clean shading, friendly compact readable silhouette. NO photorealism, NO fabric weave, NO stone texture, NO complex decorative patterns, NO photographic appearance, NO excessive microdetails. Colors can be natural but harmonious with a dark green and warm ivory app. Three-quarter elevated frontal view, crisp polished animated illustration, centered occupying about 80 percent of the square canvas, transparent margin all around. No background, no floor, no detached ground shadow. A small rolled-out teal-green prayer rug with one curved rolled end, a simple warm cream arch outline and very short ivory fringe. Clean rounded chunky toy-like rug, one uncomplicated flat geometric border, no tiny ornament, no fabric texture, no people, no religious text. Match the compact scale and softness of an emoji object.",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "Own new cartoon Dua icon as shared style reference",
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-e06e993e-9c32-4ea1-8a37-84f69957c2c3.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/prayer.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "key": "names",
+      "prompt": "Create one isolated mobile-app icon, transparent background. Match the clean simple 3D emoji/cartoon style of the attached cupped hands and the small icons in the screenshot (style references only, never copy the UI). Smooth rounded toy geometry, matte/satin colors, simple broad surfaces, soft clean shading, friendly compact readable silhouette. NO photorealism, NO fabric weave, NO stone texture, NO complex decorative patterns, NO photographic appearance, NO excessive microdetails. Colors can be natural but harmonious with a dark green and warm ivory app. Three-quarter elevated frontal view, crisp polished animated illustration, centered occupying about 80 percent of the square canvas, transparent margin all around. No background, no floor, no detached ground shadow. A small closed rounded forest-green book with cream page edges and one gold cover medallion containing ONLY the clean legible digits 99. One short coral-red bookmark. No other text or calligraphy. Simple smooth toy book with broad surfaces and no cover texture, minimal decoration, soft 3D cartoon geometry.",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "Own new cartoon Dua icon as shared style reference",
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-869d0d24-850f-4651-b6e1-9056a329bd6f.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/names.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "key": "quiz",
+      "prompt": "Create one isolated mobile-app icon, transparent background. Match the clean simple 3D emoji/cartoon style of the attached cupped hands and the small icons in the screenshot (style references only, never copy the UI). Smooth rounded toy geometry, matte/satin colors, simple broad surfaces, soft clean shading, friendly compact readable silhouette. NO photorealism, NO fabric weave, NO stone texture, NO complex decorative patterns, NO photographic appearance, NO excessive microdetails. Colors can be natural but harmonious with a dark green and warm ivory app. Three-quarter elevated frontal view, crisp polished animated illustration, centered occupying about 80 percent of the square canvas, transparent margin all around. No background, no floor, no detached ground shadow. Three small rounded quiz cards in a compact fanned stack, ivory front card displaying one large golden-yellow question mark, teal back card and muted coral back card. Chunky smooth edges, friendly cartoon geometry, clean broad surfaces. No other text. Simple emoji-sized recognizable icon.",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "Own new cartoon Dua icon as shared style reference",
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-905e49e9-367c-4c62-9654-ffb9587267f9.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/quiz.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "key": "duas",
+      "prompt": "Create a single isolated Dua praying hands app icon on a fully transparent background. Use the attached screenshot ONLY as a visual style guide: the simple 3D emoji-like cupped hands, smooth rounded cartoon forms, friendly compact silhouette. Do not reproduce the screenshot UI. Two upward-facing cupped hands, correctly formed five digits per hand, thumbs facing inward, balanced symmetry. Clearly stylized animated-film/emoji hands with broad simplified fingers and soft peach/apricot colors. Smooth matte toy material, gently rounded geometry, clean soft shaded color areas. NO photorealism, NO pores, NO detailed palm creases, NO veins, NO fingernail detail, NO realistic skin texture, NO photographic lighting. Short simple muted teal cuffs, no fabric texture. Three-quarter frontal view like an emoji, compact centered composition occupying 82 percent of the square canvas, ample transparent margin, no words or lettering, no objects or cast shadow outside silhouette. High quality crisp clean playful mobile-app illustration consistent with the example's small readable icons.",
+      "inputImages": [
+        "/var/folders/46/msv7yfxn0x3dbcj6tcycvqz80000gn/T/codex-clipboard-396fa50e-29c9-4c9a-b859-b5ceee1b430b.png"
+      ],
+      "inputRoles": [
+        "User-provided screenshot as illustration style reference only; UI not copied"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2d0e4436-76ab-49c3-8eec-67626abe2ead.png",
+      "workspaceOriginal": "output/imagegen/cartoon-home-icons-20261014/duas.png",
+      "runtimePath": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    }
+  ],
+  "referenceSnapshot": {
+    "path": "output/imagegen/cartoon-home-icons-20261014/user-style-reference.png",
+    "sha256": "24a0436589d9cd3379708792250ad8966db6ef47599bad30813a9f6d4a0cdf72",
+    "use": "User-provided screenshot archived as style input; not a shipped app asset."
+  }
+}

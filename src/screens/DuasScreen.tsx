@@ -1,3 +1,6 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpenCheck,
@@ -14,7 +17,7 @@ import {
 } from 'lucide-react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { useDialog } from '../shared/useDialog';
-import { DUA_BY_ID, DUA_CATEGORIES, DUA_CATEGORY_BY_ID, DUAS } from '../data/duaData';
+import { DUA_BY_ID, DUA_CATEGORIES, DUA_CATEGORY_BY_ID, DUAS, getDuaShareText } from '../data/duaData';
 import type { DuaCategoryId, DuaEntry } from '../data/duaData';
 
 type DuaFilter = 'all' | 'favorites' | DuaCategoryId;
@@ -44,9 +47,11 @@ function readStringSet(key: string, fallback: string[] = []) {
 
 function writeStringSet(key: string, value: Set<string>) {
   try {
-    localStorage.setItem(key, JSON.stringify([...value]));
+    const serialized = JSON.stringify([...value]);
+    localStorage.setItem(key, serialized);
+    return localStorage.getItem(key) === serialized;
   } catch {
-    // Lokale Speicherung ist in eingeschränkten Browsermodi optional.
+    return false;
   }
 }
 
@@ -57,12 +62,11 @@ async function copyText(text: string) {
 
 export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void; initialDuaId?: string | null }) {
   const initialDua = initialDuaId ? DUA_BY_ID.get(initialDuaId) ?? null : null;
-  const [filter, setFilter] = useState<DuaFilter>('all');
-  const [query, setQuery] = useState('');
+  const [filter, setFilter] = useScreenState<DuaFilter>('duas.filter', 'all');
+  const [query, setQuery] = useScreenState('duas.query', '');
   const [favorites, setFavorites] = useState(() => readStringSet('nur_dua_favorites'));
   const [viewed, setViewed] = useState(() => {
     const current = readStringSet('nur_dua_viewed');
-    if (initialDua) current.add(initialDua.id);
     return current;
   });
   const [selected, setSelected] = useState<DuaEntry | null>(initialDua);
@@ -73,8 +77,14 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
 
   const toastTimerRef = useRef<number | null>(null);
 
-  useEffect(() => writeStringSet('nur_dua_favorites', favorites), [favorites]);
-  useEffect(() => writeStringSet('nur_dua_viewed', viewed), [viewed]);
+  const [viewedPersistenceFailed, setViewedPersistenceFailed] = useState(false);
+  useEffect(() => {
+    if (!initialDua) return;
+    const next = readStringSet('nur_dua_viewed');
+    next.add(initialDua.id);
+    setViewed(next);
+    setViewedPersistenceFailed(!writeStringSet('nur_dua_viewed', next));
+  }, [initialDua]);
   useEffect(() => () => {
     if (toastTimerRef.current !== null) window.clearTimeout(toastTimerRef.current);
   }, []);
@@ -102,21 +112,26 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
   };
 
   const toggleFavorite = (id: string) => {
-    setFavorites((current) => {
-      const next = new Set(current);
-      if (next.has(id)) next.delete(id);
-      else next.add(id);
-      return next;
-    });
+    const next = readStringSet('nur_dua_favorites');
+    if (next.has(id)) next.delete(id);
+    else next.add(id);
+    if (!writeStringSet('nur_dua_favorites', next)) {
+      setFavorites(readStringSet('nur_dua_favorites'));
+      flash('Favoriten konnten nicht gespeichert werden');
+      return;
+    }
+    setFavorites(next);
   };
 
   const openDua = (dua: DuaEntry) => {
     setSelected(dua);
-    setViewed((current) => new Set(current).add(dua.id));
+    const next = new Set(viewed).add(dua.id);
+    setViewed(next);
+    setViewedPersistenceFailed(!writeStringSet('nur_dua_viewed', next));
   };
 
   const shareDua = async (dua: DuaEntry) => {
-    const text = `${dua.title}\n\n${dua.arabic}\n\nSinngemäße Bedeutung: ${dua.translation}\n\nQuelle: ${dua.source}`;
+    const text = getDuaShareText(dua);
     try {
       if (navigator.share) {
         await navigator.share({ title: dua.title, text });
@@ -160,7 +175,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
 
       <section className="reference-dua-progress glass-card">
         <span><BookOpenCheck size={21} /></span>
-        <div><small>Bereits geöffnet</small><strong>{viewed.size} von {DUAS.length} Duas</strong><em>{favorites.size} Favoriten gespeichert</em></div>
+        <div><small>Bereits geöffnet</small><strong>{viewed.size} von {DUAS.length} Duas</strong><em>{favorites.size} gespeicherte Favoriten</em>{viewedPersistenceFailed ? <small role="status">Öffnungsstand nur in dieser Ansicht; Speicherung fehlgeschlagen.</small> : null}</div>
         <div className="reference-dua-progress__bar"><span style={{ width: `${Math.round((viewed.size / DUAS.length) * 100)}%` }} /></div>
       </section>
 
@@ -194,7 +209,7 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
                   <button className={isFavorite ? 'is-favorite' : ''} onClick={() => toggleFavorite(dua.id)} aria-label={`${dua.title} als Favorit markieren`} aria-pressed={isFavorite}><Heart size={18} fill={isFavorite ? 'currentColor' : 'none'} /></button>
                 </div>
                 <button className="reference-dua-card__content" onClick={() => openDua(dua)}>
-                  <span className={wasViewed ? 'reference-dua-viewed is-viewed' : 'reference-dua-viewed'}><CircleCheck size={14} /> {wasViewed ? 'Gelesen' : 'Öffnen'}</span>
+                  <span className={wasViewed ? 'reference-dua-viewed is-viewed' : 'reference-dua-viewed'}><CircleCheck size={14} /> {wasViewed ? 'Geöffnet' : 'Öffnen'}</span>
                   <h2>{dua.title}</h2>
                   <p className="reference-dua-card__arabic" dir="rtl">{dua.arabic}</p>
                   <blockquote><small>Sinngemäße Bedeutung</small>{dua.translation}</blockquote>
@@ -211,14 +226,15 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setSelected(null)}>
-            <motion.section {...screenDialog.props} className="reference-dua-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setSelected(null)} aria-label="Schließen"><X size={18} /></button>
-              <span className="overline">{DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title}</span>
-              <h2>{selected.title}</h2>
+            <motion.section {...screenDialog.props} className="reference-dua-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={selected.title} subtitle={DUA_CATEGORY_BY_ID.get(selected.categoryId)?.title} onClose={closeDialog} />
               <p className="reference-dua-modal__arabic" dir="rtl">{selected.arabic}</p>
               <section><small>Transliteration</small><p>{selected.transliteration}</p></section>
               <section><small>Sinngemäße Bedeutung</small><p>{selected.translation}</p></section>
-              <div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quelle</small><strong>{selected.source}</strong></span></div>
+              <SourceInfo title={`Quelle zu „${selected.title}“`}><div className="reference-dua-modal__source"><ShieldCheck size={16} /><span><small>Quelle</small><strong>{selected.source}</strong></span></div>
+              {selected.sourceUrl ? <p><a href={selected.sourceUrl} target="_blank" rel="noopener noreferrer">Fundstelle öffnen</a></p> : null}
+              {selected.sourceNote ? <section><small>Einordnung der Fundstelle</small><p>{selected.sourceNote}</p></section> : null}
+</SourceInfo>
               <div className="reference-dua-modal__actions">
                 <button className={favorites.has(selected.id) ? 'is-active' : ''} onClick={() => toggleFavorite(selected.id)}><Heart size={18} fill={favorites.has(selected.id) ? 'currentColor' : 'none'} /> Favorit</button>
                 <button onClick={() => copyText(selected.arabic).then(() => flash('Arabischer Text kopiert')).catch(() => flash('Kopieren war nicht möglich'))}><Copy size={18} /> Kopieren</button>

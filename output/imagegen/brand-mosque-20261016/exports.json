@@ -1,0 +1,35 @@
+{
+  "primary": "public/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp",
+  "background": {
+    "r": 3,
+    "g": 57,
+    "b": 40
+  },
+  "brandExports": [
+    {
+      "path": "public/nur-app-icon.svg",
+      "sha256": "8141b38298f86abb3e4d90828ef4a6374de8f19a2667cb13213a7b02a427e4e1",
+      "sourceFile": "output/imagegen/brand-mosque-20261016/mosque-refined.png",
+      "origin": "Derivative of the generated 3D mosque icon; SVG embeds the same WebP artwork. Maskable PNG has 20% extra padding."
+    },
+    {
+      "path": "public/nur-app-icon-192.png",
+      "sha256": "268a656f96f8d6da5949f8772e22a30e2c5aab82215f8d55c3154ecf26540acc",
+      "sourceFile": "output/imagegen/brand-mosque-20261016/mosque-refined.png",
+      "origin": "Derivative of the generated 3D mosque icon; SVG embeds the same WebP artwork. Maskable PNG has 20% extra padding."
+    },
+    {
+      "path": "public/nur-app-icon-512.png",
+      "sha256": "83017035b855060f8f825e57308f3a52e38d7a4facc713eb4c12a0f95660394f",
+      "sourceFile": "output/imagegen/brand-mosque-20261016/mosque-refined.png",
+      "origin": "Derivative of the generated 3D mosque icon; SVG embeds the same WebP artwork. Maskable PNG has 20% extra padding."
+    },
+    {
+      "path": "public/nur-app-icon-maskable-512.png",
+      "sha256": "b189648099720d3b6cdae6e5e616fb895f338938dfd7fb8a495ccac28c9b6306",
+      "sourceFile": "output/imagegen/brand-mosque-20261016/mosque-refined.png",
+      "origin": "Derivative of the generated 3D mosque icon; SVG embeds the same WebP artwork. Maskable PNG has 20% extra padding."
+    }
+  ],
+  "appleTouchGitBlob": "4cba3225f0ea7512ddc9101f6d0fbf1111025c21"
+}

@@ -1,0 +1,35 @@
+{
+  "date": "2026-10-13",
+  "scope": "Startbildschirm kompakter; vorhandene Gebetszeit und Ayah unverändert, Ladehinweis ergänzt; Querformat ohne abgeschnittenen Inhalt.",
+  "fileHashes": {
+    "src/screens/SplashScreen.tsx": "095654c1f9ad204d727edf3bf14e917f5dd6d4fc45cfd729a8ad45a92769f10e",
+    "src/styles/premium-brand-entry-art-lock.css": "d6ab7de5abbdb8e09bee05a5310c917c60da8bb250a230d8ef1d86e9b1708ea6",
+    "src/app/pwa.ts": "02fb40ab11dbf6e98fd0bb2ef925cae8913c5904c187ae68e32ff871ea92fc6e",
+    "public/sw.js": "7c2d5bd5401bc4f22f192c91e6e67ee2c997925cd4cca4bc2bb2f293fa44cf3a",
+    "scripts/check-reference-assets.mjs": "4720f6fd6278cf0326c2120a5618a28765625a335aaa8ddf7cc97170be99c6a5",
+    "scripts/check-reference-image-map.mjs": "135781d26045c0967477d664b092ccedd096506f33fe5f2ea51e886464884d52",
+    "scripts/check-stylesheet-debt.mjs": "aa6c6afc1a0309be00203547405fff78b8a5d83645e19db79b1d74af79fd7db1",
+    "e2e/splash-daily-content.spec.ts": "2d7bab6bccd643366b320a55a0e692794346db4f7de4bf26d0a41a8ee304888d"
+  },
+  "check": {
+    "exitCode": 0,
+    "tests": 1041,
+    "log": "opening-layout-check-2026-10-13.log"
+  },
+  "browser": {
+    "exitCode": 0,
+    "tests": 13,
+    "scope": "Startbildschirm in fünf Größen, fünf Ayahs, fehlende Daten/Bilder, reduzierte Bewegung und Offline.",
+    "log": "opening-layout-browser-2026-10-13.log"
+  },
+  "screenshotsInspected": [
+    "opening-layout-preview-2026-10-13.jpg",
+    "opening-layout-phone-2026-10-13.png",
+    "opening-layout-small-phone-2026-10-13.png",
+    "opening-layout-landscape-2026-10-13.png"
+  ],
+  "startupTimingChanged": false,
+  "pwaShellVersion": 81,
+  "stylesheetGrowthBytes": 831,
+  "published": false
+}

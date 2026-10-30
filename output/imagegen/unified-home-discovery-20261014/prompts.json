@@ -1,0 +1,41 @@
+{
+  "recordedAt": "2026-10-14",
+  "mode": "Codex built-in image_gen",
+  "model": "Exact model identifier not exposed",
+  "transparentBackground": true,
+  "scope": "Four Home discovery shortcut images only",
+  "sources": {
+    "prayer": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-7b141e5b-6f0e-46c6-83f6-fec2958f18cb.png",
+    "names": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-9a0862aa-8553-485f-aef9-07c40c517640.png",
+    "quiz": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-8630b8c0-eb24-4502-a2a2-695622c9d832.png",
+    "duas": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-a1350cbc-c576-4b4c-9798-7b04a62632b2.png"
+  },
+  "prompts": {
+    "prayer": "Use case: style-transfer. Asset type: one transparent Home shortcut icon for Nur Islam, part of a coordinated four-icon collection. Image 1 is the illustration to redesign; image 2 is the approved prayer-bead icon and is the reference for the collection's tactile matte finish, quiet lighting and tasteful color balance. Redesign ONLY image 1; do not include the reference object or make a collage. Retain the recognizable subject and compact silhouette. Make the four subjects feel made by the SAME illustrator: simplified rounded geometry, matte soft 3D surfaces, subtle material hints without gritty photographic texture, same soft upper-left studio light, same mild three-quarter perspective and gentle grounding shadow, no gloss or dramatic rim lighting. The app has deep forest-green surfaces, warm ivory typography and aged-brass accents. Build a cohesive object palette of warm ivory, muted forest/teal green and small aged-brass accents; natural warm skin color is allowed for hands. Avoid vivid royal blue, bright coral, primary yellow and shiny toy plastic. Calm and refined, not overly ornate. Center one whole object on a square genuinely transparent canvas, approximately 76% of canvas size, equal optical scale across the set, no background tile, no glow, no scenery, no watermark, no pseudo-Arabic or invented sacred text.\nSubject: a partially unfurled prayer rug with a rolled far edge. Muted deep teal-green cloth, warm ivory plain border and a simple ivory mihrab outline, restrained sand-colored fringe. Simplify the current busy tassels and high-frequency fibers. One continuous believable rug, no person, no floor, no additional objects or text.",
+    "names": "Use case: style-transfer. Asset type: one transparent Home shortcut icon for Nur Islam, part of a coordinated four-icon collection. Image 1 is the illustration to redesign; image 2 is the approved prayer-bead icon and is the reference for the collection's tactile matte finish, quiet lighting and tasteful color balance. Redesign ONLY image 1; do not include the reference object or make a collage. Retain the recognizable subject and compact silhouette. Make the four subjects feel made by the SAME illustrator: simplified rounded geometry, matte soft 3D surfaces, subtle material hints without gritty photographic texture, same soft upper-left studio light, same mild three-quarter perspective and gentle grounding shadow, no gloss or dramatic rim lighting. The app has deep forest-green surfaces, warm ivory typography and aged-brass accents. Build a cohesive object palette of warm ivory, muted forest/teal green and small aged-brass accents; natural warm skin color is allowed for hands. Avoid vivid royal blue, bright coral, primary yellow and shiny toy plastic. Calm and refined, not overly ornate. Center one whole object on a square genuinely transparent canvas, approximately 76% of canvas size, equal optical scale across the set, no background tile, no glow, no scenery, no watermark, no pseudo-Arabic or invented sacred text.\nSubject: one small closed book with a warm-ivory cloth-like cover, muted forest-green spine and bookmark, a thin aged-brass simple border and the exact centered digits \"99\" in muted forest green. Keep the book easy to recognize. No other writing, no religious lettering, no pedestal.",
+    "quiz": "Use case: style-transfer. Asset type: one transparent Home shortcut icon for Nur Islam, part of a coordinated four-icon collection. Image 1 is the illustration to redesign; image 2 is the approved prayer-bead icon and is the reference for the collection's tactile matte finish, quiet lighting and tasteful color balance. Redesign ONLY image 1; do not include the reference object or make a collage. Retain the recognizable subject and compact silhouette. Make the four subjects feel made by the SAME illustrator: simplified rounded geometry, matte soft 3D surfaces, subtle material hints without gritty photographic texture, same soft upper-left studio light, same mild three-quarter perspective and gentle grounding shadow, no gloss or dramatic rim lighting. The app has deep forest-green surfaces, warm ivory typography and aged-brass accents. Build a cohesive object palette of warm ivory, muted forest/teal green and small aged-brass accents; natural warm skin color is allowed for hands. Avoid vivid royal blue, bright coral, primary yellow and shiny toy plastic. Calm and refined, not overly ornate. Center one whole object on a square genuinely transparent canvas, approximately 76% of canvas size, equal optical scale across the set, no background tile, no glow, no scenery, no watermark, no pseudo-Arabic or invented sacred text.\nSubject: one substantial warm-ivory rounded quiz card with a large clean muted forest-green question mark \"?\" centered, one slightly offset muted teal backing card and a subtle aged-brass edge detail. Same tactile paper/cloth-like matte finish as the book. No other words, letters or numbers, no stand or scene.",
+    "duas": "Use case: style-transfer. Asset type: one transparent Home shortcut icon for Nur Islam, part of a coordinated four-icon collection. Image 1 is the illustration to redesign; image 2 is the approved prayer-bead icon and is the reference for the collection's tactile matte finish, quiet lighting and tasteful color balance. Redesign ONLY image 1; do not include the reference object or make a collage. Retain the recognizable subject and compact silhouette. Make the four subjects feel made by the SAME illustrator: simplified rounded geometry, matte soft 3D surfaces, subtle material hints without gritty photographic texture, same soft upper-left studio light, same mild three-quarter perspective and gentle grounding shadow, no gloss or dramatic rim lighting. The app has deep forest-green surfaces, warm ivory typography and aged-brass accents. Build a cohesive object palette of warm ivory, muted forest/teal green and small aged-brass accents; natural warm skin color is allowed for hands. Avoid vivid royal blue, bright coral, primary yellow and shiny toy plastic. Calm and refined, not overly ornate. Center one whole object on a square genuinely transparent canvas, approximately 76% of canvas size, equal optical scale across the set, no background tile, no glow, no scenery, no watermark, no pseudo-Arabic or invented sacred text.\nSubject: a pair of gently cupped hands, warm natural medium-brown skin, simplified smooth stylized 3D modeling at the SAME level of detail as the other objects, muted forest-green sleeve cuffs with a minimal warm-ivory hem. Each hand must have exactly five plausible digits, natural relaxed proportions, clear separated fingertips. No face/body, no additional objects, no writing. Avoid photographic pores, excessive palm-line detail or plastic shine."
+  },
+  "inputImages": {
+    "prayer": [
+      "output/imagegen/home-discovery-20261014/prayer.png",
+      "output/imagegen/compact-shortcuts-20261014/dhikr.png"
+    ],
+    "names": [
+      "output/imagegen/home-discovery-20261014/names.png",
+      "output/imagegen/compact-shortcuts-20261014/dhikr.png"
+    ],
+    "quiz": [
+      "output/imagegen/home-discovery-20261014/quiz.png",
+      "output/imagegen/compact-shortcuts-20261014/dhikr.png"
+    ],
+    "duas": [
+      "output/imagegen/home-discovery-20261014/duas.png",
+      "output/imagegen/compact-shortcuts-20261014/dhikr.png"
+    ]
+  },
+  "inputRoles": [
+    "Previous motif to redesign",
+    "Approved Dhikr illustration as shared style reference"
+  ]
+}

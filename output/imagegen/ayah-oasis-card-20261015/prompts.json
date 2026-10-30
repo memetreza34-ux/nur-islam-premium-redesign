@@ -1,0 +1,13 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: stylized-concept.\nAsset type: quiet full-bleed background for the “Ayah des Tages” card in the Nur Islam mobile app.\nImage 1 is a MATERIAL AND SHAPE STYLE reference only: match the app's clean smooth matte 3D illustration language, gentle bevels and emerald/ivory/gold palette. Do NOT include the book or wooden stand.\nCreate a serene minimal NATURE SCENE, a small oasis garden suggested at the very edges around a broad open warm-ivory central backdrop. The result must be a recognizable softly modeled 3D environment, not just a color gradient or paper texture.\nComposition: square 1:1 canvas for a responsive reading card. A broad softly curving pale sand/ivory landscape occupies the lower 15%, flowing gently from the bottom corners. A very small calm turquoise water glimpse is confined to the bottom-left OUTER corner. A few beautifully sculpted matte olive-green leaves and one slim stem rise only along the extreme lower-right edge, taking up at most the outermost 10% of the width and bottom 25% of height. A very faint distant low dune silhouette at bottom adds depth. Keep the ENTIRE central x12%-88%, y8%-88% warm luminous cream (#f6eddc family), quiet and nearly uniform, so dark green Arabic text, translation and source remain legible on top. No dark detail behind the central text. Very soft afternoon light, broad smooth shadows at the perimeter, restrained muted green, cream and sand colors.\nStyle: refined smooth matte 3D illustration, simple solid forms, gentle lighting, no photographic texture, no grain, no tiny detail, no ornate decoration, no childish cartoon.\nAvoid any book, human, animal, mosque, doorway, arch, lantern, calligraphy, text, UI, label, frame, watermark, religious symbol, decorative pattern or texture. The backdrop should feel natural, calm and warm, with genuine modeled scene detail near the edges and a clear reading area. One finished background image.",
+  "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-1be9d0b8-2648-4ade-8f4f-ba534683793d.png",
+  "inputImages": [
+    "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+  ],
+  "inputRoles": [
+    "Matte 3D material and shape reference only; no book depicted"
+  ],
+  "purpose": "Quiet cream/oasis background for Home and Quran daily Ayah cards. Text-safe center."
+}

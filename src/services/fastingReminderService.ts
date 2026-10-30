@@ -1,6 +1,7 @@
 import { readCalendarEntries, writeCalendarEntries } from './calendarReminderService';
 import type { PersonalCalendarEntry } from './calendarReminderService';
-import { getHijriDay } from './hijriCalendar';
+import { getHijriDay, getHijriMonth } from './hijriCalendar';
+import { isFastingForbidden } from '../data/islamicEventsData';
 
 const FASTING_ENABLED_KEY = 'nur_fasting_reminders';
 const FASTING_TIME_KEY = 'nur_fasting_reminder_time';
@@ -48,6 +49,12 @@ export function isManagedFastingReminder(entry: PersonalCalendarEntry) {
   return entry.id >= FASTING_REMINDER_ID_BASE && entry.id < FASTING_REMINDER_ID_MAX;
 }
 
+export function isVoluntaryFastingDate(date: Date) {
+  const month = getHijriMonth(date), day = getHijriDay(date);
+  return month >= 1 && month <= 12 && day >= 1 && day <= 30
+    && month !== 9 && !isFastingForbidden(month, day);
+}
+
 export function buildRollingFastingReminders(now = new Date()) {
   const enabled = readJsonValue<unknown>(FASTING_ENABLED_KEY, false) === true;
   if (!enabled) return [] as PersonalCalendarEntry[];
@@ -61,6 +68,7 @@ export function buildRollingFastingReminders(now = new Date()) {
     fastingDate.setDate(today.getDate() + offset);
     const weekday = fastingDate.getDay();
     const hijriDay = getHijriDay(fastingDate);
+    if (!isVoluntaryFastingDate(fastingDate)) continue;
     const monday = weekday === 1;
     const thursday = weekday === 4;
     const whiteDay = hijriDay >= 13 && hijriDay <= 15;

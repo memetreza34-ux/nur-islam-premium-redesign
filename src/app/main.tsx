@@ -10,7 +10,7 @@ import '@fontsource/cormorant-garamond/600.css';
 import '@fontsource/cormorant-garamond/700.css';
 import '@fontsource/amiri/400.css';
 import App from './App';
-import { resolveAppPath, versionAppPath } from './appPaths';
+import { resolveAppPath } from './appPaths';
 import { AppErrorBoundary, CalendarReminderBanner, NetworkStatus, PrayerReminderBanner } from './AppSystemLayer';
 import { blockForeignFraming, isFramedByForeignSite } from './frameGuard';
 import { startCalendarReminderScheduler } from '../services/calendarReminderService';
@@ -28,12 +28,6 @@ import '../styles/premium-legacy-art-final.css';
 import '../styles/premium-local-features.css';
 
 const PremiumSystemLayer = React.lazy(() => import('./PremiumSystemLayer').then(({ PremiumSystemLayer }) => ({ default: PremiumSystemLayer })));
-
-const VISUAL_VERSION = '20260826-original-art';
-const STARTUP_ASSETS = [
-  'nur-logo-emblem-v3.svg',
-  'splash-mosque-v1.webp',
-];
 
 function consumeInitialNavigationIntent() {
   const url = new URL(window.location.href);
@@ -61,17 +55,6 @@ function prepareImmediatePreview() {
   }
 
   document.documentElement.classList.toggle('is-preview', previewMode && !forceOnboarding);
-  STARTUP_ASSETS.forEach((name) => {
-    const href = versionAppPath(`premium-assets/high-res-objects/${name}`, VISUAL_VERSION);
-    if (document.head.querySelector(`link[href="${href}"]`)) return;
-    const link = document.createElement('link');
-    link.rel = 'preload';
-    link.as = 'image';
-    link.href = href;
-    link.type = name.endsWith('.svg') ? 'image/svg+xml' : 'image/webp';
-    document.head.appendChild(link);
-  });
-
   const manifest = document.querySelector<HTMLLinkElement>('link[rel="manifest"]');
   if (manifest) manifest.href = resolveAppPath('manifest.webmanifest');
 }
@@ -111,8 +94,9 @@ function BootRoot() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    if (import.meta.env.DEV && new URLSearchParams(window.location.search).get('splash') === '1') return;
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 160 : 1600);
+    const timer = window.setTimeout(() => setReady(true), reducedMotion ? 160 : 3000);
     return () => window.clearTimeout(timer);
   }, []);
 

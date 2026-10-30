@@ -1,0 +1,38 @@
+[
+  {
+    "arabicWidth": 256,
+    "cardOverflow": false,
+    "cardWidth": 300,
+    "documentWidth": 320,
+    "labelFont": "12px",
+    "meaningAlign": "center",
+    "meaningWidth": 256,
+    "plainBackground": "none",
+    "sourceFont": "12px",
+    "viewport": 320
+  },
+  {
+    "arabicWidth": 320,
+    "cardOverflow": false,
+    "cardWidth": 364,
+    "documentWidth": 390,
+    "labelFont": "12px",
+    "meaningAlign": "center",
+    "meaningWidth": 320,
+    "plainBackground": "none",
+    "sourceFont": "12px",
+    "viewport": 390
+  },
+  {
+    "arabicWidth": 444,
+    "cardOverflow": false,
+    "cardWidth": 488,
+    "documentWidth": 768,
+    "labelFont": "12px",
+    "meaningAlign": "center",
+    "meaningWidth": 444,
+    "plainBackground": "none",
+    "sourceFont": "12px",
+    "viewport": 768
+  }
+]

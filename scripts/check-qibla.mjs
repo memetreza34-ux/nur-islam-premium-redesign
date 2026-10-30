@@ -3,6 +3,11 @@ import { resolve } from 'node:path';
 
 const source = await readFile(resolve(process.cwd(), 'src/screens/QiblaScreen.tsx'), 'utf8');
 const dial = await readFile(resolve(process.cwd(), 'src/shared/QiblaCompass.tsx'), 'utf8');
+const preview = await readFile(resolve(process.cwd(), 'src/app/QiblaWidgetPreview.tsx'), 'utf8');
+
+if (!preview.includes('<QiblaCompass') || !preview.includes('heading={null}') || !preview.includes('showDirection={!nearby}') || preview.includes('<svg')) {
+  throw new Error('Qibla preview must use the shared compass, remain north-oriented and hide its pointer near the Kaaba.');
+}
 
 const requiredFragments = [
   'DeviceOrientationEventConstructorWithPermission',

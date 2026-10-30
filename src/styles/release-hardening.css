@@ -48,7 +48,7 @@
 .reference-notes-storage strong,
 .reference-account-security strong {
   color: var(--cream-strong);
-  font-size: .61rem;
+  font-size: .75rem;
 }
 
 .reference-account-entry small,
@@ -56,7 +56,7 @@
 .reference-account-security small,
 .reference-account-security em {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.45;
 }
@@ -101,7 +101,7 @@
 
 .reference-account-hero small {
   color: var(--gold);
-  font-size: .49rem;
+  font-size: .75rem;
   font-weight: 800;
   letter-spacing: .12em;
   text-transform: uppercase;
@@ -119,7 +119,7 @@
 .reference-account-hero p {
   margin-top: 5px;
   color: var(--muted-green);
-  font-size: .56rem;
+  font-size: .75rem;
   line-height: 1.52;
 }
 
@@ -143,7 +143,7 @@
   border-radius: 12px;
   color: var(--muted-green);
   background: transparent;
-  font-size: .55rem;
+  font-size: .75rem;
   font-weight: 800;
   cursor: pointer;
 }
@@ -166,7 +166,7 @@
   display: grid;
   gap: 6px;
   color: var(--gold-soft, var(--gold));
-  font-size: .51rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -234,8 +234,8 @@
   text-align: left;
 }
 
-.reference-account-cloud-grid strong { color: var(--cream-strong); font-size: .66rem; }
-.reference-account-cloud-grid small { color: var(--muted-green); font-size: .49rem; line-height: 1.45; }
+.reference-account-cloud-grid strong { color: var(--cream-strong); font-size: .75rem; }
+.reference-account-cloud-grid small { color: var(--muted-green); font-size: .75rem; line-height: 1.45; }
 
 .reference-account-security,
 .reference-calendar-calculation-note {
@@ -270,8 +270,8 @@
 
 .reference-account-consent > svg { margin-top: 1px; }
 .reference-account-consent > div { display: grid; gap: 9px; min-width: 0; }
-.reference-account-consent strong { color: var(--cream-strong); font-size: .72rem; }
-.reference-account-consent small { color: var(--muted-green); font-size: .58rem; line-height: 1.55; }
+.reference-account-consent strong { color: var(--cream-strong); font-size: .75rem; }
+.reference-account-consent small { color: var(--muted-green); font-size: .75rem; line-height: 1.55; }
 
 .reference-account-consent label {
   display: grid;
@@ -289,18 +289,18 @@
   accent-color: #d8ad54;
 }
 
-.reference-account-consent label span { font-size: .6rem; line-height: 1.5; }
+.reference-account-consent label span { font-size: .75rem; line-height: 1.5; }
 .reference-account-consent > div > div { display: flex; flex-wrap: wrap; gap: 8px; }
 
 .reference-account-consent button {
-  min-height: 40px;
+  min-height: 44px;
   padding: 0 12px;
   border: 1px solid rgba(226, 191, 119, .23);
   border-radius: 12px;
   color: #eadfca;
   background: rgba(226, 191, 119, .06);
   cursor: pointer;
-  font-size: .58rem;
+  font-size: .75rem;
   font-weight: 800;
 }
 
@@ -374,7 +374,7 @@
   border-radius: 13px;
   color: var(--cream);
   background: rgba(5, 31, 24, .94);
-  font-size: .52rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
@@ -388,13 +388,13 @@
 
 .reference-notes-storage > svg { color: var(--gold); }
 .reference-notes-storage > button {
-  min-height: 36px;
+  min-height: 44px;
   padding: 0 10px;
   border: 1px solid rgba(226, 191, 119, .22);
   border-radius: 11px;
   color: var(--gold-bright);
   background: rgba(214, 175, 55, .06);
-  font-size: .48rem;
+  font-size: .75rem;
   font-weight: 800;
   cursor: pointer;
 }
@@ -406,7 +406,7 @@
   justify-content: center;
   gap: 8px;
   color: var(--muted-green);
-  font-size: .54rem;
+  font-size: .75rem;
 }
 
 .reference-notes-list {
@@ -435,9 +435,9 @@
 }
 
 .reference-notes-list > button > span { display: grid; min-width: 0; gap: 2px; }
-.reference-notes-list strong { overflow: hidden; color: var(--cream-strong); font-size: .58rem; white-space: nowrap; text-overflow: ellipsis; }
-.reference-notes-list small { overflow: hidden; color: var(--muted-green); font-size: .47rem; white-space: nowrap; text-overflow: ellipsis; }
-.reference-notes-list em { color: var(--gold); font-size: .44rem; font-style: normal; }
+.reference-notes-list strong { overflow: hidden; color: var(--cream-strong); font-size: .75rem; white-space: nowrap; text-overflow: ellipsis; }
+.reference-notes-list small { overflow: hidden; color: var(--muted-green); font-size: .75rem; white-space: nowrap; text-overflow: ellipsis; }
+.reference-notes-list em { color: var(--gold); font-size: .75rem; font-style: normal; }
 
 .reference-note-editor {
   display: grid;
@@ -455,11 +455,11 @@
   justify-content: space-between;
 }
 
-.reference-note-editor__heading > span { display: flex; align-items: center; gap: 7px; color: var(--cream-strong); font-size: .58rem; }
+.reference-note-editor__heading > span { display: flex; align-items: center; gap: 7px; color: var(--cream-strong); font-size: .75rem; }
 .reference-note-editor__heading > button {
   display: grid;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid rgba(226, 191, 119, .16);
   border-radius: 12px;
@@ -472,9 +472,9 @@
 .reference-note-editor textarea { resize: vertical; min-height: 148px; padding: 11px 12px; line-height: 1.55; }
 
 .reference-calendar-calculation-note > span { display: grid; gap: 2px; }
-.reference-calendar-calculation-note strong { color: var(--cream-strong); font-size: .55rem; }
+.reference-calendar-calculation-note strong { color: var(--cream-strong); font-size: .75rem; }
 .reference-calendar-calculation-note small,
-.reference-calendar-reminder-help { color: var(--muted-green); font-size: .48rem; line-height: 1.48; }
+.reference-calendar-reminder-help { color: var(--muted-green); font-size: .75rem; line-height: 1.48; }
 .reference-calendar-reminder-help { display: block; margin-top: -2px; }
 
 .reference-calendar-reminder-banner { top: max(84px, calc(env(safe-area-inset-top) + 72px)); }
@@ -514,8 +514,6 @@ html[data-theme='light'] .reference-account-hero,
 html[data-theme='light'] .reference-notes-storage,
 html[data-theme='light'] .reference-note-editor,
 html[data-theme='light'] .reference-profile-row,
-html[data-theme='light'] .reference-core-access-grid > button,
-html[data-theme='light'] .reference-services-grid > button,
 html[data-theme='light'] .reference-settings-toggles > button,
 html[data-theme='light'] .reference-choice,
 html[data-theme='light'] .reference-calendar-event,

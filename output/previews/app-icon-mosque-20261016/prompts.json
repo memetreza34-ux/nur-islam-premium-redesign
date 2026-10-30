@@ -1,0 +1,12 @@
+{
+  "created": "2026-10-16",
+  "generator": "Built-in image_gen",
+  "scope": "Preview-only alternative app icon; arch proposal retained; production branding unchanged.",
+  "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-cf6c29e4-e30e-4961-917d-1da58476077d.png",
+  "prompt": "Use case: logo-brand. Asset type: a single finished square mobile app icon, 1024 x 1024 composition. Primary request: create an alternative mosque app icon for an adult Islamic companion app, matching the calm, polished, matte 3D illustration world of the supplied references. Input image 1 is a mosque subject/material reference; input image 2 is a supporting reference for clean rounded forms and restraint. Design ONE recognizable mosque with a large deep emerald dome, an ivory front facade with a single pointed arch doorway, two shorter flanking ivory minarets, and a restrained warm gold crescent and trim. Simplify the reference into a bold unified silhouette readable at 48 px: fewer windows, fewer building tiers, no tiny carved ornaments. Gently elevated near-frontal three-quarter view with very subtle depth, symmetrical balanced mass. Opaque full-bleed deep forest emerald background with very subtle soft studio gradient, slightly lighter behind the building; cream mosque clearly separates from it. Building entirely centered and contained within the central 72 percent of the canvas, generous even safe padding for rounded-square or circular system masks, no cropped minarets. Soft upper-left light, satin ceramic/plaster materials, restrained gold, calm premium finish. Preserve the visual family of the references without looking photorealistic or childish. No lettering, name, words, calligraphy, border, outer rounded-square drawing, icon mockup, phone, landscape, palms, sparkles, glossy plastic, exaggerated cartoon features, or extra objects. Fill the whole square with the background color all the way to every corner. Produce the icon artwork itself, not a presentation sheet.",
+  "references": [
+    "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp",
+    "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+  ],
+  "retainedArch": "../app-icon-arch-20261016/app-icon.svg"
+}

@@ -1,0 +1,183 @@
+{
+  "date": "2026-10-18",
+  "browserBatches": [
+    {
+      "log": "nur-design-unification-verified-e2e-20261018.log",
+      "passed": 58,
+      "failed": 1,
+      "failure": "New topic-art test searched only the core directory; Zakat lives in the services directory. Product worked. Selector corrected to include both."
+    },
+    {
+      "log": "nur-design-unification-delivery-20261018.log",
+      "passed": 13,
+      "failed": 0,
+      "scope": "Entire design-unification suite, including the corrected topic-art test and stable screenshots."
+    }
+  ],
+  "uniqueVerifiedBrowserTests": 59,
+  "responsive": [
+    {
+      "format": "responsive-app-complete-app-adapts-to-768x1024-phone",
+      "views": 50,
+      "smallText": 0,
+      "lateralText": 0,
+      "clippedText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-1024x768-phone",
+      "views": 50,
+      "smallText": 0,
+      "lateralText": 0,
+      "clippedText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-844x390-phone",
+      "views": 50,
+      "smallText": 0,
+      "lateralText": 0,
+      "clippedText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-320x740-phone",
+      "views": 50,
+      "smallText": 0,
+      "lateralText": 0,
+      "clippedText": 0
+    },
+    {
+      "format": "responsive-app-complete-app-adapts-to-390x844-phone",
+      "views": 50,
+      "smallText": 0,
+      "lateralText": 0,
+      "clippedText": 0
+    }
+  ],
+  "screenshots": [
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-home.png",
+      "sha256": "02996cc68248db9eb4ec3cc36be86d1bd960f4a5d12e5c71816826fd0c8c0ac0",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-40f81--complete-labels-at-390x844-phone/home.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-more.png",
+      "sha256": "da3e6689a2ea2a313155e833812e1ecbc60f4e2b2ab4efc572308232edb0682e",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-40f81--complete-labels-at-390x844-phone/more.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-ayah.png",
+      "sha256": "64e97e5a5471b3fb125da41801e6366e505815ea1094ef8c1f32ac8221f8b6b7",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-40f81--complete-labels-at-390x844-phone/ayah.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/320-home.png",
+      "sha256": "0155972f20d04a48e02acd5152b850488ab023fd9686ebb4ed982fcbdb1367d6",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-118ee--complete-labels-at-320x740-phone/home.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/844-home.png",
+      "sha256": "a15847b057bb6014f8bcc5d8134d5c8675182cb240622b9805f629122b72bba2",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-c8757--complete-labels-at-844x390-phone/home.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/768-more.png",
+      "sha256": "ad70e9c17f5c2b9d48ef9d2b266b2bd51cd90080ec97234583fecd5cdbc85217",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-b6a27-complete-labels-at-768x1024-phone/more.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/1024-more.png",
+      "sha256": "59f0a5e586c76beb6ee29ff4659cc13fb746d0fd4b452a175c6a2a2db1fe0c62",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-readabl-c42b6-complete-labels-at-1024x768-phone/more.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-widgets.png",
+      "sha256": "1b40678af7f2231a8eeef00f13e708fc7dcd8ad1515e0540fb93a8f343e5053f",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-widget--8f359--full-row-on-a-normal-phone-phone/widgets.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-german-reading.png",
+      "sha256": "5cfb76374bf0ab34586364ed5894643395109201016389ce5f4e9688712c3165",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-reading-72f00--guidance-remains-reachable-phone/german-reading.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-onboarding.png",
+      "sha256": "360f1b45c45807bd439322f7868633f732a16f3ba0c2547fdd93aa97e9a7f8ee",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-onboard-e8f95-rves-complete-mosque-at-390-phone/onboarding-art.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/320-onboarding.png",
+      "sha256": "c3ad7bfdf99d56d3268c54a1c4f7156cf7437133463452d4b8aeb997944df38f",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-onboard-779ee-rves-complete-mosque-at-320-phone/onboarding-art.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/768-onboarding.png",
+      "sha256": "ff12e027297a27e50eecbb5a831b85038065c6d398ec2f2db6f295289e8e1e68",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-onboard-3d426-rves-complete-mosque-at-768-phone/onboarding-art.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-zakat.png",
+      "sha256": "646bc958a5748feed9f26e2669e149cefb8b603d774108b3ec17f35e34f99c7e",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-topic-a-fbf62-ds-on-the-secondary-screens-phone/Zakat-Rechner.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-ummah.png",
+      "sha256": "afecf14ff272712ca9851ea995e8ad813e5f946d6e3891ec4ab722a18065310c",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-topic-a-fbf62-ds-on-the-secondary-screens-phone/Ummah-Übersicht.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-accent-sapphire.png",
+      "sha256": "5a7a83d19a38c5ed78139da8e886ac452f1e70f9e46918476f90baf430eaa4c0",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-each-ac-895f3-t-and-action-roles-together-phone/accent-Saphir.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-accent-plum.png",
+      "sha256": "6984abe8c9dd5d9848edc9117f8dac172fe1c575a2a870256ca85f9d3b69c97a",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-each-ac-895f3-t-and-action-roles-together-phone/accent-Pflaume.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-accent-sand.png",
+      "sha256": "508378a3b6b3ce9ea43ccf17f35bf15197a60f07ac419304860bc770231a341f",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-each-ac-895f3-t-and-action-roles-together-phone/accent-Sand.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-large-type-reader.png",
+      "sha256": "aadda6b9aff2c3b61e63ddf662865200250da964b1060f606a0b68c12c571bdf",
+      "source": "/tmp/nur-design-unification-delivery-20261018/design-unification-main-se-db02d-le-with-a-doubled-base-font-phone/large-type-reader.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-qibla.png",
+      "sha256": "2613f335c012f967b27b09ee29f7a5879cde28168e34e14226208236073f6886",
+      "source": "/tmp/nur-design-unification-verified-e2e-20261018/qibla-compass-open-Qibla-dial-is-readable-at-390px-phone/qibla-390.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-learn.png",
+      "sha256": "253fa019f9887563498a325e8f8aa8e4343038a2329b460e2338e1b52f6f0f37",
+      "source": "/tmp/nur-design-unification-verified-e2e-20261018/responsive-app-complete-app-adapts-to-390x844-phone/Lernen.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/768-learn.png",
+      "sha256": "0e41a6f9f4a0bb9d6b442fad32322e96a3e597cab0828b47bd8bdc2f1bd42fa1",
+      "source": "/tmp/nur-design-unification-verified-e2e-20261018/responsive-app-complete-app-adapts-to-768x1024-phone/Lernen.png"
+    },
+    {
+      "file": "docs/design-unification-2026-10-18/screenshots/390-quran.png",
+      "sha256": "e7a21fd8d3d05b2369cb5cab58910a7cdc6afafa2e2d3f3f45b5052a36b83672",
+      "source": "/tmp/nur-design-unification-verified-e2e-20261018/responsive-app-complete-app-adapts-to-390x844-phone/Quran.png"
+    }
+  ],
+  "limitations": [
+    "Browser emulation does not replace physical-device release QA.",
+    "No App Store or Google Play approval claimed.",
+    "Existing release prerequisites in AGENTS.md remain outside this visual implementation."
+  ],
+  "check": {
+    "command": "npm run check",
+    "status": "passed",
+    "log": "check.log",
+    "unitTestFiles": 61,
+    "unitTests": 1141,
+    "bundleGzipKB": 510,
+    "bundleLimitKB": 511,
+    "entryGzipKB": 94,
+    "entryLimitKB": 95
+  }
+}

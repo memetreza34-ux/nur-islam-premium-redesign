@@ -5,6 +5,11 @@ const root = process.cwd();
 const read = (path) => readFile(resolve(root, path), 'utf8');
 const homeProgress = await read('src/services/homeQuranProgress.ts');
 const dhikrDailyState = await read('src/services/dhikrDailyState.ts');
+const learningProgress = await read('src/services/learningProgress.ts');
+const learningCourse = await read('src/screens/LearningCourseScreen.tsx');
+const guideProgress = await read('src/services/worshipGuideProgress.ts');
+const guideScreen = await read('src/screens/ReferenceReadingScreens.tsx');
+const learningHub = await read('src/screens/LearnScreen.tsx');
 
 const [app, quran, reader, duas, names, dhikr, collections, calendar, notes, account, backend] = await Promise.all([
   read('src/app/App.tsx'),
@@ -32,6 +37,50 @@ function forbidTokens(source, label, tokens) {
   }
 }
 
+requireTokens(learningProgress, 'Knowledge course write acknowledgement', [
+  "LEARNING_PROGRESS_KEY = 'nur_learning_completed'",
+  'if (!current.valid) return null;',
+  'localStorage.getItem(LEARNING_PROGRESS_KEY) === value',
+  'localStorage.getItem(key) === lessonId',
+]);
+requireTokens(learningCourse, 'Reading position feedback without completion', [
+  'readLearningPosition',
+  'writeLearningPosition',
+  'Speicherung der letzten Lektionsposition',
+  'Lektion auswählen',
+  "x: '-50%'",
+]);
+forbidTokens(learningCourse, 'No completion writes from reading lessons', [
+  'updateLearningCompletion',
+  'completionSaved',
+  'Lektionsfortschritt zurücksetzen',
+]);
+forbidTokens(learningCourse, 'Knowledge course mount data preservation', [
+  'useEffect(() => writeStringSet',
+  'parsed.map(String)',
+]);
+
+requireTokens(guideProgress, 'Worship guide validated persistence', [
+  'WORSHIP_GUIDE_BY_ID.get(guideId)',
+  'Number.isInteger(stepIndex)',
+  'Number(step.raw) < guide.steps.length',
+  '!readGuideProgress(guideId).stepValid',
+  'localStorage.getItem(key) === value',
+]);
+requireTokens(guideScreen, 'Reading position without completion', [
+  'saveGuideStep(guide.id, index)', 'Speicherung der Schrittposition nicht bestätigt', 'stored.stepValid',
+]);
+forbidTokens(guideScreen, 'No completion writes or bars in guides', [
+  'saveGuideCompletion', 'completeGuide', 'completionValid', 'stored.completed', 'reference-guide-progress',
+]);
+forbidTokens(learningHub, 'Learning directory without completion or a duplicate course entry', [
+  'readPrayerCompletion', 'completedPrayerLessons', 'coreProgress', 'learn-library-prayer-entry',
+]);
+const prayerLearning = await read('src/screens/PrayerLearningScreen.tsx');
+forbidTokens(prayerLearning, 'Prayer learning without completion tracking', [
+  'nur_prayer_learning_complete', 'completedLessons', 'completionOpen', 'courseProgress', 'is-complete',
+]);
+
 requireTokens(homeProgress, 'Home Quran progress data', [
   'hasProgress: boolean',
   'progressFor(surahs[0])',
@@ -57,10 +106,11 @@ forbidTokens(app, 'Home Quran progress', [
 requireTokens(quran, 'Quran catalog progress', [
   'function readLastRead(): LastRead | null',
   'if (!raw) return null;',
-  "lastRead ? 'Weiterlesen' : 'Quran beginnen'",
   "lastRead ? 'Weiterlesen' : 'Lesen beginnen'",
   'const readerSurahNumber = lastSurah?.number ?? lastRead?.surahNumber ?? 1',
-  'lastRead && lastSurah ? Math.min(100, Math.max(1, (lastAyah / lastSurah.numberOfAyahs) * 100)) : 0',
+  'title={`Sure ${readerSurahNumber}`}',
+  'meta={lastRead && lastSurah ? <span id="quran-resume-position">Ayah {lastAyah} von {lastSurah.numberOfAyahs}</span> : undefined}',
+  'progress={0}',
 ]);
 forbidTokens(quran, 'Quran catalog progress', [
   'const fallback = { surahNumber: 112, ayahNumber: 1',
@@ -68,11 +118,13 @@ forbidTokens(quran, 'Quran catalog progress', [
 ]);
 
 requireTokens(reader, 'Quran reader validated persistence', [
-  'if (!bundle) return;',
+  'if (!bundle || bundle.meta.number !== surahNumber) return;',
   'const validatedAyah = Math.min(bundle.meta.numberOfAyahs, Math.max(1, activeAyah))',
   'surahNumber: bundle.meta.number',
   'ayahNumber: validatedAyah',
-  'setBookmarks((current) => new Set([...current].filter((ayahNumber) => ayahNumber <= data.meta.numberOfAyahs)))',
+  'readBookmarks(surahNumber, data.meta.numberOfAyahs)',
+  'localStorage.getItem(key) === value',
+  'ayahNumber <= surah.numberOfAyahs',
 ]);
 forbidTokens(reader, 'Quran reader validated persistence', [
   'surahNumber,\n        ayahNumber: activeAyah',

@@ -18,9 +18,9 @@ function apiResponse(body: unknown) {
 }
 
 function stubValidApi() {
-  vi.stubGlobal('fetch', vi.fn(async () => apiResponse({
+  vi.stubGlobal('fetch', vi.fn(async (input: RequestInfo | URL) => apiResponse({
     code: 200,
-    data: { timings: TIMINGS, meta: { method: { name: 'Diyanet' }, school: 'Standard', timezone: 'Europe/Berlin' } },
+    data: { timings: TIMINGS, date: { gregorian: { date: new URL(String(input)).pathname.split('/').at(-1) } }, meta: { latitude: 52.52, longitude: 13.41, method: { id: 13, name: 'Diyanet' }, school: 'STANDARD', timezone: 'Europe/Berlin' } },
   })));
 }
 

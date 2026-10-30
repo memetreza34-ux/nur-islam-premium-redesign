@@ -1,0 +1,25 @@
+{
+  "date": "2026-10-15",
+  "change": [
+    "Removed daily Hadith from Home and More; removed automatic daily selection from the retained saved-Hadith reader.",
+    "Ayah cards and detail use plain cream #f6eddc without image or ornamental pattern.",
+    "Archived Ayah background outside public; removed it from shell cache."
+  ],
+  "cacheVersion": 99,
+  "preserved": [
+    "Hadith library and sources",
+    "Previously saved Hadith IDs and collection navigation",
+    "Ayah Arabic text, meaning, source and reader actions"
+  ],
+  "checks": {
+    "npmRunCheck": "passed",
+    "unitTests": 1047,
+    "e2e": "29 passed (1.1m)",
+    "responsiveAyahWidths": [
+      320,
+      390,
+      768
+    ]
+  },
+  "screenshot": "home-plain-ayah-2026-10-15.png"
+}

@@ -2,7 +2,7 @@
   --legal-panel: rgba(5, 39, 30, .9);
   --legal-panel-soft: rgba(11, 66, 50, .62);
   --legal-border: rgba(226, 191, 119, .2);
-  --legal-muted: rgba(215, 225, 214, .68);
+  --legal-muted: #c0cec5;
   gap: 14px;
   padding-bottom: 112px;
 }
@@ -85,8 +85,8 @@
 .reference-legal-hero p {
   max-width: 48ch;
   margin: 5px 0 0;
-  color: rgba(226, 234, 224, .74);
-  font-size: .7rem;
+  color: var(--legal-muted);
+  font-size: .9375rem;
   line-height: 1.55;
 }
 
@@ -107,7 +107,7 @@
   border-radius: 999px;
   color: rgba(255, 244, 218, .86);
   background: rgba(1, 25, 19, .34);
-  font-size: .54rem;
+  font-size: .75rem;
   font-weight: 750;
 }
 
@@ -134,7 +134,7 @@
   border-radius: 14px;
   color: rgba(208, 220, 208, .64);
   background: transparent;
-  font-size: .62rem;
+  font-size: .75rem;
   font-weight: 760;
   cursor: pointer;
 }
@@ -144,7 +144,7 @@
 .reference-legal-tabs button.is-active {
   border-color: rgba(239, 208, 137, .38);
   color: #17392c;
-  background: linear-gradient(135deg, #f3d994, #c9973f);
+  background: linear-gradient(135deg, var(--ds-gold-lt), var(--ds-gold));
   box-shadow: 0 8px 20px rgba(191, 139, 48, .2);
 }
 
@@ -186,7 +186,7 @@
 .reference-legal-pending p {
   margin: 0;
   color: rgba(240, 226, 197, .72);
-  font-size: .64rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -206,7 +206,7 @@
   border-radius: 999px;
   color: rgba(243, 214, 166, .86);
   background: rgba(232, 174, 72, .06);
-  font-size: .5rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
@@ -250,7 +250,7 @@
   border-radius: 15px;
   color: var(--gold-bright);
   background: rgba(226, 191, 119, .065);
-  font-size: .55rem;
+  font-size: .75rem;
   font-weight: 850;
   letter-spacing: .08em;
 }
@@ -275,9 +275,10 @@
 .reference-legal-section p {
   margin: 0;
   color: var(--legal-muted);
-  font-size: .68rem;
-  line-height: 1.68;
+  font-size: 1rem;
+  line-height: 1.7;
   text-wrap: pretty;
+  overflow-wrap: anywhere;
 }
 
 .reference-legal-section p + p {
@@ -319,8 +320,8 @@
 }
 
 .reference-legal-sources > div { display: grid; min-width: 0; gap: 4px; }
-.reference-legal-sources strong { color: #f5eedf; font-size: .7rem; }
-.reference-legal-sources small { color: rgba(205, 221, 208, .58); font-size: .53rem; line-height: 1.5; }
+.reference-legal-sources strong { color: #f5eedf; font-size: .75rem; }
+.reference-legal-sources small { color: rgba(205, 221, 208, .58); font-size: .75rem; line-height: 1.5; }
 .reference-legal-sources > svg { color: rgba(226, 191, 119, .42); }
 
 .reference-legal-sources nav {
@@ -340,7 +341,7 @@
   border-radius: 999px;
   color: #e9cf95;
   background: rgba(0, 20, 15, .28);
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 750;
   text-decoration: none;
 }
@@ -349,15 +350,6 @@
 .reference-legal-sources a:focus-visible {
   outline: 2px solid rgba(247, 226, 178, .78);
   outline-offset: 2px;
-}
-
-@media (hover: hover) {
-  .reference-legal-tabs button:not(.is-active):hover,
-  .reference-legal-sources a:hover {
-    border-color: rgba(226, 191, 119, .3);
-    color: #f7e7c2;
-    background: rgba(226, 191, 119, .07);
-  }
 }
 
 @media (max-width: 390px) {
@@ -369,7 +361,7 @@
 
   .reference-legal-hero__icon { width: 46px; height: 46px; border-radius: 16px; }
   .reference-legal-hero h2 { font-size: 1.48rem; }
-  .reference-legal-tabs button { gap: 5px; font-size: .56rem; }
+  .reference-legal-tabs button { gap: 5px; font-size: .75rem; }
 
   .reference-legal-section {
     grid-template-columns: 38px minmax(0, 1fr);

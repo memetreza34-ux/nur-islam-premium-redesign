@@ -10,7 +10,8 @@
  * themselves and each narration was read back against its summary before the
  * number was written down. Five of those seventeen turned out to be a second
  * copy of an already numbered entry and were merged, which is why the floor
- * below is 20 and not 25.
+ * below is 20: duplicates were merged. Different grading attributions must
+ * remain visible; they are not a blanket reason to remove a narration.
  *
  * The budget stays at zero: a new entry arrives with its number or not at all.
  * Numbers are never written from memory.
@@ -20,7 +21,7 @@ import { resolve } from 'node:path';
 
 const root = process.cwd();
 const source = await readFile(resolve(root, 'src/data/hadithData.ts'), 'utf8');
-const screen = await readFile(resolve(root, 'src/screens/DailyHadithScreen.tsx'), 'utf8');
+const screen = await readFile(resolve(root, 'src/screens/SavedHadithScreen.tsx'), 'utf8');
 
 const library = source.slice(
   source.indexOf('export const HADITH_LIBRARY'),
@@ -38,6 +39,9 @@ if (entries.length !== ids.length) {
 }
 if (entries.length < 20) {
   throw new Error(`Hadith library holds ${entries.length} entries; at least 20 are expected.`);
+}
+if (!source.includes("id: 'es-gehort-zum-guten'") || !source.includes('https://sunnah.com/nawawi40:12') || !source.includes('daif für Tirmidhi 2317')) {
+  throw new Error('The retained Tirmidhi 2317 entry must preserve both attributed grading sources.');
 }
 if (new Set(ids).size !== ids.length) {
   const seen = new Set();
@@ -93,5 +97,5 @@ if (!screen.includes('entry.context ? (')) {
 }
 
 console.log(
-  `Hadith verified: ${entries.length} entries with unique ids and distinct references, every one naming a known collection with a number and marked as a sinngemäße Inhaltsangabe.`,
+  `Hadith structure checked: ${entries.length} entries with unique ids and distinct references, numbered collection labels and paraphrase markers. This check does not verify religious meaning or authenticity.`,
 );

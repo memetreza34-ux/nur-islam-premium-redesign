@@ -1,4 +1,4 @@
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const root = process.cwd();
@@ -22,9 +22,9 @@ if (microIndex < 0 || finalIndex < 0 || microIndex > finalIndex) {
 }
 
 for (const token of [
-  '--text-micro: .54rem',
-  '--text-caption: .58rem',
-  '--text-body-small: .62rem',
+  '--text-micro: .75rem',
+  '--text-caption: .75rem',
+  '--text-body-small: .875rem',
   '--compact-line-height: 1.42',
   '--icon-box-small: 36px',
   '--icon-box-medium: 40px',
@@ -41,7 +41,6 @@ for (const selector of [
   '.reference-prayer-reminder-banner__copy small',
   '.reference-prayer-reminder-banner__copy em',
   '.reference-mosque-live-status small',
-  '.reference-core-access-grid small',
   '.reference-network-status small',
   '.reference-install-prompt__copy .overline',
   '.reference-install-prompt__copy small',
@@ -82,14 +81,34 @@ for (const requirement of [
   if (!micro.includes(requirement)) throw new Error(`Micro UI rhythm requirement is missing: ${requirement}`);
 }
 
-if (!profile.includes('font-size: .51rem') || !prayerCalendar.includes('font-size: .49rem')) {
+if (!profile.includes('font-size: .75rem') || !prayerCalendar.includes('font-size: .75rem')) {
   throw new Error('Expected profile/prayer legacy micro-copy baselines changed; review the centralized overrides.');
 }
-if (!quran.includes('font-size: .4rem') || !duas.includes('font-size: .47rem') || !names.includes('font-size: .48rem')) {
+if (!quran.includes('font-size: .75rem') || !duas.includes('font-size: .75rem') || !names.includes('font-size: .75rem')) {
   throw new Error('Expected Quran/Dua/Names legacy micro-copy baselines changed; review the centralized overrides.');
 }
-if (!installPrompt.includes('font-size: .46rem') || !installPrompt.includes('font-size: .47rem') || !systemLayer.includes('font-size: .46rem') || !prayerReminders.includes('font-size:.49rem')) {
+if (!installPrompt.includes('font-size: .75rem') || !installPrompt.includes('font-size: .75rem') || !systemLayer.includes('font-size: .75rem') || !prayerReminders.includes('font-size:.75rem')) {
   throw new Error('Expected global install/network/reminder micro-copy baselines changed; review the centralized overrides.');
 }
 
 console.log('Micro UI consistency verified: secondary text across profile, prayer, reminder banner, calendar, mosque, Quran, Duas, Names, install/network UI, and learning uses one readable scale with aligned compact icon and badge geometry.');
+
+const pointerOwner = 'premium-motion-performance-lock.css';
+const pointerSource = await readFile(resolve(root, 'src/styles', pointerOwner), 'utf8');
+for (const token of [
+  '@media (hover: hover) and (pointer: fine)',
+  ":not(:disabled):not([aria-disabled='true'])",
+  'filter: brightness(1.06)',
+  'filter: brightness(.94)',
+  '@media (prefers-reduced-motion: reduce)',
+  'transition: none',
+]) {
+  if (!pointerSource.includes(token)) throw new Error(`Shared pointer feedback is missing: ${token}`);
+}
+for (const name of await readdir(resolve(root, 'src/styles'))) {
+  if (!name.endsWith('.css') || name === pointerOwner) continue;
+  const css = await readFile(resolve(root, 'src/styles', name), 'utf8');
+  if (/:(hover|active)\b/.test(css)) throw new Error(`Pointer feedback must use the shared owner: ${name}`);
+}
+if (/:(hover|active)\b/.test(styleIndex)) throw new Error('Inline app styles must use shared pointer feedback.');
+console.log('Pointer feedback verified: one desktop hover and press treatment, no component-specific movement, disabled controls excluded and reduced motion preserved.');

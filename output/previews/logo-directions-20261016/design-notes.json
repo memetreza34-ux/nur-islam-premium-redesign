@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-16",
+  "purpose": "Three reviewable original vector logo directions for Nur Islam; app branding not changed before direction selection.",
+  "method": "Code-authored SVG paths, no raster image generation or external design template.",
+  "palette": {
+    "emerald": "#0b352b",
+    "cream": "#fff8e8",
+    "gold": "#e8ca86",
+    "goldShade": "#b88735"
+  },
+  "concepts": [
+    {
+      "id": "a",
+      "name": "Lichtbogen",
+      "idea": "Reduced pointed arch with a gold light core; no detailed mosque silhouette."
+    },
+    {
+      "id": "b",
+      "name": "Nur-Monogramm",
+      "idea": "Bold rounded N with a warm gold central stroke."
+    },
+    {
+      "id": "c",
+      "name": "Mond & Licht",
+      "idea": "Simple cream crescent with one small gold light star."
+    }
+  ],
+  "exports": "logo-*.svg: white-background logo presentation; icon-*.svg: emerald app-icon context. All scalable vectors; 16/32px previews included."
+}

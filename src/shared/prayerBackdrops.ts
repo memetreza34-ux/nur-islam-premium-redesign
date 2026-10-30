@@ -3,12 +3,24 @@ import { prayerTimeToMinutes, type PrayerId, type PrayerScheduleItem } from '../
 export type PrayerBackdropId = Exclude<PrayerId, 'sunrise'>;
 
 export const PRAYER_BACKDROPS: Record<PrayerBackdropId, string> = {
-  fajr: '/premium-assets/high-res-objects/prayer-fajr-v1.webp',
-  dhuhr: '/premium-assets/high-res-objects/prayer-dhuhr-v1.webp',
-  asr: '/premium-assets/high-res-objects/prayer-asr-v1.webp',
-  maghrib: '/premium-assets/high-res-objects/prayer-maghrib-v1.webp',
-  isha: '/premium-assets/high-res-objects/prayer-isha-v1.webp',
+  fajr: '/premium-assets/high-res-objects/prayer-oasis-fajr-v2.webp',
+  dhuhr: '/premium-assets/high-res-objects/prayer-oasis-dhuhr-v2.webp',
+  asr: '/premium-assets/high-res-objects/prayer-oasis-asr-v2.webp',
+  maghrib: '/premium-assets/high-res-objects/prayer-oasis-maghrib-v2.webp',
+  isha: '/premium-assets/high-res-objects/prayer-oasis-isha-v2.webp',
 };
+
+export const SPLASH_BACKDROPS: Record<PrayerBackdropId, string> = {
+  fajr: '/premium-assets/high-res-objects/splash-arcade-fajr-v1.webp',
+  dhuhr: '/premium-assets/high-res-objects/splash-arcade-dhuhr-v1.webp',
+  asr: '/premium-assets/high-res-objects/splash-arcade-asr-v1.webp',
+  maghrib: '/premium-assets/high-res-objects/splash-arcade-maghrib-v1.webp',
+  isha: '/premium-assets/high-res-objects/splash-arcade-isha-v1.webp',
+};
+
+export function getSplashBackdrop(scene?: PrayerBackdropId) {
+  return scene ? SPLASH_BACKDROPS[scene] : undefined;
+}
 
 export function getPrayerBackdrop(scene?: PrayerBackdropId) {
   return scene ? PRAYER_BACKDROPS[scene] : undefined;

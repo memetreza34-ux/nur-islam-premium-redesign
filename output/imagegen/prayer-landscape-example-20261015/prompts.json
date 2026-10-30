@@ -1,0 +1,22 @@
+{
+  "path": "public/premium-assets/high-res-objects/learn-prayer-asr-illustrated-v1.webp",
+  "sha256": "7e0a3203e418614bab2f440e7feb4c686f94e4538ae28af3128e7d1b546b1fb7",
+  "dimensions": "1536x1024",
+  "use": "Einzelnes Asr-Beispiel im Lernbereich. Übrige Gebetslandschaften und Anfangsanimation unverändert.",
+  "generatedAt": "2026-10-15",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-badcd364-5671-4c52-b3d1-3385e69b5939.png",
+  "workspaceOriginal": "output/imagegen/prayer-landscape-example-20261015/asr.png",
+  "inputImages": [
+    {
+      "sourceFile": "output/imagegen/cartoon-home-icons-20261014/prayer.png",
+      "role": "Own object illustration; materials/style only"
+    },
+    {
+      "sourceFile": "public/premium-assets/high-res-objects/prayer-asr-v1.webp",
+      "role": "Own original landscape; scene/composition only"
+    }
+  ],
+  "processing": "cwebp -q 92 -m 6; native dimensions retained",
+  "prompt": "Use case: stylized-concept. Create ONE landscape illustration example for the Asr prayer background in an adult Islamic app. Image 1 is the MATERIAL AND ILLUSTRATION STYLE reference only: clean, beautifully controlled soft 3D forms, satin matte materials, restrained rounded edges, dimensional shading and sophisticated crafted finish. Do not include the prayer mat. Image 2 is the SCENE AND COMPOSITION reference: a peaceful oasis valley with palms at the outer edges, rolling dunes, distant hills, a little water in the valley, a warm afternoon sun to the right, open blue sky. Reinterpret this landscape in exactly the same clear stylized 3D visual world as the app object illustration. It should visibly look illustrated, with simplified sculpted palm fronds, smooth sand slopes and clean layered hills, rather than a photographic or hyperdetailed AI landscape. Mature, calm, premium, not a children's game, not low poly. Wide horizontal 3:2 composition, generous quiet sky in the upper half and uncluttered center-left for future app text. Warm afternoon gold, natural teal-green palms, muted sand, clear blue sky, soft precise shadows. Continuous full-bleed environment, NOT an isolated floating island or object. No people, no buildings, no letters, no text, no logos, no border, no UI, no watermark. One finished image, not a comparison or collage.",
+  "toolMode": "built-in image_gen; model not exposed"
+}

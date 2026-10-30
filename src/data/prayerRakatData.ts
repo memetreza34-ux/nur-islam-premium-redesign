@@ -8,8 +8,8 @@
  * Gebete — man konnte daraus nicht beten lernen, weil nirgends stand, was man
  * in welcher Rakʿah tatsächlich sagt.
  *
- * Arabischer Text, Umschrift und Bedeutung sind wortgleich übernommen und
- * stehen als solche auf der Prüfliste (`npm run review:write`). Die
+ * Übernommene Texte stehen mit ihren Quellen und späteren Korrekturen auf
+ * der Prüfliste (`npm run review:write`). Die
  * Zusammensetzung der Rakʿah unterscheidet sich zwischen den Rechtsschulen in
  * Details; der Bildschirm weist darauf hin.
  */
@@ -49,11 +49,8 @@ export type RakatStep = {
    * tragen das längst (`npm run content-sources:check`), die Gebetsschritte
    * waren die Lücke: hier stand arabischer Wortlaut ohne jeden Beleg.
    *
-   * Koranstellen sind exakt angegeben. Bei den überlieferten Formeln steht die
-   * Sammlung ohne Nummer — die Nummerierung unterscheidet sich zwischen den
-   * Ausgaben, und geraten wird sie nicht. Das Schließen dieser Lücke ist Arbeit
-   * für eine fachliche Prüfung, kein Build-Schritt; genauso hält es
-   * `hadithData.ts`.
+   * Einzelfundstellen und Bewertungen werden nur nach Quellenabgleich ergänzt.
+   * Noch allgemeine Sammlungsangaben sind keine bestätigten Einzelbelege.
    */
   source: string;
   /**
@@ -141,47 +138,44 @@ const TAKBIR: RakatStep = {
   pronunciation: 'Al-laa-hu ak-bar',
   translation: 'Allah ist am größten.',
   repetitions: 1,
-  source: 'Sahih al-Bukhari; Sahih Muslim',
+  source: 'Sahih al-Bukhari 738 (Takbir und Handhebung)',
 };
 
 const SANA: RakatStep = {
   id: 'sana',
   title: 'Eröffnungs-Bittgebet (Sana)',
-  // Die Maliki-Schule kennt hier kein Eröffnungsbittgebet; „leise rezitieren“
-  // als Anweisung wäre für sie schlicht falsch.
-  description: 'In den meisten Rechtsschulen folgt hier ein leises Eröffnungsbittgebet:',
+  description: 'Dieser Lernablauf zeigt ein leises Eröffnungsbittgebet. Ob und welcher Wortlaut folgt, unterscheidet sich nach Rechtsschule:',
   posture: 'qiyam',
   arabic: 'سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ',
   transliteration: 'Subhanaka Allahumma wa bihamdika, wa tabarakasmuka, wa ta’ala jadduka, wa la ilaha ghayruk',
   pronunciation: 'Sub-haa-na-kal-laa-hum-ma wa bi-ham-dik,\nwa ta-baa-ra-kas-muk, wa ta-aa-laa dschad-duk,\nwa laa i-laa-ha ghai-ruk',
   translation: 'Preis sei Dir, o Allah, und Lob sei Dir, und gesegnet ist Dein Name, und hoch erhaben ist Deine Majestät, und es gibt keinen Gott außer Dir.',
   repetitions: 1,
-  source: 'Sunan Abu Dawud; Sunan at-Tirmidhi; Sunan Ibn Majah',
+  source: 'Jami at-Tirmidhi 243 · Hasan (Darussalam). At-Tirmidhi erwähnt Kritik am Erinnerungsvermögen des Überlieferers Haritha; keine eigene Bewertung.',
 };
 
 /**
- * Nur in der ersten Rakʿah. Das Ta’awwudh eröffnet die Rezitation des ganzen
- * Gebets und wird nach überwiegender Auffassung nicht in jeder Einheit
- * wiederholt; ab der zweiten Rakʿah steht deshalb `BASMALAH` allein.
+ * Dieser Lernablauf zeigt das Ta’awwudh in der ersten Einheit. Die
+ * Wiederholung und Anwendung unterscheiden sich nach Rechtsschule.
  */
 const TA_AWWUDH_BASMALAH: RakatStep = {
   id: 'ta-awwudh-basmalah',
-  title: 'Zuflucht suchen & Basmalah',
-  description: 'Einmal zu Beginn der Rezitation, leise:',
+  title: 'Zuflucht suchen & Basmala',
+  description: 'Hier zu Beginn der ersten Rezitation, leise. Anwendung und Wiederholung unterscheiden sich nach Rechtsschule:',
   posture: 'qiyam',
   arabic: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ\nبِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',
   transliteration: 'A’udhu billahi minash-shaytanir-rajim\nBismillahir-Rahmanir-Rahim',
   pronunciation: 'A-uu-dhu bil-laa-hi mi-nasch-schai-taa-nir-ra-dschiim\nBis-mil-laa-hir-rah-maa-nir-ra-hiim',
   translation: 'Ich suche Zuflucht bei Allah vor dem verfluchten Satan. Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
-  repetitionNote: 'Nur in der ersten Rakʿah.',
-  source: 'Quran 16:98 (Ta’awwudh); Quran 1:1 (Basmalah)',
+  repetitionNote: 'Hier in der ersten Rakʿah gezeigt; andere Auffassungen wiederholen die Zuflucht in jeder Rakʿah.',
+  source: 'Quran 16:98 (Aufforderung zur Zuflucht, kein wörtliches Verszitat); Quran 1:1 (Basmala). Formel und Schulunterschiede: Dar al-Ifta, Fatwa 7267 vom 20.12.2022.',
 };
 
 const BASMALAH: RakatStep = {
   id: 'basmalah',
-  title: 'Basmalah',
-  // Ob die Basmalah gesprochen wird und wie laut, ist genau der Punkt, an dem
+  title: 'Basmala',
+  // Ob die Basmala gesprochen wird und wie laut, ist genau der Punkt, an dem
   // die vier Schulen auseinandergehen — der Block darunter sagt es.
   description: 'Vor Al-Fatihah in jeder weiteren Rakʿah. Ob und wie laut, unterscheidet sich je nach Rechtsschule:',
   posture: 'qiyam',
@@ -190,23 +184,24 @@ const BASMALAH: RakatStep = {
   pronunciation: 'Bis-mil-laa-hir-rah-maa-nir-ra-hiim',
   translation: 'Im Namen Allahs, des Allerbarmers, des Barmherzigen.',
   repetitions: 1,
-  source: 'Quran 1:1',
+  source: 'Quran 1:1 (hier verwendete Verszählung); 27:30 (Basmala im Vers). Keine allgemeine Aussage zur Gebetspraxis aller Rechtsschulen.',
   audioAyahs: [1],
 };
 
 const FATIHA: RakatStep = {
   id: 'fatiha',
   title: 'Sure Al-Fatihah',
-  description: 'Diese Sure muss in jeder Rakʿah rezitiert werden:',
+  description: 'Hier rezitierst du Al-Fatihah. Hinter einem Imam unterscheiden sich die Regeln zur eigenen Rezitation nach Rechtsschule:',
   posture: 'qiyam',
   arabic: 'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ\nالرَّحْمَٰنِ الرَّحِيمِ\nمَالِكِ يَوْمِ الدِّينِ\nإِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ\nاهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ\nصِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',
   transliteration: 'Alhamdu lillahi rabbil-’alamin\nAr-Rahmanir-Rahim\nMaliki yawmid-din\nIyyaka na’budu wa iyyaka nasta’in\nIhdinas-siratal-mustaqim\nSiratal-ladhina an’amta ’alayhim ghayril-maghdubi ’alayhim wa lad-dallin (Amin)',
   pronunciation: 'Al-ham-du lil-laa-hi rab-bil-aa-la-miin\nAr-rah-maa-nir-ra-hiim\nMaa-li-ki jau-mid-diin\nIj-jaa-ka na-bu-du wa ij-jaa-ka nas-ta-iin\nIh-di-nas-si-raa-tal-mus-ta-qiim\nSi-raa-tal-la-dhii-na an-am-ta a-lai-him, ghai-ril-magh-duu-bi a-lai-him wa lad-daal-liin. Aa-miin.',
   translation: 'Alles Lob gehört Allah, dem Herrn der Welten, dem Allerbarmer, dem Barmherzigen, dem Herrscher am Tag des Gerichts. Dir allein dienen wir, und Dich allein bitten wir um Hilfe. Leite uns den geraden Weg, den Weg derer, denen Du Gnade erwiesen hast, nicht den Weg derer, die Deinen Zorn erregt haben, und nicht den Weg der Irregehenden.',
   repetitions: 1,
-  source: 'Quran, Sure 1 (Al-Fatihah)',
+  repetitionNote: 'Die Basmala steht im vorherigen Schritt. „Amin“ ist ein anschließendes Bittgebet, kein Vers der Sure.',
+  source: 'Quran 1:2–7 (Wortlaut); Sahih al-Bukhari 756 (Al-Fatihah), 780 (Amin). Rezitation hinter dem Imam: Dar al-Ifta, Fatwa 5899 vom 09.02.1985.',
   // Die sieben Verse der Fatihah stehen am Anfang des Korans: 1 ist die
-  // Basmalah, 2 bis 7 der hier abgedruckte Wortlaut.
+  // Basmala, 2 bis 7 der hier abgedruckte Wortlaut.
   audioAyahs: [2, 3, 4, 5, 6, 7],
 };
 
@@ -218,10 +213,10 @@ const SHORT_SURAH: RakatStep = {
   arabic: 'قُلْ هُوَ اللَّهُ أَحَدٌ\nاللَّهُ الصَّمَدُ\nلَمْ يَلِدْ وَلَمْ يُولَدْ\nوَلَمْ يَكُن لَّهُ كُفُوًا أَحَدٌ',
   transliteration: 'Qul huwallahu ahad\nAllahus-samad\nLam yalid wa lam yulad\nWa lam yakul-lahu kufuwan ahad',
   pronunciation: 'Qul hu-wal-laa-hu a-had\nAl-laa-hus-sa-mad\nLam ja-lid wa lam juu-lad\nWa lam ja-kul-la-hu ku-fu-wan a-had',
-  translation: 'Sprich: Er ist Allah, ein Einziger, Allah, der Absolute. Er zeugt nicht und ist nicht gezeugt worden, und Ihm ebenbürtig ist keiner.',
+  translation: 'Sprich: Er ist Allah, Einer. Allah, von dem alle abhängen und der niemanden benötigt. Er zeugt nicht und ist nicht gezeugt worden, und Ihm ebenbürtig ist keiner.',
   repetitions: 1,
   repetitionNote: 'Jede Sure ist möglich, nicht nur diese.',
-  source: 'Quran, Sure 112 (Al-Ikhlas)',
+  source: 'Quran 112:1–4 (Al-Ikhlas); As-Samad sinngemäß erläutert nach Ma’arif al-Qur’an zu 112:2.',
   // Sure 112 beginnt bei der 6222. Ayah des Korans.
   audioAyahs: [6222, 6223, 6224, 6225],
 };
@@ -234,10 +229,10 @@ const RUKU: RakatStep = {
   arabic: 'سُبْحَانَ رَبِّيَ الْعَظِيمِ',
   transliteration: 'Subhana Rabbiyal Adhim',
   pronunciation: 'Sub-haa-na rab-bi-jal-a-siim',
-  translation: 'Preis sei meinem Herrn, dem Allmächtigen.',
+  translation: 'Preis sei meinem Herrn, dem Gewaltigen.',
   repetitions: 3,
-  repetitionNote: 'Dreimal ist die Sunnah, einmal genügt.',
-  source: 'Sunan Abu Dawud; Sunan Ibn Majah',
+  repetitionNote: 'Hier dreimal als Lernfolge. Der Wortlautbeleg legt keine feste Anzahl fest; die rechtliche Einordnung ist rechtsschulabhängig.',
+  source: 'Jami at-Tirmidhi 262 · Sahih (Darussalam), Wortlaut; Sahih al-Bukhari 789, Wechsel-Takbir.',
 };
 
 const RISING_RUKU: RakatStep = {
@@ -250,7 +245,7 @@ const RISING_RUKU: RakatStep = {
   pronunciation: 'Sa-mi-al-laa-hu li-man ha-mi-dah\nRab-ba-naa wa la-kal-hamd',
   translation: 'Allah hört den, der Ihn lobt. Unser Herr, Dir gebührt alles Lob.',
   repetitions: 1,
-  source: 'Sahih al-Bukhari; Sahih Muslim',
+  source: 'Sahih al-Bukhari 738; 789 (Aufrichten und Lobpreis)',
 };
 
 const SUJUD: RakatStep = {
@@ -263,8 +258,8 @@ const SUJUD: RakatStep = {
   pronunciation: 'Sub-haa-na rab-bi-jal-a-laa',
   translation: 'Preis sei meinem Herrn, dem Höchsten.',
   repetitions: 3,
-  repetitionNote: 'Dreimal ist die Sunnah, einmal genügt.',
-  source: 'Sahih Muslim; Sunan Abu Dawud',
+  repetitionNote: 'Hier dreimal als Lernfolge. Der Wortlautbeleg legt keine feste Anzahl fest; die rechtliche Einordnung ist rechtsschulabhängig.',
+  source: 'Jami at-Tirmidhi 262 · Sahih (Darussalam), Wortlaut; Sahih al-Bukhari 789, Wechsel-Takbir.',
 };
 
 const SITTING_SUJUD: RakatStep = {
@@ -278,7 +273,7 @@ const SITTING_SUJUD: RakatStep = {
   translation: 'Mein Herr, vergib mir.',
   repetitions: 1,
   repetitionNote: 'Auch mehrfach überliefert.',
-  source: 'Sunan Abu Dawud; Sunan Ibn Majah',
+  source: 'Sunan Ibn Majah 897 · Sahih (Darussalam), mit wiederholtem Rabbighfir li; Sahih al-Bukhari 789, Wechsel-Takbir.',
 };
 
 const SUJUD_SECOND: RakatStep = {
@@ -303,7 +298,7 @@ const RISE_TO_NEXT_RAKAH: RakatStep = {
   pronunciation: 'Al-laa-hu ak-bar',
   translation: 'Allah ist am größten.',
   repetitions: 1,
-  source: 'Sahih al-Bukhari; Sahih Muslim',
+  source: 'Sahih al-Bukhari 789 (Aufstehen und Wechsel-Takbir)',
 };
 
 /** Nach dem mittleren Tashahhud geht es im Stehen weiter, ebenfalls mit Takbir. */
@@ -323,7 +318,7 @@ const TASHAHHUD: RakatStep = {
   pronunciation: 'At-ta-hij-jaa-tu lil-laa-hi was-sa-la-waa-tu wat-taj-ji-baat.\nAs-sa-laa-mu a-lai-ka aj-ju-han-na-bij-ju wa rah-ma-tul-laa-hi wa ba-ra-kaa-tuh.\nAs-sa-laa-mu a-lai-naa wa a-laa i-baa-dil-laa-his-saa-li-hiin.\nAsch-ha-du al-laa i-laa-ha il-lal-laah, wa asch-ha-du an-na Mu-ham-ma-dan ab-du-hu wa ra-suu-luh.',
   translation: 'Alle Ehrerbietungen, Gebete und guten Taten gebühren Allah. Friede sei mit dir, o Prophet, und die Barmherzigkeit Allahs und Seine Segnungen. Friede sei mit uns und mit den rechtschaffenen Dienern Allahs. Ich bezeuge, dass es keinen Gott gibt außer Allah, und ich bezeuge, dass Muhammad Sein Diener und Gesandter ist.',
   repetitions: 1,
-  source: 'Sahih al-Bukhari; Sahih Muslim (überliefert von Ibn Masʿud)',
+  source: 'Sunan an-Nasa’i 1170 · Sahih (Darussalam), Ibn-Masʿud-Form.',
 };
 
 const SALAWAT: RakatStep = {
@@ -336,21 +331,21 @@ const SALAWAT: RakatStep = {
   pronunciation: 'Al-laa-hum-ma sal-li a-laa Mu-ham-ma-din wa a-laa aa-li Mu-ham-mad.\nKa-maa sal-lai-ta a-laa Ib-raa-hii-ma wa a-laa aa-li Ib-raa-hiim. In-na-ka ha-mii-dun ma-dschiid.\nAl-laa-hum-ma baa-rik a-laa Mu-ham-ma-din wa a-laa aa-li Mu-ham-mad.\nKa-maa baa-rak-ta a-laa Ib-raa-hii-ma wa a-laa aa-li Ib-raa-hiim. In-na-ka ha-mii-dun ma-dschiid.',
   translation: 'O Allah, segne Muhammad und die Familie von Muhammad, wie Du Ibrahim und die Familie von Ibrahim gesegnet hast. Wahrlich, Du bist lobenswert und ruhmreich. O Allah, schenke Muhammad und der Familie von Muhammad Segen, wie Du Ibrahim und der Familie von Ibrahim Segen geschenkt hast. Wahrlich, Du bist lobenswert und ruhmreich.',
   repetitions: 1,
-  source: 'Sahih al-Bukhari; Sahih Muslim',
+  source: 'Sahih al-Bukhari 3370 (angezeigte Salawat-Form)',
 };
 
 const DUA_BEFORE_SALAM: RakatStep = {
   id: 'dua-before-salam',
-  title: 'Bittgebet vor dem Salam (optional)',
-  description: 'Vor dem Beenden des Gebets kann ein Bittgebet gesprochen werden, zum Beispiel:',
+  title: 'Bittgebet vor dem Salam',
+  description: 'Nach dem Tashahhud lehrt der Bericht diese Zuflucht vor vier Dingen:',
   posture: 'sitting',
   arabic: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ عَذَابِ جَهَنَّمَ، وَمِنْ عَذَابِ الْقَبْرِ، وَمِنْ فِتْنَةِ الْمَحْيَا وَالْمَمَاتِ، وَمِنْ شَرِّ فِتْنَةِ الْمَسِيحِ الدَّجَّالِ',
   transliteration: 'Allahumma inni a’udhu bika min ’adhabi jahannam, wa min ’adhabil-qabr, wa min fitnatil-mahya wal-mamat, wa min sharri fitnatil-masihid-dajjal.',
   pronunciation: 'Al-laa-hum-ma in-nii a-uu-dhu bi-ka min a-dhaa-bi dschah-an-nam,\nwa min a-dhaa-bil-qabr, wa min fit-na-til-mah-jaa wal-ma-maat,\nwa min schar-ri fit-na-til-ma-sii-hid-dad-sch-dschaal.',
   translation: 'O Allah, ich suche Zuflucht bei Dir vor der Strafe der Hölle, vor der Strafe des Grabes, vor den Versuchungen des Lebens und des Todes und vor der Versuchung des falschen Messias (Dajjal).',
   repetitions: 1,
-  repetitionNote: 'Freiwillig; auch ein eigenes Bittgebet ist möglich.',
-  source: 'Sahih Muslim',
+  repetitionNote: 'Die rechtliche Einordnung und weitere Bittgebete unterscheiden sich nach Rechtsschule; keine allgemeine Optionalitätsregel.',
+  source: 'Sahih Muslim 588a (Zuflucht vor vier Dingen)',
 };
 
 const TASLIM: RakatStep = {
@@ -365,7 +360,7 @@ const TASLIM: RakatStep = {
   repetitions: 2,
   repetitionNote: 'Einmal nach rechts, einmal nach links.',
   repetitionLabels: ['nach rechts', 'nach links'],
-  source: 'Sahih Muslim; Sunan Abu Dawud',
+  source: 'Sunan an-Nasa’i 1320 · Sahih (Darussalam), Salam rechts und links.',
 };
 
 /** Der Kern jeder Rakʿah: Verbeugung, Aufrichten, zwei Niederwerfungen. */
@@ -443,8 +438,8 @@ export const RECITATION_LABEL: Record<Recitation, string> = {
 };
 
 export const RECITATION_HINT: Record<Recitation, string> = {
-  aloud: 'Al-Fatihah und die Sure werden hörbar gesprochen. In der Gemeinschaft rezitiert der Imam, die Betenden hören zu.',
-  silent: 'Al-Fatihah und die Sure werden so leise gesprochen, dass nur du selbst sie hörst.',
+  aloud: 'Hier hörbare Quran-Rezitation beim Alleinbeten oder als Imam. Hinter einem Imam unterscheiden sich eigene Rezitation und Zuhören nach Rechtsschule.',
+  silent: 'Hier leise Quran-Rezitation beim Alleinbeten oder als Imam. Hinter einem Imam unterscheiden sich die Regeln zur eigenen Rezitation nach Rechtsschule.',
 };
 
 export const PRAYER_RAKATS_BY_ID = new Map(PRAYER_RAKATS.map((prayer) => [prayer.id, prayer]));

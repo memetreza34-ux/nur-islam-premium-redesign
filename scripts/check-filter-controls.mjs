@@ -26,7 +26,7 @@ for (const requirement of [
   '.reference-input-search:focus-within',
   '.reference-input-search input',
   'min-height: 44px',
-  'font-size: var(--text-body-small, .62rem)',
+  'font-size: var(--text-body-small, .75rem)',
   '.reference-filter-tabs',
   'overflow-x: auto',
   'overflow-y: hidden',
@@ -38,7 +38,7 @@ for (const requirement of [
   'min-height: 44px',
   'min-width: max-content',
   'border-radius: 999px',
-  'font-size: var(--text-caption, .58rem)',
+  'font-size: var(--text-caption, .75rem)',
   'white-space: nowrap',
   '.reference-filter-tabs button.is-active',
   'background: linear-gradient(135deg, #efd394, #c9953a)',
@@ -49,8 +49,8 @@ for (const requirement of [
   if (!filters.includes(requirement)) throw new Error(`Search/filter consistency rule is missing: ${requirement}`);
 }
 
-if (!discovery.includes('min-height: 35px')) {
-  throw new Error('Expected legacy 35px filter-chip baseline changed; review the centralized 44px override.');
+if (!discovery.includes('min-height: 44px')) {
+  throw new Error('Discovery filter controls must retain the new 44px owner sizing.');
 }
 
 const screens = [

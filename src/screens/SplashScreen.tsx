@@ -1,91 +1,46 @@
 import { motion, useReducedMotion } from 'motion/react';
-import { MosqueScene, NurMark, PremiumImage } from '../shared/PremiumVisuals';
+import { useId } from 'react';
+import { NurMark, PremiumImage } from '../shared/PremiumVisuals';
 
 export function SplashScreen() {
   const reduceMotion = useReducedMotion();
-  const ease = [0.16, 1, 0.3, 1] as const;
-  const exitTransition = { duration: reduceMotion ? 0 : .32, ease };
+  const id = useId().replace(/:/g, '');
+  const cut = `entry-cut-${id}`;
+  const metal = `entry-metal-${id}`;
 
   return (
     <motion.main
       className="reference-splash"
       initial={{ opacity: 1 }}
       animate={{ opacity: 1 }}
-      exit={{ opacity: 0, scale: reduceMotion ? 1 : 1.008 }}
-      transition={exitTransition}
+      exit={{ opacity: 0 }}
+      transition={{ duration: reduceMotion ? 0 : .3 }}
       aria-label="Nur Islam wird geladen"
     >
-      <motion.div
-        className="reference-splash__halo"
-        initial={{ opacity: reduceMotion ? 1 : 0, scale: reduceMotion ? 1 : .72 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0 : 1.1, ease }}
-        aria-hidden="true"
-      />
-      <motion.div
-        className="reference-splash__dawn"
-        initial={{ opacity: reduceMotion ? 1 : 0, scaleX: reduceMotion ? 1 : .55 }}
-        animate={{ opacity: 1, scaleX: 1 }}
-        transition={{ duration: reduceMotion ? 0 : .9, delay: reduceMotion ? 0 : .2, ease }}
-        aria-hidden="true"
-      />
-      <motion.div
-        className="reference-splash__mosque"
-        initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 54, scale: reduceMotion ? 1 : .94 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0 : 1.05, delay: reduceMotion ? 0 : .12, ease }}
-        aria-hidden="true"
-      >
-        <PremiumImage
-          src="/premium-assets/high-res-objects/splash-mosque-v1.webp"
-          className="reference-splash__mosque-image"
-          fallback={<MosqueScene />}
-          priority
-        />
-      </motion.div>
-      <motion.div
-        className="reference-splash__brand"
-        initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : -14 }}
-        animate={{ opacity: 1, y: 0, scale: 1 }}
-        transition={{ duration: reduceMotion ? 0 : .72, delay: reduceMotion ? 0 : .18, ease }}
-      >
-        <motion.div
-          className="reference-splash__mark-stage"
-          initial={{ scale: reduceMotion ? 1 : .82, rotate: reduceMotion ? 0 : -6 }}
-          animate={{ scale: 1, rotate: 0 }}
-          transition={{ duration: reduceMotion ? 0 : .82, delay: reduceMotion ? 0 : .22, ease }}
-        >
-          <PremiumImage
-            src="/premium-assets/high-res-objects/nur-logo-emblem-v3.svg"
-            className="reference-splash__mark"
-            fallback={<NurMark />}
-            priority
-          />
-        </motion.div>
-        <motion.div
-          className="reference-splash__copy"
-          initial={{ opacity: reduceMotion ? 1 : 0, y: reduceMotion ? 0 : 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: reduceMotion ? 0 : .65, delay: reduceMotion ? 0 : .42, ease }}
-        >
-          <span className="overline">Dein spiritueller Begleiter</span>
-          <h1>Nur</h1>
-          <p>Islam bewusst leben.</p>
-        </motion.div>
-      </motion.div>
-      <motion.div
-        className="reference-splash__loader"
-        initial={{ opacity: reduceMotion ? 1 : 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: reduceMotion ? 0 : .3, delay: reduceMotion ? 0 : .55 }}
-        aria-hidden="true"
-      >
-        <motion.span
-          initial={{ scaleX: reduceMotion ? 1 : 0 }}
-          animate={{ scaleX: 1 }}
-          transition={{ duration: reduceMotion ? 0 : .82, delay: reduceMotion ? 0 : .58, ease }}
-        />
-      </motion.div>
+      <div className="entry-scene" aria-hidden="true">
+        <svg width="0" height="0"><defs><clipPath id={cut} clipPathUnits="objectBoundingBox"><path d="M0 1V.32C0 .16 .23 .06 .5 0C.77 .06 1 .16 1 .32V1Z" /></clipPath></defs></svg>
+        <div className="entry-canopy" />
+        <div className="entry-portal">
+          <div className="entry-window" style={{ clipPath: `url(#${cut})` }}>
+            <div className="entry-inner-light" />
+            <div className="entry-brand">
+              <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="entry-emblem" priority fallback={<NurMark />} />
+              <span className="entry-wordmark">Nur Islam</span>
+            </div>
+            <div className="entry-door entry-door--left" /><div className="entry-door entry-door--right" />
+            <div className="entry-seam" />
+          </div>
+          <svg className="entry-arch" viewBox="0 0 300 620" preserveAspectRatio="none">
+            <defs><linearGradient id={metal} x1="0" y1="0" x2="1" y2=".2"><stop stopColor="#695631" /><stop offset=".2" stopColor="#bd9b58" /><stop offset=".48" stopColor="#fae4ac" /><stop offset=".65" stopColor="#bd9b58" /><stop offset="1" stopColor="#59492c" /></linearGradient></defs>
+            <path className="entry-arch__outer" d="M-7 620V198C-7 94 68 29 150-7C232 29 307 94 307 198V620" />
+            <path className="entry-arch__body" stroke={`url(#${metal})`} d="M0 620V198C0 99 69 37 150 0C231 37 300 99 300 198V620" />
+            <path className="entry-arch__bevel" d="M5 620V198C5 101 73 42 150 5C227 42 295 101 295 198V620" />
+            <path className="entry-arch__trace" pathLength="1" d="M0 620V198C0 99 69 37 150 0C231 37 300 99 300 198V620" />
+          </svg>
+        </div>
+        <div className="entry-threshold" /><div className="entry-floor-light" />
+      </div>
+      <span className="sr-only" role="status">App wird geöffnet</span>
     </motion.main>
   );
 }

@@ -120,7 +120,7 @@
 
 .reference-dua-filter-tabs > button,
 .reference-name-filter-tabs > button {
-  min-height: 42px;
+  min-height: 44px;
   border-color: rgba(232, 199, 122, .11) !important;
   background: rgba(4, 29, 22, .72) !important;
 }
@@ -167,16 +167,6 @@
 }
 
 /* Qibla */
-.reference-qibla-stage {
-  min-height: 478px;
-  border-color: var(--secondary-border-strong) !important;
-  border-radius: 31px !important;
-  background:
-    radial-gradient(circle at 50% 37%, rgba(232, 199, 122, .1), transparent 15rem),
-    radial-gradient(circle at 0% 100%, rgba(55, 140, 105, .09), transparent 11rem),
-    linear-gradient(160deg, #0c4535, #05261e 60%, #02130f) !important;
-  box-shadow: var(--secondary-shadow-strong) !important;
-}
 
 .reference-qibla-location,
 .reference-qibla-calibration,
@@ -232,16 +222,6 @@
 }
 
 /* Hover polish */
-@media (hover: hover) and (pointer: fine) {
-  .reference-dhikr-step-tabs > button:hover,
-.reference-dhikr-category-grid > button:hover,
-.reference-dua-card--complete:hover,
-.reference-name-list--complete > article:hover,
-.reference-mosque-list--live > button:hover {
-    border-color: rgba(247, 226, 178, .29) !important;
-    transform: translateY(-1px);
-  }
-}
 
 /* Light theme */
 [data-theme='light'] .reference-dhikr-screen--complete,
@@ -305,21 +285,12 @@
 .reference-mosque-hero {
     border-radius: 25px !important;
   }
-
-  .reference-qibla-stage {
-    min-height: 448px;
-    border-radius: 27px !important;
-  }
 }
 
 @media (max-width: 350px) {
   .reference-dhikr-step-tabs,
   .reference-dhikr-category-grid {
     grid-template-columns: 1fr;
-  }
-
-  .reference-qibla-stage {
-    min-height: 420px;
   }}
 
 @media (prefers-reduced-motion: reduce) {

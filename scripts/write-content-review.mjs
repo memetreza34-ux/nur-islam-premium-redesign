@@ -4,7 +4,8 @@
  * Generated rather than written by hand, for one reason: a hand-kept checklist
  * goes stale on the first content change and then quietly certifies entries
  * nobody looked at. This is regenerated from the data files, so an item that
- * does not exist cannot appear, and an item that was added cannot be missing.
+ * does not exist cannot appear. Coverage is explicit below: this is not a
+ * guarantee that every statement embedded in screens has been extracted.
  *
  * What it can and cannot do: it reports whether a source is present and where
  * the text came from. It cannot tell whether a citation is correct, whether a
@@ -15,6 +16,7 @@
  */
 import { readFile, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
+import ts from 'typescript';
 
 const root = process.cwd();
 const read = (file) => readFile(resolve(root, file), 'utf8');
@@ -34,11 +36,75 @@ function values(source, field) {
     .map((match) => match[1].replace(/\\'/g, "'").replace(/\\\\/g, '\\'));
 }
 
+function literalArray(source, name, record = false) {
+  const file = ts.createSourceFile('content.ts', source, ts.ScriptTarget.Latest, true);
+  const literal = (node) => {
+    if (ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isParenthesizedExpression(node)) return literal(node.expression);
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+    if (ts.isNumericLiteral(node)) return Number(node.text);
+    if (node.kind === ts.SyntaxKind.NullKeyword) return null;
+    if (node.kind === ts.SyntaxKind.TrueKeyword) return true;
+    if (node.kind === ts.SyntaxKind.FalseKeyword) return false;
+    if (ts.isArrayLiteralExpression(node)) return node.elements.map(literal);
+    if (ts.isObjectLiteralExpression(node)) return Object.fromEntries(node.properties.map(property => {
+      if (!ts.isPropertyAssignment(property)) throw new Error(`${name}: unsupported property; inventory must not silently omit it.`);
+      return [property.name.text, literal(property.initializer)];
+    }));
+    throw new Error(`${name}: unsupported expression ${node.getText(file)}; add an explicit inventory rule.`);
+  };
+  for (const statement of file.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (declaration.name.getText(file) !== name || !declaration.initializer) continue;
+      const result = literal(declaration.initializer);
+      if (record ? !result || Array.isArray(result) || typeof result !== 'object' : !Array.isArray(result)) throw new Error(`${name}: expected a literal ${record ? 'record' : 'array'}.`);
+      return result;
+    }
+  }
+  throw new Error(`Missing content array ${name}.`);
+}
+
+function literalRakatSteps(source) {
+  const file = ts.createSourceFile('prayerRakatData.ts', source, ts.ScriptTarget.Latest, true);
+  const declarations = new Map();
+  for (const statement of file.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (declaration.type?.getText(file) === 'RakatStep' && declaration.initializer) declarations.set(declaration.name.getText(file), declaration.initializer);
+    }
+  }
+  const resolveStep = (name, ancestors = new Set()) => {
+    if (ancestors.has(name) || !declarations.has(name)) throw new Error(`Prayer inventory: unresolved or cyclic step ${name}.`);
+    const lineage = new Set([...ancestors, name]);
+    const literal = node => {
+      if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return node.text;
+      if (ts.isNumericLiteral(node)) return Number(node.text);
+      if (ts.isArrayLiteralExpression(node)) return node.elements.map(literal);
+      if (ts.isObjectLiteralExpression(node)) {
+        const result = {};
+        for (const property of node.properties) {
+          if (ts.isSpreadAssignment(property) && ts.isIdentifier(property.expression)) Object.assign(result, resolveStep(property.expression.text, lineage));
+          else if (ts.isPropertyAssignment(property)) result[property.name.text] = literal(property.initializer);
+          else throw new Error(`Prayer inventory: unsupported property ${property.getText(file)}.`);
+        }
+        return result;
+      }
+      throw new Error(`Prayer inventory: unsupported expression ${node.getText(file)}.`);
+    };
+    return literal(declarations.get(name));
+  };
+  const steps = [...declarations.keys()].map(name => resolveStep(name));
+  if (steps.length < 17 || new Set(steps.map(step => step.id)).size !== steps.length) throw new Error('Prayer inventory: missing or duplicate step IDs.');
+  return steps;
+}
+
+const markdownCell = (value) => String(value).replaceAll('|', '\\|').replace(/\r?\n/g, '<br>');
+
 function table(rows) {
   return [
     '| Nr. | Inhalt | Quelle | Herkunft | geprüft |',
     '|---:|---|---|---|:---:|',
-    ...rows.map((row, index) => `| ${index + 1} | ${row.text} | ${row.source} | ${row.origin} | ☐ |`),
+    ...rows.map((row, index) => `| ${index + 1} | ${markdownCell(row.text)} | ${markdownCell(row.source)} | ${row.origin} | ☐ |`),
   ].join('\n');
 }
 
@@ -51,44 +117,39 @@ const areas = [];
 
 // --- Hadith -----------------------------------------------------------------
 const hadith = await read('src/data/hadithData.ts');
-const hadithLibrary = hadith.slice(hadith.indexOf('export const HADITH_LIBRARY'), hadith.indexOf('\n] as const;'));
-const hadithTitles = values(hadithLibrary, 'title');
-const hadithSources = values(hadithLibrary, 'source');
+const hadithEntries = literalArray(hadith, 'HADITH_LIBRARY');
 areas.push({
   name: 'Hadith-Sammlung',
   tier: 'C',
-  note: 'Jeder Eintrag ist ausdrücklich als sinngemäße Inhaltsangabe gekennzeichnet, nicht als Wortlaut. Wo die Belegstelle keine Nummer trägt, fehlt sie im Altbestand — sie ist nachzutragen, nicht zu schätzen.',
-  rows: hadithTitles.map((title, index) => ({
-    text: short(title),
-    source: hadithSources[index] ?? '—',
+  note: 'Vollständige Kurzfassung, redaktionelle Einordnung und gegebenenfalls zugeordnete Bewertungen. Kein arabischer Originalwortlaut, keine menschliche Freigabe. Aussageabgleich: HADITH-SOURCE-AUDIT-2026-10-11.md.',
+  rows: hadithEntries.map((entry) => ({
+    text: [entry.title, entry.summary, entry.context, entry.grading?.text].filter(Boolean).join(' — '),
+    source: [entry.source, entry.grading?.sourceUrl, entry.grading?.comparisonUrl].filter(Boolean).join(' · '),
     origin: CARRIED,
   })),
 });
 
 // --- Duas -------------------------------------------------------------------
 const duasFile = await read('src/data/duaData.ts');
-// Scoped to DUAS: the file also exports DUA_CATEGORIES, whose thirteen entries
-// carry a `title` of their own and are navigation, not content to review.
-const duas = duasFile.slice(duasFile.indexOf('export const DUAS'), duasFile.indexOf('export const DUA_BY_ID'));
-const duaTitles = values(duas, 'title');
-const duaSources = values(duas, 'source');
+const duas = literalArray(duasFile, 'DUAS');
 areas.push({
   name: 'Duas',
   tier: 'B',
-  note: 'Bestand der App, jeder Eintrag mit Quellenangabe.',
-  rows: duaTitles.map((title, index) => ({ text: short(title), source: duaSources[index] ?? '—', origin: CARRIED })),
+  note: 'Vollständiger arabischer Text, Umschrift, sinngemäße Bedeutung und Einordnung. KI-Quellenabgleich und Grenzen: DUA-SOURCE-AUDIT-2026-10-11.md. Keine menschliche Fachfreigabe.',
+  rows: duas.map(entry => ({
+    text: [entry.id, entry.title, entry.arabic, entry.transliteration, entry.translation, entry.sourceNote].filter(Boolean).join(' — '),
+    source: [entry.source, entry.sourceUrl].filter(Boolean).join(' · '),
+    origin: CARRIED,
+  })),
 });
 
 // --- Sunnah and repentance --------------------------------------------------
 const practice = await read('src/data/practiceData.ts');
-const practiceItems = [...practice.matchAll(
-  /title: '((?:[^'\\]|\\.)*)',\n\s+description: '(?:[^'\\]|\\.)*',\n\s+proof: '((?:[^'\\]|\\.)*)',/g,
-)];
+const practiceItems = [...literalArray(practice, 'SUNNAH_GROUPS').flatMap(group => group.items), ...literalArray(practice, 'REPENTANCE_GROUPS').flatMap(group => group.items)];
 areas.push({
-  name: 'Sunnah im Alltag · Fehler und Reue',
-  tier: 'C',
-  note: 'Alltagspraxis und Reue wurden am 03.09.2026 mit Quellen, Begriffserklärungen und didaktischen Beispielen überarbeitet. Der Abschnitt zu schweren Verfehlungen bleibt Altbestand. Alle Einträge benötigen fachliche Prüfung; Quellenprüfung ist keine Freigabe.',
-  rows: practiceItems.map(([, title, proof]) => ({ text: short(title), source: short(proof, 60), origin: proof.startsWith('Koran (') || title === 'Zauberei (Sihr)' ? CARRIED : WRITTEN })),
+  name: 'Sunnah im Alltag · Fehler und Reue', tier: 'C',
+  note: '17 Positionen einschließlich Bedeutungen und didaktischer Beispiele quellenbezogen bearbeitet am 13.10.2026; CONTENT-CLEARANCE-2026-10-13.md. Quellenabgleich ist keine religiöse Zertifizierung.',
+  rows: practiceItems.map(item => ({ text: [item.title, item.description, item.meaning, item.example].filter(Boolean).join(' — '), source: [item.proof, item.sourceUrl].filter(Boolean).join(' · '), origin: WRITTEN })),
 });
 
 const supplements = await read('src/data/foundationSupplementData.ts');
@@ -102,53 +163,113 @@ areas.push({
 
 // --- Pilgrimage -------------------------------------------------------------
 const pilgrimage = await read('src/data/pilgrimageData.ts');
-const stations = [...pilgrimage.matchAll(
-  /id: '[^']+',\n\s+(?:when|name): '(?:[^'\\]|\\.)*',\n\s+(?:title|city): '((?:[^'\\]|\\.)*)',\n\s+description: '(?:[^'\\]|\\.)*',(?:\n\s+reference: '((?:[^'\\]|\\.)*)',)?/g,
-)];
+const stations = [...literalArray(pilgrimage, 'UMRAH_STATIONS'), ...literalArray(pilgrimage, 'HAJJ_STATIONS'), ...literalArray(pilgrimage, 'HOLY_PLACES')];
 areas.push({
-  name: 'Hajj, Umrah und heilige Stätten',
-  tier: 'A',
-  priority: true,
-  note: 'Der einzige Bereich, für den es keine Vorlage gab — diese Texte sind für die App verfasst und daher vorrangig zu prüfen. Sie beschreiben bewusst nur den Ablauf und treffen keine Urteile darüber, was Pflicht ist oder was bei Versäumnissen gilt.',
-  rows: stations.map(([, title, reference]) => ({ text: short(title), source: reference ?? '— (keine)', origin: WRITTEN })),
+  name: 'Hajj, Umrah und heilige Stätten', tier: 'A', priority: true,
+  note: 'Ablauftexte mit Hadith- und Quran-Fundstellen ergänzt; keine Vollständigkeitszusage für eine individuelle Pilgerfahrt. Quellenreichweite und historische Orte: CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: stations.map(item => ({ text: [item.id, item.when, item.name, item.title, item.description, item.context, item.facts?.join(' · ')].filter(Boolean).join(' — '), source: [item.reference, item.sourceLabel, item.sourceUrl].filter(Boolean).join(' · ') || '— (keine)', origin: WRITTEN })),
 });
 
 // --- Quiz -------------------------------------------------------------------
 const quiz = await read('src/data/quizData.ts');
 const quizQuestions = values(quiz, 'question');
+const quizSources = values(quiz, 'source');
 areas.push({
   name: 'Islam-Quiz',
   tier: 'D',
-  note: 'Die Fragen tragen keine Einzelnachweise. Zu prüfen sind Frage, richtige Antwort und Erklärung gemeinsam — eine falsche Erklärung wiegt hier schwerer als eine falsche Frage.',
-  rows: quizQuestions.map((question) => ({ text: short(question), source: '— (keine)', origin: CARRIED })),
+  note: '60 Fragen mit Einzelfundstellen; KI-gestützter Wortlaut- und Aussageabgleich am 11.10.2026. Kein unabhängiges Authentizitätsgutachten und keine fachliche Freigabe. Frage, Antwort und Erklärung müssen gemeinsam betrachtet werden.',
+  rows: quizQuestions.map((question, index) => ({ text: short(question), source: quizSources[index] ?? '— (keine)', origin: WRITTEN })),
 });
 
 // --- Knowledge --------------------------------------------------------------
 const knowledge = await read('src/data/knowledgeData.ts');
-const knowledgeTitles = values(knowledge.slice(0, knowledge.indexOf('GLOSSARY_TERMS')), 'title');
+const knowledgeTopics = literalArray(knowledge, 'KNOWLEDGE_TOPICS');
 areas.push({
   name: 'Wissensbibliothek',
   tier: 'D',
-  note: 'Elf Themen mit je mehreren Abschnitten. Zu prüfen ist der gesamte Abschnittstext, nicht nur die Überschrift.',
-  rows: knowledgeTitles.map((title) => ({ text: short(title), source: '— (keine)', origin: CARRIED })),
+  note: 'Einleitungen, alle 41 Abschnitte und sechs Glossarbegriffe getrennt erfasst. Aussageabgleich vom 11.10.2026: KNOWLEDGE-SOURCE-AUDIT-2026-10-11.md. Keine menschliche Fachfreigabe.',
+  rows: [
+    ...knowledgeTopics.flatMap(topic => [
+      { text: `${topic.id} · Einleitung: ${topic.intro}`, source: `${topic.source} · ${topic.sourceUrl}`, origin: WRITTEN },
+      ...topic.sections.map(section => ({ text: `${topic.id} · ${section.subtitle}: ${section.text}`, source: `${section.source} · ${section.sourceUrl}`, origin: WRITTEN })),
+    ]),
+    ...literalArray(knowledge, 'GLOSSARY_TERMS').map(entry => ({ text: `Glossar · ${entry.term}: ${entry.definition}`, source: `${entry.source} · ${entry.sourceUrl}`, origin: WRITTEN })),
+  ],
+});
+
+const people = await read('src/data/companionData.ts');
+areas.push({
+  name: 'Gefährten und Frauen im Islam', tier: 'D',
+  note: 'Namen, Beinamen, Rollen und Kurztexte: zehn Frauen im WOMEN-SOURCE-AUDIT-2026-10-11.md, 15 Gefährten im COMPANION-SOURCE-AUDIT-2026-10-11.md abgeglichen. Historische Einordnung ist kein Prophetenzitat; kein vollständiger Biografieabgleich.',
+  rows: [
+    ...literalArray(people, 'SAHABAH').map(entry => ({ text: `${entry.id} · ${entry.name}: ${entry.honorific} · ${entry.role}${entry.sourceNote ? ` · Quellenkontext: ${entry.sourceNote}` : ''}`, source: entry.sources.map(source => `${source.label} · ${source.url}`).join(' | '), origin: CARRIED })),
+    ...literalArray(people, 'WOMEN_IN_ISLAM').map(entry => ({ text: `${entry.id} · ${entry.name}: ${entry.note}${entry.sourceNote ? ` · Quellenkontext: ${entry.sourceNote}` : ''}`, source: entry.sources.map(source => `${source.label} · ${source.url}`).join(' | '), origin: CARRIED })),
+  ],
+});
+
+const names = literalArray(await read('src/data/namesOfAllahData.ts'), 'NAMES_OF_ALLAH');
+const nameEvidence = new Map([
+  ...literalArray(await read('src/data/verifiedNamesOfAllahData.ts'), 'VERIFIED_NAMES_OF_ALLAH'),
+  ...literalArray(await read('src/data/additionalNamesOfAllahEvidence.ts'), 'ADDITIONAL_NAMES_OF_ALLAH_EVIDENCE'),
+].filter(entry => entry.legacyId !== null).map(entry => [entry.legacyId, entry]));
+const relatedNameEvidence = new Map(literalArray(await read('src/data/nameSourceEvidence.ts'), 'RELATED_NAME_SOURCE_CONTEXT').map(entry => [entry.legacyId, entry]));
+areas.push({
+  name: '99 Namen · vollständige Lernliste', tier: 'B',
+  note: 'Alle 99 bleiben sichtbar und wurden am 11.10.2026 untersucht; NAMES-SOURCE-AUDIT-2026-10-11.md. 75 direkte Belegzuordnungen bestätigen nicht alle Bedeutungsnuancen oder die feste Aufzählung. 24 Listenformen bleiben ohne direkten Einzelbeleg: 20 verwandte Stellen und ein Ausschlusskontext (98: 11:87 spricht zu Shuayb, nicht über Allah) werden nicht als direkte Belege gezählt. Für 64, 65 und 77 fehlt weiterhin auch ein zugeordneter Einzelkontext. Grammatische Abweichungen und Auslegungsgrenzen sind sichtbar. Die 99er-Aussage ist von einer festen Aufzählung zu unterscheiden; Tirmidhi 3507 mit Darussalam-Bewertung Daif und eigenem Gharib-Kommentar at-Tirmidhis eingeordnet. Keine vollständige Authentizitäts- oder Aussprachefreigabe.',
+  rows: names.map(entry => ({ text: `${entry.id} · ${entry.latin} · ${entry.arabic} · ${entry.meaning}${nameEvidence.get(entry.id)?.sourceNote ? ` · Belegkontext: ${nameEvidence.get(entry.id).sourceNote}` : ''}${relatedNameEvidence.get(entry.id) ? ` · Verwandter Beleg, kein direkter Namensbeleg: ${relatedNameEvidence.get(entry.id).label} · ${relatedNameEvidence.get(entry.id).url} · ${relatedNameEvidence.get(entry.id).note}` : ''}`, source: nameEvidence.get(entry.id)?.source ?? '— (traditionelle Lernliste, keine direkte Einzelfundstelle)', origin: CARRIED })),
+});
+
+const routines = literalArray(await read('src/data/dhikrData.ts'), 'DHIKR_ROUTINES');
+areas.push({
+  name: 'Dhikr · Routinen und einzelne Formeln', tier: 'B',
+  note: 'Sieben Routinen und 18 Formeln am 11.10.2026 anhand tatsächlich gelesener Fundstellen abgeglichen: docs/DHIKR-SOURCE-AUDIT-2026-10-11.md. Sinngemäße Bedeutungen, angenäherte Umschrift, überlieferte Varianten und persönliche Zählerziele getrennt; keine Fachfreigabe.',
+  rows: routines.flatMap(routine => [
+    { text: `${routine.id} · ${routine.title}: ${routine.description} ${routine.note ?? ''}`, source: `${routine.source}${routine.sourceUrl ? ` · ${routine.sourceUrl}` : ''}`, origin: WRITTEN },
+    ...routine.items.map(item => ({ text: `${routine.id}/${item.id} · ${item.arabic} · Kurzname: ${item.latin} · Umschrift: ${item.transliteration ?? item.latin} · ${item.meaning} · Ziel: ${item.target} · ${item.itemNote ?? ''}`, source: `${item.itemSource ?? routine.source} · ${item.itemSourceUrl ?? routine.sourceUrl ?? 'persönliche Auswahl, keine Einzelfundstelle'}`, origin: WRITTEN })),
+  ]),
+});
+
+const lessons = literalArray(await read('src/data/islamicLearningContent.ts'), 'LEARNING_LESSONS');
+areas.push({
+  name: 'Lernkurse · Texte, Merksätze und Kontrollfragen', tier: 'A', priority: true,
+  note: 'Jede Lektion mit Zusammenfassung, Absätzen, vorhandenen Detailtexten, Merksätzen, Frage samt Antwortoptionen und Erklärung. Sieben Glaubenslektionen, sechs Säulenlektionen, alle zwölf Begriffslektionen, fünf Praxislektionen, vier Charakterlektionen und sechs Gemeinschaftslektionen am 12.10.2026 in FAITH-LEARNING-SOURCE-AUDIT-2026-10-12.md, PILLARS-LEARNING-SOURCE-AUDIT-2026-10-12.md, DEVOTION-LEARNING-SOURCE-AUDIT-2026-10-12.md, TERMINOLOGY-LEARNING-SOURCE-AUDIT-2026-10-12.md, PRACTICE-LEARNING-SOURCE-AUDIT-2026-10-12.md, CHARACTER-LEARNING-SOURCE-AUDIT-2026-10-12.md und COMMUNITY-LEARNING-SOURCE-AUDIT-2026-10-12.md abgeglichen: 44/44 Lektionen mit dem Seerah-Nachtrag CONTENT-CLEARANCE-2026-10-13.md quellenbezogen bearbeitet. Quellenzuordnung allein bestätigt keine Aussage. Keine menschliche Fachfreigabe.',
+  rows: lessons.flatMap(lesson => {
+    const source = lesson.sources.map(item => `${item.label}: ${item.reference} (${item.note})${item.url ? ` · ${item.url}` : ''}`).join(' · ') || '— (keine)';
+    const row = (field, text) => ({ text: `${lesson.id}/${field} · ${text}`, source, origin: WRITTEN });
+    return [
+      row('summary', lesson.summary),
+      ...lesson.paragraphs.map((text, index) => row(`paragraphs[${index}]`, text)),
+      ...(lesson.detailItems ?? []).map((item, index) => row(`detailItems[${index}]`, `${item.title}: ${item.text}`)),
+      ...lesson.keyPoints.map((text, index) => row(`keyPoints[${index}]`, text)),
+      row('question', `${lesson.question.prompt} Optionen: ${lesson.question.options.join(' / ')}. Richtige Position: ${lesson.question.correctIndex + 1}; Erklärung: ${lesson.question.explanation}`),
+    ];
+  }),
+});
+
+areas.push({
+  name: 'Ayah des Tages · Einstieg', tier: 'B',
+  note: 'Arabischer Text und sinngemäße Bedeutung des Einstiegs separat erfasst; Rotation und Darstellung sind zusätzlich technisch zu prüfen.',
+  rows: literalArray(await read('src/data/dailyAyah.ts'), 'DAILY_AYAHS').map(entry => ({ text: `${entry.arabic} · ${entry.meaning}`, source: entry.source, origin: WRITTEN })),
 });
 
 // --- Prophets ---------------------------------------------------------------
 const prophets = await read('src/data/prophetData.ts');
-const prophetEntries = [...prophets.matchAll(/id: '[^']+', name: '([^']+)', arabic: '[^']+'[\s\S]*?quranReferences: \[([^\]]+)\]/g)];
-const prophetCourses = await read('src/data/prophetCourseData.ts');
-const prophetChapters = [...prophetCourses.matchAll(/\{ id: '[^']+', title: '([^']+)'[\s\S]*?quranReferences: \[([^\]]+)\] \}/g)];
-const prophetOverviews = await read('src/data/prophetCourseOverviews.ts');
-const prophetOverviewRows = [...prophetOverviews.matchAll(/orientation: '([^']+)'[\s\S]*?boundary: '([^']+)'/g)];
+const prophetEntries = literalArray(prophets, 'PROPHETS');
+const prophetCourses = literalArray(await read('src/data/prophetCourseData.ts'), 'PROPHET_COURSES', true);
+const prophetOverviews = literalArray(await read('src/data/prophetCourseOverviews.ts'), 'PROPHET_COURSE_OVERVIEWS', true);
 areas.push({
-  name: 'Propheten',
-  tier: 'B',
-  note: `25 Katalogeinträge, ${prophetOverviewRows.length} ausführliche Kursorientierungen mit Wissensgrenze und ${prophetChapters.length} Kurskapitel. Je Kapitel sind Erzählung, Merksätze und Quran-Stellen gemeinsam zu prüfen. Bei Dhul-Kifl ist die unterschiedliche gelehrte Einordnung ausdrücklich Teil der Prüfung.`,
-  rows: [
-    ...prophetEntries.map(([, name, references]) => ({ text: `Einführung · ${name}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
-    ...prophetOverviewRows.map(([, orientation, boundary]) => ({ text: `Kursorientierung · ${short(orientation, 48)}`, source: `Grenze: ${short(boundary, 46)}`, origin: WRITTEN })),
-    ...prophetChapters.map(([, title, references]) => ({ text: `Kapitel · ${short(title, 52)}`, source: short(references.replaceAll("'", '').replaceAll(',', ' · '), 60), origin: WRITTEN })),
-  ],
+  name: 'Propheten', tier: 'B',
+  note: 'Katalog, gesamte Kursorientierungen, Einführungen und Kapitel einschließlich Merksätzen erfasst. Quellenbezogene Korrekturen und ihre Grenzen: CONTENT-CLEARANCE-2026-10-13.md. Lernlehren sind keine wörtlichen Quran-Zitate.',
+  rows: prophetEntries.flatMap(entry => {
+    const course = prophetCourses[entry.id], overview = prophetOverviews[entry.id];
+    const references = [...new Set(course.chapters.flatMap(chapter => chapter.quranReferences))].join(' · ');
+    return [
+      { text: `Katalog · ${entry.name}: ${entry.summary} · ${entry.focus} · Lernlehre: ${entry.lesson}`, source: entry.quranReferences.join(' · '), origin: WRITTEN },
+      { text: `Kursorientierung · ${entry.id}: ${overview.orientation} · ${overview.coursePath} · Grenze: ${overview.boundary} · Lernziele: ${overview.learningGoals.join(' · ')}`, source: references, origin: WRITTEN },
+      { text: `Kurseinführung · ${entry.id}: ${course.introduction}`, source: references, origin: WRITTEN },
+      ...course.chapters.map(chapter => ({ text: `${entry.id}/${chapter.id} · ${chapter.title}: ${chapter.summary} · ${chapter.paragraphs.join(' · ')} · Lernlehren: ${chapter.keyPoints.join(' · ')}`, source: chapter.quranReferences.join(' · '), origin: WRITTEN })),
+    ];
+  }),
 });
 
 // --- Ummah ------------------------------------------------------------------
@@ -157,8 +278,8 @@ areas.push({
   name: 'Ummah-Übersicht',
   tier: 'D',
   priority: true,
-  note: 'Die absoluten Bevölkerungszahlen sind entfernt: sie trugen weder Quelle noch Stichjahr und lagen gegen Pew (Stand 2020) messbar daneben. Zu prüfen bleiben die Anteile in Prozent, die dieselbe Quellenlücke haben, sowie die Einordnungstexte je Land.',
-  rows: values(ummah.slice(ummah.indexOf('UMMAH_COUNTRIES')), 'name').map((name) => ({ text: name, source: '— (undatiert)', origin: CARRIED })),
+  note: 'Seit 11.10.2026 nur geografische Auswahl. Unbelegte Prozentwerte, Bevölkerungszahlen und Rangbehauptungen entfernt; keine Statistik und keine religiöse Rechtsaussage.',
+  rows: values(ummah.slice(ummah.indexOf('UMMAH_COUNTRIES')), 'name').map((name) => ({ text: name, source: 'Geografische Auswahl · keine Statistik', origin: CARRIED })),
 });
 
 // --- Gebetsablauf -----------------------------------------------------------
@@ -166,16 +287,15 @@ areas.push({
 // Salawat and the supplications. Wording that a beginner will repeat verbatim,
 // so the Arabic, its transliteration and its German meaning each need checking.
 const rakats = await read('src/data/prayerRakatData.ts');
-const rakatSteps = [...rakats.matchAll(/const [A-Z_0-9]+: RakatStep = \{[\s\S]*?title: '([^']+)'[\s\S]*?\n\};/g)]
-  .map((match) => match[0]);
+const rakatSteps = literalRakatSteps(rakats);
 areas.push({
   name: 'Gebetsablauf (Rakʿah)',
   tier: 'A',
   priority: true,
-  note: 'Aus dem Altbestand übernommen. Je Schritt sind arabischer Wortlaut, Umschrift und deutsche Bedeutung zu prüfen — außerdem die Zusammensetzung der Rakʿah, die sich zwischen den Rechtsschulen in Details unterscheidet.',
+  note: '17 Schritte einschließlich geerbter Varianten vollständig mit Beschreibung, Wortlaut, beiden Lesehilfen, Bedeutung und Wiederholungsgrenze erfasst. Erneuter Teilabgleich in PRAYER-LEARNING-SOURCE-AUDIT-2026-10-11.md; konkrete Fundstelle ist keine vollständige Schul-/Aussprachefreigabe. Quran-Schritte, Zusammensetzung und weitere Praxisangaben noch offen.',
   rows: rakatSteps.map((step) => ({
-    text: /title: '([^']+)'/.exec(step)?.[1] ?? 'Schritt',
-    source: /arabic: '/.test(step) ? 'Wortlaut ohne Belegstelle' : '— (Bewegung)',
+    text: [step.id, step.title, step.description, step.arabic, step.transliteration, step.pronunciation, step.translation, step.repetitions !== undefined ? `${step.repetitions} Wiederholung(en)` : '', step.repetitionNote, step.repetitionLabels?.join(', ')].filter(Boolean).join(' — '),
+    source: step.source ?? '— (keine Einzelfundstelle)',
     origin: CARRIED,
   })),
 });
@@ -185,33 +305,13 @@ areas.push({
 // wird — und „Wenn etwas schiefgeht“ sagt, was ein Versehen im Gebet nach sich
 // zieht. Das sind die Aussagen, bei denen eine Prüfung am meisten trägt.
 const guides = await read('src/data/worshipGuideData.ts');
-const guideBlock = guides.slice(guides.indexOf('WORSHIP_GUIDES: readonly'));
-const guideNames = new Map([
-  ['wudu', 'Wudu'], ['salah', 'Salah'], ['what-to-say', 'Wortlaut'],
-  ['mandatory', 'Pflichtteile'], ['mistakes', 'Häufige Fehler'], ['sahw', 'Wenn etwas schiefgeht'],
-  ['shahada', 'Die Shahada'], ['women', 'Frauen im Gebet'],
-  ['more-prayers', 'Weitere Gebete'], ['special-cases', 'Besondere Lagen'],
-  ['occasions', 'Zu besonderen Anlässen'],
+const guideRows = literalArray(guides, 'WORSHIP_GUIDES').flatMap(guide => [
+  { text: `${guide.id} · ${guide.title}: ${guide.intro} · Hinweise: ${guide.tips.join(' · ')}`, source: [...new Set(guide.steps.map(step => `${step.source ?? '— (keine)'} · ${step.sourceUrl ?? ''}`))].join(' | '), origin: WRITTEN },
+  ...guide.steps.map(step => ({ text: [guide.id, step.title, step.description, step.arabic, step.transliteration].filter(Boolean).join(' — '), source: [step.source, step.sourceUrl].filter(Boolean).join(' · ') || '— (keine)', origin: WRITTEN })),
 ]);
-const guideRows = [];
-for (const [, id] of guideBlock.matchAll(/^ {4}id: '([^']+)',$/gm)) {
-  const start = guideBlock.indexOf(`id: '${id}'`);
-  const rest = guideBlock.slice(start + 1);
-  const nextId = rest.search(/^ {4}id: '/m);
-  const section = nextId === -1 ? rest : rest.slice(0, nextId);
-  for (const title of values(section, 'title')) {
-    guideRows.push({
-      text: `${guideNames.get(id) ?? id}: ${title}`,
-      source: /arabic: '/.test(section) ? 'Wortlaut ohne Belegstelle' : '— (keine)',
-        origin: ['sahw', 'shahada', 'women', 'more-prayers', 'special-cases', 'occasions'].includes(id) ? WRITTEN : CARRIED,
-    });
-  }
-}
 areas.push({
-  name: 'Anleitungen zur Praxis',
-  tier: 'A',
-  priority: true,
-  note: 'Beschreiben, wie etwas getan wird. Sechs sind hier verfasst und besonders zu prüfen: „Wenn etwas schiefgeht“ (Sujud as-Sahw — was ein Versehen nach sich zieht und was nicht), „Die Shahada“ (Wortlaut und die Angaben zum Eintritt in den Islam) „Frauen im Gebet“, wo mehrere Punkte zwischen den Rechtsschulen verlaufen, sowie „Weitere Gebete“ und „Besondere Lagen“ — dort stehen Rakʿah-Zahlen und Erleichterungen (Qasr, Zusammenlegen, Nachholen), die unmittelbar befolgt werden, und „Zu besonderen Anlässen“ mit dem Ablauf des Toten- und des Eid-Gebets.',
+  name: 'Anleitungen zur Praxis', tier: 'A', priority: true,
+  note: 'Vollständige Einleitungen, Hinweise und Schritttexte einschließlich arabischem Wortlaut und Umschrift erfasst. Pauschale Gültigkeitsregeln begrenzt und Fundstellen sichtbar gemacht am 13.10.2026; CONTENT-CLEARANCE-2026-10-13.md.',
   rows: guideRows,
 });
 
@@ -220,44 +320,25 @@ areas.push({
 // damit zu den prüfbedürftigsten Inhalten der App — auch wenn sie beschreibend
 // formuliert sind und keine Belegstelle behaupten.
 const madhhab = await read('src/data/madhhabData.ts');
-const madhhabBlock = madhhab.slice(madhhab.indexOf('MADHHAB_DIFFERENCES: readonly'), madhhab.indexOf('export const MADHHAB_DIFFERENCES_BY_STEP'));
 areas.push({
-  name: 'Unterschiede der Rechtsschulen',
-  tier: 'A',
-  priority: true,
-  note: 'Hier verfasst. Je Punkt sind alle vier angegebenen Positionen zu prüfen, und ob die Frage überhaupt so trennscharf zwischen den Schulen verläuft. Innerhalb einer Schule gibt es zu mehreren dieser Punkte mehr als eine überlieferte Position; wo die Angabe das verkürzt, ist sie zu ergänzen.',
-  rows: values(madhhabBlock, 'question').map((question) => ({
-    text: question,
-    source: '— (keine Belegstelle; beschreibende Übersicht)',
-    origin: WRITTEN,
-  })),
+  name: 'Unterschiede der Rechtsschulen', tier: 'A', priority: true,
+  note: 'Alle vier Positionen je Vergleich erfasst. Geschlechts- und Variantenunterschiede ergänzt, Fajr-Qunut begrenzt; CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: literalArray(madhhab, 'MADHHAB_DIFFERENCES').map(item => ({ text: `${item.question} · ${Object.entries(item.positions).map(([school, text]) => `${school}: ${text}`).join(' · ')}`, source: `${item.source} · ${item.sourceUrl}`, origin: WRITTEN })),
 });
 
 const schoolCatalogue = await read('src/data/madhhabCatalogueData.ts');
 areas.push({
-  name: 'Katalog der vier sunnitischen Rechtsschulen',
-  tier: 'A',
-  priority: true,
-  note: 'Neue Zusammenfassungen, nicht fachlich freigegeben. Je Schule sind Lebensdaten, Entstehung, Methodik, Verbreitung und die Einordnung der Institutionen zu prüfen. Die verlinkten Institutionen sind keine zentralen Vertretungen einer Rechtsschule.',
-  rows: schoolCatalogue.split(/\n  \{\n    id:/).slice(1).map((school) => ({
-    text: `${values(school, 'title')[0]}: Geschichte, Methodik, Verbreitung und Praxis`,
-    source: values(school, 'href').join(' · '),
-    origin: WRITTEN,
-  })),
+  name: 'Katalog der vier sunnitischen Rechtsschulen', tier: 'A', priority: true,
+  note: 'Verknüpfte TDV-Fachartikel als Grundlage; thematisch unpassende Zusatzquellen und ungeprüfte Zahlenvergleiche entfernt. Keine zentrale Vertretung oder religiöse Zertifizierung.',
+  rows: literalArray(schoolCatalogue, 'MADHHAB_CATALOGUE').map(school => ({ text: `${school.title}: ${school.eponym} · ${school.dates} · ${school.origin} · ${school.short} · ${school.history.join(' · ')} · ${school.method.map(item => `${item.title}: ${item.text}`).join(' · ')} · ${school.spread} · ${school.practice}`, source: school.sources.map(item => `${item.title} · ${item.href}`).join(' · '), origin: WRITTEN })),
 });
 
 // --- Islamischer Kalender ---------------------------------------------------
 const events = await read('src/data/islamicEventsData.ts');
-const eventBlock = events.slice(events.indexOf('ISLAMIC_EVENTS'), events.indexOf('export const WHITE_DAYS'));
 areas.push({
-  name: 'Kalendertermine',
-  tier: 'D',
-  note: 'Aus dem Altbestand übernommen. Zu prüfen sind Hijri-Datum, Bedeutung und die angegebene Praxis — insbesondere dort, wo die Begehung unter Gelehrten unterschiedlich bewertet wird.',
-  rows: values(eventBlock, 'title').map((title) => ({
-    text: title,
-    source: '— (keine)',
-    origin: CARRIED,
-  })),
+  name: 'Kalendertermine', tier: 'D',
+  note: 'Datum, Bedeutung und Praxis erfasst; berechnete Termine sind keine Mondsichtungsbestätigung. Ramadan-Fasten getrennt von freiwilligen Hinweisen, Tashriq-Pilgerausnahme erläutert; CONTENT-CLEARANCE-2026-10-13.md.',
+  rows: literalArray(events, 'ISLAMIC_EVENTS').map(item => ({ text: `${item.title} · Hijri ${item.month}/${item.days.join(',')}: ${item.meaning} · ${item.practice}`, source: `${item.source} · ${item.sourceUrl}`, origin: WRITTEN })),
 });
 
 // --- Report -----------------------------------------------------------------
@@ -274,8 +355,11 @@ const document = `# Inhalte zur fachlichen Prüfung
 > Eine handgeführte Liste veraltet bei der ersten Inhaltsänderung und bestätigt
 > danach Einträge, die niemand gesehen hat.
 
-Diese Liste führt jede religiöse Aussage der App auf, mit ihrer Quelle und ihrer
-Herkunft. Sie sagt, **ob** eine Quelle da ist — nicht, ob sie **stimmt**. Ob eine
+Diese Liste erfasst die unten genannten Inhaltsbestände und Prüfpositionen mit
+Quelle und Herkunft. **Sie ist noch keine vollständige Extraktion aller Aussagen
+aus Oberflächen, Dialogen und dynamischen Anzeigen.** Die appweite Abdeckung und
+offenen Bereiche stehen in \`APP-CONTENT-AUDIT-2026-10-11.md\`.
+Sie sagt, **ob** eine Quelle da ist — nicht, ob sie **stimmt**. Ob eine
 Belegstelle zutrifft, eine Übersetzung trägt oder eine Aussage zur Praxis richtig
 ist, entscheidet die Prüfung selbst.
 
@@ -298,9 +382,9 @@ nicht nach Umfang.
    unmittelbar befolgt und fällt niemandem auf.
 2. **Unterschiede der Rechtsschulen** — acht Punkte, je vier Positionen. Zu
    prüfen ist auch, ob die Frage überhaupt so trennscharf verläuft.
-3. **Hajj, Umrah und heilige Stätten** — der einzige Bereich, den niemand vorher
-   geschrieben hat. Alles andere wurde aus \`memetreza34-ux/nur-islam\`
-   übernommen; diese Texte entstanden für diese App.
+3. **Lernkurse, Hajj, Umrah und heilige Stätten** — hier stehen umfangreiche
+   eigene Formulierungen. Nicht nur Titel, sondern Texte und Schlussfolgerungen
+   gemeinsam mit den angegebenen Belegen prüfen.
 
 Erledigt und nicht mehr vorrangig: die Hadith-Belegstellen tragen inzwischen
 alle ihre Nummer, jede einzeln nachgeschlagen und gegen die Inhaltsangabe
@@ -324,9 +408,8 @@ ${areas.map((area) => [
 
 ---
 
-*99 Namen Allahs, Dhikr-Routinen und die Lernlektionen sind über
-\`npm run content:report\` gesondert erfasst und dort bereits mit ihrer
-Quellenlage ausgewiesen.*
+*\`npm run content:report\` zählt ergänzend strukturelle Quellenzuordnungen.
+Weder diese Zahlen noch Häkchen sind eine KI- oder menschliche Fachfreigabe.*
 `;
 
 
@@ -367,7 +450,7 @@ const TIERS = [
   {
     id: 'D',
     title: 'Stufe D — Übriges',
-    lead: 'Wissenstexte, Kalender, Quizfragen und Zahlen. Falsches ist hier ärgerlich, aber folgenlos für die Praxis.',
+    lead: 'Wissenstexte, Kalender, Quizfragen und Angaben. Auch diese Inhalte können Entscheidungen und Praxis beeinflussen; die Stufe ist nur eine Reihenfolgeempfehlung.',
   },
 ];
 
@@ -449,9 +532,10 @@ const sheet = `<!doctype html>
     <p class="sub">Stand: ${total} Einträge, davon ${written} für diese App verfasst · erzeugt aus dem Datenbestand der App</p>
 
     <div class="intro">
-      <p><strong>Worum es geht.</strong> Diese Mappe führt jede religiöse Aussage der App auf. Sie ist
-      aus den Daten der App erzeugt, nicht von Hand geschrieben — was hier fehlt, steht auch nicht
-      in der App, und umgekehrt.</p>
+      <p><strong>Worum es geht.</strong> Diese Mappe erfasst die unten genannten Inhaltsbestände.
+      Sie ist aus Daten erzeugt, aber noch keine vollständige Extraktion aller Aussagen aus
+      Oberflächen und dynamischen Anzeigen. Abdeckung und offene Bereiche:
+      APP-CONTENT-AUDIT-2026-10-11.md.</p>
       <p><strong>Was sie nicht leistet.</strong> Sie sagt, <em>ob</em> eine Quelle angegeben ist —
       nicht, ob sie stimmt. Ob eine Belegstelle zutrifft, eine Übersetzung trägt oder eine Aussage
       zur Praxis richtig ist, entscheidet die Prüfung.</p>

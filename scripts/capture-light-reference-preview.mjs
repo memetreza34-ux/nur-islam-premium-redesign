@@ -114,14 +114,6 @@ try {
   await shot('01a-ayah-detail');
   await returnHome();
 
-  const hadithCard = page.locator('button.reference-daily-card-button').filter({ hasText: 'Hadith des Tages' }).first();
-  await hadithCard.waitFor({ state: 'visible', timeout: 10_000 });
-  await hadithCard.click();
-  await page.locator('.reference-hadith-hero').waitFor({ state: 'visible', timeout: 10_000 });
-  await settle();
-  await assertLightTheme();
-  await shot('01b-hadith-detail');
-  await returnHome();
 
   for (const [label, name] of [
     ['Gebet', '02-prayer'],

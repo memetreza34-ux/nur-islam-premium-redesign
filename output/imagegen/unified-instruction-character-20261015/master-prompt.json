@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-15",
+  "tool": "built-in image_gen",
+  "prompt": "Use case: identity-preserve.\nCreate the MASTER full-body standing illustration for a consistent Nur Islam instructional character to be used in ALL subsequent Wudu and prayer pictures.\nImage 1 is a reference for the existing character's brown hair, emerald tunic, cream trousers and standing posture ONLY. Image 2 is the primary reference for our app's smooth matte 3D materials and restrained clean form language.\nMake one original friendly young ADULT man, approximately 25 years old, with mature but softly simplified facial proportions, warm medium honey skin, a slightly oval face, a softly defined jaw, short dark-brown hair swept into three broad sculpted waves, dark brown almond-shaped eyes of NORMAL proportional size, straight broad brows, a modest rounded nose, clean-shaven face, calm neutral respectful expression, closed mouth. Head/body ratio about 1:6.2. Average adult build, medium shoulders. Not a child or teenager, no oversized eyes or balloon head.\nWardrobe LOCK: plain deep emerald knee-length long-sleeved tunic with short stand collar, three small understated cream buttons, simple straight cuffs, plain warm ivory loose trousers ending at the ankles, bare feet. No hat, jewelry or patterns.\nStyle LOCK: refined smooth matte 3D app illustration, softly rounded solid shapes, gentle broad shading, clean silhouette, NO skin pores, veins, wrinkles, textile weave or photoreal texture. Natural adult proportions and dignified body language, no caricature, no dramatic expression.\nPose: full body straight upright, facing the viewer, arms naturally relaxed down at both sides, hands open relaxed alongside thighs, feet parallel close together, eyes looking gently down. This is the standing-after-bowing posture. Show all five fingers where visible and anatomically coherent hands and feet. Stand on ONE simple flat deep-teal rectangular prayer mat with a thin muted-gold border, no arch, no patterns, no writing. Entire head, hands, feet and entire mat inside canvas with generous margins.\nCanvas: one isolated centered character on genuine transparent alpha, square 1:1 image, full body approximately 82% canvas height. No other figure, no inset, no character sheet. No text, labels, arrows, logos, scenery, UI or watermark.",
+  "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-08708707-34e6-4c8b-9489-9d1f5ce332fa.png",
+  "inputImages": [
+    "output/imagegen/unified-instruction-character-20261015/previous-runtime/salah-posture-standing-v1.webp",
+    "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+  ],
+  "inputRoles": [
+    "Former clothing and standing pose reference",
+    "Smooth matte 3D app style reference"
+  ],
+  "originalInputPaths": [
+    "public/premium-assets/high-res-objects/salah-posture-standing-v1.webp",
+    "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+  ]
+}

@@ -48,7 +48,7 @@
 
 .reference-quran-continue__copy p {
   color: rgba(19, 35, 30, .66);
-  font-size: .58rem;
+  font-size: .75rem;
 }
 
 
@@ -58,7 +58,7 @@
 .reference-inline-button {
   display: flex;
   width: max-content;
-  min-height: 38px;
+  min-height: 44px;
   align-items: center;
   gap: 5px;
   padding: 0 12px;
@@ -113,11 +113,11 @@
   background: rgba(214, 175, 55, .07);
 }
 .reference-dhikr-category-grid strong {
-  font-size: .58rem;
+  font-size: .75rem;
 }
 .reference-dhikr-category-grid small {
   color: var(--muted-green);
-  font-size: .45rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list {
@@ -153,13 +153,13 @@
 }
 
 .reference-quran-list strong {
-  font-size: .67rem;
+  font-size: .75rem;
 }
 
 .reference-quran-list small,
 .reference-quran-list em {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
   font-style: normal;
 }
 
@@ -197,7 +197,7 @@
   width: 235px;
   height: 205px;
   opacity: .22;
-  background: url('/premium-assets/high-res-objects/mihrab-arch-v2.webp') center / contain no-repeat;
+  background: url('/premium-assets/high-res-objects/home-learn-prayer-v5.webp') center / contain no-repeat;
 }
 
 .reference-quran-verse__shade {
@@ -225,19 +225,19 @@
 }
 
 .reference-quran-verse blockquote {
-  font-size: .62rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
 .reference-quran-verse small {
   color: rgba(28, 43, 36, .67);
-  font-size: .51rem;
+  font-size: .75rem;
 }
 
 .reference-quran-verse button {
   display: flex;
   width: max-content;
-  min-height: 34px;
+  min-height: 44px;
   align-items: center;
   gap: 6px;
   padding: 0 10px;
@@ -315,7 +315,7 @@
 .reference-dhikr-ring small {
   margin-top: 7px;
   color: var(--muted-green);
-  font-size: .65rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-copy {
@@ -346,14 +346,14 @@
 
 .reference-dhikr-copy small {
   color: var(--muted-green);
-  font-size: .56rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-reset {
   position: relative;
   z-index: 2;
   display: flex;
-  min-height: 38px;
+  min-height: 44px;
   align-items: center;
   gap: 6px;
   padding: 0 12px;
@@ -388,7 +388,7 @@
 
 .reference-dhikr-goal > div strong {
   color: var(--gold-soft);
-  font-size: .68rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-goal > span {
@@ -408,90 +408,19 @@
 .reference-dhikr-goal p {
   margin: 0;
   color: var(--muted-green);
-  font-size: .53rem;
+  font-size: .75rem;
 }
 
 .reference-qibla-location button {
   display: grid;
-  width: 39px;
-  height: 39px;
+  width: 44px;
+  height: 44px;
   place-items: center;
   border: 1px solid rgba(226, 191, 119, .22);
   border-radius: 13px;
   color: var(--gold-bright);
   background: rgba(214, 175, 55, .06);
   cursor: pointer;
-}
-
-.reference-qibla-stage {
-  position: relative;
-  display: grid;
-  min-height: 480px;
-  overflow: hidden;
-  justify-items: center;
-  align-content: start;
-  padding: 30px 16px 22px;
-  border: 1px solid rgba(226, 191, 119, .34);
-  border-radius: 24px;
-  background:
-    radial-gradient(circle at 50% 26%, rgba(214, 175, 55, .12), transparent 14rem),
-    linear-gradient(160deg, #0c392d, #061e18 60%, #041410);
-  box-shadow: 0 24px 56px rgba(0, 0, 0, .34), inset 0 1px 0 rgba(255, 255, 255, .035);
-}
-
-.reference-qibla-stage__halo {
-  position: absolute;
-  top: 18px;
-  width: 330px;
-  height: 330px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(232, 199, 122, .1), transparent 68%);
-}
-
-.reference-qibla-stage__compass {
-  position: relative;
-  z-index: 1;
-  width: 315px;
-  height: 315px;
-  filter: drop-shadow(0 22px 25px rgba(0, 0, 0, .47));
-}
-
-.reference-qibla-stage__needle {
-  position: absolute;
-  z-index: 3;
-  top: 60px;
-  left: 50%;
-  width: 34px;
-  height: 125px;
-  color: var(--gold-bright);
-  transform-origin: 50% 100%;
-  filter: drop-shadow(0 5px 8px rgba(0, 0, 0, .5));
-}
-
-.reference-qibla-stage__copy {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  margin-top: -7px;
-  text-align: center;
-}
-
-.reference-qibla-stage__copy h2,
-.reference-qibla-stage__copy p {
-  margin: 0;
-}
-
-.reference-qibla-stage__copy h2 {
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.65rem;
-  font-weight: 500;
-}
-
-.reference-qibla-stage__copy p {
-  color: var(--muted-green);
-  font-size: .56rem;
 }
 
 .reference-qibla-location {
@@ -521,12 +450,12 @@
 .reference-qibla-location small,
 .reference-qibla-location em {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
   font-style: normal;
 }
 
 .reference-qibla-location strong {
-  font-size: .67rem;
+  font-size: .75rem;
 }
 
 .reference-qibla-calibration {
@@ -553,13 +482,13 @@
 
 .reference-qibla-calibration p {
   color: var(--muted-green);
-  font-size: .51rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
 .reference-calibration-button {
   display: flex;
-  min-height: 39px;
+  min-height: 44px;
   align-items: center;
   gap: 6px;
   padding: 0 11px;
@@ -591,12 +520,12 @@
 
 .reference-qibla-tip strong {
   color: var(--cream);
-  font-size: .61rem;
+  font-size: .75rem;
 }
 
 .reference-qibla-tip small {
   color: var(--muted-green);
-  font-size: .5rem;
+  font-size: .75rem;
 }
 
 @media (max-width: 370px) {
@@ -609,13 +538,4 @@
 
   .reference-dhikr-counter {
     min-height: 430px;
-  }
-
-  .reference-qibla-stage {
-    min-height: 445px;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 285px;
-    height: 285px;
   }}

@@ -4,12 +4,13 @@
 >
 > Dieser Audit beschreibt einen Stand, in dem die App die deutsche Übersetzung
 > von Abu Rida vollständig mitgeliefert hat. Dieser Branch liefert **keine**
-> deutsche Übersetzung mit — sie wird beim Öffnen einer Sure abgerufen. Damit
-> entfällt die hier offene Rechtefrage, weil die App den geschützten Text gar
-> nicht verbreitet. Der aktuelle Stand steht in `docs/QURAN-PROVENANCE.md`.
+> deutsche Übersetzung mit — sie wird beim Öffnen einer Sure abgerufen.
+> Die frühere Schlussfolgerung, dadurch entfalle die Rechtefrage vollständig,
+> ist zurückgenommen. Der aktuelle Quellen-/Rechtestand steht in
+> `docs/QURAN-PROVENANCE.md`.
 >
-> Aufgehoben als Nachweis der damals durchgeführten Textprüfung des arabischen
-> Bestands, die weiterhin gilt.
+> Als historischer Bericht aufbewahrt. Die nachfolgenden damaligen Prüfzahlen
+> beweisen ohne erneuten Vergleich nicht die Identität des heutigen Bestands.
 
 
 Status: **source-audited für Textidentität / RELEASE UNRESOLVED für Rechte**

@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-15",
+  "scope": [
+    "Five shared prayer-oasis landscapes on Home, Prayer, Learn overview, prayer-course headers and prayer widgets"
+  ],
+  "unchanged": [
+    "Startup mosque-courtyard artwork",
+    "Schedule and current-phase selection",
+    "Posture instruction images",
+    "Prayer miniature icons"
+  ],
+  "generation": "Built-in image_gen; own references; original PNGs and exact prompts retained",
+  "promptSet": "output/imagegen/prayer-oasis-series-20261015/prompts.json",
+  "checks": {
+    "npm run check": "passed; 1047 tests in 59 files; lint, build and guards passed",
+    "browser": "27 passed: learning-intro-art, prayer-landscapes, prayer-learning-course, offline"
+  },
+  "screenshots": [
+    "oasis-series-prayer-visible-2026-10-15.jpg",
+    "oasis-series-learning-visible-2026-10-15.jpg"
+  ],
+  "cacheVersion": 102
+}

@@ -1,4 +1,4 @@
-import { useId, type ReactNode } from 'react';
+import { useId, type CSSProperties, type ReactNode } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { versionAppPath } from '../app/appPaths';
 import { getPrayerBackdrop, type PrayerBackdropId } from './prayerBackdrops';
@@ -63,7 +63,7 @@ export function MihrabArch({
   const backdrop = getPrayerBackdrop(scene) ?? backdropSrc;
 
   return (
-    <div className={['ds-arch', backdrop && 'ds-arch--landscape', className].filter(Boolean).join(' ')} style={{ height }} data-prayer-scene={backdrop ? scene : undefined}>
+    <div className={['ds-arch', backdrop && 'ds-arch--landscape', className].filter(Boolean).join(' ')} style={{ '--arch-height': `${height}px` } as CSSProperties} data-prayer-scene={backdrop ? scene : undefined}>
       {sky ? (
         <div className="ds-sky" aria-hidden="true">
           <i /><i /><i /><i /><i />

@@ -1,0 +1,62 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "processing": "cwebp -q 92 -m 6; native 1536x1024 preserved",
+  "records": [
+    {
+      "id": "fajr",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our newly reframed original oasis. Image 2 is our own previous fajr lighting variant, LIGHTING reference only. Create one matching 3:2 landscape. KEEP EXACTLY the image-1 geometry, camera, lake, dunes and TWO COMPLETE SMALL PALMS at x12% and x88%, their whole silhouettes including crown and ground contact strictly within y52%-80%. Absolutely NO cropped foreground palms or leaves touching image borders. Keep the central x26%-74% clear for app text. Same clean mature sculpted matte 3D style. ONLY change time-of-day lighting, sky colors, celestial objects and reflections. No new plants, buildings, people, words, UI, border or watermark. Dawn BEFORE sunrise, deep muted indigo-blue sky fading into a thin rose-peach band at horizon, cool teal water and lavender-blue sand; a few tiny sparse stars, NO sun, NO orange sunset.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-13764f9a-e576-45a8-b21b-8f2294e82074.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-framing-20261015/fajr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-fajr-v2.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-framing-20261015/asr.png",
+        "output/imagegen/prayer-oasis-series-20261015/fajr.png"
+      ]
+    },
+    {
+      "id": "dhuhr",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our newly reframed original oasis. Image 2 is our own previous dhuhr lighting variant, LIGHTING reference only. Create one matching 3:2 landscape. KEEP EXACTLY the image-1 geometry, camera, lake, dunes and TWO COMPLETE SMALL PALMS at x12% and x88%, their whole silhouettes including crown and ground contact strictly within y52%-80%. Absolutely NO cropped foreground palms or leaves touching image borders. Keep the central x26%-74% clear for app text. Same clean mature sculpted matte 3D style. ONLY change time-of-day lighting, sky colors, celestial objects and reflections. No new plants, buildings, people, words, UI, border or watermark. Clear midday, natural pale blue sky, neutral soft sunlight, ivory sand, teal water and foliage, short shadows; small sun extreme upper-right x93% y15%, NO sunset, moon or stars.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-854aeeee-2f84-4cbb-879d-3c82e5d7e1f5.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-framing-20261015/dhuhr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-dhuhr-v2.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-framing-20261015/asr.png",
+        "output/imagegen/prayer-oasis-series-20261015/dhuhr.png"
+      ]
+    },
+    {
+      "id": "asr",
+      "prompt": "Use case: precise-object-edit. Image 1 is the EDIT TARGET, our own Asr oasis background for a mature Islamic app. Fix ONLY the palm framing. Preserve the same clean sculpted matte 3D illustration style, dune/lake landscape, warm afternoon light, sky colors and wide 3:2 image. REMOVE the two half-cut foreground palms at the extreme edges. Replace them with two SMALLER, COMPLETE date palms set further back in the landscape, one at x=12%, one at x=88%. Each palm must be entirely inside the image, including its whole crown, all leaf tips, trunk and its contact with the ground. Leave at least 5% image width of clean breathing room outside each crown; NO tree or foliage touching left or right border. CRITICAL for both wide strip crops and arched hero: each small palm's ENTIRE silhouette must lie between y=52% and y=80% of full image height, from crown top to trunk foot. Thus these are small distant framing palms, not gigantic foreground trees. Keep the central x=26%-74% zone clear of palms and foliage for centered app text. Lower hills, dunes and lake remain as the reference, no dense vegetation at frame edges. Sun near the right outside text area. No words, UI, frame, border, watermark, people or buildings. One final full-bleed landscape image.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-493acde2-1d2a-460e-aa60-c92ec5e41934.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-framing-20261015/asr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-asr-v2.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-series-20261015/asr.png"
+      ]
+    },
+    {
+      "id": "maghrib",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our newly reframed original oasis. Image 2 is our own previous maghrib lighting variant, LIGHTING reference only. Create one matching 3:2 landscape. KEEP EXACTLY the image-1 geometry, camera, lake, dunes and TWO COMPLETE SMALL PALMS at x12% and x88%, their whole silhouettes including crown and ground contact strictly within y52%-80%. Absolutely NO cropped foreground palms or leaves touching image borders. Keep the central x26%-74% clear for app text. Same clean mature sculpted matte 3D style. ONLY change time-of-day lighting, sky colors, celestial objects and reflections. No new plants, buildings, people, words, UI, border or watermark. Just AFTER sunset, NO visible sun. Restrained apricot/coral band at horizon blending to dusty mauve and deep blue above; dusk terracotta sand and mauve water reflections. Not neon.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-f9ec6b05-4f1e-4c09-b599-682c3093303c.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-framing-20261015/maghrib.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-maghrib-v2.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-framing-20261015/asr.png",
+        "output/imagegen/prayer-oasis-series-20261015/maghrib.png"
+      ]
+    },
+    {
+      "id": "isha",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our newly reframed original oasis. Image 2 is our own previous isha lighting variant, LIGHTING reference only. Create one matching 3:2 landscape. KEEP EXACTLY the image-1 geometry, camera, lake, dunes and TWO COMPLETE SMALL PALMS at x12% and x88%, their whole silhouettes including crown and ground contact strictly within y52%-80%. Absolutely NO cropped foreground palms or leaves touching image borders. Keep the central x26%-74% clear for app text. Same clean mature sculpted matte 3D style. ONLY change time-of-day lighting, sky colors, celestial objects and reflections. No new plants, buildings, people, words, UI, border or watermark. Full night, deep navy/indigo sky, sparse small stars, small crescent far upper-right x94% y17%, cool blue-teal lake, midnight-blue dunes with delicate moonlit edges, NO sunset glow.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ced38c22-a39a-4be5-8069-22997a2338ba.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-framing-20261015/isha.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-isha-v2.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-framing-20261015/asr.png",
+        "output/imagegen/prayer-oasis-series-20261015/isha.png"
+      ]
+    }
+  ]
+}

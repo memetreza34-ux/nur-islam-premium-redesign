@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-15",
+  "scope": "Single Dhuhr sun example in prayer list and prayer-course selector; remaining symbols unchanged",
+  "asset": "public/premium-assets/high-res-objects/prayer-mini-dhuhr-v2.webp",
+  "original": "output/imagegen/prayer-symbol-example-20261015/dhuhr.png",
+  "promptSet": "output/imagegen/prayer-symbol-example-20261015/prompts.json",
+  "cacheVersion": 103,
+  "checks": { "check": "passed; 1047 tests, lint, build and source guards", "browser": "17 passed; prayer-miniatures, prayer-learning-course and offline" },
+  "visibleProof": "dhuhr-matte-symbol-visible-2026-10-15.jpg"
+}

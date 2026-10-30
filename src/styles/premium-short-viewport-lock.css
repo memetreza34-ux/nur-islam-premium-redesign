@@ -1,25 +1,6 @@
 /* Short-viewport / landscape visual guardrail. */
 
 @media (max-height: 680px) {
-  .reference-splash {
-    min-height: calc(100dvh - max(10px, env(safe-area-inset-top)) - max(10px, env(safe-area-inset-bottom))) !important;
-    padding-block: 24px !important;
-  }
-
-  .reference-splash__mark {
-    width: 74px !important;
-    height: 74px !important;
-  }
-
-  .reference-splash__mosque {
-    inset: auto 0 -54px !important;
-    width: 100% !important;
-    height: 54% !important;
-    opacity: 1 !important;
-  }
-
-  .reference-splash__brand { top: 8% !important; }
-
   .reference-onboarding__visual {
     min-height: 248px !important;
   }
@@ -42,26 +23,6 @@
   .reference-onboarding__visual--3 .reference-onboarding__tasbih {
     width: 104px !important;
     height: 104px !important;
-  }
-
-  .reference-qibla-stage {
-    min-height: 405px !important;
-    padding-top: 22px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 278px !important;
-    height: 278px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 264px !important;
-    height: 264px !important;
-  }
-
-  .reference-qibla-stage__needle {
-    top: 50px !important;
-    height: 106px !important;
   }
 
   .reference-dhikr-counter {
@@ -110,7 +71,7 @@
 @media (orientation: landscape) and (max-height: 600px) {
   .app-shell:not(.app-shell--onboarding) {
     padding-top: max(8px, env(safe-area-inset-top)) !important;
-    padding-bottom: max(76px, calc(64px + env(safe-area-inset-bottom))) !important;
+    padding-bottom: 0 !important;
   }
 
   .app-shell--detail {
@@ -124,35 +85,6 @@
   .reference-screen-header {
     min-height: 48px !important;
     padding-block: 1px 4px !important;
-  }
-
-  
-
-  
-
-  
-
-  .reference-qibla-stage {
-    min-height: 350px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 236px !important;
-    height: 236px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 224px !important;
-    height: 224px !important;
-  }
-
-  .reference-qibla-stage__needle {
-    top: 44px !important;
-    height: 90px !important;
-  }
-
-  .reference-qibla-stage__copy {
-    margin-top: -2px !important;
   }
 
   .reference-dhikr-counter {
@@ -194,35 +126,12 @@
 }
 
 @media (max-height: 520px) {
-  .reference-splash__mosque {
-    height: 50% !important;
-    opacity: .82 !important;
-  }
-
-  .reference-splash__brand .overline {
-    display: none;
-  }
-
   .reference-onboarding__visual {
     min-height: 190px !important;
   }
 
   .reference-onboarding__points {
     gap: 4px !important;
-  }
-
-  .reference-qibla-stage {
-    min-height: 320px !important;
-  }
-
-  .reference-qibla-stage__compass {
-    width: 200px !important;
-    height: 200px !important;
-  }
-
-  .reference-qibla-stage__halo {
-    width: 210px !important;
-    height: 210px !important;
   }
 
   .reference-dhikr-counter {
@@ -246,7 +155,6 @@
 @media (prefers-reduced-motion: reduce) {
   .reference-splash,
   .reference-onboarding__visual,
-  .reference-qibla-stage,
   .reference-dhikr-counter,
   .reference-standby-stage {
     transition: none !important;

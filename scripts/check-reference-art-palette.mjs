@@ -23,31 +23,34 @@ requireTokens(domains.get('learning'), 'Learning', [
   '#0d5743',
   '#07372b',
   '#00120f',
-  'rgba(226,191,119,.14)',
   '#fff8ea',
 ]);
 const designSystem = await read('src/styles/nur-design-system.css');
-const learningDescription = designSystem.match(/\.reference-prayer-learning-hub \.learning-intro__description\s*\{([^}]+)\}/)?.[1] ?? '';
-requireTokens(learningDescription, 'Readable learning introduction', [
-  'color: var(--ds-cream)',
-  'font-size: 14px',
-  'line-height: 1.65',
-]);
+const learningHub = await read('src/screens/LearnScreen.tsx');
+requireTokens(learningHub, 'Direct learning actions', ['learn-library-index', 'learn-library-practice', '<TopicCardContent title="Gebetsablauf"']);
+if (learningHub.includes('learn-library-prayer-entry')) throw new Error('Learning must not repeat the prayer course above its direct entry.');
 
 requireTokens(domains.get('devotional'), 'Duas / Names', [
   'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
   'rgba(226, 191, 119, .12)',
   'color: #f2d79a !important',
   'color: rgba(145, 168, 158, .8) !important',
-  'dua-hands-v2.webp?v=20260826-original-art',
+  'home-duas-v5.webp?v=20260826-original-art',
 ]);
 
-requireTokens(domains.get('worship'), 'Prayer / Qibla', [
-  'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
-  'color: #f2d79a !important',
-  'rgba(145, 168, 158, .81)',
-  'dome-v2.webp?v=20260826-original-art',
-  'kaaba-v2.webp?v=20260826-original-art',
+requireTokens(domains.get('worship'), 'Prayer / Dhikr', [
+  'conic-gradient(#f0d493 var(--dhikr-progress)',
+  '.reference-dhikr-ring strong{color:#fff8ea',
+  'learn-hub-community-v1.webp?v=20260826-original-art',
+]);
+const qiblaSurface = designSystem.match(/\.qibla-guide\s*\{([^}]+)\}/)?.[1] ?? '';
+requireTokens(qiblaSurface, 'Current green Qibla surface', [
+  'color: var(--ds-cream-hi)',
+  'linear-gradient(155deg, var(--ds-ink-600), var(--ds-ink-700) 62%, var(--ds-ink-800))',
+]);
+requireTokens(designSystem, 'Current green and gold vector compass', [
+  '.qibla-dial__case { fill: #082e23;',
+  '.qibla-dial__qibla-shaft { fill: #b29251; stroke: #e2bf77;',
 ]);
 
 requireTokens(domains.get('discovery'), 'Mosque / Calendar / Collections', [
@@ -55,16 +58,16 @@ requireTokens(domains.get('discovery'), 'Mosque / Calendar / Collections', [
   'color: #f2d79a !important',
   'rgba(145, 168, 158, .8)',
   'mosque',
-  'sun-emblem-v2.webp?v=20260826-original-art',
-  'calendar-object-v1.webp',
-  'bookmark-v3.webp',
+  'home-names-v5.webp?v=20260826-original-art',
+  'learn-hub-sunnah-v1.webp',
+  'learn-hub-terms-v1.webp',
 ]);
 
 requireTokens(domains.get('daily'), 'Daily Ayah / Hadith', [
   'linear-gradient(145deg, #0d5743, #07372b 62%, #00120f) !important',
   'rgba(226,191,119,.13)',
   'rgba(145,168,158,.8)',
-  'lantern-v3.webp',
+  'home-duas-v5.webp',
 ]);
 
 requireTokens(domains.get('quran'), 'Quran', [
@@ -72,7 +75,6 @@ requireTokens(domains.get('quran'), 'Quran', [
   'rgba(13, 87, 67, .045)',
   'color: #e2bf77 !important',
   'color: #8d6d39 !important',
-  'quran-closed-v2',
 ]);
 
 const staleByDomain = new Map([

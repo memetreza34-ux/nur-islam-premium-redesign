@@ -21,12 +21,12 @@
 
 .reference-prototype-note strong {
   color: var(--cream-strong);
-  font-size: .56rem;
+  font-size: .75rem;
 }
 
 .reference-prototype-note small {
   color: var(--muted-green);
-  font-size: .48rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
@@ -37,7 +37,7 @@
 
 .reference-dua-card blockquote > small {
   color: var(--gold);
-  font-size: .46rem;
+  font-size: .75rem;
   font-weight: 700;
   letter-spacing: .09em;
   text-transform: uppercase;

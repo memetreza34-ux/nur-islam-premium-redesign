@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-13",
+  "scope": "Bedienung: zum Anfang des gewählten Schritts springen; religiöser Wortlaut unverändert.",
+  "fileHashes": {
+    "src/shared/useStepNavigation.ts": "31a432d5ac9e26a375799239b078d13da9781fba6024546e0946116afe24e546",
+    "src/screens/PrayerLearningScreen.tsx": "4d4f6060c1c42ab7c958bce701876b77c7814e890ecd1055a8799f7d15119ff3",
+    "src/shared/WuduLesson.tsx": "a107db795b9f95063131d9b51ff40f7bfff4c9db34cb7beca14341e947310504",
+    "src/screens/ReferenceReadingScreens.tsx": "b377a2344cd3cda33dc2ed88d70c8ab21e244ff8af43a29da7ab4af9bd93dae9",
+    "src/app/pwa.ts": "a515f0f1eaf130fe4d77671fb0fea28ffe3b595b5e0a378cd4a0735de89b1a3d",
+    "public/sw.js": "65aba2b6ac32ced842d9815207a005088540a3bc0d835d5a22a47eba3f727d16",
+    "scripts/check-reference-assets.mjs": "8cb4fbdc118823aa48cc0346f1edeb05c5009cacc57ca9eb8038cddf63248241"
+  },
+  "check": {
+    "exitCode": 0,
+    "tests": 1041,
+    "log": "step-navigation-check-2026-10-13.log"
+  },
+  "browser": {
+    "exitCode": 0,
+    "tests": 24,
+    "log": "step-navigation-browser-2026-10-13.log",
+    "scope": "Gebetskurs, Wudu, Leitfäden, Rückkehrposition und Offline; kein neuer appweiter Gesamtlauf."
+  },
+  "manualVerification": {
+    "prayerNextFromThreeToFour": true,
+    "previousStep": true,
+    "directSelection": true,
+    "nextRakah": true,
+    "cardTop": 90.1875,
+    "stickyHeaderBottom": 76,
+    "newHeadingFocused": true,
+    "screenshot": "step-navigation-prayer-step-four-2026-10-13.jpg"
+  },
+  "pwaShellVersion": 80,
+  "published": false
+}

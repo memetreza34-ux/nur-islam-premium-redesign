@@ -63,7 +63,7 @@
 .reference-profile-greeting p {
   max-width: 225px;
   color: var(--muted-green);
-  font-size: .57rem;
+  font-size: .75rem;
   line-height: 1.47;
 }
 
@@ -91,7 +91,7 @@
 .reference-profile-section__label {
   padding-left: 4px;
   color: var(--gold);
-  font-size: .55rem;
+  font-size: .75rem;
   letter-spacing: .12em;
   text-transform: uppercase;
 }
@@ -142,14 +142,14 @@
 }
 
 .reference-profile-row__copy strong {
-  font-size: .68rem;
+  font-size: .75rem;
   font-weight: 600;
 }
 
 .reference-profile-row__copy small {
   overflow: hidden;
   color: var(--muted-green);
-  font-size: .51rem;
+  font-size: .75rem;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
@@ -187,18 +187,6 @@
   box-shadow: 0 28px 70px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(255, 255, 255, .04);
 }
 
-.reference-profile-modal__icon {
-  display: grid;
-  width: 54px;
-  height: 54px;
-  place-items: center;
-  margin-bottom: 3px;
-  border: 1px solid rgba(226, 191, 119, .3);
-  border-radius: 18px;
-  color: var(--gold-bright);
-  background: rgba(226, 191, 119, .08);
-}
-
 .reference-profile-modal h2,
 .reference-profile-modal p {
   margin: 0;
@@ -212,7 +200,7 @@
 
 .reference-profile-modal p {
   color: var(--muted-green);
-  font-size: .66rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
@@ -246,10 +234,7 @@
   color: var(--gold-bright);
 }
 
-.reference-choice--active {
-  border-color: rgba(242, 215, 154, .47);
-  background: rgba(226, 191, 119, .08);
-}
+
 
 .reference-settings-toggles > button {
   display: flex;
@@ -283,12 +268,12 @@
 }
 
 .reference-settings-toggles strong {
-  font-size: .64rem;
+  font-size: .75rem;
 }
 
 .reference-settings-toggles small {
   color: var(--muted-green);
-  font-size: .5rem;
+  font-size: .75rem;
 }
 
 .reference-settings-toggles em {

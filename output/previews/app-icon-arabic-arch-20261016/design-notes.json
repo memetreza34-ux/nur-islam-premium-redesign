@@ -1,0 +1,37 @@
+{
+  "created": "2026-10-16",
+  "origin": "Code-authored SVG with native CoreText Arabic outline shaping; no image generation.",
+  "word": "الله",
+  "codepoints": [
+    "U+627",
+    "U+644",
+    "U+644",
+    "U+647"
+  ],
+  "sourceArch": "src/shared/MihrabArch.tsx · ARCH_OUTLINE, same aspect ratio",
+  "scope": "Standalone alternative app icon; previous proposals and production branding preserved",
+  "source": "build-icon.swift",
+  "exports": [
+    {
+      "file": "app-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "a3bf25cfd01355b0031b4eef56b52502a87b7406dd1c638c53992e58067d4590"
+    },
+    {
+      "file": "app-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "hasAlpha": false,
+      "sha256": "9e39643abedd361cd5036f897acae9b2cda66fc347f07964ae1b2c73ed65b4a5"
+    },
+    {
+      "file": "app-icon-192.png",
+      "width": 192,
+      "height": 192,
+      "hasAlpha": false,
+      "sha256": "2fa273fa07356af8266a969be0938cd9692de24a81fd8e343f8b881b0aa59ddc"
+    }
+  ]
+}

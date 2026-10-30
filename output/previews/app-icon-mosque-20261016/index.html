@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>App-Icon · Moschee und Bogen</title>
+<style>
+:root{color-scheme:light;color:#173b2f;background:#f3eee3;font-family:Inter,Arial,sans-serif}*{box-sizing:border-box}body{margin:0}main{max-width:700px;margin:auto;padding:26px 20px 32px}.eyebrow{font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:#87672d}h1{font:500 40px/1.1 'Cormorant Garamond',Georgia,serif;margin:7px 0 10px}p{font-size:13px;line-height:1.6;color:#5a685c;margin:0}.stage{display:grid;place-items:center;background:#e6e4d8;border-radius:26px;padding:26px;margin-top:20px}.hero{display:block;width:min(256px,70vw);height:auto;border-radius:22.4%;box-shadow:0 15px 28px #15382d24}.options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}button{display:flex;align-items:center;gap:10px;min-height:76px;background:#faf7ef;border:1px solid #c9d1c1;border-radius:17px;padding:10px;color:#284637;font:500 13px Inter,Arial,sans-serif;cursor:pointer}button img{width:48px;height:48px;border-radius:22.4%;flex-shrink:0}button[aria-pressed=true]{border:2px solid #987137;padding:9px;background:#fffaf0}button:focus-visible,a:focus-visible{outline:3px solid #bb8f3e;outline-offset:3px}.small{margin-top:16px;border:1px solid #cbd3c3;border-radius:20px;padding:18px;background:#faf7ef}.small h2{margin:0 0 16px;font-size:12px;font-weight:500}.samples{display:flex;gap:24px;align-items:flex-end}.sample{display:grid;justify-items:center;gap:8px;font-size:10px;color:#647060}.sample img{display:block;border-radius:22.4%}footer{display:flex;align-items:center;flex-wrap:wrap;gap:14px;margin-top:18px}a{display:inline-flex;align-items:center;min-height:48px;background:#164435;color:#fff7e6;padding:12px 16px;border-radius:13px;text-decoration:none;font-size:13px}.note{font-size:11px;color:#657160}@media(max-width:420px){main{padding:22px 16px}h1{font-size:34px}.hero{width:210px}.stage{padding:23px}button{gap:8px;font-size:12px}}
+</style>
+</head>
+<body>
+<main>
+<header><span class="eyebrow">App-Icon · Alternative</span><h1>Moschee oder Bogen.</h1><p>Die Moschee in unserer 3D-Bildwelt. Der Bogen bleibt zum Vergleichen erhalten.</p></header>
+<section class="stage" aria-label="Ausgewähltes App-Icon"><img class="hero" src="mosque-icon-1024.png" width="1024" height="1024" alt="Moschee-Icon mit grüner Kuppel, cremefarbener Fassade und goldenen Details"></section>
+<section class="options" aria-label="Icon auswählen">
+<button type="button" data-icon="mosque" aria-pressed="true"><img src="mosque-icon-192.png" alt="">Moschee · 3D</button>
+<button type="button" data-icon="arch" aria-pressed="false"><img src="../app-icon-arch-20261016/app-icon-192.png" alt="">Bogen · klar</button>
+</section>
+<section class="small" aria-label="Kleine App-Größen"><h2 id="size-title" aria-live="polite">Moschee in App-Größe</h2><div class="samples"><span class="sample"><img src="mosque-icon-192.png" width="24" height="24" alt="24 Pixel">24 px</span><span class="sample"><img src="mosque-icon-192.png" width="48" height="48" alt="48 Pixel">48 px</span><span class="sample"><img src="mosque-icon-192.png" width="64" height="64" alt="64 Pixel">64 px</span></div></section>
+<footer><a id="download" href="mosque-icon-1024.png" download>PNG herunterladen</a><span class="note">1024 × 1024 · Name noch offen</span></footer>
+</main>
+<script type="module">
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/cormorant-garamond/500.css';
+const icons={mosque:{large:'mosque-icon-1024.png',small:'mosque-icon-192.png',name:'Moschee',alt:'Moschee-Icon mit grüner Kuppel, cremefarbener Fassade und goldenen Details'},arch:{large:'../app-icon-arch-20261016/app-icon-1024.png',small:'../app-icon-arch-20261016/app-icon-192.png',name:'Bogen',alt:'Grünes App-Icon mit hellem Bogen und goldenem Lichtkern'}};
+document.querySelectorAll('.options button').forEach(button=>button.addEventListener('click',()=>{
+ const icon=icons[button.dataset.icon];
+ document.querySelectorAll('.options button').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+ const hero=document.querySelector('.hero');hero.src=icon.large;hero.alt=icon.alt;
+ document.querySelectorAll('.samples img').forEach(image=>image.src=icon.small);
+ document.querySelector('#size-title').textContent=icon.name+' in App-Größe';
+ document.querySelector('#download').href=icon.large;
+}));
+</script>
+</body>
+</html>

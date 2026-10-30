@@ -1,6 +1,7 @@
 node_modules/
 dist/
 dist-ssr/
+*.tsbuildinfo
 
 # Real environment files carry project secrets; only .env.example belongs in git.
 .env

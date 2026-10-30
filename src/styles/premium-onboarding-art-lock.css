@@ -22,9 +22,7 @@
   filter: drop-shadow(0 8px 13px rgba(0, 0, 0, .3)) saturate(1.02) !important;
 }
 
-/* Slide 1: mosque should feel grounded and architectural. The source image
-   contains generous transparent breathing room, so scale the actual artwork
-   inside its safe hero container rather than leaving only the halo visible. */
+/* Keep the complete mosque inside the hero, including both minarets. */
 .reference-onboarding__visual--1 > .premium-image {
   width: 330px !important;
   height: 258px !important;
@@ -37,7 +35,7 @@
   opacity: 1 !important;
   object-fit: contain !important;
   object-position: center bottom !important;
-  transform: translate(20px, -10px) scale(1.62) !important;
+  transform: none !important;
   transform-origin: center bottom !important;
   filter:
     drop-shadow(0 28px 25px rgba(0, 0, 0, .5))
@@ -110,19 +108,6 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, .23), inset 0 1px 0 rgba(255, 255, 255, .04) !important;
 }
 
-@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  .reference-onboarding__visual--1:hover > .premium-image > img {
-    transform: translate(20px, -10px) scale(1.64) !important;
-  }
-
-  .reference-onboarding__visual--3:hover > .premium-image > img {
-    scale: 1.012;
-  }
-
-  .reference-onboarding__visual--2:hover > .premium-image > img {
-    scale: 1.018;
-  }}
-
 [data-theme='light'] .reference-onboarding__visual--1 > .premium-image > img {
   filter:
     drop-shadow(0 20px 21px rgba(59, 43, 20, .2))
@@ -144,7 +129,7 @@
   }
 
   .reference-onboarding__visual--1 > .premium-image > img {
-    transform: translate(18px, -8px) scale(1.58) !important;
+    transform: none !important;
   }
 
   .reference-onboarding__visual--2 > .premium-image {
@@ -171,7 +156,7 @@
   }
 
   .reference-onboarding__visual--1 > .premium-image > img {
-    transform: translate(16px, -6px) scale(1.52) !important;
+    transform: none !important;
   }
 
   .reference-onboarding__visual--2 > .premium-image {

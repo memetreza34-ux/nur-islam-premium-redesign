@@ -1,0 +1,72 @@
+{
+  "created": "2026-10-15",
+  "generator": "Built-in image_gen; model identifier not exposed",
+  "purpose": "Startup-only unified matte 3D mosque courtyard; five times of day. Prayer and learning oasis landscapes remain separate.",
+  "stages": [
+    {
+      "id": "dhuhr",
+      "prompt": "Use case: stylized-concept. Create ONE new full-bleed opening background for the mature Nur Islam mobile app, the DAYLIGHT master of a five-time-of-day series. Image 1 is the old mosque courtyard, SUBJECT reference only; replace its photographic ornate rendering. Image 2 is our approved mosque illustration, PRIMARY MATERIAL/SHAPE STYLE reference: simple clean ivory walls, deep teal dome, muted olive accents, restrained gold, smooth matte satin 3D forms, clear gentle shading. Image 3 is our own garden scene, matching ENVIRONMENT RENDER STYLE only. Build a calm coherent grown-up 3D illustrated courtyard environment, not a toy, not photorealistic, not excessively rounded childish architecture. A small elegant ivory mosque with one teal dome and two complete slender minarets, simple clean entrance and a few uncluttered arcades. Camera frontal and distant. CRITICAL RESPONSIVE FRAMING: landscape 3:2 canvas, huge quiet light-blue sky in the upper 72% for actual app text added in code. ALL mosque architecture, including BOTH minaret tips, MUST fit within the CENTRAL x=36%-64% of the full canvas and y=74%-96% of canvas. The building must occupy ONLY the middle 28% width: this is deliberate so portrait phone cropping shows the ENTIRE mosque and both minarets. Outside that central lower building, show only a simple continuous ivory courtyard ground meeting a low flat horizon at y94%, no side buildings stretching out to the frame. No palm trees or shrubs at the edges. No clouds or sun in the central text zone x30%-70%, y10%-70%; a couple of soft understated clouds far outside the central column are fine. Clear neutral MIDDAY daylight, soft warm ivory stone, calm natural blue sky, teal dome, small gold accents. No ornate filigree, no calligraphy, no written words, no humans, no logo or watermark, no UI, no extra border/frame. Do not enlarge the architecture to fill the wide frame: the small centered mosque in a huge quiet sky is an essential mobile-safe composition. One final image.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-06647e38-8cb1-45df-9f82-b95fdec80088.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/style-trial.png",
+      "inputRoles": [
+        "Previous startup mosque courtyard: subject reference only",
+        "Own approved mosque object: primary material and shape reference",
+        "Own accepted garden scene: environment rendering style reference"
+      ]
+    },
+    {
+      "id": "dhuhr_framed",
+      "prompt": "Use case: precise-object-edit. Image 1 is the edit target, our just-created stylized mosque courtyard for a phone opening. Keep the same 3D design, colors, lighting and quiet blue sky. Correct the scale and position ONLY. The current mosque is too tall and high. SCALE THE ENTIRE MOSQUE, including both minarets, facade, side arcades, steps and all roof decorations, DOWN TO 55% of its present width and height. Keep it centered at x50%, then MOVE IT DOWN until the bottom step is at y96% of the whole canvas. After this transformation the very highest minaret tip should be at about y75%, and the entire mosque should occupy approximately x39%-61%, y75%-96%. No mosque dome, tower, wall or other object above y74%. The foreground courtyard should meet a low horizon around y94%, with plain sky above it. Fill the area formerly occupied by the tall mosque seamlessly with blue sky. Maintain the full-bleed landscape 3:2 canvas, calm mature matte 3D materials. This small distant lower-center architecture is REQUIRED so all central Arabic/German app text stays over the SKY and the complete mosque fits a narrow portrait crop. No text or UI. No new props or people. Do not enlarge the mosque again to fill the image.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-a363c26a-ddd2-4ef1-bbc6-f224b3950d71.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/framing-trial.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/style-trial.png"
+      ]
+    },
+    {
+      "id": "dhuhr_final",
+      "prompt": "Edit Image 1. Keep the canvas, sky, courtyard floor, colors, architecture design and lighting unchanged. Make the mosque MUCH smaller: HALF its CURRENT width and HALF its CURRENT height, scaling the entire mosque including both minarets and steps together around the bottom-center point where the entrance steps touch the courtyard. Keep that bottom contact at exactly the same position in the image. It should now look like a much more DISTANT small mosque at the bottom-center. The highest tower must end in the bottom QUARTER of the image. Fill all vacated space above and around the reduced mosque with the existing blue sky. Do not move the small mosque upward or zoom back in afterward. Full image framing remains identical. No new objects, no writing. This is a functional app background requiring the upper three quarters to be empty sky.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-28835227-cb4c-42ab-966d-9718e2bf4ae9.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/dhuhr.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/framing-trial.png"
+      ]
+    },
+    {
+      "id": "fajr",
+      "prompt": "Use case: lighting-weather. Image 1 is our original NEW app opening courtyard, EDIT TARGET. Create ONE matching 3:2 full-bleed variant. Preserve EXACTLY its clean matte 3D illustration style, distant SMALL mosque geometry and size, two complete minarets, all architecture confined to the bottom center, camera, courtyard tiles, horizon, framing and the huge calm open central sky. DO NOT zoom in, enlarge, move or redesign the mosque. It must remain the same small distant building from image 1, its highest minaret around y73%, base around y87%, central x42%-58%. Change ONLY time-of-day light, sky, corresponding shadows, reflections and lamp brightness. No people, text, UI, logos, watermark, new architecture or extra decorations. BEFORE SUNRISE / FAJR: deep calm indigo sky in the upper three quarters, a narrow pale rose dawn band only near low horizon, cool blue-ivory courtyard, warm restrained glow in entrance and arcade lamps. A few tiny natural stars high in sky, no sun. Text will be cream, so the central sky y15%-70% must remain dark.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-407ce9f5-94ab-4daf-ac56-2d24c2111d29.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/fajr.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/dhuhr.png"
+      ]
+    },
+    {
+      "id": "asr",
+      "prompt": "Use case: lighting-weather. Image 1 is our original NEW app opening courtyard, EDIT TARGET. Create ONE matching 3:2 full-bleed variant. Preserve EXACTLY its clean matte 3D illustration style, distant SMALL mosque geometry and size, two complete minarets, all architecture confined to the bottom center, camera, courtyard tiles, horizon, framing and the huge calm open central sky. DO NOT zoom in, enlarge, move or redesign the mosque. It must remain the same small distant building from image 1, its highest minaret around y73%, base around y87%, central x42%-58%. Change ONLY time-of-day light, sky, corresponding shadows, reflections and lamp brightness. No people, text, UI, logos, watermark, new architecture or extra decorations. AFTERNOON / ASR: soft honey-gold side sunlight, sky remains predominantly natural muted blue, warm ivory courtyard and long gentle shadows, teal dome. Small sun high to the outer right, away from central text. Not an orange sunset; central sky bright enough for deep green text. Lamp glow subtle in daylight.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ed52d677-db9b-4fa7-8911-dfbe9956870a.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/asr.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/dhuhr.png"
+      ]
+    },
+    {
+      "id": "maghrib",
+      "prompt": "Use case: lighting-weather. Image 1 is our original NEW app opening courtyard, EDIT TARGET. Create ONE matching 3:2 full-bleed variant. Preserve EXACTLY its clean matte 3D illustration style, distant SMALL mosque geometry and size, two complete minarets, all architecture confined to the bottom center, camera, courtyard tiles, horizon, framing and the huge calm open central sky. DO NOT zoom in, enlarge, move or redesign the mosque. It must remain the same small distant building from image 1, its highest minaret around y73%, base around y87%, central x42%-58%. Change ONLY time-of-day light, sky, corresponding shadows, reflections and lamp brightness. No people, text, UI, logos, watermark, new architecture or extra decorations. AFTER SUNSET / MAGHRIB: sun below horizon, absent. Deep muted indigo/dusty mauve sky above, restrained coral-peach band only near very low horizon y80%-84%. Soft warm glow from entrance and arcade lamps reflected subtly on courtyard, understated. Central sky y15%-70% stays dark for cream text, no bright clouds in that zone.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-aa14f3c0-1340-4f71-a446-6158ff635015.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/maghrib.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/dhuhr.png"
+      ]
+    },
+    {
+      "id": "isha",
+      "prompt": "Use case: lighting-weather. Image 1 is our original NEW app opening courtyard, EDIT TARGET. Create ONE matching 3:2 full-bleed variant. Preserve EXACTLY its clean matte 3D illustration style, distant SMALL mosque geometry and size, two complete minarets, all architecture confined to the bottom center, camera, courtyard tiles, horizon, framing and the huge calm open central sky. DO NOT zoom in, enlarge, move or redesign the mosque. It must remain the same small distant building from image 1, its highest minaret around y73%, base around y87%, central x42%-58%. Change ONLY time-of-day light, sky, corresponding shadows, reflections and lamp brightness. No people, text, UI, logos, watermark, new architecture or extra decorations. FULL NIGHT / ISHA: deep navy-indigo sky, sparse tiny natural stars, one very small crescent moon at x59% y8% clear of later copy. Calm cool blue courtyard with soft warm entrance and arcade lamps, subtle reflections, teal dome discernible. No sunset glow, no giant moon. Central sky y15%-70% remains dark for cream text.",
+      "source": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-10f18380-eb4f-464c-b7e1-a0abeb98664d.png",
+      "workspaceOriginal": "output/imagegen/splash-courtyard-unified-20261015/isha.png",
+      "inputImages": [
+        "output/imagegen/splash-courtyard-unified-20261015/dhuhr.png"
+      ]
+    }
+  ]
+}

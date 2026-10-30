@@ -1,0 +1,774 @@
+{
+  "date": "2026-10-15",
+  "scope": "Decorative object illustrations. Prayer landscapes, startup scenes, instructional Wudu/posture illustrations and place-specific scenes remain unchanged. The Ayah card background was subsequently replaced by a plain cream color.",
+  "replacements": {
+    "quran-closed-v2.webp": "learn-hub-book-v1.webp",
+    "quran-closed-v3.webp": "learn-hub-book-v1.webp",
+    "quran-open-v2.webp": "learn-hub-book-v1.webp",
+    "quran-open-v3.webp": "learn-hub-book-v1.webp",
+    "mini-quran-v1.webp": "learn-hub-book-v1.webp",
+    "home-quran-illustrated-v1.webp": "learn-hub-book-v1.webp",
+    "widget-quran-plan-illustrated-v1.webp": "learn-hub-book-v1.webp",
+    "mosque-heritage-v1.webp": "prayer-companion-mosque-v1.webp",
+    "mosque-finder-arch-v1.webp": "prayer-companion-mosque-v1.webp",
+    "tasbih-v2.webp": "home-dhikr-illustrated-v3.webp",
+    "tasbih-v3.webp": "home-dhikr-illustrated-v3.webp",
+    "home-dhikr-illustrated-v1.webp": "home-dhikr-illustrated-v3.webp",
+    "qibla-compass-v2.webp": "home-qibla-illustrated-v3.webp",
+    "qibla-compass-v3.webp": "home-qibla-illustrated-v3.webp",
+    "qibla-v2.webp": "home-qibla-illustrated-v3.webp",
+    "home-qibla-illustrated-v1.webp": "home-qibla-illustrated-v3.webp",
+    "mihrab-v2.webp": "home-learn-prayer-v5.webp",
+    "mihrab-arch-v2.webp": "home-learn-prayer-v5.webp",
+    "mini-prayer-learning-v1.webp": "home-learn-prayer-v5.webp",
+    "home-learn-prayer-v2.webp": "home-learn-prayer-v5.webp",
+    "prayer-standby-v1.webp": "home-learn-prayer-v5.webp",
+    "widget-weekly-prayers-illustrated-v1.webp": "home-learn-prayer-v5.webp",
+    "widget-friday-illustrated-v1.webp": "home-learn-prayer-v5.webp",
+    "dua-hands-v2.webp": "home-duas-v5.webp",
+    "mini-dua-v1.webp": "home-duas-v5.webp",
+    "mini-dua-v2.webp": "home-duas-v5.webp",
+    "mini-dua-v3.webp": "home-duas-v5.webp",
+    "lantern-v2.webp": "home-duas-v5.webp",
+    "lantern-v3.webp": "home-duas-v5.webp",
+    "learning-repentance-v2.webp": "home-duas-v5.webp",
+    "sun-emblem-v2.webp": "home-names-v4.webp",
+    "mini-names-v1.webp": "home-names-v4.webp",
+    "mini-names-v2.webp": "home-names-v4.webp",
+    "mini-names-v3.webp": "home-names-v4.webp",
+    "mini-names-v4.webp": "home-names-v4.webp",
+    "mini-names-v5.webp": "home-names-v4.webp",
+    "home-names-v1.webp": "home-names-v4.webp",
+    "mini-quiz-v1.webp": "home-quiz-v5.webp",
+    "mini-quiz-v2.webp": "home-quiz-v5.webp",
+    "mini-quiz-v3.webp": "home-quiz-v5.webp",
+    "kaaba-v2.webp": "learn-hub-hajj-v1.webp",
+    "dome-v2.webp": "learn-hub-community-v1.webp",
+    "bookmark-v2.webp": "learn-hub-terms-v1.webp",
+    "bookmark-v3.webp": "learn-hub-terms-v1.webp",
+    "widget-inspiration-illustrated-v1.webp": "learn-hub-terms-v1.webp",
+    "widget-routine-illustrated-v1.webp": "learn-hub-terms-v1.webp",
+    "calendar-chip-v2.webp": "learn-hub-sunnah-v1.webp",
+    "calendar-object-v1.webp": "learn-hub-sunnah-v1.webp",
+    "widget-date-illustrated-v1.webp": "learn-hub-sunnah-v1.webp",
+    "widget-reminders-illustrated-v1.webp": "learn-hub-sunnah-v1.webp",
+    "learning-sunnah-v2.webp": "learn-hub-sunnah-v1.webp",
+    "zakat-scale-v1.webp": "learn-hub-character-v1.webp",
+    "widget-favorites-illustrated-v1.webp": "learn-hub-character-v1.webp",
+    "wudu-washing-v1.webp": "learn-hub-wudu-v1.webp",
+    "learning-hadith-v2.webp": "learn-hub-hadith-v1.webp",
+    "learning-madhhabs-v2.webp": "learn-hub-madhhabs-v1.webp",
+    "learning-prophets-v2.webp": "learn-hub-prophets-v1.webp",
+    "home-dhikr-illustrated-v2.webp": "home-dhikr-illustrated-v3.webp",
+    "home-duas-v1.webp": "home-duas-v5.webp",
+    "home-duas-v2.webp": "home-duas-v5.webp",
+    "home-duas-v3.webp": "home-duas-v5.webp",
+    "home-duas-v4.webp": "home-duas-v5.webp",
+    "home-learn-prayer-v3.webp": "home-learn-prayer-v5.webp",
+    "home-learn-prayer-v4.webp": "home-learn-prayer-v5.webp",
+    "home-names-v2.webp": "home-names-v4.webp",
+    "home-names-v3.webp": "home-names-v4.webp",
+    "home-qibla-illustrated-v2.webp": "home-qibla-illustrated-v3.webp",
+    "home-quiz-v1.webp": "home-quiz-v5.webp",
+    "home-quiz-v2.webp": "home-quiz-v5.webp",
+    "home-quiz-v3.webp": "home-quiz-v5.webp",
+    "home-quiz-v4.webp": "home-quiz-v5.webp",
+    "learn-character-v3.webp": "learn-hub-character-v1.webp",
+    "learn-community-v3.webp": "learn-hub-community-v1.webp",
+    "learn-faith-v3.webp": "learn-hub-book-v1.webp",
+    "learn-hadith-v3.webp": "learn-hub-hadith-v1.webp",
+    "learn-madhhabs-v3.webp": "learn-hub-madhhabs-v1.webp",
+    "learn-pillars-v3.webp": "learn-hub-pillars-v1.webp",
+    "learn-practice-v3.webp": "learn-hub-wudu-v1.webp",
+    "learn-prophets-v3.webp": "learn-hub-prophets-v1.webp",
+    "learn-repentance-v3.webp": "home-duas-v5.webp",
+    "learn-salah-v3.webp": "home-learn-prayer-v5.webp",
+    "learn-seerah-v3.webp": "prayer-companion-mosque-v1.webp",
+    "learn-sunnah-v3.webp": "learn-hub-sunnah-v1.webp",
+    "learn-terms-v3.webp": "learn-hub-terms-v1.webp",
+    "learning-character-v2.webp": "learn-hub-character-v1.webp",
+    "learning-community-v2.webp": "learn-hub-community-v1.webp",
+    "learning-faith-v2.webp": "learn-hub-book-v1.webp",
+    "learning-pillars-v2.webp": "learn-hub-pillars-v1.webp",
+    "learning-practice-v2.webp": "learn-hub-wudu-v1.webp",
+    "learning-seerah-v2.webp": "prayer-companion-mosque-v1.webp",
+    "learning-terms-v2.webp": "learn-hub-terms-v1.webp",
+    "mosque-gold-v2.svg": "prayer-companion-mosque-v1.webp",
+    "mosque-gold-v2.webp": "prayer-companion-mosque-v1.webp",
+    "mosque-gold.png": "prayer-companion-mosque-v1.webp",
+    "mosque-gold.webp": "prayer-companion-mosque-v1.webp",
+    "mosque-v2.webp": "prayer-companion-mosque-v1.webp",
+    "mosque.webp": "prayer-companion-mosque-v1.webp",
+    "qibla-compass.png": "home-qibla-illustrated-v3.webp",
+    "qibla-compass.webp": "home-qibla-illustrated-v3.webp",
+    "qibla.webp": "home-qibla-illustrated-v3.webp",
+    "quran-closed.png": "learn-hub-book-v1.webp",
+    "quran-closed.webp": "learn-hub-book-v1.webp",
+    "splash-mosque-v1.webp": "prayer-companion-mosque-v1.webp",
+    "tasbih.webp": "home-dhikr-illustrated-v3.webp"
+  },
+  "changedSourceFiles": [
+    "src/app/PremiumSystemLayer.tsx",
+    "src/screens/DhikrScreen.tsx",
+    "src/screens/MosqueScreen.tsx",
+    "src/screens/OnboardingScreen.tsx",
+    "src/screens/LegacyFeatureScreens.tsx",
+    "src/screens/CollectionsScreen.tsx",
+    "src/screens/ReferenceReadingScreens.tsx",
+    "src/styles/premium-worship-art-lock.css",
+    "src/styles/reference-legacy-migration.css",
+    "src/styles/premium-art-composition-lock.css",
+    "src/styles/premium-devotional-art-lock.css",
+    "src/styles/reference-core-screens.css",
+    "src/styles/reference-assets.css",
+    "src/styles/premium-discovery-collection-art-lock.css",
+    "src/styles/reference-valid-assets-v2.css",
+    "src/styles/visual-consistency.css",
+    "src/styles/premium-daily-inspiration-art-lock.css",
+    "src/styles/reference-valid-assets-secondary.css",
+    "src/styles/premium-legacy-art-final.css",
+    "src/styles/premium-quran-art-lock.css",
+    "src/data/legacyFeatures.ts"
+  ],
+  "archivedAssets": [
+    {
+      "formerPath": "public/premium-assets/high-res-objects/bookmark-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/bookmark-v2.webp",
+      "sha256": "9e09ab04fa230540a3f3ad91bb85f4eb48a16de797b33ebc9c9e13a9baece6a5",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/bookmark-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/bookmark-v3.webp",
+      "sha256": "13dda80ae71ad69b2fe6b159884ee68e0496fb267eef9f1e2f70adf660ff1440",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/calendar-chip-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/calendar-chip-v2.webp",
+      "sha256": "e20142332df57eb00abc14d13082f17e7437d90bea2002c48beaeee528a227fa",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/calendar-object-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/calendar-object-v1.webp",
+      "sha256": "b05243a57f1eeba07ab8080cc1c4dc1206ae09e3bb40186be6c10cf4ef30c5a4",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/dome-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/dome-v2.webp",
+      "sha256": "3ea1f14f807889cd6dce589a0f824bee356a1315763b22d5af04dd80b48dc2c5",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-community-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/dua-hands-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/dua-hands-v2.webp",
+      "sha256": "6ee9fe772007803654bf5972993f436b8fc472fa0cc73d87c95e1d7428eb1b8c",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-dhikr-illustrated-v1.webp",
+      "sha256": "007956419e92d82894656705e2a7f81ff473f981298d029fec783927cb02fca9",
+      "replacedBy": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-dhikr-illustrated-v2.webp",
+      "sha256": "c3bebb4c66956e75fc173cc6b74bd97dc0537868f4bf2e1ae1d2a88acddd780b",
+      "replacedBy": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-duas-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-duas-v1.webp",
+      "sha256": "b044df40da961f5c87a3186e15ebbadbfff068a153c7a8db30904daece4ec359",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-duas-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-duas-v2.webp",
+      "sha256": "a9fd47050e04c53dff63de4246ef80cea85a77d991ac896f97a5b97b9ee1d6ad",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-duas-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-duas-v3.webp",
+      "sha256": "2d90bb7c4c27f17cc588250875b6b7602101d0f4e86b63d4813d17098223a2b9",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-duas-v4.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-duas-v4.webp",
+      "sha256": "e2520c27efda1f094875b629d77b3506a30031ddbc58ff7f1dd9b76a3e7e49cd",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-learn-prayer-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-learn-prayer-v2.webp",
+      "sha256": "af0ccd8de1c1559a8bc6030f4359b56a8804b9f68335a832c343dff2c701eb9a",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-learn-prayer-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-learn-prayer-v3.webp",
+      "sha256": "caf7be458d4cc598116933246176af702d14f03c2390e261d4d126bc4257f411",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-learn-prayer-v4.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-learn-prayer-v4.webp",
+      "sha256": "44cab2c68d54c07beee603333c128a63bc3235fecf1623a1379ee478ddf5d373",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-names-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-names-v1.webp",
+      "sha256": "41ce70ed0f73e8aa5d63e364ebc6d13f8bbde2970ad0d55b4979112a16543b54",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-names-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-names-v2.webp",
+      "sha256": "d473bd56d3f29fb1c823fd92f3aebea0fc7ea7b38cbfb50a7161c690fd317656",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-names-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-names-v3.webp",
+      "sha256": "b767b023753cee920eb2f0840e03748e5268bd05cc264dbf851f7a0764004367",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-qibla-illustrated-v1.webp",
+      "sha256": "23110e43fbd99f139ee67607c4fd71d8bd0e776529728afdfd42e4aaabf105ad",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-qibla-illustrated-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-qibla-illustrated-v2.webp",
+      "sha256": "b1fc661af2ccf1fd3d8907fc658070d11a5cb8cf4ad1f0cd8b1568c72fdd9217",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-quiz-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-quiz-v1.webp",
+      "sha256": "a3bab249c76e24f239c8ca208724bb6222f0cc646b12c8a9cc2a795043ac0fa2",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-quiz-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-quiz-v2.webp",
+      "sha256": "abe80924deff1def4f5d0b220da63170305ff930b46aadfc4851063529fafbe3",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-quiz-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-quiz-v3.webp",
+      "sha256": "bb91824d95b9c89cc2f38efbdd73c4de2dcab9b129a51be251840bacf6036669",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-quiz-v4.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-quiz-v4.webp",
+      "sha256": "21cb742b4fe3838a7355f5cd3de927f039370a50396dc0c40f9515a28183b18c",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/home-quran-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/home-quran-illustrated-v1.webp",
+      "sha256": "b9a04a1c0005680ab0f72642cdc9dfab179bc70e6758e5622cd7e44575edae56",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/kaaba-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/kaaba-v2.webp",
+      "sha256": "7f8ccb76b1f2a0619d2067d04760428201f6c498083094fa6552cc0b69d6d45f",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-hajj-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/lantern-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/lantern-v2.webp",
+      "sha256": "0bcdda4c69f02f26821e8441e1e49bc74b29ddad16e294edee01bd360e756af5",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/lantern-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/lantern-v3.webp",
+      "sha256": "174608770ff8b7340c387a206659092b2ced2341e82861c5da51d5eb330c0905",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-character-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-character-v3.webp",
+      "sha256": "95b1a81e3f0b4551051e8287b594a74e6bbd06c3b0dfa959d7d68863a8be4250",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-community-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-community-v3.webp",
+      "sha256": "818350c77095b28442f2ae50357a5104e35f70dfb17689cae0c6939df3360e3a",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-community-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-faith-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-faith-v3.webp",
+      "sha256": "d5d3e4e3d09a65212e6404b38f85bb2e16dbb2d353d1228b059121390d02f040",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-hadith-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-hadith-v3.webp",
+      "sha256": "bdc636c7f432906c0fc7f6c9caf83aee2b7a2f3bd46a9d7594cf683d56c72729",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-hadith-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-madhhabs-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-madhhabs-v3.webp",
+      "sha256": "edfa328f2e6ac096199c19062862440ed3c375d9adcbb8813997e520b1518200",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-madhhabs-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-pillars-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-pillars-v3.webp",
+      "sha256": "1aec90637e40ea6fcf2c1f2449820dc8284f65995615cd7df25d3de0582fc123",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-pillars-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-practice-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-practice-v3.webp",
+      "sha256": "8c8626905040684b01dba7c8c1795f9180f72724436aafd49abc06b13155a03f",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-wudu-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-prophets-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-prophets-v3.webp",
+      "sha256": "44188247e74ca9d2ec66a8f4ace9c710dbc814c186714963a72c4e3f437d4a69",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-prophets-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-repentance-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-repentance-v3.webp",
+      "sha256": "dcdb4a7454408ffc4aad59d6c08fd178cddee937be989346284d38d658848029",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-salah-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-salah-v3.webp",
+      "sha256": "797b57de18c7a703a0ceac3d8d773bd738c7242c85e71658876e7f417276dd1d",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-seerah-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-seerah-v3.webp",
+      "sha256": "71d8a4cc777cf29114e7d0d35dc469f003d9b06a08ee24e7734d9fa98eb7f428",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-sunnah-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-sunnah-v3.webp",
+      "sha256": "010bbdb900744512bb6bcd75ea67621b17c4b98a266585a2c8381c28e74688b6",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learn-terms-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learn-terms-v3.webp",
+      "sha256": "bfd81ab36b3de04831404eac9e259eb874adbecacb5cd03f15d01a7052b63f6b",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-character-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-character-v2.webp",
+      "sha256": "8ba080d9ff35ee3faefc29542c4bf88ac15ef54f984d0ee6b301a098e7865229",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-community-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-community-v2.webp",
+      "sha256": "e21e6326a0239f221b2c824fbc8bba4758568e080c7a9066aa0eaea458a150f6",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-community-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-faith-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-faith-v2.webp",
+      "sha256": "4e1dfa1d65527fc5caf35bf7fba87069f1a977f075dd3dd5254dcd9cf94017b8",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-hadith-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-hadith-v2.webp",
+      "sha256": "527d5172b32d3386abdaaa81e81843fc60b7bbbcc10189657c55961e40fc7193",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-hadith-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-madhhabs-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-madhhabs-v2.webp",
+      "sha256": "8d397611903be6d06f0775af18e34d70d124e57eb3497c071debc6d9c4e27de3",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-madhhabs-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-pillars-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-pillars-v2.webp",
+      "sha256": "62a2da1b2054fba17c3a9a16adb163921bcd9163381e4634a487db9f4fc72961",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-pillars-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-practice-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-practice-v2.webp",
+      "sha256": "9a8371652f75cc7bf362788bf4db7744affbd4ab0dd5e81283f4dd652e72241a",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-wudu-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-prophets-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-prophets-v2.webp",
+      "sha256": "577fa4e2159973674dbfded4fd1e217c9eb93b8fbf7ad125ca4725f4704d3a4d",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-prophets-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-repentance-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-repentance-v2.webp",
+      "sha256": "8ef7ac7704475f55aceb91ae89cf362b4ab4cb98396b04fdf4ee2b44232030e6",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-seerah-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-seerah-v2.webp",
+      "sha256": "1db93adaabd44bac7deafd117c200df4d59e722b6e46f838f48b34c479358e40",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-sunnah-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-sunnah-v2.webp",
+      "sha256": "e39409d3540d30848f49bb6841c4f2154c55a2dd14952022ec868e4af6d44956",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/learning-terms-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/learning-terms-v2.webp",
+      "sha256": "40f51b368dd066a03f6be75dc837b671885d1923db61d83a4690be07aef1ca58",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mihrab-arch-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mihrab-arch-v2.webp",
+      "sha256": "b165a1680fd991d65ea874f892751cdba3b6cd07e74b0f6682409fd09b40c2d0",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mihrab-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mihrab-v2.webp",
+      "sha256": "b165a1680fd991d65ea874f892751cdba3b6cd07e74b0f6682409fd09b40c2d0",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-dua-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-dua-v1.webp",
+      "sha256": "dc21677cdf703542d770762dbff03946c127c9b5b39faaafb715db3ce5ba5834",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-dua-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-dua-v2.webp",
+      "sha256": "3ac88f47c80f4b001dc007462ed01a80b682904351951f0032f3d3e0b366b285",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-dua-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-dua-v3.webp",
+      "sha256": "a368ab4012035db4700140a40da2af83167e653a1ec4ca3c9cc2c3be05b688c1",
+      "replacedBy": "public/premium-assets/high-res-objects/home-duas-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-names-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-names-v1.webp",
+      "sha256": "95bdd74c0ffabe040ba97491a1210493cebd10e985f949497dab123aeb03c651",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-names-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-names-v2.webp",
+      "sha256": "9aa34c3efd2b4a8d6fa9b7ef3834c39585d6c1715f6445173806491600808cd5",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-names-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-names-v3.webp",
+      "sha256": "8ab16f5171474f04bc4fd73bd03a48d5a60cc16b7f6c6c797bb3208a2ed7a6fa",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-names-v4.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-names-v4.webp",
+      "sha256": "e8b19023929e3c060854e161b5c5d57e1e0789ec35c28a2e3ccfc88836d85f62",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-names-v5.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-names-v5.webp",
+      "sha256": "db5911ecb4a0885480116ec6c06d6e94ad4752da025d796774ed74c66ab82bf3",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-prayer-learning-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-prayer-learning-v1.webp",
+      "sha256": "93cc17b725ae075c48985180bae7ba09e11206486e44d4f68e5fa815bfbef937",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-quiz-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-quiz-v1.webp",
+      "sha256": "cecdff8c8d40a35a4176e313476bd08480a9a457584289ee4953b0ae84e55182",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-quiz-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-quiz-v2.webp",
+      "sha256": "1de658a6bc9a8092226f565e0fa7fbccd47573d3492549a4f7cb7610076776b2",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-quiz-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-quiz-v3.webp",
+      "sha256": "c78a1be7270dade5221e1e58a9d98c300e87c9868205342c673f8827e3f62619",
+      "replacedBy": "public/premium-assets/high-res-objects/home-quiz-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mini-quran-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mini-quran-v1.webp",
+      "sha256": "4477e3fd2bc6a967a7263ba5e59977e3f9da8233168bb871ca889ccb522234b5",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-finder-arch-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-finder-arch-v1.webp",
+      "sha256": "659848b17e7114de96f901b28eae801bbfbe6412565933d8612754e52c1370e0",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-gold-v2.svg",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-gold-v2.svg",
+      "sha256": "6840ede9d1ff7e050a3a0495c092ca4f45c5ca4121dc0cb44cace749333354e0",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-gold-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-gold-v2.webp",
+      "sha256": "7147e47f944c237c79b2dd419ca257ede8afbb9629363941e53bd74c1debcee6",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-gold.png",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-gold.png",
+      "sha256": "3245b207f743bc791d7f8c63bffc65a8baff7739c24748a2e78f966ca8fe4557",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-gold.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-gold.webp",
+      "sha256": "7147e47f944c237c79b2dd419ca257ede8afbb9629363941e53bd74c1debcee6",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-heritage-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-heritage-v1.webp",
+      "sha256": "3b51c35c022a1499e3e326134a76fc176c4c6c31f897c0aa56b950e6ef504ca8",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque-v2.webp",
+      "sha256": "7147e47f944c237c79b2dd419ca257ede8afbb9629363941e53bd74c1debcee6",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/mosque.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/mosque.webp",
+      "sha256": "7147e47f944c237c79b2dd419ca257ede8afbb9629363941e53bd74c1debcee6",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/prayer-standby-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/prayer-standby-v1.webp",
+      "sha256": "f8e46b0c225cfb7318545c1a9b21b6eb165dac9b5f150e472cb43da6a7dbfcd1",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla-compass-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla-compass-v2.webp",
+      "sha256": "4b34e66158f7b1ed04cd2a53bedbe406d293250bcbb3aee132faecad8b59bc8e",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla-compass-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla-compass-v3.webp",
+      "sha256": "997d7f09b51bcf996d54674dd5d41f80d4cf1b778f34cbd31025a8906dbf321a",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla-compass.png",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla-compass.png",
+      "sha256": "5511aebf5d6e616e62549472e257203d92bfb80b57e3acf9aec2f8fe6af15bec",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla-compass.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla-compass.webp",
+      "sha256": "abe10b10218278ec9970f057934596c4e324f62b0a8bccbc7c218846a3aea5c2",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla-v2.webp",
+      "sha256": "abe10b10218278ec9970f057934596c4e324f62b0a8bccbc7c218846a3aea5c2",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/qibla.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/qibla.webp",
+      "sha256": "abe10b10218278ec9970f057934596c4e324f62b0a8bccbc7c218846a3aea5c2",
+      "replacedBy": "public/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-closed-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-closed-v2.webp",
+      "sha256": "df6350294104a550b58d2bc5cd4879af60f232f0e7eae91f66e8b8d6b8b4b30d",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-closed-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-closed-v3.webp",
+      "sha256": "2389df5f818e54bb320217645a84e2a527cf3114a96d0667e06531eb7def9183",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-closed.png",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-closed.png",
+      "sha256": "8ad01294161f726521956b60e983e003b311ec33137ef16f61532087b4ace758",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-closed.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-closed.webp",
+      "sha256": "4aec2f68ae85f81c000d30b0ac76fb6d0651b7f1bc125c28471447c048cbf0fd",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-open-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-open-v2.webp",
+      "sha256": "ccfe37f2036aeb90ee45159dda08f22490007e9cc4d0517bd9b1f441cac68854",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/quran-open-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/quran-open-v3.webp",
+      "sha256": "8047e0f5a4394d82f14d7f24beb2dffe9679f55d613a7f913098f585ba490ab5",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/splash-mosque-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/splash-mosque-v1.webp",
+      "sha256": "55ebe82049d24d3076fba9ba9e544520696d4720df785a233a5472bec49a6a72",
+      "replacedBy": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/sun-emblem-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/sun-emblem-v2.webp",
+      "sha256": "fe0f716a6a8894fffce5f49e6cd85d91684a665d61625cae5c40c79b4a16c5b0",
+      "replacedBy": "public/premium-assets/high-res-objects/home-names-v4.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/tasbih-v2.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/tasbih-v2.webp",
+      "sha256": "fc1fd0a41e5de83531a1b9c4e3a60914c493f593d2c12db527be6e133790a45f",
+      "replacedBy": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/tasbih-v3.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/tasbih-v3.webp",
+      "sha256": "b6620917273e1706b9223d57a1c3897d24d983c30a3b607eafe9a88a2ddc36c6",
+      "replacedBy": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/tasbih.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/tasbih.webp",
+      "sha256": "801b01354f3e75a770391ea91cde8326673a3e5b430618a71b2d914d50d7da03",
+      "replacedBy": "public/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-date-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-date-illustrated-v1.webp",
+      "sha256": "410e5bf065556ac463d3e0bd598f43f32cca51806f4799a90e4075cf9c719797",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-favorites-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-favorites-illustrated-v1.webp",
+      "sha256": "1957a454f806a8944f73c58f532e04391d55cad6e2bd4a65acc20de5d2349586",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-friday-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-friday-illustrated-v1.webp",
+      "sha256": "eca2b60741658feb271bf312295ae2d3b1c8b554ed52250a3fb3e7a55b35407f",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-inspiration-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-inspiration-illustrated-v1.webp",
+      "sha256": "9f8f36a63fb3e9d9a9fe2ae3b6536137937401e9c2da7b61d6a3fa337dd4cd47",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-quran-plan-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-quran-plan-illustrated-v1.webp",
+      "sha256": "70efd29cf9bac7897fc394699d69d3db10caac7ee65085b4424680f2a4bd0cb4",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-reminders-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-reminders-illustrated-v1.webp",
+      "sha256": "9ebd7974f58cadc487533cb505f7ded6c8fb2e58fa8984f9e29d9ba90e396081",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-routine-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-routine-illustrated-v1.webp",
+      "sha256": "31213e308255449ad7b30429d1dd0dd62d7505e0c6e956f155440ff3e6e81e19",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/widget-weekly-prayers-illustrated-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/widget-weekly-prayers-illustrated-v1.webp",
+      "sha256": "1750d9d323ae35104b947a52546c9e3f82600e54c80179abfd9e8f19df75e0fe",
+      "replacedBy": "public/premium-assets/high-res-objects/home-learn-prayer-v5.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/wudu-washing-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/wudu-washing-v1.webp",
+      "sha256": "07e0ecdfbcb53dd1ab3faf7c47f7fc36e8ebd82c161bcf37f97cf5fdb6134bc7",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-wudu-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/zakat-scale-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/zakat-scale-v1.webp",
+      "sha256": "a89de2a07f0e735ff25185edc08d53766a5b9bd2cdee78eaf15d5bdc78162062",
+      "replacedBy": "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+    },
+    {
+      "formerPath": "public/premium-assets/high-res-objects/ayah-focus-bg-v1.webp",
+      "archivePath": "output/image-archive/pre-unified-20261015/ayah-focus-bg-v1.webp",
+      "sha256": "8598b7afb1fb0b033ba80e908ef1f9f952831ee58c3f82e73946738f1ef76d27",
+      "replacementStyle": "#f6eddc"
+    }
+  ],
+  "contextOverrides": [
+    {
+      "surface": "Fastenplan feature",
+      "source": "src/data/legacyFeatures.ts",
+      "former": "lantern-v3.webp",
+      "replacement": "prayer-companion-fasting-v1.webp",
+      "reason": "Dates and water preserve the fasting subject."
+    }
+  ]
+}

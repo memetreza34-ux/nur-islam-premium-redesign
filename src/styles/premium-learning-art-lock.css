@@ -1,26 +1,6 @@
-.reference-prayer-learning-hub {
-  position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  min-height: 272px !important;
-  background:
-    radial-gradient(circle at 82% 24%, rgba(226,191,119,.14), transparent 13rem),
-    linear-gradient(145deg, #0d5743 0%, #07372b 61%, #00120f 100%) !important;
-}
 
-.reference-prayer-learning-hub::after {
-  content: '';
-  position: absolute;
-  z-index: 1;
-  right: -56px;
-  bottom: -83px;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(226,191,119,.11), rgba(13,87,67,.045) 45%, transparent 72%);
-  filter: blur(10px);
-  pointer-events: none;
-}
+
+
 
 .reference-prayer-course-hero {
   position: relative;
@@ -88,8 +68,6 @@
 .reference-guide-steps > button.is-active::after,
 .reference-learning-key-points button.is-checked::after,
 .reference-learning-quiz__options button.is-correct::after { opacity: 1; }
-
-[data-theme='light'] .reference-prayer-learning-hub,
 [data-theme='light'] .reference-prayer-course-hero,
 [data-theme='light'] .reference-learning-course-hero { color: #fff8ea; }
 [data-theme='light'] .reference-learning-course-hero h2 { color: #fff8ea !important; }
@@ -98,7 +76,7 @@
 }
 
 @media (max-width:390px) {
-  .reference-prayer-learning-hub { min-height: 255px !important; }
+
 }
 @media (prefers-reduced-motion:reduce) {
   .reference-five-prayer-lessons button::after,

@@ -47,8 +47,8 @@ requireTokens(base, 'Base palette', [
   '--gold-bright: #f2d79a',
   '--cream: #f6ebd6',
   '--cream-strong: #fff8ea',
-  '--muted-green: #91a89e',
-  '--radius-xl: 42px',
+  '--muted-green: #b1c3b9',
+  '--radius-xl: 28px',
   '--radius-lg: 28px',
 ]);
 
@@ -61,12 +61,17 @@ requireTokens(homeHero, 'Home hero source', [
 ]);
 
 requireTokens(homeContent, 'Home content source', [
-  'background: linear-gradient(145deg, rgba(13, 87, 67, 0.78), rgba(0, 27, 22, 0.88))',
-  '.quick-card__icon {',
   '.hadith-card { padding: 22px; border-radius: 28px; }',
   'linear-gradient(145deg, #fff8ea, #f6ebd6)',
-  '.recommendation-card {',
-  'background: rgba(7, 55, 43, 0.65)',
+]);
+
+requireTokens(designSystem, 'Shared topic card scale', [
+  '.topic-list {',
+  '.topic-card {',
+  'grid-template-columns: 56px minmax(0, 1fr) 18px;',
+  "font: 600 1.375rem/1.15 'Cormorant Garamond', Georgia, serif;",
+  'font: 400 .875rem/1.4 Inter, system-ui, sans-serif;',
+  '.topic-card .topic-card__status {',
 ]);
 
 requireTokens(homeExact, 'Home exact header source', [
@@ -87,10 +92,9 @@ requireTokens(app, 'Home artwork map', [
   'className="home-prayer-times"',
   'className="home-prayer-arch"',
   'scene={currentScene}',
-  'home-quran-illustrated-v1.webp" fallback={<QuranObject />}',
-  'home-dhikr-illustrated-v1.webp" fallback={<RosetteObject />}',
-  'home-qibla-illustrated-v1.webp" fallback={<QiblaObject />}',
-  'ayah-focus-bg-v1.webp" className="verse-card__art"',
+  'learn-hub-book-v1.webp" fallback={<QuranObject />}',
+  'home-dhikr-illustrated-v3.webp" fallback={<RosetteObject />}',
+  'home-qibla-illustrated-v3.webp" fallback={<QiblaObject />}',
 ]);
 
 requireTokens(app, 'Home semantic actions and honest progress', [
@@ -103,10 +107,10 @@ requireTokens(app, 'Home semantic actions and honest progress', [
   'PRAYER_SCHEDULE_META.locationLabel',
   'getGermanDate(now, PRAYER_SCHEDULE_META.timezone)',
   'data-home-section="continue"',
-  "label: 'Beten lernen', eyebrow: 'Wudu, Qibla & Salah', detail: 'Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v2.webp'",
-  "label: '99 Namen Allahs', eyebrow: 'Heute entdecken', detail: 'Namen und Bedeutungen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v1.webp'",
-  "label: 'Islam Quiz', eyebrow: 'Wissen testen', detail: 'Fragen direkt beantworten', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v2.webp'",
-  "label: 'Duas', eyebrow: 'Für jeden Moment', detail: 'Bittgebete für deinen Tag', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v2.webp'",
+  "label: 'Beten lernen', detail: 'Das Gebet Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp'",
+  "label: '99 Namen Allahs', detail: 'Namen und Bedeutungen kennenlernen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v5.webp'",
+  "label: 'Islam Quiz', detail: 'Wissen mit Fragen und Erklärungen testen', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v6.webp'",
+  "label: 'Duas', detail: 'Bittgebete für den Alltag entdecken', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v5.webp'",
   'useState(readHomeQuranProgress)',
   'quranProgress.hasProgress && quranProgress.numberOfAyahs',
   ": 0;",
@@ -119,7 +123,7 @@ requireTokens(premiumSystemLayer, 'Premium widget placement', [
   'home.appendChild(currentHost)',
   'home.lastElementChild !== currentHost',
 ]);
-requireTokens(homeLayout, 'Home section ordering', ["host.style.order = '100'", '.home-prayer-note', 'hiddenHomeSections.includes(section)']);
+requireTokens(homeLayout, 'Home section ordering', ["host.style.order = '100'", '.home-prayer-focus, .prayer-hero', 'hiddenHomeSections.includes(section)']);
 requireTokens(designSystem, 'Standalone Quran resume styling', [
   '.premium-home--v2 > .journey-card--quran',
   '.home-reading-progress {',
@@ -137,7 +141,6 @@ for (const forbidden of [
 requireTokens(finalLock, 'Final Home reference lock', [
   '.welcome-hero,',
   'border-radius: 42px !important',
-  '.quick-card,',
   '.verse-card,',
   'border-radius: 28px !important',
   '.icon-button,',
@@ -156,7 +159,6 @@ requireTokens(finalLock, 'Final Home reference lock', [
 for (const requiredSelector of [
   '.premium-home--v2',
   '.welcome-hero',
-  '.quick-card',
   '.verse-card',
 ]) {
   const homeSource = `${homeHero}\n${homeContent}\n${homeExact}\n${artDirection}\n${artComposition}\n${atmosphere}`;
@@ -189,3 +191,5 @@ if (homeLayers.includes('content: url(') || homeLayers.includes('content:url('))
 }
 
 console.log('Home reference audit verified: Home uses honest Quran progress with an explicit zero-progress start state, Home hero/content/header/atmosphere sources use the approved palette and 42/28/18/26 geometry, v2 artwork and semantic actions remain mapped correctly, mosque/Mihrab crops are protected, Lucide strokes stay 1.75, and the design system remains the last stylesheet import, directly after the geometry lock.');
+
+if (app.includes('home-prayer-note')) throw new Error('Home must not show a technical prayer source strip.');

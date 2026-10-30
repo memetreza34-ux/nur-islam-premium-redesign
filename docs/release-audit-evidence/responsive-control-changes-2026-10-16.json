@@ -1,0 +1,110 @@
+[
+  {
+    "file": "src/styles/base.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/calendar.css",
+    "controls": 6
+  },
+  {
+    "file": "src/styles/filter-control-consistency.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/home-content.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/nur-design-system.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/premium-account-notes-lock.css",
+    "controls": 4
+  },
+  {
+    "file": "src/styles/premium-core-parallel-pass.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/premium-depth-lock.css",
+    "controls": 8
+  },
+  {
+    "file": "src/styles/premium-design-parallel-pass.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/premium-flow-lock.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/premium-local-features.css",
+    "controls": 8
+  },
+  {
+    "file": "src/styles/premium-secondary-parallel-pass.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/premium-visual-lock.css",
+    "controls": 4
+  },
+  {
+    "file": "src/styles/reference-core-screens.css",
+    "controls": 5
+  },
+  {
+    "file": "src/styles/reference-discovery.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/reference-exact.css",
+    "controls": 3
+  },
+  {
+    "file": "src/styles/reference-learning.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/reference-legacy-migration.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/reference-live-prayer-times.css",
+    "controls": 3
+  },
+  {
+    "file": "src/styles/reference-mosque-live.css",
+    "controls": 5
+  },
+  {
+    "file": "src/styles/reference-onboarding.css",
+    "controls": 2
+  },
+  {
+    "file": "src/styles/reference-prayer-calendar.css",
+    "controls": 5
+  },
+  {
+    "file": "src/styles/reference-prayer-learning-completion.css",
+    "controls": 5
+  },
+  {
+    "file": "src/styles/reference-quran-complete.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/reference-quran-online.css",
+    "controls": 1
+  },
+  {
+    "file": "src/styles/reference-reading.css",
+    "controls": 4
+  },
+  {
+    "file": "src/styles/release-hardening.css",
+    "controls": 4
+  }
+]

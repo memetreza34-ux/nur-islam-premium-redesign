@@ -25,9 +25,9 @@
 Das Entfernen der UI-Hinweise schließt die vorhandenen P0-Punkte nicht:
 
 1. Vollständige, bestätigte Betreiberangaben und finale rechtliche Prüfung.
-2. Qualifizierter religiöser Fachreview gemäß [Prüfübergabe](RELIGIOUS-REVIEW-HANDOFF.md).
+2. **Abgeschlossen am 13.10.2026:** [Betreiberfreigabe der geprüften Inhalte](CONTENT-RELEASE-DECISION-2026-10-13.md); frühere externe Prüferpflicht aufgehoben.
 3. Dokumentierte Tests auf realem iPhone und Android-Gerät, insbesondere Standort, Qibla, Installation, Updates und Benachrichtigungen. Siehe [Gerätetest](REAL-DEVICE-QA.md).
 
 Zusätzlicher technischer Prüfpunkt aus der aktuellen Bestandskontrolle: `prayerTimesService.ts` verwendet ohne Live-/Cache-Daten einen festen Ersatzzeitplan. Er ist als „Offline-Ersatzzeitplan“ gekennzeichnet und darf nicht als verlässlicher Tagesplan verstanden werden. Eine Release-Abnahme muss diesen Zustand einschließlich Erinnerungen ausdrücklich einschließen; dieser Turn hat die Gebetszeitberechnung nicht verändert.
 
-Die bestehende [Release-Checkliste](RELEASE-CHECKLIST.md) bleibt maßgeblich. Keine dieser offenen Voraussetzungen wurde durch das Entfernen eines Textes als erledigt markiert.
+Dieser historische Bericht beschreibt den Stand vom 03.09.2026. Für Erinnerungsverhalten, Inhaltsentscheidung und verbleibende Voraussetzungen ist die aktuelle [Release-Checkliste](RELEASE-CHECKLIST.md) maßgeblich.

@@ -1,8 +1,11 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import {
   HADITH_LIBRARY,
+  DAILY_HADITH_IDS,
+  DAILY_HADITH_POOL,
   getDailyHadith,
   getHadithById,
+  getHadithShareText,
   readSavedHadithIds,
   writeSavedHadithIds,
 } from './hadithData';
@@ -10,6 +13,16 @@ import {
 const CURRENT_KEY = 'nur_daily_hadith_saved_ids';
 const LEGACY_DAILY_KEY = 'nur_daily_hadith_saved';
 const LEGACY_LIBRARY_KEY = 'nur_hadith_library_favorites';
+afterEach(() => { vi.restoreAllMocks(); vi.unstubAllGlobals(); });
+
+function replaceStorageWrite(write: (key: string, value: string) => void) {
+  const storage = localStorage;
+  vi.stubGlobal('localStorage', {
+    getItem: storage.getItem.bind(storage),
+    removeItem: storage.removeItem.bind(storage),
+    setItem: write,
+  });
+}
 
 function store(key: string, value: unknown) {
   localStorage.setItem(key, JSON.stringify(value));
@@ -26,7 +39,6 @@ describe('Hadith library', () => {
     // No exact count: the library grows as entries are carried over, and a
     // pinned number turns each addition into a failing test for no reason.
     // check-hadith-data.mjs holds the floor and the sourcing rules. The floor
-    // dropped from 25 to 20 when five duplicated narrations were merged.
     expect(HADITH_LIBRARY.length).toBeGreaterThanOrEqual(20);
     expect(new Set(HADITH_LIBRARY.map((entry) => entry.id)).size).toBe(HADITH_LIBRARY.length);
     for (const entry of HADITH_LIBRARY) {
@@ -42,11 +54,19 @@ describe('Hadith library', () => {
     expect(evening.id).toBe(morning.id);
   });
 
-  it('rotates to the next library entry on the following local day', () => {
+  it('rotates to the next curated entry on the following local day', () => {
     const today = getDailyHadith(new Date(2026, 7, 10, 12));
     const tomorrow = getDailyHadith(new Date(2026, 7, 11, 12));
-    const currentIndex = HADITH_LIBRARY.findIndex((entry) => entry.id === today.id);
-    expect(tomorrow.id).toBe(HADITH_LIBRARY[(currentIndex + 1) % HADITH_LIBRARY.length].id);
+    const currentIndex = DAILY_HADITH_POOL.findIndex((entry) => entry.id === today.id);
+    expect(tomorrow.id).toBe(DAILY_HADITH_POOL[(currentIndex + 1) % DAILY_HADITH_POOL.length].id);
+  });
+
+  it('only rotates the documented seven Bukhari/Muslim entries', () => {
+    expect(DAILY_HADITH_IDS).toEqual(['intentions', 'mercy', 'good-word', 'anger', 'brother', 'ease', 'cleanliness']);
+    expect(DAILY_HADITH_POOL.map(entry => entry.id)).toEqual(DAILY_HADITH_IDS);
+    for (const entry of DAILY_HADITH_POOL) expect(entry.source).toMatch(/Sahih (al-Bukhari|Muslim) \d/);
+    const rotated = new Set(Array.from({ length: 140 }, (_, day) => getDailyHadith(new Date(2026, 0, day + 1)).id));
+    expect([...rotated].sort()).toEqual([...DAILY_HADITH_IDS].sort());
   });
 
   it('keeps pre-epoch dates inside the valid library range', () => {
@@ -59,10 +79,73 @@ describe('Hadith library', () => {
     expect(getHadithById('does-not-exist')).toBeNull();
     expect(getHadithById(null)).toBeNull();
   });
+
+  it('preserves edition attribution and grading differences when sharing Tirmidhi entries', () => {
+    for (const entry of HADITH_LIBRARY.filter(item => item.source.startsWith('Jami at-Tirmidhi'))) {
+      expect(entry.grading?.sourceUrl).toMatch(/^https:\/\/sunnah\.com\/tirmidhi:\d+$/);
+      expect(entry.grading?.text).toContain('Darussalam');
+      expect(entry.grading?.text).toContain('At-Tirmidhi');
+      expect(entry.grading?.text).toMatch(/keine eigene|kein eigenes/);
+      const shared = getHadithShareText(entry);
+      expect(shared).toContain(entry.summary);
+      expect(shared).toContain(entry.source);
+      expect(shared).toContain(entry.grading!.text);
+      expect(shared).toContain(entry.grading!.sourceUrl);
+    }
+  });
+
+  it('uses the verified Muslim variants rather than an ambiguous shared number', () => {
+    expect(getHadithById('die-allah-liebsten-taten')?.source).toContain('783b');
+    expect(getHadithById('der-islam-ist-auf')?.source).toContain('16c');
+    expect(getHadithById('die-religion-ist-aufrichtiger')?.source).toContain('55a');
+    expect(getHadithById('wer-einen-weg-beschreitet')?.source).toContain('2699a');
+  });
+
+  it('retains the previous bookmark id and both sources for differing assessments', () => {
+    const entry = getHadithById('es-gehort-zum-guten')!;
+    expect(entry.grading?.text).toContain('daif für Tirmidhi 2317');
+    expect(entry.grading?.text).toContain('An-Nawawi');
+    expect(entry.grading?.text).toContain('hasan');
+    expect(getHadithShareText(entry)).toContain('https://sunnah.com/nawawi40:12');
+    store(CURRENT_KEY, [entry.id]);
+    expect(readSavedHadithIds().has(entry.id)).toBe(true);
+    expect(DAILY_HADITH_POOL.some(item => item.id === entry.id)).toBe(false);
+  });
+
+  it('does not fabricate an individual grading for a Bukhari or Muslim excerpt', () => {
+    const entry = getHadithById('intentions')!;
+    expect(entry.grading).toBeUndefined();
+    expect(getHadithShareText(entry)).toBe(`${entry.summary}\n\nEinordnung: ${entry.context}\n\nQuelle: ${entry.source}`);
+    expect(getHadithShareText(getHadithById('ease')!)).toContain('Muslim 1734 nennt an derselben Stelle Beruhigen');
+  });
 });
 
 describe('Hadith favorites migration', () => {
   beforeEach(() => localStorage.clear());
+
+  it('only reports success after both current and legacy storage agree', () => {
+    expect(writeSavedHadithIds(new Set(['mercy']))).toBe(true);
+    expect(stored(CURRENT_KEY)).toEqual(['mercy']);
+    expect(stored(LEGACY_LIBRARY_KEY)).toEqual(['mercy']);
+  });
+
+  it('does not report success for blocked storage or a no-op write', () => {
+    replaceStorageWrite(() => { throw new DOMException('Full', 'QuotaExceededError'); });
+    expect(writeSavedHadithIds(new Set(['mercy']))).toBe(false);
+    vi.unstubAllGlobals();
+    replaceStorageWrite(() => undefined);
+    expect(writeSavedHadithIds(new Set(['mercy']))).toBe(false);
+  });
+
+  it('reports a partial mirror failure rather than pretending the change was fully saved', () => {
+    const storage = localStorage;
+    replaceStorageWrite((key, value) => {
+      if (key === LEGACY_LIBRARY_KEY) throw new DOMException('Full', 'QuotaExceededError');
+      storage.setItem(key, value);
+    });
+    expect(writeSavedHadithIds(new Set(['mercy']))).toBe(false);
+    expect(readSavedHadithIds().has('mercy')).toBe(true);
+  });
 
   it('merges current and legacy library favorites, filters unknown ids and mirrors the result', () => {
     store(CURRENT_KEY, ['mercy', 'unknown']);

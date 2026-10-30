@@ -1,0 +1,602 @@
+{
+  "url": "https://api.alquran.cloud/v1/quran/quran-uthmani",
+  "retrievedAt": "2026-10-11T17:31:07.570Z",
+  "httpStatus": 200,
+  "responseDate": "Sun, 11 Oct 2026 17:31:07 GMT",
+  "etag": "a27799850906e01b2d6ab7507d7c9f72-gzip\"",
+  "referenceBytes": 2109200,
+  "referenceSha256": "0df03e1d6da4fc8138208fec1688f2b416f0dd4ebbd514179f3e5e0fbaf4195f",
+  "edition": {
+    "identifier": "quran-uthmani",
+    "language": "ar",
+    "name": "القرآن الكريم برسم العثماني (uthmani)",
+    "englishName": "Uthmani",
+    "format": "text",
+    "type": "quran"
+  },
+  "localManifestSha256": "0c42d1611325c6f597310785b79676b8d921df8470d9f61284f87e606f963d6b",
+  "fingerprints": [
+    {
+      "path": "public/data/quran/surahs.json",
+      "bytes": 19242,
+      "sha256": "8821b4725a1f570bb31b28f2419529a015b1bd20fef7a7479094252938a3a223"
+    },
+    {
+      "path": "public/data/quran/ar/1.json",
+      "bytes": 942,
+      "sha256": "131aa6c5bba4fcfb3111d8bf78b8062521c5bbdeeb57d4b3da2f22b1de9162d7"
+    },
+    {
+      "path": "public/data/quran/ar/2.json",
+      "bytes": 116311,
+      "sha256": "6cc5a4d4963a6f5ca7574847186e92edd6d633e96153c08167167471186cfd3c"
+    },
+    {
+      "path": "public/data/quran/ar/3.json",
+      "bytes": 67249,
+      "sha256": "ac9b8efffeda8c56b4b66c0f51baf2c3fab5400e90f3a20aa9c5cb6ff0c044c8"
+    },
+    {
+      "path": "public/data/quran/ar/4.json",
+      "bytes": 71863,
+      "sha256": "6d10da52585c7e2fa84d52930f49625b74d9c760f6b58fd2102329df1e70a64e"
+    },
+    {
+      "path": "public/data/quran/ar/5.json",
+      "bytes": 53471,
+      "sha256": "6ac54967a65b289997ec2112633586808761759b64cd9ec6208e430a1f027e0c"
+    },
+    {
+      "path": "public/data/quran/ar/6.json",
+      "bytes": 57962,
+      "sha256": "3bbdeae94fff5dc9bb66ca049e2ec745fb50113eb4086e383dec896e7e948ddd"
+    },
+    {
+      "path": "public/data/quran/ar/7.json",
+      "bytes": 65404,
+      "sha256": "f337bc76b2f3b8f97fe5c27ccd46a91d0948d3f1029908019cf0a67719a6e392"
+    },
+    {
+      "path": "public/data/quran/ar/8.json",
+      "bytes": 24518,
+      "sha256": "268f4526bbe85081167f5d9798eb08ce1e547bedf903a10cab2ba2162e1f1f68"
+    },
+    {
+      "path": "public/data/quran/ar/9.json",
+      "bytes": 49029,
+      "sha256": "42237cbe6be41f9769fbff9d7fb64063211fea00b27c4e97331132625e0f4709"
+    },
+    {
+      "path": "public/data/quran/ar/10.json",
+      "bytes": 34650,
+      "sha256": "784cc6435497d25520a8693304802ad8cfa58073350a563b1ca8727e974dbf01"
+    },
+    {
+      "path": "public/data/quran/ar/11.json",
+      "bytes": 36336,
+      "sha256": "1c54c8206d1097b7f1722eea5d67a7cb6c2d5bf8a20b0606b252e264335c0311"
+    },
+    {
+      "path": "public/data/quran/ar/12.json",
+      "bytes": 33685,
+      "sha256": "36ef0c43f5805d7ed602b1d867375fc5cdfc7c0e75555f83c15afff645b2242f"
+    },
+    {
+      "path": "public/data/quran/ar/13.json",
+      "bytes": 16228,
+      "sha256": "f824cd0a82e918499bf95652c6160dcc4c3f00d03029c5d5e5c81f07a87177af"
+    },
+    {
+      "path": "public/data/quran/ar/14.json",
+      "bytes": 16322,
+      "sha256": "1048a27130df41bdbbcec5b92f1f877f7447b472b26d0a65560533cb948e019d"
+    },
+    {
+      "path": "public/data/quran/ar/15.json",
+      "bytes": 14862,
+      "sha256": "882e61a34f6cbd094868cbe070d73461adcdd074ffb096ea54d07c02f63b6cfc"
+    },
+    {
+      "path": "public/data/quran/ar/16.json",
+      "bytes": 36246,
+      "sha256": "8c8d5a61f994d57177e5c113f671f81fe07217e9dc315da8bb514eea3cecd427"
+    },
+    {
+      "path": "public/data/quran/ar/17.json",
+      "bytes": 30863,
+      "sha256": "82073efc7965825d6ce350c732d60827042ecf9db398b336ca6d1ae1d91d4e66"
+    },
+    {
+      "path": "public/data/quran/ar/18.json",
+      "bytes": 30521,
+      "sha256": "815e7f1b7965ebb957aa5371fd64833b52452d3e860bf45279fe2fcf9d60ac15"
+    },
+    {
+      "path": "public/data/quran/ar/19.json",
+      "bytes": 19525,
+      "sha256": "9ab7c7e3d96752c6ccfac6aa378cb87fd77a0d2e5447d2c367bc5eec66c1055d"
+    },
+    {
+      "path": "public/data/quran/ar/20.json",
+      "bytes": 26693,
+      "sha256": "6f836c7f335bc19835cccfdcf8b9d74800a8c273a7d6e7c03ab023887625a089"
+    },
+    {
+      "path": "public/data/quran/ar/21.json",
+      "bytes": 24244,
+      "sha256": "ec003148ead7c983e99372bffada702c8578b629d39f7c4a045ce63baff0a1dc"
+    },
+    {
+      "path": "public/data/quran/ar/22.json",
+      "bytes": 24338,
+      "sha256": "bd91ae762f92511a25f151c4008bef2b1aadf074b30f9fb72710e26cb421d118"
+    },
+    {
+      "path": "public/data/quran/ar/23.json",
+      "bytes": 22004,
+      "sha256": "dba232c34719fc609d19b161a44774a9ffa274afea4ac98a386a6981c0f4e049"
+    },
+    {
+      "path": "public/data/quran/ar/24.json",
+      "bytes": 25742,
+      "sha256": "0847f74d7198d2fbdd250bde769caf2988edfdf383f6fef3b1a60cb13e3423cd"
+    },
+    {
+      "path": "public/data/quran/ar/25.json",
+      "bytes": 18287,
+      "sha256": "66dd6c7a383aad6c4455c24e7cf11037a360bc3bd74c75406b72f5f229273f8d"
+    },
+    {
+      "path": "public/data/quran/ar/26.json",
+      "bytes": 29898,
+      "sha256": "f2f960b45e18d6530d1a61ff89378cf65ffb34ca84d3f36bdeb2ba352f840e28"
+    },
+    {
+      "path": "public/data/quran/ar/27.json",
+      "bytes": 22694,
+      "sha256": "76bc3980fade94944680dcb5275fd61870c8e7690e9ba7d2b1dd7d2391fb56c3"
+    },
+    {
+      "path": "public/data/quran/ar/28.json",
+      "bytes": 27196,
+      "sha256": "9ab4b01e68ad618eb41840d65ba9a4334ed35d7113dfa67b9e0e1a615c487ca2"
+    },
+    {
+      "path": "public/data/quran/ar/29.json",
+      "bytes": 19806,
+      "sha256": "2b99c0a16c19b64d0eedf81641d2801b56b5ffb2952a95a3916b18188ef54483"
+    },
+    {
+      "path": "public/data/quran/ar/30.json",
+      "bytes": 16296,
+      "sha256": "362af3b7f33bdfaf23a1773d70f705d55c14bcfda403f8b260349855a7e07ca6"
+    },
+    {
+      "path": "public/data/quran/ar/31.json",
+      "bytes": 10193,
+      "sha256": "e4b0c3f1c5bcbd0a5f0645ceff00f5ae5896fce71594d8aafd1dcff0d13b630f"
+    },
+    {
+      "path": "public/data/quran/ar/32.json",
+      "bytes": 7498,
+      "sha256": "2796ea7c32200fd6c2586f12b2e61b95589a83292e14897eda76e616ec7ab8b9"
+    },
+    {
+      "path": "public/data/quran/ar/33.json",
+      "bytes": 25734,
+      "sha256": "89cef132cac8cc78e3e6f0fc6a59a45478dd2ed47bd42a903b868481a2da30a9"
+    },
+    {
+      "path": "public/data/quran/ar/34.json",
+      "bytes": 16607,
+      "sha256": "ad73886ee754be31d9b3dcf6e781eb75a6a8b9eded7f102700fea0de966daeec"
+    },
+    {
+      "path": "public/data/quran/ar/35.json",
+      "bytes": 14866,
+      "sha256": "d2d6dcdeef4dbb6507d5445e8290974101c3bc0b4e0ac163f247b49b39c5e4d7"
+    },
+    {
+      "path": "public/data/quran/ar/36.json",
+      "bytes": 15178,
+      "sha256": "0cc73bac5a2b2770fb1316ff6db806eefc65eda1df5c4d621608c1012fc084d0"
+    },
+    {
+      "path": "public/data/quran/ar/37.json",
+      "bytes": 21460,
+      "sha256": "1300322a039e2895619ebe6145d894c3518ffacac6c0b5d4039440cbb8c6bb87"
+    },
+    {
+      "path": "public/data/quran/ar/38.json",
+      "bytes": 15510,
+      "sha256": "06ef6f24accb1ea9a1b067963548d8c4f9f71b8aee1e4505dc1a9ca04643ccbe"
+    },
+    {
+      "path": "public/data/quran/ar/39.json",
+      "bytes": 22477,
+      "sha256": "15779814a784c3ccaa55e3413ed6a3c2fce9fdfebbc9c08597e321d8acd23f9c"
+    },
+    {
+      "path": "public/data/quran/ar/40.json",
+      "bytes": 23570,
+      "sha256": "3841d59c453233f020fc96dbe69e59fb503188669d077a6879809b4afc112cdf"
+    },
+    {
+      "path": "public/data/quran/ar/41.json",
+      "bytes": 15704,
+      "sha256": "d7f435da596d48e98eeb3c66320d5ef7a2a1ae2fe8f0ddfc474102e1d05215cb"
+    },
+    {
+      "path": "public/data/quran/ar/42.json",
+      "bytes": 16278,
+      "sha256": "f9c544ce2356414b60eb2ca49a1b41bc25c4f5a3d22e8734e389321fbbe89f97"
+    },
+    {
+      "path": "public/data/quran/ar/43.json",
+      "bytes": 17728,
+      "sha256": "02fb9818270475b4150953f466ac2e36b983d3a52f1f2bb2344a528ac7a20412"
+    },
+    {
+      "path": "public/data/quran/ar/44.json",
+      "bytes": 8020,
+      "sha256": "0d5b5ec7087e54886ca2c064403e83943baad5934a76fc32c79c95bcf91cd653"
+    },
+    {
+      "path": "public/data/quran/ar/45.json",
+      "bytes": 9871,
+      "sha256": "566b358fb1c54d9dfea3781cf77b872c93ae81d0052f37f7f9057a51454ac64a"
+    },
+    {
+      "path": "public/data/quran/ar/46.json",
+      "bytes": 12206,
+      "sha256": "9e099053d16be6b45d6747c47f58550406d7fa9bc7943d2d2e20b3f2b7502363"
+    },
+    {
+      "path": "public/data/quran/ar/47.json",
+      "bytes": 11321,
+      "sha256": "1c01dc8ca2364b2f0c3b038eb0e8a1f6d3dcd47fa03b3988f51080607e9d5f34"
+    },
+    {
+      "path": "public/data/quran/ar/48.json",
+      "bytes": 11260,
+      "sha256": "fc86fb725b2dd12fe8a5acb48f595b09a45f1b770346ad8836f275a53113d5fc"
+    },
+    {
+      "path": "public/data/quran/ar/49.json",
+      "bytes": 7057,
+      "sha256": "07fc246e32a4ef87c49c495e9cdc34d4603e721ac99448c9662d6cfe4d6cf9d6"
+    },
+    {
+      "path": "public/data/quran/ar/50.json",
+      "bytes": 7805,
+      "sha256": "265ca7023a745132949a84cccd9861d4b6baf0a67c9afb7788bd54a61f00d631"
+    },
+    {
+      "path": "public/data/quran/ar/51.json",
+      "bytes": 8338,
+      "sha256": "4fe7933366988c23b5957935a9e754210fcfaef7eba5c8d558167f2643308243"
+    },
+    {
+      "path": "public/data/quran/ar/52.json",
+      "bytes": 7140,
+      "sha256": "671573e9cdfcb647e262589ced641d8a232f96b427878c662cdb1b736e425cf1"
+    },
+    {
+      "path": "public/data/quran/ar/53.json",
+      "bytes": 8022,
+      "sha256": "e7c95b02f91a4343f9a0df9a28a8a7e479b5e28ac08b7272b4440c6350d4db3a"
+    },
+    {
+      "path": "public/data/quran/ar/54.json",
+      "bytes": 8057,
+      "sha256": "b32977c8021cbe9c77ffb05191fb3e770f18ae5b30d320e9643398a60a8fd02f"
+    },
+    {
+      "path": "public/data/quran/ar/55.json",
+      "bytes": 9414,
+      "sha256": "55deb5e92a6ebaaed87b83200cad5e040a8bbf5dd46ba5d1e5f0264d99408fb5"
+    },
+    {
+      "path": "public/data/quran/ar/56.json",
+      "bytes": 10210,
+      "sha256": "2e8f9f1f294fe99ff929fb32576ea6066d05ca0ba1892ab13779403f49ae179b"
+    },
+    {
+      "path": "public/data/quran/ar/57.json",
+      "bytes": 11415,
+      "sha256": "c4b1b2523209235b34e86130edef4668c5e60b9e32c3be1764f839910fc5feba"
+    },
+    {
+      "path": "public/data/quran/ar/58.json",
+      "bytes": 9267,
+      "sha256": "840523bbb723809d4b2bbdbac49999b95438a92eeb1da6fd54fa27608bddf98e"
+    },
+    {
+      "path": "public/data/quran/ar/59.json",
+      "bytes": 8887,
+      "sha256": "396bf277627a716fe18ccf8525251e40d11777f3659c567f841825c7f9cdd462"
+    },
+    {
+      "path": "public/data/quran/ar/60.json",
+      "bytes": 7023,
+      "sha256": "15fe83c006047056de5173913e529429deaaa8093a40e332cfaf07550bec0526"
+    },
+    {
+      "path": "public/data/quran/ar/61.json",
+      "bytes": 4547,
+      "sha256": "20d2a0a2cdd3e3f83db6d8144df862094f0725beb183759a800542fd155775ed"
+    },
+    {
+      "path": "public/data/quran/ar/62.json",
+      "bytes": 3643,
+      "sha256": "045030b5654dfad6164e729608f13569d63b2e48dc3db9e620087b48a02d0385"
+    },
+    {
+      "path": "public/data/quran/ar/63.json",
+      "bytes": 3862,
+      "sha256": "651cf251c5a941833f9dea2b42dcffa0f7b7b80a7ef68e5998c420404db1aa00"
+    },
+    {
+      "path": "public/data/quran/ar/64.json",
+      "bytes": 5229,
+      "sha256": "cb798e60a5675a1f39578757ad9cbe6a60955bfa0e555c1a58cd75b43b7b2373"
+    },
+    {
+      "path": "public/data/quran/ar/65.json",
+      "bytes": 5657,
+      "sha256": "1a56389904fa94160111bf3135643c8b30cb6473bec5945f7714eff438e80179"
+    },
+    {
+      "path": "public/data/quran/ar/66.json",
+      "bytes": 5111,
+      "sha256": "68d5f731d47125ed5ffb1c520619e74fbe1275a8e4da5d319cabc4c571b3fe20"
+    },
+    {
+      "path": "public/data/quran/ar/67.json",
+      "bytes": 6655,
+      "sha256": "ef015d42a2287eb2cdec234ef78279daa94a02a9d407aa9caee029c4a2bfea2f"
+    },
+    {
+      "path": "public/data/quran/ar/68.json",
+      "bytes": 7037,
+      "sha256": "2c5bf8ad8e7d4c13a797b1f8dfa32a2bb3f73f134b998f352558d31ac06f4302"
+    },
+    {
+      "path": "public/data/quran/ar/69.json",
+      "bytes": 6409,
+      "sha256": "05e02ce8ae8199e925fb3e772d2ea9aa1bcc3e49af242b9d01c4e4d4d8b59d0e"
+    },
+    {
+      "path": "public/data/quran/ar/70.json",
+      "bytes": 5521,
+      "sha256": "05cb62212d2c1a23d0b9197bd406ed6795c528dbca7e2e5ebcc8fb7e207eaa9e"
+    },
+    {
+      "path": "public/data/quran/ar/71.json",
+      "bytes": 4984,
+      "sha256": "fc4e56f2feb396e4d9501ece6217a780479ad7ae5cba7d890ca5ae4f6ac1ccbd"
+    },
+    {
+      "path": "public/data/quran/ar/72.json",
+      "bytes": 5682,
+      "sha256": "06c94b3b3b9b385123f8fc76e4af3cabbc63c79624c48c9114524d411e5224ce"
+    },
+    {
+      "path": "public/data/quran/ar/73.json",
+      "bytes": 4346,
+      "sha256": "b510c354cc7398d23416fabf79a42c0f1f5d7850e741fbc119773b379608a752"
+    },
+    {
+      "path": "public/data/quran/ar/74.json",
+      "bytes": 6216,
+      "sha256": "4ddf57ad5d53e39e8fcde54b1335de7933e9fe924dd610b01a01e098bd1c8f28"
+    },
+    {
+      "path": "public/data/quran/ar/75.json",
+      "bytes": 4284,
+      "sha256": "875cc590e0725d7a5aa1de9976fc39b27d9d7c03c3559907ba01ee4ba2bb5b75"
+    },
+    {
+      "path": "public/data/quran/ar/76.json",
+      "bytes": 5556,
+      "sha256": "3f9d930cd01cb05e4360fcc0688b345ca2e1d8b798ad5fc2c024c1bbebe7b01a"
+    },
+    {
+      "path": "public/data/quran/ar/77.json",
+      "bytes": 5211,
+      "sha256": "871c0c4a70b5a917b97c16d151b4224ddd0d7fe15b49894e54a9cf0341e1f950"
+    },
+    {
+      "path": "public/data/quran/ar/78.json",
+      "bytes": 4614,
+      "sha256": "a17308c04a536f5249f2f338c77c835f03f675fdb129aa0bd72d35cdffccf4b8"
+    },
+    {
+      "path": "public/data/quran/ar/79.json",
+      "bytes": 4825,
+      "sha256": "1db6439170feb555a370c187df3f73f1980833b95d837a1774e57ac2b559cd5e"
+    },
+    {
+      "path": "public/data/quran/ar/80.json",
+      "bytes": 3871,
+      "sha256": "6af6e0103f3273750af3b291bec0cf738cb2c9f65f4048f3554c24071810072a"
+    },
+    {
+      "path": "public/data/quran/ar/81.json",
+      "bytes": 2874,
+      "sha256": "5580401c9d25b9f67e5de50c5c9d1b01732435fd4f27883add90829bea7063af"
+    },
+    {
+      "path": "public/data/quran/ar/82.json",
+      "bytes": 2171,
+      "sha256": "e5d3d8e8461145fdc1dc06ad7cfe0b8a397ebfdf253a94caa12df6da97b6b576"
+    },
+    {
+      "path": "public/data/quran/ar/83.json",
+      "bytes": 4370,
+      "sha256": "f88481db534709b3ca633690c10fcd9753458f43421ce5eb20a395aa7da4c10e"
+    },
+    {
+      "path": "public/data/quran/ar/84.json",
+      "bytes": 2825,
+      "sha256": "14dfd5935ea40156c8a700eacae6cd6d1e05c9873b625f6f3aff56b2265e52cd"
+    },
+    {
+      "path": "public/data/quran/ar/85.json",
+      "bytes": 2775,
+      "sha256": "3383623b1fec0fc1ceb3ae58fa6f7973d57db90006d706d8d96b971ca11bcfef"
+    },
+    {
+      "path": "public/data/quran/ar/86.json",
+      "bytes": 1797,
+      "sha256": "efdaec136095fcfff02072219d2c9408a2a55084a0335f872e88bffb23bdf0e7"
+    },
+    {
+      "path": "public/data/quran/ar/87.json",
+      "bytes": 2035,
+      "sha256": "3b78d2484c048baf67ba08a52db06f60b0f50979791d34543b6f27b50851ca3b"
+    },
+    {
+      "path": "public/data/quran/ar/88.json",
+      "bytes": 2609,
+      "sha256": "73af1a97d9672f870ae23f0b9d135f0aaa811af523d162c844b1dc72b3efe44e"
+    },
+    {
+      "path": "public/data/quran/ar/89.json",
+      "bytes": 3531,
+      "sha256": "1a65481ba74542ca7f4c7fa4a861fe6233b4df1d4760a2d6d43721291e17d6a6"
+    },
+    {
+      "path": "public/data/quran/ar/90.json",
+      "bytes": 2241,
+      "sha256": "8d6f3403c6cb249368f21ce5fd1f81a7e6fe476dd27f92e04f3a03e00abed283"
+    },
+    {
+      "path": "public/data/quran/ar/91.json",
+      "bytes": 1673,
+      "sha256": "0953997770a965f4af91e91276054fbbb6abb591ddf2498361c962e4e8ada557"
+    },
+    {
+      "path": "public/data/quran/ar/92.json",
+      "bytes": 2174,
+      "sha256": "4fa639949af821027a13549d51fcdbf56f2a3fd871953dc223e7b4d9ada1ab43"
+    },
+    {
+      "path": "public/data/quran/ar/93.json",
+      "bytes": 1271,
+      "sha256": "ae3ad8a07af6910343a227aca390ac48378530c09a9b4d2c472e5e3d5fcfc1e4"
+    },
+    {
+      "path": "public/data/quran/ar/94.json",
+      "bytes": 902,
+      "sha256": "907b928aa12753a9a5276b2ce7a629e0c52e61ce17ea850fbdfe7bc0ea53cdd5"
+    },
+    {
+      "path": "public/data/quran/ar/95.json",
+      "bytes": 1102,
+      "sha256": "a665cd39c85c05b46fc0d8223e907ebee9d8e6f7dbbcef2322ade2784e2b3da2"
+    },
+    {
+      "path": "public/data/quran/ar/96.json",
+      "bytes": 1991,
+      "sha256": "71a6e6d79162bb5c0130fbcd50e57fa94417ccf9157c30bf0fa32f39e6030ac3"
+    },
+    {
+      "path": "public/data/quran/ar/97.json",
+      "bytes": 874,
+      "sha256": "7b8a1f25cc91cd537212aca33d6562458623f6c1b52741024a69821f5dc71d39"
+    },
+    {
+      "path": "public/data/quran/ar/98.json",
+      "bytes": 2150,
+      "sha256": "6293f4dcb751ff58b0ab2b7e73279bc012c8193daa93268485b89dde680a122b"
+    },
+    {
+      "path": "public/data/quran/ar/99.json",
+      "bytes": 1138,
+      "sha256": "80cedf9d06dc0cd40a991577c43fd68a3c2007aa9dc7c73d080209e20282e183"
+    },
+    {
+      "path": "public/data/quran/ar/100.json",
+      "bytes": 1280,
+      "sha256": "4edc42b0841f86f24a4b4677eef8f44998ea4c3ef40381cbe8a26cf93ee3e3f0"
+    },
+    {
+      "path": "public/data/quran/ar/101.json",
+      "bytes": 1206,
+      "sha256": "ab66bdc67c86d527041b86569fd932e93e7d0a5a82495c5be29c6f40dedd423b"
+    },
+    {
+      "path": "public/data/quran/ar/102.json",
+      "bytes": 995,
+      "sha256": "3730d2b0ac90b214b188d55d2ec9e166515981c67d3aeb447987d1df8f141847"
+    },
+    {
+      "path": "public/data/quran/ar/103.json",
+      "bytes": 627,
+      "sha256": "a2795213602ac928aa9dcdde75b2ecc5508d360a0a6961ed51fa1c4e3bad0870"
+    },
+    {
+      "path": "public/data/quran/ar/104.json",
+      "bytes": 1094,
+      "sha256": "7d6bf838221473daa970423fa764e9232fedc0c4b938ce96fb33d07e9c4feb39"
+    },
+    {
+      "path": "public/data/quran/ar/105.json",
+      "bytes": 790,
+      "sha256": "13bc7cf190fd7d669d8c8a5e2ce55803e1967550d33e66bab5b7a317b709df0e"
+    },
+    {
+      "path": "public/data/quran/ar/106.json",
+      "bytes": 671,
+      "sha256": "890a57bb8836c5807afc8975dbd2a23bd7cd3230a0ea685c7a0c86f7edb0ee2a"
+    },
+    {
+      "path": "public/data/quran/ar/107.json",
+      "bytes": 905,
+      "sha256": "c4a57a1958db34f9afa9c18af7a68f7da886fd3ed48e03711224ca900b333a88"
+    },
+    {
+      "path": "public/data/quran/ar/108.json",
+      "bytes": 518,
+      "sha256": "f78ac677ebdcee8f6081870e316beef435824be6b54caec1a9060c6d24fdcac0"
+    },
+    {
+      "path": "public/data/quran/ar/109.json",
+      "bytes": 834,
+      "sha256": "3672be2d1535d0b5562b767ad12a87eb96f8b362f71795e24837fb0d01ab27a6"
+    },
+    {
+      "path": "public/data/quran/ar/110.json",
+      "bytes": 665,
+      "sha256": "a825bf2d078f248fb3c06230473b8c14e3c39cef0cee3231f0b0ea7d150bc926"
+    },
+    {
+      "path": "public/data/quran/ar/111.json",
+      "bytes": 740,
+      "sha256": "9bc94dc1caf494f1f7d3b8cf4553c886096fcf3702ca693cfb036a9327aa034f"
+    },
+    {
+      "path": "public/data/quran/ar/112.json",
+      "bytes": 566,
+      "sha256": "d1bce7e5204e7eff5024260c7ecc5722a86835a651796191adbf61f07ceb937c"
+    },
+    {
+      "path": "public/data/quran/ar/113.json",
+      "bytes": 684,
+      "sha256": "2a18b754b273674e4e103081cc254edb9b163d3db32dce7f217f3c0d0ab20537"
+    },
+    {
+      "path": "public/data/quran/ar/114.json",
+      "bytes": 726,
+      "sha256": "576261769b45ae5cd48708bc318a61d9bfc78228fc62645fc6723e3658fe843c"
+    }
+  ],
+  "versesCompared": 6236,
+  "exactTexts": 6236,
+  "metadataCompared": 1368,
+  "metadataEqual": 1368,
+  "differences": [],
+  "countMethod": "The whole-Quran endpoint omits numberOfAyahs; counts are derived from each reference ayahs array, not copied from the local catalogue.",
+  "scope": "Exact text strings, five supplied metadata fields and derived verse counts only; no provenance, rights, translation, recitation or theological certification."
+}

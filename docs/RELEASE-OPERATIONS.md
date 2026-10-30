@@ -2,9 +2,11 @@
 
 **Ziel:** Öffentliche Releases kontrolliert durchführen, ohne für Fehler hektisch neue Features oder ungetestete Hotfixes einzubauen.
 
+> Betreiberentscheidung 13.10.2026: [Betreiberfreigabe vom 13.10.2026](CONTENT-RELEASE-DECISION-2026-10-13.md). Kein externer religiöser App-Prüfer erforderlich. Inhaltsstand und Grenzen: [Quellenprüfung](CONTENT-CLEARANCE-2026-10-13.md).
+
 ## 1. Grundregeln
 
-- `premium-design-finish` ist der Release-Candidate-Branch.
+- `design/claude-design-system` ist der Release-Candidate-Branch.
 - `main` ist der kontrollierte Veröffentlichungszweig.
 - Kein öffentlicher Release mit rotem `npm run check`.
 - Kein P0 wird durch Dokumentation „geschlossen“, wenn die reale Prüfung fehlt.
@@ -22,7 +24,7 @@ Vor einer Freigabe muss der konkrete RC-Commit feststehen. Für genau diesen Com
 - Reference-Render/Visual-QA: PASS
 - reale iPhone-Abnahme: PASS
 - reale Android-Abnahme: PASS
-- religiöser P0-Fachreview: freigegeben
+- religiöse Inhalte: Betreiberentscheidung vom 13.10.2026 dokumentiert; geprüften Inhaltsstand dem RC zuordnen. Kein externer Prüfer erforderlich.
 - Betreiber/Legal: freigegeben
 - Audio: freigegeben oder deaktiviert
 - falls Payment aktiv: Kauf-/Restore-/Entitlement-Test PASS
@@ -33,13 +35,13 @@ Die GitHub-Actions-Läufe sind die technische Primärquelle; keine alte Run-ID d
 
 ### Phase 0 – interner RC
 
-- nur `premium-design-finish`
+- nur `design/claude-design-system`
 - keine Behauptung „Produktion fertig“
-- technische Gates und menschliche P0-Prüfungen schließen
+- technische Gates und konkrete Betreiber-/Rechtefragen schließen
 
-### Phase 1 – geschlossene Beta
+### Phase 1 – Geräteabnahme durch den Betreiber
 
-- kleiner, bewusst ausgewählter Testerkreis
+- der Betreiber prüft selbst auf seinen Geräten; kein externer Testerkreis erforderlich
 - Fokus: Installation, Offline, Gebetszeiten, Qibla, Benachrichtigungen, Persistenz, Konto/Cloud
 - Fehlermeldungen manuell sammeln; keine neue invasive Telemetrie
 - keine großen Features während der Beta
@@ -151,7 +153,7 @@ E2E: PASS/FAIL
 Visual QA: PASS/FAIL
 iPhone real: PASS/FAIL
 Android real: PASS/FAIL
-Religiöser Review: PASS/OPEN
+Inhaltsentscheidung: Betreiberfreigabe 13.10.2026 / nach Inhaltsänderungen aktualisiert
 Legal/Betreiber: PASS/OPEN
 Audio: PASS/DISABLED/OPEN
 Payment (falls aktiv): PASS/N/A

@@ -1,0 +1,172 @@
+{
+  "createdAt": "2026-10-14",
+  "mode": "Built-in image_gen.imagegen; exact model not exposed",
+  "scope": "Learning overview only. Course text, posture illustrations and original prayer landscapes retained.",
+  "assets": [
+    {
+      "key": "book",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. A closed forest-green book resting on a SIMPLE low wooden X-shaped reading stand. One plain gold geometric medallion on the cover, cream page edges. No words, no Arabic, no letters. A restrained recognizable learning/Quran book symbol without intricate ornament.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-026bbda3-5323-433c-89f5-3bdc2cdc6652.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/book.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-book-v1.webp"
+    },
+    {
+      "key": "pillars",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. FIVE simple upright warm-ivory architectural pillars of equal height on one compact low teal base. Clean straight vertical forms and minimal gold caps. No temple roof, no extra columns, no writing. A balanced adult architectural symbol for five pillars.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-71c892db-e5b2-47d7-986b-7c97cb42a107.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/pillars.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-pillars-v1.webp"
+    },
+    {
+      "key": "terms",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. Two slightly offset rounded ivory reference cards with a teal side tab. The top card has three simple gold horizontal embossed bars of different lengths, no letters or words. Minimal clear educational reference-card symbol.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-3dd2462d-e0df-4d26-89c2-88e002f57778.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/terms.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-terms-v1.webp"
+    },
+    {
+      "key": "wudu",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. A small warm-ivory water pitcher tipped toward a shallow teal basin, just three clean pale-blue water drops between them. Restrained smooth forms, no hands or human body, no photographic water splashes. Decorative water/reinheit feature symbol, not a ritual instruction.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-81bc595f-ed88-44ec-99a1-48be5740e025.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/wudu.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-wudu-v1.webp"
+    },
+    {
+      "key": "character",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. One simple muted terracotta heart with a small olive branch gently crossing its lower corner. The heart is an inanimate symbol with no face, simple polished matte material. Short branch with only four broad leaves. Quiet, mature, no sparkles.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-205818d9-52c2-46d8-a345-5bbe20dafb8c.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/character.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-character-v1.webp"
+    },
+    {
+      "key": "community",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. Three solid interlocking smooth rings in muted olive, warm ivory and deep teal, arranged in a compact connected group. Simple dignified connection/community symbol, not jewelry photography, no gems or decorative scene.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-3fecc7c5-132c-4e87-b640-97cccdb47c54.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/community.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-community-v1.webp"
+    },
+    {
+      "key": "prophets",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. One partially opened warm-ivory parchment scroll with two simple walnut rollers and ONLY the clearly readable digits \"25\" centered in dark teal. Clean broad surfaces, no other lettering, marks, portraits or human figures. Digits serve only as course-count label.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-e2f1d988-8f5b-4efc-9217-fe9794b6581c.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/prophets.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-prophets-v1.webp"
+    },
+    {
+      "key": "madhhabs",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. FOUR plain slim upright books side by side, gently staggered, in warm ivory, muted teal, olive and warm terracotta. Cream page edges and one subtle gold spine band each. No text, letters, numbers or religious symbols. Restrained scholarly library object.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-e70ef85b-095e-467b-9ba2-476d11b35716.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/madhhabs.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-madhhabs-v1.webp"
+    },
+    {
+      "key": "hadith",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. One open warm-ivory book with deep teal cover, a small gold bookmark ribbon and entirely blank pages. Simple structured page geometry, a few broad page-edge lines only, no lettering or fake script. Quiet scholarly reference-book object.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-22a37e17-fe31-4275-9ff0-031c558da84f.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/hadith.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-hadith-v1.webp"
+    },
+    {
+      "key": "sunnah",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. One small upright cream desk calendar with a forest-green frame, two simple gold binding loops, and ONE large olive-green check mark on its face. No dates, numbers or letters. Mature compact symbol for everyday practice, no decoration.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-fd46c40d-882f-47a7-b7f4-2dc0ff581c66.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/sunnah.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-sunnah-v1.webp"
+    },
+    {
+      "key": "hajj",
+      "prompt": "Use case: original app feature illustration. Create ONE isolated small icon on a truly transparent background, for the adult learning section of the Nur Islam app. The two attached images are our own Kaaba and prayer rug, STYLE REFERENCE ONLY. Match the clean readable 3D object family: clear proportions, restrained rounded edges, smooth matte surfaces, broad gentle shading and crisp silhouette. A tasteful adult editorial illustration, not photorealistic, not a children's toy, not excessively chubby. Palette: warm ivory, deep teal, muted olive, natural walnut, small soft gold accents. No photographic microtexture, no sparkles, glow, scenery, floating ornaments, complex decorative AI filigree or invented calligraphy. No people, faces, human figures, representations of Allah or prophets. No text unless a subject explicitly requests digits. One compact whole object/group occupying about 78% of a square canvas with transparent margins. Mild three-quarter elevated frontal view. No floor or detached shadow. A recognizable Kaaba cube, charcoal-black with a single soft gold band and a small gold door, cream base. No compass and no additional objects. Simple respectful clean architectural symbol, no photographic textile texture or calligraphy.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "inputRoles": [
+        "Own Qibla illustration as style reference",
+        "Own prayer rug illustration as palette and material reference"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-6acec10b-799f-410b-842c-2b650053d810.png",
+      "workspaceOriginal": "output/imagegen/learning-rows-20261014/hajj.png",
+      "runtimePath": "public/premium-assets/high-res-objects/learn-hub-hajj-v1.webp"
+    }
+  ]
+}

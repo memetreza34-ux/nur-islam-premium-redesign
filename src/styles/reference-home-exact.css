@@ -9,9 +9,7 @@
 
 
 .premium-home--v2>.prayer-hero--v2{order:2}
-.premium-home--v2>.content-section:has(.quick-grid--v2){order:3}
 .premium-home--v2>.inspiration-grid--v2{order:4}
-.premium-home--v2>.content-section:has(.journey-grid){order:5}
 .premium-home--v2>.continue-card--v2{order:6}
 .premium-home--v2>.recommendations{order:8}
 
@@ -31,17 +29,11 @@
 
 .premium-home--v2 .prayer-hero--v2 .prayer-mini-times{margin:9px 0 5px;padding:7px 3px}
 .premium-home--v2 .prayer-hero--v2 .prayer-mini-times>span{padding:5px 1px}
-
-.premium-home--v2 .content-section:has(.quick-grid--v2) .section-heading h2,.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2{font-size:1.42rem}
-.premium-home--v2 .content-section:has(.journey-grid) .section-heading .overline{display:block}
-.premium-home--v2 .content-section:has(.journey-grid) .section-heading h2::after{content:none}
-.premium-home--v2 .content-section:has(.journey-grid) .text-button{color:var(--muted-green);font-size:.55rem}
 .premium-home--v2 .journey-card{min-height:148px}
 .premium-home--v2 .journey-card .premium-image{height:104px}
-.premium-home--v2 .quick-grid--v2,
 .premium-home--v2 .continue-card--v2,
 .premium-home--v2 .inspiration-grid--v2,
 .premium-home--v2 .recommendations{margin-top:0}
-[data-theme='light'] .premium-home--v2 :is(.prayer-hero--v2 .hero-pill,.prayer-hero--v2 .hero-orb strong){color:#fff8ea}
+[data-theme='light'] .premium-home--v2 :is(.prayer-hero--v2 .hero-pill, .prayer-hero--v2 .hero-orb strong){color:#fff8ea}
 
 @media(max-width:370px){.premium-home--v2{gap:13px}.premium-home--v2 .prayer-hero--v2 .prayer-hero__content{padding-inline:15px}.premium-home--v2 .prayer-hero--v2 .hero-main h2{font-size:1.95rem}}

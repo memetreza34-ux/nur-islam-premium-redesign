@@ -22,14 +22,13 @@ const requiredCourseFeatures = [
   'Beten lernen',
   'Gebetskurs',
   'Vorbereitung',
-  'Übungsmodus',
+  'Übung einstellen',
   // Was 'Positionen lernen', the heading over seven generic positions that were
   // identical for all five prayers and carried no wording. The course now walks
   // the actual Rakʿah, so the check follows the sequence instead of a caption.
   'PRAYER_RAKATS_BY_ID',
   'POSTURE_LABEL',
   'reference-rakah-wording__arabic',
-  'nur_prayer_learning_complete',
   'nur_prayer_learning_preparation',
   'PRAYER_TIME_IMAGE',
   'PRAYER_MINI_IMAGE',
@@ -41,12 +40,29 @@ for (const feature of requiredCourseFeatures) {
   if (!course.includes(feature)) throw new Error(`Prayer learning course is missing: ${feature}`);
 }
 
-if (!learn.includes('learn-library-prayer-entry') || !learn.includes('Die fünf Pflichtgebete')) {
+const preparation = course.indexOf('className="reference-prayer-preparation"');
+const instruction = course.indexOf('className={`reference-rakah-step-detail');
+if (preparation < 0 || instruction < 0 || preparation > instruction) {
+  throw new Error('Prayer preparation must appear before the chronological instructions.');
+}
+for (const label of ['So geht’s', 'Das sprichst du', 'Hinweise zum Wortlaut', 'Quelle und Einordnung']) {
+  if (!course.includes(label)) throw new Error(`Prayer reading order is missing: ${label}`);
+}
+if (course.indexOf('currentStep.repetitionNote') < course.indexOf('reference-rakah-wording__translation')) {
+  throw new Error('Extended wording notes must follow the meaning, outside the compact repetition controls.');
+}
+
+if (!learn.includes('<TopicCardContent title="Gebetsablauf"')) {
   throw new Error('Prayer learning is no longer the primary learning experience.');
 }
-if (!learn.includes('PRAYER_LESSONS.map') || !learn.includes('<strong>Wudu</strong>') || !learn.includes('<strong>Qibla</strong>')) {
+if (!learn.includes('<TopicCardContent title="Wudu"') || !learn.includes('<TopicCardContent title="Qibla"')) {
   throw new Error('Learning screen is missing a core prayer-learning action.');
 }
+if (learn.includes('learn-library-prayer-card') || learn.includes('learn-library-prayers')) {
+  throw new Error('The learning directory must use one prayer-course entry, without duplicate prayer cards.');
+}
+if (!course.includes('PRAYER_LESSONS.map')) throw new Error('The course must retain all five prayer choices.');
+
 for (const fragment of [
   "label: 'Beten lernen'",
   "onOpenPrayer={() => navigate('prayer')}",
@@ -87,7 +103,7 @@ if (/readSet\(`nur_prayers_[^`]+`, \[['"][^\]]+/.test(prayer)) {
   throw new Error('Prayer tracker must not seed a fake pre-completed prayer.');
 }
 
-if (!styles.includes('.reference-prayer-learning-hub') || !styles.includes('.prayer-completion-modal')) {
+if (!styles.includes('.prayer-completion-modal')) {
   throw new Error('Prayer learning or completion styles are missing.');
 }
 if (!styleIndex.includes('reference-prayer-learning-completion.css')) {

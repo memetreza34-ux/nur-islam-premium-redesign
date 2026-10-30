@@ -16,7 +16,8 @@ describe('four-school catalogue', () => {
       for (const value of [school.arabic, school.pronunciation, school.eponym, school.dates, school.origin, school.short, school.spread, school.practice]) {
         expect(value.trim().length).toBeGreaterThan(0);
       }
-      expect(school.sources).toHaveLength(3);
+      expect(school.sources.length).toBeGreaterThanOrEqual(1);
+      expect(school.sources.some(source => source.publisher === 'TDV İslâm Ansiklopedisi')).toBe(true);
       expect(school.sources.some((source) => source.homepage)).toBe(true);
       for (const source of school.sources) {
         expect(new URL(source.href).protocol).toBe('https:');

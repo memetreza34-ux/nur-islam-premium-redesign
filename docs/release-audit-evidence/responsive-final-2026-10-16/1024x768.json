@@ -1,0 +1,1034 @@
+[
+  {
+    "label": "Start",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebet",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Lernen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Mehr",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Start",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebetszeiten",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Lernen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Beten lernen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "reference-madhhab__topic > A",
+        "text": "TDV İslâm Ansiklopedisi · NAMAZ",
+        "width": 792,
+        "height": 20,
+        "tag": "A"
+      },
+      {
+        "selector": "reference-madhhab__topic > A",
+        "text": "TDV İslâm Ansiklopedisi · KIYAM",
+        "width": 792,
+        "height": 20,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wudu lernen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Qibla",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Dhikr",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih Muslim 597a",
+        "width": 109.953125,
+        "height": 15,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Duas",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Moscheen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Kalender",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Fastenplan",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sammlung",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Allah & der Glaube",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Baqara 2:285",
+        "width": 151.328125,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih Muslim 8a – Hadith Jibril",
+        "width": 214.5,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die fünf Säulen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih al-Bukhari 8",
+        "width": 128.8125,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih Muslim 16b",
+        "width": 122.484375,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wichtige Begriffe",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nahl 16:116",
+        "width": 140.109375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Isra 17:36",
+        "width": 124.390625,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Reinheit & Alltag",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nahl 16:43",
+        "width": 137.375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Isra 17:36",
+        "width": 124.390625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "TDV İslâm Ansiklopedisi: FIKIH, Hayreddin Kar",
+        "width": 497.328125,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "TDV İslâm Ansiklopedisi: FETVA, Fahrettin Ata",
+        "width": 493.421875,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Charakter & Rechte",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nahl 16:90",
+        "width": 137.390625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Hujurat 49:11",
+        "width": 148.90625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Hujurat 49:12",
+        "width": 151.765625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:148",
+        "width": 136.9375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Asch-Schura 42:40–43",
+        "width": 201.296875,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "TDV İslâm Ansiklopedisi · Mustafa Çağrıcı · V",
+        "width": 491.984375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih al-Bukhari 1 · Buch 1, Hadith 1",
+        "width": 246.59375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih al-Bukhari 6114 · Buch 78, Hadith 141",
+        "width": 298.328125,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:29",
+        "width": 130.03125,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Miteinander & Verantwortung",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:36",
+        "width": 130.265625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nahl 16:90",
+        "width": 137.390625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Hujurat 49:11",
+        "width": 148.90625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Hujurat 49:12",
+        "width": 151.765625,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:148",
+        "width": 136.9375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:29",
+        "width": 130.03125,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure An-Nisa 4:58",
+        "width": 129.9375,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Isra 17:34",
+        "width": 124.78125,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Der Prophet ﷺ",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "STRONG > A",
+        "text": "Sure Al-Ahzab 33:21",
+        "width": 144.296875,
+        "height": 17,
+        "tag": "A"
+      },
+      {
+        "selector": "STRONG > A",
+        "text": "Sahih al-Bukhari 3",
+        "width": 128.75,
+        "height": 17,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Vers des Tages",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "99 Namen Allahs",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "reference-name-source > A",
+        "text": "Bukhari 7392",
+        "width": 75.046875,
+        "height": 15,
+        "tag": "A"
+      },
+      {
+        "selector": "reference-name-source > A",
+        "text": "Muslim 2677a",
+        "width": 78.75,
+        "height": 15,
+        "tag": "A"
+      },
+      {
+        "selector": "reference-name-source > A",
+        "text": "Tirmidhi 3507",
+        "width": 78.171875,
+        "height": 15,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Ummah-Übersicht",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hadith-Sammlung",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die vier Rechtsschulen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Die 25 Propheten",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hajj & Umrah",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih al-Bukhari 1524",
+        "width": 123.25,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih al-Bukhari 1645",
+        "width": 123.5625,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Quran 2:158; al-Bukhari 1645; Muslim 1218a · ",
+        "width": 446.796875,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih Muslim 1218a; Abu Dawud 1985 (sahih nac",
+        "width": 423.78125,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih al-Bukhari 1551",
+        "width": 120.359375,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih Muslim 1218a · berichteter Hajj-Ablauf",
+        "width": 249.0625,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih Muslim 1218a · berichteter Hajj-Ablauf",
+        "width": 249.0625,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih Muslim 1218a · berichteter Hajj-Ablauf",
+        "width": 249.0625,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih Muslim 1218a · berichteter Hajj-Ablauf",
+        "width": 249.0625,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Dar al-Ifta · drei Pilgerformen; Muslim 1218a",
+        "width": 347.71875,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Quran 2:203 · Gedenken und Abreise nach zwei ",
+        "width": 363.984375,
+        "height": 18.59375,
+        "tag": "A"
+      },
+      {
+        "selector": "SMALL > A",
+        "text": "Sahih al-Bukhari 1755",
+        "width": 122.15625,
+        "height": 18.59375,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sunnah im Alltag",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Fehler & Reue",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "MAKKAH, MADINAH & AL-AQSA",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Quran 2:144",
+        "width": 160.21875,
+        "height": 40,
+        "tag": "A"
+      },
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Sahih al-Bukhari 3",
+        "width": 195.734375,
+        "height": 40,
+        "tag": "A"
+      },
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Saudipedia · Prophetenmoschee",
+        "width": 278.421875,
+        "height": 40,
+        "tag": "A"
+      },
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Saudipedia · Masjid Quba",
+        "width": 236.984375,
+        "height": 40,
+        "tag": "A"
+      },
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Saudipedia · Berg Uhud",
+        "width": 225.15625,
+        "height": 40,
+        "tag": "A"
+      },
+      {
+        "selector": "holy-place-card__body > A",
+        "text": "Quelle: Quran 17:1",
+        "width": 148.1875,
+        "height": 40,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "DAS FREITAGSGEBET",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "P > A",
+        "text": "Quran 62:9",
+        "width": 68.96875,
+        "height": 16,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Bukhari 934",
+        "width": 74.640625,
+        "height": 16,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Muslim 846a",
+        "width": 79.4375,
+        "height": 16,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "PLANUNGSHILFE",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "GEBETSANZEIGE",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Konto & Cloud",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Notizen",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Impressum & Datenschutz",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "NAV > A",
+        "text": "Art. 13 DSGVO",
+        "width": 120.703125,
+        "height": 30,
+        "tag": "A"
+      },
+      {
+        "selector": "NAV > A",
+        "text": "§ 25 TDDDG",
+        "width": 107.546875,
+        "height": 30,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Einstellungen Reminder, Konto und Cloud",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Sprache Aktuell vollständig: Deutsch",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Über Nur Version und Produktprinzipien",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Quran-Leser",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Deutsch Buchseiten",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Arabisch Buchseiten",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Wudu Schritt für Schritt",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "wudu-lesson__note > A",
+        "text": "TDV İslâm Ansiklopedisi · ABDEST: Absicht, Er",
+        "width": 475.765625,
+        "height": 16,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Sahih al-Bukhari 159",
+        "width": 125.125,
+        "height": 16,
+        "tag": "A"
+      },
+      {
+        "selector": "P > A",
+        "text": "Sunan Abi Dawud 135",
+        "width": 133.390625,
+        "height": 16,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  },
+  {
+    "label": "Gebetsablauf",
+    "viewport": 1024,
+    "documentWidth": 1024,
+    "shellWidth": 900,
+    "navBottom": 768,
+    "undersizedInputs": [],
+    "small": [],
+    "targets": [
+      {
+        "selector": "reference-madhhab__topic > A",
+        "text": "TDV İslâm Ansiklopedisi · NAMAZ",
+        "width": 792,
+        "height": 20,
+        "tag": "A"
+      },
+      {
+        "selector": "reference-madhhab__topic > A",
+        "text": "TDV İslâm Ansiklopedisi · KIYAM",
+        "width": 792,
+        "height": 20,
+        "tag": "A"
+      }
+    ],
+    "clips": [],
+    "lateral": []
+  }
+]

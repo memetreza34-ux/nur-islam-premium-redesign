@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#001b16">
+  <title>Lichtbogen · Intro-Vorschau</title>
+  <style>
+    :root { color-scheme: dark; --ink:#001b16; --green:#003b29; --light:#07533f; --gold:#e2bf77; --cream:#fff0c9; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100svh; background:#06110e; color:var(--cream); font-family:Inter,system-ui,sans-serif; }
+    .preview { min-height:100svh; display:grid; grid-template-rows:auto 1fr; gap:20px; padding:20px; }
+    .toolbar { width:min(100%,640px); margin:auto; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    .toolbar strong { font-size:14px; font-weight:500; color:#c4cfc5; }
+    .toolbar button { min-height:44px; padding:10px 16px; border:1px solid #e2bf7747; border-radius:24px; color:var(--cream); background:#12372b; font:600 13px Inter,system-ui,sans-serif; cursor:pointer; }
+    .toolbar button:hover { background:#1c4637; }
+    .toolbar button:focus-visible { outline:2px solid var(--gold); outline-offset:4px; }
+    .device { position:relative; width:min(100%,390px); height:min(844px,calc(100svh - 104px)); min-height:360px; margin:auto; overflow:hidden; border-radius:32px; background:var(--ink); box-shadow:0 0 0 1px #ffffff17,0 28px 90px #0007; isolation:isolate; }
+    iframe { position:absolute; inset:0; width:100%; height:100%; border:0; background:var(--ink); }
+    .intro { position:absolute; inset:0; overflow:hidden; display:grid; place-items:center; background:radial-gradient(ellipse at 50% 43%,var(--green),var(--ink) 69%); z-index:2; }
+    .intro[hidden] { display:none; }
+    .intro::before { content:""; position:absolute; width:74%; aspect-ratio:1; border-radius:50%; background:radial-gradient(ellipse,#e2bf7714,transparent 66%); opacity:0; }
+    .scene { position:relative; width:84%; max-width:340px; aspect-ratio:360/440; transform:translateY(-2%); }
+    .arch { position:absolute; inset:0; width:100%; height:100%; overflow:visible; fill:none; }
+    .arch path { stroke:var(--gold); stroke-width:1.6; stroke-linecap:round; stroke-dasharray:1; stroke-dashoffset:1; opacity:0; }
+    .arch .glow { stroke-width:5; filter:blur(6px); stroke:var(--cream); }
+    .mosque { position:absolute; width:48%; left:26%; top:31%; aspect-ratio:1; border-radius:24%; overflow:hidden; opacity:0; transform:translateY(10px) scale(.93); box-shadow:0 15px 50px #0002; }
+    .mosque img { width:100%; height:100%; object-fit:cover; display:block; }
+    .floor { position:absolute; left:26%; width:48%; bottom:14%; height:1px; background:linear-gradient(90deg,transparent,#e2bf7770,transparent); opacity:0; transform:scaleX(.5); }
+    .intro.is-playing { animation:depart .4s 1.65s cubic-bezier(.4,0,.2,1) forwards; }
+    .is-playing::before { animation:warmth 1.65s ease-out forwards; }
+    .is-playing .arch path { animation:trace 1.05s .05s cubic-bezier(.22,1,.36,1) forwards; }
+    .is-playing .arch .glow { animation:trace-glow 1.5s .05s ease-out forwards; }
+    .is-playing .mosque { animation:arrive 1.25s .25s cubic-bezier(.16,1,.3,1) forwards; }
+    .is-playing .floor { animation:floor-light 1.1s .2s ease-out forwards; }
+    @keyframes trace { 0%{opacity:0;stroke-dashoffset:1} 12%{opacity:.8} 100%{opacity:.7;stroke-dashoffset:0} }
+    @keyframes trace-glow { 0%{opacity:0;stroke-dashoffset:1} 15%{opacity:.22} 75%{opacity:.12;stroke-dashoffset:0} 100%{opacity:0;stroke-dashoffset:0} }
+    @keyframes arrive { to{opacity:1;transform:translateY(0) scale(1)} }
+    @keyframes warmth { 45%{opacity:1} 100%{opacity:.5} }
+    @keyframes floor-light { to{opacity:.65;transform:scaleX(1)} }
+    @keyframes depart { to{opacity:0;visibility:hidden;transform:scale(1.012)} }
+    .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; }
+    @media(max-width:480px) {
+      .preview { padding:12px; gap:12px; }
+      .device { height:calc(100svh - 80px); border-radius:24px; }
+      .toolbar strong { font-size:12px; }
+      .toolbar button { padding:10px 12px; font-size:12px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .intro.is-playing { animation:none; }
+      .is-playing .arch path,.is-playing .arch .glow,.is-playing .mosque,.is-playing .floor,.is-playing::before { animation:none; }
+      .is-playing .arch path { opacity:.65;stroke-dashoffset:0; }
+      .is-playing .arch .glow { opacity:0; }
+      .is-playing .mosque { opacity:1;transform:none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="preview">
+    <header class="toolbar"><strong>Intro-Vorschau · Lichtbogen</strong><button type="button" id="replay">Noch einmal ansehen</button></header>
+    <div class="device">
+      <iframe id="app" src="/?preview=1" title="App-Startseite" loading="eager"></iframe>
+      <div class="intro" id="intro" aria-label="App-Einstieg">
+        <div class="scene" aria-hidden="true">
+          <svg class="arch" viewBox="0 0 360 440"><path class="glow" pathLength="1" d="M36 398V158C36 91 110 48 180 23C250 48 324 91 324 158V398"/><path pathLength="1" d="M36 398V158C36 91 110 48 180 23C250 48 324 91 324 158V398"/></svg>
+          <div class="mosque"><img id="logo" src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp?v=20261016-mosque-3d-v1" alt="" fetchpriority="high"></div>
+          <span class="floor"></span>
+        </div>
+        <span class="sr-only" role="status">App wird geöffnet</span>
+      </div>
+    </div>
+  </div>
+  <script>
+    const intro = document.getElementById('intro');
+    const logo = document.getElementById('logo');
+    const app = document.getElementById('app');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+    let timer;
+    const appLoaded = new Promise(resolve => { app.addEventListener('load', resolve, { once:true }); });
+    const logoLoaded = logo.decode().catch(() => {});
+    function play() {
+      clearTimeout(timer);
+      intro.classList.remove('is-playing');
+      intro.hidden = false;
+      void intro.offsetWidth;
+      intro.classList.add('is-playing');
+      app.inert = true;
+      timer = setTimeout(() => { intro.hidden = true; app.inert = false; }, reduced.matches ? 800 : 2100);
+    }
+    document.getElementById('replay').addEventListener('click', play);
+    Promise.all([logoLoaded, Promise.race([appLoaded,new Promise(resolve => setTimeout(resolve,3000))])]).then(play);
+  </script>
+</body>
+</html>

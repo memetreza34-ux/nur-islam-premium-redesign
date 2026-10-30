@@ -1,3 +1,5 @@
+import { useScreenState, useScreenRef } from '../shared/ScreenState';
+import { SourceInfo } from '../shared/SourceInfo';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { SAHABAH, WOMEN_IN_ISLAM } from '../data/companionData';
 import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from '../data/knowledgeData';
@@ -8,7 +10,7 @@ import type { PilgrimageStation } from '../data/pilgrimageData';
 import { PROPHETS } from '../data/prophetData';
 import { PROPHET_COURSES } from '../data/prophetCourseData';
 import { PROPHET_COURSE_OVERVIEWS } from '../data/prophetCourseOverviews';
-import { QUIZ_CATEGORIES } from '../data/quizData';
+import { QUIZ_CATEGORIES, getQuizSourceUrl } from '../data/quizData';
 import { learningLegacyFeatures, quizFeature, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
 import type { LegacyFeatureId, LegacyFeatureItem } from '../data/legacyFeatures';
 import type { LucideIcon } from 'lucide-react';
@@ -19,6 +21,7 @@ import {
   Bookmark,
   CalendarHeart,
   Check,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   CircleCheck,
@@ -47,10 +50,17 @@ import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data
 import { FOUNDATION_SUPPLEMENTS } from '../data/foundationSupplementData';
 import { FoundationChapter, FoundationExample, FoundationGuideIntro, FoundationSource } from '../shared/FoundationGuide';
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
+import { isVoluntaryFastingDate } from '../services/fastingReminderService';
+import { getHijriDay } from '../services/hijriCalendar';
 import { formatPrayerRemaining, getNextPrayer } from '../services/prayerSchedule';
 const MadhhabCatalogueFeature = lazy(() => import('./MadhhabCatalogue').then((module) => ({ default: module.MadhhabCatalogueFeature })));
 
 const allFeatures = [...learningLegacyFeatures, ...serviceLegacyFeatures];
+const retainedFeatures: Partial<Record<LegacyFeatureId, LegacyFeatureItem>> = {
+  knowledge: { id: 'knowledge', title: 'Wissensbibliothek', subtitle: 'Begriffe und Grundlagen', description: 'Sinngemäße Lerntexte mit Fundstellen.', icon: Library, art: '/premium-assets/high-res-objects/learn-hub-hadith-v1.webp' },
+  sahabah: { id: 'sahabah', title: 'Gefährten des Propheten', subtitle: 'Personenübersicht', description: 'Namen und kurze Einordnungen, keine vollständigen Biografien.', icon: Library, art: '/premium-assets/high-res-objects/learn-hub-hadith-v1.webp' },
+  women: { id: 'women', title: 'Frauen im Islam', subtitle: 'Personenübersicht', description: 'Namen und kurze Einordnungen, keine vollständigen Biografien.', icon: Library, art: '/premium-assets/high-res-objects/learn-hub-hadith-v1.webp' },
+};
 
 const PROPHET_PROGRESS_KEY = 'nur_prophet_course_progress_v1';
 const PROPHET_RETURN_KEY = 'nur_prophet_course_return_v1';
@@ -104,18 +114,13 @@ function formatDate(date: Date) {
 }
 
 function nextWeekday(target: number) {
-  const date = new Date();
-  const difference = (target - date.getDay() + 7) % 7 || 7;
-  date.setDate(date.getDate() + difference);
-  return date;
-}
-
-function getHijriDay(date: Date) {
-  try {
-    return Number(new Intl.DateTimeFormat('en-u-ca-islamic', { day: 'numeric' }).format(date));
-  } catch {
-    return 0;
+  const today = new Date();
+  for (let offset = 1; offset <= 45; offset++) {
+    const date = new Date(today);
+    date.setDate(today.getDate() + offset);
+    if (date.getDay() === target && isVoluntaryFastingDate(date)) return date;
   }
+  return null;
 }
 
 function findNextWhiteDay() {
@@ -124,7 +129,7 @@ function findNextWhiteDay() {
     const candidate = new Date(today);
     candidate.setDate(today.getDate() + offset);
     const hijriDay = getHijriDay(candidate);
-    if (hijriDay >= 13 && hijriDay <= 15) return { date: candidate, day: hijriDay };
+    if (hijriDay >= 13 && hijriDay <= 15 && isVoluntaryFastingDate(candidate)) return { date: candidate, day: hijriDay };
   }
   return null;
 }
@@ -143,12 +148,12 @@ function FeatureHeader({
     <>
       <header className="reference-screen-header">
         <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam Premium</span><h1>{feature.title}</h1></div>
+        <div><span className="overline">Nur Islam</span><h1>{feature.title}</h1></div>
         <span className="reference-legacy-header-icon"><Icon size={20} /></span>
       </header>
       {showHero ? <section className="reference-legacy-hero">
-        <div className="reference-legacy-hero__copy"><span className="hero-pill">{feature.subtitle}</span><h2>{feature.title}</h2><p>{feature.description}</p></div>
         <img src={visual(feature.art)} alt="" aria-hidden="true" draggable={false} />
+        <div className="reference-legacy-hero__copy"><span className="hero-pill">{feature.subtitle}</span><h2>{feature.title}</h2><p>{feature.description}</p></div>
       </section> : null}
     </>
   );
@@ -172,11 +177,11 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
   // Best scores are per category rather than one global number: with six
   // categories a single figure says nothing about where you stand.
   const [bestScores, setBestScores] = useState<Record<string, number>>(() => readStored('nur_quiz_best_scores', {}));
-  const [categoryId, setCategoryId] = useState<string | null>(null);
-  const [index, setIndex] = useState(0);
-  const [selected, setSelected] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
-  const [complete, setComplete] = useState(false);
+  const [categoryId, setCategoryId] = useScreenState<string | null>('quiz.category', null);
+  const [index, setIndex] = useScreenState('quiz.index', 0);
+  const [selected, setSelected] = useScreenState<number | null>('quiz.answer', null);
+  const [score, setScore] = useScreenState('quiz.score', 0);
+  const [complete, setComplete] = useScreenState('quiz.complete', false);
 
   const category = QUIZ_CATEGORIES.find((entry) => entry.id === categoryId) ?? null;
   const questions = category?.questions ?? [];
@@ -215,6 +220,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
       <LegacyMotionMain>
         <FeatureHeader feature={feature} onBack={onBack} />
         <section className="reference-quiz-categories">
+          <p className="reference-topic-text">Jede Lernfrage nennt nach deiner Antwort eine Fundstelle. Fragen und Erklärungen sind sinngemäße Lerntexte, keine Fatwas. Der KI-gestützte Quellenabgleich ist keine religiöse Freigabe.</p>
           {QUIZ_CATEGORIES.map((entry) => {
             const best = bestScores[entry.id];
             return (
@@ -273,7 +279,7 @@ function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: 
           {selected === null ? null : (
             <p className="reference-quiz-explanation">
               <ShieldCheck size={16} />
-              <span>{question.explanation}</span>
+              <span>{question.explanation}<br /><SourceInfo title="Quelle zur Antwort"><a href={getQuizSourceUrl(question.source)} target="_blank" rel="noopener noreferrer">Quelle: {question.source}</a></SourceInfo></span>
             </p>
           )}
           <button className="gold-button" disabled={selected === null} onClick={next}>{index === questions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
@@ -325,12 +331,12 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Nächste Möglichkeiten</span><h2>Freiwillige Fastentage</h2></div></div>
         <div className="reference-fasting-grid">
-          <article><MoonStar size={22} /><small>Montag</small><strong>{formatDate(nextMonday)}</strong></article>
-          <article><MoonStar size={22} /><small>Donnerstag</small><strong>{formatDate(nextThursday)}</strong></article>
+          <article><MoonStar size={22} /><small>Montag</small><strong>{nextMonday ? formatDate(nextMonday) : 'Kein Termin im Zeitraum'}</strong></article>
+          <article><MoonStar size={22} /><small>Donnerstag</small><strong>{nextThursday ? formatDate(nextThursday) : 'Kein Termin im Zeitraum'}</strong></article>
           <article><Star size={22} /><small>Weißer Tag</small><strong>{whiteDay ? `${formatDate(whiteDay.date)} · ${whiteDay.day}. Hijri-Tag` : 'Nicht berechenbar'}</strong></article>
         </div>
       </section>
-      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können je nach Region und lokaler Mondsichtung abweichen.</p></section>
+      <section className="reference-legacy-notice"><TriangleAlert size={19} /><p>Berechnete Hijri-Tage können von örtlicher Mondsichtung abweichen. Ramadan, beide Eid-Tage und Tashriq sind aus diesen freiwilligen Vorschlägen und Erinnerungen ausgenommen. Die besondere Tashriq-Ausnahme für Pilger wird im Kalender erklärt.</p></section>
       <section className="reference-fasting-reminder-settings">
         <label><span><Clock3 size={17} /> Erinnerung am Vorabend</span><input type="time" value={reminderTime} onChange={(event) => setReminderTime(event.target.value)} /></label>
         <button className="reference-legacy-toggle" onClick={() => void toggle()} aria-pressed={reminders}>
@@ -345,23 +351,29 @@ function FastingFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
 
 function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const guide = FOUNDATION_SUPPLEMENTS['hadith-library'];
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useScreenState('hadith.query', '');
   const [favorites, setFavorites] = useState(() => readSavedHadithIds());
+  const [storageError, setStorageError] = useState(false);
   const filtered = HADITH_LIBRARY.filter((item) => `${item.title} ${item.summary} ${item.source} ${item.context ?? ''}`.toLocaleLowerCase('de-DE').includes(query.trim().toLocaleLowerCase('de-DE')));
 
   const toggleFavorite = (id: string) => {
     const value = new Set(favorites);
     if (value.has(id)) value.delete(id);
     else value.add(id);
+    if (!writeSavedHadithIds(value)) {
+      setFavorites(readSavedHadithIds());
+      setStorageError(true);
+      return;
+    }
     setFavorites(value);
-    writeSavedHadithIds(value);
+    setStorageError(false);
   };
 
   return (
     <LegacyMotionMain className="foundation-guide">
       <FeatureHeader feature={feature} onBack={onBack} showHero={false} />
       <FoundationGuideIntro {...guide} />
-      <FoundationChapter {...guide.chapters[0]} number={1}>
+      <FoundationChapter {...guide.chapters[0]} number={1} defaultOpen={false}>
         <p><strong>Definition.</strong> Ein Hadith ist eine überlieferte Nachricht über den Propheten ﷺ, beispielsweise über eine Aussage, Handlung oder Billigung. Der Text berichtet von seinem Vorbild; er ist nicht mit einem Quranvers gleichzusetzen.</p>
         <p><strong>Begriffe.</strong> Der Inhalt einer Überlieferung heißt Matn, ihre Überliefererkette Isnad. Sammlung, Fundstelle und fachliche Beurteilung helfen dabei, eine Nachricht nachzuvollziehen.</p>
         <FoundationExample>Al-Bukhari 1 behandelt die Bedeutung der Absicht. Du kannst zunächst den Grundgedanken lesen und anschließend über die genaue Nummer die Überlieferung nachschlagen.</FoundationExample>
@@ -374,16 +386,17 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
         <p>In dieser App steht unter jedem Eintrag die Fundstelle. „Sinngemäßer Inhalt“ ist eine Zusammenfassung in eigenen Worten, kein arabischer Originaltext und keine wortgetreue Übersetzung.</p>
         <FoundationSource href="https://sunnah.com/about">Einordnung und Grenzen der Sammlung</FoundationSource>
       </FoundationChapter>
-      <FoundationChapter {...guide.chapters[2]} number={3}>
+      <FoundationChapter {...guide.chapters[2]} number={3} defaultOpen>
       <p>Suche nach einem Thema oder einer Quellenangabe. Das Lesezeichen speichert den Eintrag lokal in deinem Browser.</p>
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <p className="foundation-guide-result" role="status">{filtered.length} von {HADITH_LIBRARY.length} Hadithen · {favorites.size} gespeichert</p>
+      {storageError ? <p className="foundation-hadith-context" role="alert">Änderung konnte nicht vollständig gespeichert werden. Prüfe den Browser-Speicher.</p> : null}
       <section className="reference-hadith-library">
         {filtered.map((item) => {
           const saved = favorites.has(item.id);
           return (
             <article key={item.id}>
-              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<small>{item.source}</small></div>
+              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<SourceInfo title={item.source}><small>{item.source}</small>{item.grading ? <p className="foundation-hadith-context">{item.grading.text} <a href={item.grading.sourceUrl} target="_blank" rel="noopener noreferrer">Bewertungsquelle</a>{item.grading.comparisonUrl ? <> · <a href={item.grading.comparisonUrl} target="_blank" rel="noopener noreferrer">Vergleichsquelle</a></> : null}</p> : null}</SourceInfo></div>
               <button onClick={() => toggleFavorite(item.id)} aria-label={saved ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={saved} className={saved ? 'is-saved' : ''}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>
             </article>
           );
@@ -460,7 +473,7 @@ function StandbyFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBac
             prayer the app has no usable times for. */}
         {nextPrayer ? (
           <>
-            <span className="overline">{nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Gebet'}</span>
+            <span className="overline">Nächstes Gebet</span>
             <p className="reference-standby-arabic" dir="rtl">{nextPrayer.prayer.arabic}</p>
             <h2>{nextPrayer.prayer.label}</h2>
             <strong>{nextPrayer.prayer.time}</strong>
@@ -529,21 +542,18 @@ function ProphetsFeature({
   onBack: () => void;
   onOpenQuranReference?: (surahNumber: number, ayahNumber?: number) => void;
 }) {
-  const [openId, setOpenId] = useState<string | null>(null);
-  const [chapterIndex, setChapterIndex] = useState(0);
+  const [openId, setOpenId] = useScreenState<string | null>('prophets.selected', null);
+  const [chapterIndex, setChapterIndex] = useScreenState('prophets.chapter', 0);
   const [progressByProphet, setProgressByProphet] = useState<ProphetCourseProgress>(() =>
     readStored<ProphetCourseProgress>(PROPHET_PROGRESS_KEY, {}));
-  const catalogueScroll = useRef(0);
+  const catalogueScroll = useScreenRef('prophets.catalogue-scroll', 0);
   const prophetScrollFrame = useRef<HTMLElement | null>(null);
+  const chapterMenu = useRef<HTMLDetailsElement>(null);
   const prophet = PROPHETS.find((entry) => entry.id === openId) ?? null;
   const course = prophet ? PROPHET_COURSES[prophet.id] : null;
   const overview = prophet ? PROPHET_COURSE_OVERVIEWS[prophet.id] : null;
   const chapter = course?.chapters[chapterIndex] ?? null;
-  const storedProgress = prophet ? progressByProphet[prophet.id] : null;
-  const completedChapterIds = course
-    ? course.chapters.map((entry) => entry.id).filter((id) => storedProgress?.completedChapterIds?.includes(id))
-    : [];
-  const courseComplete = Boolean(course && completedChapterIds.length === course.chapters.length);
+
   const courseReferences = course
     ? [...new Set(course.chapters.flatMap((entry) => entry.quranReferences))]
     : [];
@@ -603,7 +613,13 @@ function ProphetsFeature({
   const selectChapter = (index: number) => {
     if (!prophet || !course) return;
     const safeIndex = Math.max(0, Math.min(index, course.chapters.length - 1));
+    if (chapterMenu.current) chapterMenu.current.open = false;
     setChapterIndex(safeIndex);
+    window.setTimeout(() => {
+      const title = document.querySelector<HTMLElement>('.reference-prophet-lesson h2');
+      title?.focus({ preventScroll: true });
+      title?.scrollIntoView({ block: 'start' });
+    }, 0);
     setProgressByProphet((current) => {
       const previous = current[prophet.id];
       const next = {
@@ -611,24 +627,6 @@ function ProphetsFeature({
         [prophet.id]: {
           chapterIndex: safeIndex,
           completedChapterIds: previous?.completedChapterIds ?? [],
-        },
-      };
-      writeStored(PROPHET_PROGRESS_KEY, next);
-      return next;
-    });
-  };
-
-  const markCurrentChapterComplete = () => {
-    if (!prophet || !chapter) return;
-    setProgressByProphet((current) => {
-      const previous = current[prophet.id];
-      const completed = previous?.completedChapterIds ?? [];
-      if (completed.includes(chapter.id)) return current;
-      const next = {
-        ...current,
-        [prophet.id]: {
-          chapterIndex,
-          completedChapterIds: [...completed, chapter.id],
         },
       };
       writeStored(PROPHET_PROGRESS_KEY, next);
@@ -650,7 +648,6 @@ function ProphetsFeature({
         <FeatureHeader feature={feature} onBack={closeProphet} showHero={false} />
 
         <section className="reference-prophet-course__hero">
-          <span className="overline">Einzelkurs · {course.chapters.length} Kapitel</span>
           <div className="reference-prophet-course__title">
             <div>
               <h2>{prophet.name}{prophet.commonName ? ` · ${prophet.commonName}` : ''}</h2>
@@ -659,23 +656,13 @@ function ProphetsFeature({
             </div>
             <span>{PROPHETS.findIndex((entry) => entry.id === prophet.id) + 1}</span>
           </div>
+        </section>
+
+        <details className="reference-prophet-overview" aria-label={`Ausführliche Einführung zu ${prophet.name}`} key={prophet.id}>
+          <summary>Einführung & Einordnung</summary>
+          <div className="reference-prophet-overview__body">
           <p>{course.introduction}</p>
-          <div className="reference-prophet-course__progress" aria-label={`Kapitel ${chapterIndex + 1} von ${course.chapters.length}`}>
-            <span style={{ width: `${((chapterIndex + 1) / course.chapters.length) * 100}%` }} />
-          </div>
-          <small>Kapitel {chapterIndex + 1} von {course.chapters.length}</small>
-        </section>
-
-        <section className="reference-prophet-status" aria-label="Kursstatus">
-          <span><CircleCheck size={15} />{completedChapterIds.length}/{course.chapters.length} abgeschlossen</span>
-          <span><BookOpenCheck size={15} />Mit Quran-Belegstellen</span>
-        </section>
-
-        <section className="reference-prophet-overview" aria-label={`Ausführliche Einführung zu ${prophet.name}`}>
-          <div className="section-heading">
-            <div><span className="overline">Kurseinstieg</span><h2>Bevor du beginnst</h2></div>
-            <span className="reference-legacy-count">Quran</span>
-          </div>
+          <p>Quran-Grundkurs mit Belegstellen. Wo der Quran keine Details nennt oder Gelehrte unterschiedlich einordnen, sagt der Kurs das ausdrücklich.</p>
           <div className="reference-prophet-overview__text">
             <p>{overview.orientation}</p>
             <p>{overview.coursePath}</p>
@@ -686,11 +673,11 @@ function ProphetsFeature({
               <p key={goal}><span>{String(index + 1).padStart(2, '0')}</span>{goal}</p>
             ))}
           </div>
-          <section className="reference-prophet-overview__facts" aria-label={`Sicher belegte Kernaussagen zu ${prophet.name}`}>
+          <section className="reference-prophet-overview__facts" aria-label={`Kernaussagen und Lernlehren zu ${prophet.name}`}>
             <div>
-              <span className="overline">Direkt aus den Versen</span>
-              <h3>Sicher im Quran belegt</h3>
-              <p>Eine Kernaussage pro Kapitel. Die ausführliche Erklärung folgt darunter.</p>
+              <span className="overline">Quellen und Lernlehren</span>
+              <h3>Das Wesentliche im Kurs</h3>
+              <p>Eine Kernaussage pro Kapitel. Die Angaben verbinden sinngemäße Quelleninhalte und redaktionelle Lernlehren; sie sind keine wörtlichen Quran-Zitate.</p>
             </div>
             <ol>
               {courseEssentials.map((item, index) => (
@@ -710,65 +697,49 @@ function ProphetsFeature({
             <p><strong>Grenze des sicheren Wissens:</strong> {overview.boundary}</p>
           </div>
           <small>{courseReferences.length} verschiedene Quran-Passagen bilden den Quellenrahmen dieses Kurses.</small>
-        </section>
-
-        <section className="reference-prophet-plan" aria-label={`Kursplan für ${prophet.name}`}>
-          <div className="section-heading">
-            <div><span className="overline">Dein roter Faden</span><h2>Kursplan</h2></div>
-            <span className="reference-legacy-count">{course.chapters.length}</span>
           </div>
+        </details>
+
+        <details className="reference-prophet-plan" ref={chapterMenu} aria-label={`Kapitel für ${prophet.name}`} key={`${prophet.id}-${chapterIndex}`}>
+          <summary><span>Kapitel auswählen</span><small>{chapterIndex + 1} von {course.chapters.length}</small><ChevronDown size={18} /></summary>
           <div className="reference-prophet-plan__list">
             {course.chapters.map((entry, index) => (
               <button
                 key={entry.id}
-                className={`${index === chapterIndex ? 'is-active' : ''}${completedChapterIds.includes(entry.id) ? ' is-complete' : ''}`}
+                className={index === chapterIndex ? 'is-active' : ''}
                 onClick={() => selectChapter(index)}
                 aria-current={index === chapterIndex ? 'step' : undefined}
               >
                 <span>{String(index + 1).padStart(2, '0')}</span>
-                <span><strong>{entry.title}</strong><small>{entry.summary}</small></span>
-                {completedChapterIds.includes(entry.id) ? <CircleCheck size={17} /> : <ChevronRight size={17} />}
+                <span><strong>{entry.title}</strong></span>
+                <ChevronRight size={17} />
               </button>
             ))}
           </div>
-        </section>
+        </details>
 
         <article className="reference-prophet-lesson">
           <header>
             <span className="overline">Kapitel {String(chapterIndex + 1).padStart(2, '0')} · {prophet.name}</span>
-            <h2>{chapter.title}</h2>
+            <h2 tabIndex={-1}>{chapter.title}</h2>
             <p>{chapter.summary}</p>
           </header>
 
           <div className="reference-prophet-lesson__text">
             <section>
-              <span className="overline">01 · Ausgangspunkt</span>
-              <p>{chapter.summary}</p>
-            </section>
-            <section>
-              <span className="overline">02 · Was der Quran berichtet</span>
+              <span className="overline">Was der Quran berichtet</span>
               {chapter.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
             </section>
           </div>
 
           <section className="reference-prophet-lesson__takeaways">
-            <span className="overline">Das solltest du mitnehmen</span>
+            <span className="overline">Das Wichtigste</span>
             {chapter.keyPoints.map((point, index) => (
               <p key={point}><span>{index + 1}</span>{point}</p>
             ))}
           </section>
 
-          <section className="reference-prophet-lesson__questions">
-            <span className="overline">Prüfe dein Verständnis</span>
-            <ol>
-              <li>Warum ist „{chapter.keyPoints[0]}“ für dieses Kapitel zentral?</li>
-              <li>Wie hängt diese Aussage mit „{chapter.keyPoints[1]}“ zusammen?</li>
-              <li>Welche der genannten Quran-Stellen belegt diese Aussage unmittelbar?</li>
-              <li>Welche Einzelheiten bleiben offen, wenn du ausschließlich die angegebenen Verse zugrunde legst?</li>
-            </ol>
-          </section>
-
-          <section className="reference-prophet-lesson__sources">
+          <SourceInfo title="Im Quran nachlesen"><section className="reference-prophet-lesson__sources">
             <span className="overline">Im Quran nachlesen</span>
             <div>
               {chapter.quranReferences.map((reference) => {
@@ -788,17 +759,9 @@ function ProphetsFeature({
                 );
               })}
             </div>
-          </section>
+          </section></SourceInfo>
 
           <nav className="reference-prophet-lesson__nav" aria-label="Kapitelnavigation">
-            <button
-              className="reference-prophet-lesson__complete"
-              onClick={markCurrentChapterComplete}
-              aria-pressed={completedChapterIds.includes(chapter.id)}
-            >
-              {completedChapterIds.includes(chapter.id) ? <CircleCheck size={17} /> : <Check size={17} />}
-              {completedChapterIds.includes(chapter.id) ? 'Kapitel abgeschlossen' : 'Kapitel als abgeschlossen markieren'}
-            </button>
             <button onClick={() => selectChapter(chapterIndex - 1)} disabled={chapterIndex === 0}>
               <ChevronLeft size={17} /> Zurück
             </button>
@@ -808,28 +771,6 @@ function ProphetsFeature({
           </nav>
         </article>
 
-        {courseComplete ? (
-          <section className="reference-prophet-completion" aria-label="Kurs abgeschlossen">
-            <div><CircleCheck size={24} /><span className="overline">Kurs abgeschlossen</span></div>
-            <h2>Du hast den Quran-Kurs zu {prophet.name} beendet.</h2>
-            <p>Diese drei Punkte bilden deinen Lernabschluss:</p>
-            <ol>{overview.learningGoals.map((goal) => <li key={goal}>{goal}</li>)}</ol>
-            <div className="reference-prophet-completion__actions">
-              <button onClick={() => selectChapter(0)}>Zum ersten Kapitel</button>
-              <button onClick={closeProphet}>Zu allen Propheten</button>
-            </div>
-          </section>
-        ) : null}
-
-        <section className="reference-prophet-course__core">
-          <div><span>Kernthema</span><strong>{prophet.focus}</strong></div>
-          <div><span>Merksatz</span><strong>{prophet.lesson}</strong></div>
-        </section>
-
-        <section className="reference-legacy-notice">
-          <ShieldCheck size={19} />
-          <p>Quran-Grundkurs mit Belegstellen. Wo der Quran keine Details nennt oder Gelehrte unterschiedlich einordnen, sagt der Kurs das ausdrücklich.</p>
-        </section>
       </LegacyMotionMain>
     );
   }
@@ -850,18 +791,12 @@ function ProphetsFeature({
     <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} showHero={false} />
       <section className="reference-prophet-catalogue-intro">
-        <span className="overline">25 eigenständige Kurse</span>
         <h2>Von Adam bis Muhammad ﷺ</h2>
-        <p>Öffne einen Propheten und lerne Schritt für Schritt: sichere Einordnung, wichtige Quran-Ereignisse, zentrale Lehren und die genauen Belegstellen.</p>
-        <div>
-          <span><strong>25</strong> Propheten</span>
-          <span><strong>{Object.values(PROPHET_COURSES).reduce((sum, entry) => sum + entry.chapters.length, 0)}</strong> Kapitel</span>
-          <span><strong>Quran</strong> als Grundlage</span>
-        </div>
+        <p>25 Propheten mit Kapiteln und Quran-Belegstellen.</p>
       </section>
 
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Kursübersicht</span><h2>Wen möchtest du kennenlernen?</h2></div><span className="reference-legacy-count">{PROPHETS.length}</span></div>
+
         <div className="reference-person-list reference-prophet-catalogue">
           {PROPHETS.map((entry, index) => {
             const entryCourse = PROPHET_COURSES[entry.id];
@@ -884,23 +819,25 @@ function ProphetsFeature({
 }
 
 function PeopleListFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  // Sahabah and women in Islam carry a name, an honorific and a role, and
-  // nothing more in the source data. They are listed rather than made tappable:
-  // a detail view would open on three lines and promise a biography that does
-  // not exist.
   const isSahabah = feature.id === 'sahabah';
   const entries = isSahabah
-    ? SAHABAH.map((entry) => ({ id: entry.id, name: entry.name, note: `${entry.honorific} · ${entry.role}` }))
-    : WOMEN_IN_ISLAM.map((entry) => ({ id: entry.id, name: entry.name, note: entry.note }));
+    ? SAHABAH.map((entry) => ({ id: entry.id, name: entry.name, note: `${entry.honorific} · ${entry.role}`, sources: entry.sources, sourceNote: entry.sourceNote }))
+    : WOMEN_IN_ISLAM;
 
   return (
-    <LegacyMotionMain>
+    <LegacyMotionMain className="reference-people-screen">
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
         <div className="section-heading"><div><span className="overline">Übersicht</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{entries.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {entries.map((entry) => (
-            <article key={entry.id}><strong>{entry.name}</strong><small>{entry.note}</small></article>
+            <article key={entry.id}>
+              <strong>{entry.name}</strong><small>{entry.note}</small>
+              <SourceInfo title={`Quellen zu ${entry.name}`}>{entry.sourceNote && <small>{entry.sourceNote}</small>}
+              {entry.sources.length > 0 && <small>Quellen: {entry.sources.map((source, index) => (
+                <span key={source.url}>{index > 0 && ' · '}<a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></span>
+              ))}</small>}</SourceInfo>
+            </article>
           ))}
         </div>
       </section>
@@ -909,25 +846,35 @@ function PeopleListFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
 }
 
 function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  const [openId, setOpenId] = useState<string | null>(null);
+  const [openId, setOpenId] = useScreenState<string | null>('knowledge.selected', null);
+  const catalogueScroll = useScreenRef('knowledge.catalogue-scroll', 0);
+  const closeTopic = () => {
+    setOpenId(null);
+    requestAnimationFrame(() => {
+      const frame = document.querySelector<HTMLElement>('.reference-person-list')?.closest<HTMLElement>('.screen-transition-frame');
+      if (frame) frame.scrollTop = catalogueScroll.current;
+    });
+  };
   const topic = KNOWLEDGE_TOPICS.find((entry) => entry.id === openId) ?? null;
 
   if (topic) {
     return (
       <LegacyMotionMain>
-        <FeatureHeader feature={feature} onBack={() => setOpenId(null)} />
+        <FeatureHeader feature={feature} onBack={closeTopic} />
         <section className="reference-person-detail">
           <span className="overline">Thema</span>
           <h2>{topic.title}</h2>
           <p className="reference-person-detail__intro">{topic.intro}</p>
+          <SourceInfo title={`Quelle zu „${topic.title}“`}><p className="reference-topic-text">Quelle: <a href={topic.sourceUrl} target="_blank" rel="noreferrer">{topic.source}</a></p></SourceInfo>
         </section>
         {topic.sections.map((section) => (
           <section className="reference-legacy-section" key={section.subtitle}>
             <div className="section-heading"><div><span className="overline">{section.subtitle}</span></div></div>
             <p className="reference-topic-text">{section.text}</p>
+            {section.source ? <SourceInfo title="Quellenangabe"><p className="reference-topic-text">Quelle: {section.sourceUrl ? <a href={section.sourceUrl} target="_blank" rel="noreferrer">{section.source}</a> : section.source}</p></SourceInfo> : null}
           </section>
         ))}
-        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Dieser Überblick enthält nicht zu jeder Aussage einen Einzelnachweis.</p></section>
+        <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Sinngemäße Lerntexte mit Fundstellen, keine wörtlichen Übersetzungen und keine Fatwa. Der KI-Quellenabgleich ist keine menschliche Fachfreigabe.</p></section>
       </LegacyMotionMain>
     );
   }
@@ -939,7 +886,7 @@ function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onB
         <div className="section-heading"><div><span className="overline">Themen</span><h2>{feature.title}</h2></div><span className="reference-legacy-count">{KNOWLEDGE_TOPICS.length}</span></div>
         <div className="reference-person-list">
           {KNOWLEDGE_TOPICS.map((entry) => (
-            <button key={entry.id} onClick={() => setOpenId(entry.id)}>
+            <button key={entry.id} onClick={event => { catalogueScroll.current = event.currentTarget.closest<HTMLElement>('.screen-transition-frame')?.scrollTop ?? 0; setOpenId(entry.id); }}>
               <span><strong>{entry.title}</strong><small>{entry.intro}</small></span>
               <ChevronRight size={18} />
             </button>
@@ -950,7 +897,7 @@ function KnowledgeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onB
         <div className="section-heading"><div><span className="overline">Glossar</span><h2>Begriffe</h2></div><span className="reference-legacy-count">{GLOSSARY_TERMS.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {GLOSSARY_TERMS.map((entry) => (
-            <article key={entry.term}><strong>{entry.term}</strong><small>{entry.definition}</small></article>
+            <article key={entry.term}><strong>{entry.term}</strong><small>{entry.definition}</small><SourceInfo title={`Quelle zu „${entry.term}“`}><small>Quelle: <a href={entry.sourceUrl} target="_blank" rel="noreferrer">{entry.source}</a></small></SourceInfo></article>
           ))}
         </div>
       </section>
@@ -988,7 +935,7 @@ function PracticeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBa
               {item.meaning ? <p><strong>Bedeutung.</strong> {item.meaning}</p> : null}
               <p>{item.description}</p>
               {item.example ? <FoundationExample>{item.example}</FoundationExample> : null}
-              {item.sourceUrl ? <FoundationSource href={item.sourceUrl}>{item.proof}</FoundationSource> : <p className="foundation-guide-label">Hinterlegter Beleg: {item.proof}</p>}
+              {item.sourceUrl ? <FoundationSource href={item.sourceUrl}>{item.proof}</FoundationSource> : <SourceInfo title="Hinterlegter Beleg"><p className="foundation-guide-label">Hinterlegter Beleg: {item.proof}</p></SourceInfo>}
             </article>)}
           </div>
         </FoundationChapter>
@@ -1002,32 +949,28 @@ function UmmahFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack:
     <LegacyMotionMain>
       <FeatureHeader feature={feature} onBack={onBack} />
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Verteilung</span><h2>Weltweit</h2></div></div>
-        <p className="reference-topic-text">Wie sich die muslimische Weltbevölkerung auf die Regionen verteilt:</p>
+        <div className="section-heading"><div><span className="overline">Gemeinschaft</span><h2>Weltweit</h2></div></div>
+        <p className="reference-topic-text">Muslimische Gemeinschaften gibt es in vielen Regionen. Diese geografische Auswahl ist keine vollständige Übersicht und keine Rangliste.</p>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_REGIONS.map((region) => (
-            <article key={region.name}><strong>{region.name}</strong><small>{region.share}</small></article>
+            <article key={region.name}><strong>{region.name}</strong></article>
           ))}
         </div>
       </section>
 
       <section className="reference-legacy-section">
-        <div className="section-heading"><div><span className="overline">Länder</span><h2>Muslimischer Anteil</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
+        <div className="section-heading"><div><span className="overline">Länder</span><h2>Geografische Auswahl</h2></div><span className="reference-legacy-count">{UMMAH_COUNTRIES.length}</span></div>
         <div className="reference-person-list reference-person-list--static">
           {UMMAH_COUNTRIES.map((country) => (
             <article key={country.id}>
               <strong>{country.name}</strong>
-              <small>{country.share} der Bevölkerung · {country.region}</small>
-              <small>{country.info}</small>
+              <small>{country.region}</small>
             </article>
           ))}
         </div>
       </section>
 
-      {/* The absolute figures are gone rather than promised. What is left still
-          carries no source, and the notice says so instead of announcing a fix
-          that has no date on it. */}
-      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Absolute Bevölkerungszahlen zeigt diese Übersicht nicht mehr: die übernommenen Werte trugen weder Quelle noch Stichjahr, und eine undatierte Bevölkerungszahl lässt sich nicht überprüfen. Auch die Anteile hier sind eine grobe Einordnung ohne Einzelnachweis, keine Statistik.</p></section>
+      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Keine Bevölkerungsstatistik: Unbelegte Prozentwerte, Bevölkerungszahlen und Rangbehauptungen wurden entfernt. Zahlen benötigen eine nachvollziehbare Quelle und ein Bezugsjahr.</p></section>
     </LegacyMotionMain>
   );
 }
@@ -1040,9 +983,8 @@ function StationList({ stations }: { stations: readonly PilgrimageStation[] }) {
           <span className="reference-station-when">{index + 1} · {station.when}</span>
           <strong>{station.title}</strong>
           <p>{station.description}</p>
-          {/* Only where a clear verse exists. An entry without one shows
-              nothing rather than an invented reference. */}
           {station.reference ? <small><ShieldCheck size={14} /> {station.reference}</small> : null}
+          {station.sourceUrl ? <SourceInfo title="Quelle zur Station"><small><a href={station.sourceUrl} target="_blank" rel="noreferrer">{station.sourceLabel}</a></small></SourceInfo> : null}
         </article>
       ))}
     </div>
@@ -1150,7 +1092,7 @@ function HolyPlacesFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
                   <article className={`holy-place-card${placeIndex === 0 ? ' holy-place-card--lead' : ''}`} key={place.id}>
                     <figure>
                       <img src={place.image} alt={place.imageAlt} loading="lazy" />
-                      <figcaption><MapPinned size={14} aria-hidden="true" />{place.city}</figcaption>
+                      <figcaption><MapPinned size={14} aria-hidden="true" />Illustration · {place.city}</figcaption>
                     </figure>
                     <div className="holy-place-card__body">
                       <span className="overline">{place.eyebrow}</span>
@@ -1160,11 +1102,11 @@ function HolyPlacesFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
                       <div className="holy-place-card__facts" aria-label={`Kurzüberblick zu ${place.name}`}>
                         {place.facts.map((fact) => <span key={fact}><CircleCheck size={15} aria-hidden="true" />{fact}</span>)}
                       </div>
-                      <a href={place.sourceUrl} target="_blank" rel="noreferrer">
+                      <SourceInfo title={`Quelle zu ${place.name}`}><a href={place.sourceUrl} target="_blank" rel="noreferrer">
                         <BookOpenCheck size={16} aria-hidden="true" />
                         <span>Quelle: {place.sourceLabel}</span>
                         <ExternalLink size={14} aria-hidden="true" />
-                      </a>
+                      </a></SourceInfo>
                     </div>
                   </article>
                 ))}
@@ -1174,10 +1116,10 @@ function HolyPlacesFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
         })}
       </div>
 
-      <section className="holy-places-note">
+      <SourceInfo title="Hinweise zu den Orten"><section className="holy-places-note">
         <ShieldCheck size={20} aria-hidden="true" />
         <div><strong>Zur Einordnung</strong><p>Die Seite vermittelt Geschichte und Orientierung. Sie ersetzt keine Reise-, Sicherheits- oder Ritualberatung vor Ort.</p></div>
-      </section>
+      </section></SourceInfo>
     </LegacyMotionMain>
   );
 }
@@ -1212,7 +1154,7 @@ export function LegacyFeatureScreen({
 }) {
   const feature = featureId === 'quiz'
     ? quizFeature
-    : allFeatures.find((item) => item.id === featureId) ?? learningLegacyFeatures[0];
+    : allFeatures.find((item) => item.id === featureId) ?? retainedFeatures[featureId] ?? learningLegacyFeatures[0];
   if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
   if (featureId === 'prophets') return <ProphetsFeature feature={feature} onBack={onBack} onOpenQuranReference={onOpenQuranReference} />;
   if (featureId === 'knowledge') return <KnowledgeFeature feature={feature} onBack={onBack} />;

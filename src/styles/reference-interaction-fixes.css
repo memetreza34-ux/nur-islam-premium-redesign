@@ -41,7 +41,7 @@
   border: 1px solid rgba(226, 191, 119, .22);
   border-radius: 11px;
   color: var(--gold-soft);
-  font-size: .52rem;
+  font-size: .75rem;
   background: rgba(214, 175, 55, .055);
 }
 
@@ -67,12 +67,3 @@
   outline: 2px solid rgba(232, 199, 122, .7);
   outline-offset: 2px;
 }
-
-@media (hover: hover) {
-  .reference-guide-steps > button:hover,
-  .reference-reader-next:hover,
-  .reference-daily-card-button:hover,
-  .reference-quran-verse--button:hover {
-    border-color: rgba(232, 199, 122, .42);
-    transform: translateY(-1px);
-  }}

@@ -1,5 +1,6 @@
+import { SourceInfo } from './SourceInfo';
 import { useEffect, useMemo, useState } from 'react';
-import { CalendarDays, ChevronLeft, ChevronRight, MoonStar } from 'lucide-react';
+import { CalendarDays, ChevronLeft, ChevronRight } from 'lucide-react';
 import { readCalendarEntries } from '../services/calendarReminderService';
 import { CALENDAR_DAY_NOTES_CHANGED_EVENT, readCalendarDayNotes } from '../services/calendarDayNotes';
 import { getCalendarEvent, getDateKey, getMonthData, getUpcomingIslamicDates } from '../services/calendarViewModel';
@@ -15,8 +16,6 @@ export function PrayerCalendarSection({ onOpenCalendar }: { onOpenCalendar: (dat
   const selectedEvent = getCalendarEvent(selectedDate);
   const [entries, setEntries] = useState(readCalendarEntries);
   const [notes, setNotes] = useState(readCalendarDayNotes);
-  const selectedEntries = entries.filter((entry) => entry.date === getDateKey(selectedDate));
-  const selectedNotes = notes.filter((note) => note.date === getDateKey(selectedDate));
   const upcomingDates = useMemo(() => getUpcomingIslamicDates(today, 3), [today]);
   const monthTitle = new Intl.DateTimeFormat('de-DE', { month: 'long', year: 'numeric' }).format(monthData.first);
   const visibleCells = useMemo(() => {
@@ -55,7 +54,6 @@ export function PrayerCalendarSection({ onOpenCalendar }: { onOpenCalendar: (dat
     <section className="prayer-calendar-section" aria-labelledby="prayer-calendar-title">
       <div className="section-heading prayer-calendar-section__heading">
         <div><span className="overline">Gebetskalender</span><h2 id="prayer-calendar-title">Islamische Tage & Termine</h2></div>
-        <button className="text-button" onClick={() => onOpenCalendar(getDateKey(selectedDate))}><CalendarDays size={15} /> Kalender öffnen</button>
       </div>
 
       <div className="prayer-calendar-ledger">
@@ -98,21 +96,27 @@ export function PrayerCalendarSection({ onOpenCalendar }: { onOpenCalendar: (dat
 
         <div className="prayer-calendar-selected">
           <time dateTime={getDateKey(selectedDate)}><strong>{selectedDate.getDate()}</strong><small>{new Intl.DateTimeFormat('de-DE', { month: 'short' }).format(selectedDate)}</small></time>
-          <span><small>{new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(selectedDate)}</small><strong>{selectedEvent?.title ?? 'Kein besonderer Termin'}</strong><em>{getHijriLabel(selectedDate)}</em></span>
-          <span className="prayer-calendar-selected__meta">{selectedNotes.length ? `${selectedNotes.length} ${selectedNotes.length === 1 ? 'Notiz' : 'Notizen'}` : selectedEntries.length ? `${selectedEntries.length} ${selectedEntries.length === 1 ? 'Termin' : 'Termine'}` : selectedEvent?.fasting ? 'Fastenhinweis' : 'Frei'}</span>
+          <span><strong>{selectedEvent?.title ?? new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(selectedDate)}</strong>{selectedEvent ? <small>{new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(selectedDate)}</small> : null}<em>{getHijriLabel(selectedDate)}</em></span>
         </div>
         <CalendarDayNotes date={selectedDate} compact />
       </div>
 
-      <div className="prayer-calendar-upcoming">
-        <div><MoonStar size={17} /><span><small>Vorausblick</small><strong>Nächste wichtige Termine</strong></span></div>
+      <button className="gold-button prayer-calendar-open" onClick={() => onOpenCalendar(getDateKey(selectedDate))}><CalendarDays size={18} /> Kalender öffnen</button>
+
+      <section className="prayer-calendar-upcoming" aria-labelledby="prayer-calendar-upcoming-title">
+        <header>
+          <h3 id="prayer-calendar-upcoming-title">Nächste Termine</h3>
+          <SourceInfo title="Islamisches Datum"><p>Hijri-Daten sind berechnet. Die örtliche Mondsichtung kann um einen Tag abweichen.</p></SourceInfo>
+        </header>
         <ol>
           {upcomingDates.map(({ date, event }) => (
-            <li key={`${getDateKey(date)}-${event.title}`}><time dateTime={getDateKey(date)}>{new Intl.DateTimeFormat('de-DE', { day: '2-digit', month: 'short' }).format(date)}</time><span><strong>{event.title}</strong><small>{getHijriLabel(date)}</small></span></li>
+            <li key={`${getDateKey(date)}-${event.title}`}>
+              <time dateTime={getDateKey(date)} aria-label={new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long', year: 'numeric' }).format(date)}><strong>{new Intl.DateTimeFormat('de-DE', { day: '2-digit' }).format(date)}</strong><small>{new Intl.DateTimeFormat('de-DE', { month: 'short' }).format(date)}</small></time>
+              <span><strong>{event.title}</strong><small>{getHijriLabel(date)}</small></span>
+            </li>
           ))}
         </ol>
-        <p>Hijri-Daten sind berechnet. Die örtliche Mondsichtung kann um einen Tag abweichen.</p>
-      </div>
+      </section>
     </section>
   );
 }

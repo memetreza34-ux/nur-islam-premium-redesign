@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nur Islam – Logoentwürfe</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #001B16; color: #F5F0E6; font: 500 15px system-ui, sans-serif; }
+    main { max-width: 1080px; margin: auto; padding: 48px 24px 80px; }
+    h1 { font: 500 clamp(28px, 4vw, 44px) Georgia, serif; margin: 0 0 12px; }
+    p { color: #9eafa6; margin: 0 0 36px; }
+    .grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+    .card { border: 1px solid #29473d; border-radius: 24px; padding: 24px; background: #08271f; }
+    .large { display: grid; place-items: center; height: 260px; background: #001B16; border-radius: 18px; }
+    .large img { width: 210px; height: 210px; }
+    .small { display: flex; align-items: center; gap: 14px; padding-top: 18px; }
+    .small img { width: 48px; height: 48px; border-radius: 11px; }
+    .small img:last-child { width: 24px; height: 24px; border-radius: 5px; }
+    h2 { font: 500 22px Georgia, serif; margin: 20px 0 6px; }
+    .description { margin: 0; line-height: 1.5; }
+    @media (max-width: 750px) { .grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Ein Zeichen, keine Illustration.</h1>
+    <p>Jede Richtung ist als App-Icon, kleines Navigationselement und Startsymbol gedacht.</p>
+    <div class="grid">
+      <section class="card">
+        <div class="large"><img src="d-nur-mosque.svg" alt="Moscheekuppel mit drei Bögen"></div>
+        <div class="small"><img src="d-nur-mosque.svg" alt=""><img src="d-nur-mosque.svg" alt=""></div>
+        <h2>D · Nur</h2>
+        <p class="description">Kuppel, drei Gebetsbögen und ein kleines Licht als prägnante Marke.</p>
+      </section>
+      <section class="card">
+        <div class="large"><img src="a-mosque-silhouette.svg" alt="Moschee-Silhouette"></div>
+        <div class="small"><img src="a-mosque-silhouette.svg" alt=""><img src="a-mosque-silhouette.svg" alt=""></div>
+        <h2>A · Silhouette</h2>
+        <p class="description">Helle, gefüllte Moschee mit goldener Lichtöffnung.</p>
+      </section>
+      <section class="card">
+        <div class="large"><img src="b-mosque-portal.svg" alt="Lichtportal"></div>
+        <div class="small"><img src="b-mosque-portal.svg" alt=""><img src="b-mosque-portal.svg" alt=""></div>
+        <h2>B · Lichtportal</h2>
+        <p class="description">Moscheebogen und „Nur“ als Licht im Eingang.</p>
+      </section>
+      <section class="card">
+        <div class="large"><img src="c-mosque-asymmetric.svg" alt="Moschee mit Minarett"></div>
+        <div class="small"><img src="c-mosque-asymmetric.svg" alt=""><img src="c-mosque-asymmetric.svg" alt=""></div>
+        <h2>C · Minarett</h2>
+        <p class="description">Eigenständige, asymmetrische Moscheeform.</p>
+      </section>
+    </div>
+  </main>
+</body>
+</html>

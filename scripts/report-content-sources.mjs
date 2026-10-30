@@ -60,13 +60,21 @@ const practiceItems = countMatches(practice, /^\s+title:\s*'/gm);
 const practiceProofs = countMatches(practice, /^\s+proof:\s*'/gm);
 
 const quizQuestions = countMatches(quiz, /^\s+question:\s*'/gm);
+const quizSources = countMatches(quiz, /^\s+source:\s*'/gm);
 
 // Pilgrimage carries a citation only where an exact one exists, so partial
 // coverage is the intended state rather than a gap to close.
 const pilgrimageEntries = countMatches(pilgrimage, /^\s{4}id:\s*'/gm);
 const pilgrimageRefs = countMatches(pilgrimage, /^\s+reference:\s*'/gm);
 
-const knowledgeCount = countMatches(knowledgeTopics.slice(0, knowledgeTopics.indexOf('GLOSSARY_TERMS')), /^\s{4}id:\s*'/gm);
+const knowledgeBody = knowledgeTopics.slice(knowledgeTopics.indexOf('export const KNOWLEDGE_TOPICS'), knowledgeTopics.indexOf('export const GLOSSARY_TERMS'));
+const glossaryBody = knowledgeTopics.slice(knowledgeTopics.indexOf('export const GLOSSARY_TERMS'));
+const knowledgeCount = countMatches(knowledgeBody, /^\s{4}id:\s*'/gm);
+const knowledgeIntroSources = countMatches(knowledgeBody, /^\s{4}source:\s*'/gm);
+const knowledgeSections = countMatches(knowledgeBody, /\bsubtitle:\s*'/g);
+const knowledgeSectionSources = countMatches(knowledgeBody, /\bsource:\s*'/g) - knowledgeIntroSources;
+const glossaryCount = countMatches(glossaryBody, /\bterm:\s*'/g);
+const glossarySources = countMatches(glossaryBody, /\bsource:\s*'/g);
 const prophetCount = countMatches(prophets, /id: '[^']+', name: '[^']+', arabic: '[^']+'/g);
 const prophetSources = countMatches(prophets, /^\s+quranReferences:\s*\[/gm);
 const prophetChapterCount = countMatches(prophetCourses, /\{ id: '[^']+', title: '[^']+', summary:/g);
@@ -81,8 +89,10 @@ const rows = [
   { area: 'Hadith summaries', items: hadithEntries, withSource: hadithSources },
   { area: 'Sunnah & repentance', items: practiceItems, withSource: practiceProofs },
   { area: 'Pilgrimage stations', items: pilgrimageEntries, withSource: pilgrimageRefs },
-  { area: 'Quiz questions', items: quizQuestions, withSource: 0 },
-  { area: 'Knowledge topics', items: knowledgeCount, withSource: 0 },
+  { area: 'Quiz questions', items: quizQuestions, withSource: quizSources },
+  { area: 'Knowledge intros', items: knowledgeCount, withSource: knowledgeIntroSources },
+  { area: 'Knowledge sections', items: knowledgeSections, withSource: knowledgeSectionSources },
+  { area: 'Knowledge glossary', items: glossaryCount, withSource: glossarySources },
   { area: 'Prophets', items: prophetCount, withSource: prophetSources },
   { area: 'Prophet chapters', items: prophetChapterCount, withSource: prophetChapterSources },
 ];

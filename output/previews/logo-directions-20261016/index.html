@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nur Islam · Drei Logoentwürfe</title>
+  <style>
+    :root { color-scheme:dark; --green:#123c30; --cream:#f7efdf; --gold:#dfbd79; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#071e18; color:var(--cream); font-family:Inter,Arial,sans-serif; }
+    main { max-width:1060px; margin:auto; padding:28px 22px; }
+    header { margin-bottom:22px; }
+    .eyebrow { color:var(--gold); font-size:11px; letter-spacing:.13em; text-transform:uppercase; }
+    h1 { font:500 38px/1.05 'Cormorant Garamond',Georgia,serif; margin:7px 0 10px; }
+    header p { margin:0; color:#adc0b3; font-size:13px; line-height:1.5; }
+    .options { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .option { display:flex; flex-direction:column; align-items:center; gap:16px; padding:26px 18px; color:var(--green); background:#fff; border:2px solid transparent; border-radius:20px; text-align:center; cursor:pointer; font:inherit; transition:border-color .15s; }
+    .option[aria-pressed="true"] { border-color:var(--gold); }
+    .option:focus-visible { outline:3px solid var(--gold); outline-offset:4px; }
+    .mark { width:150px; height:150px; display:block; }
+    .text { display:grid; gap:5px; }
+    .id { font-size:11px; font-weight:600; color:#8c692e; letter-spacing:.1em; }
+    .name { font:600 28px/1.1 'Cormorant Garamond',Georgia,serif; }
+    .description { font-size:12px; line-height:1.5; color:#526357; }
+    .context { margin-top:20px; padding:18px 20px; border:1px solid #3d5844; border-radius:20px; background:#10352a; }
+    .context-head { display:flex; justify-content:space-between; align-items:center; gap:14px; margin-bottom:14px; }
+    #selected { font-size:12px; color:var(--gold); }
+    #download { font-size:12px; color:var(--cream); text-underline-offset:4px; padding:6px 0; }
+    .brand-row { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+    .brand { display:flex; align-items:center; gap:14px; }
+    #context-icon { display:block; width:56px; height:56px; border-radius:13px; }
+    .wordmark { font:500 32px/1 'Cormorant Garamond',Georgia,serif; white-space:nowrap; }
+    .samples { display:flex; align-items:center; gap:12px; margin-left:auto; }
+    .sample { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:5px; font-size:10px; color:#a9bdaf; }
+    .sample img { display:block; }
+    @media(max-width:720px) {
+      main { padding:22px 16px; }
+      h1 { font-size:33px; }
+      header { margin-bottom:18px; }
+      .options { grid-template-columns:1fr; gap:10px; }
+      .option { flex-direction:row; gap:14px; padding:12px 14px; text-align:left; min-height:108px; border-radius:17px; }
+      .mark { width:76px; height:76px; flex-shrink:0; }
+      .name { font-size:25px; }
+      .text { gap:3px; }
+      .context { padding:14px; margin-top:14px; }
+      .brand { gap:10px; }
+      #context-icon { width:44px; height:44px; border-radius:10px; }
+      .wordmark { font-size:26px; }
+      .samples { gap:8px; }
+    }
+    @media(prefers-reduced-motion:reduce) { .option { transition:none; } }
+  </style>
+</head>
+<body>
+  <main>
+    <header><span class="eyebrow">Nur Islam · Logoentwürfe</span><h1>Ein neues Zeichen.</h1><p>Wähle einen Entwurf für die Vorschau.</p></header>
+    <section class="options" aria-label="Logoentwürfe">
+      <button class="option" type="button" data-id="a" aria-pressed="true" aria-label="A: Lichtbogen"><img class="mark" src="logo-a.svg" alt="Grüner Bogen mit goldenem Lichtkern"><span class="text"><span class="id">A</span><strong class="name">Lichtbogen</strong><span class="description">Ein klarer Bogen mit einem warmen Lichtkern.</span></span></button>
+      <button class="option" type="button" data-id="b" aria-pressed="false" aria-label="B: Nur-Monogramm"><img class="mark" src="logo-b.svg" alt="Grünes N mit goldenem Mittelstrich"><span class="text"><span class="id">B</span><strong class="name">Nur-Monogramm</strong><span class="description">Ein kräftiges N, auch als kleines App-Zeichen.</span></span></button>
+      <button class="option" type="button" data-id="c" aria-pressed="false" aria-label="C: Mond und Licht"><img class="mark" src="logo-c.svg" alt="Grüne Mondsichel mit goldenem Lichtstern"><span class="text"><span class="id">C</span><strong class="name">Mond & Licht</strong><span class="description">Eine weiche Sichel mit einem einzelnen Lichtstern.</span></span></button>
+    </section>
+    <section class="context" aria-label="Logo in App-Größe">
+      <div class="context-head"><span id="selected" aria-live="polite">Vorschau · Lichtbogen</span><a id="download" href="logo-a.svg" download>SVG herunterladen</a></div>
+      <div class="brand-row"><div class="brand"><img id="context-icon" src="icon-a.svg" alt="App-Symbol des ausgewählten Entwurfs"><span class="wordmark">Nur Islam</span></div><div class="samples" aria-label="Kleine Größen"><span class="sample"><img src="icon-a.svg" width="16" height="16" alt="16 Pixel"><span>16</span></span><span class="sample"><img src="icon-a.svg" width="24" height="24" alt="24 Pixel"><span>24</span></span><span class="sample"><img src="icon-a.svg" width="32" height="32" alt="32 Pixel"><span>32</span></span></div></div>
+    </section>
+  </main>
+  <script type="module">
+    import '@fontsource/inter/400.css';
+    import '@fontsource/inter/500.css';
+    import '@fontsource/inter/600.css';
+    import '@fontsource/cormorant-garamond/500.css';
+    import '@fontsource/cormorant-garamond/600.css';
+    const names={a:'Lichtbogen',b:'Nur-Monogramm',c:'Mond & Licht'};
+    document.querySelectorAll('.option').forEach(button=>button.addEventListener('click',()=>{
+      const id=button.dataset.id;
+      document.querySelectorAll('.option').forEach(other=>other.setAttribute('aria-pressed',String(other===button)));
+      document.querySelector('#selected').textContent='Vorschau · '+names[id];
+      document.querySelectorAll('#context-icon,.samples img').forEach(image=>image.src='icon-'+id+'.svg');
+      document.querySelector('#download').href='logo-'+id+'.svg';
+    }));
+  </script>
+</body>
+</html>

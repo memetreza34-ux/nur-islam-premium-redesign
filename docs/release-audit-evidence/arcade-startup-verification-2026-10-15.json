@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-15",
+  "scope": "Integrated the approved matte 3D arcade concept into the real startup, replacing the previous distant mosque courtyard only in the startup mapping.",
+  "motion": "5s CSS camera approach scale 1 to 1.035, 0.9s copy fade; no increase to existing 1600ms boot timer. Reduced motion disables CSS animations and retains existing 160ms boot path. Image transform is clipped inside the full-canvas background wrapper.",
+  "backgrounds": [
+    "splash-arcade-fajr-v1.webp",
+    "splash-arcade-dhuhr-v1.webp",
+    "splash-arcade-asr-v1.webp",
+    "splash-arcade-maghrib-v1.webp",
+    "splash-arcade-isha-v1.webp"
+  ],
+  "timeSelection": "Current prayer/time phase selects artwork. Next prayer label and timetable behavior unchanged.",
+  "text": "Ivory text against the central dark emerald wall for all five lighting variants.",
+  "checks": {
+    "full": "1047 unit tests, TypeScript, source/assets/provenance/budget guards and production build passed.",
+    "browser": "Final serial run: all 22 passed (startup 9, landscapes 9, offline 4). Five viewports 320x568, 390x844, 768x1024, 1280x720, 568x320. All five daily Ayah wordings on the narrow phone.",
+    "initialBrowserRun": "20 passed, 2 startup navigation timeouts in the initial parallel run. No assertion changes; complete final serial run passed.",
+    "manual": "Actual app tab: new source loaded, splash-approach animation reaches scale 1.035, ivory text opacity 1, no horizontal overflow, ordinary URL advances to Home.",
+    "logs": [
+      "/tmp/nur-arcade-startup-check-20261015.log",
+      "/tmp/nur-arcade-startup-final-e2e-20261015.log"
+    ]
+  },
+  "pwaShell": "v111",
+  "prompts": "output/imagegen/splash-arcade-20261015/prompts.json",
+  "limits": [
+    "No physical device test in this task."
+  ]
+}

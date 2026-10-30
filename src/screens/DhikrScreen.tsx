@@ -1,3 +1,5 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
@@ -52,7 +54,12 @@ function routineIcon(id: string) {
 export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const [dailyState, setDailyState] = useState(readDailyState);
   const [activeRoutineId, setActiveRoutineId] = useState(readRoutineId);
-  const [activeItemIndex, setActiveItemIndex] = useState(0);
+  const [activeItemIndex, setActiveItemIndex] = useState(() => {
+    const selected = DHIKR_ROUTINE_BY_ID.get(activeRoutineId) ?? DHIKR_ROUTINES[0];
+    const firstIncomplete = selected.items.findIndex(entry => (dailyState.counts[`${selected.id}:${entry.id}`] ?? 0) < entry.target);
+    return firstIncomplete === -1 ? selected.items.length - 1 : firstIncomplete;
+  });
+  const [storageAvailable, setStorageAvailable] = useState(true);
   const [statsOpen, setStatsOpen] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const reduceMotion = useReducedMotion();
@@ -64,6 +71,8 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
   const routine = DHIKR_ROUTINE_BY_ID.get(activeRoutineId) ?? DHIKR_ROUTINES[0];
   const item = routine.items[Math.min(activeItemIndex, routine.items.length - 1)];
   const itemKey = `${routine.id}:${item.id}`;
+  const sourceUrl = item.itemSourceUrl ?? routine.sourceUrl;
+  const sourceLabel = item.itemSource ?? routine.source;
   const count = Math.min(item.target, Math.max(0, dailyState.counts[itemKey] ?? 0));
   const itemProgress = Math.round((count / item.target) * 100);
 
@@ -87,18 +96,15 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
   useEffect(() => {
     try {
-      localStorage.setItem('nur_dhikr_daily_v2', JSON.stringify(dailyState));
+      const serialized = JSON.stringify(dailyState);
+      localStorage.setItem('nur_dhikr_daily_v2', serialized);
       localStorage.setItem('nur_dhikr_active_routine', activeRoutineId);
       localStorage.setItem('nur_dhikr_count', String(count));
+      setStorageAvailable(localStorage.getItem('nur_dhikr_daily_v2') === serialized && localStorage.getItem('nur_dhikr_active_routine') === activeRoutineId);
     } catch {
-      // Lokale Speicherung ist in eingeschränkten Browsermodi optional.
+      setStorageAvailable(false);
     }
   }, [activeRoutineId, count, dailyState]);
-
-  useEffect(() => {
-    const firstIncomplete = routine.items.findIndex((entry) => (dailyState.counts[`${routine.id}:${entry.id}`] ?? 0) < entry.target);
-    setActiveItemIndex(firstIncomplete === -1 ? Math.max(0, routine.items.length - 1) : firstIncomplete);
-  }, [activeRoutineId, dailyState.counts, routine]);
 
   useEffect(() => {
     const syncDay = () => {
@@ -155,7 +161,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       const nextIndex = activeItemIndex + 1;
       if (nextIndex < routine.items.length) {
         flash(`${item.latin} abgeschlossen`);
-        window.setTimeout(() => setActiveItemIndex(nextIndex), reduceMotion ? 0 : 220);
+        setActiveItemIndex(nextIndex);
       } else {
         flash('Routine abgeschlossen');
       }
@@ -188,9 +194,11 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
         <button className="icon-button" onClick={() => setStatsOpen(true)} aria-label="Heutige Statistik öffnen"><BarChart3 size={20} /></button>
       </header>
 
+      {!storageAvailable ? <section className="reference-dhikr-source" role="status">Speicherung fehlgeschlagen. Die Zähler bleiben nur in dieser Sitzung verfügbar.</section> : null}
+
       <section className="reference-dhikr-counter">
         <div className="reference-dhikr-counter__glow" />
-        <PremiumImage src="/premium-assets/high-res-objects/tasbih-v2.webp" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
+        <PremiumImage src="/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp" className="reference-dhikr-counter__tasbih" fallback={<RosetteObject />} />
         <button className="reference-dhikr-ring" style={{ '--dhikr-progress': `${itemProgress * 3.6}deg` } as CSSProperties} onClick={increment} aria-label={`${item.latin} zählen`}>
           <span><strong>{count}</strong><small>/ {item.target}</small></span>
         </button>
@@ -198,7 +206,8 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
           <span className="overline">{routine.shortTitle} · Schritt {activeItemIndex + 1}/{routine.items.length}</span>
           <h2>{item.latin}</h2>
           <p dir="rtl">{item.arabic}</p>
-          <small>{item.meaning}</small>
+          <small>Umschrift: {item.transliteration ?? item.latin}</small>
+          <small>Sinngemäße Bedeutung: {item.meaning}</small>
         </div>
         <button className="reference-dhikr-reset" onClick={resetCurrent}><RotateCcw size={16} /> Aktuellen Zähler zurücksetzen</button>
       </section>
@@ -218,14 +227,18 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       </section>
 
       <section className="reference-dhikr-categories">
-        <div className="section-heading"><div><span className="overline">Belegte Routinen</span><h2>Dhikr auswählen</h2></div></div>
+        <div className="section-heading"><div><span className="overline">Dhikr-Routinen</span><h2>Dhikr auswählen</h2></div></div>
         <div className="reference-dhikr-category-grid">
           {DHIKR_ROUTINES.map((entry) => {
             const Icon = routineIcon(entry.id);
             const completed = entry.items.reduce((sum, part) => sum + Math.min(part.target, dailyState.counts[`${entry.id}:${part.id}`] ?? 0), 0);
             const target = entry.items.reduce((sum, part) => sum + part.target, 0);
             return (
-              <button key={entry.id} className={activeRoutineId === entry.id ? 'is-active' : ''} onClick={() => { setActiveRoutineId(entry.id); setActiveItemIndex(0); }}>
+              <button key={entry.id} className={activeRoutineId === entry.id ? 'is-active' : ''} onClick={() => {
+                const firstIncomplete = entry.items.findIndex(part => (dailyState.counts[`${entry.id}:${part.id}`] ?? 0) < part.target);
+                setActiveRoutineId(entry.id);
+                setActiveItemIndex(firstIncomplete === -1 ? entry.items.length - 1 : firstIncomplete);
+              }}>
                 <span><Icon size={23} /></span><strong>{entry.shortTitle}</strong><small>{completed}/{target}</small>
               </button>
             );
@@ -235,7 +248,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
       <section className="reference-dhikr-source">
         <ShieldCheck size={18} />
-        <span><small>Quellenhinweis</small><strong>{routine.source}</strong><p>{routine.description}</p>{routine.note ? <em>{routine.note}</em> : null}</span>
+        <span><SourceInfo title="Quelle zum Dhikr"><strong>{sourceUrl ? <a href={sourceUrl} target="_blank" rel="noreferrer">{sourceLabel}</a> : sourceLabel}</strong></SourceInfo><p>{routine.description}</p>{item.itemNote ? <em>{item.itemNote}</em> : null}{routine.note ? <em>{routine.note}</em> : null}<p>Die Umschrift ist eine angenäherte Lesehilfe, keine genaue Lautschrift.</p></span>
       </section>
 
       <button className="reference-dhikr-routine-reset" onClick={resetRoutine}><ListRestart size={17} /> Gesamte ausgewählte Routine zurücksetzen</button>
@@ -243,13 +256,10 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {statsOpen ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : .18 }} onClick={() => setStatsOpen(false)}>
-            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-modal-close" onClick={() => setStatsOpen(false)} aria-label="Statistik schließen"><X size={18} /></button>
-              <span className="reference-dhikr-stats-modal__icon"><BarChart3 size={26} /></span>
-              <span className="overline">Heute</span>
-              <h2>Deine Dhikr-Statistik</h2>
+            <motion.section {...screenDialog.props} className="reference-dhikr-stats-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 18, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 9, scale: reduceMotion ? 1 : .99 }} transition={overlayTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title="Deine Dhikr-Statistik" subtitle="Heute" art="/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp" onClose={closeDialog} closeLabel="Statistik schließen" />
               <div className="reference-dhikr-stats-summary">
-                <span><strong>{totalToday}</strong><small>Wiederholungen</small></span>
+                <span><strong>{totalToday}</strong><small>Summe aktueller Zählerstände</small></span>
                 <span><strong>{completedRoutines}</strong><small>Routinen abgeschlossen</small></span>
                 <span><strong>{routineStats.progress}%</strong><small>{routine.shortTitle}</small></span>
               </div>
@@ -262,7 +272,7 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
                   </article>
                 ))}
               </div>
-              <small className="reference-dhikr-stats-note">Die Statistik gilt nur für den heutigen lokalen Kalendertag und wird auf diesem Gerät gespeichert.</small>
+              <small className="reference-dhikr-stats-note">{storageAvailable ? 'Die Statistik gilt nur für den heutigen lokalen Kalendertag und wird auf diesem Gerät gespeichert.' : 'Die Statistik gilt für den heutigen lokalen Kalendertag nur in dieser Sitzung. Speicherung fehlgeschlagen.'} Zurückgesetzte Wiederholungen sind nicht mehr in dieser Summe enthalten.</small>
             </motion.section>
           </motion.div>
         ) : null}

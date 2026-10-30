@@ -1,0 +1,3741 @@
+[
+  {
+    "test": "responsive-app-complete-app-adapts-to-768x1024-phone",
+    "data": [
+      {
+        "label": "Start",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebet",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Mehr",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Start",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetszeiten",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Beten lernen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu lernen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Qibla",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Dhikr",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Duas",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Moscheen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Kalender",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fastenplan",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sammlung",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Allah & der Glaube",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die f\u00fcnf S\u00e4ulen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wichtige Begriffe",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Reinheit & Alltag",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Charakter & Rechte",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Miteinander & Verantwortung",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Der Prophet \ufdfa",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Vers des Tages",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "99 Namen Allahs",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Ummah-\u00dcbersicht",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hadith-Sammlung",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die vier Rechtsschulen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die 25 Propheten",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hajj & Umrah",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sunnah im Alltag",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fehler & Reue",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "MAKKAH, MADINAH & AL-AQSA",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "DAS FREITAGSGEBET",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "P > A",
+            "text": "Quran 62:9",
+            "width": 74.265625,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Bukhari 934",
+            "width": 80.375,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Muslim 846a",
+            "width": 85.546875,
+            "height": 17,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "PLANUNGSHILFE",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "GEBETSANZEIGE",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Konto & Cloud",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Notizen",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Impressum & Datenschutz",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "NAV > A",
+            "text": "Art. 13 DSGVO",
+            "width": 120.703125,
+            "height": 30,
+            "tag": "A"
+          },
+          {
+            "selector": "NAV > A",
+            "text": "\u00a7 25 TDDDG",
+            "width": 107.546875,
+            "height": 30,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Einstellungen Reminder, Konto und Cloud",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sprache Aktuell vollst\u00e4ndig: Deutsch",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "\u00dcber Nur Version und Produktprinzipien",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran-Leser",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Deutsch Buchseiten",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Arabisch Buchseiten",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu Schritt f\u00fcr Schritt",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetsablauf",
+        "viewport": 768,
+        "documentWidth": 768,
+        "shellWidth": 768,
+        "navBottom": 1024,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      }
+    ]
+  },
+  {
+    "test": "responsive-app-complete-app-adapts-to-1024x768-phone",
+    "data": [
+      {
+        "label": "Start",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebet",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Mehr",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Start",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetszeiten",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Beten lernen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu lernen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Qibla",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Dhikr",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Duas",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Moscheen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Kalender",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fastenplan",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sammlung",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Allah & der Glaube",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die f\u00fcnf S\u00e4ulen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wichtige Begriffe",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Reinheit & Alltag",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Charakter & Rechte",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Miteinander & Verantwortung",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Der Prophet \ufdfa",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Vers des Tages",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "99 Namen Allahs",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Ummah-\u00dcbersicht",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hadith-Sammlung",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die vier Rechtsschulen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die 25 Propheten",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hajj & Umrah",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sunnah im Alltag",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fehler & Reue",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "MAKKAH, MADINAH & AL-AQSA",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "DAS FREITAGSGEBET",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "P > A",
+            "text": "Quran 62:9",
+            "width": 74.265625,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Bukhari 934",
+            "width": 80.375,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Muslim 846a",
+            "width": 85.546875,
+            "height": 17,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "PLANUNGSHILFE",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "GEBETSANZEIGE",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Konto & Cloud",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Notizen",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Impressum & Datenschutz",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "NAV > A",
+            "text": "Art. 13 DSGVO",
+            "width": 120.703125,
+            "height": 30,
+            "tag": "A"
+          },
+          {
+            "selector": "NAV > A",
+            "text": "\u00a7 25 TDDDG",
+            "width": 107.546875,
+            "height": 30,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Einstellungen Reminder, Konto und Cloud",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sprache Aktuell vollst\u00e4ndig: Deutsch",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "\u00dcber Nur Version und Produktprinzipien",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran-Leser",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Deutsch Buchseiten",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Arabisch Buchseiten",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu Schritt f\u00fcr Schritt",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetsablauf",
+        "viewport": 1024,
+        "documentWidth": 1024,
+        "shellWidth": 900,
+        "navBottom": 768,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      }
+    ]
+  },
+  {
+    "test": "responsive-app-complete-app-adapts-to-844x390-phone",
+    "data": [
+      {
+        "label": "Start",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebet",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Mehr",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Start",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetszeiten",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Beten lernen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu lernen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Qibla",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Dhikr",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Duas",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Moscheen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Kalender",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fastenplan",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sammlung",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Allah & der Glaube",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die f\u00fcnf S\u00e4ulen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wichtige Begriffe",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Reinheit & Alltag",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Charakter & Rechte",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Miteinander & Verantwortung",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Der Prophet \ufdfa",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Vers des Tages",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "99 Namen Allahs",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Ummah-\u00dcbersicht",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hadith-Sammlung",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die vier Rechtsschulen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die 25 Propheten",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hajj & Umrah",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sunnah im Alltag",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fehler & Reue",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "MAKKAH, MADINAH & AL-AQSA",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "DAS FREITAGSGEBET",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "P > A",
+            "text": "Quran 62:9",
+            "width": 74.265625,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Bukhari 934",
+            "width": 80.375,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Muslim 846a",
+            "width": 85.546875,
+            "height": 17,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "PLANUNGSHILFE",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "GEBETSANZEIGE",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Konto & Cloud",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Notizen",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Impressum & Datenschutz",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "NAV > A",
+            "text": "Art. 13 DSGVO",
+            "width": 120.703125,
+            "height": 30,
+            "tag": "A"
+          },
+          {
+            "selector": "NAV > A",
+            "text": "\u00a7 25 TDDDG",
+            "width": 107.546875,
+            "height": 30,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Einstellungen Reminder, Konto und Cloud",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sprache Aktuell vollst\u00e4ndig: Deutsch",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "\u00dcber Nur Version und Produktprinzipien",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran-Leser",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Deutsch Buchseiten",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Arabisch Buchseiten",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu Schritt f\u00fcr Schritt",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetsablauf",
+        "viewport": 844,
+        "documentWidth": 844,
+        "shellWidth": 844,
+        "navBottom": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      }
+    ]
+  },
+  {
+    "test": "responsive-app-complete-app-adapts-to-320x740-phone",
+    "data": [
+      {
+        "label": "Start",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebet",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "prayer-calendar-day",
+            "text": "1. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "2. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "3. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "4. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "5. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "6. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "7. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "8. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "9. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "10. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "11. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "12. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "13. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "14. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "15. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "16. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "17. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "18. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day is-selected is-today",
+            "text": "19. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "20. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "21. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "22. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "23. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "24. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "25. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "26. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "27. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "28. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "29. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "30. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "31. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Mehr",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Start",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetszeiten",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "prayer-calendar-day",
+            "text": "1. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "2. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "3. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "4. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "5. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "6. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "7. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "8. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "9. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "10. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "11. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "12. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "13. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "14. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "15. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "16. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "17. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "18. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day is-selected is-today",
+            "text": "19. Oktober 2026, Montagsfasten",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "20. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "21. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "22. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "23. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "24. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "25. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "26. Oktober 2026, Wei\u00dfe Tage",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "27. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "28. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "29. Oktober 2026, Donnerstagsfasten",
+            "width": 39.296875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "30. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "prayer-calendar-day",
+            "text": "31. Oktober 2026",
+            "width": 39.28125,
+            "height": 44,
+            "tag": "BUTTON"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Beten lernen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu lernen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Qibla",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Dhikr",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Duas",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Moscheen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Kalender",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "calendar-day",
+            "text": "1. Oktober 2026, Donnerstagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "2. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "3. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "4. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "5. Oktober 2026, Montagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "6. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "7. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "8. Oktober 2026, Donnerstagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "9. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "10. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "11. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "12. Oktober 2026, Montagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "13. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "14. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "15. Oktober 2026, Donnerstagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "16. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "17. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "18. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day calendar-day--selected calendar-day--today",
+            "text": "19. Oktober 2026, Montagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "20. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "21. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "22. Oktober 2026, Donnerstagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "23. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "24. Oktober 2026, Wei\u00dfe Tage",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "25. Oktober 2026, Wei\u00dfe Tage",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "26. Oktober 2026, Wei\u00dfe Tage",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "27. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "28. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "29. Oktober 2026, Donnerstagsfasten",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "30. Oktober 2026",
+            "width": 35.4375,
+            "height": 44,
+            "tag": "BUTTON"
+          },
+          {
+            "selector": "calendar-day",
+            "text": "31. Oktober 2026",
+            "width": 35.421875,
+            "height": 44,
+            "tag": "BUTTON"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fastenplan",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sammlung",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Allah & der Glaube",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die f\u00fcnf S\u00e4ulen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wichtige Begriffe",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Reinheit & Alltag",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Charakter & Rechte",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Miteinander & Verantwortung",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Der Prophet \ufdfa",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Vers des Tages",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "99 Namen Allahs",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Ummah-\u00dcbersicht",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hadith-Sammlung",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die vier Rechtsschulen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die 25 Propheten",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hajj & Umrah",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sunnah im Alltag",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fehler & Reue",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "MAKKAH, MADINAH & AL-AQSA",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "DAS FREITAGSGEBET",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "P > A",
+            "text": "Quran 62:9",
+            "width": 74.265625,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Bukhari 934",
+            "width": 80.375,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Muslim 846a",
+            "width": 85.546875,
+            "height": 17,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "PLANUNGSHILFE",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "GEBETSANZEIGE",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Konto & Cloud",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Notizen",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Impressum & Datenschutz",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "NAV > A",
+            "text": "Art. 13 DSGVO",
+            "width": 120.703125,
+            "height": 30,
+            "tag": "A"
+          },
+          {
+            "selector": "NAV > A",
+            "text": "\u00a7 25 TDDDG",
+            "width": 107.546875,
+            "height": 30,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Einstellungen Reminder, Konto und Cloud",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sprache Aktuell vollst\u00e4ndig: Deutsch",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "\u00dcber Nur Version und Produktprinzipien",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran-Leser",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Deutsch Buchseiten",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Arabisch Buchseiten",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu Schritt f\u00fcr Schritt",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetsablauf",
+        "viewport": 320,
+        "documentWidth": 320,
+        "shellWidth": 320,
+        "navBottom": 740,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      }
+    ]
+  },
+  {
+    "test": "responsive-app-complete-app-adapts-to-390x844-phone",
+    "data": [
+      {
+        "label": "Start",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebet",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Mehr",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Start",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetszeiten",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Lernen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Beten lernen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu lernen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Qibla",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Dhikr",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Duas",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Moscheen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Kalender",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fastenplan",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sammlung",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Allah & der Glaube",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die f\u00fcnf S\u00e4ulen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wichtige Begriffe",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Reinheit & Alltag",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Charakter & Rechte",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Miteinander & Verantwortung",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Der Prophet \ufdfa",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Vers des Tages",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "99 Namen Allahs",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Ummah-\u00dcbersicht",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hadith-Sammlung",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die vier Rechtsschulen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Die 25 Propheten",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hajj & Umrah",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sunnah im Alltag",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Fehler & Reue",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "MAKKAH, MADINAH & AL-AQSA",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "DAS FREITAGSGEBET",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "P > A",
+            "text": "Quran 62:9",
+            "width": 74.265625,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Bukhari 934",
+            "width": 80.375,
+            "height": 17,
+            "tag": "A"
+          },
+          {
+            "selector": "P > A",
+            "text": "Muslim 846a",
+            "width": 85.546875,
+            "height": 17,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "PLANUNGSHILFE",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "GEBETSANZEIGE",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Konto & Cloud",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Notizen",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Impressum & Datenschutz",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [
+          {
+            "selector": "NAV > A",
+            "text": "Art. 13 DSGVO",
+            "width": 120.703125,
+            "height": 30,
+            "tag": "A"
+          },
+          {
+            "selector": "NAV > A",
+            "text": "\u00a7 25 TDDDG",
+            "width": 107.546875,
+            "height": 30,
+            "tag": "A"
+          }
+        ],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Einstellungen Reminder, Konto und Cloud",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Sprache Aktuell vollst\u00e4ndig: Deutsch",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "\u00dcber Nur Version und Produktprinzipien",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Quran-Leser",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Deutsch Buchseiten",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Arabisch Buchseiten",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Wudu Schritt f\u00fcr Schritt",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      },
+      {
+        "label": "Gebetsablauf",
+        "viewport": 390,
+        "documentWidth": 390,
+        "shellWidth": 390,
+        "navBottom": 844,
+        "undersizedInputs": [],
+        "small": [],
+        "targets": [],
+        "clips": [],
+        "lateral": []
+      }
+    ]
+  }
+]

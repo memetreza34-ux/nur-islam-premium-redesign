@@ -1,0 +1,11 @@
+{
+  "generatedAt": "2026-10-22",
+  "generator": "Codex built-in image generation",
+  "prompt": "Use case: lighting-weather. Edit target: the provided existing oasis illustration used in our Islamic app. Create the matching SUNRISE lighting variant in the exact same mature sculpted matte 3D illustration style. Preserve the landscape geometry, camera, two small complete palms at x12% and x88%, lake, distant dunes, clear center and 3:2 landscape framing. Change ONLY lighting, sky and sun position: first gentle morning sunlight, small sun just peeking above the distant horizon at x78% y70%, pale apricot and warm ivory along horizon fading into soft morning blue higher up, subtle golden reflection in teal water, long soft shadows. It must read as early sunrise, not midday or sunset; restrained brightness, calm and elegant. Keep palms completely inside the image and the lake visible. No text, symbols, interface, borders, watermark, people, buildings, new objects or additional palms.",
+  "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-b12d2f78-5ad2-447e-96ef-624fb3f43616.png",
+  "inputImages": [
+    "public/premium-assets/high-res-objects/prayer-oasis-dhuhr-v2.webp"
+  ],
+  "workspaceOriginal": "output/imagegen/prayer-sunrise-20261022/sunrise.png",
+  "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-sunrise-v1.webp"
+}

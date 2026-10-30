@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-13",
+  "scope": "Originalhelligkeit des Startbildes: keine Bildüberlagerung; dunkler Tages- und heller Nachttext erst nach erfolgreichem Bildladen. Ladehinweis mit eigenem kleinen Hintergrund.",
+  "fileHashes": {
+    "src/screens/SplashScreen.tsx": "5a98d52880ab688b8bbc57216b091a6f1c664bd72fe97ff37dcef7327b888f29",
+    "src/shared/PremiumVisuals.tsx": "9fd9c4b5ba975f74abbc16949a7552fdd23e2f85fdadbce77936602e3b203e6f",
+    "src/styles/premium-brand-entry-art-lock.css": "d6b036af69f521955542ad2c6ed6c0fb8a660f4dab8a273f51998d47dd95b5bb",
+    "src/app/pwa.ts": "708a5eb4c3e6eae916358db66f5bf7c259ee1d58902acd984bee73acd52e410a",
+    "public/sw.js": "f8b2b59cf46439b76b3eec8dbfbbfac3aa1a375ddce51ade7cfb55c0a7ce2e7f",
+    "e2e/splash-daily-content.spec.ts": "9c19d1a4f3cdf8d13451268771f86d16b8aa6c45ef5dc6abc560100796900f4f"
+  },
+  "observedDisplay": {
+    "overlay": "none",
+    "imageFilter": "none",
+    "imageOpacity": "1",
+    "scene": "asr",
+    "textColor": "rgb(0, 27, 22)"
+  },
+  "check": {
+    "exitCode": 0,
+    "tests": 1041,
+    "log": "original-brightness-check-2026-10-13.log"
+  },
+  "browser": {
+    "status": "passed_with_targeted_filesystem_recheck",
+    "scheduled": 29,
+    "firstRunPassed": 28,
+    "firstRunFailed": 1,
+    "reason": "ENOSPC beim Schreiben eines Screenshots, kein Anwendungsfehler",
+    "recheckPassed": 1,
+    "uniqueVerifiedCases": 29,
+    "logs": [
+      "original-brightness-browser-2026-10-13.log",
+      "original-brightness-recheck-2026-10-13.log"
+    ]
+  },
+  "pwaShellVersion": 84,
+  "assetsChanged": false,
+  "published": false
+}

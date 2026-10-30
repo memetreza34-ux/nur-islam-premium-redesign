@@ -1,0 +1,11 @@
+{
+  "date": "2026-10-15",
+  "scope": "Five oasis variants reframed with complete smaller palms, fully inset from both horizontal edges; central learning copy and crop adjusted",
+  "content": "Prayer names, time labels, obligatory rakah wording and completion status retained; redundant right-side rakah numeral removed from the palms",
+  "promptSet": "output/imagegen/prayer-oasis-framing-20261015/prompts.json",
+  "generation": "Built-in image_gen; own oasis master and lighting references",
+  "cacheVersion": 105,
+  "checks": { "check": "passed; 1047 tests in 59 files, lint, build, budgets and guards", "browser": "27 passed; learning-intro-art, prayer-landscapes, prayer-learning-course and offline" },
+  "visualReview": "Both palms fully visible in native Prayer and Learn views and existing 320px/768px browser screenshots; centered learning copy verified at 320, 390 and 768px",
+  "proof": ["full-palms-prayer-visible-2026-10-15.jpg", "full-palms-learning-visible-2026-10-15.jpg", "full-palms-learning-320-2026-10-15.png", "full-palms-learning-768-2026-10-15.png"]
+}

@@ -22,7 +22,7 @@
   --ds-screen-edge: 16px;
   --ds-block-gap: 12px;
   --ds-row-height: 46px;
-  --ds-tap-min: 44px;
+  --ds-tap-min: 48px;
 
   --ds-radius-1: 6px;
   --ds-radius-2: 10px;
@@ -35,19 +35,16 @@
   --ds-sh-3: 0 12px 32px rgba(0, 0, 0, 0.4);
   --ds-glow: 0 0 22px rgba(226, 191, 119, 0.22);
 
-  --ds-nav-height: 68px;
+  --ds-nav-height: 81px;
   --ds-ease: cubic-bezier(0.22, 0.61, 0.36, 1);
 }
 
-/* Numbers are not text: tabular figures everywhere a value is read in a column. */
 .ds-num {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
 }
 
-/* ---------- Type: eight roles, one scale ----------
-   Applies across every screen, so headings stop being set at hero size on
-   list pages. Cormorant stays the display face; numbers leave it entirely. */
+/* ---------- Type: eight roles, one scale ---------- */
 
 .section-heading h2 {
   font-size: 21px !important;
@@ -63,22 +60,120 @@
 .reference-screen-header {
   min-height: 0 !important;
   padding: var(--ds-space-2) var(--ds-space-2) !important;
-  border-radius: var(--ds-radius-3) !important;
+  border-radius: 0 !important;
 }
+
+.reference-prayer-screen { --screen-banner-art: url('/premium-assets/high-res-objects/screen-banner-prayer-v1.webp'); }
+.reference-quran-screen { --screen-banner-art: url('/premium-assets/high-res-objects/screen-banner-quran-v1.webp'); }
+.reference-learn-screen { --screen-banner-art: url('/premium-assets/high-res-objects/screen-banner-learn-v1.webp'); }
+.reference-profile-screen { --screen-banner-art: url('/premium-assets/high-res-objects/screen-banner-more-v1.webp'); }
+html .app-shell .reference-screen-header--banner {
+  min-height: 120px !important;
+  padding: 16px 8px !important;
+  border: 1px solid rgba(226, 191, 119, .32) !important;
+  border-radius: 20px !important;
+  background: linear-gradient(90deg, #001b160d, #001b1638 35%, #001b1638 65%, #001b160d), var(--screen-banner-art) center 65% / cover, #001b16 !important;
+}
+html .reference-screen-header--banner h1 { color: #fff8ea !important; }
+html .reference-screen-header--banner .overline { color: #e2bf77 !important; }
+.reference-screen-header--banner .source-info__trigger,
+.reference-screen-header--banner .icon-button { background-color: #001b16b3; }
 
 .content-section { gap: var(--ds-space-2) !important; }
 .section-heading { padding: 0 !important; }
 
-/* Every number that is read in a column or against a clock. */
 .prayer-time-row__time,
 .next-prayer-panel__time strong,
 .reference-prayer-row__time,
 .dhikr-counter__value,
 .reference-dhikr-count,
-.quick-card strong,
 .daily-prayer-progress__ring strong {
   font-variant-numeric: tabular-nums;
   font-feature-settings: 'tnum' 1;
+}
+
+/* Topic navigation: one layout and type scale across the app. */
+.topic-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(226, 191, 119, .18);
+  border-radius: 24px;
+  background: linear-gradient(160deg, #103a2e, #061c17);
+}
+
+.topic-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) 18px;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-width: 0;
+  min-height: 96px;
+  margin: 0;
+  padding: 16px 14px;
+  border: 0;
+  border-radius: 0;
+  color: var(--ds-cream-hi);
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+  cursor: pointer;
+}
+.topic-card:not(:last-child) { border-bottom: 1px solid rgba(226, 191, 119, .14); }
+.topic-card__art { display: grid; place-items: center; width: 56px; height: 56px; color: var(--ds-gold); }
+.topic-card__art .premium-image,
+.topic-card__art img,
+.topic-card__art .premium-image__fallback { display: grid; place-items: center; width: 100%; height: 100%; }
+.topic-card__art img { object-fit: contain; object-position: center; transform: none; filter: none; }
+.topic-card__art > svg,
+.topic-card__art .premium-image__fallback svg { width: 28px; height: 28px; }
+.topic-card__copy { display: grid; gap: 4px; min-width: 0; }
+.topic-card .topic-card__title {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: var(--ds-cream-hi);
+  font: 600 1.375rem/1.15 'Cormorant Garamond', Georgia, serif;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.topic-card .topic-card__description {
+  display: block;
+  margin: 0;
+  padding: 0;
+  color: #c5d1c9;
+  font: 400 .875rem/1.4 Inter, system-ui, sans-serif;
+  letter-spacing: 0;
+  text-transform: none;
+  overflow-wrap: anywhere;
+}
+.topic-card .topic-card__status {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 2px 0 0;
+  color: var(--ds-gold-lt);
+  font: 600 .75rem/1.4 Inter, system-ui, sans-serif;
+}
+.topic-card__arrow { grid-column: 3; grid-row: 1; align-self: center; color: var(--ds-gold); }
+summary.topic-card { list-style: none; }
+summary.topic-card::-webkit-details-marker { display: none; }
+details[open] > .topic-card > .topic-card__arrow { transform: rotate(180deg); }
+[data-theme='light'] .topic-list { border-color: rgba(101, 78, 39, .2); background: linear-gradient(160deg, #fbf7eb, #f1eadb); }
+[data-theme='light'] .topic-card:not(:last-child) { border-bottom-color: rgba(101, 78, 39, .16); }
+[data-theme='light'] .topic-card .topic-card__title { color: #17382c; }
+[data-theme='light'] .topic-card .topic-card__description { color: #4d6458; }
+[data-theme='light'] .topic-card .topic-card__status,
+[data-theme='light'] .topic-card__arrow,
+[data-theme='light'] .topic-card__art { color: #80602c; }
+@media (max-width: 359px) {
+  .topic-card { grid-template-columns: 48px minmax(0, 1fr) 18px; gap: 10px; padding: 14px 12px; }
+  .topic-card__art { width: 48px; height: 48px; }
 }
 
 /* ---------- Signature: the mihrab arch ---------- */
@@ -87,6 +182,7 @@
   position: relative;
   display: block;
   width: 100%;
+  height: var(--arch-height);
 }
 
 .ds-arch__svg {
@@ -107,14 +203,11 @@
   padding: var(--ds-space-4) var(--ds-space-3) var(--ds-space-3);
 }
 
-/* With artwork at the base, the text stacks above it instead of over it. */
 .ds-arch:has(.ds-arch__footer) .ds-arch__content {
   justify-content: flex-start;
   padding-top: var(--ds-space-3);
 }
 
-/* The silhouette closes the arch at its base and carries the ground line.
-   Masked away toward the top so it never reaches the text. */
 .ds-arch__footer {
   position: absolute;
   z-index: 1;
@@ -141,14 +234,11 @@
   height: 100%;
   object-fit: contain;
   object-position: bottom center;
-  /* Only the top edge fades, so the modelling and gold stay visible where the
-     text is not. The value block above it is what the fade protects. */
+
   mask-image: linear-gradient(180deg, transparent 0%, #000 34%);
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 34%);
 }
 
-/* Home keeps the same mihrab language as Prayer. The light lives at the edge,
-   while the middle remains a quiet reading zone. */
 .ds-arch--landscape {
   isolation: isolate;
   overflow: hidden;
@@ -171,14 +261,12 @@
 .ds-arch--landscape .ds-arch__content { text-shadow: 0 2px 12px #001b16; }
 .ds-arch--landscape .ds-arch__meta { background: rgba(2, 28, 25, .82); }
 
-.premium-home--v2 .quick-grid--v2 > :last-child:nth-child(odd) { grid-column: 1 / -1; }
-
 .ds-arch--landscape .ds-arch__content {
   z-index: 3;
   padding: 26px 28px 22px;
 }
 
-.ds-arch--landscape .ds-arch__overline { font-size: 10.5px; }
+.ds-arch--landscape .ds-arch__overline { font-size: 12px; }
 .ds-arch--landscape .ds-arch__name { margin-top: 10px; font-size: 24px; }
 .ds-arch--landscape .ds-arch__name-arabic { font-size: 17px; }
 .ds-arch--landscape .ds-arch__value { margin-top: 5px; font-size: clamp(58px, 16vw, 68px); }
@@ -203,7 +291,7 @@
 }
 
 .ds-arch__overline {
-  font: 700 9.5px/1 Inter, system-ui, sans-serif;
+  font: 700 12px/1 Inter, system-ui, sans-serif;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--ds-gold);
@@ -228,7 +316,6 @@
   color: var(--ds-cream-hi);
 }
 
-/* A name, not a number: Cormorant, and it may wrap. */
 .ds-arch__value--display {
   max-width: 100%;
   font-family: 'Cormorant Garamond', Georgia, serif;
@@ -245,15 +332,12 @@
   padding: 5px 12px;
   border: 1px solid rgba(226, 191, 119, 0.34);
   border-radius: var(--ds-radius-pill);
-  font: 600 11.5px/1 Inter, system-ui, sans-serif;
+  font: 600 12px/1 Inter, system-ui, sans-serif;
   color: var(--ds-gold-lt);
   background: rgba(226, 191, 119, 0.1);
 }
 
-/* ---------- Start: place and date replace the welcome hero ----------
-   The greeting block cost 300+ px to say nothing actionable. The brand bar
-   was absolutely positioned into that block's padding; with the block gone
-   it belongs in the flow like everything else. */
+/* ---------- Start: place and date replace the welcome hero ---------- */
 
 .premium-home--v2 .brand-bar,
 .brand-bar {
@@ -274,7 +358,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font: 600 11.5px/1.3 Inter, system-ui, sans-serif;
+  font: 600 12px/1.3 Inter, system-ui, sans-serif;
   color: var(--ds-muted);
   min-width: 0;
   min-height: 44px;
@@ -285,7 +369,7 @@
   cursor: pointer;
 }
 .home-standfirst__place > span { display: grid; gap: 3px; }
-.home-standfirst__place small { font-size: 10px; font-weight: 400; }
+.home-standfirst__place small { font-size: 12px; font-weight: 400; }
 .home-standfirst__place-compact { display: none; }
 
 .home-standfirst__place svg { color: var(--ds-gold); }
@@ -300,7 +384,7 @@
   border: 0;
   border-left: 1px solid rgba(226, 191, 119, 0.18);
   border-radius: 0;
-  font: 600 11.5px/1.3 Inter, system-ui, sans-serif;
+  font: 600 12px/1.3 Inter, system-ui, sans-serif;
   color: var(--ds-cream);
   background: none;
   cursor: pointer;
@@ -316,7 +400,7 @@
 
 .home-standfirst__date-copy strong {
   color: var(--ds-cream);
-  font: 600 11px/1.25 Inter, system-ui, sans-serif;
+  font: 600 12px/1.25 Inter, system-ui, sans-serif;
   letter-spacing: -0.01em;
   white-space: nowrap;
 }
@@ -324,7 +408,7 @@
 
 .home-standfirst__date-copy small {
   color: var(--ds-muted);
-  font: 500 9px/1.3 Inter, system-ui, sans-serif;
+  font: 500 12px/1.3 Inter, system-ui, sans-serif;
   white-space: nowrap;
 }
 
@@ -333,12 +417,10 @@
   height: 15px;
   color: color-mix(in srgb, var(--ds-gold) 82%, var(--ds-muted));
 }
-.home-standfirst__date:hover { opacity: 0.82; }
-.home-standfirst__date:active { transform: scale(0.965); }
 
 @media (max-width: 360px) {
   .home-standfirst { gap: 8px; }
-  .home-standfirst__place { font-size: 10.5px; }
+  .home-standfirst__place { font-size: 12px; }
   .home-standfirst__place-detail,
   .home-standfirst__date-long { display: none; }
   .home-standfirst__place-compact,
@@ -352,11 +434,9 @@
   .home-standfirst__date-copy small { white-space: normal; }
 }
 
-/* One block gap for the whole screen, instead of 22px between everything. */
 .premium-home--v2.screen,
 .premium-home--v2 { gap: var(--ds-block-gap) !important; }
 
-/* Shared open composition for Home, Prayer and Quran. */
 .premium-home--v2 .home-prayer-focus { order: 2; padding: 8px 0 12px; }
 .home-prayer-focus__content { display: grid; gap: 12px; }
 .prayer-focus, .quran-focus { display: grid; gap: 12px; padding: 8px 0 12px; }
@@ -401,7 +481,7 @@
   background: var(--ds-gold);
 }
 .home-prayer-times small {
-  font-size: 10.5px;
+  font-size: 12px;
   line-height: 1.2;
 }
 .home-prayer-times strong {
@@ -411,9 +491,6 @@
   font-variant-numeric: tabular-nums;
 }
 .home-prayer-times svg { width: 18px; height: 18px; }
-
-
-/* Navigation geometry stays in the flow; only the active icon has a backdrop. */
 
 .app-shell .bottom-nav,
 .app-shell:not(.app-shell--onboarding) .bottom-nav {
@@ -425,7 +502,7 @@
   margin-inline: 0;
   border: 0;
   border-top: 1px solid rgba(226, 191, 119, 0.14);
-  border-radius: 0 !important; /* earlier layers pin 22–26px */
+  border-radius: 0 !important;
   background: transparent;
   box-shadow: none;
   backdrop-filter: none;
@@ -434,17 +511,16 @@
 
 .app-shell .bottom-nav__item {
   border: 0;
-  border-radius: 0 !important; /* geometry lock pins 16px */
+  border-radius: 0 !important;
   background: none;
 }
 
 .app-shell .bottom-nav__item--active {
   border-color: transparent;
-  background: none !important; /* earlier layers pin the gold pill */
+  background: none !important;
 }
 
 .bottom-nav__item--active > span,
-.bottom-nav__item:hover > span,
 .bottom-nav__item > span {
   position: relative;
   display: grid;
@@ -457,12 +533,11 @@
   box-shadow: none;
 }
 
-/* No underline or detached cap. */
 .bottom-nav__item--active::after,
 .bottom-nav__item--active > span::after { content: none !important; }
 
 .bottom-nav__item small {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.25;
   max-width: none;
   overflow: visible;
@@ -470,8 +545,6 @@
 }
 .bottom-nav__item[aria-current='page'] svg { filter: none; }
 
-/* Toast: an overlay, so it stays fixed — it just no longer shares a strip
-   with the navigation. */
 .toast {
   position: fixed;
   z-index: 40;
@@ -489,14 +562,11 @@
   color: var(--ds-cream);
   background: rgba(0, 27, 22, 0.96);
   box-shadow: var(--ds-sh-3);
-  font-size: .72rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
-/* ---------- Problem 01: the image was drawn over its own scrim ----------
-   __shade and __visual both sat at z-index 1, so DOM order won and the mosque
-   covered the very layer meant to darken it. The image now sits below the
-   scrim, and is masked away toward the top so no text ever crosses it. */
+/* ---------- Problem 01: the image was drawn over its own scrim ---------- */
 
 .welcome-hero__visual { z-index: 0 !important; }
 
@@ -519,9 +589,7 @@
 .welcome-hero__copy,
 .welcome-hero__date { z-index: 4 !important; }
 
-/* ---------- Gebet: the head shrinks so the focus arrives sooner ----------
-   Status, location and the privacy note took 430px before the time appeared.
-   All three stay — the note is a real disclosure — but as one quiet band. */
+/* ---------- Gebet: the head shrinks so the focus arrives sooner ---------- */
 
 .reference-prayer-screen { gap: var(--ds-block-gap) !important; }
 
@@ -533,114 +601,66 @@
 
 .reference-prayer-live-status > span { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
 .reference-prayer-live-status strong { font-size: 12px !important; }
-.reference-prayer-live-status small { font-size: 10px !important; opacity: .75; }
+.reference-prayer-live-status small { font-size: 12px !important; opacity: .75; }
 
 .reference-prayer-location {
+  min-height: 64px;
   gap: var(--ds-space-3) !important;
   padding: var(--ds-space-2) var(--ds-space-3) !important;
   border-radius: var(--ds-radius-2) !important;
 }
 
-.prayer-location-card__icon {
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: var(--ds-radius-2) !important;
-}
-
-.reference-prayer-location small { font-size: 9.5px !important; }
-.reference-prayer-location strong { font-size: 12.5px !important; }
+.reference-prayer-location small { font-size: 12px !important; }
+.reference-prayer-location strong { font-size: 14px !important; overflow-wrap: anywhere; }
 
 .reference-prayer-location-privacy {
   margin: calc(var(--ds-space-2) * -1) 0 0 !important;
   padding-left: var(--ds-space-3) !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
   line-height: 1.5 !important;
 }
 
-/* ---------- Gebet: six rows on rules, not six cards ----------
-   Six cards at 28px radius cost ~190px of height for framing alone. The
-   material stays (gold icon, glass surface for the next prayer) — only the
-   per-row card frame goes. */
+/* Gebetszeiten */
 
-.prayer-schedule-list {
-  display: grid;
-  gap: 0;
-  padding: var(--ds-space-1) var(--ds-space-3);
-  border: 1px solid rgba(226, 191, 119, 0.14);
-  border-radius: var(--ds-radius-3);
-  background: rgba(255, 255, 255, 0.022);
-}
+.prayer-schedule-list { display: grid; gap: 6px; overflow: hidden; border: 0; border-radius: 0; background: none; box-shadow: none; }
 
-.prayer-time-row,
-.reference-prayer-screen .prayer-time-row {
+.prayer-time-row,.reference-prayer-screen .prayer-time-row {
+  position: relative; isolation: isolate; overflow: hidden;
   display: grid;
-  grid-template-columns: clamp(32px, 10vw, 44px) minmax(0, 1fr) auto auto auto;
+  grid-template-columns: 40px minmax(0, 1fr) auto;
+  grid-template-rows: auto auto;
+  align-content: center;
   align-items: center;
-  gap: var(--ds-space-3);
-  min-height: var(--ds-row-height);
-  padding: var(--ds-space-2) 0;
-  border: 0 !important;
-  border-radius: 0 !important;
-  background: none !important;
+  gap: 2px 8px;
+  min-height: 64px;
+  padding: 6px 10px;
+  border: 1px solid #e2bf771c !important;
+  border-radius: 16px !important;
+  background: #052c22 !important;
   box-shadow: none !important;
 }
 
-.prayer-time-row + .prayer-time-row { border-top: 1px solid rgba(226, 191, 119, 0.1) !important; }
+.prayer-time-row__backdrop { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; object-position: center 75%; opacity: 1; }
+.prayer-time-row::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, #001b16ed, #001b16b3 50%, #001b1633); }
+.prayer-time-row__art { grid-column: 1; grid-row: 1 / 3; display: grid; place-items: center; width: 40px; height: 40px; color: var(--ds-gold); }
+.prayer-time-row__art img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.prayer-time-row__name { grid-column: 2; grid-row: 1; display: block !important; min-width: 0; }
+.prayer-time-row__name strong { font-size: 15px !important; line-height: 1.4; font-weight: 600; color: var(--ds-cream-hi); }
 
-.prayer-time-row__art {
-  display: grid;
-  place-items: center;
-  width: 100%;
-  aspect-ratio: 1;
-  color: var(--ds-gold);
-}
-.prayer-time-row__art img { display: block; width: 100%; height: 100%; object-fit: contain; }
-
-/* Name and Arabic share one line; the German gloss sits quietly under it. */
-.prayer-time-row__name {
-  display: flex !important;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0 var(--ds-space-2);
-  min-width: 0;
-}
-
-.prayer-time-row__name strong {
-  order: 1;
-  font-size: 14px !important;
-  font-weight: 600;
-  color: var(--ds-cream-hi);
-}
-
-.prayer-time-row__name small {
-  order: 2;
-  font-family: Amiri, serif !important;
-  font-size: 12px !important;
-  color: var(--ds-gold-dk);
-}
-
-.prayer-time-row__name em {
-  order: 3;
-  flex-basis: 100%;
-  margin-top: 1px;
-  font-size: 10px !important;
-  font-style: normal;
-  line-height: 1.3 !important;
-  color: var(--ds-muted);
-}
-
-/* The time reads down the column, so it is tabular and right-aligned. */
 .prayer-time-row__time {
+grid-column: 2; grid-row: 2;
   font-family: Inter, system-ui, sans-serif !important;
-  font-size: 17px !important;
+  font-size: 19px !important;
+  line-height: 1.2;
   font-weight: 600 !important;
   font-variant-numeric: tabular-nums !important;
   font-feature-settings: 'tnum' 1 !important;
-  text-align: right;
+  text-align: left;
   color: var(--ds-cream-hi);
+  white-space: nowrap;
 }
 
-.prayer-time-row--next { background: rgba(226, 191, 119, 0.07) !important; }
+.prayer-time-row__actions { grid-column: 3; grid-row: 1 / 3; --tap-target: var(--ds-tap-min); display: flex; gap: 8px; justify-self: end; }
 .prayer-time-row--next .prayer-time-row__time { color: var(--ds-gold-lt); }
 .prayer-time-row--done .prayer-time-row__name strong { color: var(--ds-muted); }
 
@@ -651,60 +671,13 @@
   border-radius: var(--ds-radius-2) !important;
 }
 
-/* Method and disclosure: a note, not a card. */
-.reference-prayer-method {
-  gap: var(--ds-space-3) !important;
-  padding: var(--ds-space-3) !important;
-  border-radius: var(--ds-radius-3) !important;
-}
-
-.method-card__icon {
-  width: 34px !important;
-  height: 34px !important;
-  border-radius: var(--ds-radius-2) !important;
-}
-
-.reference-prayer-method small { font-size: 9.5px !important; }
-.reference-prayer-method strong { font-size: 12.5px !important; line-height: 1.3 !important; }
-.reference-prayer-method em { font-size: 10.5px !important; line-height: 1.5 !important; }
-
 /* ---------- Quran: one entry point, then the list ----------
-   The arch replaces the paper card, so cream is left to mean one thing:
-   the Ayah of the day. */
+   A compact reading action leads to search and the complete Surah list. */
 
 .reference-quran-screen { gap: var(--ds-block-gap) !important; }
 
-.quran-focus .ds-arch__value--display { font-size: clamp(28px, 8vw, 34px); }
 .quran-focus > .gold-button { margin: 0; justify-content: center; }
-.quran-directory-art { width: 42px; height: 42px; }
 
-/* Directory status and the offline note: two lines, not two cards. */
-.reference-quran-library-status {
-  gap: var(--ds-space-3) !important;
-  padding: var(--ds-space-2) var(--ds-space-3) !important;
-  border-radius: var(--ds-radius-2) !important;
-}
-
-.reference-quran-library-status small { font-size: 9.5px !important; }
-.reference-quran-library-status strong { font-size: 12.5px !important; }
-.reference-quran-library-status em { font-size: 10px !important; line-height: 1.4 !important; }
-.reference-quran-library-status__count {
-  font-family: Inter, system-ui, sans-serif !important;
-  font-size: 19px !important;
-  font-weight: 600 !important;
-  font-variant-numeric: tabular-nums !important;
-  font-feature-settings: 'tnum' 1 !important;
-}
-
-.reference-quran-online-note {
-  padding: var(--ds-space-2) var(--ds-space-3) !important;
-  border-radius: var(--ds-radius-2) !important;
-}
-
-.reference-quran-online-note strong { font-size: 11.5px !important; }
-.reference-quran-online-note small { font-size: 10px !important; line-height: 1.5 !important; }
-
-/* The Surah catalogue reads like a set of Quran folios, not a data table. */
 .reference-quran-list--catalog {
   display: grid;
   gap: var(--ds-space-2) !important;
@@ -720,7 +693,7 @@
   overflow: hidden;
   grid-template-columns: minmax(0, 1fr) var(--ds-tap-min) !important;
   align-items: center;
-  min-height: 84px;
+  min-height: 76px;
   padding: 0 !important;
   border: 1px solid rgba(226, 191, 119, 0.18) !important;
   border-radius: var(--ds-radius-3) !important;
@@ -728,16 +701,6 @@
     radial-gradient(circle at 88% 18%, rgba(226, 191, 119, 0.08), transparent 34%),
     linear-gradient(135deg, rgba(13, 61, 46, 0.94), rgba(2, 37, 30, 0.96)) !important;
   box-shadow: inset 0 1px rgba(255, 255, 255, 0.025) !important;
-}
-
-.reference-quran-list--catalog > article::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 9px 54px 9px auto;
-  width: 56px;
-  border: 1px solid rgba(226, 191, 119, 0.08);
-  border-radius: 50%;
 }
 
 .reference-quran-list--catalog > article::after {
@@ -752,11 +715,11 @@
 
 .reference-quran-list__main {
   display: grid !important;
-  grid-template-columns: 50px minmax(0, 1fr) minmax(72px, auto) !important;
+  grid-template-columns: 40px minmax(0, 1fr) !important;
   align-items: center;
-  gap: var(--ds-space-3) !important;
-  min-height: 84px !important;
-  padding: 10px 4px 10px 12px !important;
+  gap: 10px !important;
+  min-height: 76px !important;
+  padding: 8px 4px 8px 12px !important;
   border: 0 !important;
   border-radius: 0 !important;
   background: none !important;
@@ -781,7 +744,7 @@
   position: absolute;
   inset: 2px;
   clip-path: polygon(50% 0, 63% 15%, 82% 8%, 85% 29%, 100% 50%, 85% 63%, 92% 82%, 71% 85%, 50% 100%, 37% 85%, 18% 92%, 15% 71%, 0 50%, 15% 37%, 8% 18%, 29% 15%);
-  background: linear-gradient(145deg, #f3d68f, #9d7029);
+  background: linear-gradient(145deg, var(--ds-gold-lt), var(--ds-gold-dk));
 }
 
 .reference-quran-list__number::after {
@@ -799,106 +762,41 @@
   font-variant-numeric: tabular-nums;
 }
 
-.reference-quran-list__copy { display: grid; gap: 1px; min-width: 0; }
-.reference-quran-list__index {
-  color: var(--ds-gold) !important;
-  font-size: 8px !important;
-  font-weight: 750;
-  line-height: 1.2;
-  letter-spacing: .1em;
-  text-transform: uppercase;
-}
+.reference-quran-list__copy { display: grid; gap: 3px; min-width: 0; }
 .reference-quran-list__copy > strong {
-  overflow: hidden;
+  overflow: visible;
   color: var(--ds-cream-hi) !important;
   font-family: 'Cormorant Garamond', Georgia, serif !important;
   font-size: 17px !important;
   font-weight: 650 !important;
-  line-height: 1.12 !important;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  line-height: 1.25 !important;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .reference-quran-list__copy > small {
   display: flex !important;
   align-items: center;
-  gap: 7px;
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  overflow: visible;
   color: var(--ds-muted) !important;
-  font-size: 9px !important;
+  font-size: 12px !important;
   line-height: 1.3 !important;
-  white-space: nowrap !important;
+  white-space: normal !important;
 }
 
 .reference-quran-list__arabic {
-  display: grid;
-  justify-items: end;
-  gap: 1px;
   min-width: 0;
+  margin-left: auto;
+  overflow: visible;
+  overflow-wrap: anywhere;
   font-family: Amiri, serif !important;
-  white-space: nowrap;
+  font-size: 20px;
+  line-height: 1.7;
+  white-space: normal;
   color: var(--ds-gold) !important;
 }
 
-.reference-quran-list__arabic small {
-  color: rgba(226, 191, 119, 0.58);
-  font-family: Amiri, serif;
-  font-size: 8px;
-  font-weight: 700;
-  line-height: 1;
-}
-
-.reference-quran-list__arabic strong {
-  overflow: hidden;
-  max-width: 122px;
-  color: var(--ds-gold-lt);
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1.8;
-  text-overflow: ellipsis;
-}
-
-.reference-quran-list__extent {
-  display: block;
-  overflow: hidden;
-  width: min(92px, 70%);
-  height: 2px;
-  margin-top: 4px;
-  border-radius: 999px;
-  background: rgba(226, 191, 119, 0.09);
-}
-
-.reference-quran-list__extent i {
-  display: block;
-  width: var(--surah-extent);
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #c69238, #f0d384);
-}
-
-.reference-quran-availability {
-  display: inline-flex;
-  align-items: center;
-  gap: 3px;
-  padding: 0 !important;
-  border: 0 !important;
-  background: none !important;
-  font-size: 8px !important;
-  letter-spacing: .02em;
-  white-space: nowrap;
-}
-
-.reference-quran-availability::before {
-  content: '';
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: currentColor;
-  box-shadow: 0 0 0 2px color-mix(in srgb, currentColor 15%, transparent);
-}
-
-.reference-quran-availability svg { display: none; }
-
-/* The bookmark shared the row with the surah button but was pinned to the
-   block's top edge, so it floated above its own row. */
 .reference-quran-favorite {
   display: grid;
   place-items: center;
@@ -922,13 +820,6 @@
   transform: none;
 }
 
-.reference-quran-list--catalog > article:hover {
-  border-color: rgba(226, 191, 119, 0.34) !important;
-  background:
-    radial-gradient(circle at 88% 18%, rgba(226, 191, 119, 0.12), transparent 34%),
-    linear-gradient(135deg, rgba(16, 70, 52, 0.98), rgba(3, 43, 34, 0.98)) !important;
-}
-
 [data-theme='light'] .reference-quran-list--catalog > article {
   border-color: rgba(84, 102, 88, 0.2) !important;
   background:
@@ -939,75 +830,53 @@
 [data-theme='light'] .reference-quran-list__copy > strong { color: #17382c !important; }
 [data-theme='light'] .reference-quran-list__number::after { background: linear-gradient(145deg, #f8f1dd, #e6e5d3); }
 [data-theme='light'] .reference-quran-list__number b { color: #17382c; }
-[data-theme='light'] .reference-quran-list__arabic strong { color: #8c611f; }
+[data-theme='light'] .reference-quran-list__arabic { color: #8c611f; }
 
 @media (max-width: 360px) {
   .reference-quran-list__main {
-    grid-template-columns: 44px minmax(0, 1fr) minmax(62px, auto) !important;
+    grid-template-columns: 40px minmax(0, 1fr) !important;
     gap: 8px !important;
     padding-left: 9px !important;
   }
   .reference-quran-list__number { width: 40px !important; height: 40px !important; }
-  .reference-quran-list__number b { font-size: 11px; }
-  .reference-quran-list__copy > strong { font-size: 15px !important; }
-  .reference-quran-list__arabic strong { max-width: 86px; font-size: 16px; }
-  .reference-quran-list__copy > small { gap: 5px; font-size: 8px !important; }
-  .reference-quran-availability { font-size: 7px !important; }
+  .reference-quran-list__number b { font-size: 12px; }
 }
 
 /* ---------- Lernen: reserved artwork, full-width reading area ---------- */
 
 .worship-guide-intro {
   display: grid;
-  gap: 16px;
-  padding: 20px;
-  border: 1px solid rgba(226, 191, 119, .28);
-  border-radius: var(--ds-radius-4);
-  background: linear-gradient(145deg, #0a3629, #001b16);
-  color: var(--ds-cream);
-}
-.worship-guide-intro h2 {
-  margin: 10px 0 0;
-  color: var(--ds-cream-hi);
-  font: 600 32px/1.2 'Cormorant Garamond', Georgia, serif;
-  overflow-wrap: normal;
-  word-break: normal;
-}
-.worship-guide-intro h2 > span {
-  display: block;
-  margin-top: 5px;
-  font: 500 16px/1.5 Inter, sans-serif;
-}
-.worship-guide-intro__body {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) clamp(108px, 30vw, 160px);
+  grid-template-columns: 48px minmax(0, 1fr) 44px;
+  gap: 10px;
   align-items: center;
-  gap: 16px;
+  padding: 4px 0 12px;
+  border-bottom: 1px solid rgba(185, 176, 159, .16);
 }
-.worship-guide-intro p { margin: 0; color: var(--ds-cream); font-size: 14px; line-height: 1.65; }
-.worship-guide-intro__body > * { min-width: 0; }
-.worship-guide-intro__art { width: 100%; aspect-ratio: 1; }
+.worship-guide-intro p { margin: 0; color: var(--ds-cream); font-size: 14px; line-height: 1.6; }
+.worship-guide-intro__art { width: 48px; height: 48px; }
 .worship-guide-intro__art img { object-fit: contain; }
-.worship-guide-intro .worship-guide-intro__meta {
-  padding-top: 12px;
-  border-top: 1px solid rgba(226, 191, 119, .16);
-  color: var(--ds-gold);
-  font-size: 12px;
-}
-@media (max-width: 360px) {
-  .worship-guide-intro__body { grid-template-columns: 1fr; }
-  .worship-guide-intro__body > div { width: 150px; justify-self: center; }
-}
+.wudu-lesson>.wudu-lesson__reference,.reference-guide-tips { min-width:0; border:1px solid var(--lr-border); border-radius:16px; color:var(--lr-text); background:var(--lr-panel); }
+.wudu-lesson>.wudu-lesson__reference { padding:8px 10px 8px 16px; font-size:14px; }
+.reference-prayer-preparation > summary, .reference-rakah-practice > summary { min-height:44px; padding:11px 0; color:var(--ds-cream); font:600 14px/1.5 Inter,sans-serif; cursor:pointer; }
+.reference-guide-tips>summary { display:flex; align-items:center; gap:10px; min-height:56px; padding:12px 16px; list-style:none; color:inherit; font:600 14px/1.5 Inter,sans-serif; cursor:pointer; }
+.reference-guide-tips>summary::-webkit-details-marker { display:none; }
+.reference-guide-tips>summary>span { flex:1; }
+.reference-guide-tips>summary>svg { flex-shrink:0; }
+.reference-guide-tips>summary svg,.reference-guide-tips li::marker { color:var(--lr-gold); }
+.reference-guide-tips[open]>summary>svg:last-child { transform:rotate(180deg); }
+.reference-guide-tips>summary:focus-visible { outline:2px solid var(--lr-gold); outline-offset:3px; border-radius:inherit; }
+.reference-guide-tips>ul { margin:0; padding:0 18px 18px 36px; color:var(--lr-text); font:400 14px/1.65 Inter,sans-serif; }
+.reference-guide-tips li+li { margin-top:10px; }
+.reference-rakah-practice:not([open]), .reference-prayer-preparation:not([open]) { padding-block: 0; gap: 0; }
+.reference-rakah-practice[open] > * + *, .reference-prayer-preparation[open] > * + * { margin-top: 10px; }
 
-.reference-learning-hero,
-.reference-prayer-learning-hub {
+.reference-learning-hero{
   min-height: 0 !important;
   padding: var(--ds-space-4) !important;
   border-radius: var(--ds-radius-4) !important;
 }
 
-.reference-learning-hero h2,
-.reference-prayer-learning-hub h2 {
+.reference-learning-hero h2{
   font-size: 27px !important;
   line-height: 1.05 !important;
 }
@@ -1017,53 +886,30 @@
   line-height: 1.55 !important;
 }
 
-.reference-prayer-learning-hub {
-  grid-template-columns: minmax(0, 1fr) clamp(100px, 28vw, 150px);
-  align-items: center;
-  gap: 18px;
-}
-.reference-prayer-learning-hub > * { position: relative; z-index: 2; min-width: 0; }
 .learning-intro__heading { display: grid; justify-items: start; gap: 14px; }
 .learning-intro__art .premium-image { width: 100%; height: 168px; }
 .learning-intro__art img { object-fit: contain; }
-.reference-prayer-learning-hub .learning-intro__description {
-  grid-column: 1 / -1;
-  max-width: none;
-  color: var(--ds-cream);
-  font-size: 14px;
-  line-height: 1.65;
-}
-.reference-prayer-learning-hub > :is(.reference-prayer-learning-hub__progress, .gold-button) {
-  grid-column: 1 / -1;
-  margin: 0;
-}
-.reference-prayer-learning-hub__progress > span { width: 100%; }
 
-/* The path progress is the number that matters here, so it is set like one. */
-.reference-prayer-learning-hub__progress-label,
 .reference-learning-progress-label {
   font-family: Inter, system-ui, sans-serif !important;
   font-variant-numeric: tabular-nums !important;
   font-feature-settings: 'tnum' 1 !important;
 }
 
-.reference-learning-tile,
-.reference-core-access-grid > button {
+.reference-learning-tile {
   min-height: 0 !important;
   padding: var(--ds-space-3) !important;
   border-radius: var(--ds-radius-3) !important;
 }
-
-/* Direct-access tiles: the label is one line, the gloss one more. */
-.reference-core-access-grid { gap: var(--ds-space-2) !important; }
 
 .reference-core-access__groups,
 .reference-core-access__group {
   display: grid;
 }
 
-.reference-core-access__groups { gap: 18px; }
-.reference-core-access__group { gap: 8px; }
+.reference-core-access__groups { display: block; column-count: 1; column-gap: 24px; }
+@media (min-width: 768px) { .reference-core-access__groups { column-count: 2; } }
+.reference-core-access__group { gap: 8px; break-inside: avoid; margin-bottom: 24px; }
 
 .reference-core-access__group-title {
   display: flex;
@@ -1082,7 +928,7 @@
 .reference-core-access__group-title h3 {
   margin: 0;
   color: var(--ds-muted);
-  font: 700 10px/1.25 Inter, system-ui, sans-serif;
+  font: 700 12px/1.25 Inter, system-ui, sans-serif;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
@@ -1090,59 +936,18 @@
 .reference-core-access__group-title span {
   order: 3;
   color: var(--ds-gold);
-  font: 650 9px/1 Inter, system-ui, sans-serif;
+  font: 650 12px/1 Inter, system-ui, sans-serif;
   font-variant-numeric: tabular-nums;
 }
 
-/* A tile label wraps rather than truncating — "Beten ler…" is not a label. */
-.reference-core-access-grid > button > span:not([class]) strong,
-.reference-core-access-grid > button strong {
-  overflow: visible !important;
-  font-size: 13px !important;
-  line-height: 1.2 !important;
-  text-overflow: clip !important;
-  white-space: normal !important;
-}
-
-.reference-core-access-grid > button small {
-  font-size: 10.5px !important;
-  line-height: 1.35 !important;
-  color: var(--ds-muted) !important;
-}
-
-.reference-core-access-grid > button > svg:last-child { color: var(--ds-gold); }
-
-.reference-services-grid > button {
-  grid-template-columns: 34px minmax(0, 1fr) 12px;
-  gap: 6px;
-  padding: 10px 8px;
-}
-
-.reference-services-grid__icon { width: 34px; height: 34px; }
-
-.reference-services-grid > button strong {
-  min-width: 0;
-  font-size: 15px;
-  line-height: 1.05;
-  hyphens: auto;
-  overflow-wrap: break-word;
-  white-space: normal;
-}
-
-/* ---------- Descriptions wrap; they do not get cut off ----------
-   Nine entries on Lernen ended in an ellipsis mid-sentence ("Ein ruhiger
-   Bereich zu Reue,…"), which loses the half that says what the section is. */
+/* ---------- Descriptions wrap; they do not get cut off ---------- */
 
 .reference-expanded-learning-grid em,
 .reference-expanded-learning-grid small,
-.recommendation-card strong,
-.recommendation-card span > strong,
 .reference-learning-section li p,
 .reference-learning-list__copy small,
 .reference-legacy-list__copy small,
 .reference-collection-row small,
-.quick-card small,
-.recommendation-card p,
 .reference-profile-row small {
   overflow: visible !important;
   white-space: normal !important;
@@ -1151,30 +956,24 @@
   line-height: 1.4 !important;
 }
 
-/* The row grew a line, so it stops being pinned to a single-line height. */
 .reference-expanded-learning-grid > button {
   height: auto !important;
   min-height: var(--ds-tap-min) !important;
   align-items: start !important;
 }
 
-/* ---------- Every control keeps a 44px tap target ----------
-   Text buttons were 15–16px tall — legible, but not reliably hittable. The
-   label keeps its size; the target grows around it. */
+/* ---------- Every control keeps a 44px tap target ---------- */
 
 .text-button,
-.premium-local-widgets__heading button,
-.reference-prayer-method > button {
+.premium-local-widgets__tools button{
   min-height: var(--ds-tap-min);
   padding-block: var(--ds-space-2);
 }
 
 .section-heading .text-button,
-.premium-local-widgets__heading button { margin-block: calc(var(--ds-space-2) * -1); }
+.premium-local-widgets__tools button { margin-block: calc(var(--ds-space-2) * -1); }
 
-/* ---------- Quran reader: the surah name must fit on one line ----------
-   The copy column was capped at 61% of an already narrow block, leaving 93px
-   for a 35px title — so "Al-Faatiha" broke after "Al-". */
+/* ---------- Quran reader: the surah name must fit on one line ---------- */
 
 .reference-reader-hero > div:first-child {
   max-width: none !important;
@@ -1196,14 +995,10 @@
   max-height: 118px !important;
 }
 
-/* ---------- Legacy feature template: one screen, fifteen sections ----------
-   Hadith-Sammlung, Wissensbibliothek, Propheten, Sahabah, Frauen im Islam,
-   Quiz, Hajj, Sunnah, Reue, Fasten, Ummah, Orte, Jumuah, Zakat, Standby all
-   render through this. The title column was 189px against a 118px image, so
-   the longer names broke in two. */
+/* ---------- Legacy feature template: one screen, fifteen sections ---------- */
 
 .reference-legacy-hero {
-  grid-template-columns: minmax(0, 1fr) 104px !important;
+  grid-template-columns: 104px minmax(0, 1fr) !important;
   gap: var(--ds-space-3) !important;
   align-items: center;
 }
@@ -1224,10 +1019,7 @@
   max-height: 104px !important;
 }
 
-/* ---------- Secondary screen heroes ----------
-   Several of these were given a fixed height that their own copy outgrew, so
-   the last line was clipped. The artwork stays — it is what makes the app
-   feel made — but the box now sizes to its content. */
+/* ---------- Secondary screen heroes ---------- */
 
 .reference-duas-hero,
 .reference-names-hero,
@@ -1241,6 +1033,8 @@
   height: auto !important;
   padding: var(--ds-space-4) !important;
   border-radius: var(--ds-radius-4) !important;
+  border: 0 !important;
+  box-shadow: none !important;
   overflow: visible !important;
 }
 
@@ -1262,8 +1056,6 @@
   line-height: 1.55 !important;
 }
 
-/* Ornaments are atmosphere, so they stop taking a layout row of their own —
-   this one alone claimed 208px above the headline. */
 .reference-duas-hero__ornament,
 .reference-names-hero__ornament,
 .reference-collection-hero__ornament,
@@ -1277,9 +1069,6 @@
   opacity: 0.16 !important;
 }
 
-/* Hero artwork sits beside the copy, never under it. Where the copy is tall
-   enough to reach it, the artwork retreats to the lower corner and fades out
-   toward the text rather than sitting behind it. */
 .reference-duas-hero > .premium-image,
 .reference-names-hero__allah,
 .reference-mosque-hero > .premium-image,
@@ -1304,8 +1093,6 @@
 
 .reference-mosque-hero { position: relative; }
 
-/* The contrast rule allows three fixes; here the copy gets an opaque ground,
-   because the illustration is wide enough to reach across the block. */
 .reference-mosque-hero::before {
   content: '';
   position: absolute;
@@ -1337,9 +1124,7 @@ select {
   color: var(--ds-cream-hi) !important;
 }
 
-/* ---------- Kalender: a grid of numbers you compare ----------
-   Oldstyle figures put 1, 2 and 3 at three different heights inside a grid
-   whose whole job is letting you scan down a column. */
+/* ---------- Kalender: a grid of numbers you compare ---------- */
 
 .calendar-day strong,
 .calendar-day > strong {
@@ -1353,7 +1138,7 @@ select {
 .calendar-weekday,
 .calendar-grid__weekday {
   font-family: Inter, system-ui, sans-serif !important;
-  font-size: 10px !important;
+  font-size: 12px !important;
   letter-spacing: .08em;
 }
 
@@ -1385,7 +1170,7 @@ select {
   border-radius: 999px;
   color: var(--ds-muted);
   background: rgba(0, 18, 15, .38);
-  font: 600 11px/1.4 Inter, sans-serif;
+  font: 600 12px/1.4 Inter, sans-serif;
 }
 .qibla-guide__mode > span {
   width: 7px;
@@ -1406,28 +1191,28 @@ select {
 }
 .qibla-dial > svg { display: block; width: 100%; height: auto; overflow: visible; }
 .qibla-dial__case { fill: #082e23; stroke: rgba(226, 191, 119, .68); stroke-width: 1.5; }
-.qibla-dial__bezel { fill: #173e30; stroke: var(--ds-gold); stroke-width: 1.2; }
-.qibla-dial__rim { fill: #ecd8aa; stroke: #8d6d39; stroke-width: 1; }
-.qibla-dial__face { fill: url(#qibla-paper); stroke: #fff7e5; stroke-width: 1; }
+.qibla-dial__bezel { stroke: var(--ds-gold); stroke-width: 1.2; }
+.qibla-dial__rim { fill: #102f29; stroke: #c9b47f; stroke-width: 1; }
+.qibla-dial__face { stroke: #39574a; stroke-width: 1; }
 .qibla-dial__status-ring { fill: none; stroke: transparent; stroke-width: 4; transition: stroke .28s var(--ds-ease), filter .28s var(--ds-ease); }
-.qibla-dial__chapter-ring { fill: none; stroke: rgba(24, 71, 53, .18); stroke-width: 1; }
-.qibla-dial__rose { fill: none; stroke: rgba(24, 71, 53, .12); stroke-width: 1; }
-.qibla-dial__tick { stroke: #244d3b; stroke-width: 1; stroke-opacity: .62; }
+.qibla-dial__chapter-ring { fill: none; stroke: rgba(145,174,155,.2); stroke-width: 1; }
+.qibla-dial__rose { fill: none; stroke: rgba(145,174,155,.15); stroke-width: 1; }
+.qibla-dial__tick { stroke: #9db4a6; stroke-width: 1; stroke-opacity: .7; }
 .qibla-dial__tick--medium { stroke-opacity: .78; stroke-width: 1.35; }
 .qibla-dial__tick--major { stroke-opacity: 1; stroke-width: 2; }
-.qibla-dial text { fill: #173d2e; font: 650 21px 'Cormorant Garamond', Georgia, serif; }
-.qibla-dial text.qibla-dial__north { fill: #865d27; font-size: 25px; font-weight: 700; }
-.qibla-dial__qibla-shaft { fill: #b48943; stroke: #6f5127; stroke-width: 1.25; stroke-linejoin: round; }
-.qibla-dial__qibla-highlight { fill: #eed08c; }
+.qibla-dial text { fill: #c8d6c8; font: 500 19px Inter,sans-serif; }
+.qibla-dial text.qibla-dial__north { fill: #f0d89d; font-size: 25px; font-weight: 700; }
+.qibla-dial__qibla-shaft { fill: #b29251; stroke: #e2bf77; stroke-width: 1.25; stroke-linejoin: round; }
+.qibla-dial__qibla-highlight { fill: #f3dba0; }
 .qibla-dial__pin-outer { fill: #c39a52; stroke: #6f5127; stroke-width: 1.3; }
 .qibla-dial__pin-inner { fill: #173d2e; }
-.qibla-dial__target-halo { fill: #f5e8c8; stroke: #8c642e; stroke-width: 1.5; transition: fill .28s var(--ds-ease), stroke .28s var(--ds-ease); }
-.qibla-dial__target-kaaba { fill: none; stroke: #173d2e; stroke-width: 1.6; stroke-linejoin: round; }
+.qibla-dial__target-halo { fill: #0b2620; stroke: #bca474; stroke-width: 1.5; transition: fill .28s var(--ds-ease), stroke .28s var(--ds-ease); }
+.qibla-dial__target-kaaba { fill: none; stroke: #e2c27d; stroke-width: 1.6; stroke-linejoin: round; }
 .qibla-dial__device-marker { fill: #e2bf77; }
 .qibla-dial[data-state="near"] .qibla-dial__status-ring { stroke: rgba(114, 181, 135, .52); }
-.qibla-dial[data-state="near"] .qibla-dial__target-halo { fill: #d9e5bd; }
+.qibla-dial[data-state="near"] .qibla-dial__target-halo { fill: #174f3c; }
 .qibla-dial[data-state="aligned"] .qibla-dial__status-ring { stroke: #83d4a6; filter: drop-shadow(0 0 4px rgba(131, 212, 166, .38)); }
-.qibla-dial[data-state="aligned"] .qibla-dial__target-halo { fill: #9ee2bd; stroke: #207a55; }
+.qibla-dial[data-state="aligned"] .qibla-dial__target-halo { fill: #174f3c; stroke: #9ee2bd; }
 .qibla-dial[data-pulse="true"] .qibla-dial__status-ring { transform-origin: 180px 180px; animation: qibla-ring-pulse .65s var(--ds-ease) 1; }
 @keyframes qibla-ring-pulse { 50% { transform: scale(1.028); opacity: .75; } }
 .qibla-guide .reference-qibla-location {
@@ -1445,7 +1230,7 @@ select {
 }
 .qibla-guide .reference-qibla-location__icon { width: 38px; height: 38px; }
 .qibla-guide .reference-qibla-location > span:nth-child(2) { min-width: 0; }
-.qibla-guide .reference-qibla-location small { color: var(--ds-muted); font: 550 10px/1.35 Inter, sans-serif; }
+.qibla-guide .reference-qibla-location small { color: var(--ds-muted); font: 550 12px/1.35 Inter, sans-serif; }
 .qibla-guide .reference-qibla-location strong { display: block; overflow: hidden; color: var(--ds-cream-hi); font: 650 13px/1.4 Inter, sans-serif; text-overflow: ellipsis; white-space: nowrap; }
 .qibla-guide .reference-qibla-location > button { display: grid; width: 44px; height: 44px; min-width: 44px; place-items: center; padding: 0; border-radius: 12px; }
 .qibla-guide__reading { display: grid; gap: 4px; text-align: center; }
@@ -1461,7 +1246,7 @@ select {
   font-variant-numeric: tabular-nums;
 }
 .qibla-guide__reading h2 span { font: 550 23px/1.2 'Cormorant Garamond', Georgia, serif; letter-spacing: 0; }
-.qibla-guide__reading p { margin: 0; color: var(--ds-muted); font: 500 11px/1.5 Inter, sans-serif; }
+.qibla-guide__reading p { margin: 0; color: var(--ds-muted); font: 500 12px/1.5 Inter, sans-serif; }
 .qibla-guide__guidance {
   display: grid;
   grid-template-columns: 38px minmax(0, 1fr);
@@ -1477,7 +1262,7 @@ select {
 }
 .qibla-guide__guidance > span { display: grid; width: 38px; height: 38px; place-items: center; border-radius: 50%; background: rgba(226, 191, 119, .1); }
 .qibla-guide__guidance > div { display: grid; gap: 2px; min-width: 0; }
-.qibla-guide__guidance small { color: var(--ds-muted); font: 500 11px/1.4 Inter, sans-serif; }
+.qibla-guide__guidance small { color: var(--ds-muted); font: 500 12px/1.4 Inter, sans-serif; }
 .qibla-guide__guidance strong { color: var(--ds-cream-hi); font: 700 14px/1.3 Inter, sans-serif; }
 .qibla-guide__guidance[data-state="near"] { border-color: rgba(142, 211, 177, .3); color: #b9dfb8; }
 .qibla-guide__guidance[data-state="aligned"] { border-color: rgba(142, 211, 177, .48); color: #9ee2bd; background: rgba(30, 104, 73, .23); }
@@ -1485,13 +1270,13 @@ select {
 .qibla-guide__guidance[data-state="error"] { border-color: rgba(222, 132, 117, .4); color: #f0ac9c; }
 .qibla-guide__facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 7px; }
 .qibla-guide__facts > div { display: grid; min-width: 0; min-height: 62px; align-content: center; gap: 3px; padding: 8px 9px; border: 1px solid rgba(226, 191, 119, .17); border-radius: 12px; background: rgba(0, 18, 15, .25); }
-.qibla-guide__facts small { color: var(--ds-muted); font: 550 10px/1.3 Inter, sans-serif; }
+.qibla-guide__facts small { color: var(--ds-muted); font: 550 12px/1.3 Inter, sans-serif; }
 .qibla-guide__facts strong { color: var(--ds-cream-hi); font: 700 12px/1.3 Inter, sans-serif; overflow-wrap: anywhere; }
 .qibla-guide__tip { display: flex; min-height: 45px; align-items: center; gap: 10px; padding: 7px 10px; border: 1px solid rgba(226, 191, 119, .14); border-radius: 12px; color: var(--ds-gold-lt); }
 .qibla-guide__tip > svg { flex: 0 0 auto; }
 .qibla-guide__tip > span { display: grid; gap: 2px; }
 .qibla-guide__tip strong { color: var(--ds-cream-hi); font: 650 12px/1.2 Inter, sans-serif; }
-.qibla-guide__tip small { color: var(--ds-muted); font: 500 10px/1.3 Inter, sans-serif; }
+.qibla-guide__tip small { color: var(--ds-muted); font: 500 12px/1.3 Inter, sans-serif; }
 .qibla-guide .reference-qibla-calibration {
   display: grid;
   gap: 0;
@@ -1502,7 +1287,7 @@ select {
   background: transparent;
   box-shadow: none;
 }
-.qibla-guide .reference-qibla-calibration p { margin: 0; color: var(--ds-muted); font: 500 11px/1.45 Inter, sans-serif; text-align: center; }
+.qibla-guide .reference-qibla-calibration p { margin: 0; color: var(--ds-muted); font: 500 12px/1.45 Inter, sans-serif; text-align: center; }
 .reference-qibla-screen .reference-calibration-button {
   width: 100%;
   min-height: 48px;
@@ -1510,7 +1295,7 @@ select {
   border-color: rgba(242, 215, 154, .62);
   border-radius: 15px;
   color: #092219;
-  background: linear-gradient(135deg, #f3d591, #c8953f);
+  background: linear-gradient(135deg, var(--ds-gold-lt), var(--ds-gold));
   box-shadow: 0 10px 25px rgba(0, 0, 0, .25), inset 0 1px 0 rgba(255, 255, 255, .38);
   font: 750 13px/1 Inter, sans-serif;
 }
@@ -1523,16 +1308,16 @@ select {
 .qibla-help summary > span:first-child > svg { flex: 0 0 auto; color: var(--ds-gold-lt); }
 .qibla-help summary > span:first-child > span { display: grid; gap: 2px; min-width: 0; }
 .qibla-help summary strong { color: var(--ds-cream-hi); font: 700 13px/1.4 Inter, sans-serif; }
-.qibla-help summary small { color: var(--ds-muted); font: 500 11px/1.4 Inter, sans-serif; }
-.qibla-help summary > span:last-child { color: var(--ds-gold-lt); font: 650 10px/1 Inter, sans-serif; }
+.qibla-help summary small { color: var(--ds-muted); font: 500 12px/1.4 Inter, sans-serif; }
+.qibla-help summary > span:last-child { color: var(--ds-gold-lt); font: 650 12px/1 Inter, sans-serif; }
 .qibla-help details[open] summary { border-bottom: 1px solid rgba(226, 191, 119, .12); }
 .qibla-help ol { display: grid; gap: 0; margin: 0; padding: 4px 14px 2px; list-style: none; counter-reset: qibla-step; }
 .qibla-help li { position: relative; display: grid; gap: 2px; min-height: 54px; align-content: center; padding: 8px 4px 8px 38px; counter-increment: qibla-step; }
 .qibla-help li + li { border-top: 1px solid rgba(226, 191, 119, .09); }
-.qibla-help li::before { content: counter(qibla-step); position: absolute; top: 13px; left: 0; display: grid; width: 25px; height: 25px; place-items: center; border: 1px solid rgba(226, 191, 119, .22); border-radius: 9px; color: var(--ds-gold-lt); font: 700 10px Inter, sans-serif; }
+.qibla-help li::before { content: counter(qibla-step); position: absolute; top: 13px; left: 0; display: grid; width: 25px; height: 25px; place-items: center; border: 1px solid rgba(226, 191, 119, .22); border-radius: 9px; color: var(--ds-gold-lt); font: 700 12px Inter, sans-serif; }
 .qibla-help li strong { color: var(--ds-cream-hi); font: 700 12px/1.4 Inter, sans-serif; }
 .qibla-help li span,
-.qibla-help details > p { color: var(--ds-muted); font: 500 11px/1.55 Inter, sans-serif; }
+.qibla-help details > p { color: var(--ds-muted); font: 500 12px/1.55 Inter, sans-serif; }
 .qibla-help details > p { margin: 4px 14px 14px; padding-top: 11px; border-top: 1px solid rgba(226, 191, 119, .09); }
 @media (max-width: 360px) {
   .qibla-guide { padding: 14px 12px; border-radius: 22px; }
@@ -1570,7 +1355,6 @@ select {
   font-feature-settings: 'tnum' 1 !important;
 }
 
-/* The tasbih is atmosphere, so it sits behind and stays out of the count. */
 .reference-dhikr-counter__tasbih {
   height: 128px !important;
   opacity: 0.4 !important;
@@ -1595,17 +1379,15 @@ time {
    Five concepts, all under 700ms except the one that explains something.
    Nothing overshoots, nothing blinks, nothing celebrates. */
 
-/* Home: one resume card, readable captions, one spacing scale. */
 .premium-home--v2 > .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .premium-home--v2 .content-section { gap: 14px !important; }
 .premium-home--v2 .section-heading { align-items: end; gap: 12px; }
 .premium-home--v2 .section-heading h2 { line-height: 1.2 !important; }
-.premium-home--v2 .section-heading .text-button { flex-shrink: 0; font-size: 11px; min-height: 44px; }
+.premium-home--v2 .section-heading .text-button { flex-shrink: 0; font-size: 12px; min-height: 44px; }
 .premium-home--v2 .journey-card { min-height: 180px; padding: 18px; }
 .premium-home--v2 > .journey-card--quran { min-height: 132px; width: 100%; padding: 14px 18px; }
-.premium-home--v2 > .journey-card--quran > .premium-image { top: 50%; right: -2px; left: auto; width: 40%; height: 116px; transform: translateY(-50%); }
-.premium-home--v2 > .journey-card--quran > span:last-child { max-width: 56%; width: 56%; gap: 3px; }
-.premium-home--v2 > .home-prayer-note { order: 3; }
+.premium-home--v2 > .journey-card--quran > .premium-image { top: 50%; left: -2px; right: auto; width: 40%; height: 116px; transform: translateY(-50%); }
+.premium-home--v2 > .journey-card--quran > span:last-child { max-width: 56%; width: 56%; margin-left: auto; gap: 3px; }
 .premium-home--v2 > [data-home-section='continue'] { order: 4; }
 .premium-home--v2 > [data-home-section][hidden] { display: none; }
 .premium-home--v2 .journey-card > span:last-child { gap: 5px; }
@@ -1615,16 +1397,19 @@ time {
 .premium-home--v2 .journey-card .journey-card__action { display: flex; align-items: center; gap: 5px; margin-top: 5px; font: 600 12px/1.4 Inter, system-ui, sans-serif; color: var(--ds-gold-lt); }
 .home-reading-progress { display: block; height: 3px; margin-top: 4px; overflow: hidden; border-radius: 3px; background: rgba(226,191,119,.12); }
 .home-reading-progress > span { display: block; height: 100%; background: var(--ds-gold); }
-.premium-home--v2 .quick-card { min-height: 150px; padding: 16px; }
-.premium-home--v2 .quick-card strong { font: 600 18px/1.25 'Cormorant Garamond', Georgia, serif; }
-.premium-home--v2 .quick-card__eyebrow { font-size: 10px; line-height: 1.4; white-space: normal; }
-.home-prayer-note { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 10px 0; border: 0; border-top: 1px solid var(--line); background: none; color: var(--ds-muted); font: 400 11px/1.4 Inter, system-ui, sans-serif; text-align: left; cursor: pointer; }
-.home-prayer-note small { display: block; font: inherit; margin-top: 3px; }
 
-.verse-card--cream::before {
-  z-index: 1;
-  background: linear-gradient(90deg, rgba(255, 250, 240, .12) 0%, rgba(255, 250, 240, .05) 68%, rgba(139, 96, 29, .08) 100%);
-}
+.verse-card.verse-card--cream { background: #f6eddc; }
+.verse-card--cream::before,
+.verse-card--cream::after { content: none; }
+
+.verse-card.verse-card--cream { min-height: 0; }
+.verse-card--cream > .daily-ayah__backdrop { position: absolute; z-index: 0; inset: 0; width: 100%; height: 100%; overflow: hidden; border-radius: inherit; pointer-events: none; }
+.daily-ayah__backdrop > img { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.verse-card--cream .card-title-row { width: 100%; gap: 12px; }
+.verse-card--cream .arabic-verse { margin: 24px 0 20px; font-size: clamp(30px, 7vw, 36px); line-height: 1.85; text-align: center; }
+.verse-card--cream .daily-ayah__meaning-label { display: block; margin-bottom: 8px; color: #586657; font: 500 12px/1.5 Inter, sans-serif; text-align: center; }
+.verse-card--cream blockquote { font: 500 clamp(23px, 5vw, 28px)/1.3 'Cormorant Garamond', Georgia, serif; text-align: center; text-wrap: balance; }
+.verse-card--cream footer { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(23, 53, 43, .14); font: 500 12px/1.6 Inter, sans-serif; text-align: center; }
 
 .premium-home--v2 .hadith-card .card-title-row > span:first-child {
   width: auto;
@@ -1633,215 +1418,9 @@ time {
   white-space: nowrap;
 }
 
-.premium-home--v2 .quick-card__art {
-  display: block;
-  width: 64px;
-  height: 56px;
-  margin: -7px 0 5px -8px;
-  pointer-events: none;
-}
-
-.premium-home--v2 .quick-card__art-image,
-.premium-home--v2 .quick-card__art-image > img,
-.premium-home--v2 .quick-card__art-image > .premium-image__fallback {
-  width: 100%;
-  height: 100%;
-}
-
-.premium-home--v2 .quick-card__art-image > img {
-  display: block;
-  object-fit: contain;
-  object-position: center;
-  filter: drop-shadow(0 8px 8px rgba(0, 0, 0, .34)) saturate(1.04);
-  transition: transform 180ms var(--ds-ease);
-}
-
-.premium-home--v2 .quick-card__art-image > .premium-image__fallback {
-  display: grid;
-  place-items: center;
-  color: var(--ds-gold-lt);
-}
-
-/* Six companion cards share one surface and a compact editorial composition. */
-.premium-home--v2 [data-home-section='journey'] .journey-card,
-.premium-home--v2 [data-home-section='discover'] .quick-grid--v2 .quick-card {
-  min-height: 146px;
-  padding: 15px;
-  border-color: rgba(226, 191, 119, .18) !important;
-  border-radius: 21px !important;
-  background: radial-gradient(circle at 78% 24%, rgba(38, 97, 74, .34), transparent 68%), linear-gradient(160deg, #103a2e, #061c17 86%) !important;
-  box-shadow: 0 14px 32px rgba(0, 0, 0, .2), inset 0 1px 0 rgba(255, 255, 255, .025) !important;
-}
-
-.premium-home--v2 [data-home-section='journey'] .journey-card {
-  align-content: end;
-}
-
-.premium-home--v2 [data-home-section='journey'] .journey-card::after {
-  background: none;
-}
-
-.premium-home--v2 [data-home-section='journey'] .journey-card > .premium-image {
-  top: 8px;
-  right: 5px;
-  left: auto;
-  width: 45%;
-  height: 103px;
-  transform: none;
-}
-
-.premium-home--v2 [data-home-section='journey'] .journey-card > span:last-child {
-  max-width: 62%;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-grid--v2 .quick-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 4px;
-  min-height: 162px;
-  padding: 17px;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-grid--v2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card::after {
-  display: none;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__arrow {
-  top: 16px;
-  right: 16px;
-  bottom: auto;
-  color: #e5c47b;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__art {
-  position: absolute;
-  top: 60%;
-  right: 6px;
-  display: block;
-  width: 42%;
-  height: 100px;
-  margin: 0;
-  transform: translateY(-50%);
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__art-image {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__art-image > img {
-  object-fit: contain;
-  object-position: center;
-  filter: drop-shadow(0 10px 10px rgba(0, 0, 0, .32)) saturate(.94);
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__eyebrow,
-.premium-home--v2 [data-home-section='discover'] .quick-card strong,
-.premium-home--v2 [data-home-section='discover'] .quick-card__detail {
-  position: relative;
-  z-index: 1;
-  width: 58%;
-  max-width: 58%;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__eyebrow {
-  color: #d5c189;
-  font-size: 11px;
-  font-weight: 700;
-  line-height: 1.35;
-  letter-spacing: .045em;
-  white-space: normal;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card strong {
-  margin-top: 1px;
-  padding-right: 0;
-  color: #fff6e7;
-  font-size: 24px;
-  line-height: 1.04;
-}
-
-.premium-home--v2 [data-home-section='discover'] .quick-card__detail {
-  display: block;
-  margin-top: 2px;
-  padding-right: 0;
-  color: #d0dbd2;
-  font: 400 13px/1.35 Inter, system-ui, sans-serif;
-}
-
-@media (max-width: 430px) {
-  .premium-home--v2 [data-home-section='journey'] .journey-card > .premium-image {
-    width: 35%;
-    height: 82px;
-  }
-}
-
-@media (max-width: 600px) {
-  .premium-home--v2 [data-home-section='discover'] .quick-grid--v2 {
-    grid-template-columns: 1fr;
-  }
-
-  .premium-home--v2 [data-home-section='discover'] .quick-grid--v2 .quick-card {
-    min-height: 128px;
-  }
-
-  .premium-home--v2 [data-home-section='discover'] .quick-card__art {
-    width: 30%;
-    height: 100px;
-  }
-}
-
-@media (max-width: 360px) {
-  .premium-home--v2 [data-home-section='journey'] .journey-card {
-    min-height: 142px;
-    padding: 12px;
-  }
-
-  .premium-home--v2 [data-home-section='discover'] .quick-grid--v2 .quick-card {
-    min-height: 142px;
-    padding: 12px;
-  }
-}
-
-[data-theme='light'] .premium-home--v2 [data-home-section='journey'] .journey-card,
-[data-theme='light'] .premium-home--v2 [data-home-section='discover'] .quick-grid--v2 .quick-card {
-  background: radial-gradient(circle at 78% 24%, rgba(204, 175, 112, .13), transparent 68%), linear-gradient(160deg, #fbf7eb, #f1eadb 86%) !important;
-  border-color: rgba(101, 78, 39, .2) !important;
-}
-
-[data-theme='light'] .premium-home--v2 [data-home-section='journey'] .journey-card strong,
-[data-theme='light'] .premium-home--v2 [data-home-section='discover'] .quick-card strong {
-  color: #17382c;
-}
-
-[data-theme='light'] .premium-home--v2 [data-home-section='journey'] .journey-card small,
-[data-theme='light'] .premium-home--v2 [data-home-section='journey'] .journey-card em,
-[data-theme='light'] .premium-home--v2 [data-home-section='discover'] .quick-card__eyebrow,
-[data-theme='light'] .premium-home--v2 [data-home-section='discover'] .quick-card__detail {
-  color: #4d6458 !important;
-}
-
-@media (hover: hover) {
-  .premium-home--v2 .quick-card:hover .quick-card__art-image > img {
-    transform: translateY(-2px) rotate(-2deg) scale(1.04);
-  }
-}
-
-/* 1. Tap feedback. Cards give 3.5%, tiles 7%, icons 8% — a card is a large
-      surface, so the same scale would read as a lurch. */
 .glass-card,
-.quick-card,
 .journey-card,
 .continue-card,
-.recommendation-card,
 .prayer-time-row,
 .reference-quran-list__main,
 .reference-name-list__main,
@@ -1849,23 +1428,10 @@ time {
   transition: transform 140ms var(--ds-ease);
 }
 
-.quick-card:active,
-.journey-card:active,
-.continue-card:active,
-.recommendation-card:active,
-.reference-quran-list__main:active,
-.reference-name-list__main:active,
-.reference-profile-row:active { transform: scale(0.965); }
-
-.reference-core-access-grid > button,
 .reference-learning-tile,
 .reference-collection-grid > button {
   transition: transform 140ms var(--ds-ease);
 }
-
-.reference-core-access-grid > button:active,
-.reference-learning-tile:active,
-.reference-collection-grid > button:active { transform: scale(0.93); }
 
 .icon-button,
 .bottom-nav__item,
@@ -1875,12 +1441,6 @@ time {
   transition: transform 120ms var(--ds-ease), color 180ms var(--ds-ease);
 }
 
-.icon-button:active,
-.prayer-alert:active,
-.prayer-complete:active,
-.reference-quran-favorite:active { transform: scale(0.92); }
-
-/* 2. The check draws itself rather than appearing. */
 @keyframes ds-draw-check {
   from { stroke-dasharray: 0 32; }
   to { stroke-dasharray: 32 0; }
@@ -1891,16 +1451,12 @@ time {
   animation: ds-draw-check 420ms var(--ds-ease) both;
 }
 
-/* 3. The arch fills on arrival — the one animation that explains something,
-      so it is allowed the longest run. */
 @keyframes ds-arch-fill {
   from { stroke-dasharray: 0 100; }
 }
 
 .ds-arch__progress { animation: ds-arch-fill 900ms var(--ds-ease) both; }
 
-/* 4. Ambient light. Five points, periods offset by primes so they never
-      align — slow enough that you notice them only on second look. */
 .ds-sky {
   position: absolute;
   inset: 0;
@@ -1925,50 +1481,52 @@ time {
   50% { opacity: 0.5; transform: scale(1); }
 }
 
-/* A single readable Wudu lesson, with a separate illustration and wording. */
 .wudu-lesson { display: grid; gap: 16px; color: var(--ds-cream-hi); }
-.wudu-lesson__card {
+.wudu-lesson__card, .reference-rakah-step-detail {
   display: grid;
-  gap: 24px;
-  padding: clamp(20px, 5vw, 32px);
-  border: 1px solid var(--ds-gold-dk);
-  border-radius: 24px;
-  background: var(--ds-ink-700);
+  gap: 22px;
+  width: 100%;
+  max-width: 640px;
+  justify-self: center;
+  padding: 24px 20px;
+  border: 1px solid #b9a16f;
+  border-radius: 12px;
+  color: #173d31;
+  background: #f6efdf;
+  box-shadow: inset 0 0 0 5px #f6efdf, inset 0 0 0 6px #c6b28766;
 }
+.wudu-lesson__card > header { padding-bottom: 18px; border-bottom: 3px double #c6b28780; text-align: left; }
+.wudu-lesson__card > header:has(figure) { display: grid; gap: 12px; }
 .wudu-lesson p { margin: 0; font-size: 16px; line-height: 1.65; }
 .wudu-lesson h2 {
   margin: 8px 0;
-  font-family: Inter, sans-serif;
-  font-size: clamp(24px, 5vw, 30px);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 28px;
   line-height: 1.25;
   font-weight: 650;
+  color: #173d31;
   letter-spacing: -.025em;
   overflow-wrap: normal;
   word-break: normal;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 16px;
 }
-.wudu-lesson h3 { margin: 0 0 8px; font: 600 14px/1.4 Inter, sans-serif; }
-.wudu-lesson p.wudu-lesson__eyebrow { font-size: 12px; font-weight: 700; color: var(--ds-gold); }
-.wudu-lesson p.wudu-lesson__cue { color: var(--ds-gold-lt); font-size: 14px; }
-.wudu-lesson__figure {
-  display: grid;
-  justify-items: center;
-  gap: 4px;
-  margin: 0;
-  padding: 16px 12px 12px;
-  border-radius: 20px;
-  background: var(--ds-cream);
-  color: var(--ds-ink-600);
-}
-.wudu-lesson .wudu-lesson__art { display: block; position: relative; width: min(100%, 256px); height: 220px; }
+.wudu-lesson h3 { margin: 0; font: 600 13px/1.5 Inter, sans-serif; color: #6f592e; }
+.wudu-lesson p.wudu-lesson__eyebrow { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #6f592e; }
+.wudu-lesson p.wudu-lesson__cue { color: #526457; font-size: 13px; }
+.wudu-lesson__figure { justify-self: center; margin: 0; color: var(--ds-ink-600); }
+.wudu-lesson .wudu-lesson__art { display: block; position: relative; width: 160px; height: 140px; }
 .wudu-lesson .wudu-lesson__art img { width: 100%; height: 100%; object-fit: contain; filter: none; }
-.wudu-lesson__figure figcaption { font-size: 11px; line-height: 1.5; text-align: center; }
-.wudu-lesson__wording { display: grid; gap: 12px; padding-top: 20px; border-top: 1px solid var(--ds-gold-dk); }
-.wudu-lesson p.wudu-lesson__arabic { font-family: Amiri, serif; font-size: 32px; line-height: 1.9; text-align: right; }
-.wudu-lesson__pronunciation { display: grid; gap: 8px; padding: 18px; border-radius: 14px; background: var(--ds-ink-900); }
-.wudu-lesson__pronunciation h3 { margin: 0; color: var(--ds-gold-lt); }
+.wudu-lesson__instruction { display: grid; gap: 8px; }
+.wudu-lesson__instruction-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.wudu-lesson__wording { display: grid; gap: 16px; }
+.wudu-lesson__wording > h3 { text-align: center; letter-spacing: .12em; text-transform: uppercase; font-size: 12px; }
+.wudu-lesson p.wudu-lesson__arabic { font-family: Amiri, serif; font-size: 34px; line-height: 1.95; text-align: center; }
+.wudu-lesson__pronunciation { display: grid; gap: 8px; padding: 16px 0; border-block: 1px solid #c6b28766; }
 .wudu-lesson p.wudu-lesson__phonetic { font-size: 18px; line-height: 1.65; overflow-wrap: anywhere; }
-.wudu-lesson p.wudu-lesson__note { color: var(--ds-muted); font-size: 13px; line-height: 1.6; }
+.wudu-lesson p.wudu-lesson__note { font-size: 13px; line-height: 1.6; }
+.wudu-lesson__reference { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: var(--ds-muted); font: 400 12px/1.5 Inter,sans-serif; }
+.wudu-lesson__card .wudu-lesson__reference { color: #526457; }
+.wudu-lesson__card .source-info__trigger { color: #6f592e; }
 .wudu-lesson__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .wudu-lesson__actions button {
   display: flex;
@@ -1982,14 +1540,13 @@ time {
   font: 600 13px/1.4 Inter, sans-serif;
 }
 .wudu-lesson__actions button:disabled { opacity: .45; cursor: default; }
-.wudu-lesson__actions button:not(.gold-button) { appearance: none; background: transparent; color: var(--ds-cream); }
+.wudu-lesson__actions button:not(.gold-button) { appearance: none; background: transparent; color: #173d31; }
 .wudu-lesson .wudu-lesson__actions .gold-button { margin: 0; width: 100%; min-width: 0; }
-.wudu-lesson .wudu-lesson__actions .gold-button:hover { transform: none; }
 .wudu-lesson__actions svg { flex: 0 0 auto; }
-.wudu-lesson__help, .wudu-lesson__overview { padding: 14px 0; border-top: 1px solid var(--ds-gold-dk); }
+.wudu-lesson__help, .wudu-lesson__overview { padding: 0; border-top: 1px solid var(--ds-gold-dk); }
 .wudu-lesson summary { padding: 8px 0; min-height: 44px; cursor: pointer; color: var(--ds-gold-lt); font-size: 14px; line-height: 1.5; }
-.wudu-lesson__help p { margin-top: 12px; font-size: 13px; color: var(--ds-muted); }
-.wudu-lesson a { color: var(--ds-gold-lt); text-decoration: underline; }
+.wudu-lesson__card summary { color: #526457; }
+.wudu-lesson__help p { margin-top: 12px; font-size: 13px; color: #526457; }
 .wudu-lesson__overview summary { display: flex; align-items: center; gap: 12px; list-style: none; color: var(--ds-cream); }
 .wudu-lesson__overview summary::-webkit-details-marker { display: none; }
 .wudu-lesson__overview summary small { margin-left: auto; color: var(--ds-muted); font-size: 12px; }
@@ -1997,14 +1554,12 @@ time {
 .wudu-lesson__overview ol { margin: 12px 0 0; padding: 0; list-style: none; }
 .wudu-lesson__overview li + li { border-top: 1px solid rgba(226,191,119,.12); }
 .wudu-lesson__overview button { appearance: none; display: grid; grid-template-columns: 28px minmax(0,1fr) 16px; align-items: center; gap: 12px; width: 100%; min-height: 48px; padding: 8px; border: 0; box-shadow: none; border-radius: 8px; background: transparent; color: var(--ds-cream); text-align: left; font: 400 14px/1.5 Inter,sans-serif; cursor: pointer; }
-.wudu-lesson__overview button:hover { background: var(--ds-ink-700); }
 .wudu-lesson__overview button[aria-current="step"] { color: var(--ds-gold-lt); background: var(--ds-ink-600); }
 .wudu-lesson__step-number { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; color: var(--ds-muted); background: var(--ds-ink-700); font-size: 12px; font-variant-numeric: tabular-nums; }
 .wudu-lesson__overview [aria-current="step"] .wudu-lesson__step-number { color: var(--ds-ink-900); background: var(--ds-gold); }
-.wudu-lesson__overview button small { display: block; color: var(--ds-muted); font-size: 11px; }
+.wudu-lesson__overview button small { display: block; color: var(--ds-muted); font-size: 12px; }
 @media (max-width: 360px) {
   .wudu-lesson__actions { grid-template-columns: 1fr; }
-  .wudu-lesson .wudu-lesson__art { height: 190px; }
 }
 
 .ds-sky i:nth-child(1) { top: 18%; left: 12%; --ds-period: 11s; animation-delay: 0s; }
@@ -2013,21 +1568,14 @@ time {
 .ds-sky i:nth-child(4) { top: 12%; left: 58%; --ds-period: 19s; animation-delay: 1.4s; }
 .ds-sky i:nth-child(5) { top: 46%; left: 88%; --ds-period: 13s; animation-delay: 7.6s; }
 
-/* 5. The splash draws the arch instead of spinning a loader. */
 @keyframes ds-draw-arch {
   from { stroke-dashoffset: 100; }
   to { stroke-dashoffset: 0; }
 }
 
-/* prefers-reduced-motion: the app stays fully usable, it just stops moving. */
 @media (prefers-reduced-motion: reduce) {
   .ds-arch__progress,
   .bottom-nav__item--active::before { transition: none !important; }
-
-  .premium-home--v2 .quick-card__art-image > img {
-    transition: none;
-    transform: none;
-  }
 
   .ds-arch__progress,
   .prayer-complete--done svg,
@@ -2045,7 +1593,7 @@ time {
 
 .reference-prayer-course-hero--compact {
   display: block;
-  min-height: 216px;
+  min-height: 136px;
   background: #031f19;
 }
 
@@ -2065,10 +1613,10 @@ time {
   z-index: 3;
   display: grid;
   align-content: end;
-  min-height: 216px;
+  min-height: 136px;
   max-width: none;
   gap: 7px;
-  padding: 23px 22px 20px;
+  padding: 18px;
 }
 
 .reference-prayer-course-hero > .reference-prayer-course-hero__time-art {
@@ -2103,7 +1651,7 @@ time {
 
 .reference-prayer-course-hero__eyebrow {
   color: var(--ds-gold-lt);
-  font: 800 10px/1 Inter, system-ui, sans-serif;
+  font: 800 12px/1 Inter, system-ui, sans-serif;
   letter-spacing: .13em;
   text-transform: uppercase;
 }
@@ -2129,58 +1677,27 @@ time {
 .reference-prayer-course-hero__copy > p {
   margin: 0;
   color: rgba(247, 239, 220, .76);
-  font: 550 11px/1.4 Inter, system-ui, sans-serif;
-}
-
-.reference-prayer-course-hero__progress {
-  display: grid;
-  width: min(100%, 245px);
-  gap: 6px;
-  margin-top: 6px;
-}
-
-.reference-prayer-course-hero__progress strong {
-  color: rgba(247, 239, 220, .78);
-  font: 600 10px/1.2 Inter, system-ui, sans-serif;
-}
-
-.reference-prayer-course-hero__progress strong > span { color: var(--ds-gold-lt); }
-.reference-prayer-course-hero__progress > span {
-  display: block;
-  height: 3px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, .13);
-}
-
-.reference-prayer-course-hero__progress i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, #c99743, #f0d793);
+  font: 550 12px/1.4 Inter, system-ui, sans-serif;
 }
 
 .reference-prayer-course-selector {
-  grid-template-columns: repeat(5, minmax(74px, 1fr));
-  gap: 8px;
-  overflow-x: auto;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 4px;
   padding: 2px 0 5px;
   scrollbar-width: none;
 }
 
-.reference-prayer-course-selector::-webkit-scrollbar { display: none; }
-
 .reference-prayer-course-selector button {
-  min-width: 74px;
-  min-height: 92px;
+  min-width: 0;
+  min-height: 72px;
   gap: 4px;
-  padding: 8px 5px;
+  padding: 8px 2px;
   border-radius: 16px;
 }
 
-.reference-prayer-course-selector__image {
-  width: 48px;
-  height: 42px;
+.reference-prayer-course-selector .reference-prayer-course-selector__image {
+  width: 32px;
+  height: 32px;
   overflow: hidden;
   border: 1px solid rgba(226, 191, 119, .2);
   border-radius: 13px;
@@ -2194,7 +1711,6 @@ time {
 }
 
 .reference-prayer-course-selector strong { font-size: 12px; }
-.reference-prayer-course-selector small { color: #c2b8a5; font-size: 9px; line-height: 1.35; }
 
 .reference-prayer-step-chooser {
   position: relative;
@@ -2210,7 +1726,7 @@ time {
   grid-template-columns: minmax(0, 1fr) 24px;
   align-items: center;
   gap: 12px;
-  min-height: 66px;
+  min-height: 48px;
   padding: 12px 15px;
   color: var(--ds-cream-hi);
   list-style: none;
@@ -2219,8 +1735,7 @@ time {
 
 .reference-prayer-step-chooser > summary::-webkit-details-marker { display: none; }
 .reference-prayer-step-chooser > summary > span { display: grid; gap: 3px; }
-.reference-prayer-step-chooser > summary small { color: var(--ds-gold); font-size: 11px; font-weight: 800; letter-spacing: .04em; }
-.reference-prayer-step-chooser > summary strong { overflow: hidden; font-size: 16px; text-overflow: ellipsis; white-space: nowrap; }
+.reference-prayer-step-chooser > summary strong { overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
 .reference-prayer-step-chooser[open] > summary { border-bottom: 1px solid rgba(226, 191, 119, .14); }
 .reference-prayer-step-chooser[open] > summary > svg { transform: rotate(180deg); }
 
@@ -2253,7 +1768,7 @@ time {
 
 .reference-prayer-step-chooser button.is-complete > svg { color: #9de0ba; }
 .reference-prayer-step-chooser button > span { display: grid; gap: 2px; min-width: 0; }
-.reference-prayer-step-chooser button small { color: var(--ds-gold); font-size: 10px; }
+.reference-prayer-step-chooser button small { color: var(--ds-gold); font-size: 12px; }
 .reference-prayer-step-chooser button strong { overflow: hidden; font-size: 14px; text-overflow: ellipsis; white-space: nowrap; }
 
 .salah-posture-image {
@@ -2274,141 +1789,52 @@ time {
 .salah-posture-image--compact > img { filter: drop-shadow(0 8px 8px rgba(0, 0, 0, .25)); }
 
 .reference-rakah-step-detail {
-  gap: 14px;
-  padding: 16px;
-  border-radius: 22px;
+  --cream:#173d31; --cream-strong:#173d31; --muted-green:#526457;
+  --gold:#6f592e; --gold-soft:#6f592e; --gold-bright:#6f592e;
+  --lr-text:#173d31; --lr-gold:#6f592e; --lr-border:#c6b28766; --lr-panel:transparent;
+}
+.reference-rakah-step-detail>.section-heading { padding-bottom:16px; border-bottom:3px double #c6b28780; }
+.reference-rakah-step-detail .overline { color:#6f592e; font-size:12px; letter-spacing:.06em; }
+.reference-rakah-step-detail h2 { margin:8px 0 0; color:#173d31; font:650 28px/1.2 'Cormorant Garamond',Georgia,serif !important; }
+.reference-rakah-step-detail h3 { margin:0; color:#6f592e; font:600 14px/1.5 Inter,sans-serif; }
+.reference-rakah-step-detail__body,.reference-rakah-instruction { display:grid; grid-template-columns:minmax(0,1fr); gap:12px; }
+.reference-rakah-figure { display:grid; justify-items:center; gap:8px; margin:0; border:0; background:none; }
+.reference-rakah-figure .salah-posture-image { position:relative; width:176px; height:160px; min-height:0; overflow:hidden; }
+.reference-rakah-figure .salah-posture-image>img { position:absolute; inset:0; width:100%; height:100%; object-fit:contain; object-position:center bottom; filter:none; }
+.reference-rakah-figure figcaption { color:#526457; font:400 13px/1.5 Inter,sans-serif; text-align:center; }
+.reference-rakah-step-detail>.reference-rakah-recitation { display:flex; align-items:center; justify-content:space-between; gap:12px; margin:0; padding:0; border:0; border-radius:0; background:none; color:#6f592e; }
+.reference-rakah-recitation strong { font-size:14px; font-weight:500; }
+.reference-rakah-step-detail__description { margin:0; color:#173d31; font:400 16px/1.65 Inter,sans-serif; }
+.reference-rakah-wording { display:grid; gap:18px; padding:18px 0 0; border:0; border-top:3px double #c6b28780; border-radius:0; background:none; }
+.reference-rakah-wording__count { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:12px; }
+.reference-rakah-wording__count>div { display:grid; flex:1 1 140px; gap:4px; }
+.reference-rakah-wording__count span { color:#526457; font:400 13px/1.5 Inter,sans-serif; }
+.reference-rakah-wording__count .reference-recitation-button { margin:0; color:#173d31; border-color:#b9a16f; font-weight:600; }
+.reference-rakah-wording__arabic { margin:0; color:#173d31; font:400 34px/1.95 Amiri,serif; text-align:center; white-space:pre-line; }
+.reference-rakah-wording__pronunciation { display:grid; gap:8px; margin:0; padding:14px 0; border-block:1px solid #c6b28766; color:#173d31; font:500 18px/1.75 Inter,sans-serif; white-space:pre-line; }
+.reference-rakah-wording__pronunciation>span,.reference-rakah-wording__translation>span { color:#6f592e; font:600 13px/1.5 Inter,sans-serif; letter-spacing:0; text-transform:none; }
+.reference-rakah-wording__translation { display:grid; gap:8px; margin:0; color:#3d5a4b; font:400 16px/1.65 Inter,sans-serif; }
+.reference-rakah-step-detail .reference-guide-tips { border:0; border-top:1px solid #c6b28766; border-radius:0; background:none; }
+.reference-rakah-step-detail .reference-guide-tips>summary { padding:12px 0; min-height:48px; }
+.reference-rakah-pronunciation-note { margin:0; padding:0 0 12px; color:#526457; font:400 14px/1.65 Inter,sans-serif; }
+.reference-rakah-source-row { display:flex; align-items:center; justify-content:space-between; gap:12px; color:#526457; font:400 13px/1.5 Inter,sans-serif; }
+.reference-rakah-source { font-size:14px; line-height:1.65; }
+.reference-rakah-runs { display:grid; gap:22px; margin:0; padding:0; list-style:none; }
+.reference-rakah-runs li { display:grid; gap:8px; }
+.reference-rakah-runs__label { color:#6f592e; font:600 13px/1.5 Inter,sans-serif; }
+.reference-rakah-runs li>div { display:grid; gap:10px; min-width:0; }
+.reference-rakah-step-detail .reference-madhhab { border-color:#c6b28766; border-radius:12px; background:transparent; }
+.reference-rakah-step-detail .reference-madhhab summary strong { font-size:14px; }
+.reference-rakah-step-detail .reference-madhhab__topic dl>div { background:#fff8; }
+.reference-rakah-step-detail .reference-prayer-course-navigation>button { width:100%; min-height:48px; margin:0; border-color:#b9a16f; border-radius:12px; font:600 14px/1.4 Inter,sans-serif !important; }
+.reference-rakah-step-detail .reference-prayer-course-navigation>button:not(.gold-button) { background:transparent; }
+@media (max-width:370px) {
+  .reference-prayer-course-hero--compact,.reference-prayer-course-hero--compact .reference-prayer-course-hero__copy { min-height:128px; }
+  .reference-prayer-course-hero--compact .reference-prayer-course-hero__copy { padding:16px; }
+  .reference-prayer-course-hero__title h2 { font-size:35px; }
 }
 
-.reference-rakah-step-detail__body {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
-}
-
-.reference-rakah-figure {
-  position: relative;
-  display: grid;
-  grid-template-rows: minmax(0, 1fr) auto;
-  width: 100%;
-  height: 320px;
-  margin: 0;
-  padding: 8px 0 0;
-  overflow: hidden;
-  border: 1px solid rgba(226, 191, 119, .22);
-  border-radius: 20px;
-  background: radial-gradient(circle at 50% 42%, rgba(42, 129, 92, .31), transparent 48%), linear-gradient(160deg, #0d4b38, #031f19);
-}
-
-.reference-rakah-figure .salah-posture-image {
-  position: relative;
-  min-height: 0;
-  overflow: hidden;
-}
-.reference-rakah-figure .salah-posture-image > img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-position: center bottom;
-}
-.reference-rakah-figure figcaption {
-  display: flex;
-  align-items: center;
-  min-height: 42px;
-  padding: 8px 16px;
-  border-top: 1px solid rgba(226, 191, 119, .24);
-  color: var(--ds-cream-hi);
-  background: rgba(2, 29, 23, .92);
-  font: 700 14px/1.3 Inter, system-ui, sans-serif;
-  text-align: left;
-}
-.reference-rakah-figure figcaption::before {
-  content: '';
-  flex: 0 0 3px;
-  height: 16px;
-  margin-right: 10px;
-  border-radius: 2px;
-  background: var(--ds-gold);
-}
-.reference-rakah-step-detail__description { margin: 0; color: #ece4d4; font-size: 16px; line-height: 1.58; }
-
-.reference-rakah-wording {
-  display: grid;
-  gap: 12px;
-  padding: 15px;
-  border: 1px solid rgba(226, 191, 119, .18);
-  border-radius: 18px;
-  background: rgba(0, 20, 16, .4);
-}
-
-.reference-rakah-wording__arabic {
-  margin: 0;
-  color: var(--ds-cream-hi);
-  font-size: clamp(25px, 7vw, 32px);
-  line-height: 2;
-  text-align: center;
-  white-space: pre-line;
-}
-
-.reference-rakah-wording__pronunciation {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding: 13px 14px;
-  border-left: 3px solid var(--ds-gold);
-  border-radius: 0 13px 13px 0;
-  color: #fff2d8;
-  background: rgba(226, 191, 119, .08);
-  font-size: 17px;
-  font-weight: 650;
-  line-height: 1.75;
-  white-space: pre-line;
-}
-
-.reference-rakah-wording__pronunciation > span,
-.reference-rakah-wording__translation > span {
-  color: var(--ds-gold);
-  font-size: 10px;
-  font-weight: 850;
-  letter-spacing: .09em;
-  text-transform: uppercase;
-}
-
-.reference-rakah-pronunciation-note {
-  margin: -3px 0 0;
-  color: #afa795;
-  font-size: 12px;
-  line-height: 1.55;
-}
-
-.reference-rakah-wording__translation {
-  display: grid;
-  gap: 5px;
-  margin: 0;
-  color: #d4caba;
-  font-size: 15px;
-  line-height: 1.6;
-}
-
-.reference-rakah-source { font-size: 12px; line-height: 1.55; }
-.reference-rakah-wording__count strong { font-size: 14px; }
-.reference-rakah-wording__count span { font-size: 12px; }
-.reference-rakah-runs .reference-rakah-wording__pronunciation { font-size: 15px; }
-
-@media (max-width: 370px) {
-  .reference-prayer-course-hero--compact,
-  .reference-prayer-course-hero--compact .reference-prayer-course-hero__copy { min-height: 198px; }
-  .reference-prayer-course-hero--compact .reference-prayer-course-hero__copy { padding: 20px 17px 17px; }
-  .reference-prayer-course-hero__title h2 { font-size: 35px; }
-  .reference-rakah-figure { height: 280px; }
-  .reference-rakah-wording { padding: 12px; }
-  .reference-rakah-wording__pronunciation { font-size: 16px; }
-}
-
-/* ---------- Propheten: Quran-basierter Einzelkurs ----------
-   Die goldene Kapitelspur ist hier echte Navigation: Ihre Nummern bilden die
-   Lernreihenfolge ab. Alles andere bleibt ruhig, damit längere Texte lesbar
-   bleiben und nicht wie eine Sammlung weiterer Dashboard-Karten wirken. */
+/* ---------- Propheten: Quran-basierter Einzelkurs ---------- */
 
 .reference-prophet-course,
 .reference-prophet-course :is(button, article, section) { min-width: 0; }
@@ -2449,8 +1875,10 @@ time {
 .reference-prophet-course__hero h2 {
   margin: 0;
   color: var(--ds-cream-hi);
-  font-size: clamp(31px, 9vw, 42px);
-  line-height: .98;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
   text-wrap: balance;
 }
 
@@ -2463,24 +1891,11 @@ time {
   line-height: 1.62;
 }
 
-.reference-prophet-catalogue-intro > div {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 8px;
-  padding-top: 2px;
-}
 
-.reference-prophet-catalogue-intro > div > span {
-  display: grid;
-  gap: 3px;
-  color: var(--ds-muted);
-  font: 600 10px/1.25 Inter, system-ui, sans-serif;
-}
 
-.reference-prophet-catalogue-intro > div strong {
-  color: var(--ds-gold-lt);
-  font: 750 17px/1 Inter, system-ui, sans-serif;
-}
+
+
+
 
 .reference-prophet-catalogue > button {
   display: grid;
@@ -2501,12 +1916,12 @@ time {
   border-radius: 12px;
   color: var(--ds-gold);
   background: rgba(226, 191, 119, .07);
-  font: 750 11px/1 Inter, system-ui, sans-serif;
+  font: 750 12px/1 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-catalogue em {
   color: var(--ds-gold);
-  font: normal 700 10px/1.35 Inter, system-ui, sans-serif;
+  font: normal 700 12px/1.35 Inter, system-ui, sans-serif;
   letter-spacing: .02em;
 }
 
@@ -2530,12 +1945,12 @@ time {
   align-items: center;
   gap: 7px;
   color: #d7cdbb;
-  font: 650 11px/1.3 Inter, system-ui, sans-serif;
+  font: 650 12px/1.3 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-course__title small span {
   color: var(--ds-gold);
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: .08em;
   text-transform: uppercase;
 }
@@ -2553,52 +1968,21 @@ time {
   font: 750 15px/1 Inter, system-ui, sans-serif;
 }
 
-.reference-prophet-course__progress {
-  height: 5px;
-  overflow: hidden;
-  border-radius: 999px;
-  background: rgba(255, 248, 234, .09);
-}
 
-.reference-prophet-course__progress > span {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: linear-gradient(90deg, var(--ds-gold-dk), var(--ds-gold-lt));
-  transition: width .28s var(--ds-ease);
-}
-
-.reference-prophet-course__hero > small {
-  color: var(--ds-muted);
-  font: 650 10px/1 Inter, system-ui, sans-serif;
-}
-
-.reference-prophet-status {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 7px 16px;
-  padding: 2px 4px 4px;
-  color: #cfc5b4;
-  font: 650 10px/1.3 Inter, system-ui, sans-serif;
-}
-
-.reference-prophet-status span {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.reference-prophet-status svg { color: var(--ds-gold); }
 
 .reference-prophet-overview {
-  display: grid;
-  gap: 18px;
-  padding: 20px;
+  padding: 0 16px;
   border: 1px solid rgba(226, 191, 119, .2);
   border-radius: 22px;
   background: linear-gradient(145deg, rgba(6, 57, 44, .9), rgba(0, 29, 23, .96));
 }
 
+.reference-prophet-overview__body { display: grid; gap: 16px; padding: 8px 0 16px; color: var(--ds-cream); font-size: 15px; line-height: 1.65; }
+.reference-prophet-overview > summary, .reference-prophet-plan > summary { min-height: 48px; padding: 12px 0; color: var(--ds-cream-hi); font: 600 14px/1.5 Inter, sans-serif; cursor: pointer; }
+.reference-prophet-plan > summary { display: flex; align-items: center; gap: 12px; list-style: none; }
+.reference-prophet-plan > summary::-webkit-details-marker { display: none; }
+.reference-prophet-plan > summary small { margin-left: auto; color: var(--ds-muted); }
+.reference-prophet-plan[open] > summary > svg { transform: rotate(180deg); }
 .reference-prophet-overview__text {
   display: grid;
   gap: 13px;
@@ -2639,7 +2023,7 @@ time {
   border: 1px solid rgba(226, 191, 119, .3);
   border-radius: 50%;
   color: var(--ds-gold-lt);
-  font: 750 9px/1 Inter, system-ui, sans-serif;
+  font: 750 12px/1 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-overview__facts {
@@ -2669,7 +2053,7 @@ time {
 
 .reference-prophet-overview__facts > div > p {
   color: var(--ds-muted);
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.45;
 }
 
@@ -2697,7 +2081,7 @@ time {
   border: 1px solid rgba(226, 191, 119, .27);
   border-radius: 50%;
   color: var(--ds-gold-lt);
-  font: 750 9px/1 Inter, system-ui, sans-serif;
+  font: 750 12px/1 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-overview__facts li > div {
@@ -2723,7 +2107,7 @@ time {
 
 .reference-prophet-overview__facts li small {
   color: var(--ds-gold);
-  font: 650 9px/1.45 Inter, system-ui, sans-serif;
+  font: 650 12px/1.45 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-overview__boundary {
@@ -2744,13 +2128,11 @@ time {
 .reference-prophet-overview__boundary strong { color: var(--ds-cream); }
 .reference-prophet-overview > small {
   color: var(--ds-muted);
-  font: 600 10px/1.45 Inter, system-ui, sans-serif;
+  font: 600 12px/1.45 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-plan {
-  display: grid;
-  gap: 12px;
-  padding: 18px 16px;
+  padding: 0 16px;
   border: 1px solid rgba(226, 191, 119, .2);
   border-radius: 21px;
   background: rgba(0, 30, 24, .66);
@@ -2796,7 +2178,7 @@ time {
   border: 1px solid rgba(226, 191, 119, .25);
   border-radius: 50%;
   color: var(--ds-gold);
-  font: 750 10px/1 Inter, system-ui, sans-serif;
+  font: 750 12px/1 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-plan__list > button.is-active > span:first-child {
@@ -2814,7 +2196,7 @@ time {
 
 .reference-prophet-plan__list > button > span:nth-child(2) { display: grid; gap: 4px; }
 .reference-prophet-plan__list strong { font: 700 14px/1.25 Inter, system-ui, sans-serif; }
-.reference-prophet-plan__list small { color: var(--ds-muted); font: 450 11px/1.4 Inter, system-ui, sans-serif; }
+.reference-prophet-plan__list small { color: var(--ds-muted); font: 450 12px/1.4 Inter, system-ui, sans-serif; }
 .reference-prophet-plan__list svg { color: var(--ds-gold); }
 
 .reference-prophet-lesson {
@@ -2837,15 +2219,17 @@ time {
   max-width: 15ch;
   margin: 0;
   color: var(--ds-cream-hi);
-  font-size: clamp(30px, 8vw, 39px);
-  line-height: 1;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 600;
+  font-size: 28px;
+  line-height: 1.2;
   text-wrap: balance;
 }
 
 .reference-prophet-lesson > header p {
   margin: 0;
   color: #ded4c2;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.55;
 }
 
@@ -2868,16 +2252,10 @@ time {
   line-height: 1.72;
 }
 
-.reference-prophet-lesson__text > section:nth-child(2) p:first-of-type::first-letter {
-  float: left;
-  margin: 7px 8px 0 0;
-  color: var(--ds-gold-lt);
-  font: 600 47px/.72 Cormorant Garamond, Georgia, serif;
-}
+
 
 .reference-prophet-lesson__takeaways,
-.reference-prophet-lesson__sources,
-.reference-prophet-lesson__questions {
+.reference-prophet-lesson__sources{
   display: grid;
   gap: 11px;
   margin: 0 20px 20px;
@@ -2888,26 +2266,6 @@ time {
 .reference-prophet-lesson__takeaways {
   border: 1px solid rgba(226, 191, 119, .2);
   background: rgba(226, 191, 119, .07);
-}
-
-.reference-prophet-lesson__questions {
-  border: 1px solid rgba(226, 191, 119, .16);
-  background: rgba(2, 37, 29, .74);
-}
-
-.reference-prophet-lesson__questions ol {
-  display: grid;
-  gap: 10px;
-  margin: 0;
-  padding-left: 20px;
-  color: #e4dac8;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.reference-prophet-lesson__questions li::marker {
-  color: var(--ds-gold);
-  font-weight: 800;
 }
 
 .reference-prophet-lesson__takeaways p {
@@ -2929,7 +2287,7 @@ time {
   border-radius: 50%;
   color: var(--ds-ink-900);
   background: var(--ds-gold);
-  font: 800 10px/1 Inter, system-ui, sans-serif;
+  font: 800 12px/1 Inter, system-ui, sans-serif;
 }
 
 .reference-prophet-lesson__sources { background: rgba(0, 18, 14, .46); }
@@ -2943,7 +2301,7 @@ time {
   border-radius: 999px;
   color: var(--ds-cream);
   background: rgba(226, 191, 119, .05);
-  font: 650 10px/1.3 Inter, system-ui, sans-serif;
+  font: 650 12px/1.3 Inter, system-ui, sans-serif;
 }
 .reference-prophet-lesson__sources > div > button > span {
   display: grid;
@@ -2952,7 +2310,7 @@ time {
 }
 .reference-prophet-lesson__sources > div > button small {
   color: var(--ds-gold);
-  font: 800 8px/1 Inter, system-ui, sans-serif;
+  font: 800 12px/1 Inter, system-ui, sans-serif;
   letter-spacing: .09em;
   text-transform: uppercase;
 }
@@ -2961,7 +2319,7 @@ time {
 .reference-prophet-lesson__sources > p {
   margin: 0;
   color: var(--ds-muted);
-  font-size: 10.5px;
+  font-size: 12px;
   line-height: 1.55;
 }
 
@@ -2990,113 +2348,11 @@ time {
   background: var(--ds-gold-lt);
 }
 
-.reference-prophet-lesson__nav .reference-prophet-lesson__complete {
-  grid-column: 1 / -1;
-  color: var(--ds-ink-900);
-  background: linear-gradient(135deg, var(--ds-gold-lt), #d8aa52);
-}
-
-.reference-prophet-lesson__nav .reference-prophet-lesson__complete[aria-pressed='true'] {
-  border-color: rgba(109, 208, 158, .42);
-  color: #bde9cf;
-  background: rgba(109, 208, 158, .1);
-}
-
 .reference-prophet-lesson__nav button:disabled { opacity: .28; }
-
-.reference-prophet-course__core {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 9px;
-}
-
-.reference-prophet-course__core > div {
-  display: grid;
-  gap: 7px;
-  padding: 15px;
-  border: 1px solid rgba(226, 191, 119, .17);
-  border-radius: 17px;
-  background: rgba(4, 48, 37, .7);
-}
-
-.reference-prophet-course__core span {
-  color: var(--ds-gold);
-  font: 800 9px/1 Inter, system-ui, sans-serif;
-  letter-spacing: .08em;
-  text-transform: uppercase;
-}
-
-.reference-prophet-course__core strong {
-  color: #e8dfcf;
-  font: 650 12px/1.45 Inter, system-ui, sans-serif;
-}
-
-.reference-prophet-completion {
-  position: relative;
-  display: grid;
-  gap: 12px;
-  overflow: hidden;
-  padding: 22px 20px;
-  border: 1px solid rgba(226, 191, 119, .34);
-  border-radius: 23px;
-  background:
-    linear-gradient(90deg, var(--ds-gold) 0 3px, transparent 3px),
-    linear-gradient(145deg, rgba(12, 73, 55, .94), rgba(1, 32, 25, .98));
-  box-shadow: var(--ds-sh-2);
-}
-
-.reference-prophet-completion > div:first-child {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  color: #9fdfbd;
-}
-
-.reference-prophet-completion h2,
-.reference-prophet-completion p { margin: 0; }
-.reference-prophet-completion h2 {
-  max-width: 19ch;
-  color: var(--ds-cream-hi);
-  font-size: 29px;
-  line-height: 1.03;
-}
-.reference-prophet-completion p,
-.reference-prophet-completion li {
-  color: #ddd3c2;
-  font-size: 13px;
-  line-height: 1.5;
-}
-.reference-prophet-completion ol {
-  display: grid;
-  gap: 6px;
-  margin: 0;
-  padding-left: 20px;
-}
-.reference-prophet-completion li::marker { color: var(--ds-gold); font-weight: 800; }
-.reference-prophet-completion__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  padding-top: 3px;
-}
-.reference-prophet-completion__actions button {
-  min-height: 42px;
-  padding: 0 14px;
-  border: 1px solid rgba(226, 191, 119, .28);
-  border-radius: 13px;
-  color: var(--ds-cream);
-  background: rgba(226, 191, 119, .07);
-  font: 750 11px/1 Inter, system-ui, sans-serif;
-}
-.reference-prophet-completion__actions button:last-child {
-  color: var(--ds-ink-900);
-  background: var(--ds-gold-lt);
-}
 
 @media (max-width: 370px) {
   .reference-prophet-catalogue-intro,
-  .reference-prophet-course__hero,
-  .reference-prophet-overview { padding: 19px 16px; }
+  .reference-prophet-course__hero { padding: 16px; }
   .reference-prophet-catalogue-intro > div { grid-template-columns: 1fr 1fr; }
   .reference-prophet-catalogue-intro > div > span:last-child { grid-column: 1 / -1; }
   .reference-prophet-catalogue > button { grid-template-columns: 32px minmax(0, 1fr) 16px; gap: 9px; }
@@ -3104,17 +2360,13 @@ time {
   .reference-prophet-lesson > header,
   .reference-prophet-lesson__text { padding-inline: 16px; }
   .reference-prophet-lesson__takeaways,
-  .reference-prophet-lesson__sources,
-  .reference-prophet-lesson__questions { margin-inline: 16px; }
+  .reference-prophet-lesson__sources{ margin-inline: 16px; }
   .reference-prophet-lesson__nav { padding-inline: 16px; }
-  .reference-prophet-course__core { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .reference-prophet-course__progress > span { transition: none; }
 }
 
-/* Four Sunni schools: one equal-weight catalogue, then one guided reading page. */
 .madhhab-screen { gap: 14px; }
 .madhhab-intro {
   display: grid;
@@ -3182,7 +2434,7 @@ time {
 .madhhab-grid__top span { color: #dec477; font-family: Amiri, serif; font-size: 1.25rem; line-height: 1.4; }
 .madhhab-grid strong { display: block; margin-top: 14px; font-family: 'Cormorant Garamond', serif; font-size: 1.52rem; font-weight: 650; line-height: 1.05; }
 .madhhab-grid em { display: block; margin-top: 6px; color: #a9b9af; font-size: .75rem; font-style: normal; line-height: 1.45; }
-.madhhab-grid__place { display: flex; gap: 5px; align-items: center; margin-top: 13px; color: #c5d0c8; font-size: .67rem; }
+.madhhab-grid__place { display: flex; gap: 5px; align-items: center; margin-top: 13px; color: #c5d0c8; font-size: .75rem; }
 .madhhab-grid__arrow { position: absolute; right: 14px; bottom: 14px; z-index: 1; color: #d8b65f; }
 .madhhab-detail-hero {
   display: grid;
@@ -3197,7 +2449,7 @@ time {
 .madhhab-detail-hero__icon { display: grid; place-items: center; width: 64px; height: 64px; border: 1px solid rgba(242,211,140,.34); border-radius: 18px 18px 32px 32px; color: #efd28f; font-family: 'Cormorant Garamond', serif; font-size: 1.65rem; background: rgba(2,26,19,.45); }
 .madhhab-detail-hero h2 { font-size: 2.25rem; }
 .madhhab-detail-hero p { margin: 0; color: #edd38f; font-family: Amiri, serif; font-size: 1.25rem; line-height: 1.4; text-align: left; }
-.madhhab-detail-hero small { display: block; color: #9db1a5; font-size: .72rem; }
+.madhhab-detail-hero small { display: block; color: #9db1a5; font-size: .75rem; }
 .madhhab-detail-jump { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; }
 .madhhab-detail-jump a { display: grid; place-items: center; min-height: 44px; padding: 10px 7px; border: 1px solid rgba(225,189,103,.13); border-radius: 12px; color: #c9d5ce; background: rgba(8,44,34,.7); font-size: .8rem; font-weight: 720; text-align: center; text-decoration: none; }
 .madhhab-detail { overflow: hidden; border: 1px solid rgba(226,190,105,.17); border-radius: 24px; background: linear-gradient(155deg,rgba(10,57,43,.94),rgba(2,25,19,.98)); }
@@ -3213,7 +2465,7 @@ time {
 .madhhab-facts dd { margin: 5px 0 0; color: #f3ecdd; font-size: .88rem; line-height: 1.4; }
 .madhhab-method-list { display: grid; gap: 8px; margin-top: 16px; }
 .madhhab-method-list > div { display: grid; grid-template-columns: 34px 1fr; gap: 11px; padding: 13px; border: 1px solid rgba(226,190,105,.13); border-radius: 15px; background: rgba(255,255,255,.018); }
-.madhhab-method-list > div > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: #e7c36f; background: rgba(226,190,105,.08); font-size: .65rem; font-weight: 800; }
+.madhhab-method-list > div > span { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 10px; color: #e7c36f; background: rgba(226,190,105,.08); font-size: .75rem; font-weight: 800; }
 .madhhab-method-list p { margin-top: 4px; }
 .madhhab-context-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; margin-top: 15px; }
 .madhhab-context-grid > div { padding: 15px; border: 1px solid rgba(226,190,105,.13); border-radius: 16px; background: rgba(255,255,255,.018); }
@@ -3232,11 +2484,6 @@ time {
 [data-theme='light'] .madhhab-detail p.madhhab-detail__lead,
 [data-theme='light'] .madhhab-facts dd { color: #264c3b; }
 [data-theme='light'] .madhhab-source-list a.madhhab-source-home { color: #775a1e; }
-@media (hover:hover) {
-  .madhhab-grid > button:hover { border-color: rgba(239,207,133,.4); background: linear-gradient(145deg,rgba(21,91,67,.78),rgba(4,36,27,.92)); transform: translateY(-2px); }
-  .madhhab-source-list a:hover,
-  .madhhab-detail-jump a:hover { border-color: rgba(239,207,133,.35); background: rgba(232,199,122,.07); }
-}
 [data-theme='light'] .madhhab-intro,
 [data-theme='light'] .madhhab-catalogue,
 [data-theme='light'] .madhhab-detail,
@@ -3322,7 +2569,7 @@ time {
 }
 .holy-places-hero__copy h1 { margin: 7px 0 10px; max-width: 12ch; color: #fff8ea; font-family: 'Cormorant Garamond',Georgia,serif; font-size: clamp(2.35rem,6vw,3.2rem); line-height: .92; letter-spacing: -.035em; }
 .holy-places-hero__copy p { margin: 0; max-width: 38ch; color: #e0dbcf; font-size: .94rem; line-height: 1.52; }
-.holy-places-hero__meta { display: flex; align-items: center; gap: 8px; margin-top: 18px; color: #f0d28e; font-size: .68rem; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
+.holy-places-hero__meta { display: flex; align-items: center; gap: 8px; margin-top: 18px; color: #f0d28e; font-size: .75rem; font-weight: 760; letter-spacing: .08em; text-transform: uppercase; }
 .holy-places-hero__meta i { width: 3px; height: 3px; border-radius: 50%; background: currentColor; opacity: .62; }
 .holy-places-route { display: grid; grid-template-columns: repeat(3,1fr); border-block: 1px solid rgba(226,191,119,.2); background: transparent; }
 .holy-places-route button { display: flex; align-items: center; justify-content: center; gap: 10px; min-width: 0; min-height: 64px; padding: 10px; border: 0; border-right: 1px solid rgba(226,191,119,.14); color: #f6ebd6; background: transparent; text-align: left; cursor: pointer; }
@@ -3330,38 +2577,33 @@ time {
 .holy-places-route button > svg { flex: 0 0 auto; color: #d6b465; }
 .holy-places-route button span { display: grid; min-width: 0; gap: 2px; }
 .holy-places-route strong { font-size: .82rem; letter-spacing: .01em; }
-.holy-places-route small { overflow: hidden; color: #91a69b; font-size: .64rem; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
+.holy-places-route small { overflow: hidden; color: #91a69b; font-size: .75rem; line-height: 1.3; text-overflow: ellipsis; white-space: nowrap; }
 .holy-places-atlas { display: grid; gap: 44px; }
 .holy-places-region { scroll-margin-top: 90px; }
 .holy-places-region > header { display: flex; align-items: end; justify-content: space-between; gap: 14px; margin-bottom: 15px; padding: 0 4px 10px; border-bottom: 1px solid rgba(226,191,119,.18); }
 .holy-places-region > header h2 { margin: 4px 0 0; color: #fff8ea; font-family: 'Cormorant Garamond',Georgia,serif; font-size: 2.25rem; line-height: .9; }
-.holy-places-region > header > span { flex: 0 0 auto; color: #bcae89; font-size: .7rem; font-weight: 720; }
+.holy-places-region > header > span { flex: 0 0 auto; color: #bcae89; font-size: .75rem; font-weight: 720; }
 .holy-places-region__grid { display: grid; gap: 16px; }
 .holy-place-card { display: grid; overflow: hidden; border: 1px solid rgba(226,191,119,.2); border-radius: 24px; background: linear-gradient(145deg,rgba(8,53,40,.95),rgba(2,29,23,.96)); box-shadow: 0 14px 40px rgba(0,0,0,.16); }
 .holy-place-card figure { position: relative; min-height: 255px; margin: 0; overflow: hidden; background: #0a3629; }
 .holy-place-card figure::after { position: absolute; inset: 0; background: linear-gradient(0deg,rgba(0,20,16,.34),transparent 52%); content: ''; pointer-events: none; }
 .holy-place-card figure img { width: 100%; height: 100%; min-height: 255px; object-fit: cover; object-position: center; transition: transform .55s var(--ds-ease); }
-.holy-place-card figcaption { position: absolute; z-index: 1; left: 16px; bottom: 14px; display: flex; align-items: center; gap: 6px; color: #fff8ea; font-size: .7rem; font-weight: 740; letter-spacing: .06em; text-shadow: 0 2px 8px rgba(0,0,0,.66); text-transform: uppercase; }
+.holy-place-card figcaption { position: absolute; z-index: 1; left: 16px; bottom: 14px; display: flex; align-items: center; gap: 6px; color: #fff8ea; font-size: .75rem; font-weight: 740; letter-spacing: .06em; text-shadow: 0 2px 8px rgba(0,0,0,.66); text-transform: uppercase; }
 .holy-place-card__body { display: flex; flex-direction: column; min-width: 0; padding: 23px 22px 21px; }
 .holy-place-card__body h3 { margin: 6px 0 11px; color: #fff8ea; font-family: 'Cormorant Garamond',Georgia,serif; font-size: clamp(1.9rem,5vw,2.45rem); line-height: .95; letter-spacing: -.02em; }
 .holy-place-card__body p { margin: 0; }
 .holy-place-card__intro { color: #eee3d1; font-size: .95rem; font-weight: 650; line-height: 1.48; }
 .holy-place-card__body p.holy-place-card__context { margin-top: 9px; color: #a9b7b0; font-size: .84rem; line-height: 1.56; }
 .holy-place-card__facts { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px 13px; margin: 17px 0 18px; padding-top: 15px; border-top: 1px solid rgba(226,191,119,.14); }
-.holy-place-card__facts > span { display: flex; align-items: flex-start; gap: 7px; color: #d0c9bb; font-size: .72rem; line-height: 1.4; }
+.holy-place-card__facts > span { display: flex; align-items: flex-start; gap: 7px; color: #d0c9bb; font-size: .75rem; line-height: 1.4; }
 .holy-place-card__facts svg { flex: 0 0 auto; margin-top: 1px; color: #dfbd72; }
-.holy-place-card__body > a { display: flex; align-items: center; gap: 7px; width: fit-content; min-height: 40px; margin-top: auto; color: #e5c57e; font-size: .73rem; font-weight: 760; text-decoration: none; }
+.holy-place-card__body > a { display: flex; align-items: center; gap: 7px; width: fit-content; min-height: 40px; margin-top: auto; color: #e5c57e; font-size: .75rem; font-weight: 760; text-decoration: none; }
 .holy-place-card__body > a svg:last-child { opacity: .65; }
 .holy-places-note { display: flex; gap: 12px; padding: 17px 4px 2px; border-top: 1px solid rgba(226,191,119,.16); color: #a9aea8; }
 .holy-places-note > svg { flex: 0 0 auto; color: #e2bf77; }
 .holy-places-note strong { display: block; margin-bottom: 3px; color: #f6ebd6; font-size: .84rem; }
 .holy-places-note p { margin: 0; font-size: .76rem; line-height: 1.5; }
-.holy-places-screen :is(button,a):focus-visible { outline: 2px solid #f2d79a; outline-offset: 3px; }
-@media (hover:hover) {
-  .holy-places-route button:hover { background: rgba(226,191,119,.07); }
-  .holy-place-card:hover figure img { transform: scale(1.025); }
-  .holy-place-card__body > a:hover { border-color: rgba(242,215,154,.48); background: rgba(226,191,119,.08); }
-}
+.holy-places-screen :is(button, a):focus-visible { outline: 2px solid #f2d79a; outline-offset: 3px; }
 [data-theme='light'] .holy-places-hero__copy { color: #fff8ea; }
 [data-theme='light'] .holy-place-card { background: #fffaf0; box-shadow: 0 12px 30px rgba(75,55,22,.09); }
 [data-theme='light'] .holy-places-route strong,
@@ -3380,11 +2622,11 @@ time {
   .holy-places-hero__copy { width: 100%; padding: 22px 18px; }
   .holy-places-hero__copy h1 { max-width: 10ch; font-size: 2.35rem; }
   .holy-places-hero__copy p { font-size: .85rem; }
-  .holy-places-hero__meta { gap: 6px; font-size: .59rem; }
+  .holy-places-hero__meta { gap: 6px; font-size: .75rem; }
   .holy-places-route button { min-height: 56px; padding: 8px 5px; }
   .holy-places-route button > svg,
   .holy-places-route small { display: none; }
-  .holy-places-route strong { font-size: .72rem; }
+  .holy-places-route strong { font-size: .75rem; }
   .holy-place-card figure,
   .holy-place-card figure img { min-height: 220px; }
   .holy-place-card__body { padding: 17px; }
@@ -3393,3 +2635,23 @@ time {
 @media (prefers-reduced-motion: reduce) {
   .holy-place-card figure img { transition: none; transform: none; }
 }
+
+@media (orientation: landscape) and (max-height: 500px) {
+  .premium-home--v2 { --home-layout: grid; display: grid; grid-template-columns: minmax(240px, .9fr) minmax(0, 1.1fr); align-items: start; }
+  .premium-home--v2 > * { grid-column: 1 / -1; }
+  .premium-home--v2 > .brand-bar { grid-column: 1; grid-row: 1; }
+  .premium-home--v2 .home-standfirst { grid-column: 1; grid-row: 2; display: grid; justify-content: start; gap: 12px; margin-block: 0; }
+  .home-standfirst__date { border-left: 0; padding-left: 0; justify-content: flex-start; }
+  .home-standfirst__date-copy { justify-items: start; text-align: left; }
+  .premium-home--v2 .home-prayer-focus { grid-column: 2; grid-row: 1 / 3; padding-block: 0; }
+  .home-prayer-focus .ds-arch { --arch-responsive-height: 230px; max-width: 380px; height: 230px; }
+  .home-prayer-focus .ds-arch__value { font-size: 52px; }
+}
+
+/* Quiet calculation summary; complete source and caveats stay in the info dialog. */
+.reference-prayer-method { display:grid; grid-template-columns:minmax(0,1fr) auto 44px; align-items:center; gap:4px; min-height:72px; padding:10px 12px; border:1px solid var(--line); border-radius:16px; background:var(--surface); }
+.prayer-method-copy { display:grid; min-width:0; gap:3px; }
+.prayer-method-copy strong { color:var(--cream); font:600 14px/1.3 Inter,sans-serif; }
+.prayer-method-copy span { color:var(--muted-green); font:400 12px/1.4 Inter,sans-serif; overflow-wrap:anywhere; }
+.prayer-method-adjust { min-height:44px; padding:8px; border:0; border-radius:12px; color:var(--gold-text); background:transparent; font:600 14px/1.3 Inter,sans-serif; cursor:pointer; }
+.prayer-method-adjust:focus-visible { outline:2px solid var(--ds-gold); outline-offset:2px; }

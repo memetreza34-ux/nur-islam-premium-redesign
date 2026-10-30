@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-15",
+  "scope": "Replace all eight Wudu instructional images and all seven prayer posture images with one fixed character in the existing matte 3D illustration family.",
+  "master": "output/imagegen/unified-instruction-character-20261015/salah-standing.png",
+  "prompts": "output/imagegen/unified-instruction-character-20261015/prompts.json",
+  "runtime": "15 unique versioned 512x512 alpha WebP assets, q92/m6. Previous 15 runtime assets archived outside public and active provenance; hashes verified.",
+  "identityReview": "Same reference image supplied for every action. Visually checked consistent face shape, brown hair, eyebrows, emerald collar/tunic with three cream buttons and breast pocket, ivory trousers, bare feet. Wudu uses rolled sleeves. Prayer uses long sleeves.",
+  "poseRefinements": [
+    "Ruku refined for horizontal straight back with palms on knees.",
+    "Taslim head direction corrected toward the character’s right/viewer’s left, with torso and tunic pocket preserved."
+  ],
+  "content": "Existing ritual texts, sources, school-specific explanations, step order, pronunciation and fallbacks unchanged. No new religious approval claimed.",
+  "checks": {
+    "full": "1047 unit tests across 59 files, TypeScript, production build, source/assets/provenance/budget guards all passed after archive.",
+    "browser": "20 passed: Wudu lesson 7, prayer course 9, offline 4. Includes widths 320, 390, 768 and 1280 as applicable, all eight Wudu images, step selection/reload, missing-image fallback.",
+    "manual": "Actual app tab shows loaded 512px face-washing v2 and Qiyam v2, with readable controls on 368px viewport.",
+    "logs": [
+      "/tmp/nur-unified-character-check-20261015.log",
+      "/tmp/nur-unified-character-e2e-20261015.log"
+    ]
+  },
+  "cache": "PWA shell v112, all 15 new images precached. No previous v1 Wudu/posture references in app source, source guards, E2E expectations or service worker.",
+  "limits": [
+    "No physical-device QA in this task."
+  ]
+}

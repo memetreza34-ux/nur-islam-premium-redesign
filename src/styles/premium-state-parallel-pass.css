@@ -155,9 +155,7 @@
 button:disabled:not(.reference-quiz-answers > button),
 .reference-install-prompt__action:disabled,
 .reference-account-cloud-grid > button:disabled,
-.reference-learning-course-navigation > button:disabled,
-.reference-prayer-course-navigation > button:disabled,
-.reference-guide-navigation > button:disabled {
+.reference-prayer-course-navigation > button:disabled {
   opacity: .42 !important;
   filter: saturate(.5);
   box-shadow: none !important;

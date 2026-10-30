@@ -57,7 +57,7 @@
   line-height: .82;
   font-weight: 700;
 }
-.brand-lockup small { color: var(--gold); font-size: .59rem; letter-spacing: .045em; }
+.brand-lockup small { color: var(--gold); font-size: .75rem; letter-spacing: .045em; }
 .brand-bar__actions { display: flex; gap: 8px; }
 
 .premium-image { display: block; position: relative; }
@@ -140,14 +140,8 @@
 }
 .prayer-mini-times > span.is-current { border-color: rgba(229, 195, 125, .48); color: var(--gold-bright); background: rgba(226, 191, 119, .09); }
 .prayer-mini-times svg { color: var(--gold); }
-.prayer-mini-times small { font-size: .52rem; }
-.prayer-mini-times strong { font-size: .58rem; }
-
-.journey-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 10px;
-}
+.prayer-mini-times small { font-size: .75rem; }
+.prayer-mini-times strong { font-size: .75rem; }
 
 .journey-card {
   position: relative;
@@ -182,11 +176,9 @@
   filter: drop-shadow(0 14px 15px rgba(0,0,0,.4));
 }
 .journey-card > span:last-child { position: relative; z-index: 2; display: grid; gap: 2px; }
-.journey-card small { color: var(--gold); font-size: .55rem; }
+.journey-card small { color: var(--gold); font-size: .75rem; }
 .journey-card strong { color: var(--cream-strong); font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.15rem; }
-.journey-card em { color: var(--muted-green); font-size: .55rem; font-style: normal; }
-
-.quick-grid--v2 .quick-card { min-height: 124px; }
+.journey-card em { color: var(--muted-green); font-size: .75rem; font-style: normal; }
 
 .continue-card--v2 { overflow: hidden; border-radius: 26px; }
 .continue-card--v2 .continue-card__cover { width: 92px; height: 102px; overflow: visible; background: transparent; }
@@ -205,24 +197,18 @@
 }
 .verse-card--cream::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 45%, rgba(10, 59, 44, .08)); }
 .verse-card--cream .verse-card__art { position: absolute; right: -28px; bottom: -35px; width: 210px; height: 225px; opacity: .5; }
-.verse-card--cream > *:not(.verse-card__art) { position: relative; z-index: 2; max-width: 68%; }
+.verse-card--cream > *:not(.daily-ayah__backdrop) { position: relative; z-index: 2; max-width: 100%; }
 .verse-card--cream .card-title-row span,
 .verse-card--cream .arabic-verse,
 .verse-card--cream blockquote,
 .verse-card--cream footer { color: #17352b; }
 .verse-card--cream .card-title-row button { color: #74531f; border-color: rgba(116,83,31,.26); background: rgba(255,255,255,.38); }
 
-.recommendation-card__icon svg { width: 28px; height: 28px; }
-
 
 
 
 @media (max-width: 390px) {
-  
-  
-  
-  .journey-grid { gap: 7px; }
   .journey-card { min-height: 165px; padding: 9px; }
   .journey-card strong { font-size: 1rem; }
-  .prayer-mini-times small { font-size: .46rem; }
-  .prayer-mini-times strong { font-size: .51rem; }}
+  .prayer-mini-times small { font-size: .75rem; }
+  .prayer-mini-times strong { font-size: .75rem; }}

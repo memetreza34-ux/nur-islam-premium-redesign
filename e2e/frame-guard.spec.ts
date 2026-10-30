@@ -17,14 +17,15 @@ import { expect, test } from '@playwright/test';
 // not the guard.
 test.use({
   launchOptions: {
+    ...(process.env.NUR_E2E_CHROME_PATH ? { executablePath: process.env.NUR_E2E_CHROME_PATH } : {}),
     args: ['--disable-features=LocalNetworkAccessChecks,BlockInsecurePrivateNetworkRequests'],
   },
 });
 
-const hostPage = '<!doctype html><meta charset="utf-8"><iframe src="http://localhost:4173/?preview=1" style="width:390px;height:800px;border:0"></iframe>';
+const hostPage = (origin: string) => '<!doctype html><meta charset="utf-8"><iframe src="' + origin + '/?preview=1" style="width:390px;height:800px;border:0"></iframe>';
 
-test('refuses to render inside a frame owned by another site', async ({ page }) => {
-  await page.route('http://127.0.0.1:9999/**', (route) => route.fulfill({ contentType: 'text/html', body: hostPage }));
+test('refuses to render inside a frame owned by another site', async ({ page, baseURL }) => {
+  await page.route('http://127.0.0.1:9999/**', (route) => route.fulfill({ contentType: 'text/html', body: hostPage(baseURL!) }));
 
   await page.goto('http://127.0.0.1:9999/trap');
   const framed = page.frameLocator('iframe');
@@ -33,8 +34,8 @@ test('refuses to render inside a frame owned by another site', async ({ page }) 
   await expect(framed.getByRole('navigation')).toHaveCount(0);
 });
 
-test('still renders inside a same-origin frame', async ({ page }) => {
-  await page.route('http://localhost:4173/frame-host', (route) => route.fulfill({ contentType: 'text/html', body: hostPage }));
+test('still renders inside a same-origin frame', async ({ page, baseURL }) => {
+  await page.route(`${baseURL}/frame-host`, (route) => route.fulfill({ contentType: 'text/html', body: hostPage(baseURL!) }));
 
   await page.goto('/frame-host');
   const framed = page.frameLocator('iframe');

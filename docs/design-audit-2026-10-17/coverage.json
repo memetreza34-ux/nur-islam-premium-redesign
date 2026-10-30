@@ -1,0 +1,802 @@
+[
+  {
+    "index": 4,
+    "label": "Beten lernenFünf Gebete Schritt für Schritt",
+    "width": 390,
+    "heading": [],
+    "screenshot": "390-entry-4.png"
+  },
+  {
+    "index": 5,
+    "label": "Wudu lernenWaschung Schritt für Schritt",
+    "width": 390,
+    "heading": [
+      "Wudu (Gebetswaschung)"
+    ],
+    "screenshot": "390-entry-5.png"
+  },
+  {
+    "index": 6,
+    "label": "QiblaLive-Kompass",
+    "width": 390,
+    "heading": [
+      "Qibla"
+    ],
+    "screenshot": "390-entry-6.png"
+  },
+  {
+    "index": 7,
+    "label": "DhikrZähler & Tagesziel",
+    "width": 390,
+    "heading": [
+      "Dhikr"
+    ],
+    "screenshot": "390-entry-7.png"
+  },
+  {
+    "index": 8,
+    "label": "DuasBittgebete für jeden Moment",
+    "width": 390,
+    "heading": [],
+    "screenshot": "390-entry-8.png"
+  },
+  {
+    "index": 9,
+    "label": "MoscheenGebetsorte in deiner Nähe",
+    "width": 390,
+    "heading": [
+      "Moschee-Finder"
+    ],
+    "screenshot": "390-entry-9.png"
+  },
+  {
+    "index": 4,
+    "label": "Beten lernenFünf Gebete Schritt für Schritt",
+    "width": 390,
+    "heading": [
+      "Gebetskurs"
+    ],
+    "screenshot": "390-entry-4.png"
+  },
+  {
+    "index": 8,
+    "label": "DuasBittgebete für jeden Moment",
+    "width": 390,
+    "heading": [
+      "Duas"
+    ],
+    "screenshot": "390-entry-8.png"
+  },
+  {
+    "index": 10,
+    "label": "KalenderIslamische Tage & Termine",
+    "width": 390,
+    "heading": [
+      "Kalender"
+    ],
+    "screenshot": "390-entry-10.png"
+  },
+  {
+    "index": 11,
+    "label": "FastenplanFreiwillige Fastentage",
+    "width": 390,
+    "heading": [
+      "Fastenplan"
+    ],
+    "screenshot": "390-entry-11.png"
+  },
+  {
+    "index": 12,
+    "label": "SammlungFavoriten & Lesezeichen",
+    "width": 390,
+    "heading": [
+      "Meine Sammlung"
+    ],
+    "screenshot": "390-entry-12.png"
+  },
+  {
+    "index": 13,
+    "label": "Allah & der GlaubeDas Fundament",
+    "width": 390,
+    "heading": [
+      "Allah & der Glaube"
+    ],
+    "screenshot": "390-entry-13.png"
+  },
+  {
+    "index": 14,
+    "label": "Die fünf SäulenIslam leben",
+    "width": 390,
+    "heading": [
+      "Die fünf Säulen"
+    ],
+    "screenshot": "390-entry-14.png"
+  },
+  {
+    "index": 15,
+    "label": "Wichtige BegriffeEinfach verstehen",
+    "width": 390,
+    "heading": [
+      "Wichtige Begriffe"
+    ],
+    "screenshot": "390-entry-15.png"
+  },
+  {
+    "index": 16,
+    "label": "Reinheit & AlltagSicher handeln",
+    "width": 390,
+    "heading": [
+      "Reinheit & Alltag"
+    ],
+    "screenshot": "390-entry-16.png"
+  },
+  {
+    "index": 17,
+    "label": "Charakter & RechteGlaube im Verhalten",
+    "width": 390,
+    "heading": [
+      "Charakter & Rechte"
+    ],
+    "screenshot": "390-entry-17.png"
+  },
+  {
+    "index": 18,
+    "label": "Miteinander & VerantwortungRechte im Alltag",
+    "width": 390,
+    "heading": [
+      "Miteinander & Verantwortung"
+    ],
+    "screenshot": "390-entry-18.png"
+  },
+  {
+    "index": 19,
+    "label": "Der Prophet ﷺVorbild & Geschichte",
+    "width": 390,
+    "heading": [
+      "Der Prophet ﷺ"
+    ],
+    "screenshot": "390-entry-19.png"
+  },
+  {
+    "index": 20,
+    "label": "Vers des TagesArabisch, Aussprache & Bedeutung",
+    "width": 390,
+    "heading": [
+      "Ayah im Fokus"
+    ],
+    "screenshot": "390-entry-20.png"
+  },
+  {
+    "index": 21,
+    "label": "99 Namen AllahsArabisch, Aussprache & Bedeutung",
+    "width": 390,
+    "heading": [
+      "99 Namen Allahs"
+    ],
+    "screenshot": "390-entry-21.png"
+  },
+  {
+    "index": 22,
+    "label": "Ummah-ÜbersichtMuslime weltweit",
+    "width": 390,
+    "heading": [
+      "Ummah-Übersicht"
+    ],
+    "screenshot": "390-entry-22.png"
+  },
+  {
+    "index": 23,
+    "label": "Hadith-SammlungQuellen & Einordnung",
+    "width": 390,
+    "heading": [
+      "Hadith-Sammlung"
+    ],
+    "screenshot": "390-entry-23.png"
+  },
+  {
+    "index": 24,
+    "label": "Die vier RechtsschulenFiqh richtig einordnen",
+    "width": 390,
+    "heading": [
+      "Die vier Rechtsschulen"
+    ],
+    "screenshot": "390-entry-24.png"
+  },
+  {
+    "index": 25,
+    "label": "Die 25 Propheten25 eigenständige Quran-Kurse",
+    "width": 390,
+    "heading": [
+      "Die 25 Propheten"
+    ],
+    "screenshot": "390-entry-25.png"
+  },
+  {
+    "index": 26,
+    "label": "Hajj & UmrahAblauf verstehen",
+    "width": 390,
+    "heading": [
+      "Hajj & Umrah"
+    ],
+    "screenshot": "390-entry-26.png"
+  },
+  {
+    "index": 27,
+    "label": "Sunnah im AlltagGute Gewohnheiten",
+    "width": 390,
+    "heading": [
+      "Sunnah im Alltag"
+    ],
+    "screenshot": "390-entry-27.png"
+  },
+  {
+    "index": 28,
+    "label": "Fehler & ReueRückkehr zu Allah",
+    "width": 390,
+    "heading": [
+      "Fehler & Reue"
+    ],
+    "screenshot": "390-entry-28.png"
+  },
+  {
+    "index": 29,
+    "label": "Makkah, Madinah & Al-AqsaIslamische Orte",
+    "width": 390,
+    "heading": [
+      "Islamische Orte",
+      "Bedeutende Orte"
+    ],
+    "screenshot": "390-entry-29.png"
+  },
+  {
+    "index": 30,
+    "label": "Das FreitagsgebetJumuah",
+    "width": 390,
+    "heading": [
+      "Jumuah"
+    ],
+    "screenshot": "390-entry-30.png"
+  },
+  {
+    "index": 31,
+    "label": "PlanungshilfeZakat-Rechner",
+    "width": 390,
+    "heading": [
+      "Zakat-Rechner"
+    ],
+    "screenshot": "390-entry-31.png"
+  },
+  {
+    "index": 32,
+    "label": "GebetsanzeigeStandby",
+    "width": 390,
+    "heading": [
+      "Gebetsanzeige"
+    ],
+    "screenshot": "390-entry-32.png"
+  },
+  {
+    "index": 4,
+    "label": "Beten lernenFünf Gebete Schritt für Schritt",
+    "width": 320,
+    "heading": [
+      "Gebetskurs"
+    ],
+    "screenshot": "320-entry-4.png"
+  },
+  {
+    "index": 5,
+    "label": "Wudu lernenWaschung Schritt für Schritt",
+    "width": 320,
+    "heading": [
+      "Wudu (Gebetswaschung)"
+    ],
+    "screenshot": "320-entry-5.png"
+  },
+  {
+    "index": 6,
+    "label": "QiblaLive-Kompass",
+    "width": 320,
+    "heading": [
+      "Qibla"
+    ],
+    "screenshot": "320-entry-6.png"
+  },
+  {
+    "index": 7,
+    "label": "DhikrZähler & Tagesziel",
+    "width": 320,
+    "heading": [
+      "Dhikr"
+    ],
+    "screenshot": "320-entry-7.png"
+  },
+  {
+    "index": 8,
+    "label": "DuasBittgebete für jeden Moment",
+    "width": 320,
+    "heading": [
+      "Duas"
+    ],
+    "screenshot": "320-entry-8.png"
+  },
+  {
+    "index": 9,
+    "label": "MoscheenGebetsorte in deiner Nähe",
+    "width": 320,
+    "heading": [
+      "Moschee-Finder"
+    ],
+    "screenshot": "320-entry-9.png"
+  },
+  {
+    "index": 10,
+    "label": "KalenderIslamische Tage & Termine",
+    "width": 320,
+    "heading": [
+      "Kalender"
+    ],
+    "screenshot": "320-entry-10.png"
+  },
+  {
+    "index": 11,
+    "label": "FastenplanFreiwillige Fastentage",
+    "width": 320,
+    "heading": [
+      "Fastenplan"
+    ],
+    "screenshot": "320-entry-11.png"
+  },
+  {
+    "index": 12,
+    "label": "SammlungFavoriten & Lesezeichen",
+    "width": 320,
+    "heading": [
+      "Meine Sammlung"
+    ],
+    "screenshot": "320-entry-12.png"
+  },
+  {
+    "index": 13,
+    "label": "Allah & der GlaubeDas Fundament",
+    "width": 320,
+    "heading": [
+      "Allah & der Glaube"
+    ],
+    "screenshot": "320-entry-13.png"
+  },
+  {
+    "index": 14,
+    "label": "Die fünf SäulenIslam leben",
+    "width": 320,
+    "heading": [
+      "Die fünf Säulen"
+    ],
+    "screenshot": "320-entry-14.png"
+  },
+  {
+    "index": 15,
+    "label": "Wichtige BegriffeEinfach verstehen",
+    "width": 320,
+    "heading": [
+      "Wichtige Begriffe"
+    ],
+    "screenshot": "320-entry-15.png"
+  },
+  {
+    "index": 16,
+    "label": "Reinheit & AlltagSicher handeln",
+    "width": 320,
+    "heading": [
+      "Reinheit & Alltag"
+    ],
+    "screenshot": "320-entry-16.png"
+  },
+  {
+    "index": 17,
+    "label": "Charakter & RechteGlaube im Verhalten",
+    "width": 320,
+    "heading": [
+      "Charakter & Rechte"
+    ],
+    "screenshot": "320-entry-17.png"
+  },
+  {
+    "index": 18,
+    "label": "Miteinander & VerantwortungRechte im Alltag",
+    "width": 320,
+    "heading": [
+      "Miteinander & Verantwortung"
+    ],
+    "screenshot": "320-entry-18.png"
+  },
+  {
+    "index": 19,
+    "label": "Der Prophet ﷺVorbild & Geschichte",
+    "width": 320,
+    "heading": [
+      "Der Prophet ﷺ"
+    ],
+    "screenshot": "320-entry-19.png"
+  },
+  {
+    "index": 20,
+    "label": "Vers des TagesArabisch, Aussprache & Bedeutung",
+    "width": 320,
+    "heading": [
+      "Ayah im Fokus"
+    ],
+    "screenshot": "320-entry-20.png"
+  },
+  {
+    "index": 21,
+    "label": "99 Namen AllahsArabisch, Aussprache & Bedeutung",
+    "width": 320,
+    "heading": [
+      "99 Namen Allahs"
+    ],
+    "screenshot": "320-entry-21.png"
+  },
+  {
+    "index": 22,
+    "label": "Ummah-ÜbersichtMuslime weltweit",
+    "width": 320,
+    "heading": [
+      "Ummah-Übersicht"
+    ],
+    "screenshot": "320-entry-22.png"
+  },
+  {
+    "index": 23,
+    "label": "Hadith-SammlungQuellen & Einordnung",
+    "width": 320,
+    "heading": [
+      "Hadith-Sammlung"
+    ],
+    "screenshot": "320-entry-23.png"
+  },
+  {
+    "index": 24,
+    "label": "Die vier RechtsschulenFiqh richtig einordnen",
+    "width": 320,
+    "heading": [
+      "Die vier Rechtsschulen"
+    ],
+    "screenshot": "320-entry-24.png"
+  },
+  {
+    "index": 25,
+    "label": "Die 25 Propheten25 eigenständige Quran-Kurse",
+    "width": 320,
+    "heading": [
+      "Die 25 Propheten"
+    ],
+    "screenshot": "320-entry-25.png"
+  },
+  {
+    "index": 26,
+    "label": "Hajj & UmrahAblauf verstehen",
+    "width": 320,
+    "heading": [
+      "Hajj & Umrah"
+    ],
+    "screenshot": "320-entry-26.png"
+  },
+  {
+    "index": 27,
+    "label": "Sunnah im AlltagGute Gewohnheiten",
+    "width": 320,
+    "heading": [
+      "Sunnah im Alltag"
+    ],
+    "screenshot": "320-entry-27.png"
+  },
+  {
+    "index": 28,
+    "label": "Fehler & ReueRückkehr zu Allah",
+    "width": 320,
+    "heading": [
+      "Fehler & Reue"
+    ],
+    "screenshot": "320-entry-28.png"
+  },
+  {
+    "index": 29,
+    "label": "Makkah, Madinah & Al-AqsaIslamische Orte",
+    "width": 320,
+    "heading": [
+      "Islamische Orte",
+      "Bedeutende Orte"
+    ],
+    "screenshot": "320-entry-29.png"
+  },
+  {
+    "index": 30,
+    "label": "Das FreitagsgebetJumuah",
+    "width": 320,
+    "heading": [
+      "Jumuah"
+    ],
+    "screenshot": "320-entry-30.png"
+  },
+  {
+    "index": 31,
+    "label": "PlanungshilfeZakat-Rechner",
+    "width": 320,
+    "heading": [
+      "Zakat-Rechner"
+    ],
+    "screenshot": "320-entry-31.png"
+  },
+  {
+    "index": 32,
+    "label": "GebetsanzeigeStandby",
+    "width": 320,
+    "heading": [
+      "Gebetsanzeige"
+    ],
+    "screenshot": "320-entry-32.png"
+  },
+  {
+    "index": 4,
+    "label": "Beten lernenFünf Gebete Schritt für Schritt",
+    "width": 768,
+    "heading": [
+      "Gebetskurs"
+    ],
+    "screenshot": "768-entry-4.png"
+  },
+  {
+    "index": 5,
+    "label": "Wudu lernenWaschung Schritt für Schritt",
+    "width": 768,
+    "heading": [
+      "Wudu (Gebetswaschung)"
+    ],
+    "screenshot": "768-entry-5.png"
+  },
+  {
+    "index": 6,
+    "label": "QiblaLive-Kompass",
+    "width": 768,
+    "heading": [
+      "Qibla"
+    ],
+    "screenshot": "768-entry-6.png"
+  },
+  {
+    "index": 7,
+    "label": "DhikrZähler & Tagesziel",
+    "width": 768,
+    "heading": [
+      "Dhikr"
+    ],
+    "screenshot": "768-entry-7.png"
+  },
+  {
+    "index": 8,
+    "label": "DuasBittgebete für jeden Moment",
+    "width": 768,
+    "heading": [
+      "Duas"
+    ],
+    "screenshot": "768-entry-8.png"
+  },
+  {
+    "index": 9,
+    "label": "MoscheenGebetsorte in deiner Nähe",
+    "width": 768,
+    "heading": [
+      "Moschee-Finder"
+    ],
+    "screenshot": "768-entry-9.png"
+  },
+  {
+    "index": 10,
+    "label": "KalenderIslamische Tage & Termine",
+    "width": 768,
+    "heading": [
+      "Kalender"
+    ],
+    "screenshot": "768-entry-10.png"
+  },
+  {
+    "index": 11,
+    "label": "FastenplanFreiwillige Fastentage",
+    "width": 768,
+    "heading": [
+      "Fastenplan"
+    ],
+    "screenshot": "768-entry-11.png"
+  },
+  {
+    "index": 12,
+    "label": "SammlungFavoriten & Lesezeichen",
+    "width": 768,
+    "heading": [
+      "Meine Sammlung"
+    ],
+    "screenshot": "768-entry-12.png"
+  },
+  {
+    "index": 13,
+    "label": "Allah & der GlaubeDas Fundament",
+    "width": 768,
+    "heading": [
+      "Allah & der Glaube"
+    ],
+    "screenshot": "768-entry-13.png"
+  },
+  {
+    "index": 14,
+    "label": "Die fünf SäulenIslam leben",
+    "width": 768,
+    "heading": [
+      "Die fünf Säulen"
+    ],
+    "screenshot": "768-entry-14.png"
+  },
+  {
+    "index": 15,
+    "label": "Wichtige BegriffeEinfach verstehen",
+    "width": 768,
+    "heading": [
+      "Wichtige Begriffe"
+    ],
+    "screenshot": "768-entry-15.png"
+  },
+  {
+    "index": 16,
+    "label": "Reinheit & AlltagSicher handeln",
+    "width": 768,
+    "heading": [
+      "Reinheit & Alltag"
+    ],
+    "screenshot": "768-entry-16.png"
+  },
+  {
+    "index": 17,
+    "label": "Charakter & RechteGlaube im Verhalten",
+    "width": 768,
+    "heading": [
+      "Charakter & Rechte"
+    ],
+    "screenshot": "768-entry-17.png"
+  },
+  {
+    "index": 18,
+    "label": "Miteinander & VerantwortungRechte im Alltag",
+    "width": 768,
+    "heading": [
+      "Miteinander & Verantwortung"
+    ],
+    "screenshot": "768-entry-18.png"
+  },
+  {
+    "index": 19,
+    "label": "Der Prophet ﷺVorbild & Geschichte",
+    "width": 768,
+    "heading": [
+      "Der Prophet ﷺ"
+    ],
+    "screenshot": "768-entry-19.png"
+  },
+  {
+    "index": 20,
+    "label": "Vers des TagesArabisch, Aussprache & Bedeutung",
+    "width": 768,
+    "heading": [
+      "Ayah im Fokus"
+    ],
+    "screenshot": "768-entry-20.png"
+  },
+  {
+    "index": 21,
+    "label": "99 Namen AllahsArabisch, Aussprache & Bedeutung",
+    "width": 768,
+    "heading": [
+      "99 Namen Allahs"
+    ],
+    "screenshot": "768-entry-21.png"
+  },
+  {
+    "index": 22,
+    "label": "Ummah-ÜbersichtMuslime weltweit",
+    "width": 768,
+    "heading": [
+      "Ummah-Übersicht"
+    ],
+    "screenshot": "768-entry-22.png"
+  },
+  {
+    "index": 23,
+    "label": "Hadith-SammlungQuellen & Einordnung",
+    "width": 768,
+    "heading": [
+      "Hadith-Sammlung"
+    ],
+    "screenshot": "768-entry-23.png"
+  },
+  {
+    "index": 24,
+    "label": "Die vier RechtsschulenFiqh richtig einordnen",
+    "width": 768,
+    "heading": [
+      "Die vier Rechtsschulen"
+    ],
+    "screenshot": "768-entry-24.png"
+  },
+  {
+    "index": 25,
+    "label": "Die 25 Propheten25 eigenständige Quran-Kurse",
+    "width": 768,
+    "heading": [
+      "Die 25 Propheten"
+    ],
+    "screenshot": "768-entry-25.png"
+  },
+  {
+    "index": 26,
+    "label": "Hajj & UmrahAblauf verstehen",
+    "width": 768,
+    "heading": [
+      "Hajj & Umrah"
+    ],
+    "screenshot": "768-entry-26.png"
+  },
+  {
+    "index": 27,
+    "label": "Sunnah im AlltagGute Gewohnheiten",
+    "width": 768,
+    "heading": [
+      "Sunnah im Alltag"
+    ],
+    "screenshot": "768-entry-27.png"
+  },
+  {
+    "index": 28,
+    "label": "Fehler & ReueRückkehr zu Allah",
+    "width": 768,
+    "heading": [
+      "Fehler & Reue"
+    ],
+    "screenshot": "768-entry-28.png"
+  },
+  {
+    "index": 29,
+    "label": "Makkah, Madinah & Al-AqsaIslamische Orte",
+    "width": 768,
+    "heading": [
+      "Islamische Orte",
+      "Bedeutende Orte"
+    ],
+    "screenshot": "768-entry-29.png"
+  },
+  {
+    "index": 30,
+    "label": "Das FreitagsgebetJumuah",
+    "width": 768,
+    "heading": [
+      "Jumuah"
+    ],
+    "screenshot": "768-entry-30.png"
+  },
+  {
+    "index": 31,
+    "label": "PlanungshilfeZakat-Rechner",
+    "width": 768,
+    "heading": [
+      "Zakat-Rechner"
+    ],
+    "screenshot": "768-entry-31.png"
+  },
+  {
+    "index": 32,
+    "label": "GebetsanzeigeStandby",
+    "width": 768,
+    "heading": [
+      "Gebetsanzeige"
+    ],
+    "screenshot": "768-entry-32.png"
+  }
+]

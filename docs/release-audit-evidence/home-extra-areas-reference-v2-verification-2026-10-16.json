@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-16",
+  "scope": "Only the two images in Home > Weitere Bereiche",
+  "generator": "Codex built-in image_gen",
+  "references": [
+    "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/prayer-companion-fasting-v1.webp",
+    "/Users/arman/Islam App/nur-islam-premium-redesign/public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+  ],
+  "assets": [
+    "public/premium-assets/high-res-objects/home-extra-ummah-v2.webp",
+    "public/premium-assets/high-res-objects/home-extra-collection-v2.webp"
+  ],
+  "checks": [
+    "512x512 WebP with transparency",
+    "image provenance, image map, icon map and TypeScript passed",
+    "Browser test passed at 320, 390 and 768px",
+    "App.tsx differs only in the two image paths; Prayer, Learn, Quran, More and widget layer byte-identical to snapshot"
+  ],
+  "screenshot": "docs/release-audit-evidence/home-extra-areas-reference-v2-2026-10-16.png"
+}

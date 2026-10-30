@@ -1,3 +1,8 @@
+import { DialogHeader } from '../shared/DialogHeader';
+import { SourceInfo } from '../shared/SourceInfo';
+import { TopicCardContent } from '../shared/TopicCardContent';
+import { TOPIC_SUMMARIES } from '../data/topicSummaries';
+import { useScreenState } from '../shared/ScreenState';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { CSSProperties } from 'react';
 import {
@@ -14,7 +19,6 @@ import {
   LocateFixed,
   MapPin,
   MoonStar,
-  Navigation,
   RefreshCw,
   Settings2,
   Share2,
@@ -43,9 +47,10 @@ import {
 } from '../services/prayerTimesService';
 import type { AsrSchool, PrayerCalculationMethod, PrayerTimesMonth } from '../services/prayerTimesService';
 import { MihrabArch } from '../shared/MihrabArch';
-import { getCurrentPrayerScene } from '../shared/prayerBackdrops';
+import { getCurrentPrayerScene, PRAYER_BACKDROPS } from '../shared/prayerBackdrops';
 import { usePrayerTimes } from '../shared/usePrayerTimes';
 import { getHijriLabel } from '../services/hijriCalendar';
+import { prayerTimesFeedback } from '../services/prayerTimesFeedback';
 
 const PrayerCalendarSection = lazy(() => import('../shared/PrayerCalendarSection').then((module) => ({ default: module.PrayerCalendarSection })));
 
@@ -155,18 +160,25 @@ function PrayerIcon({ prayer, size = 21 }: { prayer: PrayerScheduleItem; size?: 
 }
 
 const PRAYER_MINIATURES: Record<PrayerId, string> = {
-  fajr: '/premium-assets/high-res-objects/prayer-mini-fajr-v1.webp',
+  fajr: '/premium-assets/high-res-objects/prayer-mini-fajr-v2.webp',
   sunrise: '/premium-assets/high-res-objects/prayer-mini-sunrise-v1.webp',
-  dhuhr: '/premium-assets/high-res-objects/prayer-mini-dhuhr-v1.webp',
-  asr: '/premium-assets/high-res-objects/prayer-mini-asr-v1.webp',
-  maghrib: '/premium-assets/high-res-objects/prayer-mini-maghrib-v1.webp',
-  isha: '/premium-assets/high-res-objects/prayer-mini-isha-v1.webp',
+  dhuhr: '/premium-assets/high-res-objects/prayer-mini-dhuhr-v2.webp',
+  asr: '/premium-assets/high-res-objects/prayer-mini-asr-v2.webp',
+  maghrib: '/premium-assets/high-res-objects/prayer-mini-maghrib-v2.webp',
+  isha: '/premium-assets/high-res-objects/prayer-mini-isha-v2.webp',
 };
 
 function PrayerMiniature({ prayer }: { prayer: PrayerScheduleItem }) {
   const [failed, setFailed] = useState(false);
   if (failed) return <PrayerIcon prayer={prayer} />;
   return <img src={versionAppPath(PRAYER_MINIATURES[prayer.id], '20260826-original-art')} alt="" width={192} height={192} decoding="async" draggable={false} onError={() => setFailed(true)} />;
+}
+
+function PrayerRowBackdrop({ prayer }: { prayer: PrayerScheduleItem }) {
+  const [failed, setFailed] = useState(false);
+  if (failed) return null;
+  const backdrop = prayer.id === 'sunrise' ? '/premium-assets/high-res-objects/prayer-oasis-sunrise-v1.webp' : PRAYER_BACKDROPS[prayer.id];
+  return <img className="prayer-time-row__backdrop" src={versionAppPath(backdrop, '20260826-original-art')} alt="" aria-hidden="true" decoding="async" draggable={false} onError={() => setFailed(true)} />;
 }
 
 async function playReminderTone() {
@@ -195,7 +207,6 @@ async function playReminderTone() {
 }
 
 type PrayerScreenProps = {
-  onBack: () => void;
   openCalendar: (dateKey: string) => void;
   openDhikr: () => void;
   openDuas: () => void;
@@ -206,7 +217,6 @@ type PrayerScreenProps = {
 };
 
 export function PrayerScreen({
-  onBack,
   openCalendar,
   openDhikr,
   openDuas,
@@ -225,7 +235,7 @@ export function PrayerScreen({
   const [toast, setToast] = useState<string | null>(null);
   const [celebrationOpen, setCelebrationOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [selectedPrayerDate, setSelectedPrayerDate] = useState(() => localNoon());
+  const [selectedPrayerDate, setSelectedPrayerDate] = useScreenState('prayer.date', () => localNoon());
   const [previewSchedule, setPreviewSchedule] = useState<PrayerScheduleItem[] | null>(null);
   const [previewStatus, setPreviewStatus] = useState<'idle' | 'loading' | 'error'>('idle');
   const [monthOpen, setMonthOpen] = useState(false);
@@ -260,7 +270,6 @@ export function PrayerScreen({
   const closeMonth = useCallback(() => { setMonthOpen(false); }, []);
   const monthDialog = useDialog(monthOpen, closeMonth, 'Gebetszeiten im Monat');
 
-  const dateLabel = useMemo(() => getGregorianDate(now), [now]);
   const hijriLabel = useMemo(() => getHijriDate(now), [now]);
   const selectedPrayerDateKey = useMemo(() => getDateKey(selectedPrayerDate), [selectedPrayerDate]);
   const selectedIsToday = selectedPrayerDateKey === currentDateKey;
@@ -444,20 +453,23 @@ export function PrayerScreen({
     setNow(new Date());
     await selectPrayerDate(localNoon());
     const result = await refresh();
-    flash(result === 'live' ? 'Live-Gebetszeiten aktualisiert' : 'Offline-Zeitplan wird weiter verwendet');
+    const message = prayerTimesFeedback(result, 'Gebetszeiten aktualisiert');
+    if (message) flash(message);
   };
 
   const handleLocation = async () => {
     await selectPrayerDate(localNoon());
     const result = await requestLocation();
-    flash(result === 'live' ? 'Gebetszeiten für deinen Standort geladen' : result === 'location-denied' ? 'Standort wurde nicht freigegeben' : 'Gespeicherter Zeitplan wird verwendet');
+    const message = prayerTimesFeedback(result, 'Gebetszeiten für deinen Standort geladen');
+    if (message) flash(message);
   };
 
   const applyPreferences = async () => {
     await selectPrayerDate(localNoon());
     const result = await updatePreferences({ method: draftMethod, school: draftSchool });
     setSettingsOpen(false);
-    flash(result === 'live' ? 'Berechnungseinstellung übernommen' : 'Einstellung gespeichert – Offline-Fallback aktiv');
+    const message = prayerTimesFeedback(result, 'Berechnungseinstellung übernommen');
+    if (message) flash(message);
   };
 
   const testTone = async () => {
@@ -488,41 +500,40 @@ export function PrayerScreen({
     : status === 'loading'
       ? 'Wird aktualisiert …'
       : status === 'cache'
-        ? 'Gespeicherte Live-Zeiten'
+        ? 'Gespeicherter Tagesstand'
         : status === 'location-denied'
           ? 'Standort nicht freigegeben'
-          : 'Offline-Fallback';
+          : 'Keine bestätigten Zeiten';
 
   const screenTransition = { duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] as const };
   const toastTransition = { duration: reduceMotion ? 0 : 0.2, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
     <motion.main className="screen prayer-screen reference-prayer-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+      <header className="reference-screen-header reference-screen-header--banner">
+        <SourceInfo title="Standort & Datenschutz"><p>Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p></SourceInfo>
         <div><span className="overline">{hijriLabel}</span><h1>Gebetszeiten</h1></div>
         <button className="icon-button" onClick={handleRefresh} aria-label="Gebetszeiten aktualisieren" disabled={refreshing}><RefreshCw size={20} className={refreshing ? 'spin' : ''} /></button>
       </header>
 
-      <section className={`reference-prayer-live-status is-${status}`} aria-live="polite">
+      {status !== 'live' || error ? <section className={`reference-prayer-live-status is-${status}`} aria-live="polite">
         <span className="reference-prayer-live-status__dot" />
-        <span><strong>{statusLabel}</strong><small>{meta.sourceLabel} · {meta.timezone ?? 'lokale Zeitzone'}</small></span>
-        {error ? <em title={error}>Fallback aktiv</em> : null}
-      </section>
+        <span><strong>{statusLabel}</strong></span>
+        {error ? <em title={error}>{status === 'location-denied' ? 'Standorthinweis' : 'Abruf fehlgeschlagen'}</em> : null}
+      </section> : null}
 
-      <section className="prayer-location-card glass-card reference-prayer-location">
-        <span className="prayer-location-card__icon"><Navigation size={20} /></span>
-        <span><small>{dateLabel}</small><strong>{meta.locationLabel}</strong></span>
-        <button onClick={handleLocation} disabled={refreshing} className={refreshing ? 'is-loading' : ''}><LocateFixed size={16} /> {refreshing ? 'Lädt' : 'Standort'}</button>
+      <section className="prayer-location-card glass-card reference-prayer-location" aria-label="Standort für Gebetszeiten">
+        <MapPin size={18} aria-hidden="true" />
+        <span><strong>{meta.locationLabel}</strong>{location.source === 'default' ? <small>Voreingestellt</small> : null}</span>
+        <button onClick={handleLocation} disabled={refreshing} className="icon-button" aria-label="Standort aktualisieren" aria-busy={refreshing} title="Standort aktualisieren"><LocateFixed size={18} className={refreshing ? 'spin' : undefined} /></button>
       </section>
-      <p className="reference-prayer-location-privacy">Standort ist optional. Bei Nutzung werden die Gerätekoordinaten zur Berechnung der Gebetszeiten an AlAdhan übermittelt.</p>
 
       {/* Without a usable timetable there is no next prayer, and the arch would
           otherwise show a prayer and a countdown the app does not know. */}
       {nextPrayer ? (
       <section className="prayer-focus" aria-label="Nächstes Pflichtgebet">
         <MihrabArch
-          overline={nextPrayer.tomorrow ? 'Morgen früh' : 'Nächstes Pflichtgebet'}
+          overline="Nächstes Gebet"
           title={nextPrayer.prayer.label}
           titleArabic={nextPrayer.prayer.arabic}
           value={nextPrayer.prayer.time}
@@ -565,56 +576,65 @@ export function PrayerScreen({
             const notificationOn = selectedIsToday && prayer.obligatory && notifications.has(prayer.id);
             return (
               <motion.article key={`${selectedPrayerDateKey}-${prayer.id}`} className={`${isNext ? 'prayer-time-row prayer-time-row--next' : 'prayer-time-row'}${done ? ' prayer-time-row--done' : ''}${selectedIsToday ? '' : ' prayer-time-row--preview'}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.22, delay: reduceMotion ? 0 : index * 0.025, ease: [0.22, 1, 0.36, 1] }}>
-                <span className="prayer-time-row__art" aria-hidden="true"><PrayerMiniature prayer={prayer} /></span><span className="prayer-time-row__name"><small>{prayer.arabic}</small><strong>{prayer.label}</strong><em>{prayer.description}</em></span><strong className="prayer-time-row__time">{prayer.time}</strong>
-                {selectedIsToday ? <>{prayer.obligatory ? <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button> : <span className="prayer-alert prayer-alert--disabled" aria-hidden="true" />}{prayer.obligatory ? <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button> : <span className="prayer-complete prayer-complete--disabled" />}</> : null}
+                <PrayerRowBackdrop prayer={prayer} />
+                <span className="prayer-time-row__art" aria-hidden="true"><PrayerMiniature prayer={prayer} /></span><span className="prayer-time-row__name"><strong>{prayer.label}</strong></span><strong className="prayer-time-row__time">{prayer.time}</strong>
+                {selectedIsToday && prayer.obligatory ? <div className="prayer-time-row__actions">
+                  <button className={notificationOn ? 'prayer-alert prayer-alert--on' : 'prayer-alert'} onClick={() => void toggleNotification(prayer.id)} aria-label={`Erinnerung für ${prayer.label}`} aria-pressed={notificationOn}>{notificationOn ? <BellRing size={17} /> : <Bell size={17} />}</button>
+                  <button className={done ? 'prayer-complete prayer-complete--done' : 'prayer-complete'} onClick={() => toggleCompleted(prayer.id)} aria-label={`${prayer.label} als gebetet markieren`} aria-pressed={done}>{done ? <CircleCheck size={19} /> : <span />}</button>
+                </div> : null}
               </motion.article>
             );
           })}
         </div>
       </section>
 
-      <section className="prayer-companions" aria-labelledby="prayer-companions-title">
+      <div className="prayer-companions">
+      <section className="prayer-companions__group" aria-labelledby="prayer-companions-title">
         <div className="section-heading">
-          <div><span className="overline">Rund ums Gebet</span><h2 id="prayer-companions-title">Direkt weiter</h2></div>
+          <h2 id="prayer-companions-title">Gebetspraxis</h2>
         </div>
-        <div className="prayer-companions__grid">
-          <button className="prayer-companion-card prayer-companion-card--feature" onClick={openLearn} aria-label="Beten lernen – von Wudu bis zum vollständigen Gebet">
-            <span className="prayer-companion-card__copy"><em>Schritt für Schritt</em><strong>Beten lernen</strong><small>Von Wudu bis zum vollständigen Gebet</small></span>
-            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-learn-prayer-v2.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
+        <div className="prayer-companions__grid topic-list">
+          <button className="prayer-companion-card topic-card" onClick={openLearn} aria-label="Beten lernen – von Wudu bis zum vollständigen Gebet">
+            <TopicCardContent title="Beten lernen" description={TOPIC_SUMMARIES['prayer-learning']} art={'/premium-assets/high-res-objects/home-learn-prayer-v5.webp'} fallback={<ChevronRight />} />
           </button>
-          <button className="prayer-companion-card" onClick={openQibla} aria-label="Qibla – Richtung zur Kaaba finden">
-            <span className="prayer-companion-card__copy"><em>Ausrichtung</em><strong>Qibla</strong><small>Richtung zur Kaaba finden</small></span>
-            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-qibla-illustrated-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
-          </button>
-          <button className="prayer-companion-card" onClick={openDuas} aria-label="Duas – Bittgebete für Alltag und besondere Momente">
-            <span className="prayer-companion-card__copy"><em>Bittgebete</em><strong>Duas</strong><small>Für Alltag und besondere Momente</small></span>
-            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-duas-v2.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
-          </button>
-          <button className="prayer-companion-card" onClick={openDhikr} aria-label="Dhikr – Tasbih, Tagesziel und Routinen">
-            <span className="prayer-companion-card__copy"><em>Gedenken</em><strong>Dhikr</strong><small>Tasbih, Tagesziel und Routinen</small></span>
-            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/home-dhikr-illustrated-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
-          </button>
-          <button className="prayer-companion-card" onClick={openMosques} aria-label="Moscheen – Gebetsorte auf der Karte">
-            <span className="prayer-companion-card__copy"><em>In der Nähe</em><strong>Moscheen</strong><small>Gebetsorte auf der Karte</small></span>
-            <img className="prayer-companion-card__art prayer-companion-card__art--mosque" src={versionAppPath('/premium-assets/high-res-objects/splash-mosque-v1.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
-          </button>
-          <button className="prayer-companion-card prayer-companion-card--wide" onClick={openFastingPlan} aria-label="Fastenplan – Fastentage planen und Erinnerungen setzen">
-            <span className="prayer-companion-card__copy"><em>Fasten</em><strong>Fastenplan</strong><small>Fastentage planen und Erinnerungen setzen</small></span>
-            <img className="prayer-companion-card__art" src={versionAppPath('/premium-assets/high-res-objects/lantern-v3.webp', '20260929-prayer-companions')} alt="" loading="lazy" decoding="async" />
-            <ChevronRight size={16} />
+          <button className="prayer-companion-card topic-card" onClick={openQibla} aria-label="Qibla – Richtung zur Kaaba finden">
+            <TopicCardContent title="Qibla" description={TOPIC_SUMMARIES['qibla']} art={'/premium-assets/high-res-objects/home-qibla-illustrated-v3.webp'} fallback={<ChevronRight />} />
           </button>
         </div>
       </section>
+      <section className="prayer-companions__group" aria-labelledby="prayer-remembrance-title">
+        <div className="section-heading"><h2 id="prayer-remembrance-title">Duas & Dhikr</h2></div>
+        <div className="prayer-companions__grid topic-list">
+          <button className="prayer-companion-card topic-card" onClick={openDuas} aria-label="Duas – Bittgebete für Alltag und besondere Momente">
+            <TopicCardContent title="Duas" description={TOPIC_SUMMARIES['duas']} art={'/premium-assets/high-res-objects/home-duas-v5.webp'} fallback={<ChevronRight />} />
+          </button>
+          <button className="prayer-companion-card topic-card" onClick={openDhikr} aria-label="Dhikr – Tasbih, Tagesziel und Routinen">
+            <TopicCardContent title="Dhikr" description={TOPIC_SUMMARIES['dhikr']} art={'/premium-assets/high-res-objects/home-dhikr-illustrated-v3.webp'} fallback={<ChevronRight />} />
+          </button>
+        </div>
+      </section>
+      <section className="prayer-companions__group" aria-labelledby="prayer-planning-title">
+        <div className="section-heading"><h2 id="prayer-planning-title">Moscheen & Fasten</h2></div>
+        <div className="prayer-companions__grid topic-list">
+          <button className="prayer-companion-card topic-card" onClick={openMosques} aria-label="Moscheen – Gebetsorte auf der Karte">
+            <TopicCardContent title="Moscheen" description={TOPIC_SUMMARIES['mosques']} art={'/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp'} fallback={<ChevronRight />} />
+          </button>
+          <button className="prayer-companion-card topic-card" onClick={openFastingPlan} aria-label="Fastenplan – Fastentage planen und Erinnerungen setzen">
+            <TopicCardContent title="Fastenplan" description={TOPIC_SUMMARIES['fasting']} art={'/premium-assets/high-res-objects/prayer-companion-fasting-v1.webp'} fallback={<ChevronRight />} />
+          </button>
+        </div>
+      </section>
+      </div>
 
-      <section className="method-card glass-card reference-prayer-method">
-        <span className="method-card__icon"><MoonStar size={22} /></span>
-        <span><small>{meta.sourceLabel}</small><strong>{meta.methodLabel}</strong><em>{meta.calculationNotice}</em></span>
-        <button onClick={() => setSettingsOpen(true)}>Anpassen</button>
+      <section className="reference-prayer-method" aria-label="Berechnung der Gebetszeiten">
+        <div className="prayer-method-copy"><strong>Berechnung</strong><span>{PRAYER_METHOD_OPTIONS.find(option => option.id === preferences.method)?.shortLabel ?? 'Methode prüfen'}</span></div>
+        <button type="button" className="prayer-method-adjust" onClick={() => setSettingsOpen(true)}>Anpassen</button>
+        <SourceInfo title="Berechnung & Quelle">
+          <p><strong>{meta.sourceLabel}</strong></p>
+          <p>{meta.methodLabel}</p>
+          <p>{meta.timezone ?? 'Zeitzone nicht bestätigt'}</p>
+          <p>{meta.calculationNotice}</p>
+        </SourceInfo>
       </section>
 
       <Suspense fallback={<section className="prayer-calendar-loading" aria-busy="true">Kalender wird geladen …</section>}>
@@ -624,11 +644,8 @@ export function PrayerScreen({
       <AnimatePresence>
         {monthOpen ? (
           <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.18 }} onClick={closeMonth}>
-            <motion.section {...monthDialog.props} className="reference-prayer-settings-modal prayer-month-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-prayer-settings-modal__close" onClick={closeMonth} aria-label="Monatsplan schließen"><X size={18} /></button>
-              <span className="reference-prayer-settings-modal__icon"><CalendarRange size={25} /></span>
-              <span className="overline">Gebetszeiten im Monat</span>
-              <h2>{getPrayerMonthTitle(monthCursor)}</h2>
+            <motion.section {...monthDialog.props} className="reference-prayer-settings-modal prayer-month-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title={getPrayerMonthTitle(monthCursor)} subtitle="Gebetszeiten im Monat" onClose={closeMonth} closeLabel="Monatsplan schließen" />
               <p>Alle fünf Pflichtgebete auf einen Blick. Tippe auf einen Tag, um seine vollständige Tagesansicht zu öffnen.</p>
               <div className="prayer-month-navigation">
                 <button onClick={() => setMonthCursor(new Date(monthCursor.getFullYear(), monthCursor.getMonth() - 1, 1, 12))} aria-label="Vorherigen Monat anzeigen"><ChevronLeft size={18} /></button>
@@ -660,14 +677,20 @@ export function PrayerScreen({
       <AnimatePresence>
         {settingsOpen ? (
           <motion.div className="reference-prayer-settings-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: reduceMotion ? 0 : 0.18 }} onClick={() => setSettingsOpen(false)}>
-            <motion.section {...settingsDialog.props} className="reference-prayer-settings-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 20, scale: reduceMotion ? 1 : .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
-              <button className="reference-prayer-settings-modal__close" onClick={() => setSettingsOpen(false)} aria-label="Schließen"><X size={18} /></button>
-              <span className="reference-prayer-settings-modal__icon"><Settings2 size={25} /></span>
-              <span className="overline">Gebetszeiten</span><h2>Berechnung anpassen</h2><p>Die Auswahl beeinflusst insbesondere Fajr, Isha und Asr. Vergleiche die Zeiten bei Unsicherheit mit deiner örtlichen Moschee.</p>
-
-              <div className="reference-prayer-settings-group"><strong>Berechnungsmethode</strong><div>{PRAYER_METHOD_OPTIONS.map((option) => <button key={option.id} className={draftMethod === option.id ? 'is-active' : ''} onClick={() => setDraftMethod(option.id)}><span>{option.shortLabel}</span><small>{option.label}</small></button>)}</div></div>
-              <div className="reference-prayer-settings-group"><strong>Asr-Berechnung</strong><div>{ASR_SCHOOL_OPTIONS.map((option) => <button key={option.id} className={draftSchool === option.id ? 'is-active' : ''} onClick={() => setDraftSchool(option.id)}><span>{option.label}</span><small>{option.description}</small></button>)}</div></div>
-              <button className="gold-button" onClick={applyPreferences} disabled={refreshing}>{refreshing ? <RefreshCw size={17} className="spin" /> : <Check size={17} />} Übernehmen</button>
+            <motion.section {...settingsDialog.props} className="reference-prayer-settings-modal prayer-settings-compact dialog-panel dialog-form" initial={reduceMotion ? false : { opacity: 0, y: 20, scale: .975 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 10, scale: reduceMotion ? 1 : .99 }} transition={toastTransition} onClick={(event) => event.stopPropagation()}>
+              <DialogHeader title="Berechnung" onClose={closeSettings} />
+              <div className="prayer-settings-choices">
+                <div className="reference-prayer-settings-group"><strong>Berechnungsmethode</strong><div>{PRAYER_METHOD_OPTIONS.map((option) => <button type="button" key={option.id} className={draftMethod === option.id ? 'is-active' : ''} aria-pressed={draftMethod === option.id} aria-label={option.label} onClick={() => setDraftMethod(option.id)}><span>{option.id === 13 ? 'Diyanet' : option.shortLabel}</span>{option.id === 13 ? <small>experimentell</small> : null}</button>)}</div></div>
+                <div className="reference-prayer-settings-group"><strong>Asr-Berechnung</strong><div>{ASR_SCHOOL_OPTIONS.map((option) => <button type="button" key={option.id} className={draftSchool === option.id ? 'is-active' : ''} aria-pressed={draftSchool === option.id} onClick={() => setDraftSchool(option.id)}><span>{option.label}</span><small>{option.description}</small></button>)}</div></div>
+              </div>
+              <div className="prayer-settings-actions">
+                <SourceInfo title="Hinweise zur Berechnung">
+                  <p>Die Auswahl beeinflusst insbesondere Fajr, Isha und Asr. Vergleiche die Zeiten bei Unsicherheit mit deiner örtlichen Moschee.</p>
+                  {PRAYER_METHOD_OPTIONS.map(option => <p key={option.id}><strong>{option.shortLabel}</strong><br />{option.label}</p>)}
+                  {ASR_SCHOOL_OPTIONS.map(option => <p key={option.id}><strong>{option.label}</strong><br />{option.description}</p>)}
+                </SourceInfo>
+                <button className="gold-button" onClick={applyPreferences} disabled={refreshing}>{refreshing ? <RefreshCw size={17} className="spin" /> : <Check size={17} />} Übernehmen</button>
+              </div>
             </motion.section>
           </motion.div>
         ) : null}
@@ -680,11 +703,11 @@ export function PrayerScreen({
               <button className="prayer-completion-modal__close" onClick={() => setCelebrationOpen(false)} aria-label="Schließen"><X size={18} /></button>
               <div className="prayer-completion-burst" aria-hidden="true">
                 {!reduceMotion ? celebrationParticles.map((particle) => <motion.i key={particle.id} style={{ '--angle': `${particle.angle}deg`, '--distance': `${particle.distance}px`, width: particle.size, height: particle.size } as CSSProperties} initial={{ opacity: 0, scale: 0, x: 0, y: 0 }} animate={{ opacity: [0, 1, 0], scale: [0, 1, .6], x: Math.cos(particle.angle * Math.PI / 180) * particle.distance, y: Math.sin(particle.angle * Math.PI / 180) * particle.distance }} transition={{ duration: 1.05, delay: particle.delay, ease: 'easeOut' }} />) : null}
-                <motion.span initial={reduceMotion ? false : { scale: .72, rotate: -7 }} animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], rotate: 0 }} transition={{ duration: .55 }}><CircleCheck size={46} /></motion.span>
+                <motion.span initial={reduceMotion ? false : { scale: .72, rotate: -7 }} animate={reduceMotion ? undefined : { scale: [1, 1.05, 1], rotate: 0 }} transition={{ duration: .55 }}><img src={versionAppPath('/premium-assets/high-res-objects/home-duas-v5.webp', '20260826-original-art')} alt="" width={96} height={96} decoding="async" /></motion.span>
               </div>
-              <span className="hero-pill">5 von 5</span><h2>Alle Pflichtgebete abgeschlossen</h2><p>Möge Allah deine Gebete annehmen und dir Beständigkeit schenken.</p>
+              <h2>Alle Gebete abgeschlossen</h2><p>Möge Allah deine Gebete annehmen.</p>
               <div className="prayer-completion-stats"><span><strong>5</strong><small>Gebete heute</small></span><span><strong>{Math.max(1, completionStreak)}</strong><small>{completionStreak === 1 ? 'vollständiger Tag' : 'Tage Serie'}</small></span></div>
-              <div className="prayer-completion-actions"><button onClick={shareCompletion}><Share2 size={17} /> Teilen</button><button className="gold-button" onClick={() => setCelebrationOpen(false)}>Alhamdulillah <Sparkles size={17} /></button></div>
+              <div className="prayer-completion-actions"><button onClick={shareCompletion}><Share2 size={17} /> Teilen</button><button className="gold-button" onClick={() => setCelebrationOpen(false)}>Alhamdulillah</button></div>
             </motion.section>
           </motion.div>
         ) : null}

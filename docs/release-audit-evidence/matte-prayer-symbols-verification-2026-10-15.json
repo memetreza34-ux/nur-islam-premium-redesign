@@ -1,0 +1,10 @@
+{
+  "date": "2026-10-15",
+  "scope": "Fajr, Asr, Maghrib and Isha now match the approved matte Dhuhr sun, in prayer list and prayer-course selector",
+  "unchanged": "Sunrise symbol; all prayer times, completion and reminder behavior",
+  "originalsAndPrompts": "output/imagegen/prayer-symbols-20261015/prompts.json",
+  "generation": "Built-in image_gen, own approved Dhuhr sun and prayer rug as style references",
+  "cacheVersion": 104,
+  "checks": { "check": "passed; 1047 tests, lint, build and guards", "browser": "17 passed; prayer-miniatures, prayer-learning-course and offline" },
+  "visibleProof": "matte-prayer-symbols-visible-2026-10-15.jpg"
+}

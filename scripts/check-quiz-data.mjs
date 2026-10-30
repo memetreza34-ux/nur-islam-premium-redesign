@@ -57,7 +57,7 @@ for (const [, id, rawOptions, correctAnswer, explanation] of questions) {
 }
 
 for (const requirement of [
-  "import { QUIZ_CATEGORIES } from '../data/quizData';",
+  "import { QUIZ_CATEGORIES, getQuizSourceUrl } from '../data/quizData';",
   'reference-quiz-categories',
   "featureId === 'quiz'",
   '<QuizFeature feature={feature} onBack={onBack} />',
@@ -65,6 +65,7 @@ for (const requirement of [
   // earlier would hand over the answer.
   'selected === null ? null : (',
   'reference-quiz-explanation',
+  'href={getQuizSourceUrl(question.source)}',
   "writeStored('nur_quiz_best_scores', nextBest)",
 ]) {
   if (!screen.includes(requirement)) throw new Error(`Quiz screen is missing: ${requirement}`);
@@ -72,6 +73,11 @@ for (const requirement of [
 
 if (screen.includes('const quizQuestions = [')) {
   throw new Error('The five inline quiz questions are back; the catalogue in src/data/quizData.ts is the source.');
+}
+
+for (const id of questionIds) {
+  const block = source.match(new RegExp(`id: '${id}',[\\s\\S]*?\\n      \\},`))?.[0];
+  if (!block || !/source: '[^']+',/.test(block)) throw new Error(`Quiz question ${id} lacks its own citation.`);
 }
 
 // Where the correct answer sits has to stay spread across the four positions.

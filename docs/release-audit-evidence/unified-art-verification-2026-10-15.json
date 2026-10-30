@@ -1,0 +1,31 @@
+{
+  "date": "2026-10-15",
+  "archivedDecorativeFiles": 104,
+  "archivedBytes": 7231637,
+  "cacheVersion": 97,
+  "checks": {
+    "npmRunCheck": "passed",
+    "unitTests": 1047,
+    "e2e": "53 passed (1.8m)",
+    "e2eFiles": [
+      "core-flows",
+      "offline",
+      "quran-open-design",
+      "wudu-intro-art",
+      "learning-intro-art",
+      "qibla-compass",
+      "premium-local"
+    ]
+  },
+  "guards": [
+    "Archived files absent from public and active source URLs",
+    "Archived files absent from shell precache",
+    "Current replacements exist",
+    "Active and archived provenance SHA-256 verified"
+  ],
+  "screenshots": [
+    "unified-art-quran-phone-2026-10-15.png",
+    "unified-art-wudu-phone-2026-10-15.png"
+  ],
+  "manualBrowserLimitation": "Existing preview tab was on a browser error page; user was asked to reload. Production screenshots verified through existing E2E tests."
+}

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 570" fill="none">
+  <rect width="1200" height="570" fill="#F4F1E8"/>
+  <g font-family="Arial, sans-serif" fill="#173D34">
+    <text x="62" y="55" font-size="24" font-weight="700">NUR ISLAM · ZEICHENSTUDIEN</text>
+    <text x="62" y="83" font-size="15">Ohne Namen · drei Formen des arabischen Anfangsbuchstabens Nūn</text>
+  </g>
+  <g>
+    <rect x="55" y="115" width="340" height="400" rx="28" fill="#06372D"/>
+    <rect x="430" y="115" width="340" height="400" rx="28" fill="#06372D"/>
+    <rect x="805" y="115" width="340" height="400" rx="28" fill="#06372D"/>
+    <path d="M60 64c-16 21-22 45-8 61 13 16 43 20 71 14 24-5 38-19 39-42 1-18-7-35-18-48l-12-9c16 28 17 48 8 62-10 16-33 23-57 18-22-4-31-21-23-42 3-7 6-12 10-18z" transform="translate(115 170) scale(1.5)" fill="#E5C27B"/>
+    <path d="m75 20 18 9-9 18-18-9z" transform="translate(115 170) scale(1.5)" fill="#E5C27B"/>
+    <path d="M31 58 17 95l9 26 30 17h48l29-18 10-27-21-47 2 46-14 21-18 7H62l-19-9-8-17 9-35z" transform="translate(490 170) scale(1.5)" fill="#E5C27B"/>
+    <path d="m75 21 18 9-9 18-18-9z" transform="translate(490 170) scale(1.5)" fill="#E5C27B"/>
+    <path d="M37 52c-12 20-16 38-9 55 7 20 26 31 52 31 31 0 51-13 56-37 4-18-2-35-18-54l-3-4c10 24 8 41-3 52-11 12-31 17-49 12-19-5-26-18-21-37z" transform="translate(865 170) scale(1.5)" fill="#E5C27B"/>
+    <path d="M79 17c0 11 6 17 17 17-11 0-17 6-17 17 0-11-6-17-17-17 11 0 17-6 17-17Z" transform="translate(865 170) scale(1.5)" fill="#E5C27B"/>
+    <g font-family="Arial, sans-serif" fill="#E9E1CC">
+      <text x="80" y="430" font-size="17" font-weight="700">A · KALLIGRAFISCH</text>
+      <text x="455" y="430" font-size="17" font-weight="700">B · GEOMETRISCH</text>
+      <text x="830" y="430" font-size="17" font-weight="700">C · LICHTPUNKT</text>
+      <text x="80" y="461" font-size="14" opacity=".75">Ruhig, nah am Schriftzeichen</text>
+      <text x="455" y="461" font-size="14" opacity=".75">Markant, strenger und kantiger</text>
+      <text x="830" y="461" font-size="14" opacity=".75">Weich, mit Nur-Lichtakzent</text>
+    </g>
+    <rect x="334" y="448" width="36" height="36" rx="9" fill="#104B3D" stroke="#56725C"/>
+    <path d="M40 64c-16 21-22 45-8 61 13 16 43 20 71 14 24-5 38-19 39-42 1-18-7-35-18-48l-12-9c16 28 17 48 8 62-10 16-33 23-57 18-22-4-31-21-23-42 3-7 6-12 10-18z" transform="translate(334 448) scale(.225)" fill="#E5C27B"/>
+    <path d="m75 20 18 9-9 18-18-9z" transform="translate(334 448) scale(.225)" fill="#E5C27B"/>
+    <rect x="709" y="448" width="36" height="36" rx="9" fill="#104B3D" stroke="#56725C"/>
+    <path d="M31 58 17 95l9 26 30 17h48l29-18 10-27-21-47 2 46-14 21-18 7H62l-19-9-8-17 9-35z" transform="translate(709 448) scale(.225)" fill="#E5C27B"/>
+    <path d="m75 21 18 9-9 18-18-9z" transform="translate(709 448) scale(.225)" fill="#E5C27B"/>
+    <rect x="1084" y="448" width="36" height="36" rx="9" fill="#104B3D" stroke="#56725C"/>
+    <path d="M37 52c-12 20-16 38-9 55 7 20 26 31 52 31 31 0 51-13 56-37 4-18-2-35-18-54l-3-4c10 24 8 41-3 52-11 12-31 17-49 12-19-5-26-18-21-37z" transform="translate(1084 448) scale(.225)" fill="#E5C27B"/>
+    <path d="M79 17c0 11 6 17 17 17-11 0-17 6-17 17 0-11-6-17-17-17 11 0 17-6 17-17Z" transform="translate(1084 448) scale(.225)" fill="#E5C27B"/>
+  </g>
+</svg>

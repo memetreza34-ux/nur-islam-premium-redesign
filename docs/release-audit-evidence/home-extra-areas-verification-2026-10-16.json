@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-16",
+  "scope": "Only Home > Weitere Bereiche: remove fasting and mosque shortcuts; dedicated matte globe and collection illustrations",
+  "appScopeVerified": "App.tsx byte-identical outside the recommendations section compared with pre-change snapshot",
+  "unchangedFiles": [
+    "PrayerScreen.tsx",
+    "LearnScreen.tsx",
+    "QuranScreen.tsx",
+    "MoreScreen.tsx",
+    "PremiumSystemLayer.tsx"
+  ],
+  "checks": {
+    "fullCheck": "passed: 1047 tests and build; updated asset hashes and new source guard verified after refinement",
+    "browser": "8 passed, including Home at 320, 390 and 768 px; prayer companions, More directory, widget disclosure and scroll restoration"
+  },
+  "generator": "Codex built-in image_gen",
+  "prompts": "output/imagegen/home-extra-areas-20261016/matte-prompts.json",
+  "assets": [
+    "public/premium-assets/high-res-objects/home-extra-ummah-v1.webp",
+    "public/premium-assets/high-res-objects/home-extra-collection-v1.webp"
+  ],
+  "screenshot": "docs/release-audit-evidence/home-extra-areas-matte-2026-10-16.png"
+}

@@ -4,7 +4,7 @@ import { PREMIUM_HOME_SECTIONS, type PremiumSettings } from './premiumLocalServi
 
 function fixture() {
   const home = document.createElement('main');
-  home.innerHTML = '<header class="brand-bar"></header><section class="home-standfirst"></section><section class="home-prayer-focus"></section><button class="home-prayer-note"></button>';
+  home.innerHTML = '<header class="brand-bar"></header><section class="home-standfirst"></section><section class="home-prayer-focus"></section>';
   for (const id of PREMIUM_HOME_SECTIONS) {
     const section = document.createElement('section');
     section.dataset.homeSection = id;
@@ -17,10 +17,10 @@ function fixture() {
 }
 
 describe('Start section customization', () => {
-  it('orders the source note after the timetable and before custom sections', () => {
+  it('places custom sections directly after the timetable', () => {
     const { home, host, settings } = fixture();
     applyHomePreferences(home, settings, host);
-    expect([...home.children].map(node => (node as HTMLElement).style.order)).toEqual(['0', '1', '2', '3', '4', '5', '6', '7', '8', '100']);
+    expect([...home.children].map(node => (node as HTMLElement).style.order)).toEqual(['0', '1', '2', '3', '4', '5', '6', '7', '100']);
   });
   it.each(PREMIUM_HOME_SECTIONS)('can hide and restore %s independently', section => {
     const { home, host, settings } = fixture();
@@ -34,7 +34,7 @@ describe('Start section customization', () => {
     settings.homeOrder.reverse();
     applyHomePreferences(home, settings, host);
     settings.homeOrder.forEach((section, index) => {
-      expect(home.querySelector<HTMLElement>(`[data-home-section="${section}"]`)?.style.order).toBe(String(index + 4));
+      expect(home.querySelector<HTMLElement>(`[data-home-section="${section}"]`)?.style.order).toBe(String(index + 3));
     });
   });
   it('keeps the unavailable timetable in the same fixed position', () => {

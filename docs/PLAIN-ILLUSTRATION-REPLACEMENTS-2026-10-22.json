@@ -1,0 +1,9 @@
+{
+  "date": "2026-10-22",
+  "reason": "Remove baked-in digits and question marks while preserving the existing 3D art direction. UI labels remain unchanged.",
+  "replacements": {
+    "home-names-v4.webp": "home-names-v5.webp",
+    "home-quiz-v5.webp": "home-quiz-v6.webp",
+    "learn-hub-prophets-v1.webp": "learn-hub-prophets-v2.webp"
+  }
+}

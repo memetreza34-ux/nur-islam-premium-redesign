@@ -1,0 +1,80 @@
+{
+  "created": "2026-10-16",
+  "scope": "Additional app-icon proposals only; previous proposals and production app preserved.",
+  "origin": "Original SVG geometry; Arabic lettering shaped with CoreText and exported as outlines.",
+  "directions": [
+    {
+      "id": "nur",
+      "name": "Nur",
+      "word": "نور",
+      "meaning": "Licht",
+      "arch": "Same original path and aspect ratio as src/shared/MihrabArch.tsx"
+    },
+    {
+      "id": "moon",
+      "name": "Lichtmond",
+      "motif": "Ivory crescent with a single gold four-point light"
+    },
+    {
+      "id": "light",
+      "name": "Licht & Wissen",
+      "motif": "Simplified open book with a light above"
+    }
+  ],
+  "exports": [
+    {
+      "file": "nur-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "92dba43284de1479cd09bfb92092515f26af2f6642d2c4b82aa5fb912b93d626"
+    },
+    {
+      "file": "nur-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "sha256": "5fdc7d8b9c1626a84eba9b69c7ddcd64b89408b3bd0099d6d47ac2feb2e973cb"
+    },
+    {
+      "file": "nur-icon-192.png",
+      "width": 192,
+      "height": 192,
+      "sha256": "fd0da7909348ea995ae9a8565c8f8dece7acda2e63eed6c79be560e7fdae0347"
+    },
+    {
+      "file": "moon-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "720baec657b7728b3c391dd2dedc27d72ca77c729bc3816e100ff087390e05cf"
+    },
+    {
+      "file": "moon-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "sha256": "d1984f1be9752dfe673208b6a8f2b50f86dfa62b949f703f0ae038572803d32a"
+    },
+    {
+      "file": "moon-icon-192.png",
+      "width": 192,
+      "height": 192,
+      "sha256": "b027fefbfebe088e0d3f500d86e0834c7854f7bdb9d9ee5b13325084a56d4f98"
+    },
+    {
+      "file": "light-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "sha256": "7dd6ea7dcc94bfe8e3e5494e30d25d2a1a63865427d27d4211a3a2fd7712649b"
+    },
+    {
+      "file": "light-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "sha256": "d0b1fa428c6bbbb7f7fb17ecaa8e098ddb49b2f7dc65a50fbf42db20459ceffb"
+    },
+    {
+      "file": "light-icon-192.png",
+      "width": 192,
+      "height": 192,
+      "sha256": "f5c1bd1c38ccc457f0f857bdeb74726e925502e95a5888894ce842a5561ef8c7"
+    }
+  ]
+}

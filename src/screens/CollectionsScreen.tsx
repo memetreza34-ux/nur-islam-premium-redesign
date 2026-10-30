@@ -1,3 +1,4 @@
+import { useScreenState } from '../shared/ScreenState';
 import { useMemo, useState } from 'react';
 import {
   Bookmark,
@@ -136,7 +137,7 @@ export function CollectionsScreen({
   onOpenHadith,
   onOpenCalendarDate,
 }: CollectionsScreenProps) {
-  const [filter, setFilter] = useState('Alle');
+  const [filter, setFilter] = useScreenState('collections.filter', 'Alle');
   const reduceMotion = useReducedMotion();
   const quranBookmarkGroups = useMemo(readQuranBookmarkGroups, []);
   const quranSurahFavorites = useMemo(() => readNumberSet('nur_quran_surah_favorites', [], 114), []);
@@ -188,7 +189,7 @@ export function CollectionsScreen({
           <div className="section-heading"><div><span className="overline">Quran</span><h2>Lesezeichen & Suren</h2></div></div>
           <div className="reference-collection-grid">
             <button onClick={onOpenQuran} aria-label="Quran-Sammlung öffnen">
-              <PremiumImage src="/premium-assets/high-res-objects/quran-closed-v2.webp" fallback={<QuranObject />} />
+              <PremiumImage src="/premium-assets/high-res-objects/learn-hub-book-v1.webp" fallback={<QuranObject />} />
               <span><strong>{quranBookmarkGroups.reduce((sum, group) => sum + group.bookmarks.size, 0)} Ayah-Lesezeichen</strong><small>{quranSurahFavorites.size} Lieblingssuren</small></span>
               <Bookmark size={17} />
             </button>

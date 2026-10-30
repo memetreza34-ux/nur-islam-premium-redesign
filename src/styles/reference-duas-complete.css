@@ -33,13 +33,13 @@
 .reference-dua-progress small,
 .reference-dua-progress em {
   color: var(--muted-green);
-  font-size: .5rem;
+  font-size: .75rem;
   font-style: normal;
 }
 
 .reference-dua-progress strong {
   color: var(--cream-strong);
-  font-size: .7rem;
+  font-size: .75rem;
 }
 
 .reference-dua-progress__bar {
@@ -68,12 +68,12 @@
   align-items: center;
   justify-content: space-between;
   color: var(--gold-soft);
-  font-size: .56rem;
+  font-size: .75rem;
 }
 
 .reference-dua-results-label small {
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
 }
 
 .reference-dua-grid--complete {
@@ -110,13 +110,13 @@
   display: grid;
   gap: 4px;
   color: var(--cream);
-  font-size: .61rem;
+  font-size: .75rem;
   line-height: 1.55;
 }
 
 .reference-dua-card__content blockquote small {
   color: var(--gold-soft);
-  font-size: .47rem;
+  font-size: .75rem;
   letter-spacing: .05em;
   text-transform: uppercase;
 }
@@ -137,7 +137,7 @@
   align-items: center;
   gap: 4px;
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .75rem;
 }
 
 .reference-dua-viewed.is-viewed {
@@ -195,7 +195,7 @@
 .reference-dua-modal > section small,
 .reference-dua-modal__source small {
   color: var(--gold-soft);
-  font-size: .47rem;
+  font-size: .75rem;
   letter-spacing: .05em;
   text-transform: uppercase;
 }
@@ -203,7 +203,7 @@
 .reference-dua-modal > section p {
   margin: 0;
   color: var(--cream);
-  font-size: .61rem;
+  font-size: .75rem;
   line-height: 1.62;
 }
 
@@ -229,13 +229,13 @@
 
 .reference-dua-modal__source strong {
   color: var(--cream);
-  font-size: .57rem;
+  font-size: .75rem;
   line-height: 1.45;
 }
 
 .reference-dua-modal__source em {
   color: var(--muted-green);
-  font-size: .47rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.45;
 }
@@ -258,7 +258,7 @@
   color: var(--gold-soft);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
-  font-size: .51rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 

@@ -1,0 +1,41 @@
+{
+  "scope": "Five individual prayer course rows in the learning overview use full-width landscapes behind their labels and rakah counters.",
+  "previewUrl": "http://127.0.0.1:3004/?preview=1",
+  "originalLandscapeFilesUnchanged": true,
+  "newImageGeneration": false,
+  "courseDataAndActionsUnchanged": true,
+  "style": {
+    "rowMinimumHeight": 112,
+    "nightTextPhases": ["fajr", "maghrib", "isha"],
+    "darkTextPhases": ["dhuhr", "asr"],
+    "localizedContrastGradients": true
+  },
+  "manual": {
+    "viewports": ["320x740", "390x844", "native 648x764"],
+    "allFiveImagesLoaded": true,
+    "smallPhoneRowAndImageWidth": 298,
+    "smallPhoneRowHeight": 112,
+    "smallPhoneSceneHeight": "111px with 1px row divider; final row 112px",
+    "minimumTextToCounterGap": 8,
+    "screenshots": ["learning-full-prayer-backgrounds-phone.jpg", "learning-full-prayer-backgrounds-small-phone.jpg", "learning-full-prayer-backgrounds-visible.jpg"],
+    "viewportOverrideReset": true,
+    "previewKeptOpen": true
+  },
+  "checks": {
+    "fullCheckExitCode": 0,
+    "unitTestsPassed": 1047,
+    "fullCheckLog": "/tmp/nur-full-prayer-backgrounds-final-check.log",
+    "finalBrowserExitCode": 0,
+    "finalBrowserTestsPassed": 26,
+    "finalBrowserLog": "/tmp/nur-full-prayer-backgrounds-final-e2e.log",
+    "browserScope": ["e2e/core-flows.spec.ts", "e2e/offline.spec.ts", "e2e/learning-intro-art.spec.ts"],
+    "browserPort": 4174,
+    "responsiveWidthsCovered": [320, 390, 768],
+    "initialAttempt": "25 passed; one test measured a 44px button as 43.999969px. The assertion now checks the actual layout offsetHeight, preserving the 44px minimum; all 26 passed on the final run.",
+    "gitDiffCheckExitCode": 0,
+    "combinedGzipKB": 511
+  },
+  "previousLearningOverviewEvidence": "learning-rows-verification-2026-10-14.json",
+  "serviceWorkerCacheVersion": "v94",
+  "published": false
+}

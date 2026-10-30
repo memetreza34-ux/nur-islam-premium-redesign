@@ -10,7 +10,7 @@
 }
 
 .reference-ayah-hero {
-  height: 410px;
+  height: auto;
   min-height: 0;
   aspect-ratio: auto;
   align-content: start;
@@ -18,29 +18,7 @@
   padding: 24px 22px 22px;
 }
 
-.reference-ayah-hero__art {
-  z-index: 0 !important;
-  opacity: .07 !important;
-  -webkit-mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
-  mask-image: radial-gradient(ellipse at 50% 44%, #000 0 44%, rgba(0,0,0,.55) 62%, transparent 82%);
-}
-
-.reference-ayah-hero__art > img {
-  object-position: center 45% !important;
-  filter: saturate(.62) contrast(1.04) !important;
-  transform: scale(.96);
-}
-
-.reference-ayah-hero::after {
-  content: '';
-  position: absolute;
-  z-index: 0;
-  inset: 0;
-  background:
-    radial-gradient(circle at 50% 18%, rgba(255,255,255,.32), transparent 10rem),
-    linear-gradient(180deg, rgba(255,255,255,.04), transparent 44%, rgba(91,64,27,.08));
-  pointer-events: none;
-}
+.reference-ayah-hero::after { content: none; }
 
 .reference-ayah-hero > *:not(.reference-ayah-hero__art) {
   position: relative;
@@ -60,8 +38,18 @@
   line-height: 1.42;
 }
 
+.reference-ayah-hero > .hero-pill {
+  color: #173d32;
+  border-color: rgba(23, 61, 50, .18);
+  background: rgba(23, 61, 50, .05);
+}
 .reference-ayah-hero > div {
-  margin-top: 10px;
+  margin-top: 14px;
+}
+.reference-ayah-hero > div button {
+  min-height: 48px;
+  color: #173d32;
+  font-size: .9375rem;
 }
 
 .hadith-card::after,
@@ -72,7 +60,7 @@
   width: 148px !important;
   height: 174px !important;
   opacity: .19 !important;
-  background: url('/premium-assets/high-res-objects/lantern-v3.webp') center bottom / contain no-repeat !important;
+  background: url('/premium-assets/high-res-objects/home-duas-v5.webp') center bottom / contain no-repeat !important;
   filter: drop-shadow(0 20px 19px rgba(0,0,0,.38)) saturate(.96) contrast(1.03) !important;
 }
 
@@ -137,7 +125,6 @@
   color: rgba(226,191,119,.8) !important;
 }
 
-[data-theme='light'] .reference-ayah-hero__art,
 [data-theme='light'] .verse-card--cream .verse-card__art {
   opacity: .055 !important;
 }
@@ -174,7 +161,7 @@
 
 @media (max-width: 390px) {
   .reference-ayah-hero {
-    height: 392px;
+    height: auto;
     padding: 22px 18px 20px;
   }
 
@@ -193,7 +180,7 @@
 
 @media (max-width: 350px) {
   .reference-ayah-hero {
-    height: 376px;
+    height: auto;
     gap: 8px;
   }
 

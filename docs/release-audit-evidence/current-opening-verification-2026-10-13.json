@@ -1,0 +1,39 @@
+{
+  "recordedAt": "2026-10-13",
+  "scope": "Opening background follows current local prayer/daylight phase independently of next obligatory prayer notice. Original prayer-page artwork remains unchanged.",
+  "implementation": {
+    "background": "getSplashBackdrop(currentScene)",
+    "phase": "getCurrentPrayerScene(now, PRAYER_SCHEDULE, PRAYER_SCHEDULE_META.timezone)",
+    "timetableGuard": "isSharedPrayerScheduleCurrent(now)",
+    "notice": "getNextPrayer(now)",
+    "textContrast": "Based on loaded currentScene, not the upcoming prayer"
+  },
+  "serviceWorkerCache": "v86",
+  "checks": {
+    "checkExitCode": 0,
+    "unitTestsPassed": 1047,
+    "unitFilesPassed": 59,
+    "browserExitCode": 0,
+    "browserTestsPassed": 13,
+    "browserScope": [
+      "splash-daily-content.spec.ts",
+      "offline.spec.ts"
+    ],
+    "diffCheckExitCode": 0
+  },
+  "coverage": [
+    "All five current scenes and dawn/sunrise/Asr/Maghrib/Isha boundaries",
+    "Asr background with next Maghrib, refresh into Maghrib with next Isha",
+    "Isha background with tomorrow Fajr notice",
+    "Fallback/stale times suppress guessed artwork",
+    "Small phone, phone, tablet, desktop, landscape, unavailable times, missing images, reduced motion, offline"
+  ],
+  "visualEvidence": {
+    "screenshot": "current-opening-scene-2026-10-13.jpg",
+    "observedAsset": "prayer-asr-v3.webp",
+    "observedScene": "asr",
+    "observedNotice": "Nächstes Gebet Maghrib 18:23",
+    "temporaryPreviewClosed": true
+  },
+  "published": false
+}

@@ -92,7 +92,7 @@
 
 .reference-profile-modal--about .reference-about__hero .overline {
   color: #e6bc61;
-  font-size: .52rem;
+  font-size: .8125rem;
   letter-spacing: .17em;
 }
 
@@ -107,8 +107,8 @@
 
 .reference-profile-modal--about .reference-about__hero p {
   max-width: 335px;
-  color: rgba(239, 233, 214, .72);
-  font-size: .62rem;
+  color: var(--muted-green);
+  font-size: .9375rem;
   line-height: 1.55;
   text-wrap: pretty;
 }
@@ -144,7 +144,7 @@
 
 .reference-about__promise small {
   color: #d9ad4d;
-  font-size: .46rem;
+  font-size: .8125rem;
   font-weight: 800;
   letter-spacing: .13em;
   text-transform: uppercase;
@@ -158,8 +158,8 @@
 }
 
 .reference-profile-modal--about .reference-about__promise p {
-  color: rgba(183, 203, 193, .68);
-  font-size: .5rem;
+  color: var(--muted-green);
+  font-size: .9375rem;
   line-height: 1.45;
 }
 
@@ -181,12 +181,12 @@
 
 .reference-about__section-heading strong {
   color: #f5e7c8;
-  font-size: .61rem;
+  font-size: .8125rem;
 }
 
 .reference-about__section-heading small {
   color: rgba(183, 203, 193, .58);
-  font-size: .44rem;
+  font-size: .8125rem;
 }
 
 .reference-about__area-grid {
@@ -206,7 +206,7 @@
   border-radius: 10px;
   color: rgba(241, 233, 211, .84);
   background: rgba(0, 22, 18, .3);
-  font-size: .48rem;
+  font-size: .8125rem;
   font-weight: 650;
 }
 
@@ -232,7 +232,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: .51rem;
+  font-size: .8125rem;
   font-weight: 750;
 }
 
@@ -242,7 +242,7 @@
 
 .reference-about__footer small {
   color: rgba(177, 199, 188, .56);
-  font-size: .46rem;
+  font-size: .8125rem;
   white-space: nowrap;
 }
 

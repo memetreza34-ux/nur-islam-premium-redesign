@@ -24,6 +24,7 @@ export type PrayerTimesSnapshot = {
   dateKey: string;
   fetchedAt: string;
   source: 'live' | 'cache' | 'fallback';
+  validationVersion?: 1;
 };
 
 export type PrayerTimesCalendarDay = {
@@ -86,8 +87,10 @@ type AlAdhanDay = {
     gregorian?: { date?: string };
   };
   meta?: {
+    latitude?: number;
+    longitude?: number;
     timezone?: string;
-    method?: { name?: string };
+    method?: { id?: number; name?: string };
     school?: string;
   };
 };
@@ -105,6 +108,7 @@ type AlAdhanCalendarResponse = {
 };
 
 export function getPrayerDateKey(date = new Date(), timezone?: string) {
+  if (!Number.isFinite(date.getTime())) return '';
   if (timezone) return getPrayerClock(date, timezone)?.dateKey ?? '';
   const year = date.getFullYear();
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -118,12 +122,28 @@ export function getPrayerMonthKey(date = new Date()) {
 
 function normalizeTime(value: unknown) {
   if (typeof value !== 'string') throw new Error('Gebetszeit fehlt in der API-Antwort.');
-  const match = value.trim().match(/^(\d{1,2}):(\d{2})/);
+  const match = value.trim().match(/^(\d{1,2}):(\d{2})(?:\s+\([A-Za-z0-9+:/_-]+\))?$/);
   if (!match) throw new Error(`Ungültige Gebetszeit: ${value}`);
   const hours = Number(match[1]);
   const minutes = Number(match[2]);
   if (hours > 23 || minutes > 59) throw new Error(`Ungültige Gebetszeit: ${value}`);
   return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+}
+
+function isPrayerDateKey(value: string) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(value)) return false;
+  const date = new Date(`${value}T12:00:00Z`);
+  return Number.isFinite(date.getTime()) && date.toISOString().slice(0, 10) === value;
+}
+
+function apiDayKey(data: AlAdhanDay) {
+  const value = data.date?.gregorian?.date;
+  if (typeof value !== 'string' || !/^\d{2}-\d{2}-\d{4}$/.test(value)) {
+    throw new Error('Bestätigtes Datum fehlt in der Gebetszeiten-Antwort.');
+  }
+  const dateKey = value.split('-').reverse().join('-');
+  if (!isPrayerDateKey(dateKey)) throw new Error('Ungültiges Datum in der Gebetszeiten-Antwort.');
+  return dateKey;
 }
 
 function methodLabel(preferences: PrayerTimesPreferences) {
@@ -202,11 +222,12 @@ export function savePrayerPreferences(preferences: PrayerTimesPreferences) {
 
 export function loadCachedPrayerTimes(date = new Date(), location = loadPrayerLocation(), preferences = loadPrayerPreferences()) {
   const cached = readJson<PrayerTimesSnapshot>(SNAPSHOT_STORAGE_KEY);
-  if (!cached || !cached.meta?.timezone || !['live', 'cache'].includes(cached.source)
+  if (!cached || cached.validationVersion !== 1 || !cached.meta?.timezone || !['live', 'cache'].includes(cached.source)
     || !isPrayerLocation(cached.location) || !isPreferences(cached.preferences)
     || cached.location.latitude !== location.latitude || cached.location.longitude !== location.longitude
     || cached.preferences.method !== preferences.method || cached.preferences.school !== preferences.school
     || cached.dateKey !== getPrayerDateKey(date, cached.meta.timezone)
+    || cached.meta.dateKey !== cached.dateKey
     || !Array.isArray(cached.schedule) || cached.schedule.length !== FALLBACK_PRAYER_SCHEDULE.length
     || !FALLBACK_PRAYER_SCHEDULE.every((template, index) => cached.schedule[index]?.id === template.id && Number.isFinite(prayerTimeToMinutes(cached.schedule[index]?.time ?? '')))) return null;
   // The times are today's and came from AlAdhan, but nothing was requested just
@@ -238,11 +259,8 @@ export function getInitialPrayerTimesSnapshot(date = new Date()): PrayerTimesSna
   return loadCachedPrayerTimes(date) ?? createFallbackSnapshot(loadPrayerLocation(), loadPrayerPreferences(), date);
 }
 
-/**
- * Prayer times only change by seconds within a city, so the request does not
- * need the device's exact position. Two decimals is roughly a kilometre: enough
- * for a correct schedule, not enough to point at a home address.
- */
+// Reduce coordinate precision sent to the provider; this is not an accuracy or
+// anonymity guarantee. Longitude grid spacing also depends on latitude.
 function coarseCoordinate(value: number) {
   return Math.round(value * 100) / 100;
 }
@@ -263,18 +281,24 @@ function scheduleFromTimings(timings: Record<string, string> | undefined) {
 }
 
 function metaFromApi(data: AlAdhanDay, location: PrayerLocation, preferences: PrayerTimesPreferences): PrayerScheduleMeta {
+  if (data.meta?.latitude !== coarseCoordinate(location.latitude) || data.meta?.longitude !== coarseCoordinate(location.longitude)
+    || data.meta?.method?.id !== preferences.method || data.meta?.school?.toUpperCase() !== (preferences.school === 1 ? 'HANAFI' : 'STANDARD')) {
+    throw new Error('Standort oder Berechnungsmethode der Gebetszeiten-Antwort stimmt nicht mit der Abfrage überein.');
+  }
   const apiMethodName = data.meta?.method?.name?.trim();
   const apiSchool = data.meta?.school?.trim();
   const apiTimezone = data.meta?.timezone?.trim();
   if (!apiTimezone || !getPrayerClock(new Date(), apiTimezone)) throw new Error('Zeitzone fehlt in der Gebetszeiten-Antwort.');
   const selectedMethodLabel = methodLabel(preferences);
   const selectedSchoolLabel = selectedMethodLabel.split(' · ')[1] ?? 'Asr';
-  const liveMethodLabel = apiMethodName
-    ? `${apiMethodName}${preferences.method === 13 ? ' (experimentell)' : ''}`
+  const normalizedMethodName = apiMethodName?.replace(/\(experimental\)/gi, '(experimentell)');
+  const liveMethodLabel = normalizedMethodName
+    ? `${normalizedMethodName}${preferences.method === 13 && !/experimentell/i.test(normalizedMethodName) ? ' (experimentell)' : ''}`
     : selectedMethodLabel.split(' · ')[0];
   return {
     ...FALLBACK_PRAYER_META,
     city: location.label,
+    country: location.source === 'default' ? FALLBACK_PRAYER_META.country : '',
     locationLabel: location.label,
     sourceLabel: 'Live via AlAdhan',
     methodLabel: `${liveMethodLabel} · ${apiSchool || selectedSchoolLabel}`,
@@ -292,9 +316,10 @@ export async function fetchPrayerTimes(
   options: { cache?: boolean; dateKey?: string } = {},
 ): Promise<PrayerTimesSnapshot> {
   if (!isPrayerLocation(location) || !isPreferences(preferences)) throw new Error('Ungültiger Standort oder Berechnungsmethode.');
+  const requestedKey = options.dateKey ?? getPrayerDateKey(date ?? new Date());
+  if (!isPrayerDateKey(requestedKey)) throw new Error('Ungültiges Datum für die Gebetszeiten-Abfrage.');
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 9000);
-  const requestedKey = options.dateKey ?? getPrayerDateKey(date ?? new Date());
   const apiDate = requestedKey.split('-').reverse().join('-');
   const url = new URL(`https://api.aladhan.com/v1/timings/${apiDate}`);
   appendPrayerQuery(url, location, preferences);
@@ -305,14 +330,13 @@ export async function fetchPrayerTimes(
     const payload = await response.json() as AlAdhanResponse;
     if (payload.code !== 200 || !payload.data?.timings) throw new Error('Die Gebetszeiten-API hat keine gültigen Daten geliefert.');
 
+    if (apiDayKey(payload.data) !== requestedKey) throw new Error('Die Gebetszeiten gehören zu einem anderen Datum.');
     const schedule = scheduleFromTimings(payload.data.timings);
     const meta = metaFromApi(payload.data, location, preferences);
     const localDayKey = getPrayerDateKey(new Date(), meta.timezone);
     if (!date && !options.dateKey && requestedKey !== localDayKey) {
       return await fetchPrayerTimes(location, preferences, undefined, { ...options, dateKey: localDayKey });
     }
-    const responseDate = payload.data.date?.gregorian?.date?.split('-').reverse().join('-');
-    if (responseDate && responseDate !== requestedKey) throw new Error('Die Gebetszeiten gehören zu einem anderen Datum.');
     meta.dateKey = requestedKey;
     const snapshot: PrayerTimesSnapshot = {
       schedule,
@@ -322,6 +346,7 @@ export async function fetchPrayerTimes(
       dateKey: requestedKey,
       fetchedAt: new Date().toISOString(),
       source: 'live',
+      validationVersion: 1,
     };
     registerPrayerScheduleContext(schedule, meta);
     if (options.cache !== false) writeJson(SNAPSHOT_STORAGE_KEY, snapshot);
@@ -336,6 +361,8 @@ export async function fetchPrayerTimesMonth(
   preferences = loadPrayerPreferences(),
   date = new Date(),
 ): Promise<PrayerTimesMonth> {
+  if (!isPrayerLocation(location) || !isPreferences(preferences)) throw new Error('Ungültiger Standort oder Berechnungsmethode.');
+  if (!isPrayerDateKey(getPrayerDateKey(date))) throw new Error('Ungültiges Datum für den Monatsplan.');
   const controller = new AbortController();
   const timeout = window.setTimeout(() => controller.abort(), 12000);
   const year = date.getFullYear();
@@ -348,19 +375,26 @@ export async function fetchPrayerTimesMonth(
     const response = await fetch(url, { signal: controller.signal, headers: { Accept: 'application/json' } });
     if (!response.ok) throw new Error(`Monatsplan konnte nicht geladen werden (${response.status}).`);
     const payload = await response.json() as AlAdhanCalendarResponse;
-    if (payload.code !== 200 || !Array.isArray(payload.data) || payload.data.length < daysInMonth) {
+    if (payload.code !== 200 || !Array.isArray(payload.data) || payload.data.length !== daysInMonth) {
       throw new Error('Die Gebetszeiten-API hat keinen vollständigen Monatsplan geliefert.');
     }
 
-    const days = payload.data.slice(0, daysInMonth).map((entry, index) => ({
-      dateKey: getPrayerDateKey(new Date(year, month - 1, index + 1, 12)),
-      schedule: scheduleFromTimings(entry.timings),
-    }));
+    const meta = metaFromApi(payload.data[0], location, preferences);
+    const days = payload.data.map((entry, index) => {
+      const dateKey = apiDayKey(entry);
+      if (dateKey !== getPrayerDateKey(new Date(year, month - 1, index + 1, 12))) {
+        throw new Error('Der Monatsplan enthält Gebetszeiten für ein anderes Datum.');
+      }
+      if (metaFromApi(entry, location, preferences).timezone !== meta.timezone) {
+        throw new Error('Der Monatsplan enthält widersprüchliche Zeitzonen.');
+      }
+      return { dateKey, schedule: scheduleFromTimings(entry.timings) };
+    });
 
     return {
       monthKey: getPrayerMonthKey(date),
       days,
-      meta: metaFromApi(payload.data[0], location, preferences),
+      meta,
       location,
       preferences,
       fetchedAt: new Date().toISOString(),

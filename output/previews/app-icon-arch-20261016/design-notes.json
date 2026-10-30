@@ -1,0 +1,58 @@
+{
+  "created": "2026-10-16",
+  "scope": "Standalone app icon proposal; production app branding and name unchanged.",
+  "origin": "Original code-authored SVG, refined from logo direction A.",
+  "direction": "Architectural pointed arch, ivory and muted gold on emerald.",
+  "source": "app-icon.svg",
+  "sourceSha256": "d928b2e049c13fb13b2380da23af63680ea307fe06ebde5071758a08f35c7e8f",
+  "exports": [
+    {
+      "file": "app-icon-1024.png",
+      "width": 1024,
+      "height": 1024,
+      "hasAlpha": false,
+      "sha256": "bd8f431ddff0ddd63d079db763ccdbcc723c9fd4b2763878bba688a3cec3766f"
+    },
+    {
+      "file": "app-icon-512.png",
+      "width": 512,
+      "height": 512,
+      "hasAlpha": false,
+      "sha256": "b5969c32983a387f8c080aa6b57285354861be730da68b09aa37149686278b7c"
+    },
+    {
+      "file": "app-icon-192.png",
+      "width": 192,
+      "height": 192,
+      "hasAlpha": false,
+      "sha256": "b32f38219c2b7c5197c16f2f305b3e8ffc2fe0edd6007b204caf55a93d8bd60a"
+    }
+  ],
+  "corners": "Opaque square source; rounding is shown with CSS in preview.",
+  "names": {
+    "status": "Brainstorming only. Preliminary web searches; no availability conclusion.",
+    "candidates": [
+      "Sajira",
+      "Nurmira",
+      "Deenvia"
+    ],
+    "rejected": [
+      {
+        "name": "Nurelio",
+        "reason": "Existing app",
+        "source": "https://play.google.com/store/apps/details?id=com.nurelio.app"
+      },
+      {
+        "name": "Deenora",
+        "reason": "Existing software platform",
+        "source": "https://tech.deenora.app/"
+      },
+      {
+        "name": "Nuvaya",
+        "reason": "Existing brand",
+        "source": "https://nuvaya.mx/"
+      }
+    ],
+    "searchBackend": "Built-in web search; agent-reach Exa unavailable because mcporter is not installed."
+  }
+}

@@ -11,6 +11,7 @@ body,
 .app-background {
   width: 100%;
   height: 100svh;
+  height: 100dvh;
   min-height: 0;
   overflow: hidden;
 }
@@ -19,6 +20,7 @@ body,
   display: flex;
   width: min(100%, 470px);
   height: 100svh;
+  height: 100dvh;
   min-height: 0;
   flex-direction: column;
   overflow: hidden;
@@ -31,7 +33,7 @@ body,
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: contain;
-  padding-bottom: calc(126px + env(safe-area-inset-bottom));
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
   scrollbar-width: none;
   -webkit-overflow-scrolling: touch;
 }
@@ -40,32 +42,11 @@ body,
   display: none;
 }
 
-/* The install prompt is a fixed bar above the navigation, so the padding that
-   clears the navigation is not enough while it is on screen: scrolled all the
-   way down, the last card still sat underneath it and could not be reached. */
+/* Reserve scroll space for the fixed install prompt above the navigation. */
 body:has(.reference-install-prompt) .app-shell:not(.app-shell--onboarding) .screen-transition-frame {
-  padding-bottom: calc(212px + env(safe-area-inset-bottom));
+  padding-bottom: calc(112px + env(safe-area-inset-bottom));
 }
 
 .app-shell--detail .screen-transition-frame {
   padding-bottom: max(30px, env(safe-area-inset-bottom));
 }
-
-.app-shell:not(.app-shell--onboarding) .bottom-nav {
-  position: absolute;
-  right: 14px;
-  bottom: max(12px, env(safe-area-inset-bottom));
-  left: 14px;
-  width: auto;
-  transform: none;
-}
-
-@media (min-width: 760px) {
-  .app-shell:not(.app-shell--onboarding) {
-    width: min(100%, 520px);
-  }
-
-  .app-shell:not(.app-shell--onboarding) .bottom-nav {
-    right: 24px;
-    left: 24px;
-  }}

@@ -14,15 +14,23 @@ for (const width of [320, 390, 768]) {
   test(`Wudu lesson separates image, instructions and pronunciation at ${width}px`, async ({ page }, testInfo) => {
     await page.setViewportSize({ width, height: 900 });
     await openWudu(page);
+    await page.screenshot({ path: testInfo.outputPath(`wudu-opening-${width}.png`) });
     await page.getByRole('button', { name: 'Nächster Schritt', exact: true }).click();
     const card = page.getByRole('article', { name: 'Hände waschen', exact: true });
     await expect(card).toBeVisible();
+    await expect(card).toHaveCSS('background-color', 'rgb(246, 239, 223)');
+    await expect(card).toHaveCSS('color', 'rgb(23, 61, 49)');
     const art = card.getByRole('img', { name: 'Zwei Hände werden mit Wasser gewaschen.', exact: true });
     await expect.poll(() => art.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
-    await expect(card).toContainText('Arabische Bezeichnung');
-    await expect(card).toContainText('Ghasl al-Jadain');
+    await expect(card).not.toContainText('Arabische Bezeichnung');
+    await expect(card.locator('.wudu-lesson__wording')).toHaveCount(0);
     const instruction = card.getByText('Wasche beide Hände bis zu den Handgelenken dreimal gründlich.', { exact: true });
     const imageBox = (await art.boundingBox())!;
+    const titleBox = (await card.getByRole('heading', { level: 2 }).boundingBox())!;
+    expect(imageBox.y).toBeGreaterThanOrEqual(titleBox.y + titleBox.height);
+    const cardBox = (await card.boundingBox())!;
+    expect(imageBox.x + imageBox.width / 2).toBeCloseTo(cardBox.x + cardBox.width / 2, 0);
+    expect(imageBox.x + imageBox.width).toBeLessThanOrEqual(width);
     const chooserBox = (await page.locator('.wudu-lesson__overview').boundingBox())!;
     expect(chooserBox.y + chooserBox.height).toBeLessThan(imageBox.y);
     const textBox = (await instruction.boundingBox())!;
@@ -32,10 +40,26 @@ for (const width of [320, 390, 768]) {
     expect(metrics.line).toBeGreaterThanOrEqual(24);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await card.screenshot({ path: testInfo.outputPath(`wudu-lesson-${width}.png`) });
+    await page.getByText('Schritt auswählen', { exact: true }).click();
+    await page.getByRole('button', { name: 'Schritt 10: Dua nach dem Wudu', exact: true }).click();
+    const dua = page.getByRole('article', { name: 'Dua nach dem Wudu', exact: true });
+    const arabic = dua.locator('.wudu-lesson__arabic');
+    await expect(arabic).toHaveCSS('font-size', '34px');
+    await expect(arabic).toHaveCSS('color', 'rgb(23, 61, 49)');
+    const arabicBox = (await arabic.boundingBox())!;
+    const meaningBox = (await dua.locator('.wudu-lesson__instruction').boundingBox())!;
+    expect(arabicBox.y + arabicBox.height).toBeLessThan(meaningBox.y);
+    expect(arabicBox.x).toBeGreaterThanOrEqual(0);
+    expect(arabicBox.x + arabicBox.width).toBeLessThanOrEqual(width);
+    await dua.screenshot({ path: testInfo.outputPath(`wudu-dua-${width}.png`) });
+    await dua.locator('.wudu-lesson__instruction').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: testInfo.outputPath(`wudu-dua-meaning-${width}.png`) });
+
   });
 }
 
-test('all eight cartoon images load while previous and next keep one active step', async ({ page }) => {
+test('all eight cartoon images load while previous and next keep one active step', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 900 });
   await openWudu(page);
   await expect(page.getByRole('article')).toContainText('Bis-mil-laah');
   await expect(page.getByRole('button', { name: 'Vorheriger Schritt', exact: true })).toBeDisabled();
@@ -44,24 +68,31 @@ test('all eight cartoon images load while previous and next keep one active step
     const card = page.getByRole('article');
     await expect(card).toHaveCount(1);
     const art = card.getByRole('img');
-    await expect(art).toHaveAttribute('src', new RegExp(`wudu-step-${id}-v1.webp`));
+    await expect(art).toHaveAttribute('src', new RegExp(`wudu-step-${id}-v2.webp`));
     await expect.poll(() => art.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
+    const titleBox = (await card.getByRole('heading', { level: 2 }).boundingBox())!;
+    const imageBox = (await art.boundingBox())!;
+    expect(imageBox.y).toBeGreaterThan(titleBox.y + titleBox.height);
+    if (id === 'head') await card.screenshot({ path: testInfo.outputPath('wudu-head-stacked.png') });
   }
   await page.getByRole('button', { name: 'Nächster Schritt', exact: true }).click();
-  await expect(page.getByRole('article')).toContainText('Arabischer Wortlaut');
+  await expect(page.getByRole('article')).toContainText('Zum Sprechen');
   await expect(page.getByRole('article')).toContainText('Asch-hadu');
   await expect(page.getByRole('article')).toContainText('freiwillig, keine Pflicht');
+  await page.getByRole('button', { name: 'Quellen anzeigen: Quellen zum Abschlusswortlaut', exact: true }).click();
   const sources = page.getByRole('region', { name: 'Quellen zum Abschlusswortlaut', exact: true });
   await expect(sources.getByRole('link', { name: 'Sahih Muslim 234b', exact: true })).toHaveAttribute('href', 'https://sunnah.com/muslim:234b');
   await expect(sources).toContainText('unterschiedlich bewertet');
-  await expect(sources).toContainText('Du kannst beim dort belegten Glaubensbekenntnis bleiben.');
+  await expect(sources).toContainText('ist hier ausgelassen');
+  await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
+  await expect(page.locator('.wudu-lesson__arabic')).not.toContainText('اجْعَلْنِي');
   expect(await page.evaluate(() => localStorage.getItem('nur_guide_wudu_complete'))).toBeNull();
-  await page.getByRole('button', { name: 'Abschließen', exact: true }).click();
-  expect(await page.evaluate(() => localStorage.getItem('nur_guide_wudu_complete'))).toBe('1');
+  await page.getByRole('button', { name: 'Von vorn', exact: true }).click();
+  expect(await page.evaluate(() => localStorage.getItem('nur_guide_wudu_complete'))).toBeNull();
 });
 
 test('step overview selection survives reload and missing image keeps the text usable', async ({ page }) => {
-  await page.route('**/wudu-step-mouth-v1.webp*', route => route.abort());
+  await page.route('**/wudu-step-mouth-v2.webp*', route => route.abort());
   await openWudu(page);
   await page.getByText('Schritt auswählen', { exact: true }).click();
   await page.getByRole('button', { name: 'Schritt 3: Mund ausspülen', exact: true }).click();
@@ -69,7 +100,7 @@ test('step overview selection survives reload and missing image keeps the text u
   const card = page.getByRole('article', { name: 'Mund ausspülen', exact: true });
   await expect(card.locator('img')).toBeHidden();
   await expect(card).toContainText('Spüle den Mund dreimal mit Wasser aus.');
-  await expect(card).toContainText('Al-mad-ma-da');
+  await expect(card.locator('.wudu-lesson__wording')).toHaveCount(0);
   await page.reload();
   await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
   await page.getByRole('button', { name: 'Wudu Schritt für Schritt', exact: true }).click();

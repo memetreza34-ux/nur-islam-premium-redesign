@@ -1,4 +1,5 @@
 import {
+  ISLAMIC_EVENTS,
   WEEKLY_FAST_EVENT,
   WHITE_DAYS,
   WHITE_DAYS_EVENT,
@@ -13,6 +14,9 @@ export type CalendarEvent = {
   meaning?: string;
   practice?: string;
   fasting: boolean;
+  fastingKind?: 'ramadan' | 'voluntary';
+  source?: string;
+  sourceUrl?: string;
   sourceNote: string;
   named: boolean;
 };
@@ -47,17 +51,22 @@ export function getCalendarEvent(date: Date): CalendarEvent | null {
   const hijriDay = getHijriDay(date);
   const hijriMonth = getHijriMonth(date);
   const fastingForbidden = isFastingForbidden(hijriMonth, hijriDay);
-  const [named] = findIslamicEvents(hijriMonth, hijriDay);
+  const namedEvents = findIslamicEvents(hijriMonth, hijriDay);
+  const named = namedEvents.find(event => event.id === 'laylat-al-qadr') ?? namedEvents[0]
+    ?? (hijriMonth === 9 ? ISLAMIC_EVENTS.find(event => event.id === 'ramadan') : undefined);
 
   if (named) {
     return {
-      title: named.title,
+      title: named.id === 'ramadan' && hijriDay !== 1 ? 'Ramadan' : named.title,
       subtitle: `${hijriDay}. Tag des ${hijriMonth}. islamischen Monats`,
       meaning: named.meaning,
       practice: named.practice,
       fasting: named.fasting && !fastingForbidden,
+      fastingKind: hijriMonth === 9 ? 'ramadan' : 'voluntary',
+      source: named.source,
+      sourceUrl: named.sourceUrl,
       sourceNote: HIJRI_SOURCE_NOTE,
-      named: true,
+      named: namedEvents.length > 0,
     };
   }
 
@@ -68,6 +77,9 @@ export function getCalendarEvent(date: Date): CalendarEvent | null {
       meaning: WHITE_DAYS_EVENT.meaning,
       practice: WHITE_DAYS_EVENT.practice,
       fasting: !fastingForbidden,
+      fastingKind: 'voluntary',
+      source: 'Jami at-Tirmidhi 761 · hasan nach Darussalam',
+      sourceUrl: 'https://sunnah.com/tirmidhi:761',
       sourceNote: HIJRI_SOURCE_NOTE,
       named: false,
     };
@@ -81,6 +93,9 @@ export function getCalendarEvent(date: Date): CalendarEvent | null {
       meaning: WEEKLY_FAST_EVENT.meaning,
       practice: WEEKLY_FAST_EVENT.practice,
       fasting: !fastingForbidden,
+      fastingKind: 'voluntary',
+      source: 'Jami at-Tirmidhi 747 · hasan nach Darussalam',
+      sourceUrl: 'https://sunnah.com/tirmidhi:747',
       sourceNote: 'Dieser Hinweis basiert ausschließlich auf dem lokalen Wochentag.',
       named: false,
     };

@@ -1,3 +1,4 @@
+import { useId } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 
 export type CompassVisualState = 'ready' | 'turn' | 'near' | 'aligned' | 'uncertain' | 'error';
@@ -8,6 +9,8 @@ type Props = {
   rotation: number;
   state: CompassVisualState;
   pulse: boolean;
+  label?: string;
+  showDirection?: boolean;
 };
 
 const rosePoints = Array.from({ length: 16 }, (_, i) => {
@@ -16,7 +19,8 @@ const rosePoints = Array.from({ length: 16 }, (_, i) => {
   return `${180 + Math.cos(angle) * radius},${180 + Math.sin(angle) * radius}`;
 }).join(' ');
 
-export function QiblaCompass({ direction, heading, rotation, state, pulse }: Props) {
+export function QiblaCompass({ direction, heading, rotation, state, pulse, label, showDirection = true }: Props) {
+  const dialId = useId();
   const reduced = useReducedMotion();
   const transition = reduced ? 'none' : 'transform 320ms cubic-bezier(.22,.61,.36,1)';
   const turn = (degrees: number) => ({ transform: `rotate(${degrees}deg)`, transformOrigin: '180px 180px', transition });
@@ -24,17 +28,19 @@ export function QiblaCompass({ direction, heading, rotation, state, pulse }: Pro
 
   return (
     <motion.div className="qibla-dial" data-state={state} data-aligned={state === 'aligned'} data-pulse={pulse && !reduced && state === 'aligned'} initial={{ opacity: 0, scale: reduced ? 1 : .98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: reduced ? 0 : .36 }}>
-      <svg viewBox="0 0 360 360" role="img" aria-label={`Qibla-Kompass: ${Math.round(direction)} Grad ab Norden${heading === null ? ', nordorientierte Ansicht ohne Gerätesensor' : ', relativ zur Geräteausrichtung'}`}>
+      <svg viewBox="0 0 360 360" role="img" aria-label={label ?? `Qibla-Kompass: ${Math.round(direction)} Grad ab Norden${heading === null ? ', nordorientierte Ansicht ohne Gerätesensor' : ', relativ zur Geräteausrichtung'}`}>
         <defs>
-          <radialGradient id="qibla-paper" cx=".45" cy=".35" r=".8">
-            <stop offset="0" stopColor="#fff9ec" />
-            <stop offset="1" stopColor="#edddba" />
+          <linearGradient id={`${dialId}-rim`} x1="0" y1="0" x2="1" y2="1">
+            <stop stopColor="#d9c597" /><stop offset=".28" stopColor="#67786d" /><stop offset=".6" stopColor="#233f35" /><stop offset="1" stopColor="#b39e70" />
+          </linearGradient>
+          <radialGradient id={`${dialId}-face`} cx=".35" cy=".18" r=".85">
+            <stop stopColor="#244f42" /><stop offset=".6" stopColor="#102f29" /><stop offset="1" stopColor="#061f1b" />
           </radialGradient>
         </defs>
         <circle className="qibla-dial__case" cx="180" cy="180" r="171" />
-        <circle className="qibla-dial__bezel" cx="180" cy="180" r="164" />
+        <circle className="qibla-dial__bezel" cx="180" cy="180" r="164" fill={`url(#${dialId}-rim)`} />
         <circle className="qibla-dial__rim" cx="180" cy="180" r="157" />
-        <circle className="qibla-dial__face" cx="180" cy="180" r="150" />
+        <circle className="qibla-dial__face" cx="180" cy="180" r="150" fill={`url(#${dialId}-face)`} />
         <circle className="qibla-dial__status-ring" cx="180" cy="180" r="168" />
         <circle className="qibla-dial__chapter-ring" cx="180" cy="180" r="126" />
         <polygon className="qibla-dial__rose" points={rosePoints} />
@@ -48,14 +54,14 @@ export function QiblaCompass({ direction, heading, rotation, state, pulse }: Pro
             </g>
           ))}
         </g>
-        <g className="qibla-dial__qibla-pointer" style={turn(rotation)} aria-hidden="true">
+        {showDirection && <g className="qibla-dial__qibla-pointer" style={turn(rotation)} aria-hidden="true">
           <path className="qibla-dial__qibla-shaft" d="M180 76 190 167 180 178 170 167Z" />
           <path className="qibla-dial__qibla-highlight" d="M180 78V174L170 167Z" />
           <g className="qibla-dial__kaaba-mark" transform="translate(180 68)">
             <circle className="qibla-dial__target-halo" r="13" />
             <path className="qibla-dial__target-kaaba" d="M-6-5 0-8 6-5V5L0 8-6 5ZM-6-5 0-2 6-5M0-2V8" />
           </g>
-        </g>
+        </g>}
         <circle className="qibla-dial__pin-outer" cx="180" cy="180" r="10" />
         <circle className="qibla-dial__pin-inner" cx="180" cy="180" r="4" />
         <path className="qibla-dial__device-marker" d="M180 29 173 14H187Z" />

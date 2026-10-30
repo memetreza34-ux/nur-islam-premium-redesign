@@ -25,14 +25,6 @@ export type MadhhabEntry = {
   sources: readonly MadhhabSource[];
 };
 
-const commonOverview: MadhhabSource = {
-  title: 'Warum es vier sunnitische Rechtsschulen gibt',
-  publisher: 'Dar al-Ifta Ägypten',
-  href: 'https://www.dar-alifta.org/en/article/details/209/why-there-are-four-different-legal-schools-of-jurisprudence-can%E2%80%99t-we-agree-on-o',
-  language: 'Englisch',
-  homepage: 'https://www.dar-alifta.org/en',
-};
-
 export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
   {
     id: 'hanafi',
@@ -41,7 +33,7 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     arabic: 'الْمَذْهَبُ الْحَنَفِيُّ',
     pronunciation: 'al-Madhhab al-Hanafī',
     eponym: 'Abu Hanifa an-Nuʿman',
-    dates: '80–150 AH · 699–767 n. Chr.',
+    dates: 'Gestorben 150 AH · 767 n. Chr.',
     origin: 'Kufa, Irak',
     short: 'Eine in Kufa gewachsene Rechtstradition, die Textbelege mit systematischer juristischer Herleitung verbindet.',
     history: [
@@ -57,8 +49,6 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     practice: 'Typische Unterschiede zu anderen Schulen betreffen einzelne Regeln etwa zu Wudu, Gebet oder Verträgen. Sie beruhen auf unterschiedlichen juristischen Wegen – nicht auf einem anderen Quran oder einem anderen Propheten.',
     sources: [
       { title: 'Hanefî Mezhebi', publisher: 'TDV İslâm Ansiklopedisi', href: 'https://islamansiklopedisi.org.tr/hanefi-mezhebi', language: 'Türkisch', homepage: 'https://islamansiklopedisi.org.tr/' },
-      { title: 'The Hanafi School', publisher: 'Oxford Bibliographies', href: 'https://academic.oup.com/reference/62361/reference-article-abstract/554576007', language: 'Englisch' },
-      commonOverview,
     ],
   },
   {
@@ -68,7 +58,7 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     arabic: 'الْمَذْهَبُ الْمَالِكِيُّ',
     pronunciation: 'al-Madhhab al-Mālikī',
     eponym: 'Malik ibn Anas',
-    dates: '93–179 AH · ca. 711–795 n. Chr.',
+    dates: 'Gestorben 179 AH · 795 n. Chr.',
     origin: 'Medina',
     short: 'Eine in Medina gewachsene Rechtstradition, die neben den Textquellen der überlieferten Praxis Medinas besonderes Gewicht gibt.',
     history: [
@@ -84,8 +74,6 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     practice: 'Die Schule ist keine Sammlung von Gewohnheiten Medinas ohne Belege. Sie besitzt eine ausgearbeitete Methodik, in der Text, Überlieferung und juristische Herleitung zusammenspielen.',
     sources: [
       { title: 'Mâlikî Mezhebi', publisher: 'TDV İslâm Ansiklopedisi', href: 'https://islamansiklopedisi.org.tr/maliki-mezhebi', language: 'Türkisch', homepage: 'https://islamansiklopedisi.org.tr/' },
-      { title: 'Die malikitische Schule in Marokko', publisher: 'Marokkanisches Ministerium für Stiftungen und Islamische Angelegenheiten', href: 'https://habous.gov.ma/2012-05-28-10-40-28/45-%D8%A7%D9%84%D9%85%D8%B0%D9%87%D8%A8-%D8%A7%D9%84%D9%85%D8%A7%D9%84%D9%83%D9%8A-%D9%81%D9%8A-%D8%A7%D9%84%D9%85%D8%BA%D8%B1%D8%A8.html', language: 'Arabisch' },
-      commonOverview,
     ],
   },
   {
@@ -95,7 +83,7 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     arabic: 'الْمَذْهَبُ الشَّافِعِيُّ',
     pronunciation: 'al-Madhhab asch-Schāfiʿī',
     eponym: 'Muhammad ibn Idris asch-Schafiʿi',
-    dates: '150–204 AH · 767–820 n. Chr.',
+    dates: 'Gestorben 204 AH · 820 n. Chr.',
     origin: 'Makka, Bagdad und Ägypten',
     short: 'Eine Rechtstradition, die das Verhältnis von Quran, Sunnah, Konsens und Analogieschluss besonders systematisch ordnete.',
     history: [
@@ -111,8 +99,6 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     practice: 'Die schafiitische Methodik versucht, einzelne Urteile eng an eine nachvollziehbare Beweiskette zu binden. Das verhindert dennoch nicht, dass innerhalb der Schule mehrere überlieferte Auffassungen vorkommen.',
     sources: [
       { title: 'Şâfiî Mezhebi', publisher: 'TDV İslâm Ansiklopedisi', href: 'https://islamansiklopedisi.org.tr/safii-mezhebi', language: 'Türkisch', homepage: 'https://islamansiklopedisi.org.tr/' },
-      { title: 'Die vier Rechtsschulen im Lehrplan', publisher: 'Al-Azhar Observatory', href: 'https://azhar.eg/observer-en/Al-Azhar-Observatory-for-Combating-Extremismd/ArtMID/3472/ArticleID/100212/Irrational-Religiosity-A-Manifestation-of-False-Piety', language: 'Englisch' },
-      commonOverview,
     ],
   },
   {
@@ -122,7 +108,7 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
     arabic: 'الْمَذْهَبُ الْحَنْبَلِيُّ',
     pronunciation: 'al-Madhhab al-Hanbalī',
     eponym: 'Ahmad ibn Hanbal',
-    dates: '164–241 AH · 780–855 n. Chr.',
+    dates: 'Gestorben 241 AH · 855 n. Chr.',
     origin: 'Bagdad',
     short: 'Eine in Bagdad gewachsene Rechtstradition mit besonders starker Ausrichtung auf Textbelege und überlieferte Aussagen der frühen Generationen.',
     history: [
@@ -134,12 +120,10 @@ export const MADHHAB_CATALOGUE: readonly MadhhabEntry[] = [
       { title: 'Vorsicht bei Spekulation', text: 'Wo ein naher Textbeleg oder eine frühe Überlieferung vorliegt, wird freie juristische Spekulation bewusst zurückgestellt.' },
       { title: 'Qiyas bleibt Teil der Schule', text: 'Analogieschluss wird nicht pauschal ausgeschlossen. Er kommt innerhalb der später entwickelten Schulmethodik dort zum Einsatz, wo kein näherer Beleg entscheidet.' },
     ],
-    spread: 'Historisch zahlenmäßig kleiner als die anderen drei Schulen und besonders auf der Arabischen Halbinsel verbreitet. Aus der Verbreitung lässt sich keine Rangfolge ableiten.',
+    spread: 'Historisch in mehreren Regionen vertreten, besonders auf der Arabischen Halbinsel. Aus der Verbreitung lässt sich keine Rangfolge ableiten.',
     practice: '„Stärker textorientiert“ bedeutet nicht, dass die anderen Schulen Quran und Sunnah weniger achten. Der Unterschied liegt darin, wie Belege gewichtet, verbunden und auf neue Fälle angewandt werden.',
     sources: [
       { title: 'Hanbelî Mezhebi', publisher: 'TDV İslâm Ansiklopedisi', href: 'https://islamansiklopedisi.org.tr/hanbeli-mezhebi', language: 'Türkisch', homepage: 'https://islamansiklopedisi.org.tr/' },
-      { title: 'Shariah Law: Schulen und juristische Herleitung', publisher: 'Dar al-Ifta Ägypten', href: 'https://www.dar-alifta.org/en/article/details/111/shariah-law', language: 'Englisch' },
-      commonOverview,
     ],
   },
 ] as const;

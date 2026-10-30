@@ -1,0 +1,37 @@
+{
+  "createdAt": "2026-10-14",
+  "mode": "Built-in image_gen.imagegen; exact model not exposed",
+  "scope": "Two new prayer companion illustrations. Four existing new Home motifs reused unchanged.",
+  "assets": [
+    {
+      "key": "mosque",
+      "prompt": "Use case: stylized app illustration. Create ONE original isolated icon for a premium Islamic app, truly transparent background. Attached Kaaba and prayer rug are our existing app illustrations and serve as the style family reference ONLY; don't include their objects. Match their clean rounded 3D forms, gentle light, crisp silhouette and readable small-icon composition, but keep the result understated and suitable for adults. Balanced natural proportions, restrained ornament, smooth matte surfaces, no photographic textures, no gritty material, no exaggerated chubby toy geometry, no googly eyes or faces, no neon colors, no glow, no sparkles, no busy AI ornament, no dramatic cinematic light. Deep teal green, warm ivory, muted olive and small warm gold accents. Three-quarter frontal elevated view, whole object centered at 78 percent of a square canvas, generous transparent margins, no ground plane or detached cast shadow, no text or fake calligraphy. Subject: a compact dignified stylized mosque, one simple muted teal dome, two slender ivory minarets, warm ivory walls and one clearly shaped arched doorway. Quiet balanced architectural proportions. Only a few large clean window openings; no intricate filigree. No real named building, no landscape or people.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-7ae54390-d075-4abc-b514-f93e39e16c6d.png",
+      "inputRoles": [
+        "Own Home Qibla illustration: clean 3D style reference",
+        "Own Home prayer rug illustration: palette and finish reference"
+      ],
+      "workspaceOriginal": "output/imagegen/prayer-companion-rows-20261014/mosque.png",
+      "runtimePath": "public/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp"
+    },
+    {
+      "key": "fasting",
+      "prompt": "Use case: stylized app illustration. Create ONE original isolated icon for a premium Islamic app, truly transparent background. Attached Kaaba and prayer rug are our existing app illustrations and serve as the style family reference ONLY; don't include their objects. Match their clean rounded 3D forms, gentle light, crisp silhouette and readable small-icon composition, but keep the result understated and suitable for adults. Balanced natural proportions, restrained ornament, smooth matte surfaces, no photographic textures, no gritty material, no exaggerated chubby toy geometry, no googly eyes or faces, no neon colors, no glow, no sparkles, no busy AI ornament, no dramatic cinematic light. Deep teal green, warm ivory, muted olive and small warm gold accents. Three-quarter frontal elevated view, whole object centered at 78 percent of a square canvas, generous transparent margins, no ground plane or detached cast shadow, no text or fake calligraphy. Subject: a small shallow warm ivory bowl containing THREE simple chestnut-brown dates, beside one clear simple tumbler of pale blue water. Respectful understated fasting/iftar feature symbol, a compact balanced still life. Simplified smooth forms and broad shading. Dates have only one subtle indentation each, no hyperreal wrinkled texture. Glass should remain readable at small size, simple teal-edged silhouette. No food scene, no excess items, no crescent background, no text.",
+      "inputImages": [
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/qibla.png",
+        "/Users/arman/Islam App/nur-islam-premium-redesign/output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ],
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-f2694821-2626-4fb9-9e22-203d7c4b22f7.png",
+      "inputRoles": [
+        "Own Home Qibla illustration: clean 3D style reference",
+        "Own Home prayer rug illustration: palette and finish reference"
+      ],
+      "workspaceOriginal": "output/imagegen/prayer-companion-rows-20261014/fasting.png",
+      "runtimePath": "public/premium-assets/high-res-objects/prayer-companion-fasting-v1.webp"
+    }
+  ]
+}

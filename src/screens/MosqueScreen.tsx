@@ -1,3 +1,6 @@
+import { SourceInfo } from '../shared/SourceInfo';
+import { DialogHeader } from '../shared/DialogHeader';
+import { useScreenState } from '../shared/ScreenState';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Accessibility,
@@ -17,7 +20,6 @@ import {
   RefreshCw,
   Route,
   Search,
-  ShieldCheck,
   WifiOff,
   X,
 } from 'lucide-react';
@@ -78,7 +80,7 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
   const [origin, setOrigin] = useState<MosqueSearchOrigin>(initialOrigin);
   const [snapshot, setSnapshot] = useState<MosqueSearchSnapshot | null>(() => readMosqueCache(initialOrigin));
   const [status, setStatus] = useState<FinderStatus>(() => snapshot?.source ?? 'loading');
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useScreenState('mosques.query', '');
   const [selected, setSelected] = useState<MosqueResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [toast, setToast] = useState<string | null>(null);
@@ -165,8 +167,9 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
     ].filter(Boolean).join(' ').toLocaleLowerCase('de-DE').includes(normalized));
   }, [query, snapshot]);
 
+  const resultCount = snapshot?.results.length ?? 0;
   const statusLabel = status === 'live'
-    ? 'Live von OpenStreetMap'
+    ? `${resultCount} ${resultCount === 1 ? 'Ergebnis' : 'Ergebnisse'}`
     : status === 'cache'
       ? 'Gespeicherte Live-Daten'
       : status === 'fallback'
@@ -177,8 +180,6 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
             ? 'Datenquelle nicht erreichbar'
             : 'Moscheen werden gesucht …';
 
-  const resultCount = snapshot?.results.length ?? 0;
-
   return (
     <motion.main className="screen reference-mosque-screen reference-mosque-screen--live" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header">
@@ -188,18 +189,16 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       </header>
 
       <section className="reference-mosque-hero">
-        <PremiumImage src="/premium-assets/high-res-objects/mosque-finder-arch-v1.webp" fallback={<MosqueScene />} priority />
+        <PremiumImage src="/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp" fallback={<MosqueScene />} priority />
         <div><span className="hero-pill">{origin.label}</span><h2>Finde einen Ort<br />für dein Gebet.</h2><p>Echte Moschee- und Gebetsraumdaten im Umkreis von zehn Kilometern.</p><button className="reference-mosque-location-button" onClick={() => void useDeviceLocation()} disabled={status === 'loading'}><LocateFixed size={16} /> Eigenen Standort verwenden</button></div>
-        <span className="reference-mosque-hero__caption">Illustrative Ansicht</span>
       </section>
 
       <section className={`reference-mosque-live-status is-${status}`} aria-live="polite">
         <span className="reference-mosque-live-status__dot" />
-        <span><strong>{statusLabel}</strong><small>{snapshot ? `${resultCount} Ergebnisse · Aktualisiert ${formatUpdatedAt(snapshot.fetchedAt)}` : status === 'loading' ? 'Einträge werden geladen' : status === 'error' ? 'Bitte später erneut versuchen' : 'Noch keine Einträge geladen'}</small></span>
-        {snapshot?.source === 'live' ? <CircleCheck size={18} /> : status === 'loading' ? <LoaderCircle size={18} className="is-spinning" /> : null}
+        <span><strong>{statusLabel}</strong>{status !== 'live' ? <small>{snapshot ? `${resultCount} Ergebnisse` : status === 'loading' ? 'Einträge werden geladen' : status === 'error' ? 'Bitte später erneut versuchen' : 'Noch keine Einträge geladen'}</small> : null}</span>
+        <SourceInfo title="Moscheedaten & Datenschutz"><p>Das Moschee-Bild ist eine Illustration.</p><p><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noreferrer">OpenStreetMap-Mitwirkende</a></p>{snapshot ? <p>Aktualisiert {formatUpdatedAt(snapshot.fetchedAt)}</p> : null}<p>Bei freiwilliger Standortfreigabe werden deine Koordinaten ausschließlich für die Radiusabfrage an einen öffentlichen Overpass-Dienst gesendet. Namen, Adressen und Zusatzangaben können in OpenStreetMap fehlen oder veraltet sein.</p></SourceInfo>
       </section>
 
-      <section className="reference-prototype-note reference-mosque-source-note"><ShieldCheck size={16} /><span><strong>Daten: OpenStreetMap-Mitwirkende</strong><small>Bei freiwilliger Standortfreigabe werden deine Koordinaten ausschließlich für die Radiusabfrage an einen öffentlichen Overpass-Dienst gesendet. Namen, Adressen und Zusatzangaben können in OpenStreetMap fehlen oder veraltet sein.</small></span></section>
 
       <label className="reference-input-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Name, Adresse oder Konfession suchen …" /><Filter size={17} /></label>
 
@@ -227,12 +226,8 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
       <AnimatePresence>
         {selected ? (
           <motion.div className="reference-modal-backdrop" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) closeDialog(); }} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition}>
-            <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition}>
-              <header>
-                <span className="reference-mosque-detail-modal__pin"><MapPin size={22} /></span>
-                <div><span className="overline">{formatDistance(selected.distanceKm)} entfernt</span><h2>{selected.name}</h2><p>{selected.address}</p></div>
-                <button className="reference-mosque-detail-modal__close" onClick={closeDialog} aria-label="Schließen"><X size={20} /></button>
-              </header>
+            <motion.section {...mosqueDialog.props} className="reference-mosque-detail-modal dialog-panel" initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition}>
+              <DialogHeader title={selected.name} subtitle={`${formatDistance(selected.distanceKm)} entfernt`} onClose={closeDialog} /><p>{selected.address}</p>
 
               <div className="reference-mosque-detail-facts">
                 <span><Globe2 size={17} /><strong>{formatDenomination(selected.denomination)}</strong></span>

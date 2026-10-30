@@ -1,0 +1,59 @@
+{
+  "generatedAt": "2026-10-15",
+  "toolMode": "built-in image_gen",
+  "model": "not exposed",
+  "processing": "cwebp -q 92 -m 6; native 1536x1024 dimensions preserved",
+  "records": [
+    {
+      "id": "fajr",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our original master oasis illustration for an adult Islamic app. Create ONE matching 3:2 full-bleed landscape variant. Preserve exactly the master camera, lake shape, dune outlines, horizon height, palm positions and size, low vegetation, calm open sky and the same softly sculpted matte 3D illustration style. This is the same place at another time, not a new scene. Quiet central sky must remain clear for app copy. Never add buildings, people, patterns, text, UI, ornaments or watermark. Retain the two extreme-edge palms and low horizon; no extra trees. Change ONLY light, sky palette, celestial objects and corresponding shadows/reflections. FAJR, before sunrise: deep muted indigo-blue sky fading into a thin soft rose-peach dawn band near horizon; pale cool teal water, sand in dusky lavender and muted blue, palms dark teal. A few tiny restrained stars near the upper outer edges, no sun and no large moon, no daytime golden light. Central sky dark enough for ivory typography. Peaceful dawn, NOT orange sunset.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-35d79fc0-ce44-4785-9cb7-e33732f9af99.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-series-20261015/fajr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-fajr-v1.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-series-20261015/asr.png"
+      ]
+    },
+    {
+      "id": "dhuhr",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our original master oasis illustration for an adult Islamic app. Create ONE matching 3:2 full-bleed landscape variant. Preserve exactly the master camera, lake shape, dune outlines, horizon height, palm positions and size, low vegetation, calm open sky and the same softly sculpted matte 3D illustration style. This is the same place at another time, not a new scene. Quiet central sky must remain clear for app copy. Never add buildings, people, patterns, text, UI, ornaments or watermark. Retain the two extreme-edge palms and low horizon; no extra trees. Change ONLY light, sky palette, celestial objects and corresponding shadows/reflections. DHUHR, clear midday: pale natural azure sky, bright neutral soft daylight, warm ivory sand, muted natural teal foliage and lake, short gentle shadows. Small sun at the extreme upper-right x93%, y15%, outside the text area. No orange sunset or stars or moon. Keep the center clear and consistent with the same landscape.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-321ee65c-390c-4cee-8f16-78da8f151bac.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-series-20261015/dhuhr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-dhuhr-v1.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-series-20261015/asr.png"
+      ]
+    },
+    {
+      "id": "asr",
+      "prompt": "Use case: stylized-concept. Create one ORIGINAL landscape background, a new master scene for a coordinated five-prayer illustration series in the mature Nur Islam app. Image 1 is our existing landscape trial, for oasis subject only: improve its overbusy composition. Image 2 is our app's prayer-rug illustration, STYLE reference: carefully controlled matte 3D forms, simple clean shapes, broad soft shading and restrained adult elegance. Create a calm, softly sculpted oasis, genuinely illustrated rather than photographic, not childish or game-like. Wide 3:2 full-bleed canvas. CRITICAL MULTI-CROP COMPOSITION: it must work both as a broad shallow card and a large arched hero with clock text. Keep x=12%-84%, y=12%-70% as quiet clear sky with no objects. Place the horizon at 73% height. Soft sand dunes and a small turquoise lake only in bottom 27%. Distant simple hills stay low. At most two graceful date palms, only in the extreme outer 8% at each edge; their fronds must not project into the central text area. No foreground vegetation in front of copy. Clean sweeping forms, minimal foliage clumps, no dense hundreds-of-trees microdetail, no sand ripple texture, no photorealistic leaves. ASR late afternoon: restrained warm honey light, predominantly muted blue sky, small sun near far right x=93% y=35%, sun clearly above horizon, soft long shadows over ochre sand, deep teal-green foliage. Harmonious natural color, not garish or excessively orange. Camera level, wide quiet landscape, not isometric, no floating island. No people, architecture, books, mats, letters, religious script, UI, borders, text, watermark. One final full-bleed landscape image only.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-7ef83686-b71c-4420-a007-2ebf1a65490f.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-series-20261015/asr.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-asr-v1.webp",
+      "inputImages": [
+        "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-badcd364-5671-4c52-b3d1-3385e69b5939.png",
+        "output/imagegen/cartoon-home-icons-20261014/prayer.png"
+      ]
+    },
+    {
+      "id": "maghrib",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our original master oasis illustration for an adult Islamic app. Create ONE matching 3:2 full-bleed landscape variant. Preserve exactly the master camera, lake shape, dune outlines, horizon height, palm positions and size, low vegetation, calm open sky and the same softly sculpted matte 3D illustration style. This is the same place at another time, not a new scene. Quiet central sky must remain clear for app copy. Never add buildings, people, patterns, text, UI, ornaments or watermark. Retain the two extreme-edge palms and low horizon; no extra trees. Change ONLY light, sky palette, celestial objects and corresponding shadows/reflections. MAGHRIB, just after sunset: sun completely below horizon and absent. Muted warm apricot/coral band at horizon blending into dusty mauve and deep muted blue above; sand soft dusky terracotta and subdued gold, foliage deep teal, lake reflects mauve. Central sky dark enough for ivory type. Refined restrained sunset, no neon red, no fireworks, no giant glowing disk.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-4141753a-eca4-4c82-b3f4-24bfe625cb2c.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-series-20261015/maghrib.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-maghrib-v1.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-series-20261015/asr.png"
+      ]
+    },
+    {
+      "id": "isha",
+      "prompt": "Use case: lighting-weather. Image 1 is the EDIT TARGET, our original master oasis illustration for an adult Islamic app. Create ONE matching 3:2 full-bleed landscape variant. Preserve exactly the master camera, lake shape, dune outlines, horizon height, palm positions and size, low vegetation, calm open sky and the same softly sculpted matte 3D illustration style. This is the same place at another time, not a new scene. Quiet central sky must remain clear for app copy. Never add buildings, people, patterns, text, UI, ornaments or watermark. Retain the two extreme-edge palms and low horizon; no extra trees. Change ONLY light, sky palette, celestial objects and corresponding shadows/reflections. ISHA, full night: deep rich indigo/navy sky, sparse small natural stars, a very small elegant crescent at the far upper-right x94% y17% outside central text area. Cool blue-teal lake, subdued midnight-blue dunes with delicate moonlit edges, dark teal palms. Keep the landscape legible without bright orange or sunset glow, not pitch black. Central sky dark enough for ivory typography.",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-8e2208d5-1e3e-48d2-aa02-f8149a7ce112.png",
+      "workspaceOriginal": "output/imagegen/prayer-oasis-series-20261015/isha.png",
+      "runtimeFile": "public/premium-assets/high-res-objects/prayer-oasis-isha-v1.webp",
+      "inputImages": [
+        "output/imagegen/prayer-oasis-series-20261015/asr.png"
+      ]
+    }
+  ]
+}

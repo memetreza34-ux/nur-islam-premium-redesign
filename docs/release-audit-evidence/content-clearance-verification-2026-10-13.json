@@ -1,0 +1,157 @@
+{
+  "createdAt": "2026-10-13",
+  "baselineCommit": "6c380b978c00b15a3bf4920fa78bd04c887d7332",
+  "branch": "design/claude-design-system",
+  "workingTree": true,
+  "status": "source-corrections-documented-and-accepted-by-operator",
+  "humanReligiousApproval": false,
+  "externalReviewerRequested": false,
+  "published": false,
+  "inventory": {
+    "positions": 1171,
+    "withoutDirectSingleReference": 24,
+    "writtenPositions": 959
+  },
+  "sourceScope": "Published sources compared; no independent isnad, complete tafsir, pronunciation, rights or physical device certification.",
+  "fileHashes": {
+    "e2e/learning-course-structure.spec.ts": "bc89c1355b98e8aee6ce57ed037d9ba18e0a70500834ee6d06f32940795fa827",
+    "e2e/learning-seerah-source-integrity.spec.ts": "f363988d1e9c9ca888896e0975214b5c11a2981557e4b6f92a19a123250bf771",
+    "e2e/offline.spec.ts": "e792672f30f5e7e31a8c98aa9b95b71edd25dfb79c2780cf24d5ea0977ae7c93",
+    "e2e/quran-source-integrity.spec.ts": "f7bcb29603ef965443375785c78d6d26b63b8a51e7a7f17022b59e17be9b34b7",
+    "e2e/splash-daily-content.spec.ts": "002e0e6cf6dfc6d15339d46a6cbd4aebcdd7681d777ba0d14fe3827c663162c2",
+    "e2e/worship-source-integrity.spec.ts": "cf1187e55ab976eb75e48c98d26832b5ebbb8bf9f6d3cb106e1e545bacb2a0cb",
+    "e2e/wudu-intro-art.spec.ts": "2b71f37f32d1196a180a9eb11bfd1b65280051a1fa12b37c29049125a6024d0a",
+    "e2e/wudu-lesson.spec.ts": "107a62c8588f16b3b1dfcc27c46aec969877c09d8e133b909e1c5de91d181d9c",
+    "public/sw.js": "2e1f08d4f24ec4f8272ce4c81dda0fbb699cfb5b1a34fba9e5a51aa5b0e99159",
+    "scripts/check-bundle-budget.mjs": "5214eb6ca3923b5ac9e130e01b6c2436399cb8d869513a9a77ff138607791083",
+    "scripts/check-fasting-reminders.mjs": "cceb682ca5987d5e3d98f6a2a03c9d5b6f3006ccddefbbd375465038849fad9c",
+    "scripts/check-reference-assets.mjs": "0172640015d5a72c011ecb100f84b06420d6d3d7b0cbe89d734de887d449ad09",
+    "scripts/check-worship-guides.mjs": "2c3c14f20752097f0f4d67c775889500b764ea24b5bdb9ab831017254b538513",
+    "scripts/write-content-review.mjs": "7d679c9fdb21da10e4dc695a038a1923ef42d3e610dfae81034e9a5e1dd5da4b",
+    "src/app/pwa.ts": "2837971685971d8d7878b90b3caaab1da45dd80a78de82962cca3c4a28d925aa",
+    "src/data/islamicEventsData.ts": "f700a058c0f3684fa845e0f4c333cb31f71ae52d519f40fef2d9e416ffea0a12",
+    "src/data/islamicLearningContent.ts": "fc534d5e7709a6f2890b2ecb4be91a209d43b536fe5729035f7134275946fe2a",
+    "src/data/madhhabCatalogueData.test.ts": "57dc69218b5715c4c1aad173c467a58fe9a0808b73dc380527f3812dda651b57",
+    "src/data/madhhabCatalogueData.ts": "d46585c1e4a20e3ca63c63624c83923749d1bef9632a220f0cf3d0e48ce7eebd",
+    "src/data/madhhabData.ts": "e56d6f3567fe0547155bec4f78760adadff3dbc37abcdc01a5c10fe49796d052",
+    "src/data/pilgrimageData.ts": "6b891a4b6734dcfbe6352bac9f2bd8361f3cd0462feb4bdc44f7e24668b11111",
+    "src/data/practiceData.ts": "cf7a2e7b3ac2299ec448b42852a465322351ea8e39c222b4ee4476101c9516a3",
+    "src/data/prophetCourseData.ts": "c0e673af148c8f1db682d1ebff771f5768e46fb352f3648e0e43a027c89b1a96",
+    "src/data/prophetCourseOverviews.ts": "f3a7060b15ed990d1b875d4dc43f278a505e99bf61bab50e1926367d4a12cec7",
+    "src/data/prophetData.ts": "3d7b81757650562744cdacaf3f93db75332f8126b0a7a9f8eaa01ad92ae3b971",
+    "src/data/worshipGuideData.ts": "22412128d9b1529289eb5d72aacc4a0c74abdfcdb6018d88a251ed575bb66e6f",
+    "src/data/wuduPresentation.ts": "a90dcae9e1cfa3ad4ec3e7bd89a0a517917ce13b3c53157f923586cca2738856",
+    "src/screens/CalendarScreen.tsx": "d64ae7a2037766cbf4783dbb13e32ddca63d2762d180249314d75c81bed65386",
+    "src/screens/LegacyFeatureScreens.tsx": "c3e75b3a35deebd427ab3fecb969daf78d18d90ffa429bede7d24a9278dcbd60",
+    "src/screens/PrayerLearningScreen.tsx": "4de8b946821f7cdb89722991fc769c42a85f831ab7767dc70c640e75438ca5b9",
+    "src/screens/QuranReaderScreen.tsx": "ac52901778c2290737f8d71c70d2de33b580a5413c96f501578d62bc71313178",
+    "src/screens/ReferenceReadingScreens.tsx": "f3464ea5bb4ae0dfd7b95ce6bb2f1ad7c7b968e9817207876d109ba44e42c230",
+    "src/services/calendarEntries.test.ts": "027ba8f1814e7f1b98b6a81bf333153f85db88ef0ba31ed6a4789a0094608e13",
+    "src/services/calendarViewModel.test.ts": "9b32b609b6d9c6cc14964733710a142ea9eec1445b6d06c3542d40d17a195dc1",
+    "src/services/calendarViewModel.ts": "bf197cb2d0b3a7f58221a939c468211fffe4f5a49600ee9c12d5bc1d409aa700",
+    "src/services/fastingReminderService.ts": "a17fbb90d81538d71a3e438318f6403f23711e8c231e67871328b2e3341ad940",
+    "src/services/prayerReminderService.test.ts": "88720217ea667cb1f5933ce1ac4ade55c5e5a3b704c85f2f20c944b7b6853ca0",
+    "src/services/prayerReminderService.ts": "e862753318533b8916be6e1640c0a6aa09ecc3f1a73026041ed0f7ec01fc5392",
+    "src/services/quranService.test.ts": "c1b1fcae46ab0cd94fd7212877571da291b3b16e5b2eda456f02016d1d6de72d",
+    "src/services/quranService.ts": "481ae6869d284fd4d6b3cc77d6473bab2a180ed86ee8022034014baf22253f47",
+    "src/shared/WuduLesson.tsx": "fa8d2e18c3f9c808c22dbf2737190c58ee12350cabeae5b2bcf9b69c67764c6b"
+  },
+  "validation": {
+    "check": {
+      "exitCode": 0,
+      "testFiles": 59,
+      "tests": 1041,
+      "log": "content-clearance-check-2026-10-13.log"
+    },
+    "browser": {
+      "status": "passed_with_targeted_test_setup_recheck",
+      "log": "content-clearance-e2e-2026-10-13.log",
+      "scheduledTests": 287,
+      "knownSkips": 2,
+      "earlierRuns": [
+        {
+          "result": "invalid",
+          "reason": "Concurrent builds changed chunk filenames during preview."
+        },
+        {
+          "result": "invalid",
+          "reason": "An old preview server used mismatching base paths after the production check."
+        },
+        {
+          "result": "interrupted",
+          "reason": "User interrupted the turn before the fixed fresh run completed."
+        },
+        {
+          "result": "failed",
+          "passed": 273,
+          "failed": 10,
+          "skipped": 2,
+          "reason": "Four stale Quran notice assertions, three stale Wudu introduction assertions and three duplicated Wudu source-card selectors; fixed before the final run."
+        }
+      ],
+      "uniquePassedTests": 285,
+      "skippedTests": 2,
+      "fullSuite": {
+        "exitCode": 1,
+        "passed": 283,
+        "failed": 2,
+        "skipped": 2,
+        "durationMinutes": 6.4,
+        "failure": "Both failures occurred in clock.pauseAt before page.goto: Cannot fast-forward to the past."
+      },
+      "targetedRecheck": {
+        "exitCode": 0,
+        "scope": "All nine tests in e2e/splash-daily-content.spec.ts",
+        "passed": 9,
+        "durationSeconds": 10.2,
+        "log": "content-clearance-splash-recheck-2026-10-13.log",
+        "repair": "Install the simulated clock one minute before the pause target; no application code changed after the full suite.",
+        "documentation": "https://playwright.dev/docs/clock#consistent-time-and-timers"
+      },
+      "allPreviousFailuresResolved": true
+    },
+    "bundle": {
+      "jsGzipKB": 389,
+      "cssGzipKB": 123,
+      "totalGzipKB": 512,
+      "entryGzipKB": 93,
+      "entryBudgetKB": 95,
+      "largestRawJsKB": 323
+    },
+    "legalReleaseGuard": {
+      "exitCode": 1,
+      "reason": "Operator address/contact placeholders remain; content review is not public-release clearance.",
+      "log": "content-clearance-legal-2026-10-13.log"
+    },
+    "sourceGuard": {
+      "command": "npm run guides:check",
+      "includedInFinalCheck": true,
+      "guides": 11,
+      "stepsWithRequiredSourceAndHttpsLink": 91,
+      "note": "Checks source presence, not religious truth."
+    },
+    "visualInspection": [
+      "content-clearance-screenshots/seerah-hijra-sources-320.png",
+      "content-clearance-screenshots/seerah-revelation-reading-320.png",
+      "content-clearance-screenshots/wudu-lesson-320.png",
+      "content-clearance-screenshots/sahw-source-320.png"
+    ]
+  },
+  "remainingReleaseFacts": [
+    "Operator street/city/contact placeholders",
+    "Concrete media and edition rights not settled by content review",
+    "Default cloud project INACTIVE in 2026-10-12 release audit",
+    "Physical device acceptance not documented"
+  ],
+  "completedAt": "2026-10-13",
+  "externalReviewerRequired": false,
+  "operatorContentDecision": {
+    "status": "accepted_for_release",
+    "date": "2026-10-13",
+    "basis": "Direkte Anweisung von Arman in diesem Chat; externen religiösen App-Prüfer als Pflicht entfernen.",
+    "scope": "Dokumentierter Quellen- und Korrekturstand mit den unveränderten fileHashes.",
+    "document": "../CONTENT-RELEASE-DECISION-2026-10-13.md",
+    "scholarlyCertification": false,
+    "publicDeploymentApprovedByThisRecord": false
+  }
+}

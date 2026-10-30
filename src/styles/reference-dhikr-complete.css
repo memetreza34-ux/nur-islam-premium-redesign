@@ -20,6 +20,11 @@
   line-height: 1.75;
 }
 
+.reference-dhikr-screen--complete .reference-dhikr-copy small {
+  display: block;
+  margin-top: 8px;
+}
+
 .reference-dhikr-step-tabs {
   display: flex;
   gap: 8px;
@@ -57,7 +62,7 @@
   border: 1px solid rgba(214, 175, 55, .2);
   border-radius: 9px;
   color: var(--gold-soft);
-  font-size: .48rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button strong,
@@ -68,12 +73,12 @@
 }
 
 .reference-dhikr-step-tabs button strong {
-  font-size: .56rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button small {
   color: var(--muted-green);
-  font-size: .45rem;
+  font-size: .75rem;
 }
 
 .reference-dhikr-step-tabs button.is-active {
@@ -113,14 +118,24 @@
 .reference-dhikr-source em {
   margin: 0;
   color: var(--muted-green);
-  font-size: .49rem;
+  font-size: .75rem;
   font-style: normal;
   line-height: 1.55;
 }
 
 .reference-dhikr-source strong {
   color: var(--cream-strong);
-  font-size: .63rem;
+  font-size: .75rem;
+}
+
+.reference-dhikr-source a {
+  color: var(--gold-text);
+  text-underline-offset: .2em;
+}
+
+.reference-dhikr-source a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
 }
 
 .reference-dhikr-source em {
@@ -142,7 +157,7 @@
   color: var(--muted-green);
   background: rgba(255, 255, 255, .025);
   cursor: pointer;
-  font-size: .52rem;
+  font-size: .75rem;
   font-weight: 700;
 }
 
