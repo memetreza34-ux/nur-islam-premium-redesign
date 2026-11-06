@@ -1,10 +1,11 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useScreenState } from '../shared/ScreenState';
 import { useMemo, useState } from 'react';
 import {
   Bookmark,
   BookOpen,
   CalendarDays,
-  ChevronLeft,
   ChevronRight,
   RotateCcw,
   Sparkles,
@@ -164,8 +165,8 @@ export function CollectionsScreen({
 
   return (
     <motion.main className="screen reference-collections-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-notes-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Gespeichert</span><h1>Meine Sammlung</h1></div>
         <button
           className="icon-button"
@@ -176,7 +177,7 @@ export function CollectionsScreen({
         >
           <RotateCcw size={20} />
         </button>
-      </header>
+      </ScreenBanner>
 
       <div className="reference-filter-tabs reference-filter-tabs--wide">
         {['Alle', 'Quran', 'Duas', 'Namen', 'Impulse', 'Termine'].map((item) => (

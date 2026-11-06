@@ -38,6 +38,12 @@ for (const width of [320, 390, 768]) {
     await expect(lesson.getByRole('heading', { name: 'Worum es in diesem Kapitel geht' })).toBeVisible();
     await expect(lesson.getByRole('heading', { name: 'So ist der Glaubenskurs aufgebaut' })).toBeVisible();
     await expect(lesson.getByRole('heading', { name: 'So lernst du verantwortungsvoll' })).toBeVisible();
+    const details = lesson.locator('.learning-course-v2__details');
+    await expect(details).not.toHaveAttribute('open');
+    await details.locator('summary').click();
+    await expect(details.getByText('Tawhid verstehen', { exact: true })).toBeVisible();
+    await details.locator('summary').click();
+    await expect(details.getByText('Tawhid verstehen', { exact: true })).toBeHidden();
 
     const paragraph = lesson.getByText(/Aqidah bezeichnet die Glaubensgrundlage/);
     const type = await paragraph.evaluate(element => ({
@@ -60,6 +66,17 @@ for (const width of [320, 390, 768]) {
     }
 
     await page.locator('.learning-course-v2__lesson > header').screenshot({ path: testInfo.outputPath(`learning-intro-${width}.png`) });
+    const back = page.getByRole('button', { name: 'Zurück zu Lernen', exact: true });
+    const frame = page.locator('.screen-transition-frame');
+    await frame.evaluate(element => { element.scrollTop = 0; });
+    const start = (await back.boundingBox())!;
+    const frameBox = (await frame.boundingBox())!;
+    expect(start.x).toBeLessThan(frameBox.x + frameBox.width / 2);
+    await frame.evaluate(element => { element.scrollTop = element.scrollHeight; });
+    await expect(back).toBeInViewport();
+    expect((await back.boundingBox())!.y).toBeCloseTo(start.y, 0);
+    await back.click();
+    await expect(page.getByRole('heading', { name: 'Lernen', exact: true })).toBeVisible();
   });
 }
 

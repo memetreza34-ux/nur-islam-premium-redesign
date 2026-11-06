@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "recordedAt": "2026-10-14",
+  "recordedAt": "2026-11-02",
   "generator": {
     "provider": "OpenAI",
     "surface": "Codex built-in image generation",
@@ -1698,19 +1698,151 @@
       ],
       "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
       "prompt": "Use case: stylized-concept. Create ONE new original panoramic 3:1 landscape image for the compact MORE / profile and settings page header of the Nur Islam app, matching the attached banner references as a coherent 3D illustration series. Same sculpted rounded forms, rich emerald enamel, warm ivory stone, walnut wood, restrained antique gold, soft warm sunlight, clean premium animated-film rendering. NEW composition: a serene personal corner in an Islamic courtyard. At far LEFT on an ivory ledge: an elegant CLOSED brass compass case bearing only a simple geometric rosette (no needle or direction), a small emerald personal notebook with completely unlettered cover, and loosely arranged green prayer beads with a small golden tassel. At far RIGHT a softly glowing brass lantern in a graceful ivory arched niche beside a little olive foliage. Central 45 percent must remain a calm deep emerald wall for separate white app title. Subjects clear and simple enough for a 360x120 display; keep key subjects inside middle vertical band for cropping. Full opaque rectangle, ideally 1536x512 or any true3:1. No text, letters, Arabic, pseudo-script, numbers, labels, icons, UI, logos, watermark, people, faces, clocks, visible compass bearings or floating gears. Decorative symbolic setting, not a real named place. Do not paste existing isolated objects over the supplied scene; render one cohesive original environment."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-faith-v1.webp",
+      "sha256": "1be4b8b16679dc547e6b93c20f449876b5989e9b46fb85647da4cc6bb621a42c",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich faith; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-d5d025a3-29bc-4ff8-972d-ff2213e32c3f.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Faith foundations: a peaceful ivory courtyard arch with a carved geometric window at far LEFT and a view of a small emerald domed rooftop and olive foliage at far RIGHT. The empty architecture and garden are the subject; do not personify or depict God. Crisp tranquil morning light and warm stone."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-pillars-v1.webp",
+      "sha256": "e0fd6db7a8f6c304951487d847ce554cbe69f1d2a4ff43bd46cfe4588b178a96",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich pillars; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-32714a50-011c-4176-a5a5-6406e6903490.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. The five pillars: a balanced miniature architectural colonnade, exactly five smooth ivory columns with restrained emerald and brass capitals, three along the LEFT wing and two along the RIGHT wing, opening onto a quiet emerald courtyard wall in the center. A folded emerald prayer rug rests low at far LEFT. No numbered markers or text."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-terms-v1.webp",
+      "sha256": "79f91be99e50160c78b59fdebe622255b294bf78d90a082298efa5bf49bee526",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich terms; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-f504e7e4-9264-4f3b-ad02-ed42886fafdc.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Understanding important words: an inviting scholarly alcove, at far LEFT a small stack of unlettered emerald and ivory books with a brass inkwell and reed pen, at far RIGHT a softly carved ivory bookshelf with just a few closed books and a blank rolled parchment. Blank pages and unlettered spines, no ink marks. Original distinct composition."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-practice-v1.webp",
+      "sha256": "b9b4db29dd1186f7a688fa47a08d1f9fde2e1484e5d685a9e04a191e5c4b190e",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich practice; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-92f70fa2-050c-4eb3-815a-0ce0d02a4118.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Purity and everyday practice: an elegant turquoise-green ceramic water ewer pouring a little clear water into a matching shallow basin on a low ivory ledge at far LEFT; neatly folded clean ivory towels and a small brass bowl at far RIGHT. Arched emerald tiled washroom alcove, softly sunlit, dry clean surrounding stone, no people or body parts."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-character-v1.webp",
+      "sha256": "32cf0b6a6dbeffb016382800a447156afac4c10b9a5b4acc88b80b74079c3709",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich character; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ae8c54b0-9012-4f27-b78a-75e70077271b.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Character and mercy: a gracefully tended young olive tree in a rounded emerald ceramic planter at far LEFT, delicate olive leaves and a small watering vessel; a warm brass lantern in an ivory niche at far RIGHT. A quiet garden reading alcove with caring, patient atmosphere. No hearts, emoji, faces, characters or written symbols."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-community-v1.webp",
+      "sha256": "f13e9c2f6b3bb5795e9e6c68d05538c0b0f3e564d73a60230c2177b514b6ff2d",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich community; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-0313ed03-77c0-4808-b098-1404c0943474.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Community and responsibility: a welcoming courtyard hospitality corner. At far LEFT a low round walnut table with three small ivory teacups and a brass plate of dates; at far RIGHT an inviting emerald cushion and an ivory doorway with trailing greenery. Warm, dignified shared hospitality, no people or hands."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/course-banner-prophet-v1.webp",
+      "sha256": "007e3cb6ac6d58b5365d7333efed695e49a39c7e3c765348ff46c0db1cd38538",
+      "dimensions": "1080x360",
+      "use": "Nur Islam, dekorativer Bildrahmen für den Lernbereich prophet; symbolische Umgebung ohne historischen Orts- oder Darstellungsanspruch",
+      "generatedAt": "2026-10-30",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-e5e39453-98c0-448f-abde-0bc884a416b7.png",
+      "inputImages": [],
+      "processing": "Built-in image_gen; cwebp -q 84 -m 6 -resize 1080 360; no compositing or retouching",
+      "prompt": "Use case: stylized-concept. Create one finished panoramic 3:1 landscape image, ideally 1536x512, for a compact mobile Islamic learning course header. Cohesive premium sculpted 3D illustration: rounded tactile shapes, deep emerald enamel, warm ivory limestone, walnut, restrained antique brass, soft honey daylight, serene Islamic courtyard architecture. Full opaque rectangle. Elegant ivory arched architectural framing and subtle geometric carving at the OUTER edges, large recognizable subjects concentrated in the outer LEFT and RIGHT thirds; central 45 percent is a visually quiet deep emerald recessed wall reserved for a separate readable white title. Keep important subjects within the middle vertical band so wide cropping is safe. Rich but uncluttered, refined animated-film rendering, not photography or flat vector. No lettering, numbers, Arabic, pseudo-script, logos, watermark, interface, people, faces, spiritual beings or religious figures. Decorative imagined environment, not a historical reconstruction. Prophetic biography and history: a respectful symbolic study alcove. At far LEFT a closed unlettered emerald history book beside two plain parchment scrolls; at far RIGHT a narrow ivory arched opening reveals a quiet distant desert path, palms and warm sandstone hills. No figure, no claim that any depicted object or location belonged to a historical person, no named holy site. Warm dawn light."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/screen-banner-qibla-v1.webp",
+      "sha256": "7629ebc24c08f318877ace050b0853ecd67f9f039ba223ef6feaf36356e8a065",
+      "dimensions": "1080x360",
+      "use": "Dekoratives Kopf-Banner: qibla; symbolische Szene, keine tatsächliche Orts- oder Richtungsangabe",
+      "generatedAt": "2026-11-02",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-7215fbc9-ea4d-4919-8aa4-3d7058188c48.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -m 6 -resize 1080 360; opaque banner",
+      "prompt": "Use case: stylized-concept. Asset: wide 3:1 decorative header banner for the Nur Islam app, part of a cohesive series. Refined realistic 3D architectural still life, emerald green, warm ivory carved stone arches, walnut and restrained antique brass. Gentle warm light, quiet respectful atmosphere, crisp natural materials. Outer left and right edges contain relevant objects, the central 45 percent is an uninterrupted dark emerald wall with no focal object, for a readable white UI title added later. One coherent panoramic scene, no collage. No people, faces, lettering, numbers, Arabic calligraphy, logos, labels, watermark or UI. No depiction of religious figures or claim of any actual historical location. Render 3:1 horizontal composition. Theme: An ivory arcade opening to a distant softly lit courtyard. An elegant small antique brass compass with a blank unlettered dial and a simple miniature black cuboid with a plain gold band sit on a low walnut stand at the far right, leafy olive branches on the far left. Symbolic navigation and prayer direction; no map, no compass numbers, no sacred text."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/screen-banner-dhikr-v1.webp",
+      "sha256": "3817a9efc9a7755731f7cd7c3919cd24dfbad972116230e352082821a18969de",
+      "dimensions": "1080x360",
+      "use": "Dekoratives Kopf-Banner: dhikr; symbolische Szene, keine tatsächliche Orts- oder Richtungsangabe",
+      "generatedAt": "2026-11-02",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-723ec32f-f8e9-44d8-94f3-7ece90b9ac91.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -m 6 -resize 1080 360; opaque banner",
+      "prompt": "Use case: stylized-concept. Asset: wide 3:1 decorative header banner for the Nur Islam app, part of a cohesive series. Refined realistic 3D architectural still life, emerald green, warm ivory carved stone arches, walnut and restrained antique brass. Gentle warm light, quiet respectful atmosphere, crisp natural materials. Outer left and right edges contain relevant objects, the central 45 percent is an uninterrupted dark emerald wall with no focal object, for a readable white UI title added later. One coherent panoramic scene, no collage. No people, faces, lettering, numbers, Arabic calligraphy, logos, labels, watermark or UI. No depiction of religious figures or claim of any actual historical location. Render 3:1 horizontal composition. Theme: A polished walnut side table in an ivory arched alcove. A beautiful strand of olive green prayer beads with an antique gold tassel is arranged at the far right, soft lantern light and a small carved screen at far left. The green beads must be recognizable as the focus; no book, no writing."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/screen-banner-duas-v1.webp",
+      "sha256": "c40225934b7d1fca4b53e422ac243b6a0be4310eebe5a8c264eece291d39d90e",
+      "dimensions": "1080x360",
+      "use": "Dekoratives Kopf-Banner: duas; symbolische Szene, keine tatsächliche Orts- oder Richtungsangabe",
+      "generatedAt": "2026-11-02",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-115ac743-da7f-4a19-aa5f-5faa4df0bc65.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -m 6 -resize 1080 360; opaque banner",
+      "prompt": "Use case: stylized-concept. Asset: wide 3:1 decorative header banner for the Nur Islam app, part of a cohesive series. Refined realistic 3D architectural still life, emerald green, warm ivory carved stone arches, walnut and restrained antique brass. Gentle warm light, quiet respectful atmosphere, crisp natural materials. Outer left and right edges contain relevant objects, the central 45 percent is an uninterrupted dark emerald wall with no focal object, for a readable white UI title added later. One coherent panoramic scene, no collage. No people, faces, lettering, numbers, Arabic calligraphy, logos, labels, watermark or UI. No depiction of religious figures or claim of any actual historical location. Render 3:1 horizontal composition. Theme: A quiet green and ivory prayer alcove. At far right a closed emerald bound prayer book with an entirely blank cover beside a small softly glowing brass lantern, at far left a folded ivory prayer rug and olive foliage. Intimate calm reflection, no text or symbols on the book."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/screen-banner-calendar-v1.webp",
+      "sha256": "94c567c2efb95bcdcd7163f6d2c5c7e06a45a541a7d43eccaebcae90040c7ca2",
+      "dimensions": "1080x360",
+      "use": "Dekoratives Kopf-Banner: calendar; symbolische Szene, keine tatsächliche Orts- oder Richtungsangabe",
+      "generatedAt": "2026-11-02",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-ab7e8374-7627-4451-aea9-7c39560a8209.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -m 6 -resize 1080 360; opaque banner",
+      "prompt": "Use case: stylized-concept. Asset: wide 3:1 decorative header banner for the Nur Islam app, part of a cohesive series. Refined realistic 3D architectural still life, emerald green, warm ivory carved stone arches, walnut and restrained antique brass. Gentle warm light, quiet respectful atmosphere, crisp natural materials. Outer left and right edges contain relevant objects, the central 45 percent is an uninterrupted dark emerald wall with no focal object, for a readable white UI title added later. One coherent panoramic scene, no collage. No people, faces, lettering, numbers, Arabic calligraphy, logos, labels, watermark or UI. No depiction of religious figures or claim of any actual historical location. Render 3:1 horizontal composition. Theme: An ivory arched window at far left reveals a deep twilight blue sky with a delicate crescent moon; at far right a tasteful small blank ivory desk calendar with empty unmarked pages on a walnut stand, beside a brass lantern. Absolutely no digits, weekday labels or lettering. Elegant planning and seasons."
+    },
+    {
+      "path": "public/premium-assets/high-res-objects/screen-banner-notes-v1.webp",
+      "sha256": "ba4d427713392d7085e10b9a685aab9a8178c4e470cc523d76774cb8b3cb05dc",
+      "dimensions": "1080x360",
+      "use": "Dekoratives Kopf-Banner: notes; symbolische Szene, keine tatsächliche Orts- oder Richtungsangabe",
+      "generatedAt": "2026-11-02",
+      "sourceFile": "/Users/arman/.codex/generated_images/01a1315d-7ef8-7401-84b7-5c00cb87d494/exec-2bafc10d-4c4a-4e99-be48-37f7bb92304d.png",
+      "inputImages": [],
+      "processing": "cwebp -q 84 -m 6 -resize 1080 360; opaque banner",
+      "prompt": "Use case: stylized-concept. Asset: wide 3:1 decorative header banner for the Nur Islam app, part of a cohesive series. Refined realistic 3D architectural still life, emerald green, warm ivory carved stone arches, walnut and restrained antique brass. Gentle warm light, quiet respectful atmosphere, crisp natural materials. Outer left and right edges contain relevant objects, the central 45 percent is an uninterrupted dark emerald wall with no focal object, for a readable white UI title added later. One coherent panoramic scene, no collage. No people, faces, lettering, numbers, Arabic calligraphy, logos, labels, watermark or UI. No depiction of religious figures or claim of any actual historical location. Render 3:1 horizontal composition. Theme: An ivory study alcove with a walnut writing desk at far right, an open completely blank cream notebook, a brass pen and a tiny inkwell. At far left an ivory carved geometric lattice and olive foliage. Quiet considered personal writing, clear blank pages without marks."
     }
   ],
   "vectorAssets": [
     {
       "path": "public/premium-assets/high-res-objects/nur-logo-emblem-transparent-v1.svg",
-      "sha256": "2c6b5e317dbd647dab2413db8a8856fa7211ae582691eb10df40037d366f6f8c",
+      "sha256": "f12f16ad25e747a9718693c4eef68b60eb09930be9e61f515cf87247370dd5f3",
       "dimensions": "180x180 viewBox",
       "use": "Historisches Vektorlogo, nur zur Rückwärtskompatibilität erhalten; nicht im aktuellen App-Auftritt oder Installations-Icon verwendet.",
       "origin": "Code-native derivative of public/premium-assets/high-res-objects/nur-logo-emblem-v3.svg. The original dome, minaret and ivory doorway paths and transform are retained. The emerald background rectangle is removed and the former emerald opening paths become alpha cutouts through an SVG mask. No new generation, external image or revised mark geometry."
     },
     {
       "path": "public/premium-assets/high-res-objects/nur-logo-emblem-v3.svg",
-      "sha256": "d07ab621e1a362917eaea051a489447bcab5fb30fe55bd2a92c4c56dc600105d",
+      "sha256": "4d54701cd996ac89a21e807064734d95fdff2ec42e744bd8eb5c0ad04570f271",
       "dimensions": "180x180 viewBox",
       "use": "Historisches Vektorlogo, nur zur Rückwärtskompatibilität erhalten; nicht im aktuellen App-Auftritt oder Installations-Icon verwendet.",
       "origin": "Code-native vector reconstruction of user-selected generated concept C: pointed dome, two integrated minarets and ivory doorway in the app palette. Source concept: output/logo-concepts-20261010-v2/c-geometrisch.png, generated with built-in imagegen; raster gradients removed and curves redrawn for scalable app icons. User-approved refinement: enlarged silhouette, sturdier finial and wider simplified minaret apertures. All install PNGs are rendered from this SVG; the maskable PNG has a 20% additional inset for platform cropping."
@@ -3365,7 +3497,7 @@
   "brandExports": [
     {
       "path": "public/nur-app-icon.svg",
-      "sha256": "8141b38298f86abb3e4d90828ef4a6374de8f19a2667cb13213a7b02a427e4e1",
+      "sha256": "f28dbbab495e83e8bcc45c392d3adfb277c4143ebadff40548777f3ef6b21edb",
       "sourceFile": "output/imagegen/brand-mosque-20261016/mosque-refined.png",
       "origin": "Derivative of the generated 3D mosque icon; SVG embeds the same WebP artwork. Maskable PNG has 20% extra padding."
     },

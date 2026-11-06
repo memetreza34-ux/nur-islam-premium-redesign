@@ -1,3 +1,6 @@
+import { ReadingNavigation } from '../shared/ReadingNavigation';
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useScreenState, useScreenRef } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
 import { lazy, Suspense, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
@@ -10,8 +13,7 @@ import type { PilgrimageStation } from '../data/pilgrimageData';
 import { PROPHETS } from '../data/prophetData';
 import { PROPHET_COURSES } from '../data/prophetCourseData';
 import { PROPHET_COURSE_OVERVIEWS } from '../data/prophetCourseOverviews';
-import { QUIZ_CATEGORIES, getQuizSourceUrl } from '../data/quizData';
-import { learningLegacyFeatures, quizFeature, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
+import { learningLegacyFeatures, serviceLegacyFeatures, visual } from '../data/legacyFeatures';
 import type { LegacyFeatureId, LegacyFeatureItem } from '../data/legacyFeatures';
 import type { LucideIcon } from 'lucide-react';
 import {
@@ -48,7 +50,8 @@ import { motion, useReducedMotion } from 'motion/react';
 import { versionAppPath } from '../app/appPaths';
 import { HADITH_LIBRARY, readSavedHadithIds, writeSavedHadithIds } from '../data/hadithData';
 import { FOUNDATION_SUPPLEMENTS } from '../data/foundationSupplementData';
-import { FoundationChapter, FoundationExample, FoundationGuideIntro, FoundationSource } from '../shared/FoundationGuide';
+import { FoundationReader, FoundationChapter, FoundationExample, FoundationGuideIntro, FoundationSource } from '../shared/FoundationGuide';
+import { ReadingIntroduction } from '../shared/ReadingIntroduction';
 import { syncRollingFastingReminders } from '../services/fastingReminderService';
 import { isVoluntaryFastingDate } from '../services/fastingReminderService';
 import { getHijriDay } from '../services/hijriCalendar';
@@ -134,6 +137,24 @@ function findNextWhiteDay() {
   return null;
 }
 
+const FEATURE_BANNERS: Record<LegacyFeatureId, string> = {
+  fasting: 'screen-banner-calendar-v1.webp',
+  ummah: 'course-banner-community-v1.webp',
+  'hadith-library': 'course-banner-terms-v1.webp',
+  knowledge: 'screen-banner-learn-v1.webp',
+  madhhabs: 'course-banner-terms-v1.webp',
+  prophets: 'course-banner-prophet-v1.webp',
+  sahabah: 'course-banner-community-v1.webp',
+  women: 'course-banner-community-v1.webp',
+  hajj: 'screen-banner-qibla-v1.webp',
+  sunnah: 'course-banner-character-v1.webp',
+  sins: 'screen-banner-duas-v1.webp',
+  places: 'screen-banner-prayer-v1.webp',
+  jumuah: 'screen-banner-prayer-v1.webp',
+  zakat: 'course-banner-community-v1.webp',
+  standby: 'course-banner-pillars-v1.webp',
+};
+
 function FeatureHeader({
   feature,
   onBack,
@@ -146,11 +167,11 @@ function FeatureHeader({
   const Icon = feature.icon;
   return (
     <>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam</span><h1>{feature.title}</h1></div>
+      <ScreenBanner art={FEATURE_BANNERS[feature.id]}>
+        <ScreenBackButton onClick={onBack} label="Zurück" />
+        <div><span className="overline">Awwaba</span><h1>{feature.title}</h1></div>
         <span className="reference-legacy-header-icon"><Icon size={20} /></span>
-      </header>
+      </ScreenBanner>
       {showHero ? <section className="reference-legacy-hero">
         <img src={visual(feature.art)} alt="" aria-hidden="true" draggable={false} />
         <div className="reference-legacy-hero__copy"><span className="hero-pill">{feature.subtitle}</span><h2>{feature.title}</h2><p>{feature.description}</p></div>
@@ -170,122 +191,6 @@ function LegacyMotionMain({ children, className = '' }: { children: ReactNode; c
     >
       {children}
     </motion.main>
-  );
-}
-
-function QuizFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
-  // Best scores are per category rather than one global number: with six
-  // categories a single figure says nothing about where you stand.
-  const [bestScores, setBestScores] = useState<Record<string, number>>(() => readStored('nur_quiz_best_scores', {}));
-  const [categoryId, setCategoryId] = useScreenState<string | null>('quiz.category', null);
-  const [index, setIndex] = useScreenState('quiz.index', 0);
-  const [selected, setSelected] = useScreenState<number | null>('quiz.answer', null);
-  const [score, setScore] = useScreenState('quiz.score', 0);
-  const [complete, setComplete] = useScreenState('quiz.complete', false);
-
-  const category = QUIZ_CATEGORIES.find((entry) => entry.id === categoryId) ?? null;
-  const questions = category?.questions ?? [];
-  const question = questions[index];
-
-  const startCategory = (id: string) => {
-    setCategoryId(id);
-    setIndex(0);
-    setSelected(null);
-    setScore(0);
-    setComplete(false);
-  };
-
-  const answer = (answerIndex: number) => {
-    if (selected !== null || !question) return;
-    setSelected(answerIndex);
-    if (answerIndex === question.correctAnswer) setScore((value) => value + 1);
-  };
-
-  const next = () => {
-    if (selected === null || !category) return;
-    if (index === questions.length - 1) {
-      const finalScore = Math.min(questions.length, score);
-      const nextBest = { ...bestScores, [category.id]: Math.max(bestScores[category.id] ?? 0, finalScore) };
-      setBestScores(nextBest);
-      writeStored('nur_quiz_best_scores', nextBest);
-      setComplete(true);
-      return;
-    }
-    setIndex((value) => value + 1);
-    setSelected(null);
-  };
-
-  if (!category) {
-    return (
-      <LegacyMotionMain>
-        <FeatureHeader feature={feature} onBack={onBack} />
-        <section className="reference-quiz-categories">
-          <p className="reference-topic-text">Jede Lernfrage nennt nach deiner Antwort eine Fundstelle. Fragen und Erklärungen sind sinngemäße Lerntexte, keine Fatwas. Der KI-gestützte Quellenabgleich ist keine religiöse Freigabe.</p>
-          {QUIZ_CATEGORIES.map((entry) => {
-            const best = bestScores[entry.id];
-            return (
-              <button key={entry.id} onClick={() => startCategory(entry.id)}>
-                <span className="reference-quiz-categories__copy">
-                  <strong>{entry.title}</strong>
-                  <small>{entry.description}</small>
-                  <em>{entry.questions.length} Fragen{best === undefined ? '' : ` · Bestwert ${best} von ${entry.questions.length}`}</em>
-                </span>
-                <ChevronRight size={18} />
-              </button>
-            );
-          })}
-        </section>
-      </LegacyMotionMain>
-    );
-  }
-
-  const best = bestScores[category.id] ?? 0;
-
-  return (
-    <LegacyMotionMain>
-      <FeatureHeader feature={feature} onBack={onBack} />
-      {complete ? (
-        <section className="reference-quiz-result">
-          <span><CircleCheck size={30} /></span>
-          <h2>{score} von {questions.length} richtig</h2>
-          <p>{category.title} · Bestwert {best} von {questions.length}. Die Speicherung erfolgt nur auf diesem Gerät.</p>
-          <button className="gold-button" onClick={() => startCategory(category.id)}><RotateCcw size={17} /> Erneut versuchen</button>
-          <button className="reference-quiz-back" onClick={() => setCategoryId(null)}><ChevronLeft size={16} /> Andere Kategorie</button>
-        </section>
-      ) : question ? (
-        <section className="reference-quiz-card">
-          <div className="reference-quiz-progress"><span style={{ width: `${((index + 1) / questions.length) * 100}%` }} /></div>
-          <small>{category.title} · Frage {index + 1} von {questions.length}</small>
-          <h2>{question.question}</h2>
-          <div className="reference-quiz-answers">
-            {question.options.map((item, answerIndex) => {
-              const isSelected = selected === answerIndex;
-              const isCorrect = selected !== null && answerIndex === question.correctAnswer;
-              const isWrong = isSelected && answerIndex !== question.correctAnswer;
-              return (
-                <button
-                  key={item}
-                  className={`${isCorrect ? 'is-correct' : ''} ${isWrong ? 'is-wrong' : ''}`}
-                  onClick={() => answer(answerIndex)}
-                  disabled={selected !== null}
-                >
-                  <span>{String.fromCharCode(65 + answerIndex)}</span>{item}{isCorrect ? <Check size={18} /> : null}
-                </button>
-              );
-            })}
-          </div>
-          {/* Shown only after answering: the reason is the point of the quiz,
-              but revealing it earlier would give the answer away. */}
-          {selected === null ? null : (
-            <p className="reference-quiz-explanation">
-              <ShieldCheck size={16} />
-              <span>{question.explanation}<br /><SourceInfo title="Quelle zur Antwort"><a href={getQuizSourceUrl(question.source)} target="_blank" rel="noopener noreferrer">Quelle: {question.source}</a></SourceInfo></span>
-            </p>
-          )}
-          <button className="gold-button" disabled={selected === null} onClick={next}>{index === questions.length - 1 ? 'Auswertung' : 'Weiter'} <ChevronRight size={17} /></button>
-        </section>
-      ) : null}
-    </LegacyMotionMain>
   );
 }
 
@@ -370,10 +275,11 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
   };
 
   return (
+    <FoundationReader chapters={guide.chapters} onBack={onBack} initialChapter={guide.chapters[2].id}>
     <LegacyMotionMain className="foundation-guide">
       <FeatureHeader feature={feature} onBack={onBack} showHero={false} />
       <FoundationGuideIntro {...guide} />
-      <FoundationChapter {...guide.chapters[0]} number={1} defaultOpen={false}>
+      <FoundationChapter {...guide.chapters[0]} number={1}>
         <p><strong>Definition.</strong> Ein Hadith ist eine überlieferte Nachricht über den Propheten ﷺ, beispielsweise über eine Aussage, Handlung oder Billigung. Der Text berichtet von seinem Vorbild; er ist nicht mit einem Quranvers gleichzusetzen.</p>
         <p><strong>Begriffe.</strong> Der Inhalt einer Überlieferung heißt Matn, ihre Überliefererkette Isnad. Sammlung, Fundstelle und fachliche Beurteilung helfen dabei, eine Nachricht nachzuvollziehen.</p>
         <FoundationExample>Al-Bukhari 1 behandelt die Bedeutung der Absicht. Du kannst zunächst den Grundgedanken lesen und anschließend über die genaue Nummer die Überlieferung nachschlagen.</FoundationExample>
@@ -386,7 +292,7 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
         <p>In dieser App steht unter jedem Eintrag die Fundstelle. „Sinngemäßer Inhalt“ ist eine Zusammenfassung in eigenen Worten, kein arabischer Originaltext und keine wortgetreue Übersetzung.</p>
         <FoundationSource href="https://sunnah.com/about">Einordnung und Grenzen der Sammlung</FoundationSource>
       </FoundationChapter>
-      <FoundationChapter {...guide.chapters[2]} number={3} defaultOpen>
+      <FoundationChapter {...guide.chapters[2]} number={3}>
       <p>Suche nach einem Thema oder einer Quellenangabe. Das Lesezeichen speichert den Eintrag lokal in deinem Browser.</p>
       <label className="reference-legacy-search"><Search size={18} /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Hadithe durchsuchen" /></label>
       <p className="foundation-guide-result" role="status">{filtered.length} von {HADITH_LIBRARY.length} Hadithen · {favorites.size} gespeichert</p>
@@ -396,7 +302,7 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
           const saved = favorites.has(item.id);
           return (
             <article key={item.id}>
-              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<SourceInfo title={item.source}><small>{item.source}</small>{item.grading ? <p className="foundation-hadith-context">{item.grading.text} <a href={item.grading.sourceUrl} target="_blank" rel="noopener noreferrer">Bewertungsquelle</a>{item.grading.comparisonUrl ? <> · <a href={item.grading.comparisonUrl} target="_blank" rel="noopener noreferrer">Vergleichsquelle</a></> : null}</p> : null}</SourceInfo></div>
+              <div><h3>{item.title}</h3><p className="foundation-guide-label">Sinngemäßer Inhalt</p><p>{item.summary}</p>{item.context ? <p className="foundation-hadith-context"><strong>Einordnung.</strong> {item.context}</p> : null}<SourceInfo title={item.source} label="Quelle und Einordnung"><small>{item.source}</small>{item.grading ? <p className="foundation-hadith-context">{item.grading.text} <a href={item.grading.sourceUrl} target="_blank" rel="noopener noreferrer">Bewertungsquelle</a>{item.grading.comparisonUrl ? <> · <a href={item.grading.comparisonUrl} target="_blank" rel="noopener noreferrer">Vergleichsquelle</a></> : null}</p> : null}</SourceInfo></div>
               <button onClick={() => toggleFavorite(item.id)} aria-label={saved ? 'Aus Favoriten entfernen' : 'Als Favorit speichern'} aria-pressed={saved} className={saved ? 'is-saved' : ''}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>
             </article>
           );
@@ -405,6 +311,7 @@ function HadithLibraryFeature({ feature, onBack }: { feature: LegacyFeatureItem;
       {!filtered.length ? <div className="reference-empty-result"><Search size={24} /><strong>Kein Hadith gefunden</strong><small>Ändere den Suchbegriff.</small></div> : null}
       </FoundationChapter>
     </LegacyMotionMain>
+    </FoundationReader>
   );
 }
 
@@ -658,8 +565,7 @@ function ProphetsFeature({
           </div>
         </section>
 
-        <details className="reference-prophet-overview" aria-label={`Ausführliche Einführung zu ${prophet.name}`} key={prophet.id}>
-          <summary>Einführung & Einordnung</summary>
+        <ReadingIntroduction className="reference-prophet-overview" label={`Ausführliche Einführung zu ${prophet.name}`} key={prophet.id}>
           <div className="reference-prophet-overview__body">
           <p>{course.introduction}</p>
           <p>Quran-Grundkurs mit Belegstellen. Wo der Quran keine Details nennt oder Gelehrte unterschiedlich einordnen, sagt der Kurs das ausdrücklich.</p>
@@ -698,7 +604,7 @@ function ProphetsFeature({
           </div>
           <small>{courseReferences.length} verschiedene Quran-Passagen bilden den Quellenrahmen dieses Kurses.</small>
           </div>
-        </details>
+        </ReadingIntroduction>
 
         <details className="reference-prophet-plan" ref={chapterMenu} aria-label={`Kapitel für ${prophet.name}`} key={`${prophet.id}-${chapterIndex}`}>
           <summary><span>Kapitel auswählen</span><small>{chapterIndex + 1} von {course.chapters.length}</small><ChevronDown size={18} /></summary>
@@ -739,7 +645,7 @@ function ProphetsFeature({
             ))}
           </section>
 
-          <SourceInfo title="Im Quran nachlesen"><section className="reference-prophet-lesson__sources">
+          <SourceInfo title="Im Quran nachlesen" label="Im Quran nachlesen"><section className="reference-prophet-lesson__sources">
             <span className="overline">Im Quran nachlesen</span>
             <div>
               {chapter.quranReferences.map((reference) => {
@@ -761,14 +667,7 @@ function ProphetsFeature({
             </div>
           </section></SourceInfo>
 
-          <nav className="reference-prophet-lesson__nav" aria-label="Kapitelnavigation">
-            <button onClick={() => selectChapter(chapterIndex - 1)} disabled={chapterIndex === 0}>
-              <ChevronLeft size={17} /> Zurück
-            </button>
-            <button onClick={() => selectChapter(chapterIndex + 1)} disabled={chapterIndex === course.chapters.length - 1}>
-              Weiter <ChevronRight size={17} />
-            </button>
-          </nav>
+          <ReadingNavigation className="reference-prophet-lesson__nav" onPrevious={() => selectChapter(chapterIndex - 1)} previousDisabled={chapterIndex === 0} onNext={() => selectChapter(chapterIndex + 1)} nextDisabled={chapterIndex === course.chapters.length - 1} nextLabel="Nächstes Kapitel" />
         </article>
 
       </LegacyMotionMain>
@@ -911,6 +810,7 @@ function PracticeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBa
   const groups = isSunnah ? SUNNAH_GROUPS : [...REPENTANCE_GROUPS].reverse();
 
   return (
+    <FoundationReader chapters={guide.chapters} onBack={onBack}>
     <LegacyMotionMain className="foundation-guide">
       <FeatureHeader feature={feature} onBack={onBack} showHero={false} />
       <FoundationGuideIntro {...guide} />
@@ -935,12 +835,13 @@ function PracticeFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBa
               {item.meaning ? <p><strong>Bedeutung.</strong> {item.meaning}</p> : null}
               <p>{item.description}</p>
               {item.example ? <FoundationExample>{item.example}</FoundationExample> : null}
-              {item.sourceUrl ? <FoundationSource href={item.sourceUrl}>{item.proof}</FoundationSource> : <SourceInfo title="Hinterlegter Beleg"><p className="foundation-guide-label">Hinterlegter Beleg: {item.proof}</p></SourceInfo>}
+              {item.sourceUrl ? <FoundationSource href={item.sourceUrl}>{item.proof}</FoundationSource> : <SourceInfo title="Hinterlegter Beleg" label="Beleg ansehen"><p className="foundation-guide-label">Hinterlegter Beleg: {item.proof}</p></SourceInfo>}
             </article>)}
           </div>
         </FoundationChapter>
       ))}
     </LegacyMotionMain>
+    </FoundationReader>
   );
 }
 
@@ -984,7 +885,7 @@ function StationList({ stations }: { stations: readonly PilgrimageStation[] }) {
           <strong>{station.title}</strong>
           <p>{station.description}</p>
           {station.reference ? <small><ShieldCheck size={14} /> {station.reference}</small> : null}
-          {station.sourceUrl ? <SourceInfo title="Quelle zur Station"><small><a href={station.sourceUrl} target="_blank" rel="noreferrer">{station.sourceLabel}</a></small></SourceInfo> : null}
+          {station.sourceUrl ? <SourceInfo title="Quelle zur Station" label="Quelle zur Station"><small><a href={station.sourceUrl} target="_blank" rel="noreferrer">{station.sourceLabel}</a></small></SourceInfo> : null}
         </article>
       ))}
     </div>
@@ -994,6 +895,7 @@ function StationList({ stations }: { stations: readonly PilgrimageStation[] }) {
 function PilgrimageFeature({ feature, onBack }: { feature: LegacyFeatureItem; onBack: () => void }) {
   const guide = FOUNDATION_SUPPLEMENTS.hajj;
   return (
+    <FoundationReader chapters={guide.chapters} onBack={onBack}>
     <LegacyMotionMain className="foundation-guide">
       <FeatureHeader feature={feature} onBack={onBack} showHero={false} />
       <FoundationGuideIntro {...guide} />
@@ -1034,8 +936,9 @@ function PilgrimageFeature({ feature, onBack }: { feature: LegacyFeatureItem; on
 
       {/* This is the one area written for this app rather than carried over,
           so the limit is stated rather than implied. */}
-      <section className="reference-legacy-notice"><ShieldCheck size={19} /><p>Diese Übersicht beschreibt den Ablauf, nicht die Urteile. Was Pflicht und was Sunnah ist, was bei Versäumnissen gilt und worin sich die Rechtsschulen unterscheiden, gehört zu einer qualifizierten Quelle.</p></section>
+      <SourceInfo title="Hinweise zu Hajj & Umrah" label="Hinweise zu Hajj & Umrah"><p>Diese Übersicht beschreibt den Ablauf, nicht die Urteile. Was Pflicht und was Sunnah ist, was bei Versäumnissen gilt und worin sich die Rechtsschulen unterscheiden, gehört zu einer qualifizierten Quelle.</p></SourceInfo>
     </LegacyMotionMain>
+    </FoundationReader>
   );
 }
 
@@ -1152,10 +1055,7 @@ export function LegacyFeatureScreen({
   onBack: () => void;
   onOpenQuranReference?: (surahNumber: number, ayahNumber?: number) => void;
 }) {
-  const feature = featureId === 'quiz'
-    ? quizFeature
-    : allFeatures.find((item) => item.id === featureId) ?? retainedFeatures[featureId] ?? learningLegacyFeatures[0];
-  if (featureId === 'quiz') return <QuizFeature feature={feature} onBack={onBack} />;
+  const feature = allFeatures.find((item) => item.id === featureId) ?? retainedFeatures[featureId] ?? learningLegacyFeatures[0];
   if (featureId === 'prophets') return <ProphetsFeature feature={feature} onBack={onBack} onOpenQuranReference={onOpenQuranReference} />;
   if (featureId === 'knowledge') return <KnowledgeFeature feature={feature} onBack={onBack} />;
   if (featureId === 'madhhabs') return <Suspense fallback={<p role="status">Rechtsschulen werden geladen …</p>}><MadhhabCatalogueFeature feature={feature} onBack={onBack} /></Suspense>;

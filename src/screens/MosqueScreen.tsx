@@ -1,10 +1,11 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { SourceInfo } from '../shared/SourceInfo';
 import { DialogHeader } from '../shared/DialogHeader';
 import { useScreenState } from '../shared/ScreenState';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Accessibility,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   Clock3,
@@ -182,11 +183,11 @@ export function MosqueScreen({ onBack }: { onBack: () => void }) {
 
   return (
     <motion.main className="screen reference-mosque-screen reference-mosque-screen--live" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-prayer-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">In deiner Nähe</span><h1>Moschee-Finder</h1></div>
         <button className="icon-button" onClick={() => void loadMosques(origin, true)} aria-label="Moscheen aktualisieren" disabled={status === 'loading'}><RefreshCw size={20} className={status === 'loading' ? 'is-spinning' : ''} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="reference-mosque-hero">
         <PremiumImage src="/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp" fallback={<MosqueScene />} priority />

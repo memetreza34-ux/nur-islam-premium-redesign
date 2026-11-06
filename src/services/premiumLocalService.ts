@@ -274,7 +274,7 @@ export function readPremiumReminders(): PremiumReminder[] {
 
 export function createPremiumReminder(label: string, time: string) {
   if (!/^\d{2}:\d{2}$/.test(time)) return null;
-  const reminder: PremiumReminder = { id: safeId('reminder'), label: label.trim().slice(0, 80) || 'Nur Erinnerung', time, days: [0, 1, 2, 3, 4, 5, 6], enabled: true };
+  const reminder: PremiumReminder = { id: safeId('reminder'), label: label.trim().slice(0, 80) || 'Awwaba Erinnerung', time, days: [0, 1, 2, 3, 4, 5, 6], enabled: true };
   writeJson(REMINDERS_KEY, [reminder, ...readPremiumReminders()].slice(0, 24));
   return reminder;
 }

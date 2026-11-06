@@ -89,11 +89,10 @@ if (!/closingSteps = \[TASHAHHUD, SALAWAT, DUA_BEFORE_SALAM, TASLIM\]/.test(sour
 if (!/reference-rakah-runs/.test(screen) || !/repetitionRuns/.test(screen)) {
   throw new Error('The step detail no longer repeats the wording once per spoken run.');
 }
-// Each run carries the transliteration too. Someone learning the prayer reads
-// from the transliteration, so printing it once under three Arabic lines would
-// withhold the repetition from the very line being read.
-if (!/reference-rakah-runs[\s\S]{0,900}reference-rakah-wording__pronunciation/.test(screen)) {
-  throw new Error('The repeated runs must show the transliteration, not only the Arabic.');
+for (const format of ['arabic', 'flowing', 'syllables']) {
+  if (!screen.includes(`<PrayerWordingText step={currentStep} format="${format}" />`)) {
+    throw new Error(`The repeated prayer wording is missing its ${format} view.`);
+  }
 }
 if (!/repetitionLabels: \['nach rechts', 'nach links'\]/.test(source)) {
   throw new Error('The two Taslim runs must stay labelled by direction, not just counted.');
@@ -118,7 +117,8 @@ if (!/recitationUrlsForRun/.test(source) || !/recitationUrlsForRun/.test(screen)
 for (const fragment of [
   'reference-rakah-wording__arabic',
   'reference-rakah-wording__pronunciation',
-  'Deutsche Aussprachehilfe',
+  'Aussprache als Fließtext',
+  'Aussprache mit Silbenstrichen',
   'reference-rakah-wording__translation',
   'POSTURE_LABEL',
 ]) {

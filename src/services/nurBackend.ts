@@ -241,7 +241,7 @@ export async function upsertProfile(input: Partial<Omit<NurProfile, 'user_id' | 
   // value cannot be bent by a wrong device clock.
   const row: NurProfile = {
     user_id: session.user.id,
-    display_name: input.display_name ?? current?.display_name ?? 'Nur Nutzer',
+    display_name: input.display_name ?? current?.display_name ?? 'Awwaba Nutzer',
     language: 'de',
     sensitive_cloud_consent_version: input.sensitive_cloud_consent_version ?? current?.sensitive_cloud_consent_version ?? null,
     sensitive_cloud_consent_at: input.sensitive_cloud_consent_at ?? current?.sensitive_cloud_consent_at ?? null,
@@ -331,7 +331,7 @@ export async function restoreCloudState() {
   // that promise unkept, so a backup this build does not understand is refused
   // rather than half-applied.
   if (cloud.schema_version > STORAGE_SCHEMA_VERSION) {
-    throw new Error('Diese Sicherung stammt aus einer neueren App-Version. Bitte aktualisiere Nur Islam und versuche es erneut.');
+    throw new Error('Diese Sicherung stammt aus einer neueren App-Version. Bitte aktualisiere Awwaba und versuche es erneut.');
   }
   const payload = cloud.payload as Record<string, unknown>;
   Object.entries(payload).forEach(([key, value]) => {

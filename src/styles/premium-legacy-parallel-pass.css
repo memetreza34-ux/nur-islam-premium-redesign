@@ -42,8 +42,6 @@
 }
 
 .reference-legacy-section,
-.reference-quiz-card,
-.reference-quiz-result,
 .reference-legacy-toggle,
 .reference-hadith-library article,
 .reference-fasting-reminder-settings,
@@ -54,8 +52,6 @@
 }
 
 .reference-legacy-section,
-.reference-quiz-card,
-.reference-quiz-result,
 .reference-fasting-reminder-settings,
 .reference-zakat-calculator {
   border-radius: 22px !important;
@@ -175,75 +171,9 @@
   background: rgba(232,199,122,.075) !important;
 }
 
-/* Quiz */
-.reference-quiz-card {
-  padding: 19px !important;
-}
-
-.reference-quiz-progress {
-  height: 6px !important;
-  background: rgba(255,255,255,.055) !important;
-}
-
-.reference-quiz-answers {
-  gap: 8px !important;
-}
-
-.reference-quiz-answers > button {
-  min-height: 56px !important;
-  border-color: rgba(232,199,122,.1) !important;
-  border-radius: 15px !important;
-  background: rgba(255,255,255,.018) !important;
-}
-
-.reference-quiz-answers > button > span {
-  border: 1px solid rgba(232,199,122,.13);
-  border-radius: 10px !important;
-  background: rgba(232,199,122,.045) !important;
-}
-
 /* Once an answer is locked in, the three states have to be told apart at a
    glance. At the previous alpha the picked option and the correct one differed
    by a small check mark alone, and the screen stopped explaining itself. */
-.reference-quiz-answers > button:disabled {
-  color: rgba(255,248,232,.45);
-}
-
-.reference-quiz-answers > button.is-correct {
-  border-color: rgba(101,208,153,.6) !important;
-  background: rgba(63,170,111,.16) !important;
-  color: #eafff2 !important;
-}
-
-.reference-quiz-answers > button.is-correct > span {
-  border-color: #63d99a !important;
-  background: #63d99a !important;
-  color: #0d2b1e !important;
-}
-
-.reference-quiz-answers > button.is-wrong > span {
-  border-color: #e08a8a !important;
-  background: #e08a8a !important;
-  color: #2b0d0d !important;
-}
-
-.reference-quiz-answers > button.is-wrong {
-  border-color: rgba(218,121,100,.6) !important;
-  background: rgba(180,70,53,.15) !important;
-  color: #ffe6e6 !important;
-}
-
-.reference-quiz-result {
-  min-height: 270px !important;
-  background:
-    radial-gradient(circle at 50% 10%, rgba(232,199,122,.09), transparent 10rem),
-    var(--legacy-panel) !important;
-}
-
-.reference-quiz-result > span {
-  border: 1px solid rgba(247,226,178,.24);
-  box-shadow: 0 12px 28px rgba(0,0,0,.2);
-}
 
 /* Zakat */
 .reference-zakat-calculator {
@@ -319,8 +249,6 @@
 }
 
 [data-theme='light'] .reference-legacy-section,
-[data-theme='light'] .reference-quiz-card,
-[data-theme='light'] .reference-quiz-result,
 [data-theme='light'] .reference-legacy-toggle,
 [data-theme='light'] .reference-hadith-library article,
 [data-theme='light'] .reference-fasting-reminder-settings,
@@ -333,7 +261,6 @@
 [data-theme='light'] .reference-legacy-list > button,
 [data-theme='light'] .reference-legacy-list--overview > article,
 [data-theme='light'] .reference-fasting-grid article,
-[data-theme='light'] .reference-quiz-answers > button,
 [data-theme='light'] .reference-fasting-reminder-settings > label,
 [data-theme='light'] .reference-fasting-reminder-settings .reference-legacy-toggle,
 [data-theme='light'] .reference-zakat-calculator input,
@@ -358,7 +285,6 @@
   }
 
   .reference-zakat-calculator,
-  .reference-quiz-card,
   .reference-legacy-section {
     padding: 16px !important;
   }

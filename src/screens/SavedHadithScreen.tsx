@@ -1,10 +1,11 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { SourceInfo } from '../shared/SourceInfo';
 import { useState } from 'react';
 import {
   BookOpen,
   Bookmark,
   BookmarkCheck,
-  ChevronLeft,
   CircleCheck,
   Share2,
   ShieldCheck,
@@ -67,7 +68,7 @@ export function SavedHadithScreen({
     if (!entry) return;
     try {
       const result = await shareOrCopy(
-        `Nur Islam · ${entry.title}`,
+        `Awwaba · ${entry.title}`,
         getHadithShareText(entry),
       );
       flash(result === 'shared' ? 'Hadith geteilt' : 'Hadith kopiert');
@@ -78,22 +79,22 @@ export function SavedHadithScreen({
 
   if (!entry) return (
     <main className="screen reference-detail-screen">
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="course-banner-terms-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Deine Sammlung</span><h1>Hadith nicht verfügbar</h1></div>
         <span className="reference-reading-header-spacer" aria-hidden="true" />
-      </header>
+      </ScreenBanner>
       <p role="status">Der gespeicherte Verweis ist nicht mehr verfügbar. Es wird kein anderer Hadith als Ersatz angezeigt.</p>
     </main>
   );
 
   return (
     <motion.main className="screen reference-detail-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="course-banner-terms-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Deine Sammlung</span><h1>Gespeicherter Hadith</h1></div>
         <span className="reference-reading-header-spacer" aria-hidden="true" />
-      </header>
+      </ScreenBanner>
 
       <section className="reference-hadith-hero">
         <span className="reference-hadith-hero__mark">ﷺ</span>

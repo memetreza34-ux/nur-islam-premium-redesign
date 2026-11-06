@@ -87,7 +87,7 @@ const screenRequirements = [
   'document.visibilityState',
   "window.addEventListener('focus', syncClock)",
   'setCompletedDateKey(currentDateKey)',
-  'reference-prayer-location-privacy',
+  'prayer-times-unavailable',
   'an AlAdhan übermittelt',
   'SourceInfo title="Standort & Datenschutz"',
   "status !== 'live' || error",

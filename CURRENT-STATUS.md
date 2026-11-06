@@ -1,4 +1,24 @@
-# Nur Islam Premium – aktueller Release-Status
+# Awwaba – aktueller Arbeits- und Release-Status
+
+**Aktualisiert:** 06. November 2026
+
+**Arbeitsbranch:** `design/claude-design-system`
+
+**Rechnerwechsel:** [Unter Windows weiterarbeiten](docs/WINDOWS-WEITERARBEITEN.md)
+
+## Verbindlicher aktueller Stand
+
+- Die App heißt **Awwaba**. Alte technische Kennungen bleiben für Installations- und Datenkompatibilität bestehen.
+- Das Islam-Quiz ist vollständig aus der aktiven App entfernt. Es gibt weiterhin keinen Chat-/KI-Assistenten.
+- Lern- und Unteransichten verwenden gemeinsame Bildbanner, Leseflächen und Navigation. Nur die Zurück-Taste bleibt beim Scrollen oben links sichtbar.
+- Der appweite Gestaltungscheck ist noch nicht abgeschlossen. Verbleibende Kontrast- und Browserkontrollen stehen im Windows-Leitfaden; Quellen und Wortlaut wurden bei den Gestaltungsänderungen nicht neu freigegeben.
+- Technischer Prüfstand vom 06.11.2026: vollständiges `npm run check` mit 1.115 erfolgreichen Tests; vollständiger Browserlauf mit 372 erfolgreichen Tests und zwei übersprungenen optionalen Bildaufnahme-Helfern. Die visuelle Endkontrolle und echte Geräteprüfungen bleiben davon getrennt.
+- Der Inhaltsstand wurde vom Betreiber am 13.10.2026 angenommen. Ein externer religiöser Prüfer ist keine Release-Voraussetzung: [Inhaltsentscheidung](docs/CONTENT-RELEASE-DECISION-2026-10-13.md).
+- Der öffentliche Release bleibt von echten Betreiberangaben, tatsächlicher Hosting-/Cloud-Konfiguration, Nutzungsrechten, echter Geräteprüfung und Cloud-Abnahme beziehungsweise einer Entscheidung für einen Release ohne Cloud abhängig. `main` wird beim Rechnerwechsel nicht verändert.
+
+Für neue Arbeit gelten [AGENTS.md](AGENTS.md) und der Windows-Leitfaden. Die folgenden älteren RC-Notizen sind historisch; frühere Branchnamen, Fortschrittsanzeigen und Freigabeanforderungen darin beschreiben nicht den heutigen Arbeitsstand.
+
+## Archiv: frühere RC-Notizen
 
 **Stand:** 29. August 2026
 **Repository:** `memetreza34-ux/nur-islam-premium-redesign`  

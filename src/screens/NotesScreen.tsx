@@ -1,6 +1,7 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ChevronLeft,
   CircleCheck,
   Cloud,
   CloudUpload,
@@ -56,7 +57,12 @@ export function readLocalNotes() {
 }
 
 export function writeLocalNotes(notes: LocalNote[]) {
-  try { localStorage.setItem(LOCAL_KEY, JSON.stringify(notes)); } catch { /* optional */ }
+  try {
+    localStorage.setItem(LOCAL_KEY, JSON.stringify(notes));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 export function noteSignature(title: string, body: string) {
@@ -150,17 +156,22 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         const now = new Date().toISOString();
         const local = notes as LocalNote[];
         let next: LocalNote[];
+        let createdId: string | null = null;
         if (selectedId) {
           next = local.map((note) => note.id === selectedId ? { ...note, title: cleanTitle || 'Notiz', body: cleanBody, updated_at: now } : note);
         } else {
           const created: LocalNote = { id: nextLocalNoteId(), title: cleanTitle || 'Notiz', body: cleanBody, created_at: now, updated_at: now };
           next = [created, ...local];
-          setSelectedId(created.id);
+          createdId = created.id;
         }
         next.sort((a, b) => b.updated_at.localeCompare(a.updated_at));
+        if (!writeLocalNotes(next)) {
+          setStatus('Nicht gespeichert: Die Speicherung auf diesem Gerät ist blockiert. Dein Text bleibt im geöffneten Editor erhalten.');
+          return;
+        }
+        if (createdId) setSelectedId(createdId);
         setNotes(next);
         setLocalNotesPending(next);
-        writeLocalNotes(next);
         setStatus('Notiz lokal auf diesem Gerät gespeichert.');
       }
     } catch (reason) {
@@ -189,9 +200,10 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
       }
       const refreshed = await listCloudNotes();
       setNotes(refreshed);
-      writeLocalNotes([]);
-      setLocalNotesPending([]);
-      setStatus(imported > 0 ? `${imported} lokale Notiz${imported === 1 ? '' : 'en'} in Nur Cloud übernommen.` : 'Lokale Notizen waren bereits in Nur Cloud vorhanden. Lokale Kopien wurden bereinigt.');
+      const cleared = writeLocalNotes([]);
+      if (cleared) setLocalNotesPending([]);
+      const importedStatus = imported > 0 ? `${imported} lokale Notiz${imported === 1 ? '' : 'en'} in Awwaba Cloud übernommen.` : 'Lokale Notizen waren bereits in Awwaba Cloud vorhanden.';
+      setStatus(`${importedStatus} ${cleared ? 'Lokale Kopien wurden bereinigt.' : 'Lokale Kopien konnten nicht entfernt werden. Die Speicherung auf diesem Gerät ist blockiert.'}`);
     } catch (reason) {
       setStatus(reason instanceof Error ? `Import nicht abgeschlossen: ${reason.message}. Lokale Notizen bleiben erhalten.` : 'Import nicht abgeschlossen. Lokale Notizen bleiben erhalten.');
     } finally {
@@ -208,9 +220,12 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
         setNotes(await listCloudNotes());
       } else {
         const next = (notes as LocalNote[]).filter((note) => note.id !== selectedId);
+        if (!writeLocalNotes(next)) {
+          setStatus('Notiz konnte nicht gelöscht werden. Die Speicherung auf diesem Gerät ist blockiert.');
+          return;
+        }
         setNotes(next);
         setLocalNotesPending(next);
-        writeLocalNotes(next);
       }
       closeEditor();
       setStatus('Notiz gelöscht.');
@@ -223,11 +238,11 @@ export function NotesScreen({ onBack, onOpenAccount }: { onBack: () => void; onO
 
   return (
     <motion.main className={`screen reference-notes-screen${editorOpen ? ' reference-notes-screen--editing' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-notes-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Deine Gedanken</span><h1>Notizen</h1></div>
         <button className="icon-button" onClick={beginNew} aria-label="Neue Notiz"><Plus size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="reference-notes-storage">
         {session ? <Cloud size={18} /> : <NotebookPen size={18} />}

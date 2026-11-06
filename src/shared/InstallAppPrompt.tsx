@@ -151,7 +151,7 @@ export function InstallAppPrompt() {
           <button className="reference-install-prompt__close" onClick={dismiss} aria-label="Installationshinweis schließen"><X size={16} /></button>
           <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="reference-install-prompt__logo" fallback={<NurMark />} />
           <div className="reference-install-prompt__copy">
-            <span className="overline">Nur Islam als App</span>
+            <span className="overline">Awwaba als App</span>
             <strong>{installed ? 'App wurde installiert' : mode === 'ios' ? 'Als App öffnen' : 'Direkt als App öffnen'}</strong>
             <small>{mode === 'ios' ? 'Ohne Browserleiste und mit eigenem App-Symbol.' : 'Schneller Start, Vollbildansicht und Offline-Grundlage.'}</small>
             {installError ? <em className="reference-install-prompt__error">{installError}</em> : null}

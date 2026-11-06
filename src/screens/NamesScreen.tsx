@@ -1,3 +1,5 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { DialogHeader } from '../shared/DialogHeader';
 import { useScreenState } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
@@ -5,7 +7,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookmarkCheck,
   Check,
-  ChevronLeft,
   CircleCheck,
   Filter,
   Heart,
@@ -149,11 +150,11 @@ export function NamesScreen({ onBack, initialNameId = null }: { onBack: () => vo
       animate={{ opacity: 1, y: 0 }}
       transition={screenTransition}
     >
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="course-banner-faith-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück zur Startseite" />
         <div><span className="overline">Asma’ul Husna</span><h1>99 Namen Allahs</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(favoriteSelection.readable ? `${favorites.size} Favoriten` : 'Favoriten konnten nicht gelesen werden'); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="reference-names-hero">
         <span className="reference-names-hero__allah" dir="rtl">الله</span>

@@ -15,7 +15,7 @@ export function SplashScreen() {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: reduceMotion ? 0 : .3 }}
-      aria-label="Nur Islam wird geladen"
+      aria-label="Awwaba wird geladen"
     >
       <div className="entry-scene" aria-hidden="true">
         <svg width="0" height="0"><defs><clipPath id={cut} clipPathUnits="objectBoundingBox"><path d="M0 1V.32C0 .16 .23 .06 .5 0C.77 .06 1 .16 1 .32V1Z" /></clipPath></defs></svg>
@@ -25,7 +25,7 @@ export function SplashScreen() {
             <div className="entry-inner-light" />
             <div className="entry-brand">
               <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="entry-emblem" priority fallback={<NurMark />} />
-              <span className="entry-wordmark">Nur Islam</span>
+              <span className="entry-wordmark">Awwaba</span>
             </div>
             <div className="entry-door entry-door--left" /><div className="entry-door entry-door--right" />
             <div className="entry-seam" />

@@ -740,6 +740,10 @@ html[data-theme='light'] .premium-local-hero-card {
   background-color: rgba(255, 255, 255, .63);
 }
 
+html[data-theme='light'] .premium-local-launcher { color: #173d31; background: #fffaf0; border-color: #c6b287; }
+html[data-theme='light'] .premium-local-launcher > svg { color: #765b2d; }
+html[data-theme='light'] .premium-local-launcher small { color: #526457; }
+
 html[data-theme='light'] .premium-local-widgets__tools>strong,
 html[data-theme='light'] .premium-local-widget-group>div>strong { color: #173d33; }
 html[data-theme='light'] .premium-local-widget { border-color: rgba(87,72,38,.23); }

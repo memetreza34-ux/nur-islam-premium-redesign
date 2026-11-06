@@ -109,7 +109,6 @@ requireTokens(app, 'Home semantic actions and honest progress', [
   'data-home-section="continue"',
   "label: 'Beten lernen', detail: 'Das Gebet Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp'",
   "label: '99 Namen Allahs', detail: 'Namen und Bedeutungen kennenlernen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v5.webp'",
-  "label: 'Islam Quiz', detail: 'Wissen mit Fragen und Erklärungen testen', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v6.webp'",
   "label: 'Duas', detail: 'Bittgebete für den Alltag entdecken', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v5.webp'",
   'useState(readHomeQuranProgress)',
   'quranProgress.hasProgress && quranProgress.numberOfAyahs',

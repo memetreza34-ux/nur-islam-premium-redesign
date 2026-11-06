@@ -7,7 +7,7 @@ import { join, extname } from 'node:path';
 
 const BUILD = 'dist-artifact';
 const PUBLIC = 'public';
-const OUT = process.argv[2] || 'nur-islam-preview.html';
+const OUT = process.argv[2] || 'awwaba-preview.html';
 
 const MIME = {
   '.webp': 'image/webp',
@@ -96,7 +96,7 @@ window.__NUR_DATA__ = ${JSON.stringify(quran)};
 })();
 </script>`;
 
-const html = `<title>Nur Islam</title>
+const html = `<title>Awwaba</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

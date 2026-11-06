@@ -13,14 +13,17 @@
   text-overflow: ellipsis;
 }
 
-.reference-next-prayer {
-  min-height: 329px;
+.prayer-times-unavailable {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: 16px;
+  background: var(--surface);
 }
-
-
-
-
-
+.prayer-times-unavailable > svg { flex: 0 0 auto; color: var(--gold-text); }
+.prayer-times-unavailable > p { margin: 0; color: var(--cream); font-size: 14px; line-height: 1.6; }
 .reference-next-prayer__icon {
   display: grid;
   width: 38px;

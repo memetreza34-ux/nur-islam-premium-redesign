@@ -13,7 +13,7 @@ for (const width of [320, 768, 1280]) {
       } });
     });
     await page.goto('/?preview=1');
-    await expect(page.getByRole('main', { name: 'Nur Islam wird geladen' })).toHaveCount(0);
+    await expect(page.getByRole('main', { name: 'Awwaba wird geladen' })).toHaveCount(0);
     await page.getByRole('navigation').getByRole('button', { name: 'Lernen', exact: true }).click();
     await page.locator('.reference-foundation-path').getByRole('button', { name: /Hadith-Sammlung/ }).click();
     const articles = page.locator('.reference-hadith-library article');

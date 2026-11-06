@@ -1,10 +1,11 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useScreenState } from '../shared/ScreenState';
 import { useState } from 'react';
 import {
   AlertTriangle,
   Building2,
   Check,
-  ChevronLeft,
   Copyright,
   ExternalLink,
   FileCheck2,
@@ -40,7 +41,7 @@ const TAB_INTRO: Record<LegalTab, { eyebrow: string; title: string; text: string
   },
   imprint: {
     eyebrow: 'Anbieter & Verantwortung',
-    title: 'Wer hinter Nur Islam steht.',
+    title: 'Wer hinter Awwaba steht.',
     text: 'Anbieter, Kontakt und inhaltliche Verantwortung werden an einer dauerhaft erreichbaren Stelle gebündelt.',
     facts: ['Anbieter', 'Kontakt', 'Inhaltsverantwortung'],
   },
@@ -74,11 +75,11 @@ export function LegalScreen({ onBack }: { onBack: () => void }) {
 
   return (
     <motion.main className="screen reference-legal-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
-      <header className="reference-screen-header reference-legal-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-notes-v1.webp" className="reference-legal-header">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Rechtliches</span><h1>{active.label}</h1></div>
         <span className="reference-legal-header-icon" aria-hidden="true"><Scale size={20} /></span>
-      </header>
+      </ScreenBanner>
 
       <section className="reference-legal-hero">
         <span className="reference-legal-hero__icon" aria-hidden="true"><ActiveIcon size={25} /></span>

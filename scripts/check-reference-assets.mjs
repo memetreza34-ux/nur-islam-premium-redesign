@@ -61,6 +61,7 @@ const illustrationMigration = JSON.parse(await readFile(resolve(root, 'docs/ILLU
 const illustrationRefresh = JSON.parse(await readFile(resolve(root, 'docs/PLAIN-ILLUSTRATION-REPLACEMENTS-2026-10-22.json'), 'utf8'));
 const currentArtworkName = (name) => illustrationRefresh.replacements[name] ?? name;
 const currentIllustrations = new Set([...Object.values(illustrationMigration.replacements).map(currentArtworkName), ...Object.values(illustrationRefresh.replacements)]);
+currentIllustrations.delete('home-quiz-v6.webp');
 const archivedNames = new Set(illustrationMigration.archivedAssets.map((asset) => asset.formerPath.split('/').pop()));
 const recoveredAssets = [
   'nur-logo-emblem-v2.webp',
@@ -270,6 +271,7 @@ for (const asset of illustrationMigration.archivedAssets) {
 }
 
 const retainedUnreferencedAssets = new Set([
+  'home-quiz-v6.webp',
   'quran-closed-v2.webp',
   'quran-closed-v3.webp',
   'quran-open-v2.webp',
@@ -391,8 +393,8 @@ for (const staleVersion of ['20260806-visual4', '20260807-visual-cleanup']) {
   }
 }
 
-if (!serviceWorker.includes(`nur-islam-premium-v122-${'${VISUAL_VERSION}'}`)) {
-  throw new Error('Service worker app-shell cache must be v122 for the selected 3D mosque brand and current offline artwork.');
+if (!serviceWorker.includes(`nur-islam-premium-v125-${'${VISUAL_VERSION}'}`)) {
+  throw new Error('Service worker app-shell cache must be v125 for the current brand, readable themes and offline artwork.');
 }
 for (const name of new Set([...currentIllustrations].map((name) => name.replace(/\.webp$/, '')))) {
   if (!serviceWorker.includes(`premiumAsset('${name}.webp')`)) {

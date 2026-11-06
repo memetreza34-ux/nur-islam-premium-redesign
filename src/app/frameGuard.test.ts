@@ -41,7 +41,7 @@ describe('blockForeignFraming', () => {
     blockForeignFraming(root);
 
     expect(root.querySelector('.frame-guard')).not.toBeNull();
-    expect(root.textContent).toContain('Nur Islam läuft nicht in fremden Seiten');
+    expect(root.textContent).toContain('Awwaba läuft nicht in fremden Seiten');
     expect(root.querySelector('script')).toBeNull();
 
     const link = root.querySelector('a');

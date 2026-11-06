@@ -483,7 +483,7 @@ export function PrayerScreen({
   const shareCompletion = async () => {
     const text = `Mein heutiger Gebets-Tracker ist vollständig: 5 von 5 Pflichtgebeten.${completionStreak > 1 ? ` Aktuelle Serie: ${completionStreak} Tage.` : ''}`;
     try {
-      if (navigator.share) await navigator.share({ title: 'Nur Islam · Gebets-Tracker', text });
+      if (navigator.share) await navigator.share({ title: 'Awwaba · Gebets-Tracker', text });
       else {
         await navigator.clipboard.writeText(text);
         flash('Abschluss wurde kopiert');
@@ -550,9 +550,10 @@ export function PrayerScreen({
           <button className={tonePlaying ? 'adhan-button adhan-button--active' : 'adhan-button'} onClick={testTone} disabled={tonePlaying} aria-label="Hinweiston testen"><Volume2 size={19} /></button>
         </div>
       </section>
-      ) : (
-        <section className="next-prayer-panel reference-next-prayer">
-          <p className="reference-prayer-location-privacy">Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Aktualisiere die Daten oder gleiche mit einer örtlichen Moschee ab.</p>
+      ) : status === 'loading' ? null : (
+        <section className="prayer-times-unavailable" aria-label="Gebetszeiten nicht verfügbar">
+          <Clock3 size={20} aria-hidden="true" />
+          <p>Für diesen Standort liegen gerade keine verwendbaren Gebetszeiten vor. Aktualisiere die Daten oder gleiche mit einer örtlichen Moschee ab.</p>
         </section>
       )}
 

@@ -22,7 +22,8 @@ for (const fileName of primaryScreens) {
   if (!source.includes('className="screen')) {
     throw new Error(`${fileName} does not use the shared screen layout class.`);
   }
-  const header = source.match(/<header className="reference-screen-header(?: reference-screen-header--banner)?">([\s\S]*?)<\/header>/)?.[1];
+  const header = source.match(/<header className="reference-screen-header(?: reference-screen-header--banner)?">([\s\S]*?)<\/header>/)?.[1]
+    ?? source.match(/<ScreenBanner\b[^>]*>([\s\S]*?)<\/ScreenBanner>/)?.[1];
   if (!header) {
     throw new Error(`${fileName} does not use the shared reference screen header.`);
   }
@@ -92,6 +93,10 @@ if (!app.includes("'app-shell app-shell--detail'")) {
 }
 
 const shell = await readFile(resolve(root, 'src/styles/reference-shell.css'), 'utf8');
+const banner = await readFile(resolve(root, 'src/shared/ScreenBanner.tsx'), 'utf8');
+if (!banner.includes('reference-screen-header reference-screen-header--banner') || !banner.includes('resolveAppPath') || !banner.includes('--screen-banner-art')) {
+  throw new Error('Shared banners must retain the header geometry and base-path-safe artwork.');
+}
 const headerFlow = shell.split('.reference-screen-header {')[1]?.split('}')[0] ?? '';
 if (!headerFlow.includes('position: static') || /position:\s*(sticky|fixed)/.test(headerFlow)) {
   throw new Error('Screen headers must scroll with the page.');

@@ -9,7 +9,6 @@ export const TOPIC_SUMMARIES = {
   wudu: 'Die Gebetswaschung Schritt für Schritt lernen',
   salah: 'Haltung und Wortlaut des Gebets üben',
   names: 'Namen und Bedeutungen kennenlernen',
-  quiz: 'Wissen mit Fragen und Erklärungen testen',
   duas: 'Bittgebete für den Alltag entdecken',
   dhikr: 'Mit Zähler und Tagesziel Allahs gedenken',
   qibla: 'Die Gebetsrichtung mit dem Kompass finden',

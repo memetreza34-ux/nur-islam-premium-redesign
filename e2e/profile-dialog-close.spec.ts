@@ -7,7 +7,7 @@ async function openMore(page: Page) {
   await page.route('https://api.aladhan.com/**', route => route.abort());
   await page.goto('/?preview=1');
   await expect(page.getByRole('navigation')).toBeVisible();
-  await expect(page.getByRole('main', { name: 'Nur Islam wird geladen' })).toBeHidden();
+  await expect(page.getByRole('main', { name: 'Awwaba wird geladen' })).toBeHidden();
   await page.getByRole('navigation').getByRole('button', { name: 'Mehr', exact: true }).click();
   await expect(page.getByRole('heading', { name: 'Mehr', exact: true })).toBeVisible();
 }
@@ -18,8 +18,8 @@ for (const [name, width, height] of [
   test(`About X receives pointer clicks, including after scrolling on ${name}`, async ({ page }) => {
     await page.setViewportSize({ width, height });
     await openMore(page);
-    const opener = page.getByRole('button', { name: 'Über Nur Version und Produktprinzipien', exact: true });
-    const dialog = page.getByRole('dialog', { name: 'Über Nur', exact: true });
+    const opener = page.getByRole('button', { name: 'Über Awwaba Version und Produktprinzipien', exact: true });
+    const dialog = page.getByRole('dialog', { name: 'Über Awwaba', exact: true });
 
     for (const scrolled of [false, true]) {
       await opener.click();
@@ -49,7 +49,7 @@ test('profile dialogs retain X, Enter, Escape and Done closing', async ({ page }
     ['Sprache Aktuell vollständig: Deutsch', 'App-Sprache'],
     ['Einstellungen', 'Einstellungen'],
     ['Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt', 'Hilfe und Datenschutz'],
-    ['Über Nur Version und Produktprinzipien', 'Über Nur'],
+    ['Über Awwaba Version und Produktprinzipien', 'Über Awwaba'],
   ]) {
     const opener = page.getByRole('button', { name: openerName, exact: true });
     const dialog = page.getByRole('dialog', { name: dialogName, exact: true });
@@ -59,8 +59,8 @@ test('profile dialogs retain X, Enter, Escape and Done closing', async ({ page }
     await expect(opener).toBeFocused();
   }
 
-  const opener = page.getByRole('button', { name: 'Über Nur Version und Produktprinzipien', exact: true });
-  const dialog = page.getByRole('dialog', { name: 'Über Nur', exact: true });
+  const opener = page.getByRole('button', { name: 'Über Awwaba Version und Produktprinzipien', exact: true });
+  const dialog = page.getByRole('dialog', { name: 'Über Awwaba', exact: true });
   await opener.click();
   await expect(dialog.getByRole('button', { name: 'Schließen', exact: true })).toBeFocused();
   await page.keyboard.press('Enter');

@@ -170,17 +170,6 @@ areas.push({
   rows: stations.map(item => ({ text: [item.id, item.when, item.name, item.title, item.description, item.context, item.facts?.join(' · ')].filter(Boolean).join(' — '), source: [item.reference, item.sourceLabel, item.sourceUrl].filter(Boolean).join(' · ') || '— (keine)', origin: WRITTEN })),
 });
 
-// --- Quiz -------------------------------------------------------------------
-const quiz = await read('src/data/quizData.ts');
-const quizQuestions = values(quiz, 'question');
-const quizSources = values(quiz, 'source');
-areas.push({
-  name: 'Islam-Quiz',
-  tier: 'D',
-  note: '60 Fragen mit Einzelfundstellen; KI-gestützter Wortlaut- und Aussageabgleich am 11.10.2026. Kein unabhängiges Authentizitätsgutachten und keine fachliche Freigabe. Frage, Antwort und Erklärung müssen gemeinsam betrachtet werden.',
-  rows: quizQuestions.map((question, index) => ({ text: short(question), source: quizSources[index] ?? '— (keine)', origin: WRITTEN })),
-});
-
 // --- Knowledge --------------------------------------------------------------
 const knowledge = await read('src/data/knowledgeData.ts');
 const knowledgeTopics = literalArray(knowledge, 'KNOWLEDGE_TOPICS');
@@ -450,7 +439,7 @@ const TIERS = [
   {
     id: 'D',
     title: 'Stufe D — Übriges',
-    lead: 'Wissenstexte, Kalender, Quizfragen und Angaben. Auch diese Inhalte können Entscheidungen und Praxis beeinflussen; die Stufe ist nur eine Reihenfolgeempfehlung.',
+    lead: 'Wissenstexte, Kalender und weitere Angaben. Auch diese Inhalte können Entscheidungen und Praxis beeinflussen; die Stufe ist nur eine Reihenfolgeempfehlung.',
   },
 ];
 
@@ -494,7 +483,7 @@ const sheet = `<!doctype html>
 <html lang="de">
 <head>
 <meta charset="utf-8">
-<title>Nur Islam — Prüfmappe</title>
+<title>Awwaba — Prüfmappe</title>
 <style>
   @page { size: A4; margin: 16mm 14mm; }
   * { box-sizing: border-box; }
@@ -528,7 +517,7 @@ const sheet = `<!doctype html>
 </head>
 <body>
   <div class="wrap">
-    <h1>Nur Islam — Inhalte zur fachlichen Prüfung</h1>
+    <h1>Awwaba — Inhalte zur fachlichen Prüfung</h1>
     <p class="sub">Stand: ${total} Einträge, davon ${written} für diese App verfasst · erzeugt aus dem Datenbestand der App</p>
 
     <div class="intro">

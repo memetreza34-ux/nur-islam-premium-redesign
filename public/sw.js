@@ -1,5 +1,5 @@
 const VISUAL_VERSION = '20260826-original-art';
-const CACHE_NAME = `nur-islam-premium-v122-${VISUAL_VERSION}`;
+const CACHE_NAME = `nur-islam-premium-v125-${VISUAL_VERSION}`;
 const QURAN_CACHE_PREFIX = 'nur-quran-online-';
 const scoped = (path = '') => new URL(path.replace(/^\/+/, ''), self.registration.scope).toString();
 const premiumAsset = (name) => `${scoped(`premium-assets/high-res-objects/${name}`)}?v=${name === 'nur-logo-mosque-3d-v1.webp' ? '20261016-mosque-3d-v1' : VISUAL_VERSION}`;
@@ -31,7 +31,6 @@ const APP_SHELL = [
   premiumAsset('learn-hub-community-v1.webp'),
   premiumAsset('zakat-calculator-v1.webp'),
   premiumAsset('home-names-v5.webp'),
-  premiumAsset('home-quiz-v6.webp'),
   premiumAsset('prayer-companion-fasting-v1.webp'),
   premiumAsset('learn-hub-pillars-v1.webp'),
   premiumAsset('learn-hub-wudu-v1.webp'),
@@ -107,7 +106,7 @@ async function warmQuranCache() {
 // policy that forbids scripts and every outbound request.
 function offlineDocument() {
   return new Response(
-    '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#001b16"><title>Nur Islam · Offline</title><style>html,body{margin:0;min-height:100%;background:#00120f;color:#fff8ea;font-family:system-ui,sans-serif}body{display:grid;min-height:100vh;place-items:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 0%,rgba(226,191,119,.08),transparent 18rem),linear-gradient(180deg,#042a21 0%,#001b16 48%,#00120f 100%)}.card{max-width:360px;padding:28px;border:1px solid rgba(226,191,119,.3);border-radius:28px;background:linear-gradient(145deg,rgba(13,87,67,.92),rgba(0,27,22,.98));text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.42)}h1{font-family:Georgia,serif;font-size:2rem;margin:0 0 10px;color:#fff8ea}p{color:#91a89e;font-size:.9rem;line-height:1.6;margin:0 0 18px}a.retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid rgba(226,191,119,.35);border-radius:18px;background:linear-gradient(135deg,#f2d79a,#e2bf77);color:#10251e;font-weight:700;text-decoration:none}</style></head><body><main class="card"><h1>Nur Islam ist offline</h1><p>Gespeicherte Inhalte stehen nach dem ersten vollständigen Laden weiterhin zur Verfügung. Prüfe deine Verbindung und versuche es erneut.</p><a class="retry" href="">Erneut versuchen</a></main></body></html>',
+    '<!doctype html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#001b16"><title>Awwaba · Offline</title><style>html,body{margin:0;min-height:100%;background:#00120f;color:#fff8ea;font-family:system-ui,sans-serif}body{display:grid;min-height:100vh;place-items:center;padding:24px;box-sizing:border-box;background:radial-gradient(circle at 50% 0%,rgba(226,191,119,.08),transparent 18rem),linear-gradient(180deg,#042a21 0%,#001b16 48%,#00120f 100%)}.card{max-width:360px;padding:28px;border:1px solid rgba(226,191,119,.3);border-radius:28px;background:linear-gradient(145deg,rgba(13,87,67,.92),rgba(0,27,22,.98));text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.42)}h1{font-family:Georgia,serif;font-size:2rem;margin:0 0 10px;color:#fff8ea}p{color:#91a89e;font-size:.9rem;line-height:1.6;margin:0 0 18px}a.retry{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;border:1px solid rgba(226,191,119,.35);border-radius:18px;background:linear-gradient(135deg,#f2d79a,#e2bf77);color:#10251e;font-weight:700;text-decoration:none}</style></head><body><main class="card"><h1>Awwaba ist offline</h1><p>Gespeicherte Inhalte stehen nach dem ersten vollständigen Laden weiterhin zur Verfügung. Prüfe deine Verbindung und versuche es erneut.</p><a class="retry" href="">Erneut versuchen</a></main></body></html>',
     {
       headers: {
         'Content-Type': 'text/html; charset=utf-8',

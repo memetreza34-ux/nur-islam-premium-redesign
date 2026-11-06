@@ -10,7 +10,7 @@ import { openApp } from './appReady';
  */
 const target = process.env.SHOT_DIR;
 
-const tabs = ['Start', 'Gebete', 'Kalender', 'Mehr'];
+const tabs = ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr'];
 const hubEntries = ['Quran', 'Dhikr', 'Duas', 'Qibla', 'Namen'];
 
 test.skip(!target, 'SHOT_DIR is not set');

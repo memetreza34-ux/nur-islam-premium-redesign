@@ -2,6 +2,7 @@ import { TopicCardContent } from '../shared/TopicCardContent';
 import { TOPIC_SUMMARIES } from '../data/topicSummaries';
 import { rememberScreenFocus } from '../services/screenFocusMemory';
 import { ScreenStateProvider } from '../shared/ScreenState';
+import { ScreenBackProvider } from '../shared/ScreenBackButton';
 import { restoreScrollWhenReady } from '../services/restoreScreenScroll';
 import { Suspense, lazy, useCallback, useEffect, useRef, useState } from 'react';
 import type { UIEvent } from 'react';
@@ -48,14 +49,14 @@ const screenLoading = <div className="screen-lazy-fallback" role="status">Ansich
 
 const LearnScreen = lazy(() => import('../screens/LearnScreen')
   .then((module) => ({ default: module.LearnScreen })));
-// Split out of the initial bundle: these thirteen screens carry the quiz
+// Split out of the initial bundle: these on-demand screens carry the learning
 // catalogue, the prophets and the companion lists, and none of them is
 // reachable before the learning hub. Loading them on the way in kept ~20 KB
 // gzipped off the first paint.
 const LegacyFeatureScreen = lazy(() => import('../screens/LegacyFeatureScreens')
   .then((module) => ({ default: module.LegacyFeatureScreen })));
 import type { LegacyFeatureId } from '../data/legacyFeatures';
-import { learningLegacyFeatures, quizFeature, serviceLegacyFeatures } from '../data/legacyFeatures';
+import { learningLegacyFeatures, serviceLegacyFeatures } from '../data/legacyFeatures';
 import { readScreenScroll, rememberScreenScroll } from '../services/screenScrollMemory';
 import { AccountScreen } from '../screens/AccountScreen';
 import { NotesScreen } from '../screens/NotesScreen';
@@ -85,7 +86,6 @@ import type { NurIcon } from '../shared/NurIcons';
 import {
   NurDuaIcon,
   NurMihrabIcon,
-  NurQuizIcon,
   NurRosetteIcon,
 } from '../shared/NurIcons';
 import {
@@ -132,7 +132,6 @@ type QuickAction = {
 const quickActions: QuickAction[] = [
   { label: 'Beten lernen', detail: 'Das Gebet Schritt für Schritt lernen', icon: NurMihrabIcon, art: '/premium-assets/high-res-objects/home-learn-prayer-v5.webp', target: 'prayer-learning' },
   { label: '99 Namen Allahs', detail: 'Namen und Bedeutungen kennenlernen', icon: NurRosetteIcon, art: '/premium-assets/high-res-objects/home-names-v5.webp', target: 'names' },
-  { label: 'Islam Quiz', detail: 'Wissen mit Fragen und Erklärungen testen', icon: NurQuizIcon, art: '/premium-assets/high-res-objects/home-quiz-v6.webp', target: 'legacy:quiz' },
   { label: 'Duas', detail: 'Bittgebete für den Alltag entdecken', icon: NurDuaIcon, art: '/premium-assets/high-res-objects/home-duas-v5.webp', target: 'duas' },
 ];
 
@@ -220,7 +219,7 @@ function isKnownTab(value: unknown): value is Tab {
   return screensWithBottomNavigation.has(value as Tab)
     || ['reader', 'ayah', 'hadith', 'wudu', 'salah', 'legal'].includes(value)
     || LEARNING_CATEGORIES.some((category) => value === `learn:${category.id}`)
-    || [...learningLegacyFeatures, ...serviceLegacyFeatures, quizFeature].some((feature) => value === `legacy:${feature.id}`);
+    || [...learningLegacyFeatures, ...serviceLegacyFeatures].some((feature) => value === `legacy:${feature.id}`);
 }
 
 function isNavigationSnapshot(value: unknown): value is NavigationSnapshot {
@@ -298,11 +297,11 @@ function PremiumHome({
       exit={{ opacity: 0, y: reduceMotion ? 0 : -4 }}
       transition={screenTransition}
     >
-      <h1 className="sr-only">Start – Nur Islam</h1>
+      <h1 className="sr-only">Start – Awwaba</h1>
       <header className="brand-bar">
-        <div className="brand-lockup" aria-label="Nur Islam">
+        <div className="brand-lockup" aria-label="Awwaba">
           <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="brand-lockup__mark" fallback={<NurMark />} />
-          <span><strong>Nur</strong><small>Dein spiritueller Begleiter</small></span>
+          <span><strong>Awwaba</strong><small>Dein spiritueller Begleiter</small></span>
         </div>
         <div className="brand-bar__actions">
           <button className="icon-button" onClick={() => onNavigate('prayer')} aria-label="Gebete und Erinnerungen öffnen"><BellRing size={20} /></button>
@@ -822,9 +821,11 @@ export default function App() {
             the tab bar at 60ms intervals. */}
         <AnimatePresence mode="wait">
           <motion.div key={screenKey} ref={restoreScreenScroll} onScroll={rememberScroll} className="screen-transition-frame">
+            <ScreenBackProvider>
             <Suspense fallback={screenLoading}>
               <ScreenStateProvider stateKey={screenKey}>{screen}</ScreenStateProvider>
             </Suspense>
+            </ScreenBackProvider>
           </motion.div>
         </AnimatePresence>
         {screensWithBottomNavigation.has(activeTab) ? <BottomNavigation active={primaryActive} onChange={navigatePrimary} /> : null}

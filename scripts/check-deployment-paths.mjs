@@ -150,7 +150,7 @@ if (worker.includes("'/index.html'") || worker.includes("'/premium-assets/") || 
   throw new Error('Service worker still contains root-absolute app-shell paths.');
 }
 
-if (!appIcon.includes('<title id="title">Nur Islam</title>') || !appIcon.includes('Stilisierte 3D-Moschee') || !appIcon.includes('href="data:image/webp;base64,')) {
+if (!appIcon.includes('<title id="title">Awwaba</title>') || !appIcon.includes('Stilisierte 3D-Moschee') || !appIcon.includes('href="data:image/webp;base64,')) {
   throw new Error('PWA SVG must embed the selected 3D mosque artwork with its accessible identity metadata.');
 }
 if (/https?:\/\//.test(appIcon.replace('http://www.w3.org/2000/svg', ''))) {

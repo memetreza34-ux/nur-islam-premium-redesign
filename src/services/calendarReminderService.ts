@@ -91,7 +91,7 @@ function writeFiredSet(key: string, values: Set<string>) {
 
 async function showSystemNotification(entry: PersonalCalendarEntry) {
   if (!('Notification' in window) || Notification.permission !== 'granted') return;
-  const title = `Nur Islam · ${entry.title}`;
+  const title = `Awwaba · ${entry.title}`;
   const targetUrl = new URL(resolveAppPath(''), window.location.origin).toString();
   const notificationUrl = new URL(targetUrl);
   notificationUrl.searchParams.set('open', 'calendar');

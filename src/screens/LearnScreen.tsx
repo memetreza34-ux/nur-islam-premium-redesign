@@ -279,7 +279,7 @@ export function LearnScreen({
     <motion.main className="screen reference-learn-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
       <header className="reference-screen-header reference-screen-header--banner">
         <span aria-hidden="true" />
-        <div><span className="overline">Nur Islam</span><h1>Lernen</h1></div>
+        <div><span className="overline">Awwaba</span><h1>Lernen</h1></div>
         <span aria-hidden="true" />
       </header>
 

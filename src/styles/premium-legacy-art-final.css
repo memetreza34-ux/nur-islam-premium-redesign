@@ -37,8 +37,7 @@
 [data-theme='light'] .reference-legacy-notice,
 [data-theme='light'] .reference-fasting-grid small,
 [data-theme='light'] .reference-legacy-toggle small,
-[data-theme='light'] .reference-hadith-library small,
-[data-theme='light'] .reference-quiz-result p { color:#394e43; }
+[data-theme='light'] .reference-hadith-library small { color:#394e43; }
 [data-theme='light'] .reference-legacy-search input::placeholder { color:#4e685b; }
 @media (max-width:350px) {
   .reference-legacy-hero img[src*="mosque-gold-v2"] {

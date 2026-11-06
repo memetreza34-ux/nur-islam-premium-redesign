@@ -3,7 +3,6 @@ import { UMMAH_COUNTRIES, UMMAH_REGIONS } from './ummahData';
 import { ISLAMIC_EVENTS, WHITE_DAYS_EVENT, findIslamicEvents } from './islamicEventsData';
 import { DHIKR_ROUTINE_BY_ID } from './dhikrData';
 import { GLOSSARY_TERMS, KNOWLEDGE_TOPICS } from './knowledgeData';
-import { QUIZ_CATEGORIES, getQuizSourceUrl } from './quizData';
 import { DUAS } from './duaData';
 import { getCalendarEvent } from '../services/calendarViewModel';
 import { getHijriDay, getHijriMonth } from '../services/hijriCalendar';
@@ -84,47 +83,6 @@ describe('Content integrity corrections', () => {
     expect(section('sawm', 'Ausnahmen').text).toContain('keine pauschale dauerhafte Befreiung');
     expect(section('salah', 'Voraussetzung').text).toContain('nicht vor jedem Gebet');
     expect(JSON.stringify(KNOWLEDGE_TOPICS)).not.toContain('100% gültig');
-  });
-
-  it('does not invent the recording angels’ position or authenticate a Qudsi narration by its label', () => {
-    const questions = QUIZ_CATEGORIES.flatMap(category => category.questions);
-    expect(questions.find(question => question.id === 'a6')?.explanation).toContain('Quran 82:10–12');
-    expect(questions.find(question => question.id === 'had8')?.explanation).toContain('nicht authentisch');
-  });
-
-  it('keeps individual, openable citations on all 60 quiz explanations', () => {
-    const questions = QUIZ_CATEGORIES.flatMap(category => category.questions);
-    expect(questions).toHaveLength(60);
-    for (const question of questions) {
-      expect(question.source).toBeTruthy();
-      expect(getQuizSourceUrl(question.source)).toMatch(/^https:\/\/(?:quran\.com|sunnah\.com)\//);
-      expect(question.options).toHaveLength(4);
-      expect(question.options[question.correctAnswer]).toBeTruthy();
-    }
-    expect(getQuizSourceUrl('Quran 112:1–4')).toBe('https://quran.com/112/1-4');
-    expect(getQuizSourceUrl('Sahih Muslim 8a')).toBe('https://sunnah.com/muslim:8a');
-    expect(getQuizSourceUrl('unbekannte Quelle')).toBeUndefined();
-  });
-
-  it('does not restore unsupported rankings, counts or a guaranteed Istikhara dream', () => {
-    const questions = QUIZ_CATEGORIES.flatMap(category => category.questions);
-    expect(JSON.stringify(questions)).not.toMatch(/über 5000|über 2200|bester Freund|extreme Schüchternheit|beste Handlung nach/);
-    expect(questions.find(question => question.id === 'ak9')?.source).toBe('Quran 5:2');
-    expect(questions.find(question => question.id === 'dua10')?.explanation).toContain('nicht verlangt');
-  });
-
-  it('keeps replacement questions paired with their new answers, not the old option text', () => {
-    const questions = QUIZ_CATEGORIES.flatMap(category => category.questions);
-    const answers: Record<string, string> = {
-      w2: 'Maryam', w10: 'Umm Salama', ak1: 'Als großartig', ak2: 'Sanftmut',
-      ak10: 'Einem Mitmenschen zulächeln', had3: 'Umar ibn al-Khattab', had4: 'Sahih Muslim', had9: 'Von den Absichten (Niyyah)',
-      dua2: 'Als Anbetung', dua7: 'Ebenfalls „Amin“ sagen', dua8: 'Beim Verlassen des Hauses',
-      dua9: 'Vor Ungeduld und vorschnellem Aufgeben',
-    };
-    for (const [id, answer] of Object.entries(answers)) {
-      const question = questions.find(entry => entry.id === id)!;
-      expect(question.options[question.correctAnswer]).toBe(answer);
-    }
   });
 
   it('pairs the three compilation citations with their documented scope, not AI approval', () => {

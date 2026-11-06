@@ -5,7 +5,6 @@ import {
   Bookmark,
   CalendarDays,
   CircleDot,
-  CircleHelp,
   Clock3,
   Compass,
   Heart,
@@ -76,10 +75,6 @@ export function NurBookmarkIcon(props: IconProps) {
 
 export function NurPrayerTimesIcon(props: IconProps) {
   return <Clock3 {...sharedProps(props)} />;
-}
-
-export function NurQuizIcon(props: IconProps) {
-  return <CircleHelp {...sharedProps(props)} />;
 }
 
 export type NurIcon = (props: IconProps) => React.JSX.Element;

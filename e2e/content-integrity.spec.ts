@@ -30,9 +30,6 @@ for (const width of [320, 768, 1280]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await page.getByRole('button', { name: 'Zurück', exact: true }).click();
 
-    await page.getByRole('button', { name: /^Islam Quiz / }).click();
-    await expect(page.getByRole('main')).toContainText('Jede Lernfrage nennt nach deiner Antwort eine Fundstelle');
-    await page.getByRole('button', { name: 'Zurück', exact: true }).click();
     await page.getByRole('button', { name: /^99 Namen Allahs / }).click();
     await page.getByRole('button', { name: 'Quellen anzeigen: Quellen zur Namensliste', exact: true }).click();
     await expect(page.getByRole('dialog', { name: 'Quellen zur Namensliste', exact: true })).toContainText('Verbreitete traditionelle Lernliste');

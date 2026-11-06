@@ -1,10 +1,11 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { DialogHeader } from '../shared/DialogHeader';
 import { useScreenState } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   BookOpenCheck,
-  ChevronLeft,
   CircleCheck,
   Copy,
   Filter,
@@ -160,11 +161,11 @@ export function DuasScreen({ onBack, initialDuaId = null }: { onBack: () => void
       animate={{ opacity: 1, y: 0 }}
       transition={screenTransition}
     >
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-duas-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Bittgebete</span><h1>Duas</h1></div>
         <button className="icon-button" onClick={() => { setFilter('favorites'); flash(`${favorites.size} Favoriten`); }} aria-label="Favoriten anzeigen"><Heart size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="reference-duas-hero">
         <span className="reference-duas-hero__ornament" aria-hidden="true">۞</span>

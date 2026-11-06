@@ -1,11 +1,14 @@
+import { ReadingNavigation } from '../shared/ReadingNavigation';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useScreenState } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
 import { useEffect, useMemo, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { resolveAppPath } from '../app/appPaths';
 import {
   Check,
   BookOpen,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   Compass,
@@ -77,6 +80,28 @@ function repetitionRuns(step: RakatStep) {
     key: index,
     label: step.repetitionLabels?.[index] ?? `${index + 1}.`,
   }));
+}
+
+function PrayerWordingText({ step, format }: { step: RakatStep; format: 'arabic' | 'flowing' | 'syllables' }) {
+  const pronunciation = step.pronunciation ?? step.transliteration ?? '';
+  const text = format === 'arabic' ? step.arabic : format === 'flowing'
+    ? pronunciation.replaceAll('-', '').replace(/\s+/g, ' ').trim()
+    : pronunciation;
+  const content = <p
+    className={format === 'arabic' ? 'reference-rakah-wording__arabic' : 'reference-rakah-wording__pronunciation'}
+    data-format={format}
+    lang={format === 'arabic' ? 'ar' : 'de'}
+    dir={format === 'arabic' ? 'rtl' : undefined}
+  >{text}</p>;
+
+  return (step.repetitions ?? 1) > 1 ? (
+    <ol className="reference-rakah-runs">
+      {repetitionRuns(step).map((run) => <li key={run.key}>
+        <span className="reference-rakah-runs__label">{run.label}</span>
+        <div>{content}</div>
+      </li>)}
+    </ol>
+  ) : content;
 }
 
 const preparationItems = [
@@ -276,9 +301,9 @@ export function PrayerLearningScreen({
   };
 
   return (
-    <motion.main className="screen reference-prayer-course-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label={backLabel}><ChevronLeft size={20} /></button>
+    <motion.main className="screen reference-prayer-course-screen" style={{ '--screen-banner-art': `url("${resolveAppPath('/premium-assets/high-res-objects/course-banner-pillars-v1.webp')}")` } as CSSProperties} initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
+      <header className="reference-screen-header reference-screen-header--banner">
+        <ScreenBackButton onClick={onBack} label={backLabel} />
         <div><span className="overline">Beten lernen</span><h1>Gebetskurs</h1></div>
         <button className="icon-button" onClick={onOpenQibla} aria-label="Qibla öffnen"><Compass size={20} /></button>
       </header>
@@ -409,31 +434,24 @@ export function PrayerLearningScreen({
                   />
                 ) : null}
               </div>
-              {/* Jeder Durchgang trägt beides: den arabischen Wortlaut und die
-                  Umschrift. Wer das Gebet lernt, spricht meist von der Umschrift
-                  ab — sie einmal unter drei arabische Zeilen zu setzen hieße,
-                  genau der Zeile die Wiederholung vorzuenthalten, die gelesen
-                  wird. Die Bedeutung steht weiter einmal darunter: sie wird
-                  nicht mitgesprochen. */}
-              {(currentStep.repetitions ?? 1) > 1 ? (
-                <ol className="reference-rakah-runs">
-                  {repetitionRuns(currentStep).map((run) => (
-                    <li key={run.key}>
-                      <span className="reference-rakah-runs__label">{run.label}</span>
-                      <div>
-                        <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
-                        <p className="reference-rakah-wording__pronunciation"><span>Deutsche Aussprachehilfe</span>{currentStep.pronunciation ?? currentStep.transliteration}</p>
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              ) : (
-                <>
-                  <p className="reference-rakah-wording__arabic" lang="ar" dir="rtl">{currentStep.arabic}</p>
-                  <p className="reference-rakah-wording__pronunciation"><span>Deutsche Aussprachehilfe</span>{currentStep.pronunciation ?? currentStep.transliteration}</p>
-                </>
-              )}
-              <p className="reference-rakah-wording__translation"><span>Sinngemäße Bedeutung</span>{currentStep.translation}</p>
+              <div className="reference-rakah-wording__sections" key={`${selectedPrayerId}-${practiceRakah}-${stepIndex}`}>
+                <details className="reference-guide-tips reference-rakah-wording__section" name="prayer-wording" open>
+                  <summary><span>Arabisch</span><ChevronDown size={18} aria-hidden="true" /></summary>
+                  <div><PrayerWordingText step={currentStep} format="arabic" /></div>
+                </details>
+                <details className="reference-guide-tips reference-rakah-wording__section" name="prayer-wording">
+                  <summary><span>Aussprache als Fließtext</span><ChevronDown size={18} aria-hidden="true" /></summary>
+                  <div><PrayerWordingText step={currentStep} format="flowing" /></div>
+                </details>
+                <details className="reference-guide-tips reference-rakah-wording__section" name="prayer-wording">
+                  <summary><span>Aussprache mit Silbenstrichen</span><ChevronDown size={18} aria-hidden="true" /></summary>
+                  <div><PrayerWordingText step={currentStep} format="syllables" /></div>
+                </details>
+                <details className="reference-guide-tips reference-rakah-wording__section" name="prayer-wording">
+                  <summary><span>Sinngemäße Bedeutung</span><ChevronDown size={18} aria-hidden="true" /></summary>
+                  <div><p className="reference-rakah-wording__translation">{currentStep.translation}</p></div>
+                </details>
+              </div>
               <details className="reference-guide-tips">
                 <summary><BookOpen size={18} aria-hidden="true" /><span>Hinweise zum Wortlaut</span><ChevronDown size={18} aria-hidden="true" /></summary>
                 {currentStep.repetitionNote ? <p className="reference-rakah-pronunciation-note">{currentStep.repetitionNote}</p> : null}
@@ -474,14 +492,7 @@ export function PrayerLearningScreen({
               <p className="reference-madhhab__note">{MADHHAB_DISCLAIMER}</p>
             </details>
           ) : null}
-          <div className="reference-prayer-course-navigation">
-            <button disabled={stepIndex === 0 && practiceRakah === 1} onClick={goToPreviousStep}><ChevronLeft size={17} /> Zurück</button>
-            <button className="gold-button" onClick={goToNextStep}>
-              {atLastStep && isLastRakat
-                ? <><RotateCcw size={17} /> Von vorn</>
-                : <>{atLastStep ? 'Nächste Rakʿah' : 'Nächster Schritt'} <ChevronRight size={17} /></>}
-            </button>
-          </div>
+          <ReadingNavigation className="reference-prayer-course-navigation" previousLabel="Vorheriger Schritt" previousDisabled={stepIndex === 0 && practiceRakah === 1} onPrevious={goToPreviousStep} onNext={goToNextStep} nextLabel={atLastStep && isLastRakat ? 'Von vorn' : atLastStep ? 'Nächste Rakʿah' : 'Nächster Schritt'} />
         </section>
       ) : null}
 
@@ -491,7 +502,7 @@ export function PrayerLearningScreen({
       </details>
 
 
-      <SourceInfo title="Hinweise zum Gebetskurs"><section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.<br />Nur die Quran-Abschnitte haben eine Aufnahme. Sie wird erst beim Antippen von Islamic Network gestreamt und von Mishary Alafasy rezitiert. Für die übrigen Formeln helfen arabischer Wortlaut und deutsche Aussprachehilfe.</small></span></section></SourceInfo>
+      <SourceInfo title="Hinweise zum Gebetskurs" label="Hinweise zum Gebetskurs"><section className="reference-source-card"><ShieldCheck size={19} /><span><strong>Verständlicher Grundlagenkurs</strong><small>Der Ablauf ist ein allgemeiner Überblick. Handhaltungen, Formulierungen und einzelne Details können sich je nach Rechtsschule unterscheiden. Für verbindliche Praxisfragen ist eine qualifizierte Lehrperson wichtig.<br />Nur die Quran-Abschnitte haben eine Aufnahme. Sie wird erst beim Antippen von Islamic Network gestreamt und von Mishary Alafasy rezitiert. Für die übrigen Formeln helfen arabischer Wortlaut und deutsche Aussprachehilfe.</small></span></section></SourceInfo>
 
       <AnimatePresence>{toast ? <motion.div className="toast" initial={{ opacity: 0, y: reduceMotion ? 0 : 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 6 }} transition={microTransition}><CircleCheck size={18} /> {toast}</motion.div> : null}</AnimatePresence>
     </motion.main>

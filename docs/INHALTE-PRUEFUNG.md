@@ -16,9 +16,9 @@ ist, entscheidet die Prüfung selbst.
 
 | | |
 |---|---|
-| Einträge insgesamt | 1171 |
+| Einträge insgesamt | 1111 |
 | davon ohne Einzelnachweis | 24 |
-| davon für diese App verfasst | 959 |
+| davon für diese App verfasst | 899 |
 
 ## Zuerst prüfen
 
@@ -183,73 +183,6 @@ Ablauftexte mit Hadith- und Quran-Fundstellen ergänzt; keine Vollständigkeitsz
 | 16 | quba — Masjid Quba — Quba liegt südlich des Zentrums von Madinah und ist eng mit der Ankunft nach der Hijra verbunden. — Der Prophet ﷺ hielt sich nach der Auswanderung zunächst in Quba auf. Die dort errichtete Moschee gilt als die erste in der islamischen Geschichte gebaute Moschee. — Südlich von Madinah · Mit der Hijra verbunden | Saudipedia · Masjid Quba · https://saudipedia.com/%D9%85%D8%B3%D8%AC%D8%AF-%D9%82%D8%A8%D8%A7%D8%A1 | hier verfasst | ☐ |
 | 17 | uhud — Berg Uhud — Der lange Bergzug liegt nördlich von Madinah und prägt die Landschaft der Stadt. — Am Berg Uhud fand im dritten Jahr nach der Hijra die Schlacht von Uhud statt. Der Ort erinnert an ein zentrales Ereignis der frühen muslimischen Gemeinschaft. — Nördlich von Madinah · Schlacht von Uhud · 3 AH | Saudipedia · Berg Uhud · https://saudipedia.com/en/mount-uhud | hier verfasst | ☐ |
 | 18 | aqsa — Al-Masjid al-Aqsa — Al-Masjid al-Aqsa bezeichnet den heiligen Moscheebezirk in Jerusalem. — Der Quran nennt Al-Masjid al-Aqsa als Ziel der Nachtreise. Der weitläufige Bezirk umfasst mehrere bedeutende Gebets- und Bauwerke. — Im Quran ausdrücklich genannt · Historisch erste Qibla | Quran 17:1 · Quran 17:1 · https://quran.com/17/1 | hier verfasst | ☐ |
-
-## Islam-Quiz
-
-60 Fragen mit Einzelfundstellen; KI-gestützter Wortlaut- und Aussageabgleich am 11.10.2026. Kein unabhängiges Authentizitätsgutachten und keine fachliche Freigabe. Frage, Antwort und Erklärung müssen gemeinsam betrachtet werden.
-
-| Nr. | Inhalt | Quelle | Herkunft | geprüft |
-|---:|---|---|---|:---:|
-| 1 | Was ist die Bedeutung von "Tawhid"? | Quran 112:1–4 | hier verfasst | ☐ |
-| 2 | Wie viele Glaubensinhalte nennt der Jibril-Hadith beim Iman? | Sahih Muslim 8a | hier verfasst | ☐ |
-| 3 | Was ist "Schirk"? | Quran 31:13 | hier verfasst | ☐ |
-| 4 | Welcher Engel überbrachte dem Propheten ﷺ den Quran? | Quran 2:97 | hier verfasst | ☐ |
-| 5 | Welcher Glaubensinhalt wird mit „Al-Qadr“ bezeichnet? | Sahih Muslim 8a | hier verfasst | ☐ |
-| 6 | Wer sind die "Kiraman Katibin"? | Quran 82:10–12 | hier verfasst | ☐ |
-| 7 | Welches Buch wurde dem Propheten Dawud (a.s.) offenbart? | Quran 17:55 | hier verfasst | ☐ |
-| 8 | Was bezeichnet „Fitrah“ in Quran 30:30? | Quran 30:30 | hier verfasst | ☐ |
-| 9 | Was bedeutet der Name Allahs "Al-Ahad"? | Quran 112:1–4 | hier verfasst | ☐ |
-| 10 | Bis wann besteht das „Barzakh“ in Quran 23:100? | Quran 23:100 | hier verfasst | ☐ |
-| 11 | Wessen Gesellschaft und Unterstützung würdigte der Prophet ﷺ in Bukhari 3654 besonders? | Sahih al-Bukhari 3654 | hier verfasst | ☐ |
-| 12 | Welcher Gefährte berichtet in Muslim 8a vom Besuch Jibrils? | Sahih Muslim 8a | hier verfasst | ☐ |
-| 13 | Bei welchem Gefährten erwähnt Muslim 2401 die Schamhaftigkeit der Engel? | Sahih Muslim 2401 | hier verfasst | ☐ |
-| 14 | Welcher Gefährte berichtet vom abendlichen Dhikr mit seiner Frau Fatima? | Sahih al-Bukhari 5361 | hier verfasst | ☐ |
-| 15 | Wer erklärte seine vielen Überlieferungen mit seiner häufigen Anwesenheit beim Propheten … | Sahih al-Bukhari 118 | hier verfasst | ☐ |
-| 16 | Welcher Gefährte rief laut Bukhari 617 bereits in der Nacht den Adhan? | Sahih al-Bukhari 617 | hier verfasst | ☐ |
-| 17 | Wer erinnerte Abu ad-Darda an die Rechte seines Herrn, seiner selbst und seiner Familie? | Sahih al-Bukhari 1968 | hier verfasst | ☐ |
-| 18 | Wer fragte den Propheten ﷺ nach dem Schlechten, um sich davor zu schützen? | Sahih al-Bukhari 3606 | hier verfasst | ☐ |
-| 19 | Welcher Gefährte ist in Bukhari 4262 mit einem „Schwert Allahs“ gemeint? | Sahih al-Bukhari 4262 | hier verfasst | ☐ |
-| 20 | Wen beauftragte Abu Bakr laut Bukhari 4986 mit der Sammlung des Quran? | Sahih al-Bukhari 4986 | hier verfasst | ☐ |
-| 21 | Welche Ehefrau bestärkte den Propheten ﷺ nach dem ersten Offenbarungserlebnis? | Sahih al-Bukhari 3 | hier verfasst | ☐ |
-| 22 | Welche Frau nennt Quran 66:12 als Tochter Imrans? | Quran 66:12 | hier verfasst | ☐ |
-| 23 | Nach welcher Frau ist Sure 19 benannt? | Quran 19:16 | hier verfasst | ☐ |
-| 24 | Wie heißt die Frau des Pharao in Bukhari 3411? | Sahih al-Bukhari 3411 | hier verfasst | ☐ |
-| 25 | Welche Frau erhielt gemeinsam mit Ali den Rat zum Dhikr vor dem Schlafen? | Sahih al-Bukhari 5361 | hier verfasst | ☐ |
-| 26 | Welche Ehefrau überliefert den Bericht über den Beginn der Offenbarung in Bukhari 3? | Sahih al-Bukhari 3 | hier verfasst | ☐ |
-| 27 | Wessen Suche nach Wasser zwischen Safa und Marwa beschreibt Bukhari 3364? | Sahih al-Bukhari 3364 | hier verfasst | ☐ |
-| 28 | Wen bezeichnet Quran 33:6 als Mütter der Gläubigen? | Quran 33:6 | hier verfasst | ☐ |
-| 29 | Wer teilte ihren Gürtel, um Reiseproviant für den Propheten ﷺ und Abu Bakr zu befestigen? | Sahih al-Bukhari 3907 | hier verfasst | ☐ |
-| 30 | Welche Ehefrau berichtet in Muslim 918b von der Dua bei einem Unglück? | Sahih Muslim 918b | hier verfasst | ☐ |
-| 31 | Wie beschreibt Quran 68:4 den Charakter des Propheten ﷺ? | Quran 68:4 | hier verfasst | ☐ |
-| 32 | Welche Eigenschaft verschönert laut Muslim 2594a das, worin sie vorkommt? | Sahih Muslim 2594a | hier verfasst | ☐ |
-| 33 | Welchen Umgang mit den Eltern fordert Quran 17:23–24? | Quran 17:23–24 | hier verfasst | ☐ |
-| 34 | Wie erklärt Muslim 2589 „Ghibah“? | Sahih Muslim 2589 | hier verfasst | ☐ |
-| 35 | Was empfiehlt Muslim 54a, um die Liebe untereinander zu fördern? | Sahih Muslim 54a | hier verfasst | ☐ |
-| 36 | Welche Haltung gegenüber Nachbarn fordert Bukhari 6018? | Sahih al-Bukhari 6018 | hier verfasst | ☐ |
-| 37 | Was bedeutet „Sabr“ in Quran 2:153? | Quran 2:153 | hier verfasst | ☐ |
-| 38 | Was wird in Muslim 223 sinngemäß als die Hälfte des Glaubens bezeichnet? | Sahih Muslim 223 | hier verfasst | ☐ |
-| 39 | Wobei sollen Menschen laut Quran 5:2 zusammenarbeiten? | Quran 5:2 | hier verfasst | ☐ |
-| 40 | Welche freundliche Geste nennt Tirmidhi 1956 eine Sadaqah? | At-Tirmidhi 1956 | hier verfasst | ☐ |
-| 41 | Was ist ein Hadith? | Sunnah.com: Über Hadith | hier verfasst | ☐ |
-| 42 | Welche Sammlung stellte Muhammad ibn Ismail al-Bukhari zusammen? | Sunnah.com: Über Sahih al-Bukhari | hier verfasst | ☐ |
-| 43 | Welcher Gefährte ist am Anfang von Bukhari 1 als Überlieferer genannt? | Sahih al-Bukhari 1 | hier verfasst | ☐ |
-| 44 | In welcher Sammlung steht Hadith 223 über die Reinheit? | Sahih Muslim 223 | hier verfasst | ☐ |
-| 45 | Wie bewertet an-Nawawi in seiner Einleitung die Überlieferung über das Bewahren von vierz… | An-Nawawi: Vierzig Hadithe, Einleitung | hier verfasst | ☐ |
-| 46 | Wer ist der Autor von "Sahih Muslim"? | Sunnah.com: Über Sahih Muslim | hier verfasst | ☐ |
-| 47 | Was muss man bei unterschiedlichen Hadith-Sammlungen beachten? | Sunnah.com: Über Hadith | hier verfasst | ☐ |
-| 48 | Was kennzeichnet die Qudsi-Überlieferung in Muslim 2577a? | Sahih Muslim 2577a | hier verfasst | ☐ |
-| 49 | Wovon hängt die Bewertung der Taten in Bukhari 1 ab? | Sahih al-Bukhari 1 | hier verfasst | ☐ |
-| 50 | Wer war Imam An-Nawawi? | An-Nawawi: Vierzig Hadithe, Einleitung | hier verfasst | ☐ |
-| 51 | Was bedeutet das Wort "Dua"? | Quran 40:60 | hier verfasst | ☐ |
-| 52 | Wie bezeichnet Abu Dawud 1479 die Dua? | Sunan Abi Dawud 1479 | hier verfasst | ☐ |
-| 53 | Welche Nachtzeit hebt Bukhari 1145 für Bitten und Vergebung hervor? | Sahih al-Bukhari 1145 | hier verfasst | ☐ |
-| 54 | Welche Bitte nennt Quran 21:87 beim Mann des Fisches? | Quran 21:87–88 | hier verfasst | ☐ |
-| 55 | Was empfiehlt Abu Dawud 1481 vor dem eigenen Bittgebet? | Sunan Abi Dawud 1481 | hier verfasst | ☐ |
-| 56 | Welche Gebetshaltung hebt Muslim 482 für das Bittgebet hervor? | Sahih Muslim 482 | hier verfasst | ☐ |
-| 57 | Was empfiehlt Bukhari 780, wenn der Imam „Amin“ sagt? | Sahih al-Bukhari 780 | hier verfasst | ☐ |
-| 58 | Wann nennt Abu Dawud 5095 die Formel „Bismillah, tawakkaltu alallah, la hawla wa la quwwa… | Sunan Abi Dawud 5095 | hier verfasst | ☐ |
-| 59 | Wovor warnt Bukhari 6340 beim Bittgebet? | Sahih al-Bukhari 6340 | hier verfasst | ☐ |
-| 60 | Worum bittet man bei der Istikhara? | Sahih al-Bukhari 6382 | hier verfasst | ☐ |
 
 ## Wissensbibliothek
 

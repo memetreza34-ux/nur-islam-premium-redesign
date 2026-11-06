@@ -17,7 +17,6 @@ const groups = [
       ['hadith-library', 'Hadith-Sammlung'],
       ['knowledge', 'Wissensbibliothek'],
       ['prophets', 'Propheten'],
-      ['quiz', 'Islam-Quiz'],
       ['hajj', 'Hajj & Umrah'],
       ['sunnah', 'Sunnah im Alltag'],
       ['sins', 'Fehler & Reue'],

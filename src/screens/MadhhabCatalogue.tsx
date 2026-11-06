@@ -1,5 +1,8 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useScreenState, useScreenRef } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
+import { ReadingIntroduction } from '../shared/ReadingIntroduction';
 import { useRef, useState } from 'react';
 import {
   BookOpenCheck,
@@ -22,25 +25,24 @@ function screenFrame(element: HTMLElement | null) {
 
 function CatalogueHeader({ title, onBack }: { title: string; onBack: () => void }) {
   return (
-    <header className="reference-screen-header">
-      <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+    <ScreenBanner art="course-banner-terms-v1.webp">
+      <ScreenBackButton onClick={onBack} label="Zurück" />
       <div><span className="overline">Islamisches Recht verstehen</span><h1>{title}</h1></div>
       <span className="reference-legacy-header-icon"><Scale size={20} /></span>
-    </header>
+    </ScreenBanner>
   );
 }
 
 function MadhhabCatalogue({ onOpen }: { onOpen: (id: MadhhabId, source: HTMLElement) => void }) {
   return (
     <>
-      <section className="madhhab-intro" aria-labelledby="madhhab-intro-title">
+      <ReadingIntroduction>
         <div>
-          <span className="overline">Einfach erklärt</span>
           <h2 id="madhhab-intro-title">Was ist eine Rechtsschule?</h2>
           <p>Eine Rechtsschule heißt auf Arabisch <strong>Madhhab</strong>. Sie erklärt, wie Gelehrte aus Quran und Sunnah Regeln für Gebet, Alltag und Zusammenleben ableiten.</p>
         </div>
-        <p className="madhhab-intro__note">Gemeinsame Glaubensgrundlagen, unterschiedliche Herleitungen – keine vier Religionen und keine Rangliste.</p>
-      </section>
+        <p>Gemeinsame Glaubensgrundlagen, unterschiedliche Herleitungen – keine vier Religionen und keine Rangliste.</p>
+      </ReadingIntroduction>
 
       <section className="madhhab-catalogue" aria-labelledby="madhhab-catalogue-title">
         <div className="section-heading"><div><span className="overline">Katalog</span><h2 id="madhhab-catalogue-title">Eine Schule öffnen</h2></div><span className="reference-legacy-count">4</span></div>
@@ -104,7 +106,7 @@ function MadhhabDetail({ school, onBack }: { school: MadhhabEntry; onBack: () =>
           <div className="madhhab-context-grid"><div><MapPin size={18} /><h4>Historische Verbreitung</h4><p>{school.spread}</p></div><div><Scale size={18} /><h4>Was der Unterschied bedeutet</h4><p>{school.practice}</p></div></div>
         </section>
 
-        <SourceInfo title="Quellen und offizielle Startseiten"><section id="madhhab-quellen">
+        <SourceInfo title="Quellen und offizielle Startseiten" label="Quellen und Einordnung"><section id="madhhab-quellen">
           <span className="overline">Zum Weiterlesen</span><h3>Quellen und offizielle Startseiten</h3>
           <p>Da eine historische Rechtsschule keine zentrale Organisation ist, gibt es keine „offizielle Homepage“ der Schule. Diese direkten Fachlinks stammen von anerkannten Institutionen und Nachschlagewerken.</p>
           <div className="madhhab-source-list">
