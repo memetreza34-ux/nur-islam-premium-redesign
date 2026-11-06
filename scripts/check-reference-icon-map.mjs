@@ -70,7 +70,6 @@ requireFragments(app, 'Primary navigation', [
 for (const [label, icon] of [
   ['Beten lernen', 'NurMihrabIcon'],
   ['99 Namen Allahs', 'NurRosetteIcon'],
-  ['Islam Quiz', 'NurQuizIcon'],
   ['Duas', 'NurDuaIcon'],
 ]) {
   const pairing = new RegExp(`label: '${label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}'[^}]*icon: ${icon}\\b`);
@@ -91,7 +90,6 @@ requireFragments(nurIcons, 'Lucide-backed Nur icons', [
   'return <CalendarDays {...sharedProps(props)} />;',
   'return <Bookmark {...sharedProps(props)} />;',
   'return <Clock3 {...sharedProps(props)} />;',
-  'return <CircleHelp {...sharedProps(props)} />;',
   'strokeWidth: 1.75',
 ]);
 

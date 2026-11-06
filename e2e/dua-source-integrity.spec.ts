@@ -6,7 +6,7 @@ test.use({ serviceWorkers: 'block', reducedMotion: 'reduce' });
 async function openDuas(page: Page) {
   await page.route('https://api.aladhan.com/**', route => route.abort());
   await page.goto('/?preview=1');
-  await expect(page.getByRole('main', { name: 'Nur Islam wird geladen' })).toHaveCount(0);
+  await expect(page.getByRole('main', { name: 'Awwaba wird geladen' })).toHaveCount(0);
   await page.getByRole('navigation').getByRole('button', { name: 'Mehr', exact: true }).click();
   await page.getByText('Duas', { exact: true }).first().click();
   await expect(page.locator('.reference-dua-card')).toHaveCount(34);

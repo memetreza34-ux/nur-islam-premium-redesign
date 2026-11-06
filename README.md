@@ -1,4 +1,6 @@
-# Nur Islam Premium
+# Awwaba
+
+Produktname seit 04.11.2026: **Awwaba**. Verbindliche Schreibweise und technische Kompatibilität: [Markenname](docs/BRAND-NAME.md).
 
 Mobile-first PWA für Quran, Gebetszeiten, Qibla, Dhikr, Duas, Lernen und weitere islamische Alltagsbereiche.
 
@@ -6,7 +8,7 @@ Mobile-first PWA für Quran, Gebetszeiten, Qibla, Dhikr, Duas, Lernen und weiter
 
 Der aktive Code liegt auf `design/claude-design-system`. Das ist der einzige Arbeitsbranch; `main` ist der Veröffentlichungszweig.
 
-Nach dem bewusst ergänzten **lokalen Premium-Komfortpaket** ist der Produktumfang wieder eingefroren. Bis V1 geht es jetzt um Stabilität, reale Geräteprüfung, religiösen Fachreview, Rechte/Datenschutz, Betreiberangaben und Release-Härtung. Die echte 0,99-€-Abo-Abrechnung wird bewusst erst am Ende angebunden.
+Nach dem bewusst ergänzten **lokalen Premium-Komfortpaket** ist der Produktumfang wieder eingefroren. Bis V1 geht es um Stabilität, reale Geräteprüfung, Rechte/Datenschutz, Betreiberangaben und Release-Härtung. Der Betreiber hat den Inhaltsstand am 13.10.2026 angenommen; ein externer religiöser Prüfer ist keine Release-Voraussetzung. Die echte 0,99-€-Abo-Abrechnung wird bewusst erst am Ende angebunden.
 
 Die verbindliche Aussage zum aktuellen Stand steht in:
 
@@ -40,6 +42,8 @@ Der RC ist **noch kein freigegebener öffentlicher Produktionsrelease**. Die ver
 ## Lokale Entwicklung
 
 Voraussetzung: aktuelle Node-22-Umgebung.
+
+Für den Rechnerwechsel: [Unter Windows weiterarbeiten](docs/WINDOWS-WEITERARBEITEN.md).
 
 ```bash
 npm ci
@@ -109,7 +113,7 @@ Supabase-Ressourcen der App sind mit `nur_islam_*` namespaced. Zugriff auf die N
 1. technische und rechtliche Härtung abschließen.
 2. echte Betreiberangaben eintragen und prüfen lassen.
 3. reale iPhone-/Android-Prüfung abschließen.
-4. religiösen P0-Fachreview abschließen.
+4. die dokumentierte Inhaltsentscheidung und ihre Grenzen beibehalten.
 5. Audio-/Nutzungsrechte klären oder betroffene Audiofunktion deaktivieren.
 6. 0,99-€-Payment + serverseitiges Entitlement als letzten Produkt-Schritt integrieren und erneut prüfen.
 7. finale Release-Checkliste abzeichnen.

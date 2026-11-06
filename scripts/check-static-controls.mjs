@@ -8,7 +8,7 @@ const collections = await readFile(resolve(root, 'src/screens/CollectionsScreen.
 const styles = await readFile(resolve(root, 'src/styles.css'), 'utf8');
 
 for (const requirement of [
-  '<div className="brand-lockup" aria-label="Nur Islam">',
+  '<div className="brand-lockup" aria-label="Awwaba">',
   'reference-choice--static',
   'Deutsch ist ausgewählt',
   '.reference-choice--static',
@@ -31,7 +31,7 @@ for (const requirement of [
 
 for (const forbidden of [
   '<button className="brand-lockup"',
-  "showToast('Nur Islam')",
+  "showToast('Awwaba')",
 ]) {
   if (app.includes(forbidden)) throw new Error(`Home branding regressed to a fake action: ${forbidden}`);
 }

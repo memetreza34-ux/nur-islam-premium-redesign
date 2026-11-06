@@ -17,7 +17,7 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
-    if (import.meta.env.DEV) console.error('Nur Islam render error', error, info);
+    if (import.meta.env.DEV) console.error('Awwaba render error', error, info);
   }
 
   render() {
@@ -27,7 +27,7 @@ export class AppErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundar
         <div className="reference-system-error__halo" />
         <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" className="reference-system-error__logo" fallback={<NurMark />} />
         <span className="reference-system-error__icon"><ShieldAlert size={24} /></span>
-        <span className="overline">Nur Islam</span>
+        <span className="overline">Awwaba</span>
         <h1>Die Ansicht konnte nicht geladen werden.</h1>
         <p>Deine lokal gespeicherten Fortschritte bleiben erhalten. Lade die App neu, um zur Startseite zurückzukehren.</p>
         <button className="gold-button" onClick={() => {

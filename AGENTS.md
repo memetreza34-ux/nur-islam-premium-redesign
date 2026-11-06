@@ -14,6 +14,10 @@ mehr, und das ist Absicht.
 
 ## Was dieses Projekt ist
 
+Produktname seit 04.11.2026: **Awwaba**. Die frühere Bezeichnung „Nur Islam“ nicht wieder in sichtbare App-Texte übernehmen. Technische Altkennungen bleiben zur Daten- und Installationskompatibilität bestehen; Details: `docs/BRAND-NAME.md`.
+
+Produktentscheidung vom 04.11.2026: **Kein Islam-Quiz mehr.** Einstiege, Quiz-Navigation, Fragenkatalog und Auswertungen sind entfernt. Nicht anhand älterer Berichte oder Bilddateien wieder einbauen.
+
 **Produktentscheidung vom 27.08.2026:** Kein Chat-/KI-Assistent in der App.
 Der frühere lokale Nur-Assistent wurde vollständig entfernt. Nicht anhand alter
 Masterpläne wieder einbauen. `npm run no-assistant:check` schützt diese Grenze.

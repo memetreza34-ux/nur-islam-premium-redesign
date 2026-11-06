@@ -36,7 +36,7 @@ type OnboardingSlide = {
 
 const slides: OnboardingSlide[] = [
   {
-    eyebrow: 'Willkommen bei Nur',
+    eyebrow: 'Willkommen bei Awwaba',
     title: 'Ein ruhiger Ort für deinen Glauben.',
     description: 'Gebetszeiten, Quran, Dhikr und islamisches Wissen in einer klaren, hochwertigen App.',
     image: '/premium-assets/high-res-objects/prayer-companion-mosque-v1.webp',
@@ -134,7 +134,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
       transition={screenTransition}
     >
       <header className="reference-onboarding__topbar">
-        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} priority /><strong>Nur</strong></span>
+        <span className="reference-onboarding__brand"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} priority /><strong>Awwaba</strong></span>
         <button onClick={finish}>Überspringen</button>
       </header>
 
@@ -188,7 +188,7 @@ export function OnboardingScreen({ onComplete }: { onComplete: () => void }) {
 
         <div className="reference-onboarding__actions">
           <button className="reference-onboarding__back" disabled={index === 0} onClick={() => setIndex((value) => Math.max(0, value - 1))}><ChevronLeft size={18} /> Zurück</button>
-          <button className="gold-button" onClick={() => isLast ? finish() : setIndex((value) => Math.min(slides.length - 1, value + 1))}>{isLast ? 'Nur öffnen' : 'Weiter'} <ChevronRight size={18} /></button>
+          <button className="gold-button" onClick={() => isLast ? finish() : setIndex((value) => Math.min(slides.length - 1, value + 1))}>{isLast ? 'Awwaba öffnen' : 'Weiter'} <ChevronRight size={18} /></button>
         </div>
 
         <AnimatePresence>{status ? <motion.p className="reference-onboarding__status" initial={{ opacity: 0, y: reduceMotion ? 0 : 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }} transition={microTransition}>{status}</motion.p> : null}</AnimatePresence>

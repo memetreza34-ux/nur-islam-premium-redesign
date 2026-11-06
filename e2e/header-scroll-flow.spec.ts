@@ -16,6 +16,7 @@ for (const width of [320, 768]) {
       const frame = page.locator('.screen-transition-frame');
       const header = page.locator('main > .reference-screen-header').first();
       await expect(header).toBeVisible();
+      await expect(header).toHaveClass(/reference-screen-header--banner/);
       await expect.poll(() => header.evaluate(node => {
         for (let parent = node.parentElement; parent; parent = parent.parentElement) {
           const transform = getComputedStyle(parent).transform;
@@ -27,12 +28,23 @@ for (const width of [320, 768]) {
       await expect.poll(() => frame.evaluate(node => node.scrollTop)).toBe(0);
       expect(await header.evaluate(node => getComputedStyle(node).position)).toBe('static');
       const before = (await header.boundingBox())!;
+      const back = page.locator('.screen-back > button');
+      const backBefore = await back.count() ? (await back.boundingBox())! : null;
+      if (backBefore) {
+        await expect(back).toHaveCount(1);
+        const frameBox = (await frame.boundingBox())!;
+        expect(backBefore.x).toBeLessThan(frameBox.x + frameBox.width / 2);
+      }
       const target = await frame.evaluate(node => Math.min(450, node.scrollHeight - node.clientHeight));
       if (requireOverflow) expect(target).toBeGreaterThan(before.y + before.height);
       await frame.evaluate(node => { node.scrollTop = 450; });
       await expect.poll(() => frame.evaluate(node => node.scrollTop)).toBeCloseTo(target, 0);
       expect((await header.boundingBox())!.y).toBeCloseTo(before.y - target, 0);
       if (target > before.y + before.height) expect((await header.boundingBox())!.y + before.height).toBeLessThan(0);
+      if (backBefore) {
+        await expect(back).toBeInViewport();
+        expect((await back.boundingBox())!.y).toBeCloseTo(backBefore.y, 0);
+      }
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       await page.screenshot({ path: testInfo.outputPath(`${screen}-${width}-scrolled.png`) });
       await frame.evaluate(node => { node.scrollTop = 0; });

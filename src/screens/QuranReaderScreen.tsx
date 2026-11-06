@@ -1,3 +1,5 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { SourceInfo } from '../shared/SourceInfo';
 import { DialogHeader } from '../shared/DialogHeader';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -378,11 +380,11 @@ export function QuranReaderScreen({
 
   return (
     <motion.main className="screen reference-reader-screen reference-reader-screen--dynamic" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label={backLabel}><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-quran-v1.webp">
+        <ScreenBackButton onClick={onBack} label={backLabel} />
         <div><span className="overline">{readerLabel}</span><h1>{bundle?.meta.englishName ?? `Sure ${surahNumber}`}</h1></div>
         <button className="icon-button" onClick={() => setSettingsOpen(true)} aria-label="Leseeinstellungen öffnen"><Settings2 size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       {storageWarning ? <section className="reference-reader-source" role="status"><Database size={17} /><span><strong>Lokale Speicherung nicht bestätigt</strong><small>{storageWarning}</small></span></section> : null}
 

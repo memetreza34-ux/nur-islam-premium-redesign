@@ -117,7 +117,7 @@ test('widget labels have a full row on a normal phone', async ({ page }, testInf
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/?preview=1');
   await page.locator('.bottom-nav').getByRole('button', { name: 'Mehr', exact: true }).click();
-  await page.getByRole('button', { name: 'Nur Premium 0,99 € · Komfortfunktionen ansehen', exact: true }).click();
+  await page.getByRole('button', { name: 'Awwaba Premium 0,99 € · Komfortfunktionen ansehen', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'Home', exact: true }).click();
   const rows = page.locator('.premium-local-toggle-grid').first().locator('.premium-widget-picker-entry');
   const first = await rows.nth(0).boundingBox(), second = await rows.nth(1).boundingBox();
@@ -129,12 +129,12 @@ test('each accent updates text and action roles together', async ({ page }, test
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/?preview=1');
   await page.locator('.bottom-nav').getByRole('button', { name: 'Mehr', exact: true }).click();
-  await page.getByRole('button', { name: /Nur Premium/ }).click();
-  const dialog = page.getByRole('dialog', { name: 'Nur Islam Premium' });
+  await page.getByRole('button', { name: /Awwaba Premium/ }).click();
+  const dialog = page.getByRole('dialog', { name: 'Awwaba Premium' });
   await dialog.getByRole('button', { name: 'Design', exact: true }).click();
   const accents: Array<[string, string, string]> = [
     ['Saphir', '#8fb7cf', '#b8d8eb'], ['Pflaume', '#c69ab8', '#e2bfd5'],
-    ['Sand', '#d6b78c', '#edd2ac'], ['Nur Klassik', '#d4af37', '#e2bf77'],
+    ['Sand', '#d6b78c', '#edd2ac'], ['Awwaba Klassik', '#d4af37', '#e2bf77'],
   ];
   for (const [name, primary, text] of accents) {
     await dialog.getByRole('button', { name, exact: true }).click();
@@ -142,9 +142,9 @@ test('each accent updates text and action roles together', async ({ page }, test
       const css = getComputedStyle(el);
       return ['--gold', '--gold-text', '--ds-gold'].map(key => css.getPropertyValue(key).trim().toLowerCase());
     });
-    expect(roles).toEqual([primary, text, name === 'Nur Klassik' ? text : primary]);
+    expect(roles).toEqual([primary, text, name === 'Awwaba Klassik' ? text : primary]);
     const gradient = await dialog.locator('.premium-local-inline-form > button').evaluate(el => getComputedStyle(el).backgroundImage);
-    const channel = name === 'Nur Klassik' ? '#e2bf77' : primary;
+    const channel = name === 'Awwaba Klassik' ? '#e2bf77' : primary;
     const rgb = channel.slice(1).match(/../g)!.map(value => parseInt(value, 16)).join(', ');
     expect(gradient).toContain(`rgb(${rgb})`);
     await capture(page, testInfo.outputPath(`accent-${name}.png`));
@@ -196,7 +196,7 @@ test('main sections and reading remain usable with a doubled base font', async (
   await page.addStyleTag({ content: ':root { font-size: 200%; }' });
   for (const title of ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr']) {
     await page.locator('.bottom-nav').getByRole('button', { name: title, exact: true }).click();
-    const heading = page.getByRole('heading', { name: title === 'Start' ? 'Start – Nur Islam' : title === 'Gebet' ? 'Gebetszeiten' : title, exact: true, level: 1 });
+    const heading = page.getByRole('heading', { name: title === 'Start' ? 'Start – Awwaba' : title === 'Gebet' ? 'Gebetszeiten' : title, exact: true, level: 1 });
     await expect(heading).toBeVisible();
     await waitForPaint(heading);
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(390);

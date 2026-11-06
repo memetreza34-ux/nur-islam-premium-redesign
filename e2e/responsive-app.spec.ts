@@ -100,7 +100,7 @@ for (const size of sizes) {
     };
     for (const name of ['Start', 'Gebet', 'Quran', 'Lernen', 'Mehr']) {
       await page.locator('.bottom-nav').getByText(name, { exact: true }).click();
-      await expect(page.getByRole('heading', { name: name === 'Start' ? 'Start – Nur Islam' : name === 'Gebet' ? 'Gebetszeiten' : name, exact: true, level: 1 })).toBeVisible();
+      await expect(page.getByRole('heading', { name: name === 'Start' ? 'Start – Awwaba' : name === 'Gebet' ? 'Gebetszeiten' : name, exact: true, level: 1 })).toBeVisible();
       await record(await inspect(page, name));
       await page.screenshot({ path: testInfo.outputPath(`${name}.png`) });
     }
@@ -131,7 +131,7 @@ for (const size of sizes) {
       await page.goBack();
       await expect(page.getByRole('heading', { name: 'Mehr', exact: true, level: 1 })).toBeVisible();
     }
-    for (const name of ['Einstellungen Reminder, Konto und Cloud', 'Sprache Aktuell vollständig: Deutsch', 'Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt', 'Über Nur Version und Produktprinzipien']) {
+    for (const name of ['Einstellungen Reminder, Konto und Cloud', 'Sprache Aktuell vollständig: Deutsch', 'Hilfe & Datenquellen Woher die Inhalte kommen und was lokal bleibt', 'Über Awwaba Version und Produktprinzipien']) {
       await expect(page.getByRole('heading', { name: 'Mehr', exact: true, level: 1 })).toBeVisible();
       await page.getByRole('button', { name, exact: true }).click();
       const dialog = page.getByRole('dialog');
@@ -189,7 +189,7 @@ test.describe('first launch', () => {
         expect(result.clips).toEqual([]);
         expect(result.lateral).toEqual([]);
         await page.screenshot({ path: testInfo.outputPath(`onboarding-${i}.png`) });
-        await page.getByRole('button', { name: i === 2 ? 'Nur öffnen' : 'Weiter', exact: true }).click();
+        await page.getByRole('button', { name: i === 2 ? 'Awwaba öffnen' : 'Weiter', exact: true }).click();
       }
       await expect(page.locator('.bottom-nav')).toBeVisible();
     });

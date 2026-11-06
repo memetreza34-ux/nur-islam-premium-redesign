@@ -32,7 +32,7 @@ for (const legacyAsset of [
 }
 
 const structureRequirements = [
-  "eyebrow: 'Willkommen bei Nur'",
+  "eyebrow: 'Willkommen bei Awwaba'",
   "eyebrow: 'Gebet & Richtung'",
   "eyebrow: 'Wissen & Alltag'",
   'navigator.geolocation.getCurrentPosition',

@@ -1,5 +1,9 @@
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { SourceInfo } from '../shared/SourceInfo';
+import { ReadingNavigation } from '../shared/ReadingNavigation';
 import { useEffect, useMemo, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { resolveAppPath } from '../app/appPaths';
 import {
   Check,
   ChevronDown,
@@ -21,6 +25,15 @@ import type {
 } from '../data/islamicLearningContent';
 
 const readingSectionTitles = ['Einfach erklärt', 'Warum das wichtig ist', 'Gut einordnen'];
+const COURSE_BANNERS: Record<LearningCategoryId, string> = {
+  faith: 'course-banner-faith-v1.webp',
+  pillars: 'course-banner-pillars-v1.webp',
+  terms: 'course-banner-terms-v1.webp',
+  practice: 'course-banner-practice-v1.webp',
+  character: 'course-banner-character-v1.webp',
+  community: 'course-banner-community-v1.webp',
+  prophet: 'course-banner-prophet-v1.webp',
+};
 
 export function readLastLesson(categoryId: LearningCategoryId, lessons: LearningLesson[]) {
   return readLearningPosition(categoryId, lessons).lessonId;
@@ -73,7 +86,7 @@ export function LearningCourseScreen({
     const sourceList = selectedLesson.sources.map((source) => `${source.reference}${source.url ? ` (${source.url})` : ''}`).join(' · ');
     const text = `${selectedLesson.title}\n${selectedLesson.summary}\nQuellen: ${sourceList}`;
     try {
-      if (navigator.share) await navigator.share({ title: `Nur Islam · ${selectedLesson.title}`, text });
+      if (navigator.share) await navigator.share({ title: `Awwaba · ${selectedLesson.title}`, text });
       else {
         await navigator.clipboard.writeText(text);
         flash('Lektionsübersicht kopiert');
@@ -95,9 +108,9 @@ export function LearningCourseScreen({
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, 0.36, 1] as const };
 
   return (
-    <motion.main className="screen reference-learning-course-screen learning-course-v2" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zu Lernen"><ChevronLeft size={20} /></button>
+    <motion.main className="screen reference-learning-course-screen learning-course-v2" data-course-category={categoryId} style={{ '--screen-banner-art': `url("${resolveAppPath(`/premium-assets/high-res-objects/${COURSE_BANNERS[categoryId]}`)}")` } as CSSProperties} initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
+      <header className="reference-screen-header reference-screen-header--banner">
+        <ScreenBackButton onClick={onBack} label="Zurück zu Lernen" />
         <div><span className="overline">Islam verstehen</span><h1>{category.title}</h1></div>
         <button className="icon-button" onClick={shareLesson} aria-label="Lektion teilen"><Share2 size={19} /></button>
       </header>
@@ -148,12 +161,12 @@ export function LearningCourseScreen({
         </section>
 
         {selectedLesson.detailItems?.length ? (
-          <section className="learning-course-v2__details" aria-labelledby="learning-details-title">
-            <h3 id="learning-details-title">Auf einen Blick</h3>
+          <details className="learning-course-v2__details" key={selectedLesson.id}>
+            <summary><h3>Auf einen Blick</h3><ChevronDown size={18} aria-hidden="true" /></summary>
             <div>
               {selectedLesson.detailItems.map((item) => <article key={item.title}><strong>{item.title}</strong><p lang={item.lang} dir={item.lang === 'ar' ? 'rtl' : undefined}>{item.text}</p></article>)}
             </div>
-          </section>
+          </details>
         ) : null}
       </article>
 
@@ -162,7 +175,7 @@ export function LearningCourseScreen({
         <ul>{selectedLesson.keyPoints.map((point) => <li key={point}><Check size={16} /><strong>{point}</strong></li>)}</ul>
       </section>
 
-      <SourceInfo title="Quellen und wichtige Einordnung"><section className="learning-course-v2__sources">
+      <div className="learning-course-v2__source-row"><span>Quellen und Einordnung</span><SourceInfo title="Quellen und wichtige Einordnung"><section className="learning-course-v2__sources">
         <div>
           {selectedLesson.sources.map((source) => (
             <article key={`${source.label}-${source.reference}`}>
@@ -171,12 +184,9 @@ export function LearningCourseScreen({
           ))}
         </div>
         <p className="learning-course-v2__sources-notice">Diese Inhalte sind kompakte Einführungen. Sie ersetzen keine Fatwa, keinen vollständigen Tafsir und keinen persönlichen Unterricht bei komplexen Fragen.</p>
-      </section></SourceInfo>
+      </section></SourceInfo></div>
 
-      <div className="learning-course-v2__navigation">
-        <button disabled={lessonIndex === 0} onClick={() => selectLesson(lessons[lessonIndex - 1])}><ChevronLeft size={17} /> Vorherige</button>
-        {lessonIndex < lessons.length - 1 ? <button className="gold-button" onClick={() => selectLesson(lessons[lessonIndex + 1])}>Nächste Lektion <ChevronRight size={17} /></button> : <button className="gold-button" onClick={onBack}>Zur Übersicht <ChevronRight size={17} /></button>}
-      </div>
+      <ReadingNavigation previousDisabled={lessonIndex === 0} onPrevious={() => selectLesson(lessons[lessonIndex - 1])} onNext={() => lessonIndex < lessons.length - 1 ? selectLesson(lessons[lessonIndex + 1]) : onBack()} nextLabel={lessonIndex < lessons.length - 1 ? 'Nächste Lektion' : 'Zur Übersicht'} />
 
       <AnimatePresence>{toast ? <motion.div className="toast" role="status" initial={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, x: '-50%', y: 0 }} exit={{ opacity: 0, x: '-50%', y: reduceMotion ? 0 : 6 }} transition={microTransition}>{toast.failed ? <X size={18} /> : <CircleCheck size={18} />} {toast.message}</motion.div> : null}</AnimatePresence>
     </motion.main>

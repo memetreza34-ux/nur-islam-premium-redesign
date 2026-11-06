@@ -1,6 +1,7 @@
+import { ReadingNavigation } from './ReadingNavigation';
 import { SourceInfo } from './SourceInfo';
 import { useRef } from 'react';
-import { ChevronDown, ChevronLeft, ChevronRight, Droplets } from 'lucide-react';
+import { ChevronDown, ChevronRight, Droplets } from 'lucide-react';
 import type { WorshipStep } from '../data/worshipGuideData';
 import { WUDU_PRESENTATION } from '../data/wuduPresentation';
 import { PremiumImage } from './PremiumVisuals';
@@ -77,10 +78,7 @@ export default function WuduLesson({ steps, stepIndex, onSelect }: Props) {
             <p className="wudu-lesson__note">Diese Lernfassung endet beim Wortlaut aus Muslim 234b. Der Zusatz aus Tirmidhi 55 wird unterschiedlich bewertet und ist hier ausgelassen.</p>
           </section></SourceInfo></div>
         ) : null}
-        <div className="wudu-lesson__actions">
-          <button disabled={stepIndex === 0} onClick={() => select(stepIndex - 1)}><ChevronLeft size={18} /> Vorheriger Schritt</button>
-          <button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? select(0) : select(stepIndex + 1)}>{stepIndex === steps.length - 1 ? 'Von vorn' : 'Nächster Schritt'} <ChevronRight size={18} /></button>
-        </div>
+        <ReadingNavigation className="wudu-lesson__actions" previousLabel="Vorheriger Schritt" previousDisabled={stepIndex === 0} onPrevious={() => select(stepIndex - 1)} onNext={() => stepIndex === steps.length - 1 ? select(0) : select(stepIndex + 1)} nextLabel={stepIndex === steps.length - 1 ? 'Von vorn' : 'Nächster Schritt'} />
       </article>
       <div className="wudu-lesson__reference"><span>Hinweise zu den Abbildungen</span><SourceInfo title="Quellen und Grenzen der Bildhilfe">
         <p>Beschreibungen zum Waschen finden sich beispielsweise in <a href="https://sunnah.com/bukhari:159" target="_blank" rel="noreferrer">Sahih al-Bukhari 159</a>, zum Reinigen der Ohren in <a href="https://sunnah.com/abudawud:135" target="_blank" rel="noreferrer">Sunan Abi Dawud 135</a>.</p>

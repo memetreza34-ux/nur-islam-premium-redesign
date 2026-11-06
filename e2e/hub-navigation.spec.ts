@@ -19,7 +19,7 @@ async function openHub(page: import('@playwright/test').Page) {
 
 const hubScreens = [
   { row: /^Notizen/, heading: 'Notizen' },
-  { row: /^Konto & Cloud/, heading: 'Nur Cloud' },
+  { row: /^Konto & Cloud/, heading: 'Awwaba Cloud' },
 ];
 
 for (const screen of hubScreens) {
@@ -29,6 +29,7 @@ for (const screen of hubScreens) {
 
     await page.getByRole('button').filter({ hasText: screen.row }).first().click();
     await expect(page.getByRole('heading', { name: screen.heading, level: 1 })).toBeVisible();
+    await expect(page.locator('main > .reference-screen-header')).toHaveClass(/reference-screen-header--banner/);
 
     await page.goBack();
     await expect(page.getByRole('heading', { name: 'Mehr', level: 1 })).toBeVisible();

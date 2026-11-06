@@ -182,7 +182,7 @@ function daysUntilFriday(date = new Date()) {
 }
 
 const accentLabels: Record<PremiumAccent, string> = {
-  classic: 'Nur Klassik',
+  classic: 'Awwaba Klassik',
   sapphire: 'Saphir',
   plum: 'Pflaume',
   sand: 'Sand',
@@ -276,7 +276,7 @@ function OverviewPanel({ onTab }: { onTab: (tab: PremiumTab) => void }) {
   return (
     <div className="premium-local-panel-stack">
       <section className="premium-local-hero-card">
-        <span className="premium-local-kicker"><Crown size={15} /> Nur Islam Premium</span>
+        <span className="premium-local-kicker"><Crown size={15} /> Awwaba Premium</span>
         <h2>Ein günstiges Komfort-Paket ohne KI-Kosten.</h2>
         <p>Alle Funktionen in dieser Version arbeiten lokal auf deinem Gerät. Das geplante Abo liegt bei 0,99 € pro Monat; die Bezahlprüfung wird erst mit einem echten Store-/Web-Abo verbunden.</p>
         <div className="premium-local-price"><strong>0,99 €</strong><span>/ Monat geplant</span></div>
@@ -627,7 +627,7 @@ function WidgetPreviewPanel({ id, onClose, onBuy, onCustomize, onUse }: { id: Pr
                 <span className="premium-widget-phone__speaker" aria-hidden="true" />
                 <div className="premium-widget-phone__screen">
                   <div className="premium-widget-phone__status"><time>{previewTime}</time><span aria-hidden="true"><i /><i /><i /></span></div>
-                  <div className="premium-widget-phone__date"><strong>{previewDate}</strong><small>Nur Islam</small></div>
+                  <div className="premium-widget-phone__date"><strong>{previewDate}</strong><small>Awwaba</small></div>
                   <section className={`premium-widget-stage premium-widget-stage--${id}`} data-widget={id} role="button" tabIndex={0} aria-label={WIDGET_ACTIONS[id].label} onClick={onUse} onKeyDown={(event) => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); onUse(); } }}>
                     {id === 'prayer' ? <PrayerWidgetPreview now={now} /> : id === 'qibla' ? <QiblaWidgetPreview /> : <>
                       <div className="premium-widget-stage__copy">
@@ -666,7 +666,7 @@ function WidgetPreviewPanel({ id, onClose, onBuy, onCustomize, onUse }: { id: Pr
 }
 
 function PremiumPanel({ onClose, onPreview, initialTab = 'overview' }: { onClose: () => void; onPreview: (id: PremiumWidgetId) => void; initialTab?: PremiumTab }) {
-  const dialog = useDialog(true, onClose, 'Nur Islam Premium');
+  const dialog = useDialog(true, onClose, 'Awwaba Premium');
   const [tab, setTab] = useState<PremiumTab>(initialTab);
   const [, setVersion] = useState(0);
   const refresh = () => setVersion((value) => value + 1);
@@ -683,7 +683,7 @@ function PremiumPanel({ onClose, onPreview, initialTab = 'overview' }: { onClose
       <div className="premium-local-sheet">
         <header className="premium-local-header">
           <button className="premium-local-icon" onClick={onClose} aria-label="Premium schließen"><X size={20} /></button>
-          <div><span className="premium-local-kicker"><Crown size={14} /> Premium</span><h1>Nur Islam Premium</h1></div>
+          <div><span className="premium-local-kicker"><Crown size={14} /> Premium</span><h1>Awwaba Premium</h1></div>
           <span className="premium-local-header-badge">lokal</span>
         </header>
         <nav className="premium-local-tabs" aria-label="Premium-Bereiche">{tabItems.map((item) => <button key={item.id} className={tab === item.id ? 'is-active' : ''} onClick={() => setTab(item.id)}>{item.label}</button>)}</nav>
@@ -792,7 +792,7 @@ export function PremiumSystemLayer() {
         if (hideTimer) window.clearTimeout(hideTimer);
         hideTimer = window.setTimeout(() => setReminderMessage(null), 12000);
         if ('Notification' in window && Notification.permission === 'granted') {
-          try { new Notification('Nur Islam', { body: reminder.label, tag: `nur-premium-${reminder.id}` }); } catch { /* in-app banner remains */ }
+          try { new Notification('Awwaba', { body: reminder.label, tag: `nur-premium-${reminder.id}` }); } catch { /* in-app banner remains */ }
         }
       });
     };
@@ -809,7 +809,7 @@ export function PremiumSystemLayer() {
 
   return (
     <>
-      {profileHost && !open && !previewWidget ? createPortal(<button className="premium-local-launcher" onClick={() => openPremium('overview')}><Crown size={19} /><span><strong>Nur Premium</strong><small>0,99 € · Komfortfunktionen ansehen</small></span></button>, profileHost) : null}
+      {profileHost && !open && !previewWidget ? createPortal(<button className="premium-local-launcher" onClick={() => openPremium('overview')}><Crown size={19} /><span><strong>Awwaba Premium</strong><small>0,99 € · Komfortfunktionen ansehen</small></span></button>, profileHost) : null}
       {homeHost ? createPortal(<ScreenStateProvider stateKey="home-"><PremiumHomeWidgets onCustomize={() => openPremium('home')} onPreview={(id) => { setOpen(false); setPreviewWidget(id); }} /></ScreenStateProvider>, homeHost) : null}
       {open ? createPortal(<PremiumPanel initialTab={initialTab} onClose={closePremium} onPreview={(id) => { setOpen(false); setPreviewWidget(id); }} />, document.body) : null}
       {previewWidget ? createPortal(<WidgetPreviewPanel id={previewWidget} onClose={closePreview} onBuy={() => openPremium('overview')} onCustomize={() => openPremium('home')} onUse={() => useWidget(previewWidget)} />, document.body) : null}

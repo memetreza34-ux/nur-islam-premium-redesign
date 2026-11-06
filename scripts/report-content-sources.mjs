@@ -28,7 +28,6 @@ const names = await read('src/data/namesOfAllahData.ts');
 const learning = await read('src/data/islamicLearningContent.ts');
 const hadith = await read('src/data/hadithData.ts');
 const practice = await read('src/data/practiceData.ts');
-const quiz = await read('src/data/quizData.ts');
 const pilgrimage = await read('src/data/pilgrimageData.ts');
 const knowledgeTopics = await read('src/data/knowledgeData.ts');
 const prophets = await read('src/data/prophetData.ts');
@@ -59,8 +58,6 @@ const hadithSummaryLabels = countMatches(hadith, /^\s+summary:\s*'Sinngemäßer 
 const practiceItems = countMatches(practice, /^\s+title:\s*'/gm);
 const practiceProofs = countMatches(practice, /^\s+proof:\s*'/gm);
 
-const quizQuestions = countMatches(quiz, /^\s+question:\s*'/gm);
-const quizSources = countMatches(quiz, /^\s+source:\s*'/gm);
 
 // Pilgrimage carries a citation only where an exact one exists, so partial
 // coverage is the intended state rather than a gap to close.
@@ -89,7 +86,6 @@ const rows = [
   { area: 'Hadith summaries', items: hadithEntries, withSource: hadithSources },
   { area: 'Sunnah & repentance', items: practiceItems, withSource: practiceProofs },
   { area: 'Pilgrimage stations', items: pilgrimageEntries, withSource: pilgrimageRefs },
-  { area: 'Quiz questions', items: quizQuestions, withSource: quizSources },
   { area: 'Knowledge intros', items: knowledgeCount, withSource: knowledgeIntroSources },
   { area: 'Knowledge sections', items: knowledgeSections, withSource: knowledgeSectionSources },
   { area: 'Knowledge glossary', items: glossaryCount, withSource: glossarySources },

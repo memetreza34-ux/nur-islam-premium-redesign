@@ -27,16 +27,16 @@ export function blockForeignFraming(root: HTMLElement) {
   notice.lang = 'de';
 
   const heading = document.createElement('h1');
-  heading.textContent = 'Nur Islam läuft nicht in fremden Seiten';
+  heading.textContent = 'Awwaba läuft nicht in fremden Seiten';
 
   const copy = document.createElement('p');
-  copy.textContent = 'Diese Seite hat versucht, Nur Islam eingebettet zu laden. Öffne die App direkt, damit deine Eingaben sicher bleiben.';
+  copy.textContent = 'Diese Seite hat versucht, Awwaba eingebettet zu laden. Öffne die App direkt, damit deine Eingaben sicher bleiben.';
 
   const link = document.createElement('a');
   link.href = window.location.href;
   link.target = '_blank';
   link.rel = 'noopener noreferrer';
-  link.textContent = 'Nur Islam direkt öffnen';
+  link.textContent = 'Awwaba direkt öffnen';
 
   notice.append(heading, copy, link);
   root.replaceChildren(notice);

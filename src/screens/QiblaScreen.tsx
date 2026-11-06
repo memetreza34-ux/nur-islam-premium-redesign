@@ -1,6 +1,7 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { lazy, Suspense, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  ChevronLeft,
   CircleCheck,
   Compass,
   LocateFixed,
@@ -294,11 +295,11 @@ export function QiblaScreen({ onBack }: { onBack: () => void }) {
           : 'Kompass noch nicht gestartet';
   return (
     <motion.main className="screen reference-qibla-screen" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : 0.28, ease: [0.22, 1, 0.36, 1] }}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam</span><h1>Qibla</h1></div>
+      <ScreenBanner art="screen-banner-qibla-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
+        <div><span className="overline">Awwaba</span><h1>Qibla</h1></div>
         <button className="icon-button" onClick={openCompassControls} aria-label="Kompass-Einstellungen öffnen"><Settings size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="qibla-guide" aria-label="Richtung zur Kaaba" data-state={compassState}>
         <div className="qibla-guide__topline">

@@ -1,3 +1,5 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { DialogHeader } from '../shared/DialogHeader';
 import { SourceInfo } from '../shared/SourceInfo';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -5,7 +7,6 @@ import type { CSSProperties } from 'react';
 import {
   BarChart3,
   BedDouble,
-  ChevronLeft,
   CircleCheck,
   ListRestart,
   MoonStar,
@@ -188,11 +189,11 @@ export function DhikrScreen({ onBack }: { onBack: () => void }) {
 
   return (
     <motion.main className="screen reference-dhikr-screen reference-dhikr-screen--complete" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+      <ScreenBanner art="screen-banner-dhikr-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
         <div><span className="overline">Tägliche Erinnerung</span><h1>Dhikr</h1></div>
         <button className="icon-button" onClick={() => setStatsOpen(true)} aria-label="Heutige Statistik öffnen"><BarChart3 size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       {!storageAvailable ? <section className="reference-dhikr-source" role="status">Speicherung fehlgeschlagen. Die Zähler bleiben nur in dieser Sitzung verfügbar.</section> : null}
 

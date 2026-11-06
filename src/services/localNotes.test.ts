@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { noteSignature, readLocalNotes, writeLocalNotes } from '../screens/NotesScreen';
 
 // Notes are the only place a user writes their own text, so losing one is the
@@ -64,7 +64,20 @@ describe('local notes storage', () => {
   });
 
   it('round-trips through a write', () => {
-    writeLocalNotes([NOTE]);
+    expect(writeLocalNotes([NOTE])).toBe(true);
+    expect(readLocalNotes()).toEqual([NOTE]);
+  });
+
+  it('reports a blocked write and retains the saved copy', () => {
+    store([NOTE]);
+    const storage = localStorage;
+    vi.stubGlobal('localStorage', {
+      getItem: storage.getItem.bind(storage),
+      setItem: () => { throw new Error('QuotaExceededError'); },
+    });
+    expect(writeLocalNotes([{ ...NOTE, body: 'Neue Fassung' }])).toBe(false);
+    expect(readLocalNotes()).toEqual([NOTE]);
+    expect(writeLocalNotes([])).toBe(false);
     expect(readLocalNotes()).toEqual([NOTE]);
   });
 });

@@ -13,9 +13,7 @@
 .reference-calendar-event h3,
 .reference-dua-card__content h2,
 .reference-learning-lesson-card h2,
-.reference-learning-quiz h2,
 .reference-legacy-hero h2,
-.reference-quiz-card > h2,
 .reference-zakat-calculator h2 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 600;
@@ -34,8 +32,7 @@
 /* ---------- Eyebrows ---------- */
 .overline,
 .hero-pill,
-.reference-dua-card__top > span,
-.reference-quiz-card > small {
+.reference-dua-card__top > span {
   font-variant-numeric: tabular-nums;
 }
 

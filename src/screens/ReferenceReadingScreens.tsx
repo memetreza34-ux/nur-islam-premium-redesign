@@ -1,3 +1,6 @@
+import { ReadingNavigation } from '../shared/ReadingNavigation';
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { SourceInfo } from '../shared/SourceInfo';
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { WORSHIP_GUIDES, WORSHIP_GUIDE_BY_ID } from '../data/worshipGuideData';
@@ -7,7 +10,6 @@ import {
   BookmarkCheck,
   BookOpen,
   ChevronDown,
-  ChevronLeft,
   ChevronRight,
   CircleCheck,
   CircleAlert,
@@ -65,13 +67,13 @@ function useToast() {
   return { toast, flash };
 }
 
-function ScreenHeader({ title, eyebrow, onBack }: { title: string; eyebrow: string; onBack: () => void }) {
+function ScreenHeader({ title, eyebrow, onBack, art = 'screen-banner-quran-v1.webp' }: { title: string; eyebrow: string; onBack: () => void; art?: string }) {
   return (
-    <header className="reference-screen-header">
-      <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
+    <ScreenBanner art={art}>
+      <ScreenBackButton onClick={onBack} label="Zurück" />
       <div><span className="overline">{eyebrow}</span><h1>{title}</h1></div>
       <span className="reference-reading-header-spacer" aria-hidden="true" />
-    </header>
+    </ScreenBanner>
   );
 }
 
@@ -182,7 +184,7 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
 
   return (
     <motion.main className="screen reference-guide-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: reduceMotion ? 0 : .28, ease: [0.22, 1, 0.36, 1] }}>
-      <ScreenHeader title={guide.title} eyebrow="Schritt für Schritt" onBack={onBack} />
+      <ScreenHeader title={guide.title} eyebrow="Schritt für Schritt" onBack={onBack} art={guide.id === 'wudu' ? 'course-banner-practice-v1.webp' : 'course-banner-pillars-v1.webp'} />
 
       <section className="worship-guide-intro" aria-label="Einführung">
         <div aria-hidden="true"><PremiumImage src={heroAsset} className="worship-guide-intro__art" fallback={<Droplets size={48} />} priority /></div>
@@ -207,8 +209,8 @@ export function WorshipGuideScreen({ initialMode, onBack }: { initialMode: Guide
           <p>{step.description}</p>
           {step.arabic ? <p className="reference-guide-arabic wudu-lesson__arabic" dir="rtl" lang="ar">{step.arabic}</p> : null}
           {step.transliteration ? <p className="reference-guide-translit wudu-lesson__phonetic">{step.transliteration}</p> : null}
-          {step.source ? <SourceInfo key={step.title} title={`Quelle zu „${step.title}“`}><p>{step.source}</p>{step.sourceUrl ? <a href={step.sourceUrl} target="_blank" rel="noreferrer">Fundstelle öffnen</a> : null}</SourceInfo> : null}
-          <div className="wudu-lesson__actions"><button disabled={stepIndex === 0} onClick={() => selectStep(stepIndex - 1)}><ChevronLeft size={18} /> Vorheriger Schritt</button><button className="gold-button" onClick={() => stepIndex === steps.length - 1 ? selectStep(0) : selectStep(stepIndex + 1)}>{stepIndex === steps.length - 1 ? 'Von vorn' : 'Nächster Schritt'} <ChevronRight size={18} /></button></div>
+          {step.source ? <SourceInfo key={step.title} title={`Quelle zu „${step.title}“`} label="Quelle und Einordnung"><p>{step.source}</p>{step.sourceUrl ? <a href={step.sourceUrl} target="_blank" rel="noreferrer">Fundstelle öffnen</a> : null}</SourceInfo> : null}
+          <ReadingNavigation className="wudu-lesson__actions" previousLabel="Vorheriger Schritt" previousDisabled={stepIndex === 0} onPrevious={() => selectStep(stepIndex - 1)} onNext={() => stepIndex === steps.length - 1 ? selectStep(0) : selectStep(stepIndex + 1)} nextLabel={stepIndex === steps.length - 1 ? 'Von vorn' : 'Nächster Schritt'} />
         </article>
       </section>}
 

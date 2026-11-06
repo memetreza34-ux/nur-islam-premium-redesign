@@ -2,8 +2,8 @@
  * Navigation metadata for the active legacy features.
  *
  * Split out of LegacyFeatureScreens so the hub tiles can be rendered without
- * pulling the screens themselves — and with them the quiz catalogue, the
- * prophets and the companion lists — into the initial bundle. The screens are
+ * pulling the screens themselves — and with them the prophets and the
+ * companion lists — into the initial bundle. The screens are
  * loaded when one is opened.
  */
 import type { LucideIcon } from 'lucide-react';
@@ -12,7 +12,6 @@ import {
   Bookmark,
   CalendarHeart,
   Clock3,
-  CircleHelp,
   Globe2,
   Library,
   MapPinned,
@@ -31,7 +30,6 @@ export type LegacyFeatureId =
   | 'knowledge'
   | 'madhhabs'
   | 'prophets'
-  | 'quiz'
   | 'sahabah'
   | 'women'
   | 'hajj'
@@ -53,16 +51,6 @@ export type LegacyFeatureItem = {
 
 const VISUAL_VERSION = '20260826-original-art';
 export const visual = (path: string) => versionAppPath(path, VISUAL_VERSION);
-
-// Reachable from Start without adding another tile to the learning directory.
-export const quizFeature: LegacyFeatureItem = {
-  id: 'quiz',
-  title: 'Islam Quiz',
-  subtitle: 'Wissen testen',
-  description: 'Wähle ein Thema und überprüfe dein Wissen mit Fragen und Erklärungen.',
-  icon: CircleHelp,
-  art: '/premium-assets/high-res-objects/home-quiz-v6.webp',
-};
 
 export const learningLegacyFeatures: LegacyFeatureItem[] = [
   { id: 'hadith-library', title: 'Hadith-Sammlung', subtitle: 'Quellen & Einordnung', description: 'Begriff · Fundstelle · Hadithe lesen und speichern', icon: Library, art: '/premium-assets/high-res-objects/learn-hub-hadith-v1.webp' },

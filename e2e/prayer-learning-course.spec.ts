@@ -23,6 +23,11 @@ async function checkSourceReadable(page: Page) {
     expect(await page.locator(selector).evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth))).toBe(true);
   }
   await page.getByRole('button', { name: 'Quellen schließen', exact: true }).click();
+  for (const section of await page.locator('.reference-rakah-wording__section').all()) {
+    if (!await section.evaluate((node: HTMLDetailsElement) => node.open)) await section.locator('summary').click();
+    await expect(section.locator('p').first()).toBeVisible();
+    expect(await section.locator('p').evaluateAll(nodes => nodes.every(node => node.scrollWidth <= node.clientWidth))).toBe(true);
+  }
 }
 
 for (const width of [320, 390, 768, 1280]) {
@@ -36,9 +41,14 @@ for (const width of [320, 390, 768, 1280]) {
     await expect(page.getByRole('heading', { name: 'Takbir al-Ihram', exact: true })).toBeVisible();
     await expect(figure.getByRole('img')).toHaveAttribute('src', /salah-posture-takbir-v2\.webp/);
     await expect.poll(() => figure.getByRole('img').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
-    await expect(page.locator('.reference-rakah-wording__pronunciation')).toContainText('Al-laa-hu ak-bar');
-    await expect(page.locator('.reference-rakah-wording')).toContainText('Deutsche Aussprachehilfe');
-    await expect(page.locator('.reference-rakah-wording')).toContainText('Bedeutung');
+    const sections = page.locator('.reference-rakah-wording__section');
+    await expect(sections.locator('summary')).toHaveText([
+      'Arabisch', 'Aussprache als Fließtext', 'Aussprache mit Silbenstrichen', 'Sinngemäße Bedeutung',
+    ]);
+    await expect(page.locator('.reference-rakah-wording__section[open]')).toHaveCount(1);
+    await expect(page.locator('[data-format="arabic"]')).toBeVisible();
+    await expect(page.locator('[data-format="flowing"]')).toBeHidden();
+    await expect(page.locator('[data-format="syllables"]')).toBeHidden();
 
     const chooserBox = (await chooser.boundingBox())!;
     const imageBox = (await figure.boundingBox())!;
@@ -50,12 +60,32 @@ for (const width of [320, 390, 768, 1280]) {
     expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(width);
     await figure.screenshot({ path: testInfo.outputPath(`salah-posture-${width}.png`) });
 
+    await sections.nth(1).locator('summary').press('Enter');
+    await expect(page.locator('[data-format="flowing"]')).toHaveText('Allaahu akbar');
+    await expect(page.locator('[data-format="flowing"]')).toBeVisible();
+    await expect(page.locator('[data-format="arabic"]')).toBeHidden();
+    await sections.nth(2).locator('summary').click();
+    await expect(page.locator('[data-format="syllables"]')).toHaveText('Al-laa-hu ak-bar');
+    await expect(page.locator('[data-format="flowing"]')).toBeHidden();
+    await sections.nth(3).locator('summary').click();
+    await expect(page.locator('.reference-rakah-wording__translation')).toBeVisible();
+    await expect(page.locator('.reference-rakah-wording__section[open]')).toHaveCount(1);
+    await sections.nth(3).locator('summary').click();
+    await expect(page.locator('.reference-rakah-wording__section[open]')).toHaveCount(0);
+
     await chooser.locator('summary').click();
     const ruku = chooser.getByRole('button').filter({ hasText: 'Ruku (Verbeugung)' });
     await ruku.click();
     await expect(chooser).not.toHaveAttribute('open', '');
     await expect(figure.getByRole('img')).toHaveAttribute('src', /salah-posture-ruku-v2\.webp/);
-    await expect(page.locator('.reference-rakah-wording__pronunciation').first()).toContainText('Sub-haa-na');
+    await expect(page.locator('.reference-rakah-wording__section[open]')).toHaveCount(1);
+    await expect(sections.first().locator('.reference-rakah-runs > li')).toHaveCount(3);
+    await sections.nth(1).locator('summary').click();
+    await expect(sections.nth(1).locator('.reference-rakah-runs > li')).toHaveCount(3);
+    await expect(page.locator('[data-format="flowing"]').first()).toContainText('Subhaana');
+    await sections.nth(2).locator('summary').click();
+    await expect(sections.nth(2).locator('.reference-rakah-runs > li')).toHaveCount(3);
+    await expect(page.locator('[data-format="syllables"]').first()).toContainText('Sub-haa-na');
   });
 }
 
@@ -159,5 +189,7 @@ test('a missing generated posture keeps the labelled fallback and wording usable
   await expect(page.locator('.reference-rakah-figure img')).toBeHidden();
   await expect(page.locator('.reference-rakah-figure .prayer-posture-figure')).toBeVisible();
   await expect(page.locator('.reference-rakah-wording__arabic')).toBeVisible();
-  await expect(page.locator('.reference-rakah-wording__pronunciation')).toContainText('Al-laa-hu ak-bar');
+  await page.getByText('Aussprache mit Silbenstrichen', { exact: true }).click();
+  await expect(page.locator('[data-format="syllables"]')).toBeVisible();
+  await expect(page.locator('[data-format="syllables"]')).toContainText('Al-laa-hu ak-bar');
 });

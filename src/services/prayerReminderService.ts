@@ -44,7 +44,7 @@ async function showPrayerNotification(prayer: PrayerScheduleItem, scheduleDate: 
   if (!('Notification' in window) || Notification.permission !== 'granted') return false;
 
   const options: NotificationOptions = {
-    body: `Es ist Zeit für ${prayer.label}. Öffne Nur Islam, um deinen Gebets-Tracker zu aktualisieren.`,
+    body: `Es ist Zeit für ${prayer.label}. Öffne Awwaba, um deinen Gebets-Tracker zu aktualisieren.`,
     icon: `${APP_BASE}nur-app-icon-192.png`,
     badge: `${APP_BASE}nur-app-icon-192.png`,
     tag: `nur-prayer-${scheduleDate}-${prayer.id}`,

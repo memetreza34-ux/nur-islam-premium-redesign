@@ -15,11 +15,11 @@ for (const [name, width, height] of [
     await page.clock.pauseAt(now);
     await page.route('https://api.aladhan.com/**', route => route.fulfill({ json: prayerRequestFixture(route.request().url()) }));
     await page.goto('/?preview=1');
-    const splash = page.getByRole('main', { name: 'Nur Islam wird geladen' });
+    const splash = page.getByRole('main', { name: 'Awwaba wird geladen' });
     await expect(splash).toBeVisible();
     await expect(splash.locator('.entry-emblem img')).toHaveJSProperty('naturalWidth', 512);
     await expect(splash.locator('.entry-emblem img')).toHaveAttribute('src', /nur-logo-mosque-3d-v1\.webp/);
-    await expect(splash.locator('.entry-wordmark')).toHaveText('Nur Islam');
+    await expect(splash.locator('.entry-wordmark')).toHaveText('Awwaba');
     await expect(splash).not.toContainText(/Ayah|Nächstes Gebet|Dein App-Name/);
     await expect(splash.getByRole('status')).toHaveText('App wird geöffnet');
     await page.evaluate(() => {
@@ -67,7 +67,7 @@ test('failed logo and prayer requests keep the same mosque fallback and do not b
   await page.route('https://api.aladhan.com/**', route => route.abort());
   await page.route('**/nur-logo-mosque-3d-v1.webp*', route => route.abort());
   await page.goto('/?preview=1');
-  const splash = page.getByRole('main', { name: 'Nur Islam wird geladen' });
+  const splash = page.getByRole('main', { name: 'Awwaba wird geladen' });
   await expect(splash.locator('.entry-emblem img')).toBeHidden();
   const fallback = splash.locator('.entry-emblem .premium-image__fallback');
   await expect(fallback).not.toHaveAttribute('hidden');
@@ -83,7 +83,7 @@ test('reduced motion skips the doors and opens the app promptly', async ({ page 
   await page.clock.pauseAt(now);
   await page.route('https://api.aladhan.com/**', route => route.abort());
   await page.goto('/?preview=1');
-  const splash = page.getByRole('main', { name: 'Nur Islam wird geladen' });
+  const splash = page.getByRole('main', { name: 'Awwaba wird geladen' });
   await expect(splash.locator('.entry-emblem')).toHaveCSS('opacity', '1');
   await expect(splash.locator('.entry-door--left')).toHaveCSS('display', 'none');
   await expect(splash.locator('.entry-emblem')).toHaveCSS('animation-name', 'none');

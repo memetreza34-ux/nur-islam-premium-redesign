@@ -59,10 +59,7 @@
 .reference-learning-lesson-card,
 .reference-learning-key-points,
 .reference-learning-sources,
-.reference-learning-quiz,
 .reference-legacy-section,
-.reference-quiz-card,
-.reference-quiz-result,
 .reference-zakat-calculator,
 .reference-fasting-reminder-settings {
   -webkit-backdrop-filter: blur(18px) saturate(1.04);
@@ -84,9 +81,7 @@
 .reference-learning-lesson-selector button,
 .reference-prayer-course-selector button,
 .reference-guide-steps > button,
-.reference-prayer-lesson-steps button,
-.reference-quiz-answers button,
-.reference-learning-quiz__options button {
+.reference-prayer-lesson-steps button {
   transition:
     border-color .2s ease,
     background .2s ease,
@@ -117,7 +112,6 @@
 .reference-mosque-list__pin,
 .reference-account-cloud-grid > button > svg,
 .reference-note-editor__heading > span,
-.reference-learning-quiz__heading > span,
 .reference-prayer-learning-actions > button > span:first-child,
 .reference-expanded-learning-grid__icon,
 .reference-legacy-header-icon {
@@ -132,7 +126,6 @@
 .reference-name-progress__bar,
 .reference-dua-progress__bar,
 .reference-learning-course-hero__progress > span,
-.reference-quiz-progress,
 .next-prayer-panel__progress{
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, .22);
 }
@@ -142,7 +135,6 @@
 .reference-name-progress__bar span,
 .reference-dua-progress__bar span,
 .reference-learning-course-hero__progress i,
-.reference-quiz-progress span,
 .next-prayer-panel__progress > span{
   box-shadow: 0 0 11px rgba(236, 199, 113, .22);
 }
@@ -220,8 +212,7 @@ select:focus-visible {
 [data-theme='light'] .reference-note-editor,
 [data-theme='light'] .reference-learning-lesson-card,
 [data-theme='light'] .reference-learning-key-points,
-[data-theme='light'] .reference-learning-sources,
-[data-theme='light'] .reference-learning-quiz {
+[data-theme='light'] .reference-learning-sources {
   -webkit-backdrop-filter: blur(15px) saturate(.96);
   backdrop-filter: blur(15px) saturate(.96);
 }

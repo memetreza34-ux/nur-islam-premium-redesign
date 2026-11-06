@@ -73,7 +73,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Stand und Geltungsbereich',
     paragraphs: [
       'Stand dieser Datenschutzerklärung: 12. September 2026.',
-      'Diese Erklärung beschreibt die Web-App Nur Islam, ihre lokale Speicherung, die optionalen Live-Dienste und die freiwilligen Konto- und Cloud-Funktionen.',
+      'Diese Erklärung beschreibt die Web-App Awwaba, ihre lokale Speicherung, die optionalen Live-Dienste und die freiwilligen Konto- und Cloud-Funktionen.',
     ],
   },
   {
@@ -86,7 +86,7 @@ export const privacySections: LegalSection[] = [
   {
     heading: 'Grundsatz: die App funktioniert ohne Konto',
     paragraphs: [
-      'Gebets-Tracker, Dhikr-Zähler, Lesezeichen, Favoriten, Kalendereinträge, lokale Notizen, Lernfortschritt und Einstellungen liegen zunächst ausschließlich im lokalen Speicher deines Browsers. Ohne Konto werden diese persönlichen App-Inhalte nicht in die Nur-Islam-Cloud übertragen.',
+      'Gebets-Tracker, Dhikr-Zähler, Lesezeichen, Favoriten, Kalendereinträge, lokale Notizen, Lernfortschritt und Einstellungen liegen zunächst ausschließlich im lokalen Speicher deines Browsers. Ohne Konto werden diese persönlichen App-Inhalte nicht in die Awwaba-Cloud übertragen.',
       'Ein Konto ist ausschließlich für die freiwillige Cloud-Sicherung und Cloud-Notizen nötig.',
     ],
   },
@@ -122,7 +122,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Rechtsgrundlagen der Online-Dienste',
     paragraphs: [
       'Das Laden ausdrücklich ausgewählter Quran-Inhalte und Rezitationen sowie die Bereitstellung angeforderter Gebets- und Moschee-Funktionen erfolgt nach Artikel 6 Absatz 1 Buchstabe b DSGVO. Standortübermittlungen erfolgen nur nach Einwilligung gemäß Artikel 6 Absatz 1 Buchstabe a DSGVO.',
-      'Soweit einzelne Anfragen oder gespeicherte Inhalte religiöse Überzeugungen erkennen lassen können, gilt zusätzlich Artikel 9 DSGVO. Für die Nur-Islam-Cloud wird deshalb vor der ersten Nutzung eine ausdrückliche, freiwillige und versioniert dokumentierte Einwilligung eingeholt.',
+      'Soweit einzelne Anfragen oder gespeicherte Inhalte religiöse Überzeugungen erkennen lassen können, gilt zusätzlich Artikel 9 DSGVO. Für die Awwaba-Cloud wird deshalb vor der ersten Nutzung eine ausdrückliche, freiwillige und versioniert dokumentierte Einwilligung eingeholt.',
       'Technisch notwendige Sicherheits- und Zugriffsprotokolle des Hostings werden auf Grundlage von Artikel 6 Absatz 1 Buchstabe f DSGVO verarbeitet. Das berechtigte Interesse liegt im sicheren und störungsfreien Betrieb der App.',
     ],
   },
@@ -147,7 +147,7 @@ export const privacySections: LegalSection[] = [
     heading: 'Speicherdauer',
     paragraphs: [
       'Lokale Daten bleiben so lange auf dem Gerät, bis du sie in der App zurücksetzt oder die Browserdaten löschst.',
-      'Nur-Islam-Cloud-Daten bleiben gespeichert, bis du sie löschst oder deine Einwilligung widerrufst. Unter „Konto & Sicherung“ kannst du das app-spezifische Profil, Backups und Cloud-Notizen entfernen; die technisch getrennte Supabase-Anmeldung bleibt dabei bestehen und kann über die Kontaktadresse vollständig gelöscht werden.',
+      'Awwaba-Cloud-Daten bleiben gespeichert, bis du sie löschst oder deine Einwilligung widerrufst. Unter „Konto & Sicherung“ kannst du das app-spezifische Profil, Backups und Cloud-Notizen entfernen; die technisch getrennte Supabase-Anmeldung bleibt dabei bestehen und kann über die Kontaktadresse vollständig gelöscht werden.',
       'Speicherfristen für Sicherheitsprotokolle und technisch notwendige Verbindungsdaten richten sich nach den Regeln der jeweiligen Anbieter. Sie dürfen nicht länger als für Sicherheit, Betrieb oder gesetzliche Pflichten erforderlich gespeichert werden.',
     ],
   },

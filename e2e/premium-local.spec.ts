@@ -48,7 +48,7 @@ test('opens Premium from the compact Home overview and renders statistics withou
   await page.setViewportSize({ width: 390, height: 844 });
   await widgets.getByRole('button', { name: 'Anpassen' }).click();
 
-  const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
+  const premium = page.getByRole('dialog', { name: 'Awwaba Premium' });
   await expect(premium).toBeVisible();
   await premium.getByRole('button', { name: 'Statistik', exact: true }).click();
 
@@ -65,7 +65,7 @@ test('creates a local routine and persists its daily completion', async ({ page 
   const widgets = page.getByRole('region', { name: 'Deine Widgets' });
   await widgets.locator('summary').click();
   await widgets.getByRole('button', { name: 'Anpassen' }).click();
-  const premium = page.getByRole('dialog', { name: 'Nur Islam Premium' });
+  const premium = page.getByRole('dialog', { name: 'Awwaba Premium' });
   await premium.getByRole('button', { name: 'Routinen', exact: true }).click();
 
   await premium.getByLabel('Name').fill('Morgenroutine');
@@ -92,7 +92,7 @@ test('Premium entry sits in the More screen flow without covering shortcuts', as
   await openApp(page);
   await page.getByRole('navigation').getByText('Mehr', { exact: true }).click();
 
-  const launcher = page.getByRole('button', { name: /Nur Premium/ });
+  const launcher = page.getByRole('button', { name: /Awwaba Premium/ });
   await expect(launcher).toBeVisible();
   await expect(launcher).toHaveCSS('position', 'static');
 
@@ -111,5 +111,5 @@ test('Premium entry sits in the More screen flow without covering shortcuts', as
   expect(launcherBox!.y + launcherBox!.height).toBeLessThanOrEqual(shortcutsBox!.y + 1);
 
   await launcher.click();
-  await expect(page.getByRole('dialog', { name: 'Nur Islam Premium' })).toBeVisible();
+  await expect(page.getByRole('dialog', { name: 'Awwaba Premium' })).toBeVisible();
 });

@@ -15,7 +15,7 @@ it('reveals the selected mosque with the same fallback and no daily text or requ
     expect(host.querySelector('.entry-emblem img')?.getAttribute('src')).toContain('nur-logo-mosque-3d-v1.webp');
     expect(host.querySelector('.entry-emblem .premium-image__fallback image')?.getAttribute('href')).toMatch(/^data:image\/webp;base64,/);
     expect(host.querySelectorAll('.entry-door')).toHaveLength(2);
-    expect(host.querySelector('.entry-wordmark')?.textContent).toBe('Nur Islam');
+    expect(host.querySelector('.entry-wordmark')?.textContent).toBe('Awwaba');
     expect(host.textContent).not.toMatch(/Ayah|Nächstes Gebet|Dein App-Name/);
     expect(host.querySelector('[role="status"]')?.textContent).toBe('App wird geöffnet');
     expect(fetch).not.toHaveBeenCalled();

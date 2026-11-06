@@ -117,7 +117,7 @@ for (const requirement of [
   'reference-prophet-overview__boundary',
   'nur_prophet_course_progress_v1',
   '<details className="reference-prophet-plan"',
-  '<details className="reference-prophet-overview"',
+  '<ReadingIntroduction className="reference-prophet-overview"',
   'onOpenQuranReference',
 ]) {
   if (!screen.includes(requirement)) throw new Error(`People screens are missing: ${requirement}`);

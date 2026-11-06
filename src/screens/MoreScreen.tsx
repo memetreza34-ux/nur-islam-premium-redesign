@@ -173,7 +173,7 @@ const supportRows: ProfileRow[] = [
   // way to tell them apart was to read the small line underneath.
   { id: 'help', title: 'Hilfe & Datenquellen', description: 'Woher die Inhalte kommen und was lokal bleibt', icon: CircleHelp, action: 'support' },
   { id: 'legal', title: 'Impressum & Datenschutz', description: 'Anbieter, Datenverarbeitung und Lizenzen', icon: ScrollText, destination: 'legal' },
-  { id: 'about', title: 'Über Nur', description: 'Version und Produktprinzipien', icon: Info, action: 'about' },
+  { id: 'about', title: 'Über Awwaba', description: 'Version und Produktprinzipien', icon: Info, action: 'about' },
 ];
 
 function readReminderEnabled() {
@@ -197,7 +197,7 @@ function readUserName(session: NurSession | null) {
   } catch {
     // Use account email or neutral fallback.
   }
-  return session?.user.email.split('@')[0] || 'Nur Nutzer';
+  return session?.user.email.split('@')[0] || 'Awwaba Nutzer';
 }
 
 function ProfileList({ rows, onSelect }: { rows: ProfileRow[]; onSelect: (row: ProfileRow) => void }) {
@@ -227,7 +227,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
   const screenDialog = useDialog(
     Boolean(modal),
     closeDialog,
-    modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Nur' : modal === 'language' ? 'App-Sprache' : 'Einstellungen',
+    modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Awwaba' : modal === 'language' ? 'App-Sprache' : 'Einstellungen',
   );
   const screenTransition = { duration: reduceMotion ? 0 : .28, ease: [0.22, 1, .36, 1] as const };
   const microTransition = { duration: reduceMotion ? 0 : .18, ease: [0.22, 1, .36, 1] as const };
@@ -297,13 +297,13 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
 
       <section className="reference-profile-greeting">
         <span className="reference-profile-greeting__logo"><PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} /></span>
-        <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Nur Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
+        <div><span className="overline">Assalamu Alaikum</span><h2>{userName}</h2><p>{session ? 'Dein Konto ist verbunden. Lokale Daten kannst du in Awwaba Cloud sichern.' : 'Die App funktioniert lokal ohne Konto. Cloud-Sicherung ist optional.'}</p></div>
         <span className="reference-profile-avatar">{initials}</span>
       </section>
 
       <button className="reference-account-entry" onClick={() => onNavigate('account')}>
         <span>{session ? <Cloud size={20} /> : <LogIn size={20} />}</span>
-        <span><strong>{session ? 'Nur Cloud verbunden' : 'Konto & Cloud'}</strong><small>{session ? session.user.email : 'Anmelden, registrieren und Fortschritt sichern'}</small></span>
+        <span><strong>{session ? 'Awwaba Cloud verbunden' : 'Konto & Cloud'}</strong><small>{session ? session.user.email : 'Anmelden, registrieren und Fortschritt sichern'}</small></span>
         <ChevronRight size={18} />
       </button>
 
@@ -354,7 +354,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
         {modal ? (
           <motion.div className="reference-modal-backdrop" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={microTransition} onClick={() => setModal(null)}>
             <motion.section {...screenDialog.props} className={`dialog-panel dialog-form reference-profile-modal${modal === 'support' ? ' reference-profile-modal--support' : ''}${modal === 'about' ? ' reference-profile-modal--about' : ''}`} initial={{ opacity: 0, y: reduceMotion ? 0 : 16, scale: reduceMotion ? 1 : .98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: reduceMotion ? 0 : 8, scale: reduceMotion ? 1 : .99 }} transition={screenTransition} onClick={(event) => event.stopPropagation()}>
-              <DialogHeader title={modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Nur' : modal === 'language' ? 'App-Sprache' : 'Einstellungen'} onClose={closeDialog} />
+              <DialogHeader title={modal === 'support' ? 'Hilfe und Datenschutz' : modal === 'about' ? 'Über Awwaba' : modal === 'language' ? 'App-Sprache' : 'Einstellungen'} onClose={closeDialog} />
 
               {modal === 'language' ? (
                 <>
@@ -425,9 +425,9 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
                     <span className="reference-about__mark">
                       <PremiumImage src="/premium-assets/high-res-objects/nur-logo-mosque-3d-v1.webp" fallback={<NurMark />} />
                     </span>
-                    <span className="overline">Nur Islam · Version 0.3</span>
+                    <span className="overline">Awwaba · Version 0.3</span>
                     <h2>Eine App.<br />Dein muslimischer Alltag.</h2>
-                    <p>Nur Islam wurde speziell für Muslime entwickelt. Die wichtigsten Begleiter für Glauben, Gebet, Wissen und Alltag kommen in einer ruhigen App zusammen.</p>
+                    <p>Awwaba wurde speziell für Muslime entwickelt. Die wichtigsten Begleiter für Glauben, Gebet, Wissen und Alltag kommen in einer ruhigen App zusammen.</p>
                   </header>
 
                   <section className="reference-about__promise" aria-labelledby="about-promise-title">
@@ -435,7 +435,7 @@ export function MoreScreen({ onNavigate }: { onNavigate: (destination: MoreDesti
                     <div>
                       <small id="about-promise-title">Unser Grundsatz</small>
                       <strong>Ohne Werbung. Ohne Pflichtkonto.</strong>
-                      <p>Keine Werbebanner und keine Werbe-Tracker. Du kannst Nur Islam lokal nutzen; Konto und Cloud bleiben freiwillig.</p>
+                      <p>Keine Werbebanner und keine Werbe-Tracker. Du kannst Awwaba lokal nutzen; Konto und Cloud bleiben freiwillig.</p>
                     </div>
                   </section>
 

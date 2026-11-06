@@ -18,7 +18,7 @@ for (const width of [320, 390, 768]) {
     await page.getByRole('button', { name: 'Nächster Schritt', exact: true }).click();
     const card = page.getByRole('article', { name: 'Hände waschen', exact: true });
     await expect(card).toBeVisible();
-    await expect(card).toHaveCSS('background-color', 'rgb(246, 239, 223)');
+    await expect(card).toHaveCSS('background-color', 'rgb(245, 239, 223)');
     await expect(card).toHaveCSS('color', 'rgb(23, 61, 49)');
     const art = card.getByRole('img', { name: 'Zwei Hände werden mit Wasser gewaschen.', exact: true });
     await expect.poll(() => art.evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);

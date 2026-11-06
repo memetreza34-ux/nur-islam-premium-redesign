@@ -211,7 +211,7 @@ forbidTokens(notes, 'Local note identity', [
 requireTokens(account, 'Cloud deletion wording', [
   'Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet.',
   'Die Daten auf diesem Gerät werden nicht angetastet.',
-  'Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet.',
+  'Deine Awwaba-Cloud-Daten wurden gelöscht und du wurdest abgemeldet.',
 ]);
 forbidTokens(account, 'Cloud deletion wording', [
   'Deine Anmeldung bleibt bestehen',

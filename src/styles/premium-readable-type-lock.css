@@ -1,4 +1,4 @@
-:root{--nur-caption-size:.75rem;--nur-support-size:.875rem;--nur-body-small-size:1rem}.reference-screen-header .overline,.section-heading .overline,.hero-pill,.reference-quran-availability,.reference-dua-card__top>span,.reference-quiz-card>small,.reference-account-hero small,.reference-quran-results small,.reference-dhikr-copy .overline{font-size:var(--nur-caption-size)!important;line-height:1.3}.reference-profile-row__copy small,
+:root{--nur-caption-size:.75rem;--nur-support-size:.875rem;--nur-body-small-size:1rem}.reference-screen-header .overline,.section-heading .overline,.hero-pill,.reference-quran-availability,.reference-dua-card__top>span,.reference-account-hero small,.reference-quran-results small,.reference-dhikr-copy .overline{font-size:var(--nur-caption-size)!important;line-height:1.3}.reference-profile-row__copy small,
 .reference-account-entry small,
 .reference-collection-rows small,
 .reference-quran-list__copy small,

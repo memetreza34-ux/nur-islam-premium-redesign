@@ -1,6 +1,7 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { useEffect, useState, type FormEvent } from 'react';
 import {
-  ChevronLeft,
   CircleCheck,
   CloudDownload,
   CloudUpload,
@@ -90,14 +91,14 @@ export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onO
         const pendingName = (() => {
           try { return localStorage.getItem('nur_pending_display_name') || ''; } catch { return ''; }
         })();
-        const name = profile?.display_name || pendingName || next.user.email.split('@')[0] || 'Nur Nutzer';
+        const name = profile?.display_name || pendingName || next.user.email.split('@')[0] || 'Awwaba Nutzer';
         const saved = await upsertProfile({ display_name: name });
         storeDisplayName(saved.display_name);
         try { localStorage.removeItem('nur_pending_display_name'); } catch { /* optional */ }
         setStatus('Anmeldung erfolgreich. Cloud-Synchronisierung ist verfügbar.');
       } else {
         const result = await signUp(email, password);
-        const name = displayName.trim() || email.split('@')[0] || 'Nur Nutzer';
+        const name = displayName.trim() || email.split('@')[0] || 'Awwaba Nutzer';
         storeDisplayName(name);
         if (result.session) {
           setSession(result.session);
@@ -179,7 +180,7 @@ export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onO
       const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }));
       const link = document.createElement('a');
       link.href = url;
-      link.download = `nur-islam-daten-${new Date().toISOString().slice(0, 10)}.json`;
+      link.download = `awwaba-daten-${new Date().toISOString().slice(0, 10)}.json`;
       link.click();
       URL.revokeObjectURL(url);
       setStatus('Deine Kontodaten wurden als JSON-Datei heruntergeladen.');
@@ -200,7 +201,7 @@ export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onO
       setCloudUpdatedAt(null);
       setCloudConsentGranted(false);
       setCloudConsentChecked(false);
-      setStatus('Deine Nur-Islam-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
+      setStatus('Deine Awwaba-Cloud-Daten wurden gelöscht und du wurdest abgemeldet. Die Daten auf diesem Gerät bleiben erhalten.');
     } catch (reason) {
       setStatus(reason instanceof Error ? reason.message : 'Löschen fehlgeschlagen.');
     } finally {
@@ -221,11 +222,11 @@ export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onO
 
   return (
     <motion.main className="screen reference-account-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Konto & Sicherung</span><h1>Nur Cloud</h1></div>
+      <ScreenBanner art="screen-banner-more-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück" />
+        <div><span className="overline">Konto & Sicherung</span><h1>Awwaba Cloud</h1></div>
         <span className="reference-account-header-icon"><ShieldCheck size={20} /></span>
-      </header>
+      </ScreenBanner>
 
       {session ? (
         <>
@@ -280,7 +281,7 @@ export function AccountScreen({ onBack, onOpenLegal }: { onBack: () => void; onO
             <button onClick={() => void exportData()} disabled={busy}><Download size={18} /> Meine Daten exportieren</button>
             {confirmDelete ? (
               <div className="reference-account-data-confirm" role="alertdialog" aria-label="Cloud-Daten endgültig löschen">
-                <p>Profil, Cloud-Backup und Cloud-Notizen von Nur Islam endgültig löschen? Das lässt sich nicht rückgängig machen. Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet. Die Daten auf diesem Gerät werden nicht angetastet.</p>
+                <p>Profil, Cloud-Backup und Cloud-Notizen von Awwaba endgültig löschen? Das lässt sich nicht rückgängig machen. Dein Auth-Konto bleibt bestehen, aber du wirst nach dem Löschen abgemeldet. Die Daten auf diesem Gerät werden nicht angetastet.</p>
                 <div>
                   <button onClick={() => setConfirmDelete(false)} disabled={busy}>Abbrechen</button>
                   <button className="is-destructive" onClick={() => void removeCloudData()} disabled={busy}>Endgültig löschen</button>

@@ -1,6 +1,8 @@
 .screen-transition-frame {
   width: 100%;
 }
+.screen-back{position:sticky;top:max(12px,env(safe-area-inset-top));z-index:10;height:0;display:flex;padding:0 12px;pointer-events:none}
+.screen-back>.icon-button{pointer-events:auto;background:#07372b;color:#f2d79a}
 
 .app-shell--detail {
   padding-bottom: max(24px, env(safe-area-inset-bottom));

@@ -35,8 +35,7 @@
 .reference-prayer-lesson-steps button,
 .reference-guide-steps > button,
 .reference-learning-lesson-selector button,
-.reference-learning-key-points button,
-.reference-learning-quiz__options button {
+.reference-learning-key-points button {
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -44,8 +43,7 @@
 .reference-five-prayer-lessons button::after,
 .reference-prayer-lesson-steps button::after,
 .reference-guide-steps > button::after,
-.reference-learning-key-points button::after,
-.reference-learning-quiz__options button::after {
+.reference-learning-key-points button::after {
   content: '';
   position: absolute;
   z-index: 0;
@@ -61,27 +59,20 @@
 .reference-five-prayer-lessons button > *,
 .reference-prayer-lesson-steps button > *,
 .reference-guide-steps > button > *,
-.reference-learning-key-points button > *,
-.reference-learning-quiz__options button > * { position: relative; z-index: 1; }
+.reference-learning-key-points button > * { position: relative; z-index: 1; }
 .reference-five-prayer-lessons button.is-complete::after,
 .reference-prayer-lesson-steps button.is-active::after,
 .reference-guide-steps > button.is-active::after,
-.reference-learning-key-points button.is-checked::after,
-.reference-learning-quiz__options button.is-correct::after { opacity: 1; }
+.reference-learning-key-points button.is-checked::after { opacity: 1; }
 [data-theme='light'] .reference-prayer-course-hero,
 [data-theme='light'] .reference-learning-course-hero { color: #fff8ea; }
 [data-theme='light'] .reference-learning-course-hero h2 { color: #fff8ea !important; }
 [data-theme='light'] .reference-learn-screen .learning-hero {
   background: radial-gradient(circle at 92% 12%,rgba(242,215,154,.16),transparent 15rem),linear-gradient(145deg,#0d5743,#00120f) !important;
 }
-
-@media (max-width:390px) {
-
-}
 @media (prefers-reduced-motion:reduce) {
   .reference-five-prayer-lessons button::after,
   .reference-prayer-lesson-steps button::after,
   .reference-guide-steps > button::after,
-  .reference-learning-key-points button::after,
-  .reference-learning-quiz__options button::after { transition: none !important; }
+  .reference-learning-key-points button::after { transition: none !important; }
 }

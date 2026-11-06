@@ -40,7 +40,7 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
     };
   });
   expect(overview).not.toBeNull();
-  expect(overview!.storageTop - overview!.headerBottom, 'Notes storage card must start clear of the sticky header before editing').toBeGreaterThanOrEqual(6);
+  expect(overview!.storageTop - overview!.headerBottom, 'Notes storage card must start below the banner before editing').toBeGreaterThanOrEqual(6);
   expect(overview!.titleSize, 'Notes storage title should not be tiny').toBeGreaterThanOrEqual(11.5);
   expect(overview!.actionSize, 'Notes cloud action should remain readable').toBeGreaterThanOrEqual(11);
   expect(overview!.actionHeight, 'Notes cloud action needs a real touch target').toBeGreaterThanOrEqual(44);
@@ -78,7 +78,7 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   });
   expect(editing).not.toBeNull();
   expect(editing!.storageDisplay, 'compact editing should not waste space on the cloud status card').toBe('none');
-  expect(editing!.editorTop - editing!.headerBottom, 'Notes editor must begin below the sticky header').toBeGreaterThanOrEqual(6);
+  expect(editing!.editorTop - editing!.headerBottom, 'Notes editor must begin below the banner').toBeGreaterThanOrEqual(6);
   expect(editing!.editorHeight).toBeGreaterThanOrEqual(300);
   expect(editing!.editorHeight).toBeLessThanOrEqual(460);
   expect(editing!.titleHeight).toBeGreaterThanOrEqual(44);
@@ -99,14 +99,17 @@ test('compact portrait keeps Home useful and Notes clear, readable and balanced'
   const focusedHeader = await page.evaluate(() => {
     const header = document.querySelector<HTMLElement>('.reference-notes-screen > .reference-screen-header');
     if (!header) return null;
-    const backgroundImage = getComputedStyle(header).backgroundImage;
+    const input = document.querySelector<HTMLInputElement>('[aria-label="Titel der Notiz"]');
+    if (!input) return null;
     return {
-      backgroundImage,
-      translucentLayer: /rgba\([^)]*,\s*0?\.\d+\)/i.test(backgroundImage),
+      position: getComputedStyle(header).position,
+      headerBottom: header.getBoundingClientRect().bottom,
+      inputTop: input.getBoundingClientRect().top,
     };
   });
   expect(focusedHeader).not.toBeNull();
-  expect(focusedHeader!.translucentLayer, `focused Notes header must fully mask scrolled content: ${focusedHeader!.backgroundImage}`).toBe(false);
+  expect(['sticky', 'fixed']).not.toContain(focusedHeader!.position);
+  expect(focusedHeader!.headerBottom, 'Notes banner must not cover the focused title').toBeLessThanOrEqual(focusedHeader!.inputTop);
 });
 
 test('light calendar keeps navigation labels and day numbers comfortably readable', async ({ page }) => {

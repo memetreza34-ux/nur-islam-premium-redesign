@@ -60,15 +60,21 @@ test('browser Back and Forward preserve the actual Home origin', async ({ page }
   await expect(page.locator('.reference-reader-screen')).toBeVisible({ timeout: 15_000 });
 });
 
-test('Home quiz keeps its title and survives browser Forward and reload', async ({ page }) => {
-  await page.getByRole('button', { name: /Islam Quiz/i }).click();
-  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
-  await page.goBack();
-  await expect(page.locator('.premium-home--v2')).toBeVisible();
-  await page.goForward();
-  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
+test('removed quiz has no entry and old browser history recovers to Home', async ({ page }) => {
+  for (const tab of ['Start', 'Lernen', 'Mehr']) {
+    await page.getByRole('navigation').getByRole('button', { name: tab, exact: true }).click();
+    await expect(page.getByRole('button', { name: /Quiz/i })).toHaveCount(0);
+  }
+  await page.getByRole('navigation').getByRole('button', { name: 'Start', exact: true }).click();
+  await page.evaluate(() => {
+    const state = structuredClone(window.history.state);
+    state.__nurIslamNavigation.snapshot.activeTab = 'legacy:quiz';
+    window.history.replaceState(state, '', window.location.href);
+  });
   await page.reload();
-  await expect(page.getByRole('heading', { name: 'Islam Quiz', level: 1 })).toBeVisible();
+  await expect(page.locator('.premium-home--v2')).toBeVisible();
+  expect(await page.evaluate(() => window.history.state.__nurIslamNavigation.snapshot.activeTab)).toBe('home');
+  await expect(page.getByRole('button', { name: /Quiz/i })).toHaveCount(0);
 });
 
 test('primary navigation resets the app-owned browser stack', async ({ page }) => {

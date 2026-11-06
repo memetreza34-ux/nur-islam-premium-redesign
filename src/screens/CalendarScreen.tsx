@@ -1,3 +1,5 @@
+import { ScreenBanner } from '../shared/ScreenBanner';
+import { ScreenBackButton } from '../shared/ScreenBackButton';
 import { DialogHeader } from '../shared/DialogHeader';
 import { useScreenState } from '../shared/ScreenState';
 import { SourceInfo } from '../shared/SourceInfo';
@@ -166,11 +168,11 @@ export function CalendarScreen({ onBack, initialDateKey = null }: { onBack: () =
 
   return (
     <motion.main className="screen calendar-screen reference-calendar-screen" initial={{ opacity: 0, y: reduceMotion ? 0 : 12 }} animate={{ opacity: 1, y: 0 }} transition={screenTransition}>
-      <header className="reference-screen-header">
-        <button className="icon-button" onClick={onBack} aria-label="Zurück zur Startseite"><ChevronLeft size={20} /></button>
-        <div><span className="overline">Nur Islam</span><h1>Kalender</h1></div>
+      <ScreenBanner art="screen-banner-calendar-v1.webp">
+        <ScreenBackButton onClick={onBack} label="Zurück zur Startseite" />
+        <div><span className="overline">Awwaba</span><h1>Kalender</h1></div>
         <button className="icon-button" onClick={() => setShowAdd(true)} aria-label="Termin hinzufügen"><Plus size={20} /></button>
-      </header>
+      </ScreenBanner>
 
       <section className="calendar-month-card glass-card reference-calendar-month">
         <div className="calendar-month-nav">

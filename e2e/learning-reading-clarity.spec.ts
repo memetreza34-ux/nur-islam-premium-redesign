@@ -102,7 +102,7 @@ test('all twenty-five prophet courses retain their ninety-seven reading chapters
       await page.locator('.screen-transition-frame').evaluate(element => { element.scrollTop = 0; });
       await page.screenshot({ path: testInfo.outputPath('prophet-reading-390.png') });
     }
-    await page.locator('.reference-screen-header').getByRole('button', { name: 'Zurück', exact: true }).click();
+    await page.locator('.screen-back').getByRole('button', { name: 'Zurück', exact: true }).click();
   }
 });
 
@@ -127,6 +127,15 @@ test('all forty-four lessons remain freely readable without end-of-lesson tests'
   for (const [id, title] of [['faith', 'Allah & der Glaube'], ['pillars', 'Die fünf Säulen'], ['terms', 'Wichtige Begriffe'], ['practice', 'Reinheit & Alltag'], ['character', 'Charakter & Rechte'], ['community', 'Miteinander & Verantwortung'], ['prophet', 'Der Prophet ﷺ']] as const) {
     await learning(page);
     await page.locator('.reference-foundation-step').filter({ hasText: title }).click();
+    const header = page.locator('.reference-learning-course-screen > .reference-screen-header');
+    const background = await header.evaluate(element => getComputedStyle(element).backgroundImage);
+    expect(background).toContain(`course-banner-${id}-v1.webp`);
+    const bannerUrl = background.match(/url\("?([^"\)]+)"?\)/)![1];
+    expect(await page.evaluate(async url => {
+      const image = new Image(); image.src = url;
+      try { await image.decode(); return image.naturalWidth >= 1080 && image.naturalHeight >= 360; }
+      catch { return false; }
+    }, bannerUrl)).toBe(true);
     for (const lesson of getCategoryLessons(id)) {
       await page.getByRole('button', { name: /Lektion auswählen/ }).click();
       await page.locator('.learning-course-v2__lessons button').filter({ hasText: lesson.title }).click();
